@@ -1,6 +1,4 @@
-# Preface {-}
-
-## Organization of the Course {-} 
+# Organization of the Course {-} 
 
 ### Timetable {-}
 
@@ -16,15 +14,13 @@ timetable %>% kbl() %>%  kable_styling()
 ```
 
 
-
-
 ### Lecture Material and Literature {-}
 
 
 * Textbook: 
   * [An Introduction to Statistical Learning (2nd Edition)](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
   * The pdf-Version of this book can be downloaded for free: [Free Book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf)  
-* We use an [eWhiteboard](https://uni-bonn.sciebo.de/s/qdGFYfqMno0QfzX) for our lecture notes.
+* [eWhiteboard](https://uni-bonn.sciebo.de/s/qdGFYfqMno0QfzX) for the lecture notes.
 * This online script can be found at [https://www.dliebl.com/Script-ISLR/](https://www.dliebl.com/Script-ISLR/)
 
 The above links to the lecture materials can also be found at [eCampus](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
@@ -32,9 +28,11 @@ The above links to the lecture materials can also be found at [eCampus](https://
 
 ### Further Material
 
-While the following resources are not directly used in our course, you may find them useful nevertheless: 
+The following resources are not directly used in our course, but you may find them useful nevertheless:
 
 * [`R` Labs using `Tidymodels`](https://emilhvitfeldt.github.io/ISLR-tidymodels-labs/index.html)
+
+* [Slides, Datasets, R-Scripts, etc](https://www.statlearning.com/resources-second-edition)
 
 * [Slides and Videos (1st edition of the course textbook)](https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/)
 
