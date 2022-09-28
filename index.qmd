@@ -26,7 +26,7 @@ timetable %>% kbl() %>%  kable_styling()
 The above links to the lecture materials can also be found at [eCampus](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
 
 
-### Further Material
+<!-- ### Further Material
 
 The following resources are not directly used in our course, but you may find them useful nevertheless:
 
@@ -35,6 +35,6 @@ The following resources are not directly used in our course, but you may find th
 * [Slides, Datasets, R-Scripts, etc](https://www.statlearning.com/resources-second-edition)
 
 * [Slides and Videos (1st edition of the course textbook)](https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/)
-
+ -->
 
 
