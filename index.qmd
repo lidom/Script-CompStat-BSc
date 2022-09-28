@@ -1,0 +1,45 @@
+# Preface {-}
+
+## Organization of the Course {-} 
+
+### Timetable {-}
+
+```{r, echo=FALSE}
+suppressPackageStartupMessages(library("kableExtra"))
+suppressPackageStartupMessages(library("tidyverse"))
+
+timetable <- tibble("Day"=c("Monday", "Wednesday"),
+                    "Time"=c("12:15-13:45", "16:15-17:45"),
+                    "Lecture Hall" =c("	Jur / Hörsaal K", "	Jur / Hörsaal K"))
+           
+timetable %>% kbl() %>%  kable_styling()
+```
+
+
+
+
+### Lecture Material and Literature {-}
+
+
+All lecture material (eWhiteboard and this script) can be found at eCampus under the following link:
+
+* [https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
+
+
+We use the book 
+
+* [**An Introduction to Statistical Learning (2nd Edition)**](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
+
+The pdf-Version of this book can be downloaded for free: [Free Book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf)  
+
+
+### Further Material
+
+While the following resources are not directly used in our course, you may find them useful nevertheless: 
+
+* [`R` Labs using `Tidymodels`](https://emilhvitfeldt.github.io/ISLR-tidymodels-labs/index.html)
+
+* [Slides and Videos (1st edition of the course book)](https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/)
+
+
+

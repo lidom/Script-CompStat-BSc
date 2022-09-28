@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Computer-Aided Statistical Analysis B.Sc. - 2&nbsp; Exercise 7:</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Ch2_RLab.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Exercise 7:</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./" class="sidebar-logo-link">
+      <img src="./images/Uni_Bonn_Logo.jpeg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computer-Aided Statistical Analysis B.Sc.</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch2_RLab.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>R</code></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch2_Exercises.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Exercise 7:</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#e-xercise-8" id="toc-e-xercise-8" class="nav-link active" data-scroll-target="#e-xercise-8"><span class="toc-section-number">2.1</span>  E xercise 8:</a></li>
+  <li><a href="#e-xercise-9" id="toc-e-xercise-9" class="nav-link" data-scroll-target="#e-xercise-9"><span class="toc-section-number">2.2</span>  E xercise 9:</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Exercise 7:</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<!-- --- -->
+<!-- title: "Exercises Ch 2: Intro to Statistical Learning" -->
+<!-- format: html -->
+<!-- --- -->
+<p>The table below provides a training data set containing six observations, three predictors, and one qualitative response variable. Suppose we wish to use this data set to make a prediction for <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span> using K-nearest neighbors.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Obs.</th>
+<th style="text-align: center;"><span class="math inline">\(X_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(X_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(X_3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Red</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Red</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">Red</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">Green</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">−1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Green</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Red</td>
+</tr>
+</tbody>
+</table>
+<p><strong>7. a)</strong> Compute the Euclidean distance between each observation and the test point, <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span>.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observations</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>obs1 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>obs2 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>obs3 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>obs4 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>obs5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>obs6 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Point</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>obs0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Vector Dist_vec to store the results</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Dist <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">6</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the Euclidean distances</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">1</span>] <span class="ot">&lt;-</span> (dist1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs1<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">2</span>] <span class="ot">&lt;-</span> (dist2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs2<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">3</span>] <span class="ot">&lt;-</span> (dist3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs3<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">4</span>] <span class="ot">&lt;-</span> (dist4 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs4<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">5</span>] <span class="ot">&lt;-</span> (dist5 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs5<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">6</span>] <span class="ot">&lt;-</span> (dist6 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs6<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.000000 2.000000 3.162278 2.236068 1.414214 1.732051</code></pre>
+</div>
+</div>
+<p><strong>7. b)</strong> What is your prediction with <span class="math inline">\(K = 1\)</span>? Why?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(Dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>Closest 1 neighbor is <code>obs5</code> and thus, our prediction is <code>Green</code> because <code>Green</code> is the <span class="math inline">\(Y\)</span> value associated to <code>obs5</code>.</p>
+<p><strong>7. c)</strong> What is your prediction with <span class="math inline">\(K = 3\)</span>? Why?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(Dist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 6 2</code></pre>
+</div>
+</div>
+<p>Closest 3 neighbors are <code>obs5</code>, <code>obs6</code>, <code>obs2</code> and thus, our prediction is <code>Red</code> because it is the <span class="math inline">\(Y\)</span> value associated to <code>obs2</code> and <code>obs6</code> (majority rule).</p>
+<p><strong>7. d)</strong> If the Bayes decision boundary in this problem is highly nonlinear, then would we expect the best value for <span class="math inline">\(K\)</span> to be large or small? Why?</p>
+<p><strong>Answer:</strong></p>
+<p>A large value of K means that the <span class="math inline">\(Y\)</span>-values from a large neighborhood are contributing to the prediction at one chosen <span class="math inline">\(X\)</span>-point. This requires that the neighborhood consists of relatively similar&nbsp;<span class="math inline">\(Y\)</span>-values. However, in the case of a highly nonlinear&nbsp;decision boundary, the neighborhoods of similar <span class="math inline">\(Y\)</span>-values become generally small. Therefore, also <span class="math inline">\(K\)</span> must be chosen relatively small so that we can capture more of the non-linear decision boundary.&nbsp;</p>
+<section id="e-xercise-8" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="e-xercise-8"><span class="header-section-number">2.1</span> E xercise 8:</h2>
+<p>This exercise relates to the College data set, which can be found in the file <code>College.csv</code>. It contains a number of variables for <span class="math inline">\(777\)</span> different universities and colleges in the US. The variables are:</p>
+<ul>
+<li><strong>Private</strong> : Public/private indicator</li>
+<li><strong>Apps</strong> : Number of applications received</li>
+<li><strong>Accept</strong> : Number of applicants accepted</li>
+<li><strong>Enroll</strong> : Number of new students enrolled</li>
+<li><strong>Top10perc</strong> : New students from top 10% of high school class</li>
+<li><strong>Top25perc</strong> : New students from top 25% of high school class</li>
+<li><strong>F.Undergrad</strong> : Number of full-time undergraduates</li>
+<li><strong>P.Undergrad</strong> : Number of part-time undergraduates</li>
+<li><strong>Outstate</strong> : Out-of-state tuition</li>
+<li><strong>Room.Board</strong> : Room and board costs</li>
+<li><strong>Books</strong> : Estimated book costs</li>
+<li><strong>Personal</strong> : Estimated personal spending</li>
+<li><strong>PhD</strong> : Percent of faculty with Ph.D.’s</li>
+<li><strong>Terminal</strong> : Percent of faculty with terminal degree</li>
+<li><strong>S.F.Ratio</strong> : Student/faculty ratio</li>
+<li><strong>perc.alumni</strong> : Percent of alumni who donate</li>
+<li><strong>Expend</strong> : Instructional expenditure per student</li>
+<li><strong>Grad.Rate</strong> : Graduation rate</li>
+</ul>
+<p><strong>8. a)</strong> Use the <code>read.csv()</code> function to read the data into <code>R</code>. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/College.csv"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows and 5 collumns of the data</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(college[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                              X Private Apps Accept Enroll
+1  Abilene Christian University     Yes 1660   1232    721
+2            Adelphi University     Yes 2186   1924    512
+3                Adrian College     Yes 1428   1097    336
+4           Agnes Scott College     Yes  417    349    137
+5     Alaska Pacific University     Yes  193    146     55
+6             Albertson College     Yes  587    479    158
+7       Albertus Magnus College     Yes  353    340    103
+8                Albion College     Yes 1899   1720    489
+9              Albright College     Yes 1038    839    227
+10    Alderson-Broaddus College     Yes  582    498    172</code></pre>
+</div>
+</div>
+<p><strong>8. b)</strong> Look at the data using the <code>fix()</code> function.</p>
+<p><strong>Answer:</strong></p>
+<p>You should notice that the first column is just the name of each university. We don’t really want <code>R</code> to treat this as data. However, it may be handy to have these names for later. Try the following commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store row names</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[,<span class="dv">1</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pops up a window for data visualization</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You should see that there is now a row.names column with the name of each university recorded. This means that <code>R</code> has given each row a name corresponding to the appropriate university. <code>R</code> will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminates first column (containing the row names)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now you should see that the first data column is <code>Private</code>. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.</p>
+<p><strong>8. c.&nbsp;i)</strong> Use the <code>summary()</code> function to produce a numerical summary of the variables in the data set.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Private               Apps           Accept          Enroll    
+ Length:777         Min.   :   81   Min.   :   72   Min.   :  35  
+ Class :character   1st Qu.:  776   1st Qu.:  604   1st Qu.: 242  
+ Mode  :character   Median : 1558   Median : 1110   Median : 434  
+                    Mean   : 3002   Mean   : 2019   Mean   : 780  
+                    3rd Qu.: 3624   3rd Qu.: 2424   3rd Qu.: 902  
+                    Max.   :48094   Max.   :26330   Max.   :6392  
+   Top10perc    
+ Min.   : 1.00  
+ 1st Qu.:15.00  
+ Median :23.00  
+ Mean   :27.56  
+ 3rd Qu.:35.00  
+ Max.   :96.00  </code></pre>
+</div>
+</div>
+<p><strong>8. c.&nbsp;ii)</strong> Use the <code>pairs()</code> function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix <code>A</code> using <code>A[,2:10]</code>.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="at">x =</span> college[,<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch2_Exercises_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>8. c.&nbsp;iii)</strong> Use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Private.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate<span class="sc">~</span>Private, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Private"</span>, </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch2_Exercises_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>8. c.&nbsp;iv)</strong> Create a new qualitative variable, called <code>Elite</code>, by binning the <code>Top10perc</code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a vector called ELite with only "No" entrances amounting the number of college rows</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>,<span class="fu">nrow</span>(college))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Replacing "No" with "Yes" if the proportion of students coming from the top 10% of their HS classes exceeds 50%.</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>Elite[college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode a vector as a factor</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Elite)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Elite variable to our current dataset "college"</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(college, Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use the <code>summary()</code> function to see how many elite universities there are. Now use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Elite.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college<span class="sc">$</span>Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> No Yes 
+699  78 </code></pre>
+</div>
+</div>
+<p>There are <span class="math inline">\(78\)</span> elite Universities. The boxplots of <code>Outstate</code> versus Elite-Status are generated as following:</p>
+<div class="cell" data-scrolled="false">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate <span class="sc">~</span> Elite, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, <span class="at">xlab=</span><span class="st">"Elite"</span>, <span class="at">ylab=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch2_Exercises_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>8. c.&nbsp;v)</strong> Use the <code>hist()</code> function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command <code>par(mfrow=c(2,2))</code> useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Apps,     <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Apps"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Enroll"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch2_Exercises_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="e-xercise-9" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="e-xercise-9"><span class="header-section-number">2.2</span> E xercise 9:</h2>
+<p>This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows of the data</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Auto[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mpg cylinders displacement horsepower weight acceleration year origin
+1   18         8          307        130   3504         12.0   70      1
+2   15         8          350        165   3693         11.5   70      1
+3   18         8          318        150   3436         11.0   70      1
+4   16         8          304        150   3433         12.0   70      1
+5   17         8          302        140   3449         10.5   70      1
+6   15         8          429        198   4341         10.0   70      1
+7   14         8          454        220   4354          9.0   70      1
+8   14         8          440        215   4312          8.5   70      1
+9   14         8          455        225   4425         10.0   70      1
+10  15         8          390        190   3850          8.5   70      1
+                        name
+1  chevrolet chevelle malibu
+2          buick skylark 320
+3         plymouth satellite
+4              amc rebel sst
+5                ford torino
+6           ford galaxie 500
+7           chevrolet impala
+8          plymouth fury iii
+9           pontiac catalina
+10        amc ambassador dpl</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find more info on the variables here: https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>9. a)</strong> Which of the predictors are quantitative, and which are qualitative?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mpg          cylinders      displacement     horsepower        weight    
+ Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
+ 1st Qu.:17.00   1st Qu.:4.000   1st Qu.:105.0   1st Qu.: 75.0   1st Qu.:2225  
+ Median :22.75   Median :4.000   Median :151.0   Median : 93.5   Median :2804  
+ Mean   :23.45   Mean   :5.472   Mean   :194.4   Mean   :104.5   Mean   :2978  
+ 3rd Qu.:29.00   3rd Qu.:8.000   3rd Qu.:275.8   3rd Qu.:126.0   3rd Qu.:3615  
+ Max.   :46.60   Max.   :8.000   Max.   :455.0   Max.   :230.0   Max.   :5140  
+  acceleration        year           origin          name          
+ Min.   : 8.00   Min.   :70.00   Min.   :1.000   Length:392        
+ 1st Qu.:13.78   1st Qu.:73.00   1st Qu.:1.000   Class :character  
+ Median :15.50   Median :76.00   Median :1.000   Mode  :character  
+ Mean   :15.54   Mean   :75.98   Mean   :1.577                     
+ 3rd Qu.:17.02   3rd Qu.:79.00   3rd Qu.:2.000                     
+ Max.   :24.80   Max.   :82.00   Max.   :3.000                     </code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Quantitative predictors:</strong> <code>mpg</code>, <code>cylinders</code>, <code>displacement</code>, <code>horsepower</code>, <code>weight</code>, <code>acceleration</code>, <code>year</code></li>
+<li><strong>Qualitative predictors:</strong> <code>name</code>, <code>origin</code></li>
+</ul>
+<p><strong>9. b)</strong> What is the range of each quantitative predictor? You can answer this using the <code>range()</code> function.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the range function to the first seven columns of Auto</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print to console</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mpg cylinders displacement horsepower weight acceleration year
+[1,]  9.0         3           68         46   1613          8.0   70
+[2,] 46.6         8          455        230   5140         24.8   82</code></pre>
+</div>
+</div>
+<p><strong>9. c)</strong> What is the mean and standard deviation of each quantitative predictor?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute mean for the first seven variables and store it in a vector</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># round the values inside the vectors to 2 decimal cases</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(mean,round,<span class="dv">2</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviation and round it up </span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sd,round,<span class="dv">2</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print both vectors</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
+       23.45         5.47       194.41       104.47      2977.58        15.54 
+        year 
+       75.98 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
+        7.81         1.71       104.64        38.49       849.40         2.76 
+        year 
+        3.68 </code></pre>
+</div>
+</div>
+<p><strong>9.d)</strong> Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove observations and store them </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>newAuto <span class="ot">=</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>),]</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-do exercises 9. b) and 9.c)</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, create an empty Matrix "Results" to store the results</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">7</span>, </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"SD"</span>, <span class="st">"Minimum"</span>, <span class="st">"Maximum"</span>), </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">colnames</span>(newAuto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))))</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the results</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)  <span class="co"># Standard Deviation</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">3</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], min)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">4</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], max)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round them</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>Results[] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Results[],round,<span class="dv">2</span>)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Results[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          mpg cylinders displacement horsepower  weight acceleration
+Mean    24.40      5.37       187.24     100.72 2935.97        15.73
+SD       7.87      1.65        99.68      35.71  811.30         2.69
+Minimum 11.00      3.00        68.00      46.00 1649.00         8.50
+Maximum 46.60      8.00       455.00     230.00 4997.00        24.80</code></pre>
+</div>
+</div>
+<p><strong>9. e)</strong> Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch2_Exercises_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>heavier weight is related with lower mpg and with higher horsepower;</li>
+<li>higher horsepower correlates with lower acceleration;</li>
+<li><code>mpg</code> (miles per gallon) mostly increases for newer model years meaning that cars become more efficient over time.</li>
+</ul>
+<p><strong>9. f)</strong> Suppose that we wish to predict gas mileage (<code>mpg</code>) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting <code>mpg</code>? Justify your answer.</p>
+<p><strong>Answer:</strong></p>
+<p>Yes. On the one hand, as we can see from the plot above, all of the quantitative variables show some sort of relation (either linear or non-linear) with mpg and hence, they might be useful in predicting <code>mpg</code>. The origin qualitative variable might also be useful in predicting <code>mpg</code>, with cars originated from region 3 being associated with higher <code>mpg</code>. On the other hand, the name predictor has too little observations per name though, so using this as a predictor is likely to result in overfitting the data and will not generalize well.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Ch2_RLab.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>R</code></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
