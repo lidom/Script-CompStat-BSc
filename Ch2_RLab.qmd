@@ -12,7 +12,6 @@
 This tutorial aims to serve as an introduction to the software package `R`. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links: 
 
 *  [Reference card for R commands](http://cran.r-project.org/doc/contrib/refcard.pdf) (always useful)
-*  [Matlab/R reference card](http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf) (for those who are more familiar with Matlab)
 *  [The official Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) (very detailed)
 *  And many more at [www.r-project.org](https://www.r-project.org/other-docs.html) (see "Documents")
 <!-- *  An interactive introduction can be done online at: [www.datacamp.com](https://www.datacamp.com/) -->
@@ -23,7 +22,6 @@ This tutorial aims to serve as an introduction to the software package `R`. Othe
 Some other tutorials:
 
 *  [Introduction to data science](https://idc9.github.io/stor390/)
-*  [Scraping the web using R](https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/)
 *  [Creating dynamic graphics](https://gganimate.com/)
 
 
@@ -34,7 +32,6 @@ Why `R`?
 *  R is equipped with one of the most flexible and powerful graphics routines available anywhere. \
    For instance, check out one of the following repositories: 
     * [Clean Graphs](http://shinyapps.org/apps/RGraphCompendium/index.php) 
-    * [R graph catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
     * [Publication Ready Plots](http://www.sthda.com/english/rpkgs/ggpubr/)
 *  Today, R is the de-facto standard for statistical science.
 
