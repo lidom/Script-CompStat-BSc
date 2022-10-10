@@ -1,4 +1,4 @@
-# Organization of the Course {-} 
+# Organization of the Course 
 
 ### Timetable {-}
 
@@ -17,11 +17,11 @@ timetable %>% kbl() %>%  kable_styling()
 ### Lecture Material and Literature {-}
 
 
-* Textbook: 
+* Course Textbook (`ISLR`): 
   * [An Introduction to Statistical Learning (2nd Edition)](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
-  * The pdf-Version of this book can be downloaded for free: [Free Book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf)  
+  * The pdf-Version of the textbook `ISLR` can be downloaded for free: [Free Book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf)  
 * [eWhiteboard](https://uni-bonn.sciebo.de/s/qdGFYfqMno0QfzX) for the lecture notes.
-* This online script can be found at [https://www.dliebl.com/Script-ISLR/](https://www.dliebl.com/Script-ISLR/)
+* [This online script](https://www.dliebl.com/Script-ISLR/)
 
 The above links to the lecture materials can also be found at [eCampus](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
 

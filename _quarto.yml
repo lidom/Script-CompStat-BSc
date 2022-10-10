@@ -13,12 +13,7 @@ book:
   chapters:
     - index.qmd
     - Ch2_RLab.qmd
-    # - Ch2_Exercises.qmd
-    #- 04-MultipleReg.qmd
-    #- 05-Small-Sample-Inference.qmd
-    #- 06-Asymptotics.qmd
-    #- 08-Instrumental-Variables.qmd
-    # - references.qmd
+    - Ch3_RLab.qmd
 
 #bibliography: references.bib
 

@@ -929,11 +929,14 @@ options(tibble.print_min=10, tibble.print_max=20)
 
 ## Exercises
 
+Prepare the following exercises of Chapter 2 in our course textbook `ISLR`: 
+
 - Exercise 7
 - Exercise 8
 - Exercise 9
 
-{{< include Ch2_Exercises.qmd >}}
+
+<!-- {{< include Ch2_Exercises.qmd >}} -->
 
 
 
