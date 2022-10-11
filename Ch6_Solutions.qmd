@@ -1,9 +1,6 @@
----
-title: "Exercises Ch 6: Model Selection and Regularization"
-format: html
----
+## Solutions 
 
-# Exercise 2
+### Exercise 2 {-}
 
 For parts (a) through (c), indicate which of i. through iv. is correct. Justify your answer.
 
@@ -27,7 +24,7 @@ iv. Less flexible and hence will give improved prediction accuracy when its incr
 
 **Answer:** Claim ii is correct. Relative to least squares, non-linear methods are typically more flexible and hence, these methods will give us better predictions when the increase in variance is less than the decrease in bias.
 
-# Exercise 4
+### Exercise 4 {-}
 
 Suppose we estimate the regression coefficients in a linear regression model by minimizing:
 
@@ -71,7 +68,7 @@ When $\lambda =0$, the $\beta$ 's have their least-square estimate values and he
 
 By definition, irreducible error is model independent and hence irrespective of the choice of $\lambda$, it remains constant.
 
-# Exercise 8
+### Exercise 8 {-}
 
 In this exercise, we will generate simulated data, and will then use this data to perform best subset selection.
 
@@ -269,8 +266,8 @@ beta7 = 2
 Y = beta0 + beta7 * X^7 + eps
 
 # Predict using regsubsets
-data.full = data.frame(y = Y, x = X)
-mod.full = regsubsets(y ~ poly(x, 10, raw = T), data = data.full, nvmax = 10)
+data.full   = data.frame(y = Y, x = X)
+mod.full    = regsubsets(y ~ poly(x, 10, raw = T), data = data.full, nvmax = 10)
 mod.summary = summary(mod.full)
 
 # Find the model size for best cp, BIC and adjr2
@@ -304,7 +301,8 @@ predict(best.model, s = best.lambda, type = "coefficients")
 **Answer:** Lasso also picks the best 1-variable model with coefficients being quite close to our specification.
 
 
-# Exercise 10
+### Exercise 10 {-}
+
 We have seen that as the number of features used in a model increases, the training error will necessarily decrease, but the test error may not. We will now explore this in a simulated data set.
 
 **10 a)** Generate a data set with $p = 20$ features, $n = 1000$ observations, and an associated quantitative response vector generated according to the model:

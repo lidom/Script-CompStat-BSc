@@ -1,9 +1,6 @@
----
-title: "Exercises Ch 4: Classification"
-format: html
----
+## Solutions
 
-# Exercise 1
+### Exercise 1 {-}
 
 Using a little bit of algebra, use (4.2) to achieve (4.3). In other words, the logistic function representation and logit representation for the logistic regression model are equivalent.
 
@@ -28,7 +25,7 @@ $$
 \end{align*}
 $$
 
-# Exercise 6
+### Exercise 6 {-}
 
 Suppose we collect data for a group of students in a statistics class with variables $X_1=$`hours studied`, $X_2 =$ `undergrad GPA`, and $Y =$ `receive an A`. We fit a logistic regression and produce estimated coefficients:
 
@@ -71,7 +68,7 @@ $$
 $$
 
 
-# Exercise 13
+### Exercise 13 {-}
 
 This question should be answered using the `Weekly` data set, which is part of the `ISLR` package. This data is similar in nature to the Smarket data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
 
@@ -83,13 +80,13 @@ This question should be answered using the `Weekly` data set, which is part of t
 
 ```{r}
 # You may need to install first the following R-packages:
-# install.packages("ISLR")
+# install.packages("ISLR2")
 # install.packages("MASS")
 # install.packages("class")
 # install.packages("e1071") # naiveBayes()
 
 # Load the packages you need
-library("ISLR")
+library("ISLR2")
 
 # Eliminates the need of referring to a variable like Weekly$variable
 attach(Weekly) 
@@ -329,7 +326,7 @@ mean(knn.pred == Direction.0910)
 
 
 
-# Exercise 15
+### Exercise 15 {-}
 
 This problem involves writing functions.
 
@@ -405,7 +402,7 @@ PlotPower = function(x, a) {
 PlotPower(1:10, 3)
 ```
 
-# Exercise 16
+### Exercise 16 {-}
 
 Using the `Boston` data set, fit classification models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, and KNN models using various subsets of the predictors. Describe your findings.
 

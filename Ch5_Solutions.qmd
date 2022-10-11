@@ -1,9 +1,6 @@
----
-title: "Exercises Ch 5: Resampling Methods"
-format: html
----
+## Solutions
 
-# Exercise 3
+### Exercise 3 {-}
 
 We now review k-fold cross-validation.
 
@@ -29,7 +26,7 @@ The **validation set** approach is conceptually simple and easily implemented as
 
 **LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most intense cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV. (On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size ($n-1\approx n$).
 
-# Exercise 4
+### Exercise 4 {-}
 
 Suppose that we use some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$. Carefully describe how we might estimate the standard deviation of our prediction.
 
@@ -40,7 +37,7 @@ If we suppose using some statistical learning method to make a prediction for th
 
 Let $\hat{Y} = \hat{f}(X)$ denote the predicti onf of $Y$ for the given $X$. The bootstrap approach works by repeatedly sampling $n$ observations (with replacement) from the original data set--- in total $B$ times, for some large value of $B$, each time fitting a new model, $\hat{f}^*_1, \hat{f}^*_2, ..., \hat{f}^*_B$, and subsequently obtaining the RMSE (Root Mean Squared (Prediction) Error) of the estimates for all $B$ models by computing $\sqrt{\sum^B_{b=1} (\hat{f}^*_b(X)-Y)^2}$
 
-## Exercise 5
+### Exercise 5 {-}
 
 In Chapter 4, we used logistic regression to predict the probability of `default` using `income` and `balance` on the `Default` data set. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.
 
@@ -154,7 +151,7 @@ mean(glm.pred != Default[-train, ]$default)
 The test error rate is 2.6%. Thus adding the `student` dummy variable to our specification doesn't appear to reduce the test error rate.
 
 
-# Exercise 6
+### Exercise 6 {-}
 
 We continue to consider the use of a logistic regression model to predict the probability of `default` using `income` and `balance` on the `Default` data set. In particular, we will now compute estimates for the standard errors of the `income` and `balance` logistic regression coefficients in two different ways: (1) using the bootstrap, and (2) using the standard formula for computing the standard errors in the `glm()` function. Do not forget to set a random seed before beginning your analysis.
 
@@ -216,7 +213,7 @@ boot(Default, boot.fn, 100)
 We obtain a similar std. error estimate for the balance variable (up to 1 decimal) and for the income variable (up to unity). The std errors computed using the bootstrap approach are smaller.
 
 
-# Exercise 8
+### Exercise 8 {-}
 
 We will now perform cross-validation on a simulated data set.
 

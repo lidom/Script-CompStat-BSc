@@ -1,4 +1,4 @@
-# `R`-Lab Ch 3: Linear Regression"
+# `R`-Lab Ch 3: Linear Regression
 
 
 ## Libraries
