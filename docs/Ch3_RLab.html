@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Computer-Aided Statistical Analysis B.Sc. - 2&nbsp; R-Lab Ch 3: Liner Regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Ch2_RLab.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R-Lab Ch 3: Liner Regression</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./" class="sidebar-logo-link">
+      <img src="./images/Uni_Bonn_Logo.jpeg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computer-Aided Statistical Analysis B.Sc.</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Organization of the Course</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch2_RLab.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>R</code></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch3_RLab.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R-Lab Ch 3: Liner Regression</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link active" data-scroll-target="#simple-linear-regression"> <span class="header-section-number">3</span> Simple Linear Regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"> <span class="header-section-number">4</span> Multiple Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#variance-inflation-factors" id="toc-variance-inflation-factors" class="nav-link" data-scroll-target="#variance-inflation-factors"> <span class="header-section-number">4.1</span> Variance inflation factors</a></li>
+  <li><a href="#formula-ticks-for-working-with-lm" id="toc-formula-ticks-for-working-with-lm" class="nav-link" data-scroll-target="#formula-ticks-for-working-with-lm"> <span class="header-section-number">4.2</span> Formula-Ticks for working with <code>lm()</code></a></li>
+  </ul></li>
+  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"> <span class="header-section-number">5</span> Interaction Terms</a></li>
+  <li><a href="#non-linear-transformations-of-the-predictors" id="toc-non-linear-transformations-of-the-predictors" class="nav-link" data-scroll-target="#non-linear-transformations-of-the-predictors"> <span class="header-section-number">6</span> Non-linear Transformations of the Predictors</a></li>
+  <li><a href="#qualitative-predictors" id="toc-qualitative-predictors" class="nav-link" data-scroll-target="#qualitative-predictors"> <span class="header-section-number">7</span> Qualitative Predictors</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R-Lab Ch 3: Liner Regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>First, load the necessary <code>R</code>-packages for this <code>R</code>Lab:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("MASS")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ISLR")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"MASS"</span>) <span class="co"># contains the 'Boston' data-set among others</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR"</span>) <span class="co"># contains further data-sets</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># check: help(package="ISLR")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="simple-linear-regression" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Simple Linear Regression</h1>
+<p>Let’s take a first look at the data. The Boston data sets contains information about <span class="math inline">\(N=506\)</span> neighborhoods around Boston.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(Boston) <span class="co"># allows you to take a view on the data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(Boston)  <span class="co"># allows you also to edit the data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Boston) <span class="co"># column-names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the following, we estimate a simple linear regression model <span class="math inline">\(y_i=\alpha + \beta x_i + \varepsilon_i\)</span> with <code>medv</code> (median house value) as the dependent variable, <span class="math inline">\(y_i\)</span>, and <code>lstat</code> (percent of households with low socioeconomic status) as the predictor-variable, <span class="math inline">\(x_i\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lm.fit<span class="ot">=</span><span class="fu">lm</span>(medv <span class="sc">~</span> lstat, <span class="at">data=</span>Boston) <span class="co"># works fine</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">=</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat) <span class="co"># works fine too after attaching the data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># lm.fit</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Regression-Output</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ lstat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.168  -3.990  -1.318   2.034  24.500 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 34.55384    0.56263   61.41   &lt;2e-16 ***
+lstat       -0.95005    0.03873  -24.53   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.216 on 504 degrees of freedom
+Multiple R-squared:  0.5441,    Adjusted R-squared:  0.5432 
+F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The <code>names(lm.fit)</code> function tells you the names of the list-entries in the list-object <code>lm.fit</code>. I little more information is given by <code>str(lm.fit)</code>. You can extract the coefficients by selecting the corresponding list-entry, i.e., by <code>lm.fit$coefficients</code>. Alternatively, you can use the <code>coef()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "coefficients"  "residuals"     "effects"       "rank"         
+ [5] "fitted.values" "assign"        "qr"            "df.residual"  
+ [9] "xlevels"       "call"          "terms"         "model"        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)       lstat 
+ 34.5538409  -0.9500494 </code></pre>
+</div>
+</div>
+<p>The function <code>confint()</code> computes confidence intervals for the regression coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %     97.5 %
+(Intercept) 33.448457 35.6592247
+lstat       -1.026148 -0.8739505</code></pre>
+</div>
+</div>
+<p>The <code>predict()</code> function can be used to compute the prediction interval</p>
+<p><span class="math display">\[
+\hat{y}_{0} \pm t_{n-p}^{(\alpha / 2)} \sqrt{\hat{\sigma}^2+x_{0}^{T}\left(X^{T} X\right)^{-1} x_{0}\hat{\sigma}^2}.
+\]</span></p>
+<p>This is a <span class="math inline">\(100(1-\alpha)\%\)</span> prediction interval for a future <code>medv</code>-response <span class="math inline">\(y\)</span>, at a given predictor vector, <span class="math inline">\(x_0=(1,\tilde{x}_0)'\)</span>. The matrix <span class="math inline">\(X\)</span> denotes a <span class="math inline">\(N\times p\)</span> matrix (here <span class="math inline">\(p=2\)</span>) having <span class="math inline">\(1\)</span>s in the first column and the <code>lstat</code>-predictor values <span class="math inline">\(x_1,\dots,x_N\)</span> in the second column. Note that the prediction interval consists of two variance-components; first, the (estimated) variance of the error term, <span class="math inline">\(\hat{\sigma}^2\)</span>, and, second, the (estimated) variance of the empirical regression function at a chosen point <span class="math inline">\(x_0\)</span> of interest, i.e.&nbsp;here <span class="math inline">\(Var(\hat{f}(x_0))=Var(x_0'\hat{\beta})=x_0'(X'X)^{-1}x_0\hat{\sigma}^2\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm.fit,<span class="fu">data.frame</span>(<span class="at">lstat=</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">15</span>))), <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit       lwr      upr
+1 29.80359 17.565675 42.04151
+2 25.05335 12.827626 37.27907
+3 20.30310  8.077742 32.52846</code></pre>
+</div>
+</div>
+<p>Caution: The <code>predict</code> function has also the option <code>interval="confidence"</code>. This, shall not be mixed up with a confidence interval for the parameters which was computed above using <code>confint()</code>. Under this option you compute the following confidence interval</p>
+<p><span class="math display">\[
+\hat{y}_{0} \pm t_{n-p}^{(\alpha / 2)} \sqrt{x_{0}^{T}\left(X^{T} X\right)^{-1} x_{0}\hat{\sigma}^2}.
+\]</span></p>
+<p>This confidence interval is similar to the prediction interval above, but without the component for the variance of the error term. So, this is a confidence interval for <span class="math inline">\(f(x_0)=x_0'\hat{\beta}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm.fit,<span class="fu">data.frame</span>(<span class="at">lstat=</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">15</span>))), <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 29.80359 29.00741 30.59978
+2 25.05335 24.47413 25.63256
+3 20.30310 19.73159 20.87461</code></pre>
+</div>
+</div>
+<p>Plotting the data along with a graph of the estimated regression function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> lstat,<span class="at">y =</span> medv)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit,<span class="at">lwd=</span><span class="dv">3</span>,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Ch3_RLab_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(lstat, medv, col="red") # red points</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(lstat, medv, pch=20)    # other type of points</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(lstat, medv, pch="+")   # '+' instead of points</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(1:20, 1:20, pch=1:20)   # overview of point-options</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Diagnostic plots.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Ch3_RLab_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Inspecting the results by hand.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="fu">predict</span>(lm.fit), <span class="at">y =</span> <span class="fu">residuals</span>(lm.fit))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="fu">predict</span>(lm.fit), <span class="at">y =</span> <span class="fu">rstudent</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Ch3_RLab_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So, there are several positive outliers which can be seen by the standardized residuals with values <span class="math inline">\(&gt;+2\)</span>.</p>
+<div class="cell" data-layout-align="center">
+
+</div>
+<p>Leverage statistics exceeding <span class="math inline">\((p+1)/n=2/506=0.004\)</span> are considered as high-leverage points.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">fitted.values</span>(lm.fit))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(lm.fit)) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>lower_threshold <span class="ot">&lt;-</span> (p<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>n</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">hatvalues</span>(lm.fit) <span class="sc">&gt;</span> lower_threshold)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  1   3   4   5   6   9  11  21  24  31  33  35  40  41  42  49  53  56  58  66 
+  1   3   4   5   6   9  11  21  24  31  33  35  40  41  42  49  53  56  58  66 
+ 81  89  98  99 124 127 139 141 142 143 144 145 146 148 149 150 158 161 162 163 
+ 81  89  98  99 124 127 139 141 142 143 144 145 146 148 149 150 158 161 162 163 
+164 167 176 180 183 187 189 190 191 192 193 194 195 196 197 200 201 203 204 205 
+164 167 176 180 183 187 189 190 191 192 193 194 195 196 197 200 201 203 204 205 
+210 212 215 222 225 226 227 229 230 232 233 234 238 244 252 253 254 257 258 269 
+210 212 215 222 225 226 227 229 230 232 233 234 238 244 252 253 254 257 258 269 
+275 276 278 280 281 282 283 284 291 292 293 299 300 304 309 326 342 345 352 354 
+275 276 278 280 281 282 283 284 291 292 293 299 300 304 309 326 342 345 352 354 
+365 369 370 371 374 375 377 378 379 380 382 383 384 385 386 387 388 389 390 393 
+365 369 370 371 374 375 377 378 379 380 382 383 384 385 386 387 388 389 390 393 
+398 399 400 401 402 403 405 406 407 409 412 413 414 415 416 417 418 419 420 424 
+398 399 400 401 402 403 405 406 407 409 412 413 414 415 416 417 418 419 420 424 
+426 429 430 436 438 439 440 441 445 446 468 476 478 490 491 497 
+426 429 430 436 438 439 440 441 445 446 468 476 478 490 491 497 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>375 
+375 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">hatvalues</span>(lm.fit))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>lower_threshold, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_RLab_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Typically, we would like to avoid working with outliers having high leverage values (e.g.&nbsp;<code>lower_threshold * 2</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>standardized_resid <span class="ot">&lt;-</span> <span class="fu">scale</span>(<span class="fu">resid</span>(lm.fit))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">abs</span>(standardized_resid) <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">&amp;</span> <span class="fu">hatvalues</span>(lm.fit) <span class="sc">&gt;</span> lower_threshold <span class="sc">*</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 142 215 375 413</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-linear-regression" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Multiple Linear Regression</h1>
+<p>Let’s do now a multiple linear regression estimation, where we investigate the effects of the predictors <code>lstat</code> and <code>age</code> on the dependent variable <code>medv</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> age, <span class="at">data =</span> Boston)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ lstat + age, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.981  -3.978  -1.283   1.968  23.158 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 33.22276    0.73085  45.458  &lt; 2e-16 ***
+lstat       -1.03207    0.04819 -21.416  &lt; 2e-16 ***
+age          0.03454    0.01223   2.826  0.00491 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.173 on 503 degrees of freedom
+Multiple R-squared:  0.5513,    Adjusted R-squared:  0.5495 
+F-statistic:   309 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>There is a short-cut formula notation for regressing a dependent variable on all predictors in the data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ ., data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.595  -2.730  -0.518   1.777  26.199 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***
+crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** 
+zn           4.642e-02  1.373e-02   3.382 0.000778 ***
+indus        2.056e-02  6.150e-02   0.334 0.738288    
+chas         2.687e+00  8.616e-01   3.118 0.001925 ** 
+nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***
+rm           3.810e+00  4.179e-01   9.116  &lt; 2e-16 ***
+age          6.922e-04  1.321e-02   0.052 0.958229    
+dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***
+rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***
+tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** 
+ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***
+black        9.312e-03  2.686e-03   3.467 0.000573 ***
+lstat       -5.248e-01  5.072e-02 -10.347  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.745 on 492 degrees of freedom
+Multiple R-squared:  0.7406,    Adjusted R-squared:  0.7338 
+F-statistic: 108.1 on 13 and 492 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The command <code>summary(lm.fit)</code> returns a list-object and you can get access to each of the list entries by using the <code>$</code> operator (use the <code>str()</code> function to get an overview). For instance, <code>summary(lm.fit)$r.sq</code> gives us the <span class="math inline">\(R^2\)</span> , and <code>summary(lm.fit)$sigma</code> gives us the estimated standard deviations of the error term, which might not be a sensible statistic in case of heteroscedastic error term.</p>
+<section id="variance-inflation-factors" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="variance-inflation-factors"><span class="header-section-number">4.1</span> Variance inflation factors</h2>
+<p>Potential multicollinearity problems, can be detected using <strong>variance inflation factors</strong></p>
+<p><span class="math display">\[
+\operatorname{VIF}\left(\hat{\beta}_{j}\right)=\frac{1}{1-R_{X_{j} \mid X_{-j}}^{2}}
+\]</span></p>
+<p>VIF-values close to 1 are indicating that the <span class="math inline">\(j\)</span>th predictor is orthogonal to the space spanned by the other predictors (i.e.&nbsp;the other predictors, <span class="math inline">\(X_{-j}\)</span> cannot explain the <span class="math inline">\(j\)</span>th predictor <span class="math inline">\(X_j\)</span>). Large VIF-values <span class="math inline">\(\gg 1\)</span> are indicating that there may be an multicollinearity problem with the <span class="math inline">\(j\)</span>th predictor.</p>
+<p>In order to compute the <strong>variance inflation factors</strong>, we can use the function <code>vif()</code> of the package .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"car"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>vif_vec <span class="ot">&lt;-</span> <span class="fu">vif</span>(lm.fit)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>vif_vec[<span class="fu">order</span>(vif_vec)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    chas    black     crim  ptratio       rm       zn    lstat      age 
+1.073995 1.348521 1.792192 1.799084 1.933744 2.298758 2.941491 3.100826 
+     dis    indus      nox      rad      tax 
+3.955945 3.991596 4.393720 7.484496 9.008554 </code></pre>
+</div>
+</div>
+</section>
+<section id="formula-ticks-for-working-with-lm" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="formula-ticks-for-working-with-lm"><span class="header-section-number">4.2</span> Formula-Ticks for working with <code>lm()</code></h2>
+<p>A short-cut notation for a regression on all predictor variables in the data except on the <code>age</code> is the following</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> . <span class="sc">-</span>age, <span class="at">data =</span> Boston)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, the update() function can be used based on the above computed <code>lm.fit</code> object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm.fit, <span class="sc">~</span>.<span class="sc">-</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="interaction-terms" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Interaction Terms</h1>
+<p>It is easy to include interaction terms in a linear model using the <code>lm()</code> function. The syntax <code>lstat:black</code> tells <code>R</code> to include an interaction term between <code>lstat</code> and <code>black</code>. The syntax <code>lstat*age</code> simultaneously includes <code>lstat</code>, <code>age</code>, and the interaction term <code>lstat</code><span class="math inline">\(\times\)</span><code>age</code> as predictors; it is a shorthand for <code>lstat+age+lstat:age</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">*</span> age, <span class="at">data =</span> Boston))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ lstat * age, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.806  -4.045  -1.333   2.085  27.552 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 36.0885359  1.4698355  24.553  &lt; 2e-16 ***
+lstat       -1.3921168  0.1674555  -8.313 8.78e-16 ***
+age         -0.0007209  0.0198792  -0.036   0.9711    
+lstat:age    0.0041560  0.0018518   2.244   0.0252 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.149 on 502 degrees of freedom
+Multiple R-squared:  0.5557,    Adjusted R-squared:  0.5531 
+F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="non-linear-transformations-of-the-predictors" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Non-linear Transformations of the Predictors</h1>
+<p>The <code>lm()</code> function can also accommodate non-linear transformations of the predictors. For instance, given a predictor <span class="math inline">\(X\)</span>, we can create a predictor <span class="math inline">\(X^2\)</span> using <code>I(X^2)</code>. The function <code>I()</code> is needed since the <code>^</code> has a special meaning in a formula (see <code>?formula</code> in ). However, the wrapping <code>I(X^2)</code> allows the standard usage of <code>^</code> in , which is to raise <span class="math inline">\(X\)</span> to the power <span class="math inline">\(2\)</span>. We now perform a regression of <code>medv</code> onto <code>lstat</code> and <code>lstat</code><span class="math inline">\(^2\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Full model</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat<span class="sc">+</span><span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> Boston)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ lstat + I(lstat^2), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.2834  -3.8313  -0.5295   2.3095  25.4148 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 42.862007   0.872084   49.15   &lt;2e-16 ***
+lstat       -2.332821   0.123803  -18.84   &lt;2e-16 ***
+I(lstat^2)   0.043547   0.003745   11.63   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.524 on 503 degrees of freedom
+Multiple R-squared:  0.6407,    Adjusted R-squared:  0.6393 
+F-statistic: 448.5 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The near-zero p-value associated with the quadratic term suggests that it leads to an improved model. We use the <code>anova()</code> function to further quantify the extent to which the quadratic fit is superior to the linear fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Small sub-model</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat, <span class="at">data =</span> Boston)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Compare both models</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: Both models fit the data equally well. </span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: The full model fits the data better.</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm.fit, lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: medv ~ lstat
+Model 2: medv ~ lstat + I(lstat^2)
+  Res.Df   RSS Df Sum of Sq     F    Pr(&gt;F)    
+1    504 19472                                 
+2    503 15347  1    4125.1 135.2 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The <code>anova()</code> function performs a hypothesis test comparing the two models. The null hypothesis is that the two models fit the data equally well, and the alternative hypothesis is that the full model is superior. Here the F-statistic is <span class="math inline">\(135.2\gg 1\)</span> and the associated p-value is virtually zero. This provides very clear evidence that the model containing the predictors <code>lstat</code> and <code>lstat</code><span class="math inline">\(^2\)</span> is far superior to the model that only contains the predictor <code>lstat</code>. This is not surprising, since earlier we saw evidence for non-linearity in the relationship between <code>medv</code> and <code>lstat</code>. If we type</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Diagnostic checks</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit,  <span class="at">which =</span> <span class="dv">1</span>, <span class="at">main=</span><span class="st">"Linear Fit"</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit2, <span class="at">which =</span> <span class="dv">1</span>, <span class="at">main=</span><span class="st">"Quadratic Fit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Ch3_RLab_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>then we see that when the <code>lstat</code><span class="math inline">\(^2\)</span> term is included in the model, there is little discernible pattern in the residuals.</p>
+<p>In order to create a cubic fit, we can include a predictor of the form <code>I(X^3)</code>, etc. However, this approach can start to get cumbersome for higher-order polynomials. A better approach involves using the <code>poly()</code> function to create the polynomial within <code>lm()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>lm.fit5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> <span class="fu">poly</span>(lstat, <span class="dv">2</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), <span class="at">data =</span> Boston)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ poly(lstat, 2, raw = TRUE), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.2834  -3.8313  -0.5295   2.3095  25.4148 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                 42.862007   0.872084   49.15   &lt;2e-16 ***
+poly(lstat, 2, raw = TRUE)1 -2.332821   0.123803  -18.84   &lt;2e-16 ***
+poly(lstat, 2, raw = TRUE)2  0.043547   0.003745   11.63   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.524 on 503 degrees of freedom
+Multiple R-squared:  0.6407,    Adjusted R-squared:  0.6393 
+F-statistic: 448.5 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Of course, we are in no way restricted to using polynomial transformations of the predictors. Here we try a log-transformation and then plot the <span class="math inline">\(log()\)</span> and the polynomial transformations.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>lm.fitLog <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> <span class="fu">log</span>(lstat), <span class="at">data=</span>Boston)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fitLog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ log(lstat), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-14.4599  -3.5006  -0.6686   2.1688  26.0129 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  52.1248     0.9652   54.00   &lt;2e-16 ***
+log(lstat)  -12.4810     0.3946  -31.63   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.329 on 504 degrees of freedom
+Multiple R-squared:  0.6649,    Adjusted R-squared:  0.6643 
+F-statistic:  1000 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot polynomial vs. log</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>xpol <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(Boston<span class="sc">$</span>lstat), </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">max</span>(Boston<span class="sc">$</span>lstat), <span class="at">length =</span> <span class="dv">20</span>)  <span class="do">## prediction grid</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>ypol <span class="ot">&lt;-</span> <span class="fu">predict.lm</span>(lm.fit2, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">lstat =</span> xpol)) </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>xlog <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(<span class="fu">log</span>(Boston<span class="sc">$</span>lstat)), </span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">max</span>(<span class="fu">log</span>(Boston<span class="sc">$</span>lstat)), <span class="at">length =</span> <span class="dv">20</span>)  <span class="do">## prediction grid</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>ylog <span class="ot">&lt;-</span> lm.fitLog<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> lm.fitLog<span class="sc">$</span>coefficients[<span class="dv">2</span>] <span class="sc">*</span> xlog</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(Boston<span class="sc">$</span>lstat), Boston<span class="sc">$</span>medv, <span class="at">main=</span><span class="st">"Log(X)-Transformation</span><span class="sc">\n</span><span class="st">on log(X)-scale"</span>)</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> xlog, <span class="at">y =</span> ylog, <span class="at">col=</span><span class="st">"red"</span>) </span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Boston<span class="sc">$</span>lstat, Boston<span class="sc">$</span>medv, <span class="at">main=</span><span class="st">"Log(X)-Transformation</span><span class="sc">\n</span><span class="st">on X-scale"</span>)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">exp</span>(xlog), <span class="at">y =</span> ylog, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(medv <span class="sc">~</span> lstat, <span class="at">data =</span> Boston, <span class="at">main=</span><span class="st">"Poly(X)-Transformation"</span>, <span class="at">xlab=</span><span class="st">"lstat"</span>)</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xpol, ypol, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Ch3_RLab_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="qualitative-predictors" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Qualitative Predictors</h1>
+<p>In the following, we will now examine the <code>Carseats</code> data, which is part of the <code>ISLR</code> -package. We will attempt to predict <code>Sales</code> (child car seat sales) in 400 locations based on a number of predictors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(Carseats)</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(Carseats)</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Carseats) <span class="co"># ? Carseats</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Sales"       "CompPrice"   "Income"      "Advertising" "Population" 
+ [6] "Price"       "ShelveLoc"   "Age"         "Education"   "Urban"      
+[11] "US"         </code></pre>
+</div>
+</div>
+<p>The <code>Carseats</code> data includes qualitative predictors such as <code>Shelveloc</code>, an indicator of the quality of the shelving location – that is, the space within a store in which the car seat is displayed – at each location. The predictor <code>Shelveloc</code> takes on three possible values: <code>Bad</code>, <code>Medium</code>, and <code>Good</code>.</p>
+<p>Given a qualitative variable such as <code>Shelveloc</code>, generates dummy variables automatically. Below we fit a multiple regression model that includes some interaction terms.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> .<span class="sc">+</span>Income<span class="sc">:</span>Advertising<span class="sc">+</span>Price<span class="sc">:</span>Age, <span class="at">data=</span>Carseats)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.9208 -0.7503  0.0177  0.6754  3.3413 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         6.5755654  1.0087470   6.519 2.22e-10 ***
+CompPrice           0.0929371  0.0041183  22.567  &lt; 2e-16 ***
+Income              0.0108940  0.0026044   4.183 3.57e-05 ***
+Advertising         0.0702462  0.0226091   3.107 0.002030 ** 
+Population          0.0001592  0.0003679   0.433 0.665330    
+Price              -0.1008064  0.0074399 -13.549  &lt; 2e-16 ***
+ShelveLocGood       4.8486762  0.1528378  31.724  &lt; 2e-16 ***
+ShelveLocMedium     1.9532620  0.1257682  15.531  &lt; 2e-16 ***
+Age                -0.0579466  0.0159506  -3.633 0.000318 ***
+Education          -0.0208525  0.0196131  -1.063 0.288361    
+UrbanYes            0.1401597  0.1124019   1.247 0.213171    
+USYes              -0.1575571  0.1489234  -1.058 0.290729    
+Income:Advertising  0.0007510  0.0002784   2.698 0.007290 ** 
+Price:Age           0.0001068  0.0001333   0.801 0.423812    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.011 on 386 degrees of freedom
+Multiple R-squared:  0.8761,    Adjusted R-squared:  0.8719 
+F-statistic:   210 on 13 and 386 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The <code>contrasts()</code> function returns the coding that uses for the dummy variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Carseats)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(ShelveLoc) <span class="co"># ? contrasts</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Good Medium
+Bad       0      0
+Good      1      0
+Medium    0      1</code></pre>
+</div>
+</div>
+<p>Use <code>?contrasts</code> to learn about other contrasts, and how to set them. has created a <code>ShelveLocGood</code> dummy variable that takes on a value of <span class="math inline">\(1\)</span> if the shelving location is good, and <span class="math inline">\(0\)</span> otherwise. It has also created a <code>ShelveLocMedium</code> dummy variable that equals <span class="math inline">\(1\)</span> if the shelving location is medium, and <span class="math inline">\(0\)</span> otherwise. A bad shelving location corresponds to a zero for each of the two dummy variables. The fact that the coefficient for <code>ShelveLocGood</code> in the regression output is positive indicates that a good shelving location is associated with high sales (relative to a bad location). And <code>ShelveLocMedium</code> has a smaller positive coefficient, indicating that a medium shelving location leads to higher sales than a bad shelving location but lower sales than a good shelving location.</p>
+<!-- # Writing Functions -->
+<!-- LoadLibraries -->
+<!-- LoadLibraries() -->
+<!-- LoadLibraries=function(){ -->
+<!--   library(ISLR) -->
+<!--   library(MASS) -->
+<!--   print("The libraries have been loaded.") -->
+<!-- } -->
+<!-- LoadLibraries -->
+<!-- LoadLibraries() -->
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Ch2_RLab.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>R</code></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

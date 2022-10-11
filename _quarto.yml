@@ -12,10 +12,8 @@ book:
     chapters: true
   chapters:
     - index.qmd
-    - Ch2_RLab.qmd # Reads in Ch2_Exercises.qmd
-    #- Ch3_RLab.qmd # Reads in Ch3_Exercises.qmd
-    #- Ch4_RLab.qmd # Reads in Ch4_Exercises.qmd
-    #- Ch5_RLab.qmd # Reads in Ch5_Exercises.qmd
+    - Ch2_RLab.qmd
+    - Ch3_RLab.qmd
 
 #bibliography: references.bib
 
