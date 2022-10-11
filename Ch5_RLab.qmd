@@ -1,10 +1,7 @@
----
-title: "RLab Ch 5: Resampling Methods"
-format: html
----
+# `R`-Lab Ch 5: Resampling Methods
 
 
-# The Validation Set Approach
+## The Validation Set Approach
 
 We explore the use of the validation set approach in order to estimate the
 test error rates that result from fitting various linear models on the Auto data set. Before we begin, we use the \texttt{set.seed()} function in order to set a seed for R ’s random number generator, so that you will obtain precisely the same results as those shown below. It is generally a good idea
@@ -53,7 +50,7 @@ mean((mpg-predict(lm.fit3,Auto))[-train]^2)
 Using this split of the observations into a training set and a validation set, we find that the validation set error rates for the models with linear, quadratic, and cubic terms are 23.30, 18.90, and 19.26, respectively. These results are consistent with our previous findings: a model that predicts \texttt{mpg} using a quadratic function of \texttt{horsepower} performs better than a model that involves only a linear function of \texttt{horsepower}, and there is little evidence in favor of a model that uses a cubic function of \texttt{horsepower}. By contrast, the former split would suggest a cubic function of \texttt{horsepower}. 
 
 
-# Leave-One-Out Cross-Validation
+## Leave-One-Out Cross-Validation
 
 The LOOCV estimate can be automatically computed for any generalized linear model using the \texttt{glm()} and \texttt{cv.glm()} functions. In the lab for Chapter 4, we used the \texttt{glm()} function to perform logistic regression by passing in the \texttt{family="binomial"} argument. But if we use \texttt{glm()} to fit a model without passing in the \texttt{family} argument, then it performs **linear regression**, just like the \texttt{lm()} function. So for instance,
 ```{r}
@@ -90,7 +87,7 @@ plot(cv.error, type="b")
 As in Figure 5.4 of our textbook, we see a sharp drop in the estimated test MSE between the linear and quadratic fits, but then no clear improvement from using higher-order polynomials.
 
 
-# K-Fold Cross-Validation
+## K-Fold Cross-Validation
 
 The \texttt{cv.glm()} function can also be used to implement $K$-fold CV. Below we use $K=5$, a common choice for $K$, on the \texttt{Auto} data set. We once again set a random seed and initialize a vector in which we will store the CV errors corresponding to the polynomial fits of orders one to ten.
 ```{r}
@@ -107,12 +104,12 @@ lines(y=cv.error.5.bias_adj, x=1:5, "b", lty=2)
 ```
 
 
-# The Bootstrap
+## The Bootstrap
 
 We illustrate the use of the bootstrap in the simple example of Section 5.2 of our textbook, as well as on an example involving estimating the accuracy of the linear regression model on the \texttt{Auto} data set.
 
 
-## Estimating the Accuracy of a Statistic of Interest
+### Estimating the Accuracy of a Statistic of Interest
 
 One of the great advantages of the bootstrap approach is that it can be applied in almost all situations. No complicated mathematical calculations are required. Performing a bootstrap analysis in \texttt{R} entails only two steps. First, we must create a function that computes the statistic of interest. Second, we use the \texttt{boot()} function, which is part of the \texttt{boot} library, to perform the bootstrap by repeatedly sampling observations from the dataset with replacement. The \texttt{Portfolio} data set in the \texttt{ISLR} package is described in Section 5.2 of our textbook. To illustrate the use of the bootstrap on this data, we must first create a function, \texttt{alpha.fn()}, which takes as input the $(X,Y)$ data as well as a vector indicating which observations should be used to estimate $\alpha$. The function then outputs the estimate for $\alpha$ based on the selected observations.
 ```{r}
@@ -141,7 +138,7 @@ boot(Portfolio,alpha.fn,R=1000)
 The final output shows that using the original data, $\hat\alpha=0.5758$, and that the bootstrap estimate for $SE(\hat\alpha)$ is 0.09.
 
 
-## Estimating the Accuracy of a Linear Regression Model
+### Estimating the Accuracy of a Linear Regression Model
 
 The bootstrap approach can be used to assess the variability of the coefficient estimates and predictions from a statistical learning method. Here we use the bootstrap approach in order to assess the variability of the estimates for $\beta_0$ and $\beta_1$, the intercept and slope terms for the linear regression model that uses \texttt{horsepower} to predict \texttt{mpg} in the \texttt{Auto} data set. We will compare the estimates obtained using the bootstrap to those obtained using the formulas for $SE(\hat\beta_0)$ and $SE(\hat\beta_1)$ described in Section 3.1.2 of our textbook. 
 We first create a simple function, \texttt{boot.fn()}, which takes in the \texttt{Auto} dataset as well as a set of indices for the observations, and returns the intercept and slope estimates for the linear regression model. We then apply this function to the full set of 392 observations in order to compute the estimates of $\beta_0$ and $\beta_1$ on the entire data set using the usual linear regression coefficient estimate formulas from Chapter 3 of our textbook. Note that we do not need the \texttt{\{}and \texttt{\}} at the beginning and end of the function because it is only one line long.

@@ -7,7 +7,7 @@
 <!-- knitr::opts_chunk$set(echo = TRUE) -->
 <!-- ``` -->
 
-# Introduction to `R` 
+# `R`-Lab Ch 2: Introduction to `R` 
 
 This tutorial aims to serve as an introduction to the software package `R`. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links: 
 
