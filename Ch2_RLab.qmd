@@ -1,12 +1,3 @@
-<!-- --- -->
-<!-- title: "R-Lab Ch 2: Introduction to `R`" -->
-<!-- format: html -->
-<!-- --- -->
-
-<!-- ```{r setup, include=FALSE} -->
-<!-- knitr::opts_chunk$set(echo = TRUE) -->
-<!-- ``` -->
-
 # `R`-Lab Ch 2: Introduction to `R` 
 
 This tutorial aims to serve as an introduction to the software package `R`. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links: 
@@ -933,7 +924,7 @@ Prepare the following exercises of Chapter 2 in our course textbook `ISLR`:
 - Exercise 9
 
 
-<!-- {{< include Ch2_Exercises.qmd >}} -->
+<!-- {{< include Ch2_Solutions.qmd >}} -->
 
 
 

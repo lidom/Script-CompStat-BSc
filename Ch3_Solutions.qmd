@@ -1,9 +1,6 @@
----
-title: "Exercises Ch 3: Linear Regression"
-format: html
----
+## Solutions
 
-# Exercise 1
+### Exercise 1
 
 **1 a)** Describe the null hypotheses to which the $p$-values given in Table 3.4 correspond. 
 
@@ -21,17 +18,17 @@ On the other hand, the high p-value of `newspaper` does *not* allow us to reject
 
 **Remember:** An insignificant hypothesis test-result is never informative about whether the null is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.
 
-# Exercise 2
+### Exercise 2
 
-**2)** Carefully explain the main difference between the KNN classifier and KNN regression methods.
+Carefully explain the main difference between the KNN classifier and KNN regression methods.
 
 **Answer:**
 
 KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for $Y$ (qualitative), where as the output for a KNN regression predicts the quantitative value for $f(X)$.
 
-# Exercise 3
+### Exercise 3
 
-**3)** Suppose we have a data set with five predictors:
+Suppose we have a data set with five predictors:
 
 $X_1 =GPA$
 
@@ -94,7 +91,7 @@ Y_hat
 
 False. We must examine the $p$-value of the regression coefficient to determine if the interaction term is statistically significant or not.
 
-# Exercise 8
+### Exercise 8
 
 This question involves the use of simple linear regression on the `Auto` data set.
 
@@ -151,7 +148,6 @@ round(RSE_onlyIntercept, 3)
 ```
 
 Thus, the larger model with `horsepower` included explains more of the varinces in the response variable `mpg`. 
-
 
 The $R^2$ value
 
@@ -219,7 +215,7 @@ There also appears to be non-constant variance in the error terms (heteroscedast
 
 There are some observations with large standardized residuals & high leverage (hence, high Cook’s Distance) that may want to be reviewed.
 
-# Exercise 9
+### Exercise 9
 
 This question involves the use of multiple linear regression on the Auto data set.
 

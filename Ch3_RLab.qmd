@@ -6,8 +6,8 @@
 The `library()` function is used to load *libraries*, or groups of  functions and data sets that are not included in the base `R` distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution,  but more exotic functions require additional libraries. Here we load the `MASS` package, which is a very large collection of data sets and functions. We  also load the `ISLR2` package, which includes the data sets associated with this book.
 
 ```{r chunk1}
-library(MASS)
-library(ISLR2)
+suppressPackageStartupMessages(library(MASS))
+suppressPackageStartupMessages(library(ISLR2))
 ```
 
 
@@ -37,7 +37,7 @@ head(Boston)
 
 To find out more about the data set, we can type `?Boston`.
 
-We will start by using the `lm()` function to fit a simple  linear regression model, with `medv` as the response and `lstat`  as the predictor. The basic syntax is {\R{lm(y $\sim$ x, data)}}, where `y` is the response, `x` is the predictor, and `data` is the data set in which these two variables are kept.
+We will start by using the `lm()` function to fit a simple  linear regression model, with `medv` as the response and `lstat`  as the predictor. The basic syntax is `lm(y ~ x, data)`, where `y` is the response, `x` is the predictor, and `data` is the data set in which these two variables are kept.
 
 ```{r chunk3, error=TRUE}
 lm.fit <- lm(medv ~ lstat)
@@ -142,8 +142,7 @@ The `which.max()` function identifies the index of the largest element of a vect
 
 ## Multiple Linear Regression
 
-In order to fit a multiple linear regression model using least squares, we again use the `lm()` function. The syntax {\R{lm(y $\sim$ x1 + x2 + x3)}} is used to fit a model with three predictors, `x1`, `x2`, and `x3`.
-The `summary()` function now outputs the regression coefficients for all the predictors.
+In order to fit a multiple linear regression model using least squares, we again use the `lm()` function. The syntax `lm(y ~ x1 + x2 + x3)` is used to fit a model with three predictors, `x1`, `x2`, and `x3`. The `summary()` function now outputs the regression coefficients for all the predictors.
 
 ```{r chunk14}
 lm.fit <- lm(medv ~ lstat + age, data = Boston)
@@ -295,7 +294,7 @@ LoadLibraries
 LoadLibraries()
 ```
 
-We now create the function. Note that the `+` symbols are printed by `R` and should not be typed in. The `{` symbol informs `R` that multiple commands are about to be input. Hitting *Enter* after typing `{` will cause `R` to print the `+` symbol. We can then input as many commands as we wish, hitting {*Enter*} after each one. Finally the `}` symbol informs `R` that no further commands will be entered.
+We now create the function. 
 
 ```{r chunk29}
 LoadLibraries <- function() {
@@ -316,3 +315,17 @@ If we call the function, the libraries are loaded in and the print statement is 
 ```{r chunk31}
 LoadLibraries()
 ```
+
+
+
+## Exercises
+
+Prepare the following exercises of Chapter 3 in our course textbook `ISLR`: 
+
+- Exercise 1
+- Exercise 2
+- Exercise 3
+- Exercise 8
+- Exercise 9
+
+<!-- {{< include Ch3_Solutions.qmd >}} -->

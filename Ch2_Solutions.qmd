@@ -1,9 +1,6 @@
-<!-- --- -->
-<!-- title: "Exercises Ch 2: Intro to Statistical Learning" -->
-<!-- format: html -->
-<!-- --- -->
+## Solutions
 
-## Exercise 7 {-} 
+### Exercise 7 {-} 
 
 The table below provides a training data set containing six observations, three predictors, and one qualitative response variable. Suppose we wish to use this data set to make a prediction for $Y$ when $X_1 = X_2 = X_3 = 0$ using K-nearest neighbors.
 
@@ -74,7 +71,7 @@ Closest 3 neighbors are `obs5`, `obs6`, `obs2` and thus, our prediction is `Red`
 A large value of K means that the $Y$-values from a large neighborhood are contributing to the prediction at one chosen $X$-point. This requires that the neighborhood consists of relatively similar $Y$-values. However, in the case of a highly nonlinear decision boundary, the neighborhoods of similar $Y$-values become generally small. Therefore, also $K$ must be chosen relatively small so that we can capture more of the non-linear decision boundary. 
 
 
-## Exercise 8: {-}
+### Exercise 8: {-}
 
 This exercise relates to the College data set, which can be found in the file `College.csv`. It contains a number of variables for $777$ different universities and colleges in the US. The variables are:
 
@@ -207,7 +204,7 @@ hist(college$Outstate, main="Outstate")
 par(mfrow=c(1,1))
 ```
 
-## Exercise 9: {-}
+### Exercise 9: {-}
 
 This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.
 
