@@ -49,6 +49,7 @@ Dist
 **7. b)** What is your prediction with $K = 1$? Why?
 
 **Answer:**
+
 ```{r}
 which.min(Dist)
 ```
@@ -58,6 +59,7 @@ Closest 1 neighbor is `obs5` and thus, our prediction is `Green` because `Green`
 **7. c)** What is your prediction with $K = 3$? Why?
 
 **Answer:**
+
 ```{r}
 order(Dist)[1:3]
 ```

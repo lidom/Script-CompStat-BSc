@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ch3_solutions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Ch3_Solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/quarto.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ch3_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ch3_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ch3_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ch3_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ch3_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="solutions" class="level2">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section id="exercise-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-1">Exercise 1</h3>
+<p><strong>1 a)</strong> Describe the null hypotheses to which the <span class="math inline">\(p\)</span>-values given in Table 3.4 correspond.</p>
+<p><img src="DATA/Table.PNG" class="img-fluid"></p>
+<p><strong>1 b)</strong> Explain what conclusions you can draw based on these <span class="math inline">\(p\)</span>-values. Your explanation should be phrased in terms of <code>sales</code>, <code>TV</code>, <code>radio</code>, and <code>newspaper</code>, rather than in terms of the coefficients of the linear model.</p>
+<p><strong>Answers:</strong></p>
+<p><strong>1 a)</strong> In Table 3.4, the null hypothesis for <code>TV</code> is that in the presence of <code>radio</code> ads and <code>newspaper</code> ads, <code>TV</code> ads have no effect on sales. Similarly, the null hypothesis for <code>radio</code> is that in the presence of <code>TV</code> ads and <code>newspaper</code> ads, <code>radio</code> ads have no effect on sales.</p>
+<p><strong>1 b)</strong> On the one hand, the low p-values of TV and radio allow us to reject the null hypothesis for <code>TV</code> and <code>radio</code>. Hence, we believe that <code>TV</code> (<code>radio</code>) ads have an effect on <code>sales</code> in the presence of <code>radio</code> (<code>TV</code>) and <code>newspaper</code> ads.<br> On the other hand, the high p-value of <code>newspaper</code> does <em>not</em> allow us to reject the null-hypothesis (of no effect, i.e.&nbsp;a coefficient zero). This is an inconclusive result and only says that possible effects of <code>newspaper</code> ads are not large enough to stand out from the estimation errors (quantified by the standard error).</p>
+<p><strong>Remember:</strong> An insignificant hypothesis test-result is never informative about whether the null is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.</p>
+</section>
+<section id="exercise-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<p>Carefully explain the main difference between the KNN classifier and KNN regression methods.</p>
+<p><strong>Answer:</strong></p>
+<p>KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for <span class="math inline">\(Y\)</span> (qualitative), where as the output for a KNN regression predicts the quantitative value for <span class="math inline">\(f(X)\)</span>.</p>
+</section>
+<section id="exercise-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-3">Exercise 3</h3>
+<p>Suppose we have a data set with five predictors:</p>
+<p><span class="math inline">\(X_1 =GPA\)</span></p>
+<p><span class="math inline">\(X_2 = IQ\)</span></p>
+<p><span class="math inline">\(X_3 = Gender\)</span> (<span class="math inline">\(1\)</span> for Female and <span class="math inline">\(0\)</span> for Male)</p>
+<p><span class="math inline">\(X_4 =\)</span> Interaction between <span class="math inline">\(GPA\)</span> and <span class="math inline">\(IQ\)</span></p>
+<p><span class="math inline">\(X_5 =\)</span> Interaction between <span class="math inline">\(GPA\)</span> and <span class="math inline">\(Gender\)</span></p>
+<p>The response variable (in thousands of dollars) is defined as:</p>
+<p><span class="math inline">\(Y =\)</span> starting salary after graduation</p>
+<p>Suppose we use least squares to fit the model, and get:</p>
+<p><span class="math inline">\(\hat{\beta}_0 = 50\)</span>, <span class="math inline">\(\hat{\beta}_1 = 20\)</span>, <span class="math inline">\(\hat{\beta}_2 = 0.07\)</span>, <span class="math inline">\(\hat{\beta}_3 = 35\)</span>, <span class="math inline">\(\hat{\beta}_4 = 0.01\)</span>, and <span class="math inline">\(\hat{\beta}_5 = −10\)</span>.</p>
+<p>Thus we have:</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;E[Y|X] = \\
+&amp; 50 + 20\,\overbrace{GPA}^{X_1} + 0.07\,\overbrace{IQ}^{X_2} + 35\,\overbrace{Gender}^{X_3} +
+0.01\,\underbrace{GPA\cdot IQ}_{X_4=X_1\cdot X_2} - 10\,\underbrace{GPA\cdot Gender}_{X_5=X_1\cdot X_3}
+\end{align*}
+\]</span></p>
+<p><strong>3 a)</strong> Which answer is correct, and why?</p>
+<ol type="i">
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, males earn more on average than females.</li>
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, females earn more on average than males.</li>
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, males earn more on average than females provided that the <span class="math inline">\(GPA\)</span> is high enough.</li>
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, females earn more on average than males provided that the <span class="math inline">\(GPA\)</span> is high enough.</li>
+</ol>
+<p><strong>Answer:</strong> <span class="math display">\[
+\begin{align*}
+\text{Male\; $(X_3 = 0)$:}\quad   &amp; 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
+\text{Female\; $(X_3 = 1)$:}\quad &amp; 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
+\end{align*}
+\]</span> Thus, once the <span class="math inline">\(X_1=\)</span><code>GPA</code> is high enough (<span class="math inline">\(35-10\,X_1&lt;0 \Leftrightarrow X_1&gt;3.5\)</span>), males earn more on average.</p>
+<p><strong>3 b)</strong> Predict the salary of a female with <code>IQ</code> of 110 and a <code>GPA</code> of 4.0.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Y_hat <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">20</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> <span class="fl">0.07</span><span class="sc">*</span><span class="dv">110</span> <span class="sc">+</span> <span class="dv">35</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span><span class="dv">4</span><span class="sc">*</span><span class="dv">110</span> <span class="sc">-</span> <span class="dv">10</span><span class="sc">*</span><span class="dv">4</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 137.1</code></pre>
+</div>
+</div>
+<p><strong>3 c)</strong> True or false: Since the coefficient for the <span class="math inline">\(GPA\cdot IQ\)</span> interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.</p>
+<p><strong>Answer:</strong></p>
+<p>False. We must examine the <span class="math inline">\(p\)</span>-value of the regression coefficient to determine if the interaction term is statistically significant or not.</p>
+</section>
+<section id="exercise-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8</h3>
+<p>This question involves the use of simple linear regression on the <code>Auto</code> data set.</p>
+<p><strong>8 a)</strong> Use the <code>lm()</code> function to perform a simple linear regression with <code>mpg</code> as the response and <code>horsepower</code> as the predictor. Use the <code>summary()</code> function to print the results. Comment on the output (see questions i) to iv) below).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe Auto</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform linear regression</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data=</span>Auto)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to print the results</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ horsepower, data = Auto)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.5710  -3.2592  -0.3435   2.7630  16.9240 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 39.935861   0.717499   55.66   &lt;2e-16 ***
+horsepower  -0.157845   0.006446  -24.49   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.906 on 390 degrees of freedom
+Multiple R-squared:  0.6059,    Adjusted R-squared:  0.6049 
+F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>i)</strong> Is there a relationship between the predictor and the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Yes, there is. The predictor horsepower has a statistically significant (<span class="math inline">\(p&lt;0.001\)</span>) linear relationship with the response.</p>
+<p><strong>ii)</strong> How strong is the relationship between the predictor and the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Statistical significance does not necessarily mean a practically strong or important relationship.</p>
+<p>To quantify the strength of the relationship between the predictor and the response, we can look at the following quantities:</p>
+<ul>
+<li>Residual Standard Error <code>RSE</code> (estimate of the standard deviation of <span class="math inline">\(\epsilon\)</span>)</li>
+<li>The <span class="math inline">\(R^2\)</span> Statistic (the proportion of variance explained by the model)</li>
+<li>The <span class="math inline">\(F\)</span>-Statistic.</li>
+</ul>
+<p>The Residual Standard Error <code>RSE</code> of the regression model with <code>intercept</code> and <code>horsepower</code> as predictors is given by:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## RSE of lm(mpg ~ horsepower)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(fit.lm)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(fit.lm))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>RSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS<span class="sc">/</span>(n<span class="dv">-2</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.906</code></pre>
+</div>
+</div>
+<p>This is considerable smaller than the RSE of a model with only an intercept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>RSS_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">c</span>(Auto<span class="sc">$</span>mpg <span class="sc">-</span> <span class="fu">mean</span>(Auto<span class="sc">$</span>mpg))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>RSE_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS_onlyIntercept<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE_onlyIntercept, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.805</code></pre>
+</div>
+</div>
+<p>Thus, the larger model with <code>horsepower</code> included explains more of the variances in the response variable <code>mpg</code>.</p>
+<p>The <span class="math inline">\(R^2\)</span> value</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(fit.lm)<span class="sc">$</span>r.squared, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.61</code></pre>
+</div>
+</div>
+<p>shows that <span class="math inline">\(60\%\)</span> of variability in <span class="math inline">\(Y\)</span> can be explained using <span class="math inline">\(X\)</span>.</p>
+<p>The value of the <span class="math inline">\(F\)</span> statistic</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(fit.lm)<span class="sc">$</span>fstatistic, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> value  numdf  dendf 
+599.72   1.00 390.00 </code></pre>
+</div>
+</div>
+<p>is much larger than <span class="math inline">\(1\)</span> which means that we probably can reject the null hypothesis that <span class="math inline">\(\beta_{horsepower}=0\)</span>.</p>
+<p><strong>iii)</strong> Is the relationship between the predictor and the response positive or negative?</p>
+<p><strong>Answer:</strong></p>
+<p>The relationship is negative, as we can see from the parameter estimate for <code>horsepower</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  horsepower 
+ 39.9358610  -0.1578447 </code></pre>
+</div>
+</div>
+<p><strong>iv)</strong> What is the predicted <code>mpg</code> associated with a <code>horsepower</code> of <span class="math inline">\(98\)</span>? What are the associated <span class="math inline">\(95\%\)</span> confidence and prediction intervals?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower of 98</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># confidence interval </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">predict</span>(<span class="at">object =</span> fit.lm, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"confidence"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 24.46708 23.97308 24.96108</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction interval</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">predict</span>(<span class="at">object =</span> fit.lm, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"prediction"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit     lwr      upr
+1 24.46708 14.8094 34.12476</code></pre>
+</div>
+</div>
+<p><strong>8 b)</strong> Plot the response and the predictor. Use the <code>abline()</code> function to display the least squares regression line.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Auto<span class="sc">$</span>horsepower, <span class="at">y =</span> Auto<span class="sc">$</span>mpg, <span class="at">ylab =</span> <span class="st">"MPG"</span>, <span class="at">xlab =</span> <span class="st">"Horsepower"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(fit.lm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">"x)"</span>))), </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>8 c)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm, <span class="at">col=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Looking at the smoothing line of the residuals (<span class="math inline">\(e_i=y_i−\hat{y}_i\)</span>) vs the fitted values (<span class="math inline">\(\hat{y}_i\)</span>), there is a strong pattern in the residuals, indicating non-linearity. You can see evidence of this in the scatter plot in part 8 b) too.</p>
+<p>There also appears to be non-constant variance in the error terms (heteroscedasticity), but this could be corrected to an extent when trying a quadratic fit. If not, transformations such as <span class="math inline">\(log(y)\)</span> or <span class="math inline">\(\sqrt{y}\)</span> can shrink larger responses by a greater amount and reduce this issue.</p>
+<p>There are some observations with large standardized residuals &amp; high leverage (hence, high Cook’s Distance) that may want to be reviewed.</p>
+</section>
+<section id="exercise-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-9">Exercise 9</h3>
+<p>This question involves the use of multiple linear regression on the Auto data set.</p>
+<p><strong>9 a)</strong> Produce a scatterplot matrix which includes all of the variables in the data set.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe Auto</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce scatterplot matrix</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[,<span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>9 b)</strong> Compute the matrix of correlations between the variables using the function <code>cor()</code>. You will need to exclude the <code>name</code> variable, which is qualitative.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(<span class="fu">subset</span>(Auto, <span class="at">select =</span> <span class="sc">-</span>name)), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               mpg cylinders displacement horsepower weight acceleration  year
+mpg           1.00     -0.78        -0.81      -0.78  -0.83         0.42  0.58
+cylinders    -0.78      1.00         0.95       0.84   0.90        -0.50 -0.35
+displacement -0.81      0.95         1.00       0.90   0.93        -0.54 -0.37
+horsepower   -0.78      0.84         0.90       1.00   0.86        -0.69 -0.42
+weight       -0.83      0.90         0.93       0.86   1.00        -0.42 -0.31
+acceleration  0.42     -0.50        -0.54      -0.69  -0.42         1.00  0.29
+year          0.58     -0.35        -0.37      -0.42  -0.31         0.29  1.00
+origin        0.57     -0.57        -0.61      -0.46  -0.59         0.21  0.18
+             origin
+mpg            0.57
+cylinders     -0.57
+displacement  -0.61
+horsepower    -0.46
+weight        -0.59
+acceleration   0.21
+year           0.18
+origin         1.00</code></pre>
+</div>
+</div>
+<p><strong>9 c)</strong> Use the <code>lm()</code> function to perform a multiple linear regression with <code>mpg</code> as the response and all other variables except <code>name</code> as the predictors. Use the <code>summary()</code> function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).</p>
+<p><strong>Answer:</strong></p>
+<div class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform multiplie linear regression</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> .<span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ . - name, data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.5903 -2.1565 -0.1169  1.8690 13.0604 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -17.218435   4.644294  -3.707  0.00024 ***
+cylinders     -0.493376   0.323282  -1.526  0.12780    
+displacement   0.019896   0.007515   2.647  0.00844 ** 
+horsepower    -0.016951   0.013787  -1.230  0.21963    
+weight        -0.006474   0.000652  -9.929  &lt; 2e-16 ***
+acceleration   0.080576   0.098845   0.815  0.41548    
+year           0.750773   0.050973  14.729  &lt; 2e-16 ***
+origin         1.426141   0.278136   5.127 4.67e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.328 on 384 degrees of freedom
+Multiple R-squared:  0.8215,    Adjusted R-squared:  0.8182 
+F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>9 c i)</strong> Is there a relationship between the predictors and the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Yes, there is a relationship between the predictors and the response. By testing the null hypothesis of whether all the regression coefficients are zero (i.e.&nbsp;H<span class="math inline">\(_0\)</span>: <span class="math inline">\(\beta_1=\dots=\beta_7=0\)</span>), we can see that the <span class="math inline">\(F\)</span>-statistic is big and its <span class="math inline">\(p\)</span>-value is close to zero, indicating evidence against the null hypothesis.</p>
+<p><strong>9 c ii)</strong> Which predictors appear to have a statistically significant relationship to the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Looking at the <span class="math inline">\(p\)</span>-values associated with each predictor’s <span class="math inline">\(t\)</span>-statistic, we see that <code>displacement</code>, <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationship, while <code>cylinders</code>, <code>horsepower</code>, and <code>acceleration</code> do not.</p>
+<p>(<strong>Caution:</strong> This consideration neglects issues due to multiple testing. Bonferroni correction for multiple testing: To determine if any of the <span class="math inline">\(7\)</span> predictors is statistically significant, the corresponding <span class="math inline">\(p\)</span>-value must be smaller than <span class="math inline">\(\alpha/7\)</span>. For instance, with <span class="math inline">\(\alpha/7=0.05/7\approx 0.007\)</span>, only <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationships to the response.)</p>
+<p><strong>9 c iii)</strong> What does the coefficient for the <code>year</code> variable suggest?</p>
+<p><strong>Answer:</strong></p>
+<p>The regression coefficient for <code>year</code> suggests that, on average, one <code>year</code> later year-of-construction is associated with an increased <code>mpg</code> by <span class="math inline">\(0.75\)</span>, when holding every other predictor value constant.</p>
+<p><strong>9 d)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm, <span class="at">col=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p>The “Residuals vs Fitted” plot (top left) shows some systematic deviations of the residuals from <span class="math inline">\(0\)</span>. The reason is that we are imposing a straight line fit for the conditional mean function <span class="math inline">\(E[Y|X]=f(X)\)</span> which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values <span class="math inline">\(\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p\)</span>.</p></li>
+<li><p>The “Residuals vs Leverage” plot (bottom right) shows that there are some potential outliers that we can see when: standardized residuals are below <span class="math inline">\(-2\)</span> or above <span class="math inline">\(+2\)</span>. Moreover, the plot shows also potentially problematic “high-leverage” points with leverage values heavily exceeding the rule-of-thumb threshold <span class="math inline">\((p+ 1)/n=8/392=0.02\)</span>. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation.</p></li>
+<li><p>The “Normal Q-Q” plot (top right) suggests non-normally distributed residuals–particularly the upper tail deviates from that of a normal distribution.</p></li>
+<li><p>The “Scale-Location” plot (bottom left) shows heteroscedastic residuals with larger variances for larger fitted values <span class="math inline">\(\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p\)</span>.</p></li>
+</ul>
+<p><strong>9 e)</strong> Use the <code>*</code> and <code>:</code> symbols to fit linear regression models with interaction effects. Do any interactions appear to be statistically significant?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ horsepower + cylinders + year + weight:displacement, 
+    data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.1046 -2.8861 -0.2415  2.3967 15.3221 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         -1.343e+01  5.043e+00  -2.663  0.00807 ** 
+horsepower          -3.914e-02  1.278e-02  -3.063  0.00234 ** 
+cylinders           -1.358e+00  3.233e-01  -4.201 3.31e-05 ***
+year                 6.661e-01  6.019e-02  11.067  &lt; 2e-16 ***
+weight:displacement -3.354e-06  1.352e-06  -2.480  0.01355 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.985 on 387 degrees of freedom
+Multiple R-squared:  0.7419,    Adjusted R-squared:  0.7393 
+F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ horsepower + cylinders + year + weight * displacement, 
+    data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.7530 -1.8228 -0.0602  1.5780 12.6133 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         -2.210e+00  3.819e+00  -0.579  0.56316    
+horsepower          -3.396e-02  9.560e-03  -3.552  0.00043 ***
+cylinders            2.072e-01  2.914e-01   0.711  0.47756    
+year                 7.858e-01  4.555e-02  17.250  &lt; 2e-16 ***
+weight              -1.084e-02  6.346e-04 -17.076  &lt; 2e-16 ***
+displacement        -7.947e-02  9.905e-03  -8.023 1.26e-14 ***
+weight:displacement  2.431e-05  2.141e-06  11.355  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.976 on 385 degrees of freedom
+Multiple R-squared:  0.8568,    Adjusted R-squared:  0.8546 
+F-statistic: 384.1 on 6 and 385 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Note that there is a difference between using <code>A:B</code> and <code>A*B</code> when running a regression. While the first includes only the interaction term between the variable <code>A</code> and <code>B</code>, the second one also includes the stand-alone variables <code>A</code> and <code>B</code>.</p></li>
+<li><p>Follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the <span class="math inline">\(p\)</span>-values associated with their coeffcients are not significant.</p></li>
+</ul>
+<p><strong>9 f)</strong></p>
+<p>Try a few different transformations of the variables, such as <span class="math inline">\(\log(X)\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, <span class="math inline">\(X^2\)</span>. Comment on your findings.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span><span class="fu">log</span>(weight)<span class="sc">+</span><span class="fu">sqrt</span>(horsepower)<span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                acceleration<span class="sc">+</span><span class="fu">I</span>(acceleration<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ log(weight) + sqrt(horsepower) + acceleration + 
+    I(acceleration^2), data = Auto)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.2932  -2.5082  -0.2237   2.0237  15.7650 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       178.30303   10.80451  16.503  &lt; 2e-16 ***
+log(weight)       -14.74259    1.73994  -8.473 5.06e-16 ***
+sqrt(horsepower)   -1.85192    0.36005  -5.144 4.29e-07 ***
+acceleration       -2.19890    0.63903  -3.441 0.000643 ***
+I(acceleration^2)   0.06139    0.01857   3.305 0.001037 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.99 on 387 degrees of freedom
+Multiple R-squared:  0.7414,    Adjusted R-squared:  0.7387 
+F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This try suffers basically from the same issues as the model considered in 9 d)</p>
+<p>Let’s consider again the model with all predictors (except <code>name</code>), but with transforming the outcome variable <code>mpg</code> by a <span class="math inline">\(\log\)</span>-transformation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit.lm3 <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(mpg)<span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(mpg) ~ . - name, data = Auto)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.40955 -0.06533  0.00079  0.06785  0.33925 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.751e+00  1.662e-01  10.533  &lt; 2e-16 ***
+cylinders    -2.795e-02  1.157e-02  -2.415  0.01619 *  
+displacement  6.362e-04  2.690e-04   2.365  0.01852 *  
+horsepower   -1.475e-03  4.935e-04  -2.989  0.00298 ** 
+weight       -2.551e-04  2.334e-05 -10.931  &lt; 2e-16 ***
+acceleration -1.348e-03  3.538e-03  -0.381  0.70339    
+year          2.958e-02  1.824e-03  16.211  &lt; 2e-16 ***
+origin        4.071e-02  9.955e-03   4.089 5.28e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1191 on 384 degrees of freedom
+Multiple R-squared:  0.8795,    Adjusted R-squared:  0.8773 
+F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This model specification is much better!</p>
+<ul>
+<li>No clear issues of systematic under/over estimations for given fitted values.</li>
+<li>No clear issues of heteroscedastic residuals.</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
