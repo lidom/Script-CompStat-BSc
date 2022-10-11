@@ -317,7 +317,6 @@ LoadLibraries()
 ```
 
 
-
 ## Exercises
 
 Prepare the following exercises of Chapter 3 in our course textbook `ISLR`: 
