@@ -924,7 +924,7 @@ Prepare the following exercises of Chapter 2 in our course textbook `ISLR`:
 - Exercise 9
 
 
-<!-- {{< include Ch2_Solutions.qmd >}} -->
+{{< include Ch2_Solutions.qmd >}}
 
 
 
