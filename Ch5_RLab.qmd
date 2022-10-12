@@ -1,4 +1,4 @@
-# `R`-Lab Ch 5: Resampling Methods
+# `R`-Lab: Resampling Methods
 
 In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.
 

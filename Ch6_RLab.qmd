@@ -1,4 +1,4 @@
-# `R`-Lab Ch 6: Linear Model Selection and Regularization
+# `R`-Lab: Linear Model Selection and Regularization
 
 ## Subset Selection Methods
 

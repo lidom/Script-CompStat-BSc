@@ -1,4 +1,4 @@
-# `R`-Lab Ch 4: Classification
+# `R`-Lab: Classification
 
 
 ## The Stock Market Data

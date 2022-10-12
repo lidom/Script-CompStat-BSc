@@ -1,4 +1,4 @@
-# `R`-Lab Ch 2: Intro to `R` 
+# `R`-Lab: Intro to `R` 
 
 This tutorial aims to serve as an introduction to the software package `R`. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links: 
 
@@ -25,7 +25,6 @@ Why `R`?
     * [Clean Graphs](http://shinyapps.org/apps/RGraphCompendium/index.php) 
     * [Publication Ready Plots](http://www.sthda.com/english/rpkgs/ggpubr/)
 *  Today, R is the de-facto standard for statistical science.
-
 
 
 ## Short Glossary
@@ -78,10 +77,8 @@ y
 ls()
 rm(list=ls())
 ls()
-
 ```
 Note: RStudio's **Environment** pane also lists all the elements in your current workspace. That is, the command `ls()` becomes a bit obsolete when working with RStudio.
-
 
 
 Let's try how we can compute with vectors and scalars in R. 
