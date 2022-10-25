@@ -1,7 +1,71 @@
-# `R`-Lab: Linear Regression
+# Linear Regression
+
+The following code generates artificial data to reproduce the plot in Figure 3.3 of our course textbook `ISLR`. 
+
+```{r}
+## ###############################
+## A function to generate data 
+## similar to that shown in Fig 3.3
+## ##############################
+
+beta_0 <- 0.1                          # intercept parameter
+beta_1 <- 5  
+
+## A Function to simulate data
+myDataGenerator <- function(){
+  n      <- 50                           # sample size
+  beta_0 <- 0.1                          # intercept parameter
+  beta_1 <- 5                            # slope parameter
+  X      <- runif(n, min = -2, max = 2)  # predictor
+  error  <- rnorm(n, mean = 0, sd = 8.5) # error term
+  Y      <- beta_0 + beta_1 * X + error  # outcome 
+  ##
+  return(data.frame("Y" = Y, "X" = X))
+}
+
+## Generate a first realization of the data
+set.seed(123)
+data_sim <- myDataGenerator()
+head(data_sim)
+```
 
 
-## Libraries
+Using repeated samples form the data generating process defined in `myDataGenerator()`, we can generate multiple estimation results of the unknown simple linear regression parameters $\beta_0$ and $\beta_1$ and plot the corresponding empirical regression lines:
+```{r}
+## Estimation
+lm_obj <- lm(Y ~ X, data = data_sim)
+
+## Plotting the results
+par(mfrow=c(1,2)) # Two plots side by side
+
+## First Plot (fit for the first realization of the data)
+plot(x = data_sim$X, y = data_sim$Y, xlab = "X", ylab = "Y")
+abline(a = beta_0, b = beta_1, col = "red")
+abline(lm_obj, col = "blue")
+
+## Second Plot (fits for multiple data realizations)
+plot(x = data_sim$X, y = data_sim$Y, xlab = "X", ylab = "Y", type = "n") # type = "n": empty plot
+##
+for(r in 1:10){
+  data_sim_new <- myDataGenerator()
+  lm_obj_new   <- lm(Y ~ X, data=data_sim_new)
+  abline(lm_obj_new, col = "lightskyblue")
+}
+## Adding the first fit
+abline(a = beta_0, b = beta_1, col = "red", lwd = 2)
+abline(lm_obj, col = "blue", lwd = 2)
+```
+
+
+
+*  Can you do this animated? https://gganimate.com/articles/gganimate.html
+
+
+
+## `R`-Lab: Linear Regression
+
+
+### Libraries
 
 The `library()` function is used to load *libraries*, or groups of  functions and data sets that are not included in the base `R` distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution,  but more exotic functions require additional libraries. Here we load the `MASS` package, which is a very large collection of data sets and functions. We  also load the `ISLR2` package, which includes the data sets associated with this book.
 
@@ -26,7 +90,7 @@ via `install.packages("ISLR2")`. This installation only needs
 to be done the first time you use a package. However, the
 `library()` function must be called within each `R` session.
 
-## Simple Linear Regression
+### Simple Linear Regression
 
 The `ISLR2` library contains the `Boston`  data set, which
 records `medv` (median house value) for $506$ census tracts in Boston. We will seek to predict `medv` using $12$ predictors such as `rmvar` (average number of  rooms per house), `age` (average age of houses), and `lstat` (percent of households with low socioeconomic status).
@@ -140,7 +204,7 @@ which.max(hatvalues(lm.fit))
 
 The `which.max()` function identifies the index of the largest element of a vector. In this case, it tells us which observation has the largest leverage statistic.
 
-## Multiple Linear Regression
+### Multiple Linear Regression
 
 In order to fit a multiple linear regression model using least squares, we again use the `lm()` function. The syntax `lm(y ~ x1 + x2 + x3)` is used to fit a model with three predictors, `x1`, `x2`, and `x3`. The `summary()` function now outputs the regression coefficients for all the predictors.
 
@@ -185,7 +249,7 @@ lm.fit1 <- update(lm.fit, ~ . - age)
 ```
 
 
-## Interaction Terms
+### Interaction Terms
 
 It is easy to include interaction terms in a linear model using the `lm()` function. The syntax `lstat:black` tells `R` to include an interaction term between `lstat` and `black`.
 The syntax `lstat * age` simultaneously includes `lstat`, `age`, and the interaction term `lstat`$\times$`age` as predictors; it is a shorthand for `lstat + age + lstat:age`.
@@ -196,7 +260,7 @@ summary(lm(medv ~ lstat * age, data = Boston))
 ```
 
 
-## Non-linear Transformations of the Predictors
+### Non-linear Transformations of the Predictors
 
 The `lm()` function can also accommodate non-linear transformations of the predictors. For instance, given a predictor $X$, we can create a predictor $X^2$ using
  `I(X^2)`. The function `I()` is needed since the `^` has a special meaning in a formula object; wrapping as we do allows the standard usage in `R`, which is to raise `X` to the power `2`. We now
@@ -250,7 +314,7 @@ summary(lm(medv ~ log(rm), data = Boston))
 ```
 
 
-## Qualitative Predictors
+### Qualitative Predictors
 
 We will now examine the `Carseats` data, which is part of the
 `ISLR2` library. We will  attempt to predict `Sales`
@@ -283,7 +347,7 @@ A bad shelving location corresponds to a zero for each of the two dummy variable
 The fact that the coefficient for `ShelveLocGood` in the regression output is positive indicates that a good shelving location is associated with high sales (relative to a bad location). And `ShelveLocMedium` has a smaller positive coefficient, indicating that a medium shelving location is associated with higher sales than a bad shelving location but lower sales than a good shelving location.
 
 
-## Writing  Functions
+### Writing  Functions
 
 As we have seen, `R` comes with many useful functions, and still more functions are available by way of `R` libraries.
 However, we will often be interested in performing an operation for which no function is available. In this setting, we may want to write our own function. For instance, below we provide a simple function that reads in the `ISLR2` and `MASS` libraries, called

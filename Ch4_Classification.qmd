@@ -1,7 +1,9 @@
-# `R`-Lab: Classification
+# Classification
+
+## `R`-Lab: Classification
 
 
-## The Stock Market Data
+### The Stock Market Data
 
 We will begin by examining some numerical and graphical summaries of
 the `Smarket` data, which is part of the `ISLR2` library. This
@@ -34,7 +36,7 @@ plot(Volume)
 ```
 
 
-## Logistic Regression
+### Logistic Regression
 
 Next, we will fit a logistic regression model in order to predict `direction` using `lagone` through `lagfive` and `volume`. The `glm()` function  can be used to fit many types of generalized linear models , including logistic regression.
  The syntax of the `glm()` function is similar to that of  `lm()`,  except that we must pass in the argument `family = binomial` in order to tell `R` to run a logistic regression rather than some other type of generalized linear model.
@@ -165,7 +167,7 @@ predict(glm.fits,
 
 
 
-## Linear Discriminant Analysis
+### Linear Discriminant Analysis
 
 Now we will perform LDA on the `Smarket` data. In `R`, we fit an LDA model using the  `lda()` function, which is part of the `MASS` library. Notice that the syntax for the `lda()` function is identical to that of `lm()`, and to that of `glm()` except for the absence of the `family` option. We fit the model using only the observations before 2005.
 
@@ -226,7 +228,7 @@ sum(lda.pred$posterior[, 1] > .9)
 
 No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was $52.02$\,\%.
 
-## Quadratic Discriminant Analysis
+### Quadratic Discriminant Analysis
 
 We will now fit a QDA model to the `Smarket` data. QDA is  implemented in `R` using the `qda()` function, which is also part of the `MASS` library. The syntax is identical to that of `lda()`.
 
@@ -248,7 +250,7 @@ Interestingly, the QDA predictions are accurate almost $60$\,\% of the time, eve
 This  suggests that the quadratic form assumed by QDA may capture the true relationship more accurately than the linear forms assumed by LDA and logistic regression.
  However, we recommend evaluating this method's performance on a larger test set  before betting  that this approach will consistently beat the market!
 
-## Naive Bayes
+### Naive Bayes
 
 Next, we fit a naive Bayes model to the `Smarket` data. Naive Bayes is implemented in `R` using the `naiveBayes()` function, which is part of the `e1071` library. The syntax is identical to that of `lda()` and `qda()`.
 By default, this implementation of the naive Bayes classifier models each quantitative feature using a Gaussian distribution. However, a kernel density method can also be used to estimate the distributions.
@@ -287,7 +289,7 @@ nb.preds[1:5, ]
 ```
 
 
-## $K$-Nearest Neighbors
+### $K$-Nearest Neighbors
 
 We will now perform KNN using the `knn()` function, which is part of the `class` library. This function works rather differently from the other model-fitting functions that we have encountered thus far.
 Rather than a two-step approach  in which we first fit the model and then we use the model to make predictions, `knn()` forms predictions using a single command. The function requires four inputs.
@@ -427,7 +429,7 @@ table(glm.pred, test.Y)
 
 
 
-## Poisson Regression
+### Poisson Regression
 
 Finally, we fit a  Poisson regression model to the `Bikeshare` data set, which measures the number of bike rentals (`bikers`) per hour in Washington, DC. The data can be found in the `ISLR2` library.
 

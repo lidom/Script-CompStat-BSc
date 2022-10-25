@@ -1,8 +1,10 @@
-# `R`-Lab: Linear Model Selection and Regularization
+# Linear Model Selection and Regularization
 
-## Subset Selection Methods
+## `R`-Lab: Linear Model Selection and Regularization
 
-### Best Subset Selection
+### Subset Selection Methods
+
+#### Best Subset Selection
 
 Here we apply the best subset selection approach to the `Hitters` data.
 We wish to predict a baseball player's `Salary` on the basis of various statistics associated with performance in the previous year.
@@ -115,7 +117,7 @@ coef(regfit.full, 6)
 
 
 
-### Forward and Backward Stepwise Selection
+#### Forward and Backward Stepwise Selection
  
 
 
@@ -143,7 +145,7 @@ coef(regfit.bwd, 7)
  
 
 
-### Choosing Among Models Using the Validation-Set Approach and Cross-Validation
+#### Choosing Among Models Using the Validation-Set Approach and Cross-Validation
 
 
 We just saw that it is possible to choose among a set of models of different sizes using $C_p$, BIC, and adjusted $R^2$. We will now consider how to do this using the
@@ -295,7 +297,7 @@ coef(reg.best, 10)
 
 
 
-## Ridge Regression and the Lasso
+### Ridge Regression and the Lasso
 
 We will use the `glmnet` package in order to perform ridge regression and the lasso.
 The main function in this package is `glmnet()`, which can be used to fit ridge regression models, lasso models, and more.
@@ -309,7 +311,7 @@ y <- Hitters$Salary
 
 The `model.matrix()` function is particularly useful for creating `x`; not only does it produce a matrix corresponding to the $19$ predictors but it also automatically transforms any qualitative variables into dummy variables. The latter property is important because `glmnet()` can only take numerical, quantitative inputs.
 
-### Ridge Regression
+#### Ridge Regression
 
 The `glmnet()` function has an `alpha` argument that determines what type of model is fit. If `alpha=0` then a ridge regression model is fit, and if `alpha=1`
 then a lasso model is fit. We first fit a ridge regression model.
@@ -432,7 +434,7 @@ predict(out, type = "coefficients", s = bestlam)[1:20, ]
 
 As expected, none of the coefficients are zero---ridge regression does not perform variable selection!
 
-### The Lasso
+#### The Lasso
 
 We saw that ridge regression with a wise choice of $\lambda$ can outperform least squares as well as the null model on the `Hitters` data set. We now ask whether the lasso can yield either
 a more accurate or a more interpretable model than ridge regression. In order to fit a lasso model, we once again use the `glmnet()` function; however, this time we
@@ -473,9 +475,9 @@ lasso.coef[lasso.coef != 0]
 
 
 
-## PCR and PLS Regression
+### PCR and PLS Regression
 
-### Principal Components Regression
+#### Principal Components Regression
 
 
 Principal components regression (PCR) can be performed using the `pcr()` function, which is part of the `pls` library. We now apply PCR to the `Hitters` data, in order to predict `Salary`. Again,
@@ -554,7 +556,7 @@ summary(pcr.fit)
 
 
 
-### Partial Least Squares
+#### Partial Least Squares
 
 
 We implement partial least squares (PLS) using the `plsr()` function, also in the `pls` library. The syntax is just like that of the `pcr()` function.
@@ -584,7 +586,6 @@ summary(pls.fit)
 ```
 
 Notice that the percentage of variance in `Salary` that the one-component PLS fit explains, $43.05\,\%$, is almost as much as that explained using the final five-component model PCR fit, $44.90\,\%$. This is because PCR only attempts to maximize the amount of variance explained in the predictors, while PLS searches for directions that explain variance in both the predictors and the response.
- 
 
 ## Exercises
 

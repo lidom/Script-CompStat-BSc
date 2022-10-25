@@ -1,8 +1,10 @@
-# `R`-Lab: Resampling Methods
+# Resampling Methods
+
+## `R`-Lab: Resampling Methods
 
 In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.
 
-## The Validation Set Approach
+### The Validation Set Approach
 
 We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the `Auto` data set.
 
@@ -70,7 +72,7 @@ we find that the validation set error rates for the models with linear, quadrati
 
 These results are consistent with our previous findings: a model that predicts `mpg` using a quadratic function of `horsepower` performs better than a model that involves only a linear function of `horsepower`, and there is little evidence in favor of a model that uses a cubic function of `horsepower`.
 
-## Leave-One-Out Cross-Validation
+### Leave-One-Out Cross-Validation
 
 The LOOCV estimate can be automatically computed for any generalized linear model   using the `glm()` and `cv.glm()` functions.  In the lab for Chapter 4, we used the `glm()` function to perform logistic regression by passing in  the `family = "binomial"` argument.
  But if we use `glm()` to fit a model without passing in the `family` argument, then it  performs linear regression, just like the `lm()` function.
@@ -116,7 +118,7 @@ cv.error
 
 As in Figure 5.4, we see a sharp drop in the estimated test MSE between the linear and quadratic fits, but then no clear improvement from using higher-order polynomials.
 
-## $k$-Fold Cross-Validation
+### $k$-Fold Cross-Validation
 
 The `cv.glm()` function can also be used to implement $k$-fold CV. Below we use $k=10$, a common choice for $k$, on the `Auto` data set.
 We once again set a random seed and initialize a vector in which we will store the CV errors corresponding to the polynomial fits of orders one to ten.
@@ -140,7 +142,7 @@ We saw in Section 5.3.2 that the two numbers associated with `delta` are essenti
 When we instead perform $k$-fold CV, then the two numbers associated with `delta` differ slightly. The first is the standard $k$-fold CV estimate,
 as in ( 5.3). The second is a bias-corrected version. On this data set, the two estimates are very similar to each other.
 
-## The Bootstrap
+### The Bootstrap
 
 
 We illustrate the use of the bootstrap in the simple example of Section 5.2, as well as on an example involving estimating the
@@ -280,7 +282,6 @@ summary(
     lm(mpg ~ horsepower + I(horsepower^2), data = Auto)
   )$coef
 ```
-
 
 
 ## Exercises
