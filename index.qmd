@@ -28,6 +28,12 @@ timetable %>% kbl() %>%  kable_styling()
 The above links to the lecture materials can also be found at [eCampus](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
 
 
+### Communication {-}
+
+* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/usgj5ksjvtjddx7356cgkulu/) to post questions, share codes, etc. Happy sharing and discussing! 
+
+
+
 <!-- ### Further Material
 
 The following resources are not directly used in our course, but you may find them useful nevertheless:
