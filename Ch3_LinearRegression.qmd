@@ -1,5 +1,9 @@
 # Linear Regression
 
+## Lecture Notes & Codes
+
+### Assessing the Accuracy of the Coefficient Estimates (Ch. 3.1.2) {-}
+
 The following code generates artificial data to reproduce the plot in Figure 3.3 of our course textbook `ISLR`. 
 
 ```{r}
@@ -59,6 +63,234 @@ abline(lm_obj, col = "blue", lwd = 2)
 
 
 *  Can you do this animated? https://gganimate.com/articles/gganimate.html
+
+
+### Potential Problems (Ch. 3.3.3) {-}
+
+**1. Non-linearity of the response-predictor relationships.**
+
+Diagnostic residual plots are most useful to detect possible non-linear response-predictor relationships. 
+
+```{r}
+library("ISLR2")
+data(Auto) 
+
+## Gives the variable names in the Auto dataset
+# names(Auto)
+
+## Simple linear regression
+lmobj_1 <- lm(mpg ~ horsepower, data = Auto)
+
+## Quadratic regression 
+lmobj_2 <- lm(mpg ~ horsepower + I(horsepower^2), data = Auto)
+
+## Diagnostic Plot
+par(mfrow = c(1,2))
+plot(lmobj_1, which = 1)
+plot(lmobj_2, which = 1)
+```
+
+*Residual plots* are a useful graphical tool for identifying non-linearity. residual plot
+Given a simple linear regression model, we can plot the residuals, 
+$$
+e_i = y_i - \hat{y}_i,
+$$ 
+versus the predictor $x_i.$ 
+
+In the case of a multiple regression model, since there are multiple predictors, we instead plot the residuals versus the predicted (or fitted) values $\hat{y}_i.$ Ideally, the residual plot will show no fitted discernible pattern. The presence of a pattern may indicate a problem with some aspect of the linear model.
+
+
+If the residual plot indicates that there are non-linear associations in the
+data, then a simple approach is to use non-linear transformations of the
+predictors, such as 
+$$
+\log(X),\; \sqrt{X},\; \text{or}\; X^2
+$$ 
+in the regression model. In the later chapters, we will discuss other more advanced non-linear approaches for addressing this issue.
+
+
+**2. Correlation of Error Terms**
+
+
+An important assumption of the linear regression model is that the error
+terms, $\epsilon_1, \epsilon_2, \dots , \epsilon_n$, are uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  The **standard errors** that are computed for the estimated regression coefficients or the fitted values are based on the **assumption of uncorrelated error terms**.  If in fact there is correlation among the error terms, then the estimated standard errors will tend to **underestimate** the true standard errors. 
+
+
+Correlations among the error terms typically occur in time series data. 
+
+
+**3. Non-constant Variance of Error Terms**
+
+Another important assumption of the linear regression model is that the
+error terms have a constant variance, 
+$$
+Var(\epsilon_i) = \sigma^2.
+$$ 
+The standard formulas for standard errors, confidence intervals, and hypothesis tests associated with the linear model rely upon this assumption.
+
+
+One can identify non-constant variances in the errors ("heteroscedasticity"), from the using diagnostic residual plots. Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. 
+
+When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
+$$
+\log(Y)\;\text{ or }\; \sqrt{Y}.
+$$
+Such a transformation results in a greater amount of shrinkage of the larger responses, leading to a reduction in heteroscedasticity. 
+
+```{r}
+## Quadratic regression 
+lmobj_2 <- lm(mpg ~ horsepower + I(horsepower^2), data = Auto)
+
+## Quadratic regression with transformed response log(Y)
+lmobj_3 <- lm(I(log(mpg)) ~ horsepower + I(horsepower^2), data = Auto)
+
+## Diagnostic Plot
+par(mfrow = c(1,2))
+plot(lmobj_2, which = 1)
+plot(lmobj_3, which = 1)
+```
+
+
+**4. Outliers**
+
+An outlier is a point for which $y_i$ is far from the value predicted by the outlier
+model. Outliers can arise for a variety of reasons, such as incorrect recording
+of an observation during data collection.
+
+Outliers typically have a strong effect on the $R^2$ value since they add a very large residual to its computation. 
+
+Figure 3.12 in the textbook `ISLR` shows an outlier (observation 20) which has a typical predictor value $x_i$. Such outliers have little effect on the regression fit. 
+![](images/Fig_3_12.png)
+
+
+Figure 3.13 in the textbook `ISLR` shows an outlier (observation 41) which a predictor value $x_i$ that is very atypical. Such outliers have large **leverage** giving them power to considerable affect the regression fit. 
+
+![](images/Fig_3_13.png)
+
+
+Summary: Critical outliers have both, large residuals *and* large leverage.
+
+
+**5. High Leverage Points**
+
+In order to quantify an observation's leverage, we compute the leverage statistic. A large value of this statistic indicates an observation with high leverage. For a simple linear regression,
+$$
+h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_j-\bar{x})^2}
+$$
+There is a simple extension of $h_i$ to the case of multiple predictors, though
+we do not provide the formula here. 
+
+
+* The leverage statistic $h_i$ is always between $1/n$ and $1$
+* The average leverage for all the observations is equal to $\bar{h}=\frac{1}{n}\sum_{i=1}^n h_i=(p + 1)/n.$ 
+* If a given observation has a leverage statistic $h_i$ that greatly exceeds $(p+1)/n,$ then we may suspect that the corresponding point has high leverage.
+
+
+**6. Collinearity**
+
+Collinearity refers to the situation in which two or more predictor variables are closely related to one another. 
+
+
+```{r}
+library("ISLR2")
+data(Credit) # names(Credit)
+
+par(mfrow=c(1,2))
+plot(y = Credit$Age,    x = Credit$Limit, main = "Not Collinear", ylab = "Age", xlab = "Limit")
+plot(y = Credit$Rating, x = Credit$Limit, main = "High Collinearity", ylab = "Rating", xlab = "Limit")
+```
+
+
+![](images/Fig_3_15.png)
+
+![](images/Tab_3_11.png)
+
+
+We call this situation *multicollinearity*. 
+
+
+To detect multicollinearity issues, one can use the variance inflation factor (VIF) 
+$$
+\operatorname{VIF}(\hat{\beta}_j)=\frac{1}{1-R^2_{X_j|X_-j}},
+$$
+where $R^2_{X_j|X_-j}$ is the $R^2$ from a regression of $X_j$ onto all of the other predictors. 
+
+* If $R^2_{X_j|X_-j}$ is close to one, then multicollinearity is present, ans so $\operatorname{VIF}(\hat{\beta}_j)$ will be large. 
+
+
+In the Credit data, a regression of balance on age, rating, and limit indicates that the predictors have VIF values of 1.01, 160.67, and 160.59. As we suspected, there is considerable collinearity in the data!
+
+
+Possible solutions:
+
+1. Drop one of the problematic variables from the regression. This can usually be done without much compromise to the regression
+fit, since the presence of collinearity implies that the information that this variable provides about the response is redundant in the presence of the other variables. <br> **Caution:** In econometrics, dropping control variables is generally not a good idea since control variables are there to rule out possible issues with omitted variables biases. 
+
+2. Combine the collinear variables together into a single predictor. For instance, we might take the average of standardized versions of limit and rating in order to create a new variable that measures credit worthiness.
+
+3. Use a different estimation procedure like ridge regression. 
+
+4. Live with it. Sometimes you're not allowed to drop or combine variables (e.g. important control variables) and also no other estimation procedure can be used. Then you have to live with large standard errors due to multicollinearity. But at least you know where the large stand errors are coming from. 
+
+
+
+### Comparison of Linear Regression with K-Nearest Neighbors (Ch. 3.5) {-}
+
+
+Linear regression is an example of a parametric approach because it assumes a linear functional form for $f(X).$
+
+Advantages of parametric approaches:
+
+* Often easy to fit 
+* Simple interpretation
+* Simple inference
+
+... since there are only a few parameters that need to be computed, interpreted, and tested. 
+
+
+Disadvantages of parametric approaches: 
+
+* The parametric model assumption can be far from true; i.e.
+$$
+f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p 
+$$
+
+
+Solution: **Non-parametric methods** such as *K-nearest neighbors regression* since they do not explicitly assume a parametric form for $f(X).$
+
+
+#### K-nearest neighbors regression (KNN regression) {-}
+
+Given a value for $K$ and a prediction point $x_0,$ KNN regression
+regression ...
+
+1. identifies the $K$ training observations that are closest to
+$x_0$, represented by the index set $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}.$ 
+2. estimates $f(x_0)$ using the average of all the training responses $y_i$ with $i\in\mathcal{N}_0.$ 
+
+In other words,
+$$
+\hat{f}(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
+$$
+
+
+
+![](images/Fig_3_16.png)
+
+
+In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in Chapter 2. 
+
+* A small value for $K$ provides the most flexible fit, which will have low bias but high variance. This variance is due to the fact that the prediction in a given region is entirely dependent, e.g., on just one observation of $K=1$.
+* A large value of $K$ provide a smoother and less wiggly fit; the
+prediction in a region is an average of several points, and so changing one observation has a smaller effect. However, the smoothing may cause bias by masking some of the structure in $f(X).$
+
+
+In Chapter 5, we introduce several approaches for estimating test error rates. These methods can be used to identify the optimal value of $K$ in KNN regression.
+
+
+
+Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f.$
+
 
 
 
