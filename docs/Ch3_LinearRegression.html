@@ -442,6 +442,14 @@ f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p
 <p>In other words, <span class="math display">\[
 \hat{f}(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
 \]</span></p>
+<p><img src="images/Fig_3_16.png" class="img-fluid"></p>
+<p>In general, the optimal value for <span class="math inline">\(K\)</span> will depend on the <em>bias-variance tradeoff</em>, which we introduced in Chapter 2.</p>
+<ul>
+<li>A small value for <span class="math inline">\(K\)</span> provides the most flexible fit, which will have low bias but high variance. This variance is due to the fact that the prediction in a given region is entirely dependent, e.g., on just one observation of <span class="math inline">\(K=1\)</span>.</li>
+<li>A large value of <span class="math inline">\(K\)</span> provide a smoother and less wiggly fit; the prediction in a region is an average of several points, and so changing one observation has a smaller effect. However, the smoothing may cause bias by masking some of the structure in <span class="math inline">\(f(X).\)</span></li>
+</ul>
+<p>In Chapter 5, we introduce several approaches for estimating test error rates. These methods can be used to identify the optimal value of <span class="math inline">\(K\)</span> in KNN regression.</p>
+<p>Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of <span class="math inline">\(f.\)</span></p>
 </section>
 </section>
 </section>

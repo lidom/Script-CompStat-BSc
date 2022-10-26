@@ -1347,30 +1347,32 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>7. a)</strong> Compute the Euclidean distance between each observation and the test point, <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span>.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observations</span></span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>obs1 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>)</span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>obs2 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>obs3 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
-<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>obs4 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>obs5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>obs6 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Point</span></span>
-<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a>obs0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Vector Dist_vec to store the results</span></span>
-<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a>Dist <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">6</span>)</span>
-<span id="cb124-14"><a href="#cb124-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-15"><a href="#cb124-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the Euclidean distances</span></span>
-<span id="cb124-16"><a href="#cb124-16" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">1</span>] <span class="ot">&lt;-</span> (dist1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs1<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb124-17"><a href="#cb124-17" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">2</span>] <span class="ot">&lt;-</span> (dist2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs2<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb124-18"><a href="#cb124-18" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">3</span>] <span class="ot">&lt;-</span> (dist3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs3<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb124-19"><a href="#cb124-19" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">4</span>] <span class="ot">&lt;-</span> (dist4 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs4<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb124-20"><a href="#cb124-20" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">5</span>] <span class="ot">&lt;-</span> (dist5 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs5<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb124-21"><a href="#cb124-21" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">6</span>] <span class="ot">&lt;-</span> (dist6 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs6<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb124-22"><a href="#cb124-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-23"><a href="#cb124-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb124-24"><a href="#cb124-24" aria-hidden="true" tabindex="-1"></a>Dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outcome</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>Y    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"red"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>)</span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictor values</span></span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>obs1 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>)</span>
+<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>obs2 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>obs3 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>obs4 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>obs5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a>obs6 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Point</span></span>
+<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a>obs0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-14"><a href="#cb124-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Vector Dist_vec to store the results</span></span>
+<span id="cb124-15"><a href="#cb124-15" aria-hidden="true" tabindex="-1"></a>Dist <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">6</span>)</span>
+<span id="cb124-16"><a href="#cb124-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-17"><a href="#cb124-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the Euclidean distances</span></span>
+<span id="cb124-18"><a href="#cb124-18" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">1</span>] <span class="ot">&lt;-</span> (dist1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs1<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb124-19"><a href="#cb124-19" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">2</span>] <span class="ot">&lt;-</span> (dist2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs2<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb124-20"><a href="#cb124-20" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">3</span>] <span class="ot">&lt;-</span> (dist3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs3<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb124-21"><a href="#cb124-21" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">4</span>] <span class="ot">&lt;-</span> (dist4 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs4<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb124-22"><a href="#cb124-22" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">5</span>] <span class="ot">&lt;-</span> (dist5 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs5<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb124-23"><a href="#cb124-23" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">6</span>] <span class="ot">&lt;-</span> (dist6 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs6<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb124-24"><a href="#cb124-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-25"><a href="#cb124-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb124-26"><a href="#cb124-26" aria-hidden="true" tabindex="-1"></a>Dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.000000 2.000000 3.162278 2.236068 1.414214 1.732051</code></pre>
 </div>
@@ -1382,24 +1384,33 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which.min</span>(Dist)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "green"</code></pre>
 </div>
-<p>Closest 1 neighbor is <code>obs5</code> and thus, our prediction is <code>Green</code> because <code>Green</code> is the <span class="math inline">\(Y\)</span> value associated to <code>obs5</code>.</p>
+</div>
+<p>Closest <span class="math inline">\(K=1\)</span> neighbor is <code>obs5</code> and thus, our prediction is <code>Green</code> because <code>Green</code> is the <span class="math inline">\(Y\)</span> value associated to <code>obs5</code>.</p>
 <p><strong>7. c)</strong> What is your prediction with <span class="math inline">\(K = 3\)</span>? Why?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(Dist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(Dist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5 6 2</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">order</span>(Dist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "green" "red"   "red"  </code></pre>
 </div>
-<p>Closest 3 neighbors are <code>obs5</code>, <code>obs6</code>, <code>obs2</code> and thus, our prediction is <code>Red</code> because it is the <span class="math inline">\(Y\)</span> value associated to <code>obs2</code> and <code>obs6</code> (majority rule).</p>
+</div>
+<p>Closest <span class="math inline">\(K=3\)</span> neighbors are <code>obs5</code>, <code>obs6</code>, <code>obs2</code> and thus, our prediction is <code>Red</code> because it is the <span class="math inline">\(Y\)</span> value associated to <code>obs2</code> and <code>obs6</code> (majority rule).</p>
 <p><strong>7. d)</strong> If the Bayes decision boundary in this problem is highly nonlinear, then would we expect the best value for <span class="math inline">\(K\)</span> to be large or small? Why?</p>
 <p><strong>Answer:</strong></p>
-<p>A large value of K means that the <span class="math inline">\(Y\)</span>-values from a large neighborhood are contributing to the prediction at one chosen <span class="math inline">\(X\)</span>-point. This requires that the neighborhood consists of relatively similar&nbsp;<span class="math inline">\(Y\)</span>-values. However, in the case of a highly nonlinear&nbsp;decision boundary, the neighborhoods of similar <span class="math inline">\(Y\)</span>-values become generally small. Therefore, also <span class="math inline">\(K\)</span> must be chosen relatively small so that we can capture more of the non-linear decision boundary.&nbsp;</p>
+<!-- A large value of K means that the $Y$-values from a large neighborhood are contributing to the prediction at one chosen $X$-point. This requires that the neighborhood consists of relatively similar $Y$-values.  -->
+<p>In the case of a highly nonlinear&nbsp;decision boundary, the neighborhoods of similar <span class="math inline">\(Y\)</span>-values become generally small. Therefore, also <span class="math inline">\(K\)</span> must be chosen relatively small so that we can capture more of the non-linear decision boundary.&nbsp;</p>
 </section>
 <section id="exercise-8" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8:</h4>
-<p>This exercise relates to the College data set, which can be found in the file <code>College.csv</code>. It contains a number of variables for <span class="math inline">\(777\)</span> different universities and colleges in the US. The variables are:</p>
+<p>This exercise relates to the College data set, which can be found in the file <code>College.csv</code> (<a href="https://www.statlearning.com/s/College.csv">LINK-TO-DATA</a>). It contains a number of variables for <span class="math inline">\(777\)</span> different universities and colleges in the US. The variables are:</p>
 <ul>
 <li><strong>Private</strong> : Public/private indicator</li>
 <li><strong>Apps</strong> : Number of applications received</li>
@@ -1423,11 +1434,11 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>8. a)</strong> Use the <code>read.csv()</code> function to read the data into <code>R</code>. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
-<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/College.csv"</span>)</span>
-<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows and 5 collumns of the data</span></span>
-<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(college[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/College.csv"</span>)</span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows and 5 collumns of the data</span></span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(college[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                              X Private Apps Accept Enroll
 1  Abilene Christian University     Yes 1660   1232    721
@@ -1446,23 +1457,26 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>Answer:</strong></p>
 <p>You should notice that the first column is just the name of each university. We don’t really want <code>R</code> to treat this as data. However, it may be handy to have these names for later. Try the following commands:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store row names</span></span>
-<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[,<span class="dv">1</span>]</span>
-<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pops up a window for data visualization</span></span>
-<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store row names</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[,<span class="dv">1</span>]</span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pops up a window for data visualization</span></span>
+<span id="cb136-5"><a href="#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span>
+<span id="cb136-6"><a href="#cb136-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-7"><a href="#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Alteratively you can use: </span></span>
+<span id="cb136-8"><a href="#cb136-8" aria-hidden="true" tabindex="-1"></a><span class="co"># View(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You should see that there is now a row.names column with the name of each university recorded. This means that <code>R</code> has given each row a name corresponding to the appropriate university. <code>R</code> will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminates first column (containing the row names)</span></span>
-<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college[,<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminates first column (containing the row names)</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now you should see that the first data column is <code>Private</code>. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.</p>
 <p><strong>8. c.&nbsp;i)</strong> Use the <code>summary()</code> function to produce a numerical summary of the variables in the data set.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Private               Apps           Accept          Enroll    
  Length:777         Min.   :   81   Min.   :   72   Min.   :  35  
@@ -1483,7 +1497,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>8. c.&nbsp;ii)</strong> Use the <code>pairs()</code> function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix <code>A</code> using <code>A[,2:10]</code>.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="at">x =</span> college[,<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="at">x =</span> college[,<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_StatLearning_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1491,32 +1505,32 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>8. c.&nbsp;iii)</strong> Use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Private.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate<span class="sc">~</span>Private, </span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, </span>
-<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Private"</span>, </span>
-<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate<span class="sc">~</span>Private, </span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, </span>
+<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Private"</span>, </span>
+<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_StatLearning_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>8. c.&nbsp;iv)</strong> Create a new qualitative variable, called <code>Elite</code>, by binning the <code>Top10perc</code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a vector called ELite with only "No" entrances amounting the number of college rows</span></span>
-<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>,<span class="fu">nrow</span>(college))</span>
-<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Replacing "No" with "Yes" if the proportion of students coming from the top 10% of their HS classes exceeds 50%.</span></span>
-<span id="cb138-5"><a href="#cb138-5" aria-hidden="true" tabindex="-1"></a>Elite[college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
-<span id="cb138-6"><a href="#cb138-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-7"><a href="#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode a vector as a factor</span></span>
-<span id="cb138-8"><a href="#cb138-8" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Elite)</span>
-<span id="cb138-9"><a href="#cb138-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-10"><a href="#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Elite variable to our current dataset "college"</span></span>
-<span id="cb138-11"><a href="#cb138-11" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(college, Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a vector called ELite with only "No" entrances amounting the number of college rows</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>,<span class="fu">nrow</span>(college))</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Replacing "No" with "Yes" if the proportion of students coming from the top 10% of their HS classes exceeds 50%.</span></span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a>Elite[college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-7"><a href="#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode a vector as a factor</span></span>
+<span id="cb142-8"><a href="#cb142-8" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Elite)</span>
+<span id="cb142-9"><a href="#cb142-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-10"><a href="#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Elite variable to our current dataset "college"</span></span>
+<span id="cb142-11"><a href="#cb142-11" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(college, Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Use the <code>summary()</code> function to see how many elite universities there are. Now use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Elite.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college<span class="sc">$</span>Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college<span class="sc">$</span>Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> No Yes 
 699  78 </code></pre>
@@ -1524,8 +1538,8 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p>There are <span class="math inline">\(78\)</span> elite Universities. The boxplots of <code>Outstate</code> versus Elite-Status are generated as following:</p>
 <div class="cell" data-scrolled="false">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate <span class="sc">~</span> Elite, </span>
-<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, <span class="at">xlab=</span><span class="st">"Elite"</span>, <span class="at">ylab=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate <span class="sc">~</span> Elite, </span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, <span class="at">xlab=</span><span class="st">"Elite"</span>, <span class="at">ylab=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_StatLearning_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1533,30 +1547,30 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>8. c.&nbsp;v)</strong> Use the <code>hist()</code> function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command <code>par(mfrow=c(2,2))</code> useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Apps,     <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), </span>
-<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Apps"</span>)</span>
-<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Enroll"</span>)</span>
-<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
-<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Apps,     <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), </span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Apps"</span>)</span>
+<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Enroll"</span>)</span>
+<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
+<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_StatLearning_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-9" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="exercise-9">Exercise 9:</h4>
 <p>This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
-<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
-<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb144-4"><a href="#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
-<span id="cb144-5"><a href="#cb144-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
-<span id="cb144-6"><a href="#cb144-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb144-7"><a href="#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows of the data</span></span>
-<span id="cb144-8"><a href="#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Auto[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
+<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
+<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
+<span id="cb148-6"><a href="#cb148-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-7"><a href="#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows of the data</span></span>
+<span id="cb148-8"><a href="#cb148-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Auto[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   mpg cylinders displacement horsepower weight acceleration year origin
 1   18         8          307        130   3504         12.0   70      1
@@ -1581,13 +1595,13 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 9           pontiac catalina
 10        amc ambassador dpl</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find more info on the variables here: https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find more info on the variables here: https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>9. a)</strong> Which of the predictors are quantitative, and which are qualitative?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset</span></span>
-<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset</span></span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg          cylinders      displacement     horsepower        weight    
  Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
@@ -1612,10 +1626,10 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>9. b)</strong> What is the range of each quantitative predictor? You can answer this using the <code>range()</code> function.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the range function to the first seven columns of Auto</span></span>
-<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span>
-<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print to console</span></span>
-<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the range function to the first seven columns of Auto</span></span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span>
+<span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print to console</span></span>
+<span id="cb153-4"><a href="#cb153-4" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg cylinders displacement horsepower weight acceleration year
 [1,]  9.0         3           68         46   1613          8.0   70
@@ -1625,25 +1639,25 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>9. c)</strong> What is the mean and standard deviation of each quantitative predictor?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute mean for the first seven variables and store it in a vector</span></span>
-<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
-<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="co"># round the values inside the vectors to 2 decimal cases</span></span>
-<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(mean,round,<span class="dv">2</span>)</span>
-<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-7"><a href="#cb151-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviation and round it up </span></span>
-<span id="cb151-8"><a href="#cb151-8" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span>
-<span id="cb151-9"><a href="#cb151-9" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sd,round,<span class="dv">2</span>)</span>
-<span id="cb151-10"><a href="#cb151-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-11"><a href="#cb151-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print both vectors</span></span>
-<span id="cb151-12"><a href="#cb151-12" aria-hidden="true" tabindex="-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute mean for the first seven variables and store it in a vector</span></span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="co"># round the values inside the vectors to 2 decimal cases</span></span>
+<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(mean,round,<span class="dv">2</span>)</span>
+<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviation and round it up </span></span>
+<span id="cb155-8"><a href="#cb155-8" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span>
+<span id="cb155-9"><a href="#cb155-9" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sd,round,<span class="dv">2</span>)</span>
+<span id="cb155-10"><a href="#cb155-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-11"><a href="#cb155-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print both vectors</span></span>
+<span id="cb155-12"><a href="#cb155-12" aria-hidden="true" tabindex="-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
        23.45         5.47       194.41       104.47      2977.58        15.54 
         year 
        75.98 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
         7.81         1.71       104.64        38.49       849.40         2.76 
@@ -1654,27 +1668,27 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>9.d)</strong> Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove observations and store them </span></span>
-<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>newAuto <span class="ot">=</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>),]</span>
-<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-do exercises 9. b) and 9.c)</span></span>
-<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, create an empty Matrix "Results" to store the results</span></span>
-<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">7</span>, </span>
-<span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"SD"</span>, <span class="st">"Minimum"</span>, <span class="st">"Maximum"</span>), </span>
-<span id="cb155-8"><a href="#cb155-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">colnames</span>(newAuto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))))</span>
-<span id="cb155-9"><a href="#cb155-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-10"><a href="#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the results</span></span>
-<span id="cb155-11"><a href="#cb155-11" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
-<span id="cb155-12"><a href="#cb155-12" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)  <span class="co"># Standard Deviation</span></span>
-<span id="cb155-13"><a href="#cb155-13" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">3</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], min)</span>
-<span id="cb155-14"><a href="#cb155-14" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">4</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], max)</span>
-<span id="cb155-15"><a href="#cb155-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-16"><a href="#cb155-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round them</span></span>
-<span id="cb155-17"><a href="#cb155-17" aria-hidden="true" tabindex="-1"></a>Results[] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Results[],round,<span class="dv">2</span>)</span>
-<span id="cb155-18"><a href="#cb155-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-19"><a href="#cb155-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb155-20"><a href="#cb155-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
-<span id="cb155-21"><a href="#cb155-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Results[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove observations and store them </span></span>
+<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a>newAuto <span class="ot">=</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>),]</span>
+<span id="cb159-3"><a href="#cb159-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-4"><a href="#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-do exercises 9. b) and 9.c)</span></span>
+<span id="cb159-5"><a href="#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, create an empty Matrix "Results" to store the results</span></span>
+<span id="cb159-6"><a href="#cb159-6" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">7</span>, </span>
+<span id="cb159-7"><a href="#cb159-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"SD"</span>, <span class="st">"Minimum"</span>, <span class="st">"Maximum"</span>), </span>
+<span id="cb159-8"><a href="#cb159-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">colnames</span>(newAuto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))))</span>
+<span id="cb159-9"><a href="#cb159-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-10"><a href="#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the results</span></span>
+<span id="cb159-11"><a href="#cb159-11" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
+<span id="cb159-12"><a href="#cb159-12" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)  <span class="co"># Standard Deviation</span></span>
+<span id="cb159-13"><a href="#cb159-13" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">3</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], min)</span>
+<span id="cb159-14"><a href="#cb159-14" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">4</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], max)</span>
+<span id="cb159-15"><a href="#cb159-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-16"><a href="#cb159-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round them</span></span>
+<span id="cb159-17"><a href="#cb159-17" aria-hidden="true" tabindex="-1"></a>Results[] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Results[],round,<span class="dv">2</span>)</span>
+<span id="cb159-18"><a href="#cb159-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-19"><a href="#cb159-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb159-20"><a href="#cb159-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
+<span id="cb159-21"><a href="#cb159-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Results[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          mpg cylinders displacement horsepower  weight acceleration
 Mean    24.40      5.37       187.24     100.72 2935.97        15.73
@@ -1686,7 +1700,7 @@ Maximum 46.60      8.00       455.00     230.00 4997.00        24.80</code></pre
 <p><strong>9. e)</strong> Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_StatLearning_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
 </div>
