@@ -20,6 +20,8 @@ timetable %>% kbl() %>%  kable_styling()
 * Course Textbook (`ISLR`): 
   * [An Introduction to Statistical Learning (2nd Edition)](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
   * The pdf-Version of the textbook `ISLR` can be downloaded for free: [Free Book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf)  
+
+* Online resources (datasets, etc.) for the book can be found [HERE](https://www.statlearning.com/resources-second-edition).
 * [eWhiteboard](https://uni-bonn.sciebo.de/s/qdGFYfqMno0QfzX) for the lecture notes.
 * [This online script](https://www.dliebl.com/Script-ISLR/)
 

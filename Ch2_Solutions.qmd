@@ -76,12 +76,15 @@ Closest $K=3$ neighbors are `obs5`, `obs6`, `obs2` and thus, our prediction is `
 
 **Answer:**
 
-A large value of K means that the $Y$-values from a large neighborhood are contributing to the prediction at one chosen $X$-point. This requires that the neighborhood consists of relatively similar $Y$-values. However, in the case of a highly nonlinear decision boundary, the neighborhoods of similar $Y$-values become generally small. Therefore, also $K$ must be chosen relatively small so that we can capture more of the non-linear decision boundary. 
+<!-- A large value of K means that the $Y$-values from a large neighborhood are contributing to the prediction at one chosen $X$-point. This requires that the neighborhood consists of relatively similar $Y$-values.  -->
+
+
+In the case of a highly nonlinear decision boundary, the neighborhoods of similar $Y$-values become generally small. Therefore, also $K$ must be chosen relatively small so that we can capture more of the non-linear decision boundary. 
 
 
 #### Exercise 8: {-}
 
-This exercise relates to the College data set, which can be found in the file `College.csv`. It contains a number of variables for $777$ different universities and colleges in the US. The variables are:
+This exercise relates to the College data set, which can be found in the file `College.csv` ([LINK-TO-DATA](https://www.statlearning.com/s/College.csv)). It contains a number of variables for $777$ different universities and colleges in the US. The variables are:
 
 -   **Private** : Public/private indicator
 -   **Apps** : Number of applications received
@@ -126,6 +129,9 @@ rownames(college) <- college[,1]
 
 # pops up a window for data visualization
 # fix(college)
+
+# Alteratively you can use: 
+# View(college)
 ```
 
 You should see that there is now a row.names column with the name of each university recorded. This means that `R` has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
