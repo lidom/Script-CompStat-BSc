@@ -1,8 +1,80 @@
 # Linear Regression
 
-## Lecture Notes & Codes
+## Simple Linear Regression (Ch. 3.1) {-}
+
+The linear regression model assumes a *linear relationship* between $Y$ and the predictor(s) $X$. 
+
+The simple (only one predictor) linear regression model: 
+$$
+Y\approx \beta_0 + \beta_1 X
+$$
+
+For instance,
+<center>
+`sales` $\approx \beta_0 + \beta_1$ `TV`
+</center>
+
+### Estimating the Coefficients (Ch. 3.1.1)  {-}
+
+We choose $\hat\beta_0$ and $\hat\beta_1$ such that the Residual Sum of Squares criterion is minimized:
+$$
+\begin{align*}
+\operatorname{RSS}\equiv \operatorname{RSS}(\hat{\beta}_0,\hat{\beta_1})
+& = e_1^2 + \dots + e_n^2\\
+&=)\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2
+\end{align*}
+$$
+The minimizers are 
+$$
+\hat\beta_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}
+$$
+and
+$$
+\hat\beta_0=\bar{y} - \hat\beta_1\bar{x},
+$$
+where 
+$\bar{y}=\frac{1}{n}\sum_{i=1}^ny_i$ 
+and 
+$\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$. 
+
+![](images/Fig_3_1.png)
+
+
+![](images/Fig_3_2.png)
+
 
 ### Assessing the Accuracy of the Coefficient Estimates (Ch. 3.1.2) {-}
+
+True unknown model 
+$$
+Y=f(X)+\epsilon
+$$
+
+In in linear regression analysis, we assume[^1] that 
+$$
+f(X) = \beta_0 + \beta_1 X
+$$
+
+[^1]: The assumption $f(X) = \beta_0 + \beta_1 X$ is often a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple. 
+
+Ordinary least squares estimators 
+$$
+\hat\beta_0\quad\text{and}\quad\hat\beta_1
+$$
+are **unbiased**, that is
+$$
+\begin{align*}
+\operatorname{Bias}(\hat\beta_0)&=E(\hat\beta_0)-\beta_0=0\\
+\operatorname{Bias}(\hat\beta_1)&=E(\hat\beta_1)-\beta_1=0
+\end{align*}
+$$
+I.e., on average, the estimation results equal the true (unknown) parameters. However, in an actual data analysis, we only have one realization of the estimators $\hat\beta_0$ and $\hat\beta_1.$ 
+
+And, of course, there are estimation errors, i.e., 
+$$
+\hat\beta_0\neq \beta_0\quad\text{and}\quad\hat\beta_1\neq \beta_1.
+$$ 
+
 
 The following code generates artificial data to reproduce the plot in Figure 3.3 of our course textbook `ISLR`. 
 
@@ -60,9 +132,211 @@ abline(a = beta_0, b = beta_1, col = "red", lwd = 2)
 abline(lm_obj, col = "blue", lwd = 2)
 ```
 
+*  Coding-Questions: Can you do this animated? https://gganimate.com/articles/gganimate.html
 
 
-*  Can you do this animated? https://gganimate.com/articles/gganimate.html
+
+The magnitude of the estimation errors is expressed in unites of **standard errors**:
+$$
+\operatorname{SE}(\hat\beta_0)=\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]
+$$
+and
+$$
+\operatorname{SE}(\hat\beta_1)=\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2},
+$$
+where $Var(\epsilon)=\sigma^2\Leftrightarrow \operatorname{SD}(\epsilon)=\sqrt{Var(\epsilon)}=\sigma$. 
+
+Typically, $\sigma$ is unknown, but can be estimated by 
+$$
+\sigma\approx\hat{\sigma}=\operatorname{RSE}=\sqrt{\frac{\operatorname(RSS)}{n-2}},
+$$
+where we subtract $2$ from the sampel size $n$ since $n-2$ are the remaining degrees of freedom in the data after estimating two parameters $\hat\beta_0$ and $\hat\beta_1$. 
+
+
+Knowing $\operatorname{SE}(\hat\beta_0)$ and $\operatorname{SE}(\hat\beta_1)$ allows us to construct **Confidence Intervals**:
+$$
+\begin{align*}
+\operatorname{CI}_{\beta_1}
+&=\left[\hat{\beta_1}-2\operatorname{SE}(\hat\beta_1),\;
+        \hat{\beta_1}+2\operatorname{SE}(\hat\beta_1)\right]\\
+&=\hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
+\end{align*}
+$$
+likewise for $\operatorname{CI}_{\beta_1}$. 
+
+**Interpretation:** There is approximately a 95% change (in infinite resamplings) that the (random) confidence interval $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$.
+
+Thus, a given confidence interval either contains the true parameter value or not and we usually do not know it. To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
+
+* [Interactive visualization for interpreting confidence intervals](https://rpsychologist.com/d3/ci/)
+
+
+Standard errors can also be used to do hypothesis testing: 
+
+$$
+\begin{align*}
+H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
+H_1:&\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
+\end{align*}
+$$
+
+$t$-test statistic
+
+$$
+t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-1)}
+$$
+
+
+$p$-value
+
+$$
+\begin{align*}
+p
+&=P_{H_0}\left(|t|\geq|t_{obs}|\right)
+&=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\},
+\end{align*}
+$$
+where $t_{obs}$ denotes the observed value of the $t$-test statistic and where $t$ is $t$-distributed with $(n-2)$ degrees of freedom. 
+
+Select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$) and reject $H_0$ if 
+$$
+p<\alpha
+$$
+
+![](images/Tab_3_1.png)
+
+
+### Assessing the Accuracy of the Model (Ch. 3.1.3)
+
+In *tendency* an accurate model has ...
+
+* a low $\operatorname{RSE}$
+$$
+\operatorname{RSE}=\hat\sigma=\sqrt{\frac{\operatorname{RSS}}{n-2}}$
+$$
+
+* a high $R^2$
+
+$$
+R^2=\frac{\operatorname{TSS}-\operatorname{RSS}}{\operatorname{TSS}}=1-\frac{\operatorname{RSS}}{\operatorname{TSS}},
+$$
+
+where $0\leq R^2\leq 1$ and 
+
+$$
+\begin{align*}
+\operatorname{TSS}&=\sum_{i=1}^n\left(y_i-\bar{y}\right)^2\\ 
+\operatorname{RSS}&=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2\\ 
+\hat{y}_i&=\hat\beta_0+\hat\beta_1x_i
+\end{align*}
+$$
+
+**Caution:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus $\operatorname{RSE}\approx 0$ and $R^2\approx 1$ can be warning signals indicating overfitting. 
+
+In the case of the simple linear regression model it hold that
+
+$$
+R^2 = r^2,
+$$
+where 
+$$
+r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}
+$$
+
+
+## Multiple Linear Regression (Ch. 3.2) {-}
+
+
+The multiple linear regression model allows for more than only one predictor:  
+$$
+Y\approx \beta_0 + \beta_1 X_1 +  \dots + \beta_p X_p + \epsilon
+$$
+
+For instance,
+<center>
+`sales` $\approx \beta_0 + \beta_1$ `TV` $+\beta_2$ `radio` $+\beta_3$ `newspaper` $+\epsilon$
+</center>
+
+### Estimating the Regression Coefficients (Ch. 3.2.1) {-}
+
+Select 
+
+$$
+\hat\beta_0,\dots,\hat\beta_p
+$$ 
+by minimizing 
+$$
+\operatorname{RSS}=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2,
+$$
+where 
+$$
+\hat{y}_i=\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}
+$$
+
+
+![](images/Fig_3_4.png)
+
+
+Multiple linear regression is more than mere composition of single simple linear regression models. 
+
+Take a look at the following two simple linear regression results: 
+
+![](images/Tab_3_3.png)
+
+Here both the effects of `radio` and of `newspaper` are statistically significant on `sales`. 
+
+By contrast, when looking at the multiple linear regression when regressing `sales` onto both `radio` and `newspaper` only `radio` remains statistically significant: 
+
+![](images/Tab_3_4.png)
+
+
+**Reasoning:** 
+
+* `newspaper` has actually no effect on `sales`
+* `radio` has an effect on `sales`
+* But, `newspaper` is "strongly" correlated with `radio` (cor(`newspaper`,`radio`)=0.3541)
+
+![](images/Tab_3_5.png)
+
+Thus, wen omitting `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio`. This is called a *Omitted Variable Bias*.
+
+Conclusion: Simple linear regression can be dangerous. We need to control for all possibly relevant variables if we want to interpret the esitmation results ("Inference"). 
+
+**Interpretation of Coefficients:** For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
+
+
+### Some Important Questions (Ch. 3.2.2) {-}
+
+**1. Is There a Relationship Between the Response and Predictors?**
+
+
+$$
+\begin{align*}
+H_0:&\;\beta_1=\beta_2=\dots=\beta_p=0\\ 
+H_1:&\;\text{at least one $\beta_j\neq 0$; $j=1,\dots,p$}
+\end{align*}
+$$
+
+$F$-test statistic
+$$
+F=\frac{(\operatorname{TSS}-\operatorname{RSS})/p}{\operatorname{
+  RSS}/(n-p-1)}
+$$
+
+If $H_0$ is correct
+$$
+\begin{align*}
+E(\operatorname{RSS}/(n-p-1))&=\sigma^2\\ 
+E((\operatorname{TSS}-\operatorname{RSS})/p)&=\sigma^2\\ 
+\end{align*}
+$$
+
+
+* Thus, if $H_0$ is correct, we expect values of $F\approx 1$. 
+* But if $H_1$ is correct, we expect values of $F\gg 1$.
+
+
+Caution: Cannot be computed if $p>n$. (Chapter 6 on "high dimensional problems")
 
 
 ### Potential Problems (Ch. 3.3.3) {-}

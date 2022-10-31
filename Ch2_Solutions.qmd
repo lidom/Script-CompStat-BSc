@@ -37,12 +37,12 @@ obs0 <- c(0, 0, 0)
 Dist <- numeric(length = 6)
 
 # Compute and store the Euclidean distances
-Dist[1] <- (dist1 <- sqrt(sum((obs1-obs0)^2)) )
-Dist[2] <- (dist2 <- sqrt(sum((obs2-obs0)^2)) )
-Dist[3] <- (dist3 <- sqrt(sum((obs3-obs0)^2)) )
-Dist[4] <- (dist4 <- sqrt(sum((obs4-obs0)^2)) )
-Dist[5] <- (dist5 <- sqrt(sum((obs5-obs0)^2)) )
-Dist[6] <- (dist6 <- sqrt(sum((obs6-obs0)^2)) )
+Dist[1] <- sqrt(sum((obs1-obs0)^2)) 
+Dist[2] <- sqrt(sum((obs2-obs0)^2)) 
+Dist[3] <- sqrt(sum((obs3-obs0)^2)) 
+Dist[4] <- sqrt(sum((obs4-obs0)^2)) 
+Dist[5] <- sqrt(sum((obs5-obs0)^2)) 
+Dist[6] <- sqrt(sum((obs6-obs0)^2))  
 
 # Print the results
 Dist
