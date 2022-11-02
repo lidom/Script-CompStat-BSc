@@ -1,6 +1,8 @@
 # Linear Regression
 
-## Simple Linear Regression (Ch. 3.1) {-}
+## Lecture Notes
+
+## (Ch. 3.1) Simple Linear Regression {-}
 
 The linear regression model assumes a *linear relationship* between $Y$ and the predictor(s) $X$. 
 
@@ -14,7 +16,7 @@ For instance,
 `sales` $\approx \beta_0 + \beta_1$ `TV`
 </center>
 
-### Estimating the Coefficients (Ch. 3.1.1)  {-}
+### (Ch. 3.1.1) Estimating the Coefficients {-}
 
 We choose $\hat\beta_0$ and $\hat\beta_1$ such that the Residual Sum of Squares criterion is minimized:
 $$
@@ -43,7 +45,7 @@ $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$.
 ![](images/Fig_3_2.png)
 
 
-### Assessing the Accuracy of the Coefficient Estimates (Ch. 3.1.2) {-}
+### (Ch. 3.1.2) Assessing the Accuracy of the Coefficient Estimates {-}
 
 True unknown model 
 $$
@@ -68,9 +70,7 @@ $$
 \operatorname{Bias}(\hat\beta_1)&=E(\hat\beta_1)-\beta_1=0
 \end{align*}
 $$
-I.e., on average, the estimation results equal the true (unknown) parameters. However, in an actual data analysis, we only have one realization of the estimators $\hat\beta_0$ and $\hat\beta_1.$ 
-
-And, of course, there are estimation errors, i.e., 
+I.e., on average, the estimation results equal the true (unknown) parameters. However, in an actual data analysis, we only have one realization of the estimators $\hat\beta_0$ and $\hat\beta_1$ computed from one give dataset and thus we cannot compute averages of estimation results. Each single estimation result will have estimation errors, i.e., 
 $$
 \hat\beta_0\neq \beta_0\quad\text{and}\quad\hat\beta_1\neq \beta_1.
 $$ 
@@ -206,13 +206,13 @@ $$
 ![](images/Tab_3_1.png)
 
 
-### Assessing the Accuracy of the Model (Ch. 3.1.3)
+### (Ch. 3.1.3) Assessing the Accuracy of the Model {-}
 
-In *tendency* an accurate model has ...
+In tendency an accurate model has ...
 
 * a low $\operatorname{RSE}$
 $$
-\operatorname{RSE}=\hat\sigma=\sqrt{\frac{\operatorname{RSS}}{n-2}}$
+\operatorname{RSE}=\hat\sigma=\sqrt{\frac{\operatorname{RSS}}{n-2}}
 $$
 
 * a high $R^2$
@@ -231,16 +231,21 @@ $$
 \end{align*}
 $$
 
-**Caution:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus $\operatorname{RSE}\approx 0$ and $R^2\approx 1$ can be warning signals indicating overfitting. 
+**Caution:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
 
-In the case of the simple linear regression model it hold that
+* very low $\operatorname{RSE}$ values, $\operatorname{RSE}\approx 0$, and 
+* very high $R^2$ values, $R^2\approx 1$, 
 
+can be warning signals indicating overfitting. 
+
+
+In the case of the simple linear regression model, $R^2$ equals the squared sample correlation coefficient between $Y$ and $X$,
 $$
 R^2 = r^2,
 $$
 where 
 $$
-r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}
+r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
 $$
 
 
@@ -257,7 +262,9 @@ For instance,
 `sales` $\approx \beta_0 + \beta_1$ `TV` $+\beta_2$ `radio` $+\beta_3$ `newspaper` $+\epsilon$
 </center>
 
-### Estimating the Regression Coefficients (Ch. 3.2.1) {-}
+
+
+### (Ch. 3.2.1) Estimating the Regression Coefficients {-}
 
 Select 
 
@@ -283,32 +290,33 @@ Take a look at the following two simple linear regression results:
 
 ![](images/Tab_3_3.png)
 
-Here both the effects of `radio` and of `newspaper` are statistically significant on `sales`. 
+Thus in separate simple linear regressions, the effects of `radio` and the effect of `newspaper` on `sales` are both (but separately) statistically. 
 
-By contrast, when looking at the multiple linear regression when regressing `sales` onto both `radio` and `newspaper` only `radio` remains statistically significant: 
+By contrast, when looking at the multiple linear regression when regressing `sales` onto both `radio` and `newspaper`, only the effect of `radio` remains statistically significant: 
 
 ![](images/Tab_3_4.png)
 
 
-**Reasoning:** 
+**Reason: Omitted Variable Bias** 
 
-* `newspaper` has actually no effect on `sales`
 * `radio` has an effect on `sales`
-* But, `newspaper` is "strongly" correlated with `radio` (cor(`newspaper`,`radio`)=0.3541)
+* `newspaper` has actually no effect on `sales`
+* But, `newspaper` is "strongly" correlated with `radio` (cor(`newspaper`,`radio`)=0.3541); see Table 3.5
 
 ![](images/Tab_3_5.png)
 
-Thus, wen omitting `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio`. This is called a *Omitted Variable Bias*.
+* Thus, when omitting `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio`. This is called a *Omitted Variable Bias*.
 
-Conclusion: Simple linear regression can be dangerous. We need to control for all possibly relevant variables if we want to interpret the esitmation results ("Inference"). 
+Conclusion: Simple linear regression can be dangerous. We need to control for all possibly relevant variables if we want to interpret the estimation results ("Inference"). 
 
-**Interpretation of Coefficients:** For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
+**Interpretation of the Coefficients in Table 3.5** 
+
+For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
 
 
-### Some Important Questions (Ch. 3.2.2) {-}
+### (Ch. 3.2.2) Some Important Questions {-}
 
 **1. Is There a Relationship Between the Response and Predictors?**
-
 
 $$
 \begin{align*}
@@ -339,7 +347,243 @@ $$
 Caution: Cannot be computed if $p>n$. (Chapter 6 on "high dimensional problems")
 
 
-### Potential Problems (Ch. 3.3.3) {-}
+## (Ch. 3.3) Other Considerations in the Regression Model {-}
+
+### (Ch. 3.3.1) Qualitative Predictors {-}
+
+Often some predictors are *qualitative* variables (also known as a *factor* variables). For instance, the `Credit` dataset contains the following qualitative predictors: 
+
+* `own` (house ownership)
+* `student` (student status)
+* `status` (marital status) 
+* `region` (East, West or South)
+
+
+#### Predictors with Only Two Levels {-}
+
+If a qualitative predictor (factor) only has two levels (i.e. possible values), then incorporating it into a regression model is very simple. We simply create an indicator or **dummy variable** that takes on two possible numerical values; for instance,
+$$
+x_{i} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person owns a house}\\
+  0&\quad \text{if the $i$th person does not own a house.}
+  \end{array}\right.
+$$
+Using this dummy variable as a predictor in the regression equation results in the following regression model:
+$$
+y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
+  \begin{array}{ll}
+  \beta_0 + \beta_1&\quad \text{if the $i$th person owns a house}\\
+  \beta_0&\quad \text{if the $i$th person does not own a house}
+  \end{array}\right.
+$$
+
+**Interpretation:**
+
+* $\beta_0$: The average credit card balance among those who do not own a house
+* $\beta_0+\beta_1$: The average credit card balance among those who do own a house
+* $\beta_1$: The average difference in credit card balance between owners and non-owners
+
+![](images/Tab_3_7.png)
+
+Alternatively, instead of a 0/1 coding scheme, we could create a dummy variable
+$$
+x_{i} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person owns a house}\\
+  -1&\quad \text{if the $i$th person does not own a house.}
+  \end{array}\right.
+$$
+$$
+y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
+  \begin{array}{ll}
+  \beta_0 + \beta_1&\quad \text{if the $i$th person owns a house}\\
+  \beta_0 - \beta_1&\quad \text{if the $i$th person does not own a house}
+  \end{array}\right.
+$$
+
+**Interpretation:**
+
+* $\beta_0$: The overall average credit card balance (ignoring the house ownership effect)
+* $\beta_1$: The average amount by which house owners and non-owners have credit card balances that are above and below the overall average, respectively.
+
+
+#### Qualitative Predictors with More than Two Levels {-}
+
+When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the `region` $\in\{`South`, `West`, `East`\}$ variable we create **two** dummy variables. The first could be
+$$
+x_{i1} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person is from the South}\\
+  0&\quad \text{if the $i$th person is not from the South,}
+  \end{array}\right.
+$$
+and the second could be
+$$
+x_{i2} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person is from the West}\\
+  0&\quad \text{if the $i$th person is not from the West.}
+  \end{array}\right.
+$$
+Using both of these dummy variables results in the following regression model:
+order to obtain the model
+$$
+y_{i}=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i = \left\{
+  \begin{array}{ll}
+  \beta_0 + \beta_1 & \quad \text{if the $i$th person is from the South}\\
+  \beta_0 + \beta_2 & \quad \text{if the $i$th person is from the West}\\ 
+  \beta_0           & \quad \text{if the $i$th person is from the East.}\\ 
+  \end{array}\right.
+$$
+
+
+**Interpretation:**
+
+* $\beta_0$: The average credit card balance for individuals from the East
+* $\beta_1$: The difference in the average balance between people from the South versus the East
+* $\beta_2$: The difference in the average balance between people from the West versus the East
+
+![](images/Tab_3_8.png)
+
+
+
+There are many different ways of coding qualitative variables besides the dummy variable approach taken here. All of these approaches lead to equivalent model fits, but the coefficients are different and have different interpretations, and are designed to measure particular **contrasts**. (A detailed discussion of *contrasts* is beyond the scope of this lecture.)
+
+
+### (Ch. 3.3.2) Extensions of the Linear Model {-}
+
+#### Interaction Effects: Removing the Additive Assumption using Interaction Effects {-}
+
+Previously, we used the following model 
+
+<center>
+`sales` $= \beta_0 + \beta_1$ `TV` $+ \beta_2$ `radio` $+ \beta_3$ `newspaper` $+\epsilon$
+</center>
+
+which states that the average increase in sales associated with a one-unit increase in `TV` is always $\beta_1,$ regardless of the amount spent on radio.
+
+
+However, this simple model may be incorrect. Suppose that there is a synergy effect, such that spending money on radio advertising actually increases the effectiveness of TV advertising. 
+
+
+Figure 3.5 suggests that such an effect may be present in the advertising data: 
+
+* When levels of either `TV` or `radio` are low, then the true `sales` are lower than predicted by the linear model. 
+* But when advertising is split between the two media, then the model tends to **underestimate** sales.
+![](images/Fig_3_5.png)
+
+
+**Solution: Interaction Effects:**
+
+Consider the standard linear regression model with two variables,
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon.
+$$
+Here each predictor $X_1$ and $X_2$ has a given effect, $\beta_1$ and $\beta_2$, on $Y$ and this effect does not depend on the value of the other predictor. (Additive Assumption)
+
+One way of extending this model is to include a third predictor, called an **interaction term**, which is constructed by computing the product of $X_1$ and $X_2.$ This results in the model
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1X_2 + \epsilon.
+$$
+This is a powerful extension relaxing the additive assumption. Notice that the model can now be written as
+$$
+\begin{align*}
+Y &= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 + \beta_2 X_2 + \epsilon,
+\end{align*}
+$$
+where the new slope parameter $\tilde{\beta}_2$ is a linear function of $X_2$
+$$
+\tilde{\beta}_1\equiv\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
+$$
+
+Thus, a change in the value of $X_2$ will change the association between $X_1$ and $Y.$ 
+
+A similar argument shows that a change in the value of $X_1$ changes the association between $X_2$ and $Y.$
+
+
+Let us return to the `Advertising` example. A linear model that uses `radio`, `TV`, and an interaction, `radio`$\times$`radio`, between the two to predict `sales` takes the
+form 
+
+<center>
+`sales` $= \beta_0 + \beta_1\times$ `TV` $+ \beta_2\times$ `radio` $+ \beta_3\times($ `radio`$\times$ `TV`$)+\epsilon$
+</center>
+
+which can be rewritten as
+
+<center>
+`sales` $=\beta_0 + (\beta_1+ \beta_3\times$ `radio` $)\times$ `TV` $+ \beta_2\times$ `radio`  $+\epsilon$
+</center>
+
+
+<br>
+
+**Interpretation:** 
+
+* $\beta_3$ denotes the increase in the effectiveness of TV advertising associated with a one-unit increase in radio advertising (or vice-versa).
+
+![](images/Tab_3_9.png)
+
+
+**Interpretation of Table 3.9:**
+
+* Both (separate) main effects, `TV` and `radio`, are statistically significant ($p$-values smaller than 0.01). 
+* Additionally, the $p$-value for the interaction term, `TV`$\times$`radio`, is extremely low, indicating that there is strong evidence for $H_a: \beta_3\neq 0.$ In other words, it is clear that the true relationship is not additive. 
+
+
+
+**Hierarchical Principle:**
+
+If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
+
+
+**Interactions with Qualitative Variables:**
+
+An interaction between a qualitative variable and a quantitative variable has a particularly nice interpretation. 
+
+
+Consider the `Credit` data set and suppose that we wish to predict `balance` using the predictors: 
+
+* `income` (quantitative) and 
+* `student` (qualitative) variables. 
+
+In the absence of an interaction term, the model takes the form
+![](images/Eq_3_34.png)
+
+Thus, the regression lines for students and non-students have different intercepts, $\beta_0+\beta_2$ versus $\beta_0$, but the same slope $\beta_2$.
+
+This represents a potentially serious limitation of the model, since in fact a change in `income` may have a very different effect on the credit card balance of a student versus a non-student.
+
+This limitation can be addressed by adding an interaction variable, created by multiplying `income` with the dummy variable for student. Our model now becomes
+![](images/Eq_3_35.png)
+
+Now we have different intercepts for students and non-students but also different slopes for these groups. 
+![](images/Fig_3_7.png)
+
+
+#### Polynomial Regression: Non-linear Relationships {-}
+
+Polynomial regression allows to accommodate non-linear relationships between the predictors $X$ and the outcome $Y.$
+![](images/Fig_3_8.png)
+
+
+For example, the points in Figure 3.8 seem to have a quadratic shape, suggesting that a model of the form
+
+<center>
+`mpg` $=\beta_0 + \beta_1\times$ `horsepower` $+ \beta_2\times($`horsepower`$)^2+\epsilon$
+</center>
+
+
+
+This regression model involves predicting `mpg` using a non-linear function of `horsepower`. **But it is still a linear model!** It's simply a multiple linear regression model with $X_1=$`horsepower` and $X_2 =($`horsepower`$)^2.$ 
+
+So we can use standard linear regression software to estimate $\beta_0$, $\beta_1$, and $\beta_2$ in order to produce a non-linear fit. 
+
+![](images/Tab_3_10.png)
+
+
+### (Ch. 3.3.3) Potential Problems {-}
+
 
 **1. Non-linearity of the response-predictor relationships.**
 
@@ -403,9 +647,9 @@ $$
 The standard formulas for standard errors, confidence intervals, and hypothesis tests associated with the linear model rely upon this assumption.
 
 
-One can identify non-constant variances in the errors ("heteroscedasticity"), from the using diagnostic residual plots. Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. 
+One can identify **non-constant variances "heteroscedasticity"** in the errors, using diagnostic residual plots. 
 
-When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
+Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values which indicates. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
 $$
 \log(Y)\;\text{ or }\; \sqrt{Y}.
 $$
@@ -433,12 +677,11 @@ of an observation during data collection.
 
 Outliers typically have a strong effect on the $R^2$ value since they add a very large residual to its computation. 
 
-Figure 3.12 in the textbook `ISLR` shows an outlier (observation 20) which has a typical predictor value $x_i$. Such outliers have little effect on the regression fit. 
+Figure 3.12 in the textbook `ISLR` shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$. Such outliers have little effect on the regression fit.
 ![](images/Fig_3_12.png)
 
 
-Figure 3.13 in the textbook `ISLR` shows an outlier (observation 41) which a predictor value $x_i$ that is very atypical. Such outliers have large **leverage** giving them power to considerable affect the regression fit. 
-
+Figure 3.13 in the textbook `ISLR` shows again a clear outlier (observation 41) which has a predictor value $x_i$ that is *very atypical*. Such outliers are said to have  large **leverage** giving them power to affect the regression fit considerably. 
 ![](images/Fig_3_13.png)
 
 
@@ -447,7 +690,7 @@ Summary: Critical outliers have both, large residuals *and* large leverage.
 
 **5. High Leverage Points**
 
-In order to quantify an observation's leverage, we compute the leverage statistic. A large value of this statistic indicates an observation with high leverage. For a simple linear regression,
+In order to quantify an observation's leverage, we compute the **leverage statistic** $h_i$ for each observation $i=1,\dots,n.$ A large value of this statistic indicates an observation with high leverage. For a simple linear regression,
 $$
 h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_j-\bar{x})^2}
 $$
@@ -470,8 +713,8 @@ library("ISLR2")
 data(Credit) # names(Credit)
 
 par(mfrow=c(1,2))
-plot(y = Credit$Age,    x = Credit$Limit, main = "Not Collinear", ylab = "Age", xlab = "Limit")
-plot(y = Credit$Rating, x = Credit$Limit, main = "High Collinearity", ylab = "Rating", xlab = "Limit")
+plot(y = Credit$Age,    x = Credit$Limit, main = "No Collinearity", ylab = "Age", xlab = "Limit")
+plot(y = Credit$Rating, x = Credit$Limit, main = "Strong Collinearity", ylab = "Rating", xlab = "Limit")
 ```
 
 
@@ -480,7 +723,7 @@ plot(y = Credit$Rating, x = Credit$Limit, main = "High Collinearity", ylab = "Ra
 ![](images/Tab_3_11.png)
 
 
-We call this situation *multicollinearity*. 
+We call this situation **multicollinearity**. 
 
 
 To detect multicollinearity issues, one can use the variance inflation factor (VIF) 
@@ -489,10 +732,10 @@ $$
 $$
 where $R^2_{X_j|X_-j}$ is the $R^2$ from a regression of $X_j$ onto all of the other predictors. 
 
-* If $R^2_{X_j|X_-j}$ is close to one, then multicollinearity is present, ans so $\operatorname{VIF}(\hat{\beta}_j)$ will be large. 
+* If $R^2_{X_j|X_-j}$ is close to one, then multicollinearity is present, and $\operatorname{VIF}(\hat{\beta}_j)$ will be large. 
 
 
-In the Credit data, a regression of balance on age, rating, and limit indicates that the predictors have VIF values of 1.01, 160.67, and 160.59. As we suspected, there is considerable collinearity in the data!
+In the `Credit` data, a regression of balance on `age`, `rating`, and `limit` indicates that the predictors have VIF values of 1.01 (`age`), 160.67 (`rating`), and 160.59 (`limit`). Thus, as we suspected, there is considerable collinearity in the data!
 
 
 Possible solutions:
@@ -508,14 +751,14 @@ fit, since the presence of collinearity implies that the information that this v
 
 
 
-### Comparison of Linear Regression with K-Nearest Neighbors (Ch. 3.5) {-}
+## (Ch. 3.5) Comparison of Linear Regression with K-Nearest Neighbors {-}
 
 
-Linear regression is an example of a parametric approach because it assumes a linear functional form for $f(X).$
+Linear regression is an example of a parametric approach because it assumes a linear model form for $f(X).$
 
 Advantages of parametric approaches:
 
-* Often easy to fit 
+* Typically easy to fit 
 * Simple interpretation
 * Simple inference
 
@@ -530,7 +773,7 @@ f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p
 $$
 
 
-Solution: **Non-parametric methods** such as *K-nearest neighbors regression* since they do not explicitly assume a parametric form for $f(X).$
+Alternative: **Non-parametric methods** such as *K-nearest neighbors regression* since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
 
 
 #### K-nearest neighbors regression (KNN regression) {-}
@@ -562,9 +805,28 @@ prediction in a region is an average of several points, and so changing one obse
 In Chapter 5, we introduce several approaches for estimating test error rates. These methods can be used to identify the optimal value of $K$ in KNN regression.
 
 
+Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
 
-Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f.$
 
+Figure 3.17 of our textbook `ISLR` provides an example with data generated from a one-dimensional linear regression model. The black solid lines represent the true $f(X)$, while the blue curves correspond to the KNN fits using $K = 1$ (left plot) and $K = 9$ (right plot). In this case, the $K = 1$ predictions are far too variable, while the smoother $K = 9$ fit is much closer to the true $f(X).$ However, since the true relationship is linear, it is hard for a non-parametric approach to compete with linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
+![](images/Fig_3_17.png)
+
+
+The blue dashed line in the left-hand panel of Figure 3.18 represents the linear regression fit to the same data. It is almost perfect. The right-hand panel of Figure 3.18 reveals that linear regression outperforms KNN for this data. 
+![](images/Fig_3_18.png)
+
+Figures 3.18 and 3.19 display situations in which KNN performs slightly worse than linear regression when the relationship is linear, but much better than linear regression for non-linear situations. 
+![](images/Fig_3_19.png)
+
+
+Unfortunately, in higher dimensions $(p>1)$, KNN often performs worse than linear regression. since non-parametric approaches suffer from the **course of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise predictors that are not associated with the response. When $p = 1$ or $p = 2$, KNN outperforms linear regression. But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
+![](images/Fig_3_20.png)
+
+
+**Course of dimensionality:**
+
+* When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors will be actually close to a given test observation $x_0.$ 
+* However, when spreading the $50$ data points over, for instance, $p=20$ dimensions, the $K$ nearest neighbors become far away from $x_0$. 
 
 
 
