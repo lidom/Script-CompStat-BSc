@@ -287,7 +287,7 @@ plot(fit.lm, col='blue')
 - The "Residuals vs Fitted" plot (top left) shows some systematic deviations of the residuals from $0$. 
 The reason is that we are imposing a straight line fit for the conditional mean function $E[Y|X]=f(X)$ which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$. 
 
-- The "Residuals vs Leverage" plot (bottom right) shows that there are some potential outliers that we can see when: standardized residuals are below $-2$  or above $+2$. Moreover, the plot shows also potentially problematic "high-leverage" points with leverage values heavily exceeding the rule-of-thumb threshold $(p+ 1)/n=8/392=0.02$. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation. 
+- The "Residuals vs Leverage" plot (bottom right) shows that there are some potential outliers that we can see when: standardized residuals are below $-2$  or above $+2$. Moreover, the plot shows also potentially problematic "high-leverage" points with leverage values heavily exceeding the rule-of-thumb threshold $(p+1)/n=8/392=0.02$. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation. 
 
 - The "Normal Q-Q" plot (top right) suggests non-normally distributed residuals--particularly the upper tail deviates from that of a normal distribution. 
 
@@ -299,14 +299,12 @@ The reason is that we are imposing a straight line fit for the conditional mean 
 **Answer:**
 
 ```{r}
-fit.lm0 <- lm(mpg ~ horsepower+cylinders+year+weight:displacement, 
-              data=Auto)
+fit.lm0 <- lm(mpg ~ horsepower+cylinders+year+weight:displacement, data=Auto)
 summary(fit.lm0)
 ```
 
 ```{r}
-fit.lm1 <- lm(mpg~horsepower+cylinders+year+weight*displacement, 
-              data=Auto)
+fit.lm1 <- lm(mpg~horsepower+cylinders+year+weight*displacement, data=Auto)
 summary(fit.lm1)
 ```
 
@@ -314,7 +312,7 @@ summary(fit.lm1)
 - Note that there is a difference between using `A:B` and `A*B` when running a regression. While the first includes only the interaction term between the variable `A` and `B`, the second one also includes the stand-alone variables `A` and `B`. 
 
 
-- Follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coeffcients are not significant.
+- Follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
 
 
 **9 f)**

@@ -564,7 +564,7 @@ y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
 </section>
 <section id="qualitative-predictors-with-more-than-two-levels" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="qualitative-predictors-with-more-than-two-levels">Qualitative Predictors with More than Two Levels</h4>
-<p>When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the <code>region</code> <span class="math inline">\(\in\{`South`, `West`, `East`\}\)</span> variable we create <strong>two</strong> dummy variables. The first could be <span class="math display">\[
+<p>When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the <code>region</code> <span class="math inline">\(\in\{\)</span><code>South</code>, <code>West</code>, <code>East</code><span class="math inline">\(\}\)</span> variable we create <strong>two</strong> dummy variables. The first could be <span class="math display">\[
 x_{i1} = \left\{
   \begin{array}{ll}
   1&amp;\quad \text{if the $i$th person is from the South}\\
@@ -666,7 +666,8 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 +
 <code>mpg</code> <span class="math inline">\(=\beta_0 + \beta_1\times\)</span> <code>horsepower</code> <span class="math inline">\(+ \beta_2\times(\)</span><code>horsepower</code><span class="math inline">\()^2+\epsilon\)</span>
 </center>
 <p>This regression model involves predicting <code>mpg</code> using a non-linear function of <code>horsepower</code>. <strong>But it is still a linear model!</strong> It’s simply a multiple linear regression model with <span class="math inline">\(X_1=\)</span><code>horsepower</code> and <span class="math inline">\(X_2 =(\)</span><code>horsepower</code><span class="math inline">\()^2.\)</span></p>
-<p>So we can use standard linear regression software to estimate <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\beta_2\)</span> in order to produce a non-linear fit. <img src="images/Tab_3_10.png" class="img-fluid"></p>
+<p>So we can use standard linear regression software to estimate <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\beta_2\)</span> in order to produce a non-linear fit.</p>
+<p><img src="images/Tab_3_10.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="ch.-3.3.3-potential-problems" class="level3 unnumbered">
@@ -783,7 +784,6 @@ h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_j-\bar{x})^2}
 <li>Simple interpretation</li>
 <li>Simple inference</li>
 </ul>
-<p>… since there are only a few parameters that need to be computed, interpreted, and tested.</p>
 <p>Disadvantages of parametric approaches:</p>
 <ul>
 <li>The parametric model assumption can be far from true; i.e. <span class="math display">\[
@@ -811,13 +811,14 @@ f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p
 <p>Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of <span class="math inline">\(f\)</span> and vice versa.</p>
 <p>Figure 3.17 of our textbook <code>ISLR</code> provides an example with data generated from a one-dimensional linear regression model. The black solid lines represent the true <span class="math inline">\(f(X)\)</span>, while the blue curves correspond to the KNN fits using <span class="math inline">\(K = 1\)</span> (left plot) and <span class="math inline">\(K = 9\)</span> (right plot). In this case, the <span class="math inline">\(K = 1\)</span> predictions are far too variable, while the smoother <span class="math inline">\(K = 9\)</span> fit is much closer to the true <span class="math inline">\(f(X).\)</span> However, since the true relationship is linear, it is hard for a non-parametric approach to compete with linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. <img src="images/Fig_3_17.png" class="img-fluid"></p>
 <p>The blue dashed line in the left-hand panel of Figure 3.18 represents the linear regression fit to the same data. It is almost perfect. The right-hand panel of Figure 3.18 reveals that linear regression outperforms KNN for this data. <img src="images/Fig_3_18.png" class="img-fluid"></p>
-<p>Figures 3.18 and 3.19 display situations in which KNN performs slightly worse than linear regression when the relationship is linear, but much better than linear regression for non-linear situations. <img src="images/Fig_3_19.png" class="img-fluid"></p>
-<p>Unfortunately, in higher dimensions <span class="math inline">\((p&gt;1)\)</span>, KNN often performs worse than linear regression. since non-parametric approaches suffer from the <strong>course of dimensionality</strong>. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise predictors that are not associated with the response. When <span class="math inline">\(p = 1\)</span> or <span class="math inline">\(p = 2\)</span>, KNN outperforms linear regression. But for <span class="math inline">\(p = 3\)</span> the results are mixed, and for <span class="math inline">\(p\geq 4\)</span> linear regression is superior to KNN. <img src="images/Fig_3_20.png" class="img-fluid"></p>
+<p>Figure 3.19 displays a non-linear situations in which KNN performs much better than linear regression. <img src="images/Fig_3_19.png" class="img-fluid"></p>
 <p><strong>Course of dimensionality:</strong></p>
+<p>Unfortunately, in higher dimensions, KNN often performs worse than linear regression, since non-parametric approaches suffer from the <strong>course of dimensionality</strong>. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e.&nbsp;redundant) predictors that are not associated with the response.</p>
 <ul>
-<li>When <span class="math inline">\(p=1\)</span>, <span class="math inline">\(50\)</span> data points can provide enough information to estimate <span class="math inline">\(f(X)\)</span> accurately using non-parametric methods since the <span class="math inline">\(K\)</span> nearest neighbors will be actually close to a given test observation <span class="math inline">\(x_0.\)</span></li>
-<li>However, when spreading the <span class="math inline">\(50\)</span> data points over, for instance, <span class="math inline">\(p=20\)</span> dimensions, the <span class="math inline">\(K\)</span> nearest neighbors become far away from <span class="math inline">\(x_0\)</span>.</li>
+<li>When <span class="math inline">\(p = 1\)</span> or <span class="math inline">\(p = 2\)</span>, KNN outperforms linear regression.</li>
+<li>But for <span class="math inline">\(p = 3\)</span> the results are mixed, and for <span class="math inline">\(p\geq 4\)</span> linear regression is superior to KNN. <img src="images/Fig_3_20.png" class="img-fluid"></li>
 </ul>
+<p>When <span class="math inline">\(p=1\)</span>, <span class="math inline">\(50\)</span> data points can provide enough information to estimate <span class="math inline">\(f(X)\)</span> accurately using non-parametric methods since the <span class="math inline">\(K\)</span> nearest neighbors can actually be close to a given test observation <span class="math inline">\(x_0.\)</span> However, when spreading the <span class="math inline">\(50\)</span> data points over a large number of, for instance, <span class="math inline">\(p=20\)</span> dimensions, even the <span class="math inline">\(K\)</span> nearest neighbors tend to become far away from <span class="math inline">\(x_0.\)</span></p>
 </section>
 </section>
 <section id="r-lab-linear-regression" class="level2" data-number="3.2">
@@ -861,15 +862,19 @@ f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p
 <pre><code>Error in eval(predvars, data, env): object 'medv' not found</code></pre>
 </div>
 </div>
-<p>The command causes an error because <code>R</code> does not know where to find the variables <code>medv</code> and <code>lstat</code>. The next line tells <code>R</code> that the variables are in <code>Boston</code>. If we attach <code>Boston</code>, the first line works fine because <code>R</code> now recognizes the variables.</p>
+<p>The command causes an error because <code>R</code> does not know where to find the variables <code>medv</code> and <code>lstat</code>.</p>
+<p>The next line tells <code>R</code> that the variables are in <code>Boston</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat, <span class="at">data =</span> Boston)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat, <span class="at">data =</span> Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, we can attach the <code>Boston</code> object:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we type <code>lm.fit</code>, some basic information about the model is output. For more detailed information, we use <code>summary(lm.fit)</code>. This gives us <span class="math inline">\(p\)</span>-values and standard errors for the coefficients, as well as the <span class="math inline">\(R^2\)</span> statistic and <span class="math inline">\(F\)</span>-statistic for the model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lm.fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lm.fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -879,7 +884,7 @@ Coefficients:
 (Intercept)        lstat  
       34.55        -0.95  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -903,21 +908,22 @@ F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>We can use the <code>names()</code> function in order to find out what other pieces of information are stored in <code>lm.fit</code>. Although we can extract these quantities by name—e.g.&nbsp;<code>lm.fit$coefficients</code>—it is safer to use the extractor functions like <code>coef()</code> to access them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "coefficients"  "residuals"     "effects"       "rank"         
  [5] "fitted.values" "assign"        "qr"            "df.residual"  
  [9] "xlevels"       "call"          "terms"         "model"        </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)       lstat 
  34.5538409  -0.9500494 </code></pre>
 </div>
 </div>
-<p>In order to obtain a confidence interval for the coefficient estimates, we can use the <code>confint()</code> command. %Type <code>confint(lm.fit)</code> at the command line to obtain the confidence intervals.</p>
+<p>In order to obtain a confidence interval for the coefficient estimates, we can use the <code>confint()</code> command.</p>
+<p>Type <code>confint(lm.fit)</code> at the command line to obtain the confidence intervals for the linear regression coefficients.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %     97.5 %
 (Intercept) 33.448457 35.6592247
@@ -926,16 +932,14 @@ lstat       -1.026148 -0.8739505</code></pre>
 </div>
 <p>The <code>predict()</code> function can be used to produce confidence intervals and prediction intervals for the prediction of <code>medv</code> for a given value of <code>lstat</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm.fit, <span class="fu">data.frame</span>(<span class="at">lstat =</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))),</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm.fit, <span class="fu">data.frame</span>(<span class="at">lstat =</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))), <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 29.80359 29.00741 30.59978
 2 25.05335 24.47413 25.63256
 3 20.30310 19.73159 20.87461</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm.fit, <span class="fu">data.frame</span>(<span class="at">lstat =</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))),</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm.fit, <span class="fu">data.frame</span>(<span class="at">lstat =</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))), <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit       lwr      upr
 1 29.80359 17.565675 42.04151
@@ -946,8 +950,8 @@ lstat       -1.026148 -0.8739505</code></pre>
 <p>For instance, the 95,% confidence interval associated with a <code>lstat</code> value of 10 is <span class="math inline">\((24.47, 25.63)\)</span>, and the 95,% prediction interval is <span class="math inline">\((12.828, 37.28)\)</span>. As expected, the confidence and prediction intervals are centered around the same point (a predicted value of <span class="math inline">\(25.05\)</span> for <code>medv</code> when <code>lstat</code> equals 10), but the latter are substantially wider.</p>
 <p>We will now plot <code>medv</code> and <code>lstat</code> along with the least squares regression line using the <code>plot()</code> and <code>abline()</code> functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk9-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -955,55 +959,55 @@ lstat       -1.026148 -0.8739505</code></pre>
 <p>There is some evidence for non-linearity in the relationship between <code>lstat</code> and <code>medv</code>. We will explore this issue later in this lab.</p>
 <p>The <code>abline()</code> function can be used to draw any line, not just the least squares regression line. To draw a line with intercept <code>a</code> and slope <code>b</code>, we type <code>abline(a, b)</code>. Below we experiment with some additional settings for plotting lines and points. The <code>lwd = 3</code> command causes the width of the regression line to be increased by a factor of 3; this works for the <code>plot()</code> and <code>lines()</code> functions also. We can also use the <code>pch</code> option to create different plotting symbols.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk10-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk10-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">pch =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">pch =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk10-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">pch =</span> <span class="st">"+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">pch =</span> <span class="st">"+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk10-4.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk10-5.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Next we examine some diagnostic plots, several of which were discussed in Section 3.3.3. Four diagnostic plots are automatically produced by applying the <code>plot()</code> function directly to the output from <code>lm()</code>. In general, this command will produce one plot at a time, and hitting <em>Enter</em> will generate the next plot. However, it is often convenient to view all four plots together. We can achieve this by using the <code>par()</code> and <code>mfrow()</code> functions, which tell <code>R</code> to split the display screen into separate panels so that multiple plots can be viewed simultaneously. For example, <code>par(mfrow = c(2, 2))</code> divides the plotting region into a <span class="math inline">\(2 \times 2\)</span> grid of panels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Alternatively, we can compute the residuals from a linear regression fit using the <code>residuals()</code> function. The function <code>rstudent()</code> will return the studentized residuals, and we can use this function to plot the residuals against the fitted values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(lm.fit), <span class="fu">residuals</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(lm.fit), <span class="fu">residuals</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk12-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(lm.fit), <span class="fu">rstudent</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(lm.fit), <span class="fu">rstudent</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk12-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>On the basis of the residual plots, there is some evidence of non-linearity. Leverage statistics can be computed for any number of predictors using the <code>hatvalues()</code> function.</p>
+<p>On the basis of the residual plots, there is some evidence of non-linearity.</p>
+<p>Leverage statistics can be computed for any number of predictors using the <code>hatvalues()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk13-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>375 
 375 </code></pre>
@@ -1015,8 +1019,8 @@ lstat       -1.026148 -0.8739505</code></pre>
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">3.2.3</span> Multiple Linear Regression</h3>
 <p>In order to fit a multiple linear regression model using least squares, we again use the <code>lm()</code> function. The syntax <code>lm(y ~ x1 + x2 + x3)</code> is used to fit a model with three predictors, <code>x1</code>, <code>x2</code>, and <code>x3</code>. The <code>summary()</code> function now outputs the regression coefficients for all the predictors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> age, <span class="at">data =</span> Boston)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> age, <span class="at">data =</span> Boston)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1041,8 +1045,8 @@ F-statistic:   309 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The <code>Boston</code> data set contains 12 variables, and so it would be cumbersome to have to type all of these in order to perform a regression using all of the predictors. Instead, we can use the following short-hand:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1078,22 +1082,22 @@ F-statistic: 108.1 on 13 and 492 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>We can access the individual components of a summary object by name (type <code>?summary.lm</code> to see what is available). Hence <code>summary(lm.fit)$r.sq</code> gives us the <span class="math inline">\(R^2\)</span>, and <code>summary(lm.fit)$sigma</code> gives us the RSE. The <code>vif()</code> function, part of the <code>car</code> package, can be used to compute variance inflation factors. Most VIF’s are low to moderate for this data. The <code>car</code> package is not part of the base <code>R</code> installation so it must be downloaded the first time you use it via the <code>install.packages()</code> function in <code>R</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: carData</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">vif</span>(lm.fit)) <span class="co"># computes the VIF statistics and sorts them</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    crim       zn    indus     chas      nox       rm      age      dis 
-1.792192 2.298758 3.991596 1.073995 4.393720 1.933744 3.100826 3.955945 
-     rad      tax  ptratio    black    lstat 
-7.484496 9.008554 1.799084 1.348521 2.941491 </code></pre>
+<pre><code>    chas    black     crim  ptratio       rm       zn    lstat      age 
+1.073995 1.348521 1.792192 1.799084 1.933744 2.298758 2.941491 3.100826 
+     dis    indus      nox      rad      tax 
+3.955945 3.991596 4.393720 7.484496 9.008554 </code></pre>
 </div>
 </div>
 <p>What if we would like to perform a regression using all of the variables but one? For example, in the above regression output, <code>age</code> has a high <span class="math inline">\(p\)</span>-value. So we may wish to run a regression excluding this predictor. The following syntax results in a regression using all predictors except <code>age</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> . <span class="sc">-</span> age, <span class="at">data =</span> Boston)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> . <span class="sc">-</span> age, <span class="at">data =</span> Boston)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1128,14 +1132,14 @@ F-statistic: 117.3 on 12 and 493 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>Alternatively, the <code>update()</code> function can be used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm.fit, <span class="sc">~</span> . <span class="sc">-</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm.fit, <span class="sc">~</span> . <span class="sc">-</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="interaction-terms" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="interaction-terms"><span class="header-section-number">3.2.4</span> Interaction Terms</h3>
 <p>It is easy to include interaction terms in a linear model using the <code>lm()</code> function. The syntax <code>lstat:black</code> tells <code>R</code> to include an interaction term between <code>lstat</code> and <code>black</code>. The syntax <code>lstat * age</code> simultaneously includes <code>lstat</code>, <code>age</code>, and the interaction term <code>lstat</code><span class="math inline">\(\times\)</span><code>age</code> as predictors; it is a shorthand for <code>lstat + age + lstat:age</code>. %We can also pass in transformed versions of the predictors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">*</span> age, <span class="at">data =</span> Boston))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">*</span> age, <span class="at">data =</span> Boston))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1164,8 +1168,8 @@ F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h3 data-number="3.2.5" class="anchored" data-anchor-id="non-linear-transformations-of-the-predictors"><span class="header-section-number">3.2.5</span> Non-linear Transformations of the Predictors</h3>
 <p>The <code>lm()</code> function can also accommodate non-linear transformations of the predictors. For instance, given a predictor <span class="math inline">\(X\)</span>, we can create a predictor <span class="math inline">\(X^2\)</span> using <code>I(X^2)</code>. The function <code>I()</code> is needed since the <code>^</code> has a special meaning in a formula object; wrapping as we do allows the standard usage in <code>R</code>, which is to raise <code>X</code> to the power <code>2</code>. We now perform a regression of <code>medv</code> onto <code>lstat</code> and <code>lstat^2</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1190,8 +1194,8 @@ F-statistic: 448.5 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The near-zero <span class="math inline">\(p\)</span>-value associated with the quadratic term suggests that it leads to an improved model. We use the <code>anova()</code> function to further quantify the extent to which the quadratic fit is superior to the linear fit.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm.fit, lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm.fit, lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1206,8 +1210,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Here Model 1 represents the linear submodel containing only one predictor, <code>lstat</code>, while Model 2 corresponds to the larger quadratic model that has two predictors, <code>lstat</code> and <code>lstat^2</code>. The <code>anova()</code> function performs a hypothesis test comparing the two models. The null hypothesis is that the two models fit the data equally well, and the alternative hypothesis is that the full model is superior. Here the <span class="math inline">\(F\)</span>-statistic is <span class="math inline">\(135\)</span> and the associated <span class="math inline">\(p\)</span>-value is virtually zero. This provides very clear evidence that the model containing the predictors <code>lstat</code> and <code>lstat^2</code> is far superior to the model that only contains the predictor <code>lstat</code>. This is not surprising, since earlier we saw evidence for non-linearity in the relationship between <code>medv</code> and <code>lstat</code>. If we type</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/chunk22-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1215,8 +1219,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>then we see that when the <code>lstat^2</code> term is included in the model, there is little discernible pattern in the residuals.</p>
 <p>In order to create a cubic fit, we can include a predictor of the form <code>I(X^3)</code>. However, this approach can start to get cumbersome for higher-order polynomials. A better approach involves using the <code>poly()</code> function to create the polynomial within <code>lm()</code>. For example, the following command produces a fifth-order polynomial fit:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>lm.fit5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> <span class="fu">poly</span>(lstat, <span class="dv">5</span>))</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>lm.fit5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> <span class="fu">poly</span>(lstat, <span class="dv">5</span>))</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1246,7 +1250,7 @@ F-statistic: 214.2 on 5 and 500 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>By default, the <code>poly()</code> function orthogonalizes the predictors: this means that the features output by this function are not simply a sequence of powers of the argument. However, a linear model applied to the output of the <code>poly()</code> function will have the same fitted values as a linear model applied to the raw polynomials (although the coefficient estimates, standard errors, and p-values will differ). In order to obtain the raw polynomials from the <code>poly()</code> function, the argument <code>raw = TRUE</code> must be used.</p>
 <p>Of course, we are in no way restricted to using polynomial transformations of the predictors. Here we try a log transformation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(medv <span class="sc">~</span> <span class="fu">log</span>(rm), <span class="at">data =</span> Boston))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(medv <span class="sc">~</span> <span class="fu">log</span>(rm), <span class="at">data =</span> Boston))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1273,7 +1277,7 @@ F-statistic: 389.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h3 data-number="3.2.6" class="anchored" data-anchor-id="qualitative-predictors"><span class="header-section-number">3.2.6</span> Qualitative Predictors</h3>
 <p>We will now examine the <code>Carseats</code> data, which is part of the <code>ISLR2</code> library. We will attempt to predict <code>Sales</code> (child car seat sales) in <span class="math inline">\(400\)</span> locations based on a number of predictors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Carseats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Carseats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sales CompPrice Income Advertising Population Price ShelveLoc Age Education
 1  9.50       138     73          11        276   120       Bad  42        17
@@ -1293,9 +1297,9 @@ F-statistic: 389.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The <code>Carseats</code> data includes qualitative predictors such as <code>shelveloc</code>, an indicator of the quality of the shelving location—that is, the space within a store in which the car seat is displayed—at each location. The predictor <code>shelveloc</code> takes on three possible values: <em>Bad</em>, <em>Medium</em>, and <em>Good</em>. Given a qualitative variable such as <code>shelveloc</code>, <code>R</code> generates dummy variables automatically. Below we fit a multiple regression model that includes some interaction terms.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> . <span class="sc">+</span> Income<span class="sc">:</span>Advertising <span class="sc">+</span> Price<span class="sc">:</span>Age, </span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Carseats)</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> . <span class="sc">+</span> Income<span class="sc">:</span>Advertising <span class="sc">+</span> Price<span class="sc">:</span>Age, </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Carseats)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1331,8 +1335,8 @@ F-statistic:   210 on 13 and 386 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The <code>contrasts()</code> function returns the coding that <code>R</code> uses for the dummy variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Carseats)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(ShelveLoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Carseats)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(ShelveLoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Good Medium
 Bad       0      0
@@ -1347,26 +1351,26 @@ Medium    0      1</code></pre>
 <h3 data-number="3.2.7" class="anchored" data-anchor-id="writing-functions"><span class="header-section-number">3.2.7</span> Writing Functions</h3>
 <p>As we have seen, <code>R</code> comes with many useful functions, and still more functions are available by way of <code>R</code> libraries. However, we will often be interested in performing an operation for which no function is available. In this setting, we may want to write our own function. For instance, below we provide a simple function that reads in the <code>ISLR2</code> and <code>MASS</code> libraries, called <code>LoadLibraries()</code>. Before we have created the function, <code>R</code> returns an error if we try to call it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'LoadLibraries' not found</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">LoadLibraries</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">LoadLibraries</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in LoadLibraries(): could not find function "LoadLibraries"</code></pre>
 </div>
 </div>
 <p>We now create the function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">library</span>(ISLR2)</span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">library</span>(MASS)</span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(<span class="st">"The libraries have been loaded."</span>)</span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">library</span>(ISLR2)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">library</span>(MASS)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(<span class="st">"The libraries have been loaded."</span>)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now if we type in <code>LoadLibraries</code>, <code>R</code> will tell us what is in the function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function() {
  library(ISLR2)
@@ -1377,7 +1381,7 @@ Medium    0      1</code></pre>
 </div>
 <p>If we call the function, the libraries are loaded in and the print statement is output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">LoadLibraries</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">LoadLibraries</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "The libraries have been loaded."</code></pre>
 </div>

@@ -410,7 +410,7 @@ $$
 
 #### Qualitative Predictors with More than Two Levels {-}
 
-When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the `region` $\in\{`South`, `West`, `East`\}$ variable we create **two** dummy variables. The first could be
+When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the `region` $\in\{$`South`, `West`, `East`$\}$ variable we create **two** dummy variables. The first could be
 $$
 x_{i1} = \left\{
   \begin{array}{ll}
@@ -762,8 +762,6 @@ Advantages of parametric approaches:
 * Simple interpretation
 * Simple inference
 
-... since there are only a few parameters that need to be computed, interpreted, and tested. 
-
 
 Disadvantages of parametric approaches: 
 
@@ -815,19 +813,21 @@ Figure 3.17 of our textbook `ISLR` provides an example with data generated from 
 The blue dashed line in the left-hand panel of Figure 3.18 represents the linear regression fit to the same data. It is almost perfect. The right-hand panel of Figure 3.18 reveals that linear regression outperforms KNN for this data. 
 ![](images/Fig_3_18.png)
 
-Figures 3.18 and 3.19 display situations in which KNN performs slightly worse than linear regression when the relationship is linear, but much better than linear regression for non-linear situations. 
+
+Figure 3.19 displays a non-linear situations in which KNN performs much better than linear regression. 
 ![](images/Fig_3_19.png)
-
-
-Unfortunately, in higher dimensions $(p>1)$, KNN often performs worse than linear regression. since non-parametric approaches suffer from the **course of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise predictors that are not associated with the response. When $p = 1$ or $p = 2$, KNN outperforms linear regression. But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
-![](images/Fig_3_20.png)
 
 
 **Course of dimensionality:**
 
-* When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors will be actually close to a given test observation $x_0.$ 
-* However, when spreading the $50$ data points over, for instance, $p=20$ dimensions, the $K$ nearest neighbors become far away from $x_0$. 
+Unfortunately, in higher dimensions, KNN often performs worse than linear regression, since non-parametric approaches suffer from the **course of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
 
+* When $p = 1$ or $p = 2$, KNN outperforms linear regression. 
+* But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
+![](images/Fig_3_20.png)
+
+
+When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ However, when spreading the $50$ data points over a large number of, for instance, $p=20$ dimensions, even the $K$ nearest neighbors tend to become far away from $x_0.$ 
 
 
 ## `R`-Lab: Linear Regression
@@ -875,10 +875,15 @@ We will start by using the `lm()` function to fit a simple  linear regression mo
 lm.fit <- lm(medv ~ lstat)
 ```
 
-The command causes an error because `R` does not know where to find the variables `medv` and `lstat`. The next line tells `R` that the variables are in `Boston`. If we attach `Boston`, the first line works fine because `R` now recognizes the variables.
+The command causes an error because `R` does not know where to find the variables `medv` and `lstat`. 
 
-```{r chunk4}
+The next line tells `R` that the variables are in `Boston`: 
+```{r chunk4a}
 lm.fit <- lm(medv ~ lstat, data = Boston)
+```
+
+Alternatively, we can attach the `Boston` object:
+```{r chunk4b}
 attach(Boston)
 lm.fit <- lm(medv ~ lstat)
 ```
@@ -898,7 +903,9 @@ names(lm.fit)
 coef(lm.fit)
 ```
 
-In order to obtain a confidence interval for the coefficient estimates, we can use the `confint()` command. %Type `confint(lm.fit)` at the command line to obtain the confidence intervals.
+In order to obtain a confidence interval for the coefficient estimates, we can use the `confint()` command. 
+
+Type `confint(lm.fit)` at the command line to obtain the confidence intervals for the linear regression coefficients.
 
 ```{r chunk7}
 confint(lm.fit)
@@ -906,10 +913,8 @@ confint(lm.fit)
 The `predict()` function can be used to produce confidence intervals and prediction intervals for the prediction of `medv` for a given value of `lstat`.
 
 ```{r chunk8}
-predict(lm.fit, data.frame(lstat = (c(5, 10, 15))),
-    interval = "confidence")
-predict(lm.fit, data.frame(lstat = (c(5, 10, 15))),
-    interval = "prediction")
+predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), interval = "confidence")
+predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), interval = "prediction")
 ```
 
 For instance, the 95\,\% confidence interval associated with a `lstat` value of 10 is $(24.47, 25.63)$, and the 95\,\% prediction interval is $(12.828, 37.28)$. As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $25.05$ for `medv` when `lstat` equals 10), but the latter are substantially wider.
@@ -927,7 +932,6 @@ The `abline()` function can be used to draw any line, not just the least squares
 
 ```{r chunk10}
 plot(lstat, medv)
-abline(lm.fit, lwd = 3)
 abline(lm.fit, lwd = 3, col = "red")
 plot(lstat, medv, col = "red")
 plot(lstat, medv, pch = 20)
@@ -963,6 +967,8 @@ plot(predict(lm.fit), rstudent(lm.fit))
 ```
 
 On the basis of the residual plots, there is some evidence of non-linearity.
+
+
 Leverage statistics can be computed for any number of predictors using the `hatvalues()` function.
 
 ```{r chunk13}
@@ -999,7 +1005,7 @@ low to moderate for this data. The `car` package is not part of the base `R` ins
 
 ```{r chunk16}
 library(car)
-vif(lm.fit)
+sort(vif(lm.fit)) # computes the VIF statistics and sorts them
 ```
 
 What if we would like to perform a regression using all of the variables but one?  For example, in the above regression output,  `age` has a high $p$-value. So we may wish to run a regression excluding this predictor.
