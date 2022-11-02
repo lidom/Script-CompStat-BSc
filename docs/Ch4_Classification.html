@@ -202,6 +202,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#lecture-notes" id="toc-lecture-notes" class="nav-link active" data-scroll-target="#lecture-notes"><span class="toc-section-number">4.1</span>  Lecture Notes</a></li>
   <li><a href="#ch.-4.1-an-overview-of-classification" id="toc-ch.-4.1-an-overview-of-classification" class="nav-link" data-scroll-target="#ch.-4.1-an-overview-of-classification">(Ch. 4.1) An Overview of Classification</a></li>
   <li><a href="#ch.-4.2-why-not-linear-regression" id="toc-ch.-4.2-why-not-linear-regression" class="nav-link" data-scroll-target="#ch.-4.2-why-not-linear-regression">(Ch. 4.2) Why Not Linear Regression?</a></li>
+  <li><a href="#ch.-4.3-logistic-regression" id="toc-ch.-4.3-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3-logistic-regression">(Ch. 4.3) Logistic Regression</a>
+  <ul class="collapse">
+  <li><a href="#ch.-4.3.1-the-logistic-model" id="toc-ch.-4.3.1-the-logistic-model" class="nav-link" data-scroll-target="#ch.-4.3.1-the-logistic-model">(Ch. 4.3.1) The Logistic Model</a></li>
+  <li><a href="#ch.-4.3.2-estimating-the-regression-coefficients" id="toc-ch.-4.3.2-estimating-the-regression-coefficients" class="nav-link" data-scroll-target="#ch.-4.3.2-estimating-the-regression-coefficients">(Ch. 4.3.2) Estimating the Regression Coefficients</a></li>
+  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">(4.3.3) Making Predictions</a></li>
+  <li><a href="#ch.-4.3.4-multiple-logistic-regression" id="toc-ch.-4.3.4-multiple-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3.4-multiple-logistic-regression">(Ch. 4.3.4) Multiple Logistic Regression</a></li>
+  <li><a href="#ch.-4.3.5-multinomial-logistic-regression" id="toc-ch.-4.3.5-multinomial-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3.5-multinomial-logistic-regression">(Ch. 4.3.5) Multinomial Logistic Regression</a></li>
+  </ul></li>
   <li><a href="#r-lab-classification" id="toc-r-lab-classification" class="nav-link" data-scroll-target="#r-lab-classification"><span class="toc-section-number">4.2</span>  <code>R</code>-Lab: Classification</a>
   <ul class="collapse">
   <li><a href="#the-stock-market-data" id="toc-the-stock-market-data" class="nav-link" data-scroll-target="#the-stock-market-data"><span class="toc-section-number">4.2.1</span>  The Stock Market Data</a></li>
@@ -267,6 +275,182 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="ch.-4.2-why-not-linear-regression" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ch.-4.2-why-not-linear-regression">(Ch. 4.2) Why Not Linear Regression?</h2>
+<p>Linear regression is often not appropriate in the case of a qualitative response.</p>
+<p>Suppose that we are trying to predict the medical condition of a patient in the emergency room on the basis of her symptoms. In this simplified example, there are three possible diagnoses:</p>
+<ul>
+<li><code>stroke</code></li>
+<li><code>drug overdose</code>, and</li>
+<li><code>epileptic seizure</code></li>
+</ul>
+<p>We can encoding these values as a quantitative response variable, <span class="math display">\[
+Y=\left\{
+    \begin{array}{ll}
+    1&amp;\quad\text{if }\texttt{stroke}\\
+    2&amp;\quad\text{if }\texttt{drug overdose}\\
+    3&amp;\quad\text{if }\texttt{epileptic seizure}\\
+    \end{array}
+\right.
+\]</span> Using this coding, least squares could be used to fit a linear regression model to predict <span class="math inline">\(Y,\)</span> but:</p>
+<ol type="1">
+<li>the results would then depend on the numeric ordering <span class="math inline">\(1&lt;2&lt;3\)</span>, even though the ordering was completely arbitrary and could have been made differently.</li>
+<li>the results would then depend on the assumption the gap <span class="math inline">\((2-1=1)\)</span> between <code>stroke</code> and <code>drug overdose</code> is comparable to the gap <span class="math inline">\((3-2=1)\)</span> between <code>drug overdose</code> and <code>epileptic seizure</code>.</li>
+</ol>
+<p>(Both quite a lot of nonsense.)</p>
+<p>If the response variable’s values did take on a natural ordering, such as <em>mild</em>, <em>moderate</em>, and <em>severe</em>, and we felt the gap between <em>mild</em> and <em>moderate</em> was similar to the gap between <em>moderate</em> and <em>severe</em>, then a 1, 2, 3 coding would be reasonable.</p>
+<p>For a binary (two level) qualitative response, the situation is better. For instance, if there are only two conditions that we need to predict (either <code>stroke</code> or <code>drug overdoes</code>), we can use a dummy variable coding <span class="math display">\[
+Y=\left\{
+    \begin{array}{ll}
+    0&amp;\quad\text{if }\texttt{stroke}\\
+    1&amp;\quad\text{if }\texttt{drug overdose}\\
+    \end{array}
+\right.
+\]</span> We could then fit a linear regression to this binary response, and predict drug overdose if <span class="math inline">\(\hat{Y}&gt; 0.5\)</span> and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.</p>
+<p>For binary responses with a <span class="math inline">\(0/1\)</span> coding, linear regression is not completely unreasonable. It can be shown that <span class="math display">\[
+Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+\]</span></p>
+<p>However, if we use linear regression, some of our estimates might be outside the <span class="math inline">\([0, 1]\)</span> interval (see Figure 4.2). <img src="images/Fig_4_2.png" class="img-fluid"></p>
+<p><strong>Summary:</strong></p>
+<ol type="a">
+<li>A classic regression method cannot accommodate a qualitative response with more than two classes</li>
+<li>A classic regression method will not provide meaningful estimates of <span class="math inline">\(Pr(Y |X),\)</span> even with just two classes.</li>
+</ol>
+<p>Thus, it is often preferable to use a classification method that is truly suited for qualitative response values.</p>
+</section>
+<section id="ch.-4.3-logistic-regression" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ch.-4.3-logistic-regression">(Ch. 4.3) Logistic Regression</h2>
+<p>Logistic regression models the probability that <span class="math inline">\(Y\)</span> belongs to a particular category.</p>
+<p>For the <code>Default</code> data, logistic regression models the conditional probability of default given values for the predictor(s). For example, the probability of default given <code>balance</code>: <span class="math display">\[
+Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
+\]</span> where <span class="math inline">\(p(\texttt{balance})\in[0,1]\)</span> is used as a short hand notation.</p>
+<p>One might predict <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> for any individual for whom <span class="math inline">\(p(\texttt{balance}) &gt; 0.5.\)</span></p>
+<p>However, <span class="math inline">\(0.5\)</span> this is not the only reasonable classification threshold. For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as <span class="math inline">\(p(\texttt{balance}) &gt; 0.1.\)</span></p>
+<section id="ch.-4.3.1-the-logistic-model" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.1-the-logistic-model">(Ch. 4.3.1) The Logistic Model</h3>
+<p>For a binary coded dependen variable <span class="math inline">\(Y\in\{0,1\}\)</span> we aim to model the relationship between <span class="math display">\[
+p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
+\]</span></p>
+<p>As discussed above, a linear regression model, e.g., <span class="math display">\[
+p(X)=\beta_0+\beta_1 X
+\]</span> can produce nonsense predictions <span class="math inline">\(p(X)&lt;0\)</span> or <span class="math inline">\(p(X)&gt;1\)</span>; see the left-hand panel of Figure 4.2.</p>
+<p>Logistic regression avoids this problem by using the <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>, <span class="math display">\[
+p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
+\]</span> To fit the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we use an estimation method called <em>maximum likelihood</em>.</p>
+<p>The right-hand panel of Figure 4.2 illustrates the fit of the logistic regression model to the <code>Default</code> data.</p>
+<p>Note that <span class="math display">\[
+\begin{align*}
+p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} \\
+%\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
+%\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
+%\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
+\Leftrightarrow \frac{p(X)}{1-p(X)} &amp;= e^{\beta_0+\beta_1 X}
+\end{align*}
+\]</span></p>
+<p>The quantity <span class="math display">\[
+\frac{p(X)}{1 − p(X)}
+\]</span> is called the <strong>odds</strong>, and can take any value between 0 and plus infinity.</p>
+<ul>
+<li>A small odds value (close to zero) indicates a low probability of default.</li>
+<li>A large odds value indicate a high probability of default.</li>
+</ul>
+<p>For instance</p>
+<ul>
+<li><p>An odds value of <span class="math inline">\(\frac{1}{4}\)</span> means that <span class="math inline">\(0.2=20\%\)</span> of the people will default <span class="math display">\[
+\frac{0.2}{1-0.2}=\frac{1}{4}
+\]</span></p></li>
+<li><p>An odds value of <span class="math inline">\(9\)</span> means that <span class="math inline">\(0.9=90\%\)</span> of the people will default <span class="math display">\[
+\frac{0.9}{1-0.9}=9
+\]</span></p></li>
+</ul>
+<p>By taking the logarithm, we arrive at <em>log odds</em> or <em>logit</em> <span class="math display">\[
+\log\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
+\]</span></p>
+<p>Thus</p>
+<ul>
+<li>increasing <span class="math inline">\(X\)</span> by one unit …</li>
+<li>changes the <em>log odds</em> by <span class="math inline">\(\beta_1\)</span></li>
+<li>multiplies the odds by <span class="math inline">\(e^{\beta_1}\)</span></li>
+</ul>
+<p><strong>Caution:</strong> The amount that <span class="math inline">\(p(X)\)</span> changes due to a one-unit change in <span class="math inline">\(X\)</span> depends on the current value of <span class="math inline">\(X.\)</span></p>
+<p>But regardless of the value of <span class="math inline">\(X\)</span>, if <span class="math inline">\(\beta_1\)</span> is positive then increasing <span class="math inline">\(X\)</span> will be associated with increasing <span class="math inline">\(p(X)\)</span>, and if <span class="math inline">\(\beta_1\)</span> is negative then increasing <span class="math inline">\(X\)</span> will be associated with decreasing <span class="math inline">\(p(X).\)</span></p>
+</section>
+<section id="ch.-4.3.2-estimating-the-regression-coefficients" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.2-estimating-the-regression-coefficients">(Ch. 4.3.2) Estimating the Regression Coefficients</h3>
+<p>In logistic regression analysis, the unknown model parameters are estimated using <em>maximum likelihood</em>.</p>
+<p>Basic intuition:</p>
+<p>Find estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that the predicted probability <span class="math inline">\(\hat{p}(x_i)\)</span> for each person <span class="math inline">\(i\)</span> corresponds as close as possible to its default status. (I.e. <span class="math inline">\(\hat{p}(x_i)\approx 1\)</span> if person <span class="math inline">\(i\)</span> defaulted and <span class="math inline">\(\hat{p}(x_i)\approx 0\)</span> if not.)</p>
+<p>This intuition can be formalized using a mathematical equation called a <em>likelihood function</em>: <span class="math display">\[
+\ell(\beta_0,\beta_1)=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))
+\]</span> The estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> this likelihood function.</p>
+<p>Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).</p>
+<p>Table 4.1 shows the coefficient estimates and related information that result from fitting a logistic regression model on the <code>Default</code> data in order to predict the probability of <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> using <code>balance</code> as the only predictor. <img src="images/Tab_4_1.png" class="img-fluid"></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>We see that <span class="math inline">\(\hat\beta_1=0.0055\)</span>; this indicates that an increase in <code>balance</code> is associated with an increase in the probability of default.</li>
+<li>To be precise, a one-unit increase in <code>balance</code> is associated with an increase in the log odds of default by 0.0055 units.</li>
+<li>The <span class="math inline">\(z\)</span>-statistic in Table 4.1 plays the same role as the <span class="math inline">\(t\)</span>-statistic in the linear regression output: a large (absolute) value of the <span class="math inline">\(z\)</span>-statistic indicates evidence against the null hypothesis <span class="math inline">\(H_0: \beta_1= 0.\)</span></li>
+</ul>
+</section>
+<section id="making-predictions" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="making-predictions">(4.3.3) Making Predictions</h3>
+<p>Once the coefficients have been estimated, we can compute the probability of <code>default</code><span class="math inline">\(=1\)</span> for any given credit card balance.</p>
+<p>For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a <code>balance</code>-value of 1,000 [USD] is <span class="math display">\[
+\begin{align*}
+\hat{p}(\texttt{balance})
+&amp;=Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})\\
+&amp;=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\
+&amp;=\frac{e^{-10.6513+ 0.0055\times 1000}}{1+e^{-10.6513+ 0.0055\times 1000}} = 0.00576 &lt; 1\%
+\end{align*}
+\]</span></p>
+<p>By contrast, the default probability for an individual with a <code>balance</code>-value of 2,000 [USD] equals <span class="math inline">\(0.586\)</span> (or <span class="math inline">\(58,6\%\)</span>) and is thus much higher.</p>
+<p><strong>Qualitative Predictors:</strong></p>
+<p><img src="images/Tab_4_2.png" class="img-fluid"></p>
+<p><span class="math display">\[
+\begin{align*}
+Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})
+&amp;=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}
+= 0.0431\\
+Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
+&amp;=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}
+= 0.0292\\
+\end{align*}
+\]</span></p>
+<p>This may indicate that students tend to have higher default probabilities than non-students. But we may missed further factors here since we only use one predictor variable.</p>
+</section>
+<section id="ch.-4.3.4-multiple-logistic-regression" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.4-multiple-logistic-regression">(Ch. 4.3.4) Multiple Logistic Regression</h3>
+<p>By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following <span class="math display">\[
+\begin{align*}
+p(X)
+&amp;=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\
+\log\left(\frac{p(X)}{1-p(X)}\right)
+&amp;= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
+\end{align*}
+\]</span> where <span class="math inline">\(X=(X_1,\dots,X_p)\)</span>, and where the unknown parameters <span class="math inline">\(\beta_0,\dots,\beta_p\)</span> are estimated by maximum likelihood. <img src="images/Tab_4_3.png" class="img-fluid"></p>
+<p>The negative coefficient for student in the multiple logistic regression indicates that for a fixed value of balance and income, a student is less likely to default than a non-student.</p>
+<!-- *  The variables `student` and `balance` are correlated. -->
+<p>Interestingly, the effect of the dummy variable <code>student[Yes]</code> is now <em>negative</em>, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was <em>positive</em>.</p>
+<p>The left-hand panel of Figure 4.3 provides a graphical illustration of this apparent paradox:</p>
+<ul>
+<li>Without considering <code>balance</code>, the (overall) default rates of students are <em>higher</em> than those of non-students (horizontal broken lines). This overall effect was shown in Table 4.2.</li>
+<li>However, for given <code>balance</code>-values, the default rate for students is <em>lower</em> than for non-students (solid lines).</li>
+</ul>
+<p><img src="images/Fig_4_3.png" class="img-fluid"></p>
+<p>The right-hand panel of Figure 4.3 provides an explanation for this discrepancy:</p>
+<ul>
+<li>Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.</li>
+</ul>
+<p><strong>Summary:</strong></p>
+<ul>
+<li>An individual student with a given credit card balance will tend to have a lower probability of default than a non-student with the same credit card balance</li>
+<li>However, overall, students tend to default at a higher rate than non-students since, overall, they tend to have higher credit card balances.</li>
+</ul>
+<p>In other words: A student is riskier than a non-student if no information about the student’s credit card balance is available. However, that student is less risky than a non-student with the same credit card balance!</p>
+</section>
+<section id="ch.-4.3.5-multinomial-logistic-regression" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.5-multinomial-logistic-regression">(Ch. 4.3.5) Multinomial Logistic Regression</h3>
+<p>It is possible to extend the two-class logistic regression approach to the setting of <span class="math inline">\(K &gt; 2\)</span> classes. This extension is sometimes known as <em>multinomial logistic regression</em>.</p>
+<p>To do this, we first select a single class to serve as the baseline; without loss of generality, we select the <span class="math inline">\(K\)</span>th class for this role.</p>
+</section>
 </section>
 <section id="r-lab-classification" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="r-lab-classification"><span class="header-section-number">4.2</span> <code>R</code>-Lab: Classification</h2>

@@ -532,8 +532,8 @@ x_{i} = \left\{
 \]</span> Using this dummy variable as a predictor in the regression equation results in the following regression model: <span class="math display">\[
 y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
   \begin{array}{ll}
-  \beta_0 + \beta_1&amp;\quad \text{if the $i$th person owns a house}\\
-  \beta_0&amp;\quad \text{if the $i$th person does not own a house}
+  \beta_0 + \beta_1 + \epsilon_i &amp;\quad \text{if the $i$th person owns a house}\\
+  \beta_0 + \epsilon_i           &amp;\quad \text{if the $i$th person does not own a house}
   \end{array}\right.
 \]</span></p>
 <p><strong>Interpretation:</strong></p>
@@ -546,14 +546,14 @@ y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
 <p>Alternatively, instead of a 0/1 coding scheme, we could create a dummy variable <span class="math display">\[
 x_{i} = \left\{
   \begin{array}{ll}
-  1&amp;\quad \text{if the $i$th person owns a house}\\
-  -1&amp;\quad \text{if the $i$th person does not own a house.}
+  1 &amp;\quad \text{if the $i$th person owns a house}\\
+-1 &amp;\quad \text{if the $i$th person does not own a house.}
   \end{array}\right.
 \]</span> <span class="math display">\[
 y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
   \begin{array}{ll}
-  \beta_0 + \beta_1&amp;\quad \text{if the $i$th person owns a house}\\
-  \beta_0 - \beta_1&amp;\quad \text{if the $i$th person does not own a house}
+  \beta_0 + \beta_1 + \epsilon_i&amp;\quad \text{if the $i$th person owns a house}\\
+  \beta_0 - \beta_1 + \epsilon_i&amp;\quad \text{if the $i$th person does not own a house}
   \end{array}\right.
 \]</span></p>
 <p><strong>Interpretation:</strong></p>
@@ -579,9 +579,9 @@ x_{i2} = \left\{
 \]</span> Using both of these dummy variables results in the following regression model: order to obtain the model <span class="math display">\[
 y_{i}=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i = \left\{
   \begin{array}{ll}
-  \beta_0 + \beta_1 &amp; \quad \text{if the $i$th person is from the South}\\
-  \beta_0 + \beta_2 &amp; \quad \text{if the $i$th person is from the West}\\
-  \beta_0           &amp; \quad \text{if the $i$th person is from the East.}\\
+  \beta_0 + \beta_1  + \epsilon_i&amp; \quad \text{if the $i$th person is from the South}\\
+  \beta_0 + \beta_2  + \epsilon_i&amp; \quad \text{if the $i$th person is from the West}\\
+  \beta_0            + \epsilon_i&amp; \quad \text{if the $i$th person is from the East.}\\
   \end{array}\right.
 \]</span></p>
 <p><strong>Interpretation:</strong></p>
@@ -641,7 +641,7 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 +
 <p><strong>Interpretation of Table 3.9:</strong></p>
 <ul>
 <li>Both (separate) main effects, <code>TV</code> and <code>radio</code>, are statistically significant (<span class="math inline">\(p\)</span>-values smaller than 0.01).</li>
-<li>Additionally, the <span class="math inline">\(p\)</span>-value for the interaction term, <code>TV</code><span class="math inline">\(\times\)</span><code>radio</code>, is extremely low, indicating that there is strong evidence for <span class="math inline">\(H_a: \beta_3\neq 0.\)</span> In other words, it is clear that the true relationship is not additive.</li>
+<li>Additionally, the <span class="math inline">\(p\)</span>-value for the interaction term, <code>TV</code><span class="math inline">\(\times\)</span><code>radio</code>, is extremely low, indicating that there is strong evidence for <span class="math inline">\(H_1: \beta_3\neq 0.\)</span> In other words, it is clear that the true relationship is not additive.</li>
 </ul>
 <p><strong>Hierarchical Principle:</strong></p>
 <p>If we include an interaction in a model, we should also include the main effects, even if the <span class="math inline">\(p\)</span>-values associated with their coefficients are not significant.</p>
@@ -650,10 +650,10 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 +
 <p>Consider the <code>Credit</code> data set and suppose that we wish to predict <code>balance</code> using the predictors:</p>
 <ul>
 <li><code>income</code> (quantitative) and</li>
-<li><code>student</code> (qualitative) variables.</li>
+<li><code>student</code> (qualitative) using a dummy variable with <span class="math inline">\(x_{i2}=1\)</span> if <span class="math inline">\(i\)</span>th person is a student and <span class="math inline">\(x_{i2}=0\)</span> if not.</li>
 </ul>
 <p>In the absence of an interaction term, the model takes the form <img src="images/Eq_3_34.png" class="img-fluid"></p>
-<p>Thus, the regression lines for students and non-students have different intercepts, <span class="math inline">\(\beta_0+\beta_2\)</span> versus <span class="math inline">\(\beta_0\)</span>, but the same slope <span class="math inline">\(\beta_2\)</span>.</p>
+<p>Thus, the regression lines for students and non-students have different intercepts, <span class="math inline">\(\beta_0+\beta_2\)</span> versus <span class="math inline">\(\beta_0\)</span>, but the same slope <span class="math inline">\(\beta_1\)</span>.</p>
 <p>This represents a potentially serious limitation of the model, since in fact a change in <code>income</code> may have a very different effect on the credit card balance of a student versus a non-student.</p>
 <p>This limitation can be addressed by adding an interaction variable, created by multiplying <code>income</code> with the dummy variable for student. Our model now becomes <img src="images/Eq_3_35.png" class="img-fluid"></p>
 <p>Now we have different intercepts for students and non-students but also different slopes for these groups. <img src="images/Fig_3_7.png" class="img-fluid"></p>
@@ -695,7 +695,7 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 +
 <p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><em>Residual plots</em> are a useful graphical tool for identifying non-linearity. residual plot Given a simple linear regression model, we can plot the residuals, <span class="math display">\[
+<p><em>Residual plots</em> are a useful graphical tool for identifying non-linearity. Given a simple linear regression model, we can plot the residuals, <span class="math display">\[
 e_i = y_i - \hat{y}_i,
 \]</span> versus the predictor <span class="math inline">\(x_i.\)</span></p>
 <p>In the case of a multiple regression model, since there are multiple predictors, we instead plot the residuals versus the predicted (or fitted) values <span class="math inline">\(\hat{y}_i.\)</span> Ideally, the residual plot will show no fitted discernible pattern. The presence of a pattern may indicate a problem with some aspect of the linear model.</p>

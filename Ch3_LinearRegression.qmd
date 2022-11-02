@@ -373,8 +373,8 @@ Using this dummy variable as a predictor in the regression equation results in t
 $$
 y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
   \begin{array}{ll}
-  \beta_0 + \beta_1&\quad \text{if the $i$th person owns a house}\\
-  \beta_0&\quad \text{if the $i$th person does not own a house}
+  \beta_0 + \beta_1 + \epsilon_i &\quad \text{if the $i$th person owns a house}\\
+  \beta_0 + \epsilon_i           &\quad \text{if the $i$th person does not own a house}
   \end{array}\right.
 $$
 
@@ -390,15 +390,15 @@ Alternatively, instead of a 0/1 coding scheme, we could create a dummy variable
 $$
 x_{i} = \left\{
   \begin{array}{ll}
-  1&\quad \text{if the $i$th person owns a house}\\
-  -1&\quad \text{if the $i$th person does not own a house.}
+  1 &\quad \text{if the $i$th person owns a house}\\
+ -1 &\quad \text{if the $i$th person does not own a house.}
   \end{array}\right.
 $$
 $$
 y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
   \begin{array}{ll}
-  \beta_0 + \beta_1&\quad \text{if the $i$th person owns a house}\\
-  \beta_0 - \beta_1&\quad \text{if the $i$th person does not own a house}
+  \beta_0 + \beta_1 + \epsilon_i&\quad \text{if the $i$th person owns a house}\\
+  \beta_0 - \beta_1 + \epsilon_i&\quad \text{if the $i$th person does not own a house}
   \end{array}\right.
 $$
 
@@ -431,9 +431,9 @@ order to obtain the model
 $$
 y_{i}=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i = \left\{
   \begin{array}{ll}
-  \beta_0 + \beta_1 & \quad \text{if the $i$th person is from the South}\\
-  \beta_0 + \beta_2 & \quad \text{if the $i$th person is from the West}\\ 
-  \beta_0           & \quad \text{if the $i$th person is from the East.}\\ 
+  \beta_0 + \beta_1  + \epsilon_i& \quad \text{if the $i$th person is from the South}\\
+  \beta_0 + \beta_2  + \epsilon_i& \quad \text{if the $i$th person is from the West}\\ 
+  \beta_0            + \epsilon_i& \quad \text{if the $i$th person is from the East.}\\ 
   \end{array}\right.
 $$
 
@@ -528,7 +528,7 @@ which can be rewritten as
 **Interpretation of Table 3.9:**
 
 * Both (separate) main effects, `TV` and `radio`, are statistically significant ($p$-values smaller than 0.01). 
-* Additionally, the $p$-value for the interaction term, `TV`$\times$`radio`, is extremely low, indicating that there is strong evidence for $H_a: \beta_3\neq 0.$ In other words, it is clear that the true relationship is not additive. 
+* Additionally, the $p$-value for the interaction term, `TV`$\times$`radio`, is extremely low, indicating that there is strong evidence for $H_1: \beta_3\neq 0.$ In other words, it is clear that the true relationship is not additive. 
 
 
 
@@ -545,12 +545,12 @@ An interaction between a qualitative variable and a quantitative variable has a 
 Consider the `Credit` data set and suppose that we wish to predict `balance` using the predictors: 
 
 * `income` (quantitative) and 
-* `student` (qualitative) variables. 
+* `student` (qualitative) using a dummy variable with $x_{i2}=1$ if $i$th person is a student and $x_{i2}=0$ if not. 
 
 In the absence of an interaction term, the model takes the form
 ![](images/Eq_3_34.png)
 
-Thus, the regression lines for students and non-students have different intercepts, $\beta_0+\beta_2$ versus $\beta_0$, but the same slope $\beta_2$.
+Thus, the regression lines for students and non-students have different intercepts, $\beta_0+\beta_2$ versus $\beta_0$, but the same slope $\beta_1$.
 
 This represents a potentially serious limitation of the model, since in fact a change in `income` may have a very different effect on the credit card balance of a student versus a non-student.
 
@@ -608,8 +608,7 @@ plot(lmobj_1, which = 1)
 plot(lmobj_2, which = 1)
 ```
 
-*Residual plots* are a useful graphical tool for identifying non-linearity. residual plot
-Given a simple linear regression model, we can plot the residuals, 
+*Residual plots* are a useful graphical tool for identifying non-linearity. Given a simple linear regression model, we can plot the residuals, 
 $$
 e_i = y_i - \hat{y}_i,
 $$ 

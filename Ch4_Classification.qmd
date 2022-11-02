@@ -31,6 +31,276 @@ table(Default$default)/n # Overall no-default and default-rate
 
 ## (Ch. 4.2) Why Not Linear Regression? {-}
 
+Linear regression is often not appropriate in the case of a qualitative response. 
+
+
+Suppose that we are trying to predict the medical condition of a patient
+in the emergency room on the basis of her symptoms. In this simplified
+example, there are three possible diagnoses: 
+
+* `stroke`
+* `drug overdose`, and
+* `epileptic seizure`
+
+We can encoding these values as a quantitative response variable,
+$$
+Y=\left\{
+    \begin{array}{ll}
+    1&\quad\text{if }\texttt{stroke}\\
+    2&\quad\text{if }\texttt{drug overdose}\\
+    3&\quad\text{if }\texttt{epileptic seizure}\\
+    \end{array}
+\right.
+$$
+Using this coding, least squares could be used to fit a linear regression model
+to predict $Y,$ but: 
+
+1. the results would then depend on the numeric ordering $1<2<3$, even though the ordering was completely arbitrary and could have been made differently.
+2. the results would then depend on the assumption the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure`. 
+
+(Both quite a lot of nonsense.) 
+
+If the response variable's values did take on a natural ordering, such as *mild*, *moderate*, and *severe*, and we felt the gap between *mild* and *moderate*
+was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
+
+For a binary (two level) qualitative response, the situation is better. For instance, if there are only two conditions that we need to predict (either `stroke` or `drug overdoes`), we can use a dummy variable coding
+$$
+Y=\left\{
+    \begin{array}{ll}
+    0&\quad\text{if }\texttt{stroke}\\
+    1&\quad\text{if }\texttt{drug overdose}\\
+    \end{array}
+\right.
+$$
+We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
+
+
+For binary responses with a $0/1$ coding, linear regression is not completely unreasonable. It can be shown that 
+$$
+Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+$$
+
+However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see Figure 4.2). 
+![](images/Fig_4_2.png)
+
+**Summary:**
+
+(a) A classic regression method cannot accommodate a qualitative response with more than two classes
+(b) A classic regression method will not provide meaningful estimates of $Pr(Y |X),$ even with just two classes. 
+
+Thus, it is often preferable to use a classification method that is truly suited for qualitative response values.
+
+
+## (Ch. 4.3) Logistic Regression {-}
+
+Logistic regression models the probability that $Y$ belongs to a particular category.
+
+For the `Default` data, logistic regression models the conditional probability of default given values for the predictor(s). For example, the probability of default given `balance`: 
+$$
+Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
+$$
+where $p(\texttt{balance})\in[0,1]$ is used as a short hand notation. 
+
+
+One might predict `default`$=$`Yes` for any individual for whom $p(\texttt{balance}) > 0.5.$
+
+However, $0.5$ this is not the only reasonable classification threshold. For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as $p(\texttt{balance}) > 0.1.$
+
+### (Ch. 4.3.1) The Logistic Model {-}
+
+For a binary coded dependen variable $Y\in\{0,1\}$ we aim to model the relationship between
+$$
+p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
+$$
+
+As discussed above, a linear regression model, e.g.,
+$$
+p(X)=\beta_0+\beta_1 X
+$$
+can produce nonsense predictions $p(X)<0$ or $p(X)>1$; see the left-hand panel of Figure 4.2.  
+
+
+Logistic regression avoids this problem by using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
+$$
+p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
+$$
+To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called *maximum likelihood*. 
+
+The right-hand panel of Figure 4.2 illustrates the fit of the logistic regression model to the `Default` data.
+
+
+Note that 
+$$
+\begin{align*}
+p(X) & = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} \\
+%\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
+%\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
+%\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
+\Leftrightarrow \frac{p(X)}{1-p(X)} &= e^{\beta_0+\beta_1 X}
+\end{align*}
+$$
+
+
+The quantity 
+$$
+\frac{p(X)}{1 − p(X)}
+$$ 
+is called the **odds**, and can take any value between 0 and plus infinity.
+
+* A small odds value (close to zero) indicates a low probability of default. 
+* A large odds value indicate a high probability of default. 
+
+For instance
+
+* An odds value of $\frac{1}{4}$ means that $0.2=20\%$ of the people will default 
+$$
+\frac{0.2}{1-0.2}=\frac{1}{4}
+$$
+
+* An odds value of $9$ means that $0.9=90\%$ of the people will default
+$$
+\frac{0.9}{1-0.9}=9
+$$
+
+
+By taking the logarithm, we arrive at *log odds* or *logit*
+$$
+\log\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
+$$
+
+
+Thus 
+
+*  increasing $X$ by one unit ... 
+  * changes the *log odds* by $\beta_1$ 
+  * multiplies the odds by $e^{\beta_1}$ 
+
+**Caution:**  The amount that $p(X)$ changes due to a one-unit change in
+$X$ depends on the current value of $X.$ 
+
+
+But regardless of the value of $X$, if $\beta_1$ is positive then increasing $X$ will be associated with increasing $p(X)$, and if $\beta_1$ is negative then increasing $X$ will be associated with decreasing $p(X).$ 
+
+
+### (Ch. 4.3.2) Estimating the Regression Coefficients {-}
+
+
+In logistic regression analysis, the unknown model parameters are estimated using *maximum likelihood*. 
+
+Basic intuition: 
+
+Find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ such that the predicted probability $\hat{p}(x_i)$ for each person $i$ corresponds as close as possible to its default status. (I.e. $\hat{p}(x_i)\approx 1$ if person $i$ defaulted and $\hat{p}(x_i)\approx 0$ if not.)
+
+This intuition can be formalized using a mathematical equation called a *likelihood function*:
+$$
+\ell(\beta_0,\beta_1)=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))
+$$
+The estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* this likelihood function.
+
+Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).
+
+
+Table 4.1 shows the coefficient estimates and related information that
+result from fitting a logistic regression model on the `Default` data in order to predict the probability of `default`$=$`Yes` using `balance` as the only predictor.
+![](images/Tab_4_1.png)
+
+
+**Interpretation:**
+
+* We see that $\hat\beta_1=0.0055$; this indicates that an increase in `balance` is associated with an increase in the probability of default. 
+* To be precise, a one-unit increase in `balance` is associated with an increase in the log odds of default by 0.0055 units.
+* The $z$-statistic in Table 4.1 plays the same role as the $t$-statistic in the linear regression output: a large (absolute) value of the $z$-statistic indicates evidence against the null hypothesis $H_0: \beta_1= 0.$
+
+
+
+### (4.3.3) Making Predictions {-}
+
+Once the coefficients have been estimated, we can compute the probability of `default`$=1$ for any given credit card balance. 
+
+
+For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a `balance`-value of 1,000 [USD] is
+$$
+\begin{align*}
+\hat{p}(\texttt{balance})
+&=Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})\\
+&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\
+&=\frac{e^{-10.6513+ 0.0055\times 1000}}{1+e^{-10.6513+ 0.0055\times 1000}} = 0.00576 < 1\%
+\end{align*}
+$$
+
+By contrast, the default probability for an individual with a `balance`-value of 2,000 [USD] equals $0.586$ (or  $58,6\%$) and is thus much higher. 
+
+
+**Qualitative Predictors:**
+
+![](images/Tab_4_2.png)
+
+$$
+\begin{align*}
+Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})
+&=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}} 
+= 0.0431\\
+Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
+&=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}} 
+= 0.0292\\
+\end{align*}
+$$
+
+This may indicate that students tend to have higher default probabilities than non-students. But we may missed further factors here since we only use one predictor variable. 
+
+
+### (Ch. 4.3.4) Multiple Logistic Regression {-}
+
+
+By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following
+$$
+\begin{align*}
+p(X)
+&=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\
+\log\left(\frac{p(X)}{1-p(X)}\right) 
+&= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
+\end{align*}
+$$
+where $X=(X_1,\dots,X_p)$, and where the unknown parameters $\beta_0,\dots,\beta_p$ are estimated by maximum likelihood.
+![](images/Tab_4_3.png)
+
+
+The negative coefficient for student in the multiple logistic regression indicates that for a fixed value of balance and income, a student is less likely to default than a non-student.
+
+
+<!-- *  The variables `student` and `balance` are correlated. -->
+
+Interestingly, the effect of the dummy variable `student[Yes]` is now *negative*, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was *positive*.
+
+The left-hand panel of Figure 4.3 provides a graphical illustration of this apparent paradox:
+
+* Without considering `balance`, the (overall) default rates of students are *higher* than those of non-students (horizontal broken lines). This overall effect was shown in Table 4.2.
+* However, for given `balance`-values, the default rate for students is *lower* than for non-students (solid lines). 
+
+![](images/Fig_4_3.png)
+
+The right-hand panel of Figure 4.3 provides an explanation for this discrepancy:
+
+* Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.
+
+
+**Summary:**
+
+* An individual student with a given credit card balance will tend to have a lower probability of default than a non-student with the same credit card balance
+* However, overall, students tend to default at a higher rate than
+non-students since, overall, they tend to have higher credit card balances.
+
+
+In other words: A student is riskier than a non-student if no information about the student's credit card balance is available. However, that student is less risky than a non-student with the same credit card balance! 
+
+
+### (Ch. 4.3.5) Multinomial Logistic Regression {-}
+
+It is possible to extend the two-class logistic regression approach to the setting of $K > 2$ classes. This extension is sometimes known as *multinomial logistic regression*. 
+
+
+To do this, we first select a single class to serve as the baseline; without loss of generality, we select the $K$th class for this role. 
+
 
 
 
