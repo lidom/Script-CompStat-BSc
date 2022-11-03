@@ -210,6 +210,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ch.-4.3.4-multiple-logistic-regression" id="toc-ch.-4.3.4-multiple-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3.4-multiple-logistic-regression">(Ch. 4.3.4) Multiple Logistic Regression</a></li>
   <li><a href="#ch.-4.3.5-multinomial-logistic-regression" id="toc-ch.-4.3.5-multinomial-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3.5-multinomial-logistic-regression">(Ch. 4.3.5) Multinomial Logistic Regression</a></li>
   </ul></li>
+  <li><a href="#ch.-4.4-discriminant-analysis-generative-models-for-classification" id="toc-ch.-4.4-discriminant-analysis-generative-models-for-classification" class="nav-link" data-scroll-target="#ch.-4.4-discriminant-analysis-generative-models-for-classification">(Ch. 4.4) Discriminant Analysis: Generative Models for Classification</a>
+  <ul class="collapse">
+  <li><a href="#ch.-4.4.1-linear-discriminant-analysis-for-p-1" id="toc-ch.-4.4.1-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#ch.-4.4.1-linear-discriminant-analysis-for-p-1">(Ch. 4.4.1) Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></a></li>
+  </ul></li>
   <li><a href="#r-lab-classification" id="toc-r-lab-classification" class="nav-link" data-scroll-target="#r-lab-classification"><span class="toc-section-number">4.2</span>  <code>R</code>-Lab: Classification</a>
   <ul class="collapse">
   <li><a href="#the-stock-market-data" id="toc-the-stock-market-data" class="nav-link" data-scroll-target="#the-stock-market-data"><span class="toc-section-number">4.2.1</span>  The Stock Market Data</a></li>
@@ -450,6 +454,63 @@ p(X)
 <h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.5-multinomial-logistic-regression">(Ch. 4.3.5) Multinomial Logistic Regression</h3>
 <p>It is possible to extend the two-class logistic regression approach to the setting of <span class="math inline">\(K &gt; 2\)</span> classes. This extension is sometimes known as <em>multinomial logistic regression</em>.</p>
 <p>To do this, we first select a single class to serve as the baseline; without loss of generality, we select the <span class="math inline">\(K\)</span>th class for this role.</p>
+<p>We model the probabilities that <span class="math inline">\(Y=k\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span>, using <span class="math inline">\(k\)</span>-specific parameters <span class="math inline">\(\beta_{k0},\dots,\beta_{kp}\)</span> with <span class="math display">\[
+p_k(x)=Pr(Y=k|X=x)=\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+\]</span> for <span class="math inline">\(k=1,\dots,K-1\)</span>, and <span class="math display">\[
+p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+\]</span></p>
+<p>For <span class="math inline">\(k=1,\dots,K-1\)</span> it holds that <span class="math display">\[
+\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\]</span></p>
+<p>Note that:</p>
+<ul>
+<li><p>The predictions <span class="math inline">\(\hat{p}_k(x)\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span> do not depend on the choice of the baseline class.</p></li>
+<li><p>However, interpretation of the coefficients in a multinomial logistic regression model must be done with care, since it is tied to the choice of baseline.</p></li>
+</ul>
+</section>
+</section>
+<section id="ch.-4.4-discriminant-analysis-generative-models-for-classification" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ch.-4.4-discriminant-analysis-generative-models-for-classification">(Ch. 4.4) Discriminant Analysis: Generative Models for Classification</h2>
+<p>We now consider an alternative and less direct approach to estimating the probabilities <span class="math inline">\(Pr(Y=K|X=x)\)</span>.</p>
+<p>Suppose that we wish to classify an observation into one of <span class="math inline">\(K\geq 2\)</span> classes.</p>
+<p><strong>Prior probability:</strong> Let <span class="math display">\[
+\pi_k=Pr(Y=k)
+\]</span> represent the overall <em>prior probability</em> that a randomly chosen observation comes from class <span class="math inline">\(k.\)</span> We have that <span class="math display">\[
+\pi_1+\dots+\pi_K=1.
+\]</span></p>
+<p><strong>Density function of <span class="math inline">\(X\)</span>:</strong> Let <span class="math display">\[
+f_k(x)=Pr(X=x|Y=k)
+\]</span> denote the (conditional) density of <span class="math inline">\(X\)</span> for an observation that comes from class <span class="math inline">\(k.\)</span></p>
+<p><strong>Posterior probability:</strong> Then <em>Bayes’ theorem</em> states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span class="math display">\[
+p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
+\]</span></p>
+<p>While logistic regression aims at estimating the posterior probability <span class="math inline">\(p_k(x)\)</span> directly, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> indirectly simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
+<p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging and we therefore have to make some simplifying assumptions. (E.g. assuming that the data is normal distributed.)</p>
+<p>We know from Chapter 2 that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers.</p>
+<p>In the following sections, we discuss three classifiers that use different estimates of <span class="math inline">\(f_k(x)\)</span> to approximate the Bayes classifier:</p>
+<ul>
+<li>linear discriminant analysis</li>
+<li>quadratic discriminant analysis</li>
+<li>Naive Bayes</li>
+</ul>
+<section id="ch.-4.4.1-linear-discriminant-analysis-for-p-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.4.1-linear-discriminant-analysis-for-p-1">(Ch. 4.4.1) Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></h3>
+
+<!-- 
+OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
+Why do we need another method, when we have logistic regression?
+There are several reasons:
+
+* When there is substantial separation between the two classes, the
+parameter estimates for the logistic regression model are surprisingly
+unstable. The methods that we consider in this section do not suffer
+from this problem.
+
+* If the distribution of the predictors $X$ is approximately normal in
+each of the classes and the sample size is small, then the approaches
+in this section may be more accurate than logistic regression.
+OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?  
+-->
 </section>
 </section>
 <section id="r-lab-classification" class="level2" data-number="4.2">

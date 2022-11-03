@@ -301,7 +301,89 @@ It is possible to extend the two-class logistic regression approach to the setti
 
 To do this, we first select a single class to serve as the baseline; without loss of generality, we select the $K$th class for this role. 
 
+We model the probabilities that $Y=k$, for $k=1,\dots,K$, using $k$-specific parameters $\beta_{k0},\dots,\beta_{kp}$ with
+$$
+p_k(x)=Pr(Y=k|X=x)=\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+$$
+for $k=1,\dots,K-1$, and
+$$
+p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+$$
 
+For $k=1,\dots,K-1$ it holds that 
+$$
+\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+$$
+
+Note that:
+
+* The predictions $\hat{p}_k(x)$, for $k=1,\dots,K$ do not depend on the choice of the baseline class. 
+
+* However, interpretation of the coefficients in a multinomial logistic
+regression model must be done with care, since it is tied to the choice
+of baseline.
+
+
+
+
+## (Ch. 4.4) Discriminant Analysis: Generative Models for Classification {-}
+
+We now consider an alternative and less direct approach to estimating the probabilities $Pr(Y=K|X=x)$.
+
+Suppose that we wish to classify an observation into one of $K\geq 2$ classes. 
+
+**Prior probability:** Let 
+$$
+\pi_k=Pr(Y=k)
+$$ 
+represent the overall *prior probability* that a randomly chosen observation comes from class $k.$ We have that 
+$$
+\pi_1+\dots+\pi_K=1.
+$$  
+
+**Density function of $X$:** Let 
+$$
+f_k(x)=Pr(X=x|Y=k)
+$$
+denote the (conditional) density of $X$ for an observation that comes from class $k.$
+
+
+**Posterior probability:** Then *Bayes' theorem* states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
+$$
+p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
+$$
+
+
+While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ indirectly simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
+
+However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions. (E.g. assuming that the data is normal distributed.)
+
+We know from Chapter 2 that the **Bayes classifier**, which classifies an observation $x$ to the class for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. 
+
+In the following sections, we discuss three classifiers that use different estimates of $f_k(x)$ to approximate the Bayes classifier: 
+
+* linear discriminant analysis
+* quadratic discriminant analysis
+* Naive Bayes
+
+### (Ch. 4.4.1) Linear Discriminant Analysis for $p = 1$ {-}
+
+
+<!-- 
+OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
+Why do we need another method, when we have logistic regression?
+There are several reasons:
+
+* When there is substantial separation between the two classes, the
+parameter estimates for the logistic regression model are surprisingly
+unstable. The methods that we consider in this section do not suffer
+from this problem.
+
+* If the distribution of the predictors $X$ is approximately normal in
+each of the classes and the sample size is small, then the approaches
+in this section may be more accurate than logistic regression.
+OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?  
+-->
 
 
 ## `R`-Lab: Classification
