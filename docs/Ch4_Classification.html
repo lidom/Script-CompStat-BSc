@@ -279,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="ch.-4.2-why-not-linear-regression" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ch.-4.2-why-not-linear-regression">(Ch. 4.2) Why Not Linear Regression?</h2>
-<p>Linear regression is often not appropriate in the case of a qualitative response.</p>
+<p>Linear regression is often not appropriate in the case of a qualitative response <span class="math inline">\(Y.\)</span></p>
 <p>Suppose that we are trying to predict the medical condition of a patient in the emergency room on the basis of her symptoms. In this simplified example, there are three possible diagnoses:</p>
 <ul>
 <li><code>stroke</code></li>
@@ -1339,7 +1339,7 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((<span class="fu">predict</span>(mod.lm) <span class="sc">-</span> <span class="fu">predict</span>(mod.lm2))<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.426274e-18</code></pre>
+<pre><code>[1] 1.586608e-18</code></pre>
 </div>
 </div>
 <p>The sum of squared differences is zero. We can also see this using the <code>all.equal()</code> function:</p>

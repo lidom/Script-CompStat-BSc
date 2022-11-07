@@ -31,12 +31,9 @@ table(Default$default)/n # Overall no-default and default-rate
 
 ## (Ch. 4.2) Why Not Linear Regression? {-}
 
-Linear regression is often not appropriate in the case of a qualitative response. 
+Linear regression is often not appropriate in the case of a qualitative response $Y.$ 
 
-
-Suppose that we are trying to predict the medical condition of a patient
-in the emergency room on the basis of her symptoms. In this simplified
-example, there are three possible diagnoses: 
+Suppose that we are trying to predict the medical condition of a patient in the emergency room on the basis of her symptoms. In this simplified example, there are three possible diagnoses: 
 
 * `stroke`
 * `drug overdose`, and
@@ -52,8 +49,7 @@ Y=\left\{
     \end{array}
 \right.
 $$
-Using this coding, least squares could be used to fit a linear regression model
-to predict $Y,$ but: 
+Using this coding, least squares could be used to fit a linear regression model to predict $Y,$ but: 
 
 1. the results would then depend on the numeric ordering $1<2<3$, even though the ordering was completely arbitrary and could have been made differently.
 2. the results would then depend on the assumption the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure`. 

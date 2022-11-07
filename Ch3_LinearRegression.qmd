@@ -629,14 +629,14 @@ in the regression model. In the later chapters, we will discuss other more advan
 **2. Correlation of Error Terms**
 
 
-An important assumption of the linear regression model is that the error
-terms, $\epsilon_1, \epsilon_2, \dots , \epsilon_n$, are uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  The **standard errors** that are computed for the estimated regression coefficients or the fitted values are based on the **assumption of uncorrelated error terms**.  If in fact there is correlation among the error terms, then the estimated standard errors will tend to **underestimate** the true standard errors. 
+An important assumption of the linear regression model is that the error terms, $\epsilon_1, \epsilon_2, \dots , \epsilon_n$, are uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  The **standard errors** that are computed for the estimated regression coefficients or the fitted values are based on the **assumption of uncorrelated error terms**.  If in fact there is correlation among the error terms, then the estimated standard errors will tend to **underestimate** the true standard errors. 
 
 
-Correlations among the error terms typically occur in time series data. 
+Correlations among the error terms typically occur in time series data (see Fig. 3.10). 
 
+![](images/Fig_3_10.png)
 
-**3. Non-constant Variance of Error Terms**
+**3. Non-Constant Variance of Error Terms**
 
 Another important assumption of the linear regression model is that the
 error terms have a constant variance, 
@@ -674,7 +674,7 @@ An outlier is a point for which $y_i$ is far from the value predicted by the out
 model. Outliers can arise for a variety of reasons, such as incorrect recording
 of an observation during data collection.
 
-Outliers typically have a strong effect on the $R^2$ value since they add a very large residual to its computation. 
+Outliers typically have a strong effect on the $R^2$ value since they add a **very large residual** to its computation. 
 
 Figure 3.12 in the textbook `ISLR` shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$. Such outliers have little effect on the regression fit.
 ![](images/Fig_3_12.png)
@@ -755,14 +755,14 @@ fit, since the presence of collinearity implies that the information that this v
 
 Linear regression is an example of a parametric approach because it assumes a linear model form for $f(X).$
 
-Advantages of parametric approaches:
+**Advantages of parametric approaches:**
 
 * Typically easy to fit 
 * Simple interpretation
 * Simple inference
 
 
-Disadvantages of parametric approaches: 
+**Disadvantages of parametric approaches:**
 
 * The parametric model assumption can be far from true; i.e.
 $$
@@ -842,20 +842,7 @@ suppressPackageStartupMessages(library(ISLR2))
 ```
 
 
-If you receive an error message when loading any of these libraries, it
-likely indicates that the corresponding library has not yet been
-installed on your system. Some libraries, such as `MASS`, come with `R`
-and do not need to be separately installed on your computer. However,
-other packages, such as `ISLR2`, must be downloaded the first time they
-are used. This can be done directly from within `R`. For example, on a
-Windows system,  select the `Install package` option
-under the `Packages` tab.  After you select any mirror site, a
-list of available packages will appear. Simply select the package you
-wish to install and `R` will automatically download the
-package. Alternatively, this can be done at the `R` command line
-via `install.packages("ISLR2")`. This installation only needs
-to be done the first time you use a package. However, the
-`library()` function must be called within each `R` session.
+If you receive an error message when loading any of these libraries, it likely indicates that the corresponding library has not yet been installed on your system. Some libraries, such as `MASS`, come with `R` and do not need to be separately installed on your computer. However, other packages, such as `ISLR2`, must be downloaded the first time they are used. This can be done directly from within `R`. For example, on a Windows system,  select the `Install package` option under the `Packages` tab.  After you select any mirror site, a list of available packages will appear. Simply select the package you wish to install and `R` will automatically download the package. Alternatively, this can be done at the `R` command line via `install.packages("ISLR2")`. This installation only needs to be done the first time you use a package. However, the `library()` function must be called within each `R` session.
 
 ### Simple Linear Regression
 
@@ -912,11 +899,13 @@ confint(lm.fit)
 The `predict()` function can be used to produce confidence intervals and prediction intervals for the prediction of `medv` for a given value of `lstat`.
 
 ```{r chunk8}
-predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), interval = "confidence")
-predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), interval = "prediction")
+predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
+        interval = "confidence")
+predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
+        interval = "prediction")
 ```
 
-For instance, the 95\,\% confidence interval associated with a `lstat` value of 10 is $(24.47, 25.63)$, and the 95\,\% prediction interval is $(12.828, 37.28)$. As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $25.05$ for `medv` when `lstat` equals 10), but the latter are substantially wider.
+For instance, the 95\% confidence interval associated with a `lstat` value of 10 is $(24.47, 25.63)$, and the 95\% prediction interval is $(12.828, 37.28)$. As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $25.05$ for `medv` when `lstat` equals 10), but the latter are substantially wider.
 
 We will now plot `medv` and `lstat` along with the least squares regression line using the `plot()` and `abline()` functions.
 
@@ -977,6 +966,12 @@ which.max(hatvalues(lm.fit))
 
 The `which.max()` function identifies the index of the largest element of a vector. In this case, it tells us which observation has the largest leverage statistic.
 
+```{r}
+sort(hatvalues(lm.fit), decreasing = TRUE)[1:3]
+```
+
+The `sort()` function can be used to sort and print values of a vector like `hatvalues(lm.fit)`.
+
 ### Multiple Linear Regression
 
 In order to fit a multiple linear regression model using least squares, we again use the `lm()` function. The syntax `lm(y ~ x1 + x2 + x3)` is used to fit a model with three predictors, `x1`, `x2`, and `x3`. The `summary()` function now outputs the regression coefficients for all the predictors.
@@ -1003,7 +998,7 @@ inflation factors.   Most VIF's are
 low to moderate for this data. The `car` package is not part of the base `R` installation so it must be downloaded the first time you use it via the `install.packages()` function in `R`.
 
 ```{r chunk16}
-library(car)
+suppressPackageStartupMessages(library(car)) # contains the vif() function
 sort(vif(lm.fit)) # computes the VIF statistics and sorts them
 ```
 
