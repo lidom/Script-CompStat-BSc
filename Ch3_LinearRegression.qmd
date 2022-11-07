@@ -817,9 +817,9 @@ Figure 3.19 displays a non-linear situations in which KNN performs much better t
 ![](images/Fig_3_19.png)
 
 
-**Course of dimensionality:**
+**Curse of dimensionality:**
 
-Unfortunately, in higher dimensions, KNN often performs worse than linear regression, since non-parametric approaches suffer from the **course of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+Unfortunately, in higher dimensions, KNN often performs worse than linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
 
 * When $p = 1$ or $p = 2$, KNN outperforms linear regression. 
 * But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
