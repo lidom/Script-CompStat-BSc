@@ -13,10 +13,10 @@
 
 **1 a)** In Table 3.4, the null hypothesis for `TV` is that in the presence of `radio` ads and `newspaper` ads, `TV` ads have no effect on sales. Similarly, the null hypothesis for `radio` is that in the presence of `TV` ads and `newspaper` ads, `radio` ads have no effect on sales.
 
-**1 b)** On the one hand, the low p-values of TV and radio allow us to reject the null hypothesis for `TV` and `radio`. Hence, we believe that `TV` (`radio`) ads have an effect on `sales` in the presence of `radio` (`TV`) and `newspaper` ads.<br>
-On the other hand, the high p-value of `newspaper` does *not* allow us to reject the null-hypothesis (of no effect, i.e. a coefficient zero). This is an inconclusive result and only says that possible effects of `newspaper` ads are not large enough to stand out from the estimation errors (quantified by the standard error). 
+**1 b)** On the one hand, the low p-values of `TV` and `radio` allow us to reject the "no effect" null hypotheses for `TV` and `radio`. Hence, we believe that `TV` (`radio`) ads have an effect on `sales` in the presence of `radio` (`TV`) and `newspaper` ads.<br>
+On the other hand, the high p-value of `newspaper` does *not* allow us to reject the "no effect" null-hypothesis. This constitutes an *inconclusive result* and only says that the possible effects of `newspaper` ads are not large enough to stand out from the estimation errors. 
 
-**Remember:** An insignificant hypothesis test-result is never informative about whether the null is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.
+**Remember:** An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.
 
 ### Exercise 2  {-}
 
@@ -24,7 +24,7 @@ Carefully explain the main difference between the KNN classifier and KNN regress
 
 **Answer:**
 
-KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for $Y$ (qualitative), where as the output for a KNN regression predicts the quantitative value for $f(X)$.
+KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for $Y$ (qualitative), given a certain predictor $x_0$, where as the output for a KNN regression predicts the quantitative value for $f(x_0)$, given a certain predictor $x_0$.
 
 ### Exercise 3 {-}
 
@@ -54,7 +54,7 @@ $$
 \begin{align*}
 &E[Y|X] = \\
 & 50 + 20\,\overbrace{GPA}^{X_1} + 0.07\,\overbrace{IQ}^{X_2} + 35\,\overbrace{Gender}^{X_3} + 
- 0.01\,\underbrace{GPA\cdot IQ}_{X_4=X_1\cdot X_2} - 10\,\underbrace{GPA\cdot Gender}_{X_5=X_1\cdot X_3}
+ 0.01\,\overbrace{GPA\cdot IQ}^{X_4=X_1\cdot X_2} - 10\,\overbrace{GPA\cdot Gender}^{X_5=X_1\cdot X_3}
 \end{align*}
 $$
 
@@ -67,6 +67,7 @@ $$
 
 
 **Answer:**
+Observe that:
 $$
 \begin{align*}
 \text{Male\; $(X_3 = 0)$:}\quad   & 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
@@ -85,31 +86,31 @@ Y_hat
 ```
 
 
-**3 c)** True or false: Since the coefficient for the $GPA\cdot IQ$ interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.
+**3 c)** True or false: Since the coefficient for the `GPA`$\times$`IQ` interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.
 
 **Answer:**
 
-False. We must examine the $p$-value of the regression coefficient to determine if the interaction term is statistically significant or not.
+False. We must examine the $p$-value (or the $t$-statistic) of the regression coefficient to determine if the interaction term is statistically significant or not.
 
 ### Exercise 8 {-}
 
 This question involves the use of simple linear regression on the `Auto` data set.
 
-**8 a)** Use the `lm()` function to perform a simple linear regression with `mpg` as the response and `horsepower` as the predictor. Use the `summary()` function to print the results. Comment on the output (see questions i) to iv) below).
+**8 a)** Use the `lm()` function to perform a simple linear regression with `mpg` as the response and `horsepower` as the predictor. Use the `summary()` function to print the results. 
 
 ```{r}
-# Store data into dataframe Auto
-Auto <- read.csv("DATA/Auto.csv", header=TRUE, na.strings="?")
+library("ISLR2")
 
-# Remove missing values from the data
-Auto <- na.omit(Auto)
+data("Auto")
 
 # Perform linear regression
-fit.lm <- lm(mpg ~ horsepower, data=Auto)
+lmObj_1 <- lm(mpg ~ horsepower, data=Auto)
 
 # Use summary function to print the results
-summary(fit.lm)
+summary(lmObj_1)
 ```
+
+Comment on the output. For example:
 
 **i)** Is there a relationship between the predictor and the response?
 
@@ -125,43 +126,46 @@ Statistical significance does not necessarily mean a practically strong or impor
 
 To quantify the strength of the relationship between the predictor and the response, we can look at the following quantities: 
 
-- Residual Standard Error `RSE` (estimate of the standard deviation of $\epsilon$)
+- Residual Standard Error (RSE) (estimate of the standard deviation of $\epsilon$) in comparison to the RSE of the trivial linear regression model with only an intercept.
 - The $R^2$ Statistic (the proportion of variance explained by the model)
-- The $F$-Statistic.
+- The $F$-Statistic
 
-The Residual Standard Error `RSE` of the regression model with `intercept` and `horsepower` as predictors is given by:
+The Residual Standard Error (RSE) of the regression model with `intercept` and `horsepower` as predictors is given by:
 
 ```{r}
-## RSE of lm(mpg ~ horsepower)
-RSS <- sum(resid(fit.lm)^2)
-n   <- length(resid(fit.lm))
+## RSE of lm(mpg ~ horsepower):
+RSS <- sum(resid(lmObj_1)^2)
+n   <- length(resid(lmObj_1))
 RSE <- sqrt(RSS/(n-2))
 round(RSE, 3)
+
+## Alternatively: 
+round(summary(lmObj_1)$sigma, 3)
 ```
 
-This is considerable smaller than the RSE of a model with only an intercept:
-
+This RSE value is considerable smaller than the RSE of a model with only an intercept:
 ```{r}
-RSS_onlyIntercept <- sum(c(Auto$mpg - mean(Auto$mpg))^2)
+lmObj_onlyIntercept <- lm(mpg ~ +1, data = Auto)
+RSS_onlyIntercept <- sum(resid(lmObj_onlyIntercept)^2)
+n                 <- length(resid(lmObj_onlyIntercept))
 RSE_onlyIntercept <- sqrt(RSS_onlyIntercept/(n-1))
 round(RSE_onlyIntercept, 3)
 ```
 
-Thus, the larger model with `horsepower` included explains more of the variances in the response variable `mpg`. 
+Thus, the larger model with `horsepower` included explains more of the variances in the response variable `mpg`. Including `horsepower` as a predictor reduces the RSE by `((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100` %; i.e. by `r round(((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100, 2)`%.
 
-The $R^2$ value
+The $R^2$ value:
 
 ```{r}
-round(summary(fit.lm)$r.squared, 2)
+round(summary(lmObj_1)$r.squared, 2)
 ```
-shows that  $60\%$ of variability in $Y$ can be explained using $X$.
-
+shows that  $60\%$ of variability in $Y$ can be explained using an intercept and `horsepower` as predictors. 
 
 The value of the $F$ statistic
 ```{r}
-round(summary(fit.lm)$fstatistic, 2)
+round(summary(lmObj_1)$fstatistic, 2)
 ```
-is much larger than $1$ which means that we probably can reject the null hypothesis that $\beta_{horsepower}=0$. 
+is much larger than $1$ which means that the linear regression model with intercept and `horsepower` fits the data significantly better than the trivial regression model with only an intercept. 
 
 
 **iii)** Is the relationship between the predictor and the response positive or negative?
@@ -171,22 +175,30 @@ is much larger than $1$ which means that we probably can reject the null hypothe
 The relationship is negative, as we can see from the parameter estimate for `horsepower`
 
 ```{r}
-coef(fit.lm)
+coef(lmObj_1)[2]
 ```
 
 **iv)** What is the predicted `mpg` associated with a `horsepower` of $98$? What are the associated $95\%$ confidence and prediction intervals?
 
 **Answer:**
 
+The predicted value plus confidence interval:
+
 ```{r}
 # Horsepower of 98
 new_df <- data.frame(horsepower = 98)
 
 # confidence interval 
-print(predict(object = fit.lm, newdata = new_df, interval = "confidence"))
+predict(object = lmObj_1, newdata = new_df, interval = "confidence")
+```
+
+The predicted value plus prediction interval:
+```{r}
+# Horsepower of 98
+new_df <- data.frame(horsepower = 98)
 
 # prediction interval
-print(predict(object = fit.lm, newdata = new_df, interval = "prediction"))
+predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 ```
 
 **8 b)** Plot the response and the predictor. Use the `abline()` function to display the least squares regression line.
@@ -195,8 +207,9 @@ print(predict(object = fit.lm, newdata = new_df, interval = "prediction"))
 
 ```{r}
 plot(x = Auto$horsepower, y = Auto$mpg, ylab = "MPG", xlab = "Horsepower")
-abline(fit.lm, col="blue")
-legend("topright", legend = c("(y,x)", expression(paste("(",hat(y),"x)"))), 
+abline(lmObj_1, col="blue")
+legend("topright", 
+       legend = c("(y,x)", expression(paste("(",hat(y),"x)"))), 
        pch=c(1,NA), lty=c(NA,1), col=c("black", "blue"))
 ```
 
@@ -206,32 +219,30 @@ legend("topright", legend = c("(y,x)", expression(paste("(",hat(y),"x)"))),
 
 ```{r}
 par(mfrow=c(2,2))
-plot(fit.lm, col='blue')
+plot(lmObj_1, col='blue')
 ```
 
-Looking at the smoothing line of the residuals ($e_i=y_i−\hat{y}_i$) vs the fitted values ($\hat{y}_i$), there is a strong pattern in the residuals, indicating non-linearity. You can see evidence of this in the scatter plot in part 8 b) too.
+Looking at the smoothing line of the residuals ($e_i=y_i−\hat{y}_i$) vs. the fitted values ($\hat{y}_i$), there is a strong pattern in the residuals, indicating non-linearity. You can see evidence of this also in the scatter plot in the answer for question 8 b).
 
-There also appears to be non-constant variance in the error terms (heteroscedasticity), but this could be corrected to an extent when trying a quadratic fit. If not, transformations such as $log(y)$ or $\sqrt{y}$ can shrink larger responses by a greater amount and reduce this issue.
+There also appears to be non-constant variance in the error terms (heteroscedasticity), but this may be corrected to an extent when trying a quadratic fit. If not, transformations such as $log(y)$ or $\sqrt{y}$ can shrink larger responses by a greater amount and reduce this issue.
 
-There are some observations with large standardized residuals & high leverage (hence, high Cook’s Distance) that may want to be reviewed.
+There are some observations with large standardized residuals & high leverage (hence, high Cook’s Distance) that we need to review.
 
 ### Exercise 9 {-}
 
-This question involves the use of multiple linear regression on the Auto data set.
+This question involves the use of multiple linear regression on the `Auto` data set.
 
 **9 a)** Produce a scatterplot matrix which includes all of the variables in the data set.
 
 **Answer:**
 
 ```{r}
-# Store data into dataframe Auto
-Auto <- read.csv("DATA/Auto.csv", header=T, na.strings="?")
+library("ISLR2")
 
-# Remove missing values from the data
-Auto <- na.omit(Auto)
+data("Auto")
 
 # Produce scatterplot matrix
-pairs(Auto[,-9])
+pairs(Auto)
 ```
 
 **9 b)** Compute the matrix of correlations between the variables using the function `cor()`. You will need to exclude the `name` variable, which is qualitative.
@@ -239,7 +250,7 @@ pairs(Auto[,-9])
 **Answer:**
 
 ```{r}
-round(cor(subset(Auto, select = -name)), 2)
+round(cor(subset(Auto, select = -name)), 1)
 ```
 
 **9 c)** Use the `lm()` function to perform a multiple linear regression with `mpg` as the response and all other variables except `name` as the predictors. Use the `summary()` function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).
@@ -249,7 +260,7 @@ round(cor(subset(Auto, select = -name)), 2)
 ```{r}
 #| scrolled: true
 # Perform multiplie linear regression
-fit.lm <- lm(mpg ~ .-name, data=Auto)
+fit.lm <- lm(mpg ~ . -name, data=Auto)
 
 # Print results
 summary(fit.lm)
@@ -259,7 +270,7 @@ summary(fit.lm)
 
 **Answer:**
 
-Yes, there is a relationship between the predictors and the response. By testing the null hypothesis of whether all the regression coefficients are zero (i.e. H$_0$: $\beta_1=\dots=\beta_7=0$), we can see that the $F$-statistic is big and its $p$-value is close to zero, indicating evidence against the null hypothesis.
+Yes, there is a relationship between the predictors and the response. By testing the null hypothesis of whether all (except intercept) the regression coefficients are zero (i.e. H$_0$: $\beta_1=\dots=\beta_7=0$), we can see that the $F$-statistic is big and its $p$-value is close to zero, indicating evidence against the null hypothesis.
 
 **9 c ii)** Which predictors appear to have a statistically significant relationship to the response?
 
@@ -267,7 +278,10 @@ Yes, there is a relationship between the predictors and the response. By testing
 
 Looking at the $p$-values associated with each predictor's $t$-statistic, we see that `displacement`, `weight`, `year`, and `origin` have a statistically significant relationship, while `cylinders`, `horsepower`, and `acceleration` do not. 
 
-(**Caution:** This consideration neglects issues due to multiple testing. Bonferroni correction for multiple testing: To determine if any of the $7$ predictors is statistically significant, the corresponding $p$-value must be smaller than $\alpha/7$. For instance, with $\alpha/7=0.05/7\approx 0.007$, only `weight`, `year`, and `origin` have a statistically significant relationships to the response.)
+**Caution:** This consideration neglects issues due to multiple testing. When testing at the significance level $\alpha=0.05$, then each single test has a type I error (false H$_0$ rejections) rate of up to $5\%$. These type I error rates accumulate since we consider seven hypothesis tests simultaneously, and thus the probability of seeing one type I error among the seven tests is up to $7\cdot 5\%=35\%$. So is quite likely to see one type I error.  
+
+Bonferroni correction for multiple testing: To determine if any of the seven predictors is statistically significant, the corresponding $p$-value must be smaller than $\alpha/7$. For instance, with $\alpha/7=0.05/7\approx 0.007$, only `weight`, `year`, and `origin` have a statistically significant relationships to the response.
+
 
 **9 c iii)** What does the coefficient for the `year` variable suggest?
 
@@ -280,39 +294,43 @@ The regression coefficient for `year` suggests that, on average, one `year` late
 **Answer:**
 
 ```{r}
-par(mfrow=c(2,2))
-plot(fit.lm, col='blue')
+plot(fit.lm, which = c(1,2,5))
 ```
 
 - The "Residuals vs Fitted" plot (top left) shows some systematic deviations of the residuals from $0$. 
-The reason is that we are imposing a straight line fit for the conditional mean function $E[Y|X]=f(X)$ which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$. 
-
-- The "Residuals vs Leverage" plot (bottom right) shows that there are some potential outliers that we can see when: standardized residuals are below $-2$  or above $+2$. Moreover, the plot shows also potentially problematic "high-leverage" points with leverage values heavily exceeding the rule-of-thumb threshold $(p+1)/n=8/392=0.02$. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation. 
+The reason is that we are imposing a straight "line" (better hyper plane) fit for the conditional mean function $E[Y|X]=f(X)$ which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$. 
 
 - The "Normal Q-Q" plot (top right) suggests non-normally distributed residuals--particularly the upper tail deviates from that of a normal distribution. 
 
-- The "Scale-Location" plot (bottom left) shows heteroscedastic residuals with larger variances for larger fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$.
+
+- The "Residuals vs Leverage" plot (bottom right) shows that there are some potential outliers that we can see when: standardized residuals are below $-2$  or above $+2$. Moreover, the plot shows also potentially problematic "high-leverage" points with leverage values heavily exceeding the rule-of-thumb threshold $(p+1)/n=8/392=0.02$. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation. 
+
+
+<!-- - The "Scale-Location" plot (bottom left) shows heteroscedastic residuals with larger variances for larger fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$. -->
 
 
 **9 e)** Use the `*` and `:` symbols to fit linear regression models with interaction effects. Do any interactions appear to be statistically significant?
 
 **Answer:**
 
+Violating the hierarchy principle:
+
 ```{r}
 fit.lm0 <- lm(mpg ~ horsepower+cylinders+year+weight:displacement, data=Auto)
 summary(fit.lm0)
 ```
 
+Following the hierarchical principle:
 ```{r}
 fit.lm1 <- lm(mpg~horsepower+cylinders+year+weight*displacement, data=Auto)
 summary(fit.lm1)
 ```
 
 
-- Note that there is a difference between using `A:B` and `A*B` when running a regression. While the first includes only the interaction term between the variable `A` and `B`, the second one also includes the stand-alone variables `A` and `B`. 
+Note that there is a difference between using `A:B` and `A*B` when running a regression. While the first includes only the interaction term between the variable `A` and `B`, the second one also includes the stand-alone variables `A` and `B`. 
 
 
-- Follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
+Generally, you should follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
 
 
 **9 f)**
@@ -326,8 +344,8 @@ fit.lm2 <- lm(mpg~log(weight)+sqrt(horsepower)+
                 acceleration+I(acceleration^2),
               data=Auto)
 summary(fit.lm2)
-par(mfrow=c(2,2))
-plot(fit.lm2)
+##
+plot(fit.lm2, which = c(1,2,5))
 ```
 
 This try suffers basically from the same issues as the model considered in 9 d)
@@ -338,14 +356,15 @@ Let's consider again the model with all predictors (except `name`), but with tra
 ```{r}
 fit.lm3 <-lm(log(mpg)~ . -name, data=Auto)
 summary(fit.lm3)
-par(mfrow=c(2,2))
-plot(fit.lm3)
+##
+plot(fit.lm3, which = c(1,2,5))
 ```
 
 This model specification is much better! 
 
 - No clear issues of systematic under/over estimations for given fitted values. 
 - No clear issues of heteroscedastic residuals.
-
+- Normality assumption may be wrong, but this isn't problematic since we have a large dataset, such that a central limit theorem will make the estimators asymptotically normal distributed.
+- One large leverage point which, however, has a small residual. 
 
 
