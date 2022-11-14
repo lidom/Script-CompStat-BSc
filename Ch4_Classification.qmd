@@ -237,11 +237,11 @@ By contrast, the default probability for an individual with a `balance`-value of
 $$
 \begin{align*}
 Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})
-&=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}} 
-= 0.0431\\
+&=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\ 
+&= 0.0431\\
 Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
-&=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}} 
-= 0.0292\\
+&=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\ 
+&= 0.0292\\
 \end{align*}
 $$
 
