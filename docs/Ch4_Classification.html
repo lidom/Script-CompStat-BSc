@@ -260,6 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>On the basis of DNA sequence data for a number of patients with and without a given disease, a biologist would like to figure out which DNA mutations are deleterious (disease-causing) and which are not.</li>
 </ol>
 <p>One of the running example for this chapter: The (simulated) <code>Default</code> data set which is part of the <a href="https://www.statlearning.com/resources-second-edition">online resources</a> of our textbook <code>ISLR</code>, but also contained in the <code>R</code> package <code>ISLR2</code>. <img src="images/Fig_4_1.png" class="img-fluid"></p>
+<p>Let’s take a first look at the a priori default rate in this dataset:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(ISLR2))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Default)</span>
@@ -296,12 +297,12 @@ Y=\left\{
 \right.
 \]</span> Using this coding, least squares could be used to fit a linear regression model to predict <span class="math inline">\(Y,\)</span> but:</p>
 <ol type="1">
-<li>the results would then depend on the numeric ordering <span class="math inline">\(1&lt;2&lt;3\)</span>, even though the ordering was completely arbitrary and could have been made differently.</li>
-<li>the results would then depend on the assumption the gap <span class="math inline">\((2-1=1)\)</span> between <code>stroke</code> and <code>drug overdose</code> is comparable to the gap <span class="math inline">\((3-2=1)\)</span> between <code>drug overdose</code> and <code>epileptic seizure</code>.</li>
+<li>The results would then depend on the numeric ordering <span class="math inline">\(1&lt;2&lt;3\)</span>, even though the ordering was completely arbitrary and could have been made differently.</li>
+<li>The results would then depend on the assumption the gap <span class="math inline">\((2-1=1)\)</span> between <code>stroke</code> and <code>drug overdose</code> is comparable to the gap <span class="math inline">\((3-2=1)\)</span> between <code>drug overdose</code> and <code>epileptic seizure</code>.</li>
 </ol>
-<p>(Both quite a lot of nonsense.)</p>
-<p>If the response variable’s values did take on a natural ordering, such as <em>mild</em>, <em>moderate</em>, and <em>severe</em>, and we felt the gap between <em>mild</em> and <em>moderate</em> was similar to the gap between <em>moderate</em> and <em>severe</em>, then a 1, 2, 3 coding would be reasonable.</p>
-<p>For a binary (two level) qualitative response, the situation is better. For instance, if there are only two conditions that we need to predict (either <code>stroke</code> or <code>drug overdoes</code>), we can use a dummy variable coding <span class="math display">\[
+<p>Generally, both points are quite a lot of nonsense for most applications.</p>
+<p>Only if the response variable’s values did take on a natural ordering, such as <em>“mild”</em>, <em>“moderate”</em>, and <em>“severe”</em>, and we felt the gap between <em>mild</em> and <em>moderate</em> was similar to the gap between <em>moderate</em> and <em>severe</em>, then a 1, 2, 3 coding would be reasonable.</p>
+<p>For a <strong>binary (two level) qualitative response</strong>, the situation is better. For instance, if there are only two conditions that we need to predict (either <code>stroke</code> or <code>drug overdoes</code>), we can use a dummy variable coding <span class="math display">\[
 Y=\left\{
     \begin{array}{ll}
     0&amp;\quad\text{if }\texttt{stroke}\\
@@ -312,7 +313,7 @@ Y=\left\{
 <p>For binary responses with a <span class="math inline">\(0/1\)</span> coding, linear regression is not completely unreasonable. It can be shown that <span class="math display">\[
 Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
 \]</span></p>
-<p>However, if we use linear regression, some of our estimates might be outside the <span class="math inline">\([0, 1]\)</span> interval (see Figure 4.2). <img src="images/Fig_4_2.png" class="img-fluid"></p>
+<p>However, if we use linear regression, some of our estimates might be outside the <span class="math inline">\([0, 1]\)</span> interval (see Figure 4.2), which doesn’t make sense when predicting probabilities. <img src="images/Fig_4_2.png" class="img-fluid"></p>
 <p><strong>Summary:</strong></p>
 <ol type="a">
 <li>A classic regression method cannot accommodate a qualitative response with more than two classes</li>
@@ -327,7 +328,8 @@ Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
 Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
 \]</span> where <span class="math inline">\(p(\texttt{balance})\in[0,1]\)</span> is used as a short hand notation.</p>
 <p>One might predict <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> for any individual for whom <span class="math inline">\(p(\texttt{balance}) &gt; 0.5.\)</span></p>
-<p>However, <span class="math inline">\(0.5\)</span> this is not the only reasonable classification threshold. For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as <span class="math inline">\(p(\texttt{balance}) &gt; 0.1.\)</span></p>
+<p>However, <span class="math inline">\(0.5\)</span> this is not the only reasonable classification threshold!</p>
+<p>For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as <span class="math inline">\(p(\texttt{balance}) &gt; 0.1.\)</span></p>
 <section id="ch.-4.3.1-the-logistic-model" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.1-the-logistic-model">(Ch. 4.3.1) The Logistic Model</h3>
 <p>For a binary coded dependen variable <span class="math inline">\(Y\in\{0,1\}\)</span> we aim to model the relationship between <span class="math display">\[
@@ -337,16 +339,16 @@ p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
 p(X)=\beta_0+\beta_1 X
 \]</span> can produce nonsense predictions <span class="math inline">\(p(X)&lt;0\)</span> or <span class="math inline">\(p(X)&gt;1\)</span>; see the left-hand panel of Figure 4.2.</p>
 <p>Logistic regression avoids this problem by using the <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>, <span class="math display">\[
-p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
-\]</span> To fit the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we use an estimation method called <em>maximum likelihood</em>.</p>
+p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}.
+\]</span> To fit the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we use an estimation method called <strong>maximum likelihood</strong>.</p>
 <p>The right-hand panel of Figure 4.2 illustrates the fit of the logistic regression model to the <code>Default</code> data.</p>
 <p>Note that <span class="math display">\[
 \begin{align*}
-p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} \\
+p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
 %\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
 %\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
 %\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
-\Leftrightarrow \frac{p(X)}{1-p(X)} &amp;= e^{\beta_0+\beta_1 X}
+\quad \Leftrightarrow\quad  \frac{p(X)}{1-p(X)} = e^{\beta_0+\beta_1 X}
 \end{align*}
 \]</span></p>
 <p>The quantity <span class="math display">\[
@@ -354,7 +356,7 @@ p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} \\
 \]</span> is called the <strong>odds</strong>, and can take any value between 0 and plus infinity.</p>
 <ul>
 <li>A small odds value (close to zero) indicates a low probability of default.</li>
-<li>A large odds value indicate a high probability of default.</li>
+<li>A large odds value indicates a high probability of default.</li>
 </ul>
 <p>For instance</p>
 <ul>
@@ -365,14 +367,13 @@ p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} \\
 \frac{0.9}{1-0.9}=9
 \]</span></p></li>
 </ul>
-<p>By taking the logarithm, we arrive at <em>log odds</em> or <em>logit</em> <span class="math display">\[
+<p>By taking the logarithm, we arrive at <strong>log odds</strong> or <strong>logit</strong> <span class="math display">\[
 \log\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
 \]</span></p>
-<p>Thus</p>
+<p>Thus increasing <span class="math inline">\(X\)</span> by one unit …</p>
 <ul>
-<li>increasing <span class="math inline">\(X\)</span> by one unit …</li>
-<li>changes the <em>log odds</em> by <span class="math inline">\(\beta_1\)</span></li>
-<li>multiplies the odds by <span class="math inline">\(e^{\beta_1}\)</span></li>
+<li>… changes the <em>log odds</em> by <span class="math inline">\(\beta_1\)</span></li>
+<li>… multiplies the odds by <span class="math inline">\(e^{\beta_1}\)</span></li>
 </ul>
 <p><strong>Caution:</strong> The amount that <span class="math inline">\(p(X)\)</span> changes due to a one-unit change in <span class="math inline">\(X\)</span> depends on the current value of <span class="math inline">\(X.\)</span></p>
 <p>But regardless of the value of <span class="math inline">\(X\)</span>, if <span class="math inline">\(\beta_1\)</span> is positive then increasing <span class="math inline">\(X\)</span> will be associated with increasing <span class="math inline">\(p(X)\)</span>, and if <span class="math inline">\(\beta_1\)</span> is negative then increasing <span class="math inline">\(X\)</span> will be associated with decreasing <span class="math inline">\(p(X).\)</span></p>

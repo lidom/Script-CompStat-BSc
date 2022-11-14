@@ -1465,12 +1465,17 @@ Medium    0      1</code></pre>
 \text{Male\; $(X_3 = 0)$:}\quad   &amp; 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
 \text{Female\; $(X_3 = 1)$:}\quad &amp; 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
 \end{align*}
-\]</span> Thus, once the <span class="math inline">\(X_1=\)</span><code>GPA</code> is high enough (<span class="math inline">\(35-10\,X_1&lt;0 \Leftrightarrow X_1&gt;3.5\)</span>), males earn more on average.</p>
+\]</span></p>
+<p>Thus 3 a) iii. is correct, since once the <span class="math inline">\(X_1=\)</span><code>GPA</code> is high enough (<span class="math inline">\(35-10\,X_1&lt;0 \Leftrightarrow X_1&gt;3.5\)</span>), males earn more on average.</p>
 <p><strong>3 b)</strong> Predict the salary of a female with <code>IQ</code> of 110 and a <code>GPA</code> of 4.0.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>Y_hat <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">20</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> <span class="fl">0.07</span><span class="sc">*</span><span class="dv">110</span> <span class="sc">+</span> <span class="dv">35</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span><span class="dv">4</span><span class="sc">*</span><span class="dv">110</span> <span class="sc">-</span> <span class="dv">10</span><span class="sc">*</span><span class="dv">4</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>Y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>GPA    <span class="ot">&lt;-</span>   <span class="dv">4</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>IQ     <span class="ot">&lt;-</span> <span class="dv">110</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>Gender <span class="ot">&lt;-</span>   <span class="dv">1</span> <span class="co"># female = 1</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Prediction</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>Y_hat  <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">20</span><span class="sc">*</span>GPA <span class="sc">+</span> <span class="fl">0.07</span><span class="sc">*</span>IQ <span class="sc">+</span> <span class="dv">35</span><span class="sc">*</span>Gender <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span>GPA<span class="sc">*</span>IQ <span class="sc">-</span> <span class="dv">10</span><span class="sc">*</span>GPA</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>Y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 137.1</code></pre>
 </div>
@@ -1543,16 +1548,17 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre><code>[1] 4.906</code></pre>
 </div>
 </div>
-<p>This RSE value is considerable smaller than the RSE of a model with only an intercept: ::: {.cell}</p>
+<p>This RSE value is considerable smaller than the RSE of a model with only an intercept:</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>lmObj_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="sc">+</span><span class="dv">1</span>, <span class="at">data =</span> Auto)</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>RSS_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(lmObj_onlyIntercept)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>n                 <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(lmObj_onlyIntercept))</span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>RSE_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS_onlyIntercept<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>RSS_onlyIntercept   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(lmObj_onlyIntercept)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>n                   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(lmObj_onlyIntercept))</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>RSE_onlyIntercept   <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS_onlyIntercept<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
 <span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE_onlyIntercept, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.805</code></pre>
 </div>
-<p>:::</p>
+</div>
 <p>Thus, the larger model with <code>horsepower</code> included explains more of the variances in the response variable <code>mpg</code>. Including <code>horsepower</code> as a predictor reduces the RSE by <code>((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100</code> %; i.e.&nbsp;by 37.15%.</p>
 <p>The <span class="math inline">\(R^2\)</span> value:</p>
 <div class="cell">
@@ -1610,7 +1616,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Auto<span class="sc">$</span>horsepower, <span class="at">y =</span> Auto<span class="sc">$</span>mpg, <span class="at">ylab =</span> <span class="st">"MPG"</span>, <span class="at">xlab =</span> <span class="st">"Horsepower"</span>)</span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmObj_1, <span class="at">col=</span><span class="st">"blue"</span>)</span>
 <span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
-<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">"x)"</span>))), </span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">",x)"</span>))), </span>
 <span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
@@ -1712,36 +1718,32 @@ F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>Answer:</strong></p>
 <p>Looking at the <span class="math inline">\(p\)</span>-values associated with each predictor’s <span class="math inline">\(t\)</span>-statistic, we see that <code>displacement</code>, <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationship, while <code>cylinders</code>, <code>horsepower</code>, and <code>acceleration</code> do not.</p>
 <p><strong>Caution:</strong> This consideration neglects issues due to multiple testing. When testing at the significance level <span class="math inline">\(\alpha=0.05\)</span>, then each single test has a type I error (false H<span class="math inline">\(_0\)</span> rejections) rate of up to <span class="math inline">\(5\%\)</span>. These type I error rates accumulate since we consider seven hypothesis tests simultaneously, and thus the probability of seeing one type I error among the seven tests is up to <span class="math inline">\(7\cdot 5\%=35\%\)</span>. So is quite likely to see one type I error.</p>
-<p>Bonferroni correction for multiple testing: To determine if any of the seven predictors is statistically significant, the corresponding <span class="math inline">\(p\)</span>-value must be smaller than <span class="math inline">\(\alpha/7\)</span>. For instance, with <span class="math inline">\(\alpha/7=0.05/7\approx 0.007\)</span>, only <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationships to the response.</p>
+<p><strong>Bonferroni correction for multiple testing:</strong> To determine if any of the seven predictors is statistically significant, the corresponding <span class="math inline">\(p\)</span>-value must be smaller than <span class="math inline">\(\alpha/7\)</span>. For instance, with <span class="math inline">\(\alpha/7=0.05/7\approx 0.007\)</span>, only <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationships to the response.</p>
 <p><strong>9 c iii)</strong> What does the coefficient for the <code>year</code> variable suggest?</p>
 <p><strong>Answer:</strong></p>
 <p>The regression coefficient for <code>year</code> suggests that, on average, one <code>year</code> later year-of-construction is associated with an increased <code>mpg</code> by <span class="math inline">\(0.75\)</span>, when holding every other predictor value constant.</p>
 <p><strong>9 d)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="cell-output-display">
-<p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-21-3.png" class="img-fluid" width="672"></p>
-</div>
 </div>
 <ul>
-<li><p>The “Residuals vs Fitted” plot (top left) shows some systematic deviations of the residuals from <span class="math inline">\(0\)</span>. The reason is that we are imposing a straight “line” (better hyper plane) fit for the conditional mean function <span class="math inline">\(E[Y|X]=f(X)\)</span> which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values <span class="math inline">\(\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p\)</span>.</p></li>
-<li><p>The “Normal Q-Q” plot (top right) suggests non-normally distributed residuals–particularly the upper tail deviates from that of a normal distribution.</p></li>
-<li><p>The “Residuals vs Leverage” plot (bottom right) shows that there are some potential outliers that we can see when: standardized residuals are below <span class="math inline">\(-2\)</span> or above <span class="math inline">\(+2\)</span>. Moreover, the plot shows also potentially problematic “high-leverage” points with leverage values heavily exceeding the rule-of-thumb threshold <span class="math inline">\((p+1)/n=8/392=0.02\)</span>. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation.</p></li>
+<li><p>The “Residuals vs Fitted” plot (1st plot) shows some systematic deviations of the residuals from <span class="math inline">\(0\)</span>. The reason is that we are imposing a straight “line” (better hyper plane) fit for the conditional mean function <span class="math inline">\(E[Y|X]=f(X)\)</span> which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values <span class="math inline">\(\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p\)</span>.</p></li>
+<li><p>The “Normal Q-Q” plot (2nd plot) suggests non-normally distributed residuals–particularly the upper tail deviates from that of a normal distribution.</p></li>
+<li><p>The “Residuals vs Leverage” plot (3rd plot) shows that there are some potential outliers that we can see when: standardized residuals are below <span class="math inline">\(-2\)</span> or above <span class="math inline">\(+2\)</span>. Moreover, the plot shows also potentially problematic “high-leverage” points with leverage values heavily exceeding the rule-of-thumb threshold <span class="math inline">\((p+1)/n=8/392=0.02\)</span>. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation.</p></li>
+<li><p>The “Scale-Location” plot (4th plot) shows is rather inconclusive about heteroscedasticity. However the “Residuals vs Fitted” plot (1st plot)shows some clear sign of heteroscedastic residuals.</p></li>
 </ul>
-<!-- - The "Scale-Location" plot (bottom left) shows heteroscedastic residuals with larger variances for larger fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$. -->
 <p><strong>9 e)</strong> Use the <code>*</code> and <code>:</code> symbols to fit linear regression models with interaction effects. Do any interactions appear to be statistically significant?</p>
 <p><strong>Answer:</strong></p>
 <p>Violating the hierarchy principle:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, <span class="at">data=</span>Auto)</span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, </span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1768,8 +1770,9 @@ F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>Following the hierarchical principle: ::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, <span class="at">data=</span>Auto)</span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1832,15 +1835,10 @@ Multiple R-squared:  0.7414,    Adjusted R-squared:  0.7387
 F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-24-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This try suffers basically from the same issues as the model considered in 9 d)</p>
@@ -1875,15 +1873,10 @@ Multiple R-squared:  0.8795,    Adjusted R-squared:  0.8773
 F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="Ch3_LinearRegression_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This model specification is much better!</p>

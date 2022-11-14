@@ -17,6 +17,9 @@ One of the running example for this chapter: The (simulated) `Default` data set 
 ![](images/Fig_4_1.png)
 
 
+
+Let's take a first look at the a priori default rate in this dataset:
+
 ```{r}
 suppressPackageStartupMessages(library(ISLR2))
 data(Default)
@@ -51,15 +54,14 @@ Y=\left\{
 $$
 Using this coding, least squares could be used to fit a linear regression model to predict $Y,$ but: 
 
-1. the results would then depend on the numeric ordering $1<2<3$, even though the ordering was completely arbitrary and could have been made differently.
-2. the results would then depend on the assumption the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure`. 
+1. The results would then depend on the numeric ordering $1<2<3$, even though the ordering was completely arbitrary and could have been made differently.
+2. The results would then depend on the assumption the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure`. 
 
-(Both quite a lot of nonsense.) 
+Generally, both points are quite a lot of nonsense for most applications.
 
-If the response variable's values did take on a natural ordering, such as *mild*, *moderate*, and *severe*, and we felt the gap between *mild* and *moderate*
-was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
+Only if the response variable's values did take on a natural ordering, such as *"mild"*, *"moderate"*, and *"severe"*, and we felt the gap between *mild* and *moderate* was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
 
-For a binary (two level) qualitative response, the situation is better. For instance, if there are only two conditions that we need to predict (either `stroke` or `drug overdoes`), we can use a dummy variable coding
+For a **binary (two level) qualitative response**, the situation is better. For instance, if there are only two conditions that we need to predict (either `stroke` or `drug overdoes`), we can use a dummy variable coding
 $$
 Y=\left\{
     \begin{array}{ll}
@@ -76,7 +78,7 @@ $$
 Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
 $$
 
-However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see Figure 4.2). 
+However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see Figure 4.2), which doesn't make sense when predicting probabilities. 
 ![](images/Fig_4_2.png)
 
 **Summary:**
@@ -100,7 +102,9 @@ where $p(\texttt{balance})\in[0,1]$ is used as a short hand notation.
 
 One might predict `default`$=$`Yes` for any individual for whom $p(\texttt{balance}) > 0.5.$
 
-However, $0.5$ this is not the only reasonable classification threshold. For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as $p(\texttt{balance}) > 0.1.$
+However, $0.5$ this is not the only reasonable classification threshold! 
+
+For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as $p(\texttt{balance}) > 0.1.$
 
 ### (Ch. 4.3.1) The Logistic Model {-}
 
@@ -118,9 +122,9 @@ can produce nonsense predictions $p(X)<0$ or $p(X)>1$; see the left-hand panel o
 
 Logistic regression avoids this problem by using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
 $$
-p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
+p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}.
 $$
-To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called *maximum likelihood*. 
+To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called **maximum likelihood**. 
 
 The right-hand panel of Figure 4.2 illustrates the fit of the logistic regression model to the `Default` data.
 
@@ -128,11 +132,11 @@ The right-hand panel of Figure 4.2 illustrates the fit of the logistic regressio
 Note that 
 $$
 \begin{align*}
-p(X) & = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} \\
+p(X) & = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} 
 %\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
 %\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
 %\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
-\Leftrightarrow \frac{p(X)}{1-p(X)} &= e^{\beta_0+\beta_1 X}
+\quad \Leftrightarrow\quad  \frac{p(X)}{1-p(X)} = e^{\beta_0+\beta_1 X}
 \end{align*}
 $$
 
@@ -144,7 +148,7 @@ $$
 is called the **odds**, and can take any value between 0 and plus infinity.
 
 * A small odds value (close to zero) indicates a low probability of default. 
-* A large odds value indicate a high probability of default. 
+* A large odds value indicates a high probability of default. 
 
 For instance
 
@@ -159,17 +163,16 @@ $$
 $$
 
 
-By taking the logarithm, we arrive at *log odds* or *logit*
+By taking the logarithm, we arrive at **log odds** or **logit**
 $$
 \log\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
 $$
 
 
-Thus 
+Thus increasing $X$ by one unit ... 
 
-*  increasing $X$ by one unit ... 
-  * changes the *log odds* by $\beta_1$ 
-  * multiplies the odds by $e^{\beta_1}$ 
+  * ... changes the *log odds* by $\beta_1$ 
+  * ... multiplies the odds by $e^{\beta_1}$ 
 
 **Caution:**  The amount that $p(X)$ changes due to a one-unit change in
 $X$ depends on the current value of $X.$ 
