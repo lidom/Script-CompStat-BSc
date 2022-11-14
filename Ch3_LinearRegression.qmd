@@ -1159,4 +1159,4 @@ Prepare the following exercises of Chapter 3 in our course textbook `ISLR`:
 - Exercise 8
 - Exercise 9
 
-<!-- {{< include Ch3_Solutions.qmd >}} -->
+{{< include Ch3_Solutions.qmd >}}
