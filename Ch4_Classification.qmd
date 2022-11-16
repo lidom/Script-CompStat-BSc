@@ -61,13 +61,13 @@ Generally, both points are quite a lot of nonsense for most applications.
 
 Only if the response variable's values did take on a natural ordering, such as *"mild"*, *"moderate"*, and *"severe"*, and we felt the gap between *mild* and *moderate* was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
 
-For a **binary (two level) qualitative response**, the situation is better. For instance, if there are only two conditions that we need to predict (either `stroke` or `drug overdoes`), we can use a dummy variable coding
+For a **binary (two level) qualitative response**, the situation is better. For instance, if there are only two conditions that we need to predict (e.g. either `default`$=$`Yes` or `default`$=$`No`), we can use a dummy variable coding
 $$
 Y=\left\{
-    \begin{array}{ll}
-    0&\quad\text{if }\texttt{stroke}\\
-    1&\quad\text{if }\texttt{drug overdose}\\
-    \end{array}
+\begin{array}{ll}
+    0&\quad\text{if }\texttt{default}=\texttt{Yes}\\
+    1&\quad\text{if }\texttt{default}=\texttt{No}\\
+\end{array}
 \right.
 $$
 We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
@@ -75,7 +75,7 @@ We could then fit a linear regression to this binary response, and predict drug 
 
 For binary responses with a $0/1$ coding, linear regression is not completely unreasonable. It can be shown that 
 $$
-Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+Pr(\texttt{default}=\texttt{Yes}|X)\approx \hat{Y}=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
 $$
 
 However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see Figure 4.2), which doesn't make sense when predicting probabilities. 
@@ -363,6 +363,8 @@ In the following sections, we discuss three classifiers that use different estim
 * quadratic discriminant analysis
 * Naive Bayes
 
+
+
 ### (Ch. 4.4.1) Linear Discriminant Analysis for $p = 1$ {-}
 
 For the beginning, let us assume that we have only one predictor, i.e., $p=1.$ 
@@ -448,8 +450,8 @@ In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,
 The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. The following estimates are used: 
 $$
 \begin{align*}
-\hat\pi_k & = \frac{n_k}{n}\\
-\hat\mu   & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
+\hat\pi_k    & = \frac{n_k}{n}\\
+\hat\mu      & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
 \hat\sigma   & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\
 \end{align*}
 $$
@@ -460,6 +462,130 @@ $$
 is largest. 
 
 LDA is named **linear** since the discriminant functions $\hat\delta_k(x)$, $k=1,\dots,K$ are linear functions of $x.$
+
+
+Assumptions made by the LDA method:
+
+* Observation for each class come from a normal distribution
+* The class-specific normal distributions have class-specific means, $\mu_k$, but **equal variances** $\sigma$
+
+### (Ch. 4.4.2) Linear Discriminant Analysis for $p > 1$
+
+In the case of multiple predictors 
+$$
+X=(X_1,\dots,X_p)\quad \text{with}\quad p>1
+$$
+we need to assume that the observations for each class $k$ come from a **multivariate Gaussian distribution** with 
+
+* Class-specific $(p\times 1)$ mean vectors $\mu_k$
+* Equal $(p\times p)$ covariance matrix $\Sigma$ for all classes $k=1,\dots,K$
+
+That is, a $(p\times 1)$ random vector $X$ of class $k$ is distributed as 
+$$
+X\sim N\left(\mu_k,\Sigma\right)
+$$
+with class-specific $(p\times 1)$ mean vector $\mu_k$,
+$$
+E(X)=\mu_k,
+$$
+and $(p\times p)$ covariance matrix
+$$
+Cov(X)=\Sigma
+$$ 
+that is common for all classes $k=1,\dots,K.$
+
+The multivariate Gaussian density for class $k=1,\dots,K$ is defined as
+$$
+f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\sigma^{-1}(x-\mu_k)\right)
+$$
+
+
+Figure 4.5 shows the case of bivariate ($p=2$) Gaussian distribution  predictors.  
+
+![](images/Fig_4_5.png)
+
+Under the multivariate normality assumption (with common covariance matrix and group-specific mean vectors) the Bayes classifier assigns an multivariate observation $X=x$ to the class for which the discriminant function 
+$$
+\delta_k(x)=x^T \Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \log(\pi_k)
+$$
+is largest.
+
+
+An example for $p=2$ and $K=3$ with three equally sized (i.e. $\pi_1=\pi_2=\pi_3$) Gaussian classes is shown in the left-hand panel of Figure 4.6. The three ellipses represent regions that contain $95\%$ of the probability for each of the three classes. The dashed lines are the Bayes decision boundaries. In other words, they represent the set of values x for which $\delta_k(x) = \delta_l(x)$, $k\neq l$. 
+
+![](images/Fig_4_6.png)
+
+Again, the unknown parameters $\mu_k$, $\pi_k$, and $\Sigma$ must be estimated from the data with formulas similar to those for the $p=1$ case. 
+
+
+#### The `Default` data example {-}
+
+We can perform LDA on the `Default` data in order to predict whether or not an individual will default on the basis of 
+
+* credit card balance (real variable) and 
+* student status (qualitative variable).
+
+**Note:** Student status is qualitative, and thus the normality assumption made by LDA is clearly violated in this example! However, LDA is often remarkably robust to model violations, as this example shows. 
+
+
+The LDA model fit to the $10,000$ training samples results in a training error rate of $2.75\%:$ 
+
+```{r}
+# MASS package contains the lda() function
+suppressPackageStartupMessages(library(MASS)) 
+
+## Sample size 
+n              <- nrow(Default)
+
+lda_obj        <- lda(default ~ balance + student, 
+                      data = Default)
+ldaPredict_obj <- predict(lda_obj)
+
+## Training error rate:
+sum(Default$default != ldaPredict_obj$class)/n 
+
+## Training error rate of the null classifier:
+sum(Default$default != rep("No", n))/n 
+```
+
+
+This sounds like a low error rate, but two caveats must be noted:
+
+* Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a **new set of individuals** will default. 
+   * The reason is that we specifically adjust the parameters of our model to do well on the training data. 
+   * Generally, the higher the ratio of parameters $p$ to number of samples $n$, the more we expect this *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
+
+* Since only $3.33\%$ of the individuals in the training sample defaulted, a simple but useless classifier that always predicts that an individual will "not default", regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
+
+
+Any binary classifier can make two types of errors - here:
+
+*  incorrectly assignment of an individual who defaults to the no default category (false negatives)
+* incorrectly assign of an individual who does not default to the default category (false positives)
+
+A confusion matrix shows both types of errors (see also Table 4.4):
+
+```{r}
+## Confusion matrix (absolute frequencies)
+table(ldaPredict_obj$class, Default$default, 
+      dnn = c("Predicted default status", 
+              "True default status"))
+
+## Confusion matrix (relaive frequencies)
+table(ldaPredict_obj$class, Default$default, 
+      dnn = c("Predicted default status", 
+              "True default status"))/n
+
+```
+
+![](images/Tab_4_4.png)
+
+
+A perfect confusion matrix has zeros in the off-diagonal entries. 
+
+* LDA predicts that $104$ people default 
+  * $81$ of these $104$ actually default (true positives)
+  * $23$ of these $104$ actually do not default (false positives)
 
 <!-- 
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
@@ -657,13 +783,9 @@ lda.fit
 plot(lda.fit)
 ```
 
-The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2$\,\% of the training observations correspond to days during which the market went down.
- It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$.
- These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines.
-  The *coefficients of linear discriminants* output provides the linear combination of `lagone` and `lagtwo` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in ( 4.24).
-  If $-0.642\times `lagone` - 0.514 \times `lagtwo`$ is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
+The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2$\,\% of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The *coefficients of linear discriminants* output provides the linear combination of `lagone` and `lagtwo` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in (4.24). If $-0.642\times$`lagone`$- 0.514 \times$ `lagtwo` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
 
-  The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times `lagone` - 0.514 \times `lagtwo`$ for each of the training observations. The `Up` and `Down` observations are displayed separately.
+The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times$`lagone`$- 0.514 \times$ `lagtwo` for each of the training observations. The `Up` and `Down` observations are displayed separately.
 
 
 
