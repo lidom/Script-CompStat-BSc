@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#ch.-4.3.1-the-logistic-model" id="toc-ch.-4.3.1-the-logistic-model" class="nav-link" data-scroll-target="#ch.-4.3.1-the-logistic-model">(Ch. 4.3.1) The Logistic Model</a></li>
   <li><a href="#ch.-4.3.2-estimating-the-regression-coefficients" id="toc-ch.-4.3.2-estimating-the-regression-coefficients" class="nav-link" data-scroll-target="#ch.-4.3.2-estimating-the-regression-coefficients">(Ch. 4.3.2) Estimating the Regression Coefficients</a></li>
-  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">(4.3.3) Making Predictions</a></li>
+  <li><a href="#ch.-4.3.3-making-predictions" id="toc-ch.-4.3.3-making-predictions" class="nav-link" data-scroll-target="#ch.-4.3.3-making-predictions">(Ch. 4.3.3) Making Predictions</a></li>
   <li><a href="#ch.-4.3.4-multiple-logistic-regression" id="toc-ch.-4.3.4-multiple-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3.4-multiple-logistic-regression">(Ch. 4.3.4) Multiple Logistic Regression</a></li>
   <li><a href="#ch.-4.3.5-multinomial-logistic-regression" id="toc-ch.-4.3.5-multinomial-logistic-regression" class="nav-link" data-scroll-target="#ch.-4.3.5-multinomial-logistic-regression">(Ch. 4.3.5) Multinomial Logistic Regression</a></li>
   </ul></li>
@@ -317,7 +317,7 @@ Pr(\texttt{drug overdose})\approx \beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
 <p><strong>Summary:</strong></p>
 <ol type="a">
 <li>A classic regression method cannot accommodate a qualitative response with more than two classes</li>
-<li>A classic regression method will not provide meaningful estimates of <span class="math inline">\(Pr(Y |X),\)</span> even with just two classes.</li>
+<li>A classic regression method may not provide meaningful estimates of <span class="math inline">\(Pr(Y |X),\)</span> even with just two classes.</li>
 </ol>
 <p>Thus, it is often preferable to use a classification method that is truly suited for qualitative response values.</p>
 </section>
@@ -375,7 +375,7 @@ p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
 <li>… changes the <em>log odds</em> by <span class="math inline">\(\beta_1\)</span></li>
 <li>… multiplies the odds by <span class="math inline">\(e^{\beta_1}\)</span></li>
 </ul>
-<p><strong>Caution:</strong> The amount that <span class="math inline">\(p(X)\)</span> changes due to a one-unit change in <span class="math inline">\(X\)</span> depends on the current value of <span class="math inline">\(X.\)</span></p>
+<p><strong>Caution:</strong> The amount that <span class="math inline">\(p(X)\)</span> changes due to a one-unit change in <span class="math inline">\(X\)</span> depends on the current value of <span class="math inline">\(X.\)</span> (The logistic regression model is a non-linear model.)</p>
 <p>But regardless of the value of <span class="math inline">\(X\)</span>, if <span class="math inline">\(\beta_1\)</span> is positive then increasing <span class="math inline">\(X\)</span> will be associated with increasing <span class="math inline">\(p(X)\)</span>, and if <span class="math inline">\(\beta_1\)</span> is negative then increasing <span class="math inline">\(X\)</span> will be associated with decreasing <span class="math inline">\(p(X).\)</span></p>
 </section>
 <section id="ch.-4.3.2-estimating-the-regression-coefficients" class="level3 unnumbered">
@@ -390,13 +390,15 @@ p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
 <p>Table 4.1 shows the coefficient estimates and related information that result from fitting a logistic regression model on the <code>Default</code> data in order to predict the probability of <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> using <code>balance</code> as the only predictor. <img src="images/Tab_4_1.png" class="img-fluid"></p>
 <p><strong>Interpretation:</strong></p>
 <ul>
-<li>We see that <span class="math inline">\(\hat\beta_1=0.0055\)</span>; this indicates that an increase in <code>balance</code> is associated with an increase in the probability of default.</li>
+<li>We see that <span class="math inline">\(\hat\beta_1=0.0055\)</span>; this indicates that an increase in <code>balance</code> is associated with an increase in the probability of default.
+<ul>
 <li>To be precise, a one-unit increase in <code>balance</code> is associated with an increase in the log odds of default by 0.0055 units.</li>
+</ul></li>
 <li>The <span class="math inline">\(z\)</span>-statistic in Table 4.1 plays the same role as the <span class="math inline">\(t\)</span>-statistic in the linear regression output: a large (absolute) value of the <span class="math inline">\(z\)</span>-statistic indicates evidence against the null hypothesis <span class="math inline">\(H_0: \beta_1= 0.\)</span></li>
 </ul>
 </section>
-<section id="making-predictions" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="making-predictions">(4.3.3) Making Predictions</h3>
+<section id="ch.-4.3.3-making-predictions" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.3-making-predictions">(Ch. 4.3.3) Making Predictions</h3>
 <p>Once the coefficients have been estimated, we can compute the probability of <code>default</code><span class="math inline">\(=1\)</span> for any given credit card balance.</p>
 <p>For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a <code>balance</code>-value of 1,000 [USD] is <span class="math display">\[
 \begin{align*}
@@ -407,7 +409,8 @@ p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
 \end{align*}
 \]</span></p>
 <p>By contrast, the default probability for an individual with a <code>balance</code>-value of 2,000 [USD] equals <span class="math inline">\(0.586\)</span> (or <span class="math inline">\(58,6\%\)</span>) and is thus much higher.</p>
-<p><strong>Qualitative Predictors:</strong></p>
+<section id="qualitative-predictors" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="qualitative-predictors">Qualitative Predictors:</h4>
 <p><img src="images/Tab_4_2.png" class="img-fluid"></p>
 <p><span class="math display">\[
 \begin{align*}
@@ -419,7 +422,8 @@ Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
 &amp;= 0.0292\\
 \end{align*}
 \]</span></p>
-<p>This may indicate that students tend to have higher default probabilities than non-students. But we may missed further factors here since we only use one predictor variable.</p>
+<p>This may indicate that students tend to have higher default probabilities than non-students. But we may <strong>missed further factors</strong> here since we only use one predictor variable.</p>
+</section>
 </section>
 <section id="ch.-4.3.4-multiple-logistic-regression" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ch.-4.3.4-multiple-logistic-regression">(Ch. 4.3.4) Multiple Logistic Regression</h3>
@@ -440,10 +444,7 @@ p(X)
 <li>However, for given <code>balance</code>-values, the default rate for students is <em>lower</em> than for non-students (solid lines).</li>
 </ul>
 <p><img src="images/Fig_4_3.png" class="img-fluid"></p>
-<p>The right-hand panel of Figure 4.3 provides an explanation for this discrepancy:</p>
-<ul>
-<li>Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.</li>
-</ul>
+<p>The right-hand panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.</p>
 <p><strong>Summary:</strong></p>
 <ul>
 <li>An individual student with a given credit card balance will tend to have a lower probability of default than a non-student with the same credit card balance</li>
@@ -461,8 +462,8 @@ p_k(x)=Pr(Y=k|X=x)=\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_
 p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
 \]</span></p>
 <p>For <span class="math inline">\(k=1,\dots,K-1\)</span> it holds that <span class="math display">\[
-\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
-\]</span></p>
+\log\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\]</span> which is the counterpart to the log odds equation for <span class="math inline">\(K=2.\)</span></p>
 <p>Note that:</p>
 <ul>
 <li><p>The predictions <span class="math inline">\(\hat{p}_k(x)\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span> do not depend on the choice of the baseline class.</p></li>
@@ -472,7 +473,7 @@ p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \
 </section>
 <section id="ch.-4.4-discriminant-analysis-generative-models-for-classification" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ch.-4.4-discriminant-analysis-generative-models-for-classification">(Ch. 4.4) Discriminant Analysis: Generative Models for Classification</h2>
-<p>We now consider an alternative and less direct approach to estimating the probabilities <span class="math inline">\(Pr(Y=K|X=x)\)</span>.</p>
+<p>We now consider an alternative and less direct approach to estimating the probabilities <span class="math inline">\(Pr(Y=K|X=x).\)</span></p>
 <p>Suppose that we wish to classify an observation into one of <span class="math inline">\(K\geq 2\)</span> classes.</p>
 <p><strong>Prior probability:</strong> Let <span class="math display">\[
 \pi_k=Pr(Y=k)
@@ -481,13 +482,13 @@ p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \
 \]</span></p>
 <p><strong>Density function of <span class="math inline">\(X\)</span>:</strong> Let <span class="math display">\[
 f_k(x)=Pr(X=x|Y=k)
-\]</span> denote the (conditional) density of <span class="math inline">\(X\)</span> for an observation that comes from class <span class="math inline">\(k.\)</span></p>
-<p><strong>Posterior probability:</strong> Then <em>Bayes’ theorem</em> states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span class="math display">\[
+\]</span> denote the (conditional) density of <span class="math inline">\(X\)</span> for an observation that comes from class <span class="math inline">\(k.\)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><strong>Posterior probability:</strong> Then <em>Bayes’ theorem</em> states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span id="eq-postprob1"><span class="math display">\[
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
-\]</span></p>
-<p>While logistic regression aims at estimating the posterior probability <span class="math inline">\(p_k(x)\)</span> directly, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> indirectly simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
+\tag{4.1}\]</span></span></p>
+<p>While logistic regression aims at estimating the posterior probability <span class="math inline">\(p_k(x)\)</span> directly, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> <em>indirectly</em> simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
 <p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging and we therefore have to make some simplifying assumptions. (E.g. assuming that the data is normal distributed.)</p>
-<p>We know from Chapter 2 that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers.</p>
+<p>We know from Chapter 2 that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers.</p>
 <p>In the following sections, we discuss three classifiers that use different estimates of <span class="math inline">\(f_k(x)\)</span> to approximate the Bayes classifier:</p>
 <ul>
 <li>linear discriminant analysis</li>
@@ -496,6 +497,77 @@ p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
 </ul>
 <section id="ch.-4.4.1-linear-discriminant-analysis-for-p-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ch.-4.4.1-linear-discriminant-analysis-for-p-1">(Ch. 4.4.1) Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></h3>
+<p>For the beginning, let us assume that we have only one predictor, i.e., <span class="math inline">\(p=1.\)</span></p>
+<p>To estimate <span class="math inline">\(f_k(x)\)</span>, we will assume that <span class="math inline">\(f_k\)</span> is <em>normal</em> (or <em>Gaussian</em>). In the simple <span class="math inline">\(p=1\)</span> dimensional setting, the normal distribution is <span class="math display">\[
+f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{1}{2\sigma_k^2}(x-\mu_k)^2\right),
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(\mu_k\)</span> is the mean of the <span class="math inline">\(k\)</span>th class and</li>
+<li><span class="math inline">\(\sigma_k^2\)</span> is the variance of the <span class="math inline">\(k\)</span>th class</li>
+<li><span class="math inline">\(\pi\approx 3.14159\)</span> is the mathematical constant <span class="math inline">\(\pi\)</span>. (Do not confuse it with the prior probabilities <span class="math inline">\(\pi_k.\)</span>)</li>
+</ul>
+<p>For now, let us further assume the simplifying case of equal variances across all classes, i.e.&nbsp; <span class="math display">\[
+\sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2.
+\]</span> Plugging this assumed version of <span class="math inline">\(f_k\)</span> into <a href="#eq-postprob1">Equation&nbsp;<span>4.1</span></a>, leads to <span id="eq-LDp1"><span class="math display">\[
+p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
+\tag{4.2}\]</span></span></p>
+<p>The Bayes classifier involves assigning an observation <span class="math inline">\(X = x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest. Taking the <span class="math inline">\(\log\)</span> of <a href="#eq-LDp1">Equation&nbsp;<span>4.2</span></a> (i.e.&nbsp;a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
+\delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
+\]</span> is largest. The function <span class="math inline">\(\delta_k(x)\)</span> is called the <strong>discriminant function</strong>.</p>
+<p><strong>Example:</strong></p>
+<p>In the case of only two classes, <span class="math inline">\(K=2\)</span>, with equal a priori probabilities <span class="math inline">\(\pi_1=\pi_2\equiv \pi^*\)</span>, the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> to class <span class="math inline">\(1\)</span> if <span class="math display">\[
+\begin{align*}
+\delta_1(x) &amp; &gt; \delta_2(x)\\
+%%%
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2} + \log(\pi^*)
+&amp; &gt;
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2} + \log(\pi^*)\\
+%%%
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2}  
+&amp; &gt;
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2}\\
+%%%
+x\cdot\mu_1 - \frac{\mu_1^2}{2}  
+&amp; &gt;
+x\cdot\mu_2 - \frac{\mu_2^2}{2}\\
+%%%
+2x\cdot(\mu_1-\mu_2)   
+&amp; &gt;
+\mu_1^2 - \mu_2^2\\
+%%%
+x   
+&amp; &gt; \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+\end{align*}
+\]</span> The Bayes decision boundary is the point for which <span class="math inline">\(\delta_1(x)=\delta_2(x)\)</span> <span class="math display">\[
+\begin{align*}
+x   
+=\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+&amp;=\frac{(\mu_1 - \mu_2)(\mu_1 + \mu_2)}{2(\mu_1-\mu_2)}\\
+&amp;=\frac{(\mu_1 + \mu_2)}{2}
+\end{align*}
+\]</span> Figure 4.4 shows a specific example with</p>
+<ul>
+<li><span class="math inline">\(\pi_1=\pi_2\)</span></li>
+<li><span class="math inline">\(\mu_1=-1.25\)</span> and <span class="math inline">\(\mu_2=1.25\)</span> and</li>
+<li><span class="math inline">\(\sigma_1=\sigma_2\equiv\sigma =1.\)</span></li>
+</ul>
+<p>The two densities <span class="math inline">\(f_1\)</span> and <span class="math inline">\(f_2\)</span> overlap such that for given <span class="math inline">\(X_x\)</span> there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> …</p>
+<ul>
+<li>… to class 1 if <span class="math inline">\(x&lt;0\)</span></li>
+<li>… to class 2 if <span class="math inline">\(x&gt;0\)</span></li>
+</ul>
+<p><img src="images/Fig_4_4.png" class="img-fluid"></p>
+<p>In the above example (Figure 4.4) we know all parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. In practice, however, these parameters are usually unknown, and thus need to estimated from the data.</p>
+<p>The <strong>Linear Discriminant Analysis (LDA)</strong> method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. The following estimates are used: <span class="math display">\[
+\begin{align*}
+\hat\pi_k &amp; = \frac{n_k}{n}\\
+\hat\mu   &amp; = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
+\hat\sigma   &amp; = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\
+\end{align*}
+\]</span> The LDA classifier assigns an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
+\hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \log(\hat\pi_k)
+\]</span> is largest.</p>
+<p>LDA is named <strong>linear</strong> since the discriminant functions <span class="math inline">\(\hat\delta_k(x)\)</span>, <span class="math inline">\(k=1,\dots,K\)</span> are linear functions of <span class="math inline">\(x.\)</span></p>
 
 <!-- 
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
@@ -1489,6 +1561,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <!-- {{< include Ch4_Solutions.qmd >}} -->
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Technically, this definition is only correct if <span class="math inline">\(X\)</span> is a qualitative random variable. If <span class="math inline">\(X\)</span> is quantitative, then <span class="math inline">\(f_k(x)dx\)</span> corresponds to the probability of <span class="math inline">\(X\)</span> falling in a small region <span class="math inline">\(dx\)</span> around <span class="math inline">\(x.\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

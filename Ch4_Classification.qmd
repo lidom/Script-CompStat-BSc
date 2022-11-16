@@ -84,7 +84,7 @@ However, if we use linear regression, some of our estimates might be outside the
 **Summary:**
 
 (a) A classic regression method cannot accommodate a qualitative response with more than two classes
-(b) A classic regression method will not provide meaningful estimates of $Pr(Y |X),$ even with just two classes. 
+(b) A classic regression method may not provide meaningful estimates of $Pr(Y |X),$ even with just two classes. 
 
 Thus, it is often preferable to use a classification method that is truly suited for qualitative response values.
 
@@ -174,8 +174,7 @@ Thus increasing $X$ by one unit ...
   * ... changes the *log odds* by $\beta_1$ 
   * ... multiplies the odds by $e^{\beta_1}$ 
 
-**Caution:**  The amount that $p(X)$ changes due to a one-unit change in
-$X$ depends on the current value of $X.$ 
+**Caution:**  The amount that $p(X)$ changes due to a one-unit change in $X$ depends on the current value of $X.$ (The logistic regression model is a non-linear model.)
 
 
 But regardless of the value of $X$, if $\beta_1$ is positive then increasing $X$ will be associated with increasing $p(X)$, and if $\beta_1$ is negative then increasing $X$ will be associated with decreasing $p(X).$ 
@@ -207,12 +206,12 @@ result from fitting a logistic regression model on the `Default` data in order t
 **Interpretation:**
 
 * We see that $\hat\beta_1=0.0055$; this indicates that an increase in `balance` is associated with an increase in the probability of default. 
-* To be precise, a one-unit increase in `balance` is associated with an increase in the log odds of default by 0.0055 units.
+  * To be precise, a one-unit increase in `balance` is associated with an increase in the log odds of default by 0.0055 units.
 * The $z$-statistic in Table 4.1 plays the same role as the $t$-statistic in the linear regression output: a large (absolute) value of the $z$-statistic indicates evidence against the null hypothesis $H_0: \beta_1= 0.$
 
 
 
-### (4.3.3) Making Predictions {-}
+### (Ch. 4.3.3) Making Predictions {-}
 
 Once the coefficients have been estimated, we can compute the probability of `default`$=1$ for any given credit card balance. 
 
@@ -230,7 +229,7 @@ $$
 By contrast, the default probability for an individual with a `balance`-value of 2,000 [USD] equals $0.586$ (or  $58,6\%$) and is thus much higher. 
 
 
-**Qualitative Predictors:**
+#### Qualitative Predictors: {-}
 
 ![](images/Tab_4_2.png)
 
@@ -245,7 +244,7 @@ Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
 \end{align*}
 $$
 
-This may indicate that students tend to have higher default probabilities than non-students. But we may missed further factors here since we only use one predictor variable. 
+This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. 
 
 
 ### (Ch. 4.3.4) Multiple Logistic Regression {-}
@@ -278,9 +277,7 @@ The left-hand panel of Figure 4.3 provides a graphical illustration of this appa
 
 ![](images/Fig_4_3.png)
 
-The right-hand panel of Figure 4.3 provides an explanation for this discrepancy:
-
-* Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.
+The right-hand panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.
 
 
 **Summary:**
@@ -311,23 +308,22 @@ $$
 
 For $k=1,\dots,K-1$ it holds that 
 $$
-\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\log\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
 $$
+which is the counterpart to the log odds equation for $K=2.$
 
 Note that:
 
 * The predictions $\hat{p}_k(x)$, for $k=1,\dots,K$ do not depend on the choice of the baseline class. 
 
-* However, interpretation of the coefficients in a multinomial logistic
-regression model must be done with care, since it is tied to the choice
-of baseline.
+* However, interpretation of the coefficients in a multinomial logistic regression model must be done with care, since it is tied to the choice of baseline.
 
 
 
 
 ## (Ch. 4.4) Discriminant Analysis: Generative Models for Classification {-}
 
-We now consider an alternative and less direct approach to estimating the probabilities $Pr(Y=K|X=x)$.
+We now consider an alternative and less direct approach to estimating the probabilities $Pr(Y=K|X=x).$
 
 Suppose that we wish to classify an observation into one of $K\geq 2$ classes. 
 
@@ -344,20 +340,22 @@ $$
 $$
 f_k(x)=Pr(X=x|Y=k)
 $$
-denote the (conditional) density of $X$ for an observation that comes from class $k.$
+denote the (conditional) density of $X$ for an observation that comes from class $k.$[^1]
+
+[^1]:  Technically, this definition is only correct if $X$ is a qualitative random variable. If $X$ is quantitative, then $f_k(x)dx$ corresponds to the probability of $X$ falling in a small region $dx$ around $x.$
 
 
 **Posterior probability:** Then *Bayes' theorem* states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
-$$
+$${#eq-postprob1}
 
 
-While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ indirectly simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
+While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ *indirectly* simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
 However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions. (E.g. assuming that the data is normal distributed.)
 
-We know from Chapter 2 that the **Bayes classifier**, which classifies an observation $x$ to the class for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. 
+We know from Chapter 2 that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. 
 
 In the following sections, we discuss three classifiers that use different estimates of $f_k(x)$ to approximate the Bayes classifier: 
 
@@ -367,6 +365,101 @@ In the following sections, we discuss three classifiers that use different estim
 
 ### (Ch. 4.4.1) Linear Discriminant Analysis for $p = 1$ {-}
 
+For the beginning, let us assume that we have only one predictor, i.e., $p=1.$ 
+
+To estimate $f_k(x)$, we will assume that $f_k$ is *normal* (or *Gaussian*). In the simple $p=1$ dimensional setting, the normal distribution is
+$$
+f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{1}{2\sigma_k^2}(x-\mu_k)^2\right),
+$$
+where
+
+* $\mu_k$ is the mean of the $k$th class and 
+* $\sigma_k^2$ is the variance of the $k$th class
+* $\pi\approx 3.14159$ is the mathematical constant $\pi$. (Do not confuse it with the prior probabilities $\pi_k.$)
+
+For now, let us further assume the simplifying case of equal variances across all classes, i.e. 
+$$
+\sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2.
+$$
+Plugging this assumed version of $f_k$ into @eq-postprob1, leads to
+$$
+p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
+$${#eq-LDp1}
+
+The Bayes classifier involves assigning an observation
+$X = x$ to the class $k$ for which $p_k(x)$ is largest. Taking the $\log$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
+$$
+\delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
+$$
+is largest. The function $\delta_k(x)$ is called the **discriminant function**.
+
+
+**Example:**
+
+In the case of only two classes, $K=2$, with equal a priori probabilities $\pi_1=\pi_2\equiv \pi^*$, the Bayes classifier assigns an observation $X=x$ to class $1$ if 
+$$
+\begin{align*}
+\delta_1(x) & > \delta_2(x)\\
+%%%
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2} + \log(\pi^*) 
+& > 
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2} + \log(\pi^*)\\
+%%%
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2}  
+& > 
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2}\\
+%%%
+x\cdot\mu_1 - \frac{\mu_1^2}{2}  
+& > 
+x\cdot\mu_2 - \frac{\mu_2^2}{2}\\
+%%%
+2x\cdot(\mu_1-\mu_2)   
+& > 
+\mu_1^2 - \mu_2^2\\
+%%%
+x   
+& > \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+\end{align*}
+$$
+The Bayes decision boundary is the point for which $\delta_1(x)=\delta_2(x)$
+$$
+\begin{align*}
+x   
+=\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+&=\frac{(\mu_1 - \mu_2)(\mu_1 + \mu_2)}{2(\mu_1-\mu_2)}\\ 
+&=\frac{(\mu_1 + \mu_2)}{2}
+\end{align*}
+$$
+Figure 4.4 shows a specific example with 
+
+* $\pi_1=\pi_2$
+* $\mu_1=-1.25$ and $\mu_2=1.25$ and 
+* $\sigma_1=\sigma_2\equiv\sigma =1.$
+
+The two densities $f_1$ and $f_2$ overlap such that for given $X_x$ there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation $X=x$ ...
+
+* ... to class 1 if $x<0$
+* ... to class 2 if $x>0$
+
+![](images/Fig_4_4.png)
+
+In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. In practice, however, these parameters are usually unknown, and thus need to estimated from the data. 
+
+The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. The following estimates are used: 
+$$
+\begin{align*}
+\hat\pi_k & = \frac{n_k}{n}\\
+\hat\mu   & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
+\hat\sigma   & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\
+\end{align*}
+$$
+The LDA classifier assigns an observation $X=x$ to the class $k$ for which 
+$$
+\hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \log(\hat\pi_k)
+$$
+is largest. 
+
+LDA is named **linear** since the discriminant functions $\hat\delta_k(x)$, $k=1,\dots,K$ are linear functions of $x.$
 
 <!-- 
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
