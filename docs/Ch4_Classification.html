@@ -540,7 +540,7 @@ x\cdot\mu_2 - \frac{\mu_2^2}{2}\\
 x   
 &amp; &gt; \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
 \end{align*}
-\]</span> The Bayes decision boundary is the point for which <span class="math inline">\(\delta_1(x)=\delta_2(x)\)</span> <span class="math display">\[
+\]</span> The Bayes <strong>decision boundary</strong> is the point for which <span class="math inline">\(\delta_1(x)=\delta_2(x)\)</span> <span class="math display">\[
 \begin{align*}
 x   
 =\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
@@ -553,13 +553,13 @@ x
 <li><span class="math inline">\(\mu_1=-1.25\)</span> and <span class="math inline">\(\mu_2=1.25\)</span> and</li>
 <li><span class="math inline">\(\sigma_1=\sigma_2\equiv\sigma =1.\)</span></li>
 </ul>
-<p>The two densities <span class="math inline">\(f_1\)</span> and <span class="math inline">\(f_2\)</span> overlap such that for given <span class="math inline">\(X_x\)</span> there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> …</p>
+<p>The two densities <span class="math inline">\(f_1\)</span> and <span class="math inline">\(f_2\)</span> overlap such that for given <span class="math inline">\(X=x\)</span> there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> …</p>
 <ul>
 <li>… to class 1 if <span class="math inline">\(x&lt;0\)</span></li>
 <li>… to class 2 if <span class="math inline">\(x&gt;0\)</span></li>
 </ul>
 <p><img src="images/Fig_4_4.png" class="img-fluid"></p>
-<p>In the above example (Figure 4.4) we know all parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. In practice, however, these parameters are usually unknown, and thus need to estimated from the data.</p>
+<p>In the above example (Figure 4.4) we know all parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. In practice, however, these parameters are usually unknown, and thus need to be estimated from the data.</p>
 <p>The <strong>Linear Discriminant Analysis (LDA)</strong> method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. The following estimates are used: <span class="math display">\[
 \begin{align*}
 \hat\pi_k    &amp; = \frac{n_k}{n}\\
@@ -611,7 +611,7 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\s
 <li>student status (qualitative variable).</li>
 </ul>
 <p><strong>Note:</strong> Student status is qualitative, and thus the normality assumption made by LDA is clearly violated in this example! However, LDA is often remarkably robust to model violations, as this example shows.</p>
-<p>The LDA model fit to the <span class="math inline">\(10,000\)</span> training samples results in a training error rate of <span class="math inline">\(2.75\%:\)</span></p>
+<p>The LDA model fit to the <span class="math inline">\(10,000\)</span> training samples results in an overall training error rate of <span class="math inline">\(2.75\%:\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MASS package contains the lda() function</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(MASS)) </span>
@@ -628,7 +628,7 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\s
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0275</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Training error rate of the null classifier:</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Training error rate of the "null classifier":</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Default<span class="sc">$</span>default <span class="sc">!=</span> <span class="fu">rep</span>(<span class="st">"No"</span>, n))<span class="sc">/</span>n </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0333</code></pre>
@@ -638,8 +638,8 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\s
 <ul>
 <li>Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a <strong>new set of individuals</strong> will default.
 <ul>
-<li>The reason is that we specifically adjust the parameters of our model to do well on the training data.</li>
-<li>Generally, the higher the ratio of parameters <span class="math inline">\(p\)</span> to number of samples <span class="math inline">\(n\)</span>, the more we expect this <em>overfitting</em> to play a role. However, for these data we don’t expect this to be a problem, since <span class="math inline">\(p = 2\)</span> and <span class="math inline">\(n = 10,000.\)</span></li>
+<li>The reason is that we specifically adjust the parameters of our model to do well on the training data. (We may “overfit” the training data.)</li>
+<li>Generally, the higher the ratio of parameters <span class="math inline">\(p\)</span> to number of samples <span class="math inline">\(n\)</span>, the more we expect <em>overfitting</em> to play a role. However, for these data we don’t expect this to be a problem, since <span class="math inline">\(p = 2\)</span> and <span class="math inline">\(n = 10,000.\)</span></li>
 </ul></li>
 <li>Since only <span class="math inline">\(3.33\%\)</span> of the individuals in the training sample defaulted, a simple but useless classifier that always predicts that an individual will “not default”, regardless of his or her credit card balance and student status, will result in an error rate of <span class="math inline">\(3.33\%.\)</span> In other words, the trivial <strong>null classifier</strong> will achieve an error rate that is only a bit higher than the LDA training set error rate.</li>
 </ul>

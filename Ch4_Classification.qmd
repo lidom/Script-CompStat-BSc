@@ -423,7 +423,7 @@ x
 & > \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
 \end{align*}
 $$
-The Bayes decision boundary is the point for which $\delta_1(x)=\delta_2(x)$
+The Bayes **decision boundary** is the point for which $\delta_1(x)=\delta_2(x)$
 $$
 \begin{align*}
 x   
@@ -438,14 +438,14 @@ Figure 4.4 shows a specific example with
 * $\mu_1=-1.25$ and $\mu_2=1.25$ and 
 * $\sigma_1=\sigma_2\equiv\sigma =1.$
 
-The two densities $f_1$ and $f_2$ overlap such that for given $X_x$ there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation $X=x$ ...
+The two densities $f_1$ and $f_2$ overlap such that for given $X=x$ there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation $X=x$ ...
 
 * ... to class 1 if $x<0$
 * ... to class 2 if $x>0$
 
 ![](images/Fig_4_4.png)
 
-In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. In practice, however, these parameters are usually unknown, and thus need to estimated from the data. 
+In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. In practice, however, these parameters are usually unknown, and thus need to be estimated from the data. 
 
 The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. The following estimates are used: 
 $$
@@ -528,7 +528,7 @@ We can perform LDA on the `Default` data in order to predict whether or not an i
 **Note:** Student status is qualitative, and thus the normality assumption made by LDA is clearly violated in this example! However, LDA is often remarkably robust to model violations, as this example shows. 
 
 
-The LDA model fit to the $10,000$ training samples results in a training error rate of $2.75\%:$ 
+The LDA model fit to the $10,000$ training samples results in an overall training error rate of $2.75\%:$ 
 
 ```{r}
 # MASS package contains the lda() function
@@ -544,7 +544,7 @@ ldaPredict_obj <- predict(lda_obj)
 ## Training error rate:
 sum(Default$default != ldaPredict_obj$class)/n 
 
-## Training error rate of the null classifier:
+## Training error rate of the "null classifier":
 sum(Default$default != rep("No", n))/n 
 ```
 
@@ -552,8 +552,8 @@ sum(Default$default != rep("No", n))/n
 This sounds like a low error rate, but two caveats must be noted:
 
 * Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a **new set of individuals** will default. 
-   * The reason is that we specifically adjust the parameters of our model to do well on the training data. 
-   * Generally, the higher the ratio of parameters $p$ to number of samples $n$, the more we expect this *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
+   * The reason is that we specifically adjust the parameters of our model to do well on the training data. (We may "overfit" the training data.)
+   * Generally, the higher the ratio of parameters $p$ to number of samples $n$, the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
 
 * Since only $3.33\%$ of the individuals in the training sample defaulted, a simple but useless classifier that always predicts that an individual will "not default", regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
 
