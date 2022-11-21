@@ -353,7 +353,7 @@ $${#eq-postprob1}
 
 While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ *indirectly* simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
-However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions. (E.g. assuming that the data is normal distributed.)
+However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.
 
 We know from Chapter 2 that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. 
 

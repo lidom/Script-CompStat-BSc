@@ -489,7 +489,7 @@ f_k(x)=Pr(X=x|Y=k)
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
 \tag{4.1}\]</span></span></p>
 <p>While logistic regression aims at estimating the posterior probability <span class="math inline">\(p_k(x)\)</span> directly, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> <em>indirectly</em> simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
-<p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging and we therefore have to make some simplifying assumptions. (E.g. assuming that the data is normal distributed.)</p>
+<p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.</p>
 <p>We know from Chapter 2 that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers.</p>
 <p>In the following sections, we discuss three classifiers that use different estimates of <span class="math inline">\(f_k(x)\)</span> to approximate the Bayes classifier:</p>
 <ul>
