@@ -576,35 +576,36 @@ table(ldaPredict_obj$class, Default$default,
 
 ![](images/Tab_4_4.png)
 
-**Interpretation.**
 
-True/False Positives:
+True/False Positive Predictions:
 
-* LDA predicts that $104$ people default (Positives, P). 
-  * $81$ of these $104$ people actually default (True Positives, TP).
-  * $23$ of these $104$ people actually do not default (False Positives, FP).
+* LDA predicts that P$^*=104$ people default (**Predicted Positives**, P$^*$). 
+  * $81$ of these actually default (**True Positives**, TP).
+  * $23$ of these actually do not default (**False Positives**, FP).
 
-True/False Negatives:
+True/False Negative Predictions:
 
-* LDA predicts that $9896$ people do not default (Negatives, N).
-  * $9644$ of these $9896$ people actually do not default (True Negatives, TN)
-  * $252$ of these $9896$ people actually default (FALSE Negatives, FN)
+* LDA predicts that N$^*=9896$ people do not default (**Predicted Negatives**, N$^*$).
+  * $9644$ of these actually do not default (**True Negatives**, TN)
+  * $252$ of these actually default (**FALSE Negatives**, FN)
 
 True/False Positive Rates:
 
 * $81$ of the $333$ default individuals are correctly labeled by LDA.<br>
-  True Positive Rate: $(81/333)\cdot 100\%\approx 24.3\%$<br>
-  True Positive Rate is also called *sensitivity*
+  True Positive Rate (TP/P): $(81/333)\cdot 100\%\approx 24.3\%$
+<!-- True Positive Rate is also called *sensitivity* -->
+
 * $23$ of the $9667$ no default individuals are incorrectly labeled.<br> 
-  False Positive Rate: $(23/9667)\cdot 100\%\approx 0.2\%$  
- 
+  False Positive Rate (FP/N): $(23/9667)\cdot 100\%\approx 0.2\%$  
+<!-- False Positive Rage equals one minus *specificity* -->
+
 True/False Negative Rates:
 
-* $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br>
-  True Negative Rate: $(9644/9667)\cdot 100\%\approx 99.8\%$<br>
-  True Negative Rate is also called *specificity*
+* $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br>True Negative Rate (TN/N): $(9644/9667)\cdot 100\%\approx 99.8\%$
+
 * $252$ of the $333$ default individuals are in correctly labeled.<br> 
   False Negative Rate: $(252/333)\cdot 100\%\approx 75.7\%$  
+
 
 
 The small False Positive Rate of $0.2%$ is good since this means that trustworthy (no default) people are rarely labeled as non-trustworthy (default) people. 
@@ -614,12 +615,63 @@ However, the high False Negative Rate of $75.7\%$ is problematic for a bank sinc
 
 #### Choosing the Classification Threshold {-}
 
-If a "False Negative Event" costs the bank more than a "False Positive Event", then the bank wants/needs to adjust the classifier. 
+If a "False Negative Event" costs the bank more than a "False Positive Event", then the bank wants/needs to adjust the classifying threshold of the classifier. 
 
-In the two class cases, the Bayes classifier, and thus also LDA which tries to approximate the Bayes classifier, use a threshold of $50\%$. I.e., an observation $X=x$ is assigned to the default class if
+In the two class cases, e.g. $\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},$ the Bayes classifier, and thus also LDA which tries to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a subject $i$ with observation $X=x_i$ is assigned to the `default`$=$`Yes` class if
 $$
-Pr(\texttt{default}=\texttt{Yes}|X=x)>0.5
+Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5
 $$
+
+However, if the costs of false negatives, i.e. 
+
+> predicting $\texttt{default}_i=\texttt{No}$, when actually $\texttt{default}_i=\texttt{Yes},$
+
+are higher than the costs of false positives, i.e. 
+
+> predicting $\texttt{default}_i=\texttt{Yes}$, when actually $\texttt{default}_i=\texttt{No},$
+
+then one can consider lowering the classifying threshold. For instance, we might label any customer $i$ with a posterior probability of default above $20\%,$
+$$
+Pr(\texttt{default}=\texttt{Yes}|X=x_i)>0.2,
+$$ 
+to the `default`$=$`Yes` class. 
+
+This changes the error rates (shown in the diffusion matrix); compare Table 4.4 (threshold $0.5$) with Table 4.5 (threshold $0.2$).
+
+![](images/Tab_4_5.png)
+
+* Changing the threshold from $0.5$ to $0.2$ ...
+  * **lowered** the false negative rate from $252/333\approx 75.7\%$ to $138/333\approx 41.4\%.$  
+  * **increased** the false positive rate from $23/9667\approx 0.2\%$ to $235/9667\approx 2.4\%$
+  * **increased** the overall error rate from $(23 + 252)/10000\approx 3.73\%$ to $(235 + 138)/10000\approx 3.73\%$
+
+For a credit card company, this slight increase in the overall error rate can be a small price to pay for a more accurate identification of people who indeed default. 
+
+#### The ROC curve {-}
+
+
+The (Receiver Operating Characteristics curve) **ROC curve** is a popular graphic for displaying the two types of errors (false negative rate and false positive rate) for all possible threshold. 
+
+Construction: 
+
+Plot the 
+$$
+\texttt{true positive rates}=TP/P\quad \text{(``sensitivity'' or ``power'')}
+$$ 
+against the 
+$$
+\texttt{false positive rates}=FP/N \quad \text{(``}1-\text{specificity'' or ``type I error'')}
+$$ 
+for all possible threshold values (from zero to one). 
+
+![](images/Fig_4_8.png)
+
+* Ideal ROC curve: Touches the complete y-Axis (from zero to one) and then stays as one for all false positive rates. I.e., has values $TP/P=1$ and $FP/N=0$ for all threshold values.
+
+* Summary statistic: Area Under the (ROC) Curve **AUC**; ideal AUC-value is thus AUC$=1.$
+
+
+### (Ch. 4.4.3) Quadratic Discriminant Analysis {-}
 
 
 <!-- 

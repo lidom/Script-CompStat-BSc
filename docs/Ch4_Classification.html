@@ -214,6 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#ch.-4.4.1-linear-discriminant-analysis-for-p-1" id="toc-ch.-4.4.1-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#ch.-4.4.1-linear-discriminant-analysis-for-p-1">(Ch. 4.4.1) Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></a></li>
   <li><a href="#ch.-4.4.2-linear-discriminant-analysis-for-p-1" id="toc-ch.-4.4.2-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#ch.-4.4.2-linear-discriminant-analysis-for-p-1">(Ch. 4.4.2) Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span></a></li>
+  <li><a href="#ch.-4.4.3-quadratic-discriminant-analysis" id="toc-ch.-4.4.3-quadratic-discriminant-analysis" class="nav-link" data-scroll-target="#ch.-4.4.3-quadratic-discriminant-analysis">(Ch. 4.4.3) Quadratic Discriminant Analysis</a></li>
   </ul></li>
   <li><a href="#r-lab-classification" id="toc-r-lab-classification" class="nav-link" data-scroll-target="#r-lab-classification"><span class="toc-section-number">4.2</span>  <code>R</code>-Lab: Classification</a>
   <ul class="collapse">
@@ -664,42 +665,84 @@ Predicted default status   No  Yes
 </div>
 </div>
 <p><img src="images/Tab_4_4.png" class="img-fluid"></p>
-<p><strong>Interpretation.</strong></p>
-<p>True/False Positives:</p>
+<p>True/False Positive Predictions:</p>
 <ul>
-<li>LDA predicts that <span class="math inline">\(104\)</span> people default (Positives, P).
+<li>LDA predicts that P<span class="math inline">\(^*=104\)</span> people default (<strong>Predicted Positives</strong>, P<span class="math inline">\(^*\)</span>).
 <ul>
-<li><span class="math inline">\(81\)</span> of these <span class="math inline">\(104\)</span> people actually default (True Positives, TP).</li>
-<li><span class="math inline">\(23\)</span> of these <span class="math inline">\(104\)</span> people actually do not default (False Positives, FP).</li>
+<li><span class="math inline">\(81\)</span> of these actually default (<strong>True Positives</strong>, TP).</li>
+<li><span class="math inline">\(23\)</span> of these actually do not default (<strong>False Positives</strong>, FP).</li>
 </ul></li>
 </ul>
-<p>True/False Negatives:</p>
+<p>True/False Negative Predictions:</p>
 <ul>
-<li>LDA predicts that <span class="math inline">\(9896\)</span> people do not default (Negatives, N).
+<li>LDA predicts that N<span class="math inline">\(^*=9896\)</span> people do not default (<strong>Predicted Negatives</strong>, N<span class="math inline">\(^*\)</span>).
 <ul>
-<li><span class="math inline">\(9644\)</span> of these <span class="math inline">\(9896\)</span> people actually do not default (True Negatives, TN)</li>
-<li><span class="math inline">\(252\)</span> of these <span class="math inline">\(9896\)</span> people actually default (FALSE Negatives, FN)</li>
+<li><span class="math inline">\(9644\)</span> of these actually do not default (<strong>True Negatives</strong>, TN)</li>
+<li><span class="math inline">\(252\)</span> of these actually default (<strong>FALSE Negatives</strong>, FN)</li>
 </ul></li>
 </ul>
 <p>True/False Positive Rates:</p>
 <ul>
-<li><span class="math inline">\(81\)</span> of the <span class="math inline">\(333\)</span> default individuals are correctly labeled by LDA.<br> True Positive Rate: <span class="math inline">\((81/333)\cdot 100\%\approx 24.3\%\)</span><br> True Positive Rate is also called <em>sensitivity</em></li>
-<li><span class="math inline">\(23\)</span> of the <span class="math inline">\(9667\)</span> no default individuals are incorrectly labeled.<br> False Positive Rate: <span class="math inline">\((23/9667)\cdot 100\%\approx 0.2\%\)</span></li>
+<li><p><span class="math inline">\(81\)</span> of the <span class="math inline">\(333\)</span> default individuals are correctly labeled by LDA.<br> True Positive Rate (TP/P): <span class="math inline">\((81/333)\cdot 100\%\approx 24.3\%\)</span> <!-- True Positive Rate is also called *sensitivity* --></p></li>
+<li><p><span class="math inline">\(23\)</span> of the <span class="math inline">\(9667\)</span> no default individuals are incorrectly labeled.<br> False Positive Rate (FP/N): <span class="math inline">\((23/9667)\cdot 100\%\approx 0.2\%\)</span><br>
+<!-- False Positive Rage equals one minus *specificity* --></p></li>
 </ul>
 <p>True/False Negative Rates:</p>
 <ul>
-<li><span class="math inline">\(9644\)</span> of the <span class="math inline">\(9667\)</span> no default individuals are correctly labeled by LDA.<br> True Negative Rate: <span class="math inline">\((9644/9667)\cdot 100\%\approx 99.8\%\)</span><br> True Negative Rate is also called <em>specificity</em></li>
-<li><span class="math inline">\(252\)</span> of the <span class="math inline">\(333\)</span> default individuals are in correctly labeled.<br> False Negative Rate: <span class="math inline">\((252/333)\cdot 100\%\approx 75.7\%\)</span></li>
+<li><p><span class="math inline">\(9644\)</span> of the <span class="math inline">\(9667\)</span> no default individuals are correctly labeled by LDA.<br>True Negative Rate (TN/N): <span class="math inline">\((9644/9667)\cdot 100\%\approx 99.8\%\)</span></p></li>
+<li><p><span class="math inline">\(252\)</span> of the <span class="math inline">\(333\)</span> default individuals are in correctly labeled.<br> False Negative Rate: <span class="math inline">\((252/333)\cdot 100\%\approx 75.7\%\)</span></p></li>
 </ul>
 <p>The small False Positive Rate of <span class="math inline">\(0.2%\)</span> is good since this means that trustworthy (no default) people are rarely labeled as non-trustworthy (default) people.</p>
 <p>However, the high False Negative Rate of <span class="math inline">\(75.7\%\)</span> is problematic for a bank since this means that the bank often does not detect the non-trustworthy (default) people.</p>
 </section>
 <section id="choosing-the-classification-threshold" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="choosing-the-classification-threshold">Choosing the Classification Threshold</h4>
-<p>If a “False Negative Event” costs the bank more than a “False Positive Event”, then the bank wants/needs to adjust the classifier.</p>
-<p>In the two class cases, the Bayes classifier, and thus also LDA which tries to approximate the Bayes classifier, use a threshold of <span class="math inline">\(50\%\)</span>. I.e., an observation <span class="math inline">\(X=x\)</span> is assigned to the default class if <span class="math display">\[
-Pr(\texttt{default}=\texttt{Yes}|X=x)&gt;0.5
+<p>If a “False Negative Event” costs the bank more than a “False Positive Event”, then the bank wants/needs to adjust the classifying threshold of the classifier.</p>
+<p>In the two class cases, e.g.&nbsp;<span class="math inline">\(\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},\)</span> the Bayes classifier, and thus also LDA which tries to approximate the Bayes classifier, use a threshold of <span class="math inline">\(50\%\)</span>. I.e., a subject <span class="math inline">\(i\)</span> with observation <span class="math inline">\(X=x_i\)</span> is assigned to the <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> class if <span class="math display">\[
+Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)&gt;0.5
 \]</span></p>
+<p>However, if the costs of false negatives, i.e.&nbsp;</p>
+<blockquote class="blockquote">
+<p>predicting <span class="math inline">\(\texttt{default}_i=\texttt{No}\)</span>, when actually <span class="math inline">\(\texttt{default}_i=\texttt{Yes},\)</span></p>
+</blockquote>
+<p>are higher than the costs of false positives, i.e.&nbsp;</p>
+<blockquote class="blockquote">
+<p>predicting <span class="math inline">\(\texttt{default}_i=\texttt{Yes}\)</span>, when actually <span class="math inline">\(\texttt{default}_i=\texttt{No},\)</span></p>
+</blockquote>
+<p>then one can consider lowering the classifying threshold. For instance, we might label any customer <span class="math inline">\(i\)</span> with a posterior probability of default above <span class="math inline">\(20\%,\)</span> <span class="math display">\[
+Pr(\texttt{default}=\texttt{Yes}|X=x_i)&gt;0.2,
+\]</span> to the <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> class.</p>
+<p>This changes the error rates (shown in the diffusion matrix); compare Table 4.4 (threshold <span class="math inline">\(0.5\)</span>) with Table 4.5 (threshold <span class="math inline">\(0.2\)</span>).</p>
+<p><img src="images/Tab_4_5.png" class="img-fluid"></p>
+<ul>
+<li>Changing the threshold from <span class="math inline">\(0.5\)</span> to <span class="math inline">\(0.2\)</span> …
+<ul>
+<li><strong>lowered</strong> the false negative rate from <span class="math inline">\(252/333\approx 75.7\%\)</span> to <span class="math inline">\(138/333\approx 41.4\%.\)</span><br>
+</li>
+<li><strong>increased</strong> the false positive rate from <span class="math inline">\(23/9667\approx 0.2\%\)</span> to <span class="math inline">\(235/9667\approx 2.4\%\)</span></li>
+<li><strong>increased</strong> the overall error rate from <span class="math inline">\((23 + 252)/10000\approx 3.73\%\)</span> to <span class="math inline">\((235 + 138)/10000\approx 3.73\%\)</span></li>
+</ul></li>
+</ul>
+<p>For a credit card company, this slight increase in the overall error rate can be a small price to pay for a more accurate identification of people who indeed default.</p>
+</section>
+<section id="the-roc-curve" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-roc-curve">The ROC curve</h4>
+<p>The (Receiver Operating Characteristics curve) <strong>ROC curve</strong> is a popular graphic for displaying the two types of errors (false negative rate and false positive rate) for all possible threshold.</p>
+<p>Construction:</p>
+<p>Plot the <span class="math display">\[
+\texttt{true positive rates}=TP/P\quad \text{(``sensitivity'' or ``power'')}
+\]</span> against the <span class="math display">\[
+\texttt{false positive rates}=FP/N \quad \text{(``}1-\text{specificity'' or ``type I error'')}
+\]</span> for all possible threshold values (from zero to one).</p>
+<p><img src="images/Fig_4_8.png" class="img-fluid"></p>
+<ul>
+<li><p>Ideal ROC curve: Touches the complete y-Axis (from zero to one) and then stays as one for all false positive rates. I.e., has values <span class="math inline">\(TP/P=1\)</span> and <span class="math inline">\(FP/N=0\)</span> for all threshold values.</p></li>
+<li><p>Summary statistic: Area Under the (ROC) Curve <strong>AUC</strong>; ideal AUC-value is thus AUC<span class="math inline">\(=1.\)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="ch.-4.4.3-quadratic-discriminant-analysis" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.4.3-quadratic-discriminant-analysis">(Ch. 4.4.3) Quadratic Discriminant Analysis</h3>
 
 <!-- 
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
@@ -716,7 +759,6 @@ each of the classes and the sample size is small, then the approaches
 in this section may be more accurate than logistic regression.
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?  
 -->
-</section>
 </section>
 </section>
 <section id="r-lab-classification" class="level2" data-number="4.2">
