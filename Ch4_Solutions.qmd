@@ -17,17 +17,18 @@ $$
 Derivations:
 
 $$
-\begin{align*}\frac {p(X)} {1 - p(X)} 
-&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}} 
-= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1 + e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}} - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}} 
-= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1} {1 + e^{\beta_0 + \beta_1 X}}} 
+\begin{align*}
+\frac {p(X)} {1 - p(X)} 
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex] 
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1 + e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}} - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex]  
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1} {1 + e^{\beta_0 + \beta_1 X}}} 
 = e^{\beta_0 + \beta_1 X}
 \end{align*}
 $$
 
 ### Exercise 6 {-}
 
-Suppose we collect data for a group of students in a statistics class with variables $X_1=$`hours studied`, $X_2 =$ `undergrad GPA`, and $Y =$ `receive an A`. We fit a logistic regression and produce estimated coefficients:
+Suppose we collect data for a group of students in a statistics class with variables $X_1=$`hours studied`, $X_2 =$ `undergrad GPA` (GPA: Grade Point Average), and $Y =$ `receive an A`. We fit a logistic regression and produce estimated coefficients:
 
 $$\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.$$
 
@@ -70,9 +71,9 @@ $$
 
 ### Exercise 13 {-}
 
-This question should be answered using the `Weekly` data set, which is part of the `ISLR` package. This data is similar in nature to the Smarket data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
+This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the Smarket data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
 
-**13 a)** Produce some numerical and graphical summaries of the Weekly data. Do there appear to be any patterns?
+**13 a)** Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
 
 
 **Answer:**

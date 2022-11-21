@@ -199,14 +199,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#r-lab-resampling-methods" id="toc-r-lab-resampling-methods" class="nav-link active" data-scroll-target="#r-lab-resampling-methods"><span class="toc-section-number">5.1</span>  <code>R</code>-Lab: Resampling Methods</a>
+  <li><a href="#lecture-notes" id="toc-lecture-notes" class="nav-link active" data-scroll-target="#lecture-notes"><span class="toc-section-number">5.1</span>  Lecture Notes</a></li>
+  <li><a href="#ch.-5.1-cross-validation" id="toc-ch.-5.1-cross-validation" class="nav-link" data-scroll-target="#ch.-5.1-cross-validation">(Ch. 5.1) Cross-Validation</a>
   <ul class="collapse">
-  <li><a href="#the-validation-set-approach" id="toc-the-validation-set-approach" class="nav-link" data-scroll-target="#the-validation-set-approach"><span class="toc-section-number">5.1.1</span>  The Validation Set Approach</a></li>
-  <li><a href="#leave-one-out-cross-validation" id="toc-leave-one-out-cross-validation" class="nav-link" data-scroll-target="#leave-one-out-cross-validation"><span class="toc-section-number">5.1.2</span>  Leave-One-Out Cross-Validation</a></li>
-  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="toc-section-number">5.1.3</span>  <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
-  <li><a href="#the-bootstrap" id="toc-the-bootstrap" class="nav-link" data-scroll-target="#the-bootstrap"><span class="toc-section-number">5.1.4</span>  The Bootstrap</a></li>
+  <li><a href="#ch.-5.1.1-validation-set-approach" id="toc-ch.-5.1.1-validation-set-approach" class="nav-link" data-scroll-target="#ch.-5.1.1-validation-set-approach">(Ch. 5.1.1) Validation Set Approach</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">5.2</span>  Exercises</a></li>
+  <li><a href="#r-lab-resampling-methods" id="toc-r-lab-resampling-methods" class="nav-link" data-scroll-target="#r-lab-resampling-methods"><span class="toc-section-number">5.2</span>  <code>R</code>-Lab: Resampling Methods</a>
+  <ul class="collapse">
+  <li><a href="#the-validation-set-approach" id="toc-the-validation-set-approach" class="nav-link" data-scroll-target="#the-validation-set-approach"><span class="toc-section-number">5.2.1</span>  The Validation Set Approach</a></li>
+  <li><a href="#leave-one-out-cross-validation" id="toc-leave-one-out-cross-validation" class="nav-link" data-scroll-target="#leave-one-out-cross-validation"><span class="toc-section-number">5.2.2</span>  Leave-One-Out Cross-Validation</a></li>
+  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="toc-section-number">5.2.3</span>  <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+  <li><a href="#the-bootstrap" id="toc-the-bootstrap" class="nav-link" data-scroll-target="#the-bootstrap"><span class="toc-section-number">5.2.4</span>  The Bootstrap</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">5.3</span>  Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -229,64 +234,132 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="r-lab-resampling-methods" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="r-lab-resampling-methods"><span class="header-section-number">5.1</span> <code>R</code>-Lab: Resampling Methods</h2>
+<section id="lecture-notes" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="lecture-notes"><span class="header-section-number">5.1</span> Lecture Notes</h2>
+<p><strong>Resampling methods</strong> involve repeatedly drawing samples from a <em>training data set</em> and refitting a model of interest on each of these samples. The different estimation results across resamples can be used, for instance, to estimate the variability of a linear regression fit.</p>
+<p>In the following, we consider the resampling methods:</p>
+<ul>
+<li>Cross-Validation and</li>
+<li>Bootstrap</li>
+</ul>
+</section>
+<section id="ch.-5.1-cross-validation" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ch.-5.1-cross-validation">(Ch. 5.1) Cross-Validation</h2>
+<p>In this section, we instead consider a class of methods that estimate the test error rate by holding out a subset of the training observations from the fitting process, and then applying the statistical learning method to those held out observations.</p>
+<section id="ch.-5.1.1-validation-set-approach" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.1-validation-set-approach">(Ch. 5.1.1) Validation Set Approach</h3>
+<p>The validation set approach randomly divides the available set of observations into two parts:</p>
+<ul>
+<li>a <em>training (data) set</em> and</li>
+<li>a <em>validation (data) set</em> (or hold-out set)</li>
+</ul>
+<p>The model is fit on the training set, and the fitted model is used to predict the responses for the observations in the validation set.</p>
+<p><img src="images/Fig_5_1.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>n        <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Auto)    <span class="co"># Sample size</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n_Train  <span class="ot">&lt;-</span> <span class="dv">200</span>           <span class="co"># Sample size of training set </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n_Valid  <span class="ot">&lt;-</span> n <span class="sc">-</span> n_Train   <span class="co"># Sample size of test/validation set </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Index-Sets for selecting the training and validation sets</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set seed for reproducible training and validation sets</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>I_Train  <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="at">size =</span> n_Train, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>I_Valid  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n)[<span class="sc">-</span>I_Train]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Trainingsdaten </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Auto_Train_df <span class="ot">&lt;-</span> Auto[I_Train, ]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Validierungsdaten </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Auto_Valid_df <span class="ot">&lt;-</span> Auto[I_Valid, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="illustration" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="illustration">Illustration</h4>
+<p>Reconsider the <code>Auto</code> data set. Apparently, there is a non-linear relationship between the dependent variable <code>mpg</code> and <code>horsepower</code>.</p>
+<p>In Chapter 3, we found that a model that predicts <code>mpg</code> using <code>horsepower</code> and <code>horsepower</code><span class="math inline">\(^2\)</span> predicts better than a model that uses only the linear term.</p>
+<p>But maybe a cubic or higher order polynomial regression model predicts even better?</p>
+<p>The validation set approach can be used to select the degree <span class="math inline">\(p\)</span> of the polynomial <span class="math display">\[
+\texttt{mpg}=\beta_0 + \beta_1 \texttt{horsepower} + \beta_2 \texttt{horsepower}^2 + \dots + \beta_p \texttt{horsepower}^p
+\]</span></p>
+<p><strong>Step 1:</strong> Estimation of the polynomial regression model, e.g., for <span class="math inline">\(p=2\)</span> using the training set: <!-- $$
+\begin{align*}
+y^{Train}_i
+%&=\hat{f}^{Train}_p(x_i^{Train}) + e_i^{Train}\\
+&=\hat{\beta}_0^{Train} + \hat{\beta}_1^{Train} x_{i}^{Train} + \hat{\beta}_2^{Train} (x_{i}^{Train})^2 + \dots + \hat{\beta}_p^{Train} (x_{i}^{Train})^p + e_i^{Train}
+\end{align*}
+$$ --></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p            <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Train_polreg <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="at">degree =</span> p, <span class="at">raw=</span><span class="cn">TRUE</span>), </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> Auto_Train_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Step 2:</strong> Validation of the polynomial regression model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>( (Auto_Valid_df<span class="sc">$</span>Verbrauch <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span> )</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>MSE           <span class="ot">&lt;-</span> RSS_Valid <span class="sc">/</span> n_Valid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="r-lab-resampling-methods" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="r-lab-resampling-methods"><span class="header-section-number">5.2</span> <code>R</code>-Lab: Resampling Methods</h2>
 <p>In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.</p>
-<section id="the-validation-set-approach" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="the-validation-set-approach"><span class="header-section-number">5.1.1</span> The Validation Set Approach</h3>
+<section id="the-validation-set-approach" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-validation-set-approach"><span class="header-section-number">5.2.1</span> The Validation Set Approach</h3>
 <p>We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the <code>Auto</code> data set.</p>
 <p>Before we begin, we use the <code>set.seed()</code> function in order to set a for <code>R</code>’s random number generator, so that the reader of this book will obtain precisely the same results as those shown below. It is generally a good idea to set a random seed when performing an analysis such as cross-validation that contains an element of randomness, so that the results obtained can be reproduced precisely at a later time.</p>
 <p>We begin by using the <code>sample()</code> function to split the set of observations into two halves, by selecting a random subset of <span class="math inline">\(196\)</span> observations out of the original <span class="math inline">\(392\)</span> observations. We refer to these observations as the training set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">196</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">196</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>(Here we use a shortcut in the sample command; see <code>?sample</code> for details.) We then use the <code>subset</code> option in <code>lm()</code> to fit a linear regression using only the observations corresponding to the training set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto, <span class="at">subset =</span> train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto, <span class="at">subset =</span> train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now use the <code>predict()</code> function to estimate the response for all <span class="math inline">\(392\)</span> observations, and we use the <code>mean()</code> function to calculate the MSE of the <span class="math inline">\(196\)</span> observations in the validation set. Note that the <code>-train</code> index below selects only the observations that are not in the training set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Auto)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Auto)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 23.26601</code></pre>
 </div>
 </div>
 <p>Therefore, the estimated test MSE for the linear regression fit is <span class="math inline">\(23.27\)</span>. We can use the <code>poly()</code> function to estimate the test error for the quadratic and cubic regressions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">2</span>), <span class="at">data =</span> Auto, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit2, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">2</span>), <span class="at">data =</span> Auto, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit2, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18.71646</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">3</span>), <span class="at">data =</span> Auto, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit3, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">3</span>), <span class="at">data =</span> Auto, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit3, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18.79401</code></pre>
 </div>
 </div>
 <p>These error rates are <span class="math inline">\(18.72\)</span> and <span class="math inline">\(18.79\)</span>, respectively. If we choose a different training set instead, then we will obtain somewhat different errors on the validation set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">196</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">subset =</span> train)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">196</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">subset =</span> train)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 25.72651</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">2</span>), <span class="at">data =</span> Auto, </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit2, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">2</span>), <span class="at">data =</span> Auto, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit2, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20.43036</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">3</span>), <span class="at">data =</span> Auto, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit3, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">3</span>), <span class="at">data =</span> Auto, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit3, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20.38533</code></pre>
 </div>
@@ -294,12 +367,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Using this split of the observations into a training set and a validation set, we find that the validation set error rates for the models with linear, quadratic, and cubic terms are <span class="math inline">\(25.73\)</span>, <span class="math inline">\(20.43\)</span>, and <span class="math inline">\(20.39\)</span>, respectively.</p>
 <p>These results are consistent with our previous findings: a model that predicts <code>mpg</code> using a quadratic function of <code>horsepower</code> performs better than a model that involves only a linear function of <code>horsepower</code>, and there is little evidence in favor of a model that uses a cubic function of <code>horsepower</code>.</p>
 </section>
-<section id="leave-one-out-cross-validation" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="leave-one-out-cross-validation"><span class="header-section-number">5.1.2</span> Leave-One-Out Cross-Validation</h3>
+<section id="leave-one-out-cross-validation" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="leave-one-out-cross-validation"><span class="header-section-number">5.2.2</span> Leave-One-Out Cross-Validation</h3>
 <p>The LOOCV estimate can be automatically computed for any generalized linear model using the <code>glm()</code> and <code>cv.glm()</code> functions. In the lab for Chapter 4, we used the <code>glm()</code> function to perform logistic regression by passing in the <code>family = "binomial"</code> argument. But if we use <code>glm()</code> to fit a model without passing in the <code>family</code> argument, then it performs linear regression, just like the <code>lm()</code> function. So for instance,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(glm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(glm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)  horsepower 
  39.9358610  -0.1578447 </code></pre>
@@ -307,8 +380,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)  horsepower 
  39.9358610  -0.1578447 </code></pre>
@@ -316,10 +389,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>yield identical linear regression models. In this lab, we will perform linear regression using the <code>glm()</code> function rather than the <code>lm()</code> function because the former can be used together with <code>cv.glm()</code>. The <code>cv.glm()</code> function is part of the <code>boot</code> library.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>cv.err <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(Auto, glm.fit)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>cv.err<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>cv.err <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(Auto, glm.fit)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>cv.err<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 24.23151 24.23114</code></pre>
 </div>
@@ -327,12 +400,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>cv.glm()</code> function produces a list with several components. The two numbers in the <code>delta</code> vector contain the cross-validation results. In this case the numbers are identical (up to two decimal places) and correspond to the LOOCV statistic given in ( 5.1). Below, we discuss a situation in which the two numbers differ. Our cross-validation estimate for the test error is approximately <span class="math inline">\(24.23\)</span>.</p>
 <p>We can repeat this procedure for increasingly complex polynomial fits. To automate the process, we use the <code>for()</code> function to initiate a which iteratively fits polynomial regressions for polynomials of order <span class="math inline">\(i=1\)</span> to <span class="math inline">\(i=10\)</span>, computes the associated cross-validation error, and stores it in the <span class="math inline">\(i\)</span>th element of the vector <code>cv.error</code>. We begin by initializing the vector.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cv.error <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, i), <span class="at">data =</span> Auto)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  cv.error[i] <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(Auto, glm.fit)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>cv.error</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cv.error <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, i), <span class="at">data =</span> Auto)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  cv.error[i] <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(Auto, glm.fit)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>cv.error</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 24.23151 19.24821 19.33498 19.42443 19.03321 18.97864 18.83305 18.96115
  [9] 19.06863 19.49093</code></pre>
@@ -340,17 +413,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>As in Figure 5.4, we see a sharp drop in the estimated test MSE between the linear and quadratic fits, but then no clear improvement from using higher-order polynomials.</p>
 </section>
-<section id="k-fold-cross-validation" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">5.1.3</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h3>
+<section id="k-fold-cross-validation" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">5.2.3</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h3>
 <p>The <code>cv.glm()</code> function can also be used to implement <span class="math inline">\(k\)</span>-fold CV. Below we use <span class="math inline">\(k=10\)</span>, a common choice for <span class="math inline">\(k\)</span>, on the <code>Auto</code> data set. We once again set a random seed and initialize a vector in which we will store the CV errors corresponding to the polynomial fits of orders one to ten.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cv.error<span class="fl">.10</span> <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, i), <span class="at">data =</span> Auto)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  cv.error<span class="fl">.10</span>[i] <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(Auto, glm.fit, <span class="at">K =</span> <span class="dv">10</span>)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>cv.error<span class="fl">.10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>cv.error<span class="fl">.10</span> <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, i), <span class="at">data =</span> Auto)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  cv.error<span class="fl">.10</span>[i] <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(Auto, glm.fit, <span class="at">K =</span> <span class="dv">10</span>)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>cv.error<span class="fl">.10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 24.27207 19.26909 19.34805 19.29496 19.03198 18.89781 19.12061 19.14666
  [9] 18.87013 20.95520</code></pre>
@@ -359,36 +432,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice that the computation time is shorter than that of LOOCV. (In principle, the computation time for LOOCV for a least squares linear model should be faster than for <span class="math inline">\(k\)</span>-fold CV, due to the availability of the formula ( 5.2) for LOOCV; however, unfortunately the <code>cv.glm()</code> function does not make use of this formula.) We still see little evidence that using cubic or higher-order polynomial terms leads to lower test error than simply using a quadratic fit.</p>
 <p>We saw in Section 5.3.2 that the two numbers associated with <code>delta</code> are essentially the same when LOOCV is performed. When we instead perform <span class="math inline">\(k\)</span>-fold CV, then the two numbers associated with <code>delta</code> differ slightly. The first is the standard <span class="math inline">\(k\)</span>-fold CV estimate, as in ( 5.3). The second is a bias-corrected version. On this data set, the two estimates are very similar to each other.</p>
 </section>
-<section id="the-bootstrap" class="level3" data-number="5.1.4">
-<h3 data-number="5.1.4" class="anchored" data-anchor-id="the-bootstrap"><span class="header-section-number">5.1.4</span> The Bootstrap</h3>
+<section id="the-bootstrap" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="the-bootstrap"><span class="header-section-number">5.2.4</span> The Bootstrap</h3>
 <p>We illustrate the use of the bootstrap in the simple example of Section 5.2, as well as on an example involving estimating the accuracy of the linear regression model on the <code>Auto</code> data set.</p>
 <p>One of the great advantages of the bootstrap approach is that it can be applied in almost all situations. No complicated mathematical calculations are required. Performing a bootstrap analysis in <code>R</code> entails only two steps. First, we must create a function that computes the statistic of interest. Second, we use the <code>boot()</code> function, which is part of the <code>boot</code> library, to perform the bootstrap by repeatedly sampling observations from the data set with replacement.</p>
 <p>The <code>Portfolio</code> data set in the <code>ISLR2</code> package is simulated data of <span class="math inline">\(100\)</span> pairs of returns, generated in the fashion described in Section 5.2. To illustrate the use of the bootstrap on this data, we must first create a function, <code>alpha.fn()</code>, which takes as input the <span class="math inline">\((X,Y)\)</span> data as well as a vector indicating which observations should be used to estimate <span class="math inline">\(\alpha\)</span>. The function then outputs the estimate for <span class="math inline">\(\alpha\)</span> based on the selected observations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>alpha.fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index) {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> data<span class="sc">$</span>X[index]</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> data<span class="sc">$</span>Y[index]</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">var</span>(Y) <span class="sc">-</span> <span class="fu">cov</span>(X, Y)) <span class="sc">/</span> (<span class="fu">var</span>(X) <span class="sc">+</span> <span class="fu">var</span>(Y) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cov</span>(X, Y))</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>alpha.fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index) {</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> data<span class="sc">$</span>X[index]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> data<span class="sc">$</span>Y[index]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">var</span>(Y) <span class="sc">-</span> <span class="fu">cov</span>(X, Y)) <span class="sc">/</span> (<span class="fu">var</span>(X) <span class="sc">+</span> <span class="fu">var</span>(Y) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cov</span>(X, Y))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This function <em>returns</em>, or outputs, an estimate for <span class="math inline">\(\alpha\)</span> based on applying ( 5.7) to the observations indexed by the argument <code>index</code>. For instance, the following command tells <code>R</code> to estimate <span class="math inline">\(\alpha\)</span> using all <span class="math inline">\(100\)</span> observations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.fn</span>(Portfolio, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.fn</span>(Portfolio, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5758321</code></pre>
 </div>
 </div>
 <p>The next command uses the <code>sample()</code> function to randomly select <span class="math inline">\(100\)</span> observations from the range <span class="math inline">\(1\)</span> to <span class="math inline">\(100\)</span>, with replacement. This is equivalent to constructing a new bootstrap data set and recomputing <span class="math inline">\(\hat{\alpha}\)</span> based on the new data set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.fn</span>(Portfolio, <span class="fu">sample</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha.fn</span>(Portfolio, <span class="fu">sample</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5385326</code></pre>
 </div>
 </div>
 <p>We can implement a bootstrap analysis by performing this command many times, recording all of the corresponding estimates for <span class="math inline">\(\alpha\)</span>, and computing the resulting standard deviation. However, the <code>boot()</code> function automates this approach. Below we produce <span class="math inline">\(R=1,000\)</span> bootstrap estimates for <span class="math inline">\(\alpha\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(Portfolio, alpha.fn, <span class="at">R =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(Portfolio, alpha.fn, <span class="at">R =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ORDINARY NONPARAMETRIC BOOTSTRAP
@@ -407,9 +480,9 @@ t1* 0.5758321 0.0007959475  0.08969074</code></pre>
 <p>The bootstrap approach can be used to assess the variability of the coefficient estimates and predictions from a statistical learning method. Here we use the bootstrap approach in order to assess the variability of the estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the intercept and slope terms for the linear regression model that uses <code>horsepower</code> to predict <code>mpg</code> in the <code>Auto</code> data set. We will compare the estimates obtained using the bootstrap to those obtained using the formulas for <span class="math inline">\({\rm SE}(\hat{\beta}_0)\)</span> and <span class="math inline">\({\rm SE}(\hat{\beta}_1)\)</span> described in Section 3.1.2.</p>
 <p>We first create a simple function, <code>boot.fn()</code>, which takes in the <code>Auto</code> data set as well as a set of indices for the observations, and returns the intercept and slope estimates for the linear regression model. We then apply this function to the full set of <span class="math inline">\(392\)</span> observations in order to compute the estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> on the entire data set using the usual linear regression coefficient estimate formulas from Chapter 3. Note that we do not need the <code>{</code> and <code>}</code> at the beginning and end of the function because it is only one line long.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>boot.fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> data, <span class="at">subset =</span> index))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.fn</span>(Auto, <span class="dv">1</span><span class="sc">:</span><span class="dv">392</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>boot.fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> data, <span class="at">subset =</span> index))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.fn</span>(Auto, <span class="dv">1</span><span class="sc">:</span><span class="dv">392</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)  horsepower 
  39.9358610  -0.1578447 </code></pre>
@@ -417,13 +490,13 @@ t1* 0.5758321 0.0007959475  0.08969074</code></pre>
 </div>
 <p>The <code>boot.fn()</code> function can also be used in order to create bootstrap estimates for the intercept and slope terms by randomly sampling from among the observations with replacement. Here we give two examples.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.fn</span>(Auto, <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">392</span>, <span class="at">replace =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.fn</span>(Auto, <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">392</span>, <span class="at">replace =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)  horsepower 
  40.3404517  -0.1634868 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.fn</span>(Auto, <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">392</span>, <span class="at">replace =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.fn</span>(Auto, <span class="fu">sample</span>(<span class="dv">392</span>, <span class="dv">392</span>, <span class="at">replace =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)  horsepower 
  40.1186906  -0.1577063 </code></pre>
@@ -431,7 +504,7 @@ t1* 0.5758321 0.0007959475  0.08969074</code></pre>
 </div>
 <p>Next, we use the <code>boot()</code> function to compute the standard errors of 1,000 bootstrap estimates for the intercept and slope terms.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(Auto, boot.fn, <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(Auto, boot.fn, <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ORDINARY NONPARAMETRIC BOOTSTRAP
@@ -449,7 +522,7 @@ t2* -0.1578447 -0.0006170901 0.007343073</code></pre>
 </div>
 <p>This indicates that the bootstrap estimate for <span class="math inline">\({\rm SE}(\hat{\beta}_0)\)</span> is <span class="math inline">\(0.84\)</span>, and that the bootstrap estimate for <span class="math inline">\({\rm SE}(\hat{\beta}_1)\)</span> is <span class="math inline">\(0.0073\)</span>. As discussed in Section 3.1.2, standard formulas can be used to compute the standard errors for the regression coefficients in a linear model. These can be obtained using the <code>summary()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto))<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto))<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Estimate  Std. Error   t value      Pr(&gt;|t|)
 (Intercept) 39.9358610 0.717498656  55.65984 1.220362e-187
@@ -459,13 +532,13 @@ horsepower  -0.1578447 0.006445501 -24.48914  7.031989e-81</code></pre>
 <p>The standard error estimates for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> obtained using the formulas from Section 3.1.2 are <span class="math inline">\(0.717\)</span> for the intercept and <span class="math inline">\(0.0064\)</span> for the slope. Interestingly, these are somewhat different from the estimates obtained using the bootstrap. Does this indicate a problem with the bootstrap? In fact, it suggests the opposite. Recall that the standard formulas given in Equation 3.8 on page66 rely on certain assumptions. For example, they depend on the unknown parameter <span class="math inline">\(\sigma^2\)</span>, the noise variance. We then estimate <span class="math inline">\(\sigma^2\)</span> using the RSS. Now although the formulas for the standard errors do not rely on the linear model being correct, the estimate for <span class="math inline">\(\sigma^2\)</span> does. We see in Figure 3.8 on page91 that there is a non-linear relationship in the data, and so the residuals from a linear fit will be inflated, and so will <span class="math inline">\(\hat{\sigma}^2\)</span>. Secondly, the standard formulas assume (somewhat unrealistically) that the <span class="math inline">\(x_i\)</span> are fixed, and all the variability comes from the variation in the errors <span class="math inline">\(\epsilon_i\)</span>. The bootstrap approach does not rely on any of these assumptions, and so it is likely giving a more accurate estimate of the standard errors of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> than is the <code>summary()</code> function.</p>
 <p>Below we compute the bootstrap standard error estimates and the standard linear regression estimates that result from fitting the quadratic model to the data. Since this model provides a good fit to the data (Figure 3.8), there is now a better correspondence between the bootstrap estimates and the standard estimates of <span class="math inline">\({\rm SE}(\hat{\beta}_0)\)</span>, <span class="math inline">\({\rm SE}(\hat{\beta}_1)\)</span> and <span class="math inline">\({\rm SE}(\hat{\beta}_2)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>boot.fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower <span class="sc">+</span> <span class="fu">I</span>(horsepower<span class="sc">^</span><span class="dv">2</span>), </span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> data, <span class="at">subset =</span> index)</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(Auto, boot.fn, <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>boot.fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower <span class="sc">+</span> <span class="fu">I</span>(horsepower<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> data, <span class="at">subset =</span> index)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(Auto, boot.fn, <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ORDINARY NONPARAMETRIC BOOTSTRAP
@@ -481,9 +554,9 @@ t1* 56.900099702  3.511640e-02 2.0300222526
 t2* -0.466189630 -7.080834e-04 0.0324241984
 t3*  0.001230536  2.840324e-06 0.0001172164</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower <span class="sc">+</span> <span class="fu">I</span>(horsepower<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> Auto)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower <span class="sc">+</span> <span class="fu">I</span>(horsepower<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> Auto)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    Estimate   Std. Error   t value      Pr(&gt;|t|)
 (Intercept)     56.900099702 1.8004268063  31.60367 1.740911e-109
@@ -493,8 +566,8 @@ I(horsepower^2)  0.001230536 0.0001220759  10.08009  2.196340e-21</code></pre>
 </div>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.2</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.3</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 5 in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 3</li>
