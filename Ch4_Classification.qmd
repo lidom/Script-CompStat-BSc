@@ -287,7 +287,7 @@ The right-hand panel of Figure 4.3 provides an explanation for this discrepancy:
 non-students since, overall, they tend to have higher credit card balances.
 
 
-In other words: A student is riskier than a non-student if no information about the student's credit card balance is available. However, that student is less risky than a non-student with the same credit card balance! 
+In other words: A student is riskier than a non-student if no information about the student's credit card balance is available. However, a student is less risky than a non-student if both have the same credit card balance.
 
 
 ### (Ch. 4.3.5) Multinomial Logistic Regression {-}
