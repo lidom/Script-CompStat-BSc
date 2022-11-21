@@ -214,7 +214,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#ch.-4.4.1-linear-discriminant-analysis-for-p-1" id="toc-ch.-4.4.1-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#ch.-4.4.1-linear-discriminant-analysis-for-p-1">(Ch. 4.4.1) Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></a></li>
   <li><a href="#ch.-4.4.2-linear-discriminant-analysis-for-p-1" id="toc-ch.-4.4.2-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#ch.-4.4.2-linear-discriminant-analysis-for-p-1">(Ch. 4.4.2) Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span></a></li>
-  <li><a href="#ch.-4.4.3-quadratic-discriminant-analysis" id="toc-ch.-4.4.3-quadratic-discriminant-analysis" class="nav-link" data-scroll-target="#ch.-4.4.3-quadratic-discriminant-analysis">(Ch. 4.4.3) Quadratic Discriminant Analysis</a></li>
+  <li><a href="#ch.-4.4.3-quadratic-discriminant-analysis-qda" id="toc-ch.-4.4.3-quadratic-discriminant-analysis-qda" class="nav-link" data-scroll-target="#ch.-4.4.3-quadratic-discriminant-analysis-qda">(Ch. 4.4.3) Quadratic Discriminant Analysis (QDA)</a></li>
+  <li><a href="#ch.-4.4.4-naive-bayes" id="toc-ch.-4.4.4-naive-bayes" class="nav-link" data-scroll-target="#ch.-4.4.4-naive-bayes">(Ch. 4.4.4) Naive Bayes</a></li>
   </ul></li>
   <li><a href="#r-lab-classification" id="toc-r-lab-classification" class="nav-link" data-scroll-target="#r-lab-classification"><span class="toc-section-number">4.2</span>  <code>R</code>-Lab: Classification</a>
   <ul class="collapse">
@@ -563,7 +564,7 @@ x
 <p>The <strong>Linear Discriminant Analysis (LDA)</strong> method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. The following estimates are used: <span class="math display">\[
 \begin{align*}
 \hat\pi_k    &amp; = \frac{n_k}{n}\\
-\hat\mu      &amp; = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
+\hat\mu_k    &amp; = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
 \hat\sigma   &amp; = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\
 \end{align*}
 \]</span> The LDA classifier assigns an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
@@ -593,7 +594,7 @@ E(X)=\mu_k,
 Cov(X)=\Sigma
 \]</span> that is common for all classes <span class="math inline">\(k=1,\dots,K.\)</span></p>
 <p>The multivariate Gaussian density for class <span class="math inline">\(k=1,\dots,K\)</span> is defined as <span class="math display">\[
-f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\sigma^{-1}(x-\mu_k)\right)
+f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\Sigma^{-1}(x-\mu_k)\right)
 \]</span></p>
 <p>Figure 4.5 shows the case of bivariate (<span class="math inline">\(p=2\)</span>) Gaussian distribution predictors.</p>
 <p><img src="images/Fig_4_5.png" class="img-fluid"></p>
@@ -690,7 +691,7 @@ Predicted default status   No  Yes
 <p>True/False Negative Rates:</p>
 <ul>
 <li><p><span class="math inline">\(9644\)</span> of the <span class="math inline">\(9667\)</span> no default individuals are correctly labeled by LDA.<br>True Negative Rate (TN/N): <span class="math inline">\((9644/9667)\cdot 100\%\approx 99.8\%\)</span></p></li>
-<li><p><span class="math inline">\(252\)</span> of the <span class="math inline">\(333\)</span> default individuals are in correctly labeled.<br> False Negative Rate: <span class="math inline">\((252/333)\cdot 100\%\approx 75.7\%\)</span></p></li>
+<li><p><span class="math inline">\(252\)</span> of the <span class="math inline">\(333\)</span> default individuals are in correctly labeled.<br> False Negative Rate (FN/P): <span class="math inline">\((252/333)\cdot 100\%\approx 75.7\%\)</span></p></li>
 </ul>
 <p>The small False Positive Rate of <span class="math inline">\(0.2%\)</span> is good since this means that trustworthy (no default) people are rarely labeled as non-trustworthy (default) people.</p>
 <p>However, the high False Negative Rate of <span class="math inline">\(75.7\%\)</span> is problematic for a bank since this means that the bank often does not detect the non-trustworthy (default) people.</p>
@@ -717,32 +718,105 @@ Pr(\texttt{default}=\texttt{Yes}|X=x_i)&gt;0.2,
 <ul>
 <li>Changing the threshold from <span class="math inline">\(0.5\)</span> to <span class="math inline">\(0.2\)</span> …
 <ul>
-<li><strong>lowered</strong> the false negative rate from <span class="math inline">\(252/333\approx 75.7\%\)</span> to <span class="math inline">\(138/333\approx 41.4\%.\)</span><br>
+<li>… <strong>lowered</strong> the false negative rate from <span class="math inline">\(252/333\approx 75.7\%\)</span> to <span class="math inline">\(138/333\approx 41.4\%.\)</span><br>
 </li>
-<li><strong>increased</strong> the false positive rate from <span class="math inline">\(23/9667\approx 0.2\%\)</span> to <span class="math inline">\(235/9667\approx 2.4\%\)</span></li>
-<li><strong>increased</strong> the overall error rate from <span class="math inline">\((23 + 252)/10000\approx 3.73\%\)</span> to <span class="math inline">\((235 + 138)/10000\approx 3.73\%\)</span></li>
+<li>… <strong>increased</strong> the false positive rate from <span class="math inline">\(23/9667\approx 0.2\%\)</span> to <span class="math inline">\(235/9667\approx 2.4\%\)</span></li>
+<li>… <strong>increased</strong> the overall error rate from <span class="math inline">\((23 + 252)/10000\approx 3.73\%\)</span> to <span class="math inline">\((235 + 138)/10000\approx 3.73\%\)</span></li>
 </ul></li>
 </ul>
 <p>For a credit card company, this slight increase in the overall error rate can be a small price to pay for a more accurate identification of people who indeed default.</p>
 </section>
 <section id="the-roc-curve" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="the-roc-curve">The ROC curve</h4>
-<p>The (Receiver Operating Characteristics curve) <strong>ROC curve</strong> is a popular graphic for displaying the two types of errors (false negative rate and false positive rate) for all possible threshold.</p>
-<p>Construction:</p>
-<p>Plot the <span class="math display">\[
+<p>The (Receiver Operating Characteristics curve) <strong>ROC curve</strong> is a popular graphic for displaying the <span class="math display">\[
 \texttt{true positive rates}=TP/P\quad \text{(``sensitivity'' or ``power'')}
 \]</span> against the <span class="math display">\[
 \texttt{false positive rates}=FP/N \quad \text{(``}1-\text{specificity'' or ``type I error'')}
 \]</span> for all possible threshold values (from zero to one).</p>
 <p><img src="images/Fig_4_8.png" class="img-fluid"></p>
 <ul>
-<li><p>Ideal ROC curve: Touches the complete y-Axis (from zero to one) and then stays as one for all false positive rates. I.e., has values <span class="math inline">\(TP/P=1\)</span> and <span class="math inline">\(FP/N=0\)</span> for all threshold values.</p></li>
-<li><p>Summary statistic: Area Under the (ROC) Curve <strong>AUC</strong>; ideal AUC-value is thus AUC<span class="math inline">\(=1.\)</span></p></li>
+<li>Commonly reported summary statistic: Area Under the (ROC) Curve <strong>AUC</strong>
+<ul>
+<li>Ideal AUC-value: AUC<span class="math inline">\(=1.\)</span></li>
+<li>A classifier that performs no better than chance has AUC<span class="math inline">\(=0.5.\)</span></li>
+</ul></li>
 </ul>
 </section>
 </section>
-<section id="ch.-4.4.3-quadratic-discriminant-analysis" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="ch.-4.4.3-quadratic-discriminant-analysis">(Ch. 4.4.3) Quadratic Discriminant Analysis</h3>
+<section id="ch.-4.4.3-quadratic-discriminant-analysis-qda" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.4.3-quadratic-discriminant-analysis-qda">(Ch. 4.4.3) Quadratic Discriminant Analysis (QDA)</h3>
+<p>Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form <span class="math display">\[
+X\sim N(\mu_k,\Sigma_k),
+\]</span> where <span class="math inline">\(\Sigma_k\)</span> is a <span class="math inline">\((p\times p)\)</span> covariance matrix for the <span class="math inline">\(k\)</span>th class.</p>
+<p>Under this assumption, the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> to the class for which <span class="math display">\[
+\begin{align*}
+\delta_k(x)
+&amp;= - \frac{1}{2}\left(x-\mu_k\right)^T\Sigma_k^{-1}\left(x-\mu_k\right)
+   - \frac{1}{2}\log\left(|\Sigma_k|\right)
+   + \log(\pi_k)\\
+&amp;= - \frac{1}{2}x^T    \Sigma_k^{-1}x
+   + \frac{1}{2}x^T    \Sigma_k^{-1}\mu_k
+   - \frac{1}{2}\mu_k^T\Sigma_k^{-1}\mu_k
+   - \frac{1}{2}\log\left(|\Sigma_k|\right)
+   + \log(\pi_k)
+\end{align*}
+\]</span> is largest.</p>
+<p>This classifier is called <em>quadratic</em> discriminant analysis since the quantity <span class="math inline">\(x\)</span> appears as a quadratic function.</p>
+<p>LDA is a much less flexible classifier than QDA:</p>
+<ul>
+<li>LDA requires
+<ul>
+<li><span class="math inline">\(K\)</span> a-priori probability estimates</li>
+<li><span class="math inline">\(K\cdot p\)</span> mean estimations</li>
+<li><span class="math inline">\((p+1)/2\)</span> covariance estimates</li>
+</ul></li>
+<li>QDA requires
+<ul>
+<li><span class="math inline">\(K\)</span> a-priori probability estimates</li>
+<li><span class="math inline">\(K\cdot p\)</span> mean estimations</li>
+<li><span class="math inline">\({\color{red}K}\cdot(p+1)/2\)</span> covariance estimates</li>
+</ul></li>
+</ul>
+<p>Bias Variance trade-off:</p>
+<ul>
+<li>Low flexibility generally means low variance, but large bias</li>
+<li>High flexibility generally means high variance, but low bias</li>
+</ul>
+<p>Roughly:</p>
+<ul>
+<li>LDA tends to be better than QDA if there are relatively few training observations and so reducing variance is crucial.</li>
+<li>QDA is recommended
+<ul>
+<li>if the training set is very large, so that the variance of the classifier is not a major concern, or</li>
+<li>if the assumption of a common covariance matrix for the <span class="math inline">\(K\)</span> classes is clearly unrealistic.</li>
+</ul></li>
+</ul>
+<p><img src="images/Fig_4_9.png" class="img-fluid"></p>
+</section>
+<section id="ch.-4.4.4-naive-bayes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-4.4.4-naive-bayes">(Ch. 4.4.4) Naive Bayes</h3>
+<p>Bayes’ theorem states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span class="math display">\[
+p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
+\]</span></p>
+<p>Estimating the prior probabilities <span class="math inline">\(\pi_1,\dots,\pi_K\)</span> is typically straight forward using <span class="math display">\[
+\hat\pi_k=\frac{n_k}{n},\quad k=1,\dots,K
+\]</span></p>
+<p>Estimating the <span class="math inline">\(p\)</span> dimensional density functions <span class="math inline">\(f_1(x),\dots,f_K(x)\)</span>, however, is more difficult. To make estimation tractable and useful, LDA and QDA assume different parametric families (multivariate normals) for these density functions,</p>
+<p>By contrast, <em>Naive Bayes</em> only makes the assumption that the <span class="math inline">\(p\)</span> dimensional components of the predictor are independent from each other. I.e. that the joint density <span class="math inline">\(f_k(x)\)</span> can be written as the product of the <span class="math inline">\(p\)</span> marginal densities <span class="math inline">\(f_{kj}(x_j)\)</span>, <span class="math inline">\(j=1,\dots,p\)</span>, <span class="math display">\[
+f_k(x) = f_{k1}(x_1)\times f_{k2}(x_2)\times \dots \times f_{kp}(x_p)
+\]</span></p>
+<p>This is a simplifying assumption that may not be completely correct, but which often leads to very good classification results - particularly, in smallish sample sizes.</p>
+<p>Under the naive Bayes assumption, we have that <span class="math display">\[
+Pr(Y=k|X=x)=\frac{\pi_k f_{k1}(x_1)\times \dots \times f_{kp}(x_p)}{\sum_{l=1}^K\pi_l f_{l1}(x_1)\times \dots \times f_{lp}(x_p)}.
+\]</span></p>
+<p>For estimating the one dimensional marginal density functions <span class="math display">\[
+f_{kj}(x),\quad j=1,\dots,p\quad\text{and}\quad k=1,\dots,K
+\]</span> we can use …</p>
+<ul>
+<li>(univariate) normal distribution assumptions, i.e.&nbsp;<span class="math inline">\(X_j|Y=k \sim N(\mu_k,\sigma_k)\)</span></li>
+<li>non-parametric kernel density estimation (for quantitative predictors)</li>
+<li>simple relative frequencies (for qualitative predictors)</li>
+</ul>
 
 <!-- 
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
