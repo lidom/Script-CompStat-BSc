@@ -21,15 +21,15 @@ test error rate by holding out a subset of the training observations from the fi
 
 The validation set approach randomly divides the available set of observations into two parts: 
 
-* a *training (data) set* and 
-* a *validation (data) set* (or hold-out set)
+* a *training set* and 
+* a *validation set* (or hold-out set)
 
 The model is fit on the training set, and the fitted model is used to predict the responses for the observations in the validation set. 
 
 
 ![](images/Fig_5_1.png)
 
-
+Code for splitting data randomly into training and validation sets:
 ```{r}
 library("ISLR2")
 data("Auto")
@@ -53,41 +53,112 @@ Auto_Valid_df <- Auto[I_Valid, ]
 
 #### Illustration {-}
 
-Reconsider the `Auto` data set. Apparently, there is a non-linear relationship between the dependent variable `mpg` and `horsepower`. 
-
-
-In Chapter 3, we found that a model that predicts `mpg` using `horsepower` and `horsepower`$^2$ predicts better than a model that uses only the linear term. 
-
-But maybe a cubic or higher order polynomial regression model predicts even better? 
-
-The validation set approach can be used to select the degree $p$ of the polynomial
+Reconsider the `Auto` data set. In Chapter 3, we found that a model that predicts `mpg` using `horsepower` and `horsepower`$^2$ predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree $p$ of the polynomial
 $$
-\texttt{mpg}=\beta_0 + \beta_1 \texttt{horsepower} + \beta_2 \texttt{horsepower}^2 + \dots + \beta_p \texttt{horsepower}^p
+\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon
 $$
 
 
 **Step 1:** Estimation of the polynomial regression model, e.g., for $p=2$ using the training set:
-<!-- $$
-\begin{align*}
-y^{Train}_i
-%&=\hat{f}^{Train}_p(x_i^{Train}) + e_i^{Train}\\
-&=\hat{\beta}_0^{Train} + \hat{\beta}_1^{Train} x_{i}^{Train} + \hat{\beta}_2^{Train} (x_{i}^{Train})^2 + \dots + \hat{\beta}_p^{Train} (x_{i}^{Train})^p + e_i^{Train}
-\end{align*}
-$$ -->
 
-```{r, eval=TRUE, echo=TRUE}
-p            <- 3
+```{r}
+p            <- 2
 Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE), 
                    data = Auto_Train_df)
 ```
 
-**Step 2:** Validation of the polynomial regression model:
+**Step 2:** Validation of the polynomial regression model by computing the test mean squared (prediction) error (**test MSE**) using the validation set:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r}
 y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
-RSS_Valid     <- sum( (Auto_Valid_df$Verbrauch - y_fit_Valid)^2 )
+RSS_Valid     <- sum((Auto_Valid_df$mpg - y_fit_Valid)^2)
 MSE           <- RSS_Valid / n_Valid
 ```
+
+Repeating Step 1 and Step 2 for a series of polynomial degrees $p=1,\dots,10$
+
+```{r}
+#| label: fig-VA1
+#| fig-cap: Validation error estimates for a single split into training and validation data sets. This result suggests that $p=9$ minimizes the test MSE.
+p_max         <- 10
+MSE           <- numeric(p_max)
+for(p in 1:p_max){
+  ## Step 1
+  Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE), 
+                     data = Auto_Train_df)
+  ## Step 2
+  y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+  RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
+  MSE[p]        <- RSS_Valid / n_Valid
+}
+
+plot(x = 1:p_max, y = MSE, type = "b", 
+     col = "black", bg = "black", pch = 21,  
+     xlab = "Degree of Polynomial", ylab = "MSE")
+points(y = MSE[which.min(MSE)], 
+       x = c(1:p_max)[which.min(MSE)], 
+       col = "red", bg = "red", pch = 21)     
+```
+
+
+@fig-VA1 shows the test MSE values based on **one** random split of the dataset. The result that $p=9$ minimizes the test MSE, however, may depend on the random split. Different random splits may lead to different model selection (choices of $p$). 
+
+Repeating the above computations for multiple random splits of the dataset into training and validation sets
+
+```{r}
+#| label: fig-VA2
+#| fig-cap: Validation error estimates for ten different random splits into training and validation data sets. The polynomial degrees that minimize the test MSE strongly vary across the different random splits.
+## R = 10 random splits
+R        <- 10
+## Container for the MSE results
+MSE      <- matrix(NA, R, p_max)
+
+for(r in 1:R){
+## Index sets for training and validation sets
+I_Train  <- sample(x = 1:n, size = n_Train, replace = FALSE)
+I_Valid  <- c(1:n)[-I_Train]
+
+## Training set 
+Auto_Train_df <- Auto[I_Train, ]
+## Validation set
+Auto_Valid_df <- Auto[I_Valid, ]
+
+for(p in 1:p_max){
+  ## Step 1
+  Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
+                     data = Auto_Train_df)
+  ## Step 2
+  y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+  RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
+  MSE[r,p]      <- RSS_Valid / n_Valid
+}
+}
+
+matplot(y = t(MSE), type="b", ylab="MSE", xlab="Degree of Polynomial", 
+        pch=21, col="black", bg="black", main="")
+for(r in 1:R){
+  points(y = MSE[r,][which.min(MSE[r,])], 
+       x = c(1:p_max)[which.min(MSE[r,])], 
+       col = "red", bg = "red", pch = 21)
+}
+```
+
+
+@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly vary across the different random splits and thus depend on the data included in the test and validation sets. 
+
+A particular problem with the validation set approach are small sample sizes. Both the training and the validation set have reduced sample sizes 
+$$
+n_{Train}<n\quad\text{and}\quad n_{Valid}<n
+$$ 
+which leads to **increased estimation uncertainties when estimating the test MSE values**.
+
+
+*Cross-validation* is a refinement of the validation set approach that addresses this issue. 
+
+### (Ch. 5.1.2) Leave-One-Out Cross-Validation {-}
+
+#### Leave-one-out cross-validation (LOOCV) {-}
+
 
 
 
