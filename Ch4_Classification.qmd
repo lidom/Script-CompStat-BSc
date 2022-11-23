@@ -543,9 +543,6 @@ ldaPredict_obj <- predict(lda_obj)
 
 ## Training error rate:
 sum(Default$default != ldaPredict_obj$class)/n 
-
-## Training error rate of the "null classifier":
-sum(Default$default != rep("No", n))/n 
 ```
 
 
@@ -555,17 +552,25 @@ This sounds like a low error rate, but two caveats must be noted:
    * The reason is that we specifically adjust the parameters of our model to do well on the training data. (We may "overfit" the training data.)
    * Generally, the higher the ratio of parameters $p$ to number of samples $n$, the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
 
-* Since only $3.33\%$ of the individuals in the training sample defaulted, a simple but useless classifier that always predicts that an individual will "not default", regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
+* Since only $3.33\%$ of the individuals in the training sample defaulted, a simple naive classifier that always predicts "not default" for every person, regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
+
+```{r}
+## Training error rate of the "null classifier":
+sum(Default$default != rep("No", n))/n 
+```
 
 
-#### Classification Errors of Binary Classifiers {-}
 
-Any binary classifier can make two types of errors---here:
+### Classification Errors of Binary Classifiers {-}
 
-*  incorrect assignment of an individual who defaults to the no default category (false negatives)
-* incorrect assignment of an individual who does not default to the default category (false positives)
+Any binary classifier can make two types of errors:
 
-A **confusion matrix** shows both types of errors. A perfect confusion matrix has zeros in the off-diagonal entries which show the misclassified individuals (see also Table 4.4):
+* False Negatives (FN): Predicting "no default" for a person who actually defaults
+* False Positives (FP): Predicing "default" for a person who actually does not default
+
+Depending on the context, both error can have different consequential damages. 
+
+A **confusion matrix** shows both types of errors. The upper off-diagonal entry shows the FNs; the lower off-diagonal entry shows the FPs. A perfect confusion matrix has zeros in the off-diagonal entries.
 
 ```{r}
 ## Confusion matrix
@@ -589,82 +594,173 @@ True/False Negative Predictions:
   * $9644$ of these actually do not default (**True Negatives**, TN)
   * $252$ of these actually default (**FALSE Negatives**, FN)
 
-True/False Positive Rates:
+True Positive/Negative Rates:
 
-* $81$ of the $333$ default individuals are correctly labeled by LDA.<br>
-  True Positive Rate (TP/P): $(81/333)\cdot 100\%\approx 24.3\%$
+*   True Positive Rate (TP/P): $(81/333)\cdot 100\%\approx 24.3\%$
 <!-- True Positive Rate is also called *sensitivity* -->
+<!-- $81$ of the $333$ default individuals are correctly labeled by LDA.<br> -->
+* True Negative Rate (TN/N): $(9644/9667)\cdot 100\%\approx 99.8\%$
+<!-- $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br> -->
 
-* $23$ of the $9667$ no default individuals are incorrectly labeled.<br> 
-  False Positive Rate (FP/N): $(23/9667)\cdot 100\%\approx 0.2\%$  
+False Positive/Negative Rates:
+
+* False Positive Rate (FP/N): $(23/9667)\cdot 100\%\approx 0.2\%$  
+<!-- $23$ of the $9667$ no default individuals are incorrectly labeled.<br> -->
 <!-- False Positive Rage equals one minus *specificity* -->
+* False Negative Rate (FN/P): $(252/333)\cdot 100\%\approx 75.7\%$  
+<!-- $252$ of the $333$ default individuals are in correctly labeled.<br>  -->
+  
+The small False Positive Rate of $0.2\%$ is good since this means that trustworthy "no default" people are rarely labeled as non-trustworthy "default" people. 
 
-True/False Negative Rates:
-
-* $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br>True Negative Rate (TN/N): $(9644/9667)\cdot 100\%\approx 99.8\%$
-
-* $252$ of the $333$ default individuals are in correctly labeled.<br> 
-  False Negative Rate (FN/P): $(252/333)\cdot 100\%\approx 75.7\%$  
-
-
-
-The small False Positive Rate of $0.2%$ is good since this means that trustworthy (no default) people are rarely labeled as non-trustworthy (default) people. 
-
-However, the high False Negative Rate of $75.7\%$ is problematic for a bank since this means that the bank often does not detect the non-trustworthy (default) people. 
+However, the high False Negative Rate of $75.7\%$ is problematic for a bank since this means that the bank often does not detect the non-trustworthy "default" people. 
 
 
 #### Choosing the Classification Threshold {-}
 
-If a "False Negative Event" costs the bank more than a "False Positive Event", then the bank wants/needs to adjust the classifying threshold of the classifier. 
+If a "False Negative Event" costs the bank more than a "False Positive Event" (or vice versa), then the bank will want to adjust the classifying threshold of the classifier. 
 
-In the two class cases, e.g. $\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},$ the Bayes classifier, and thus also LDA which tries to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a subject $i$ with observation $X=x_i$ is assigned to the `default`$=$`Yes` class if
+<!-- In the two class cases, e.g. $\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},$  -->
+
+The Bayes classifier, and thus also all classifiers which try to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a person $i$ with predictor value $X=x_i$ is assigned to the `default`$=$`Yes` class if
 $$
-Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5
+Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5.
 $$
 
-However, if the costs of false negatives, i.e. 
+However, if the costs of False Negatives (FN) are higher than the costs of False Positives (FP), one can consider lowering the classifying threshold. This decreases the predicted negatives (N$^*$) and thus also decreases the False Negatives (FN) since N$^*=$TN$+$FN.
 
-> predicting $\texttt{default}_i=\texttt{No}$, when actually $\texttt{default}_i=\texttt{Yes},$
 
-are higher than the costs of false positives, i.e. 
-
-> predicting $\texttt{default}_i=\texttt{Yes}$, when actually $\texttt{default}_i=\texttt{No},$
-
-then one can consider lowering the classifying threshold. For instance, we might label any customer $i$ with a posterior probability of default above $20\%,$
+For instance, we might classify any person $i$ with a posterior probability of default above $20\%,$
 $$
 Pr(\texttt{default}=\texttt{Yes}|X=x_i)>0.2,
 $$ 
-to the `default`$=$`Yes` class. 
+into the `default`$=$`Yes` class. 
 
-This changes the error rates (shown in the diffusion matrix); compare Table 4.4 (threshold $0.5$) with Table 4.5 (threshold $0.2$).
+```{r}
+## Predicted posterior probabilities 
+## head(ldaPredict_obj$posterior)
+
+## Container for the predicted classes
+PredictedDefault <- rep("No", n)
+## Fill in the "Yes" classifications 
+PredictedDefault[ldaPredict_obj$posterior[,2] > 0.2] <- "Yes"
+
+## Confusion matrix for 0.2 threshold:
+table(PredictedDefault, Default$default, 
+      dnn = c("Predicted default status", 
+              "True default status"))
+```
+
+
 
 ![](images/Tab_4_5.png)
 
-* Changing the threshold from $0.5$ to $0.2$ ...
-  * ... **lowered** the false negative rate from $252/333\approx 75.7\%$ to $138/333\approx 41.4\%.$  
-  * ... **increased** the false positive rate from $23/9667\approx 0.2\%$ to $235/9667\approx 2.4\%$
-  * ... **increased** the overall error rate from $(23 + 252)/10000\approx 3.73\%$ to $(235 + 138)/10000\approx 3.73\%$
+Changing the threshold from $0.5$ to $0.2$ ...
+
+* ... **lowered** the False Negative Rate (FN/P) 😎
+   * from $252/333\approx 75.7\%$ 
+   * to $138/333\approx 41.4\%$  
+* ... **increased** the False Positive Rate (FP/N) 😕
+   * from $23/9667\approx 0.2\%$ 
+   * to $235/9667\approx 2.4\%$
+* ... **increased** the Overall Error Rate ((FN+FP)/n) 😕
+   * from $(23 + 252)/10000\approx 2.75\%$ 
+   * to $(235 + 138)/10000\approx 3.73\%$
 
 For a credit card company, this slight increase in the overall error rate can be a small price to pay for a more accurate identification of people who indeed default. 
 
-#### The ROC curve {-}
+<!-- Such an adjustment of the threshold increases the overall error rate, and changes the False Positives and False Negatives. The latter can be advantageous in a cost-benefit analysis - even though the overall error rate is increased.   -->
 
 
-The (Receiver Operating Characteristics curve) **ROC curve** is a popular graphic for displaying the 
+### The ROC curve {-}
+
+
+The (Receiver Operating Characteristics) **ROC curve** is a popular graphic for displaying the 
 $$
-\texttt{true positive rates}=TP/P\quad \text{(``sensitivity'' or ``power'')}
+\text{TP Rate}=\text{TP/P}\quad \text{(``sensitivity'' or ``power'')}
 $$ 
 against the 
 $$
-\texttt{false positive rates}=FP/N \quad \text{(``}1-\text{specificity'' or ``type I error'')}
+\text{FP Rate}=\text{FP/N} \quad \text{(``}1-\text{specificity'' or ``type I error'')}
 $$ 
 for all possible threshold values (from zero to one). 
 
-![](images/Fig_4_8.png)
 
-* Commonly reported summary statistic: Area Under the (ROC) Curve **AUC**
-   * Ideal AUC-value: AUC$=1.$
-   * A classifier that performs no better than chance has AUC$=0.5.$
+```{r}
+#| label: fig-ROC
+#| fig-cap: The ROC curve traces out two types of error as we vary the threshold value for the posterior probability of default. The actual thresholds are not shown. The ideal ROC curve hugs the top left corner, indicating a high true positive rate and a low false positive rate. The dotted line represents the "no information" classifier; this is what we would expect if student status and credit card balance are not associated with probability of default.
+
+## Considered thresholds (exclude the trivial 0/1 values)
+thresholds       <- seq(0, 1, length.out = 250)
+n_thresholds     <- length(thresholds)
+
+## Container for the predicted classes
+PredictedDefault_mat <- matrix("No", n, n_thresholds)
+
+## Fill in the "Yes" classifications 
+for(j in 1:n_thresholds){
+  PredicedYes  <- ldaPredict_obj$posterior[,2] > thresholds[j]
+  PredictedDefault_mat[PredicedYes, j] <- "Yes"
+}
+
+## Number of actual positives
+P <- length(Default$default[Default$default == "Yes"])
+## Number of actual negatives
+N <- length(Default$default[Default$default == "No"])
+
+TP_Rate <- numeric(n_thresholds)
+FP_Rate <- numeric(n_thresholds)
+
+for(j in 1:n_thresholds){
+  ## ClassPredictions for the actually positives
+  ClassPredictions4P <- PredictedDefault_mat[,j][Default$default == "Yes"]
+  ## ClassPredictions for the actually negatives
+  ClassPredictions4N <- PredictedDefault_mat[,j][Default$default == "No"]
+  ## True Positives
+  TP <- length(ClassPredictions4P[ClassPredictions4P == "Yes"])
+  ## False Positives
+  FP <- length(ClassPredictions4N[ClassPredictions4N == "Yes"])
+
+  ## Error rates:
+  TP_Rate[j] <- TP/P
+  FP_Rate[j] <- FP/N 
+}
+
+## Plot the ROC curve 
+plot(y = TP_Rate, x = FP_Rate, type = "l", 
+      col = "blue", lwd=1.5, main = "ROC Curve", 
+      ylab = "True Positive Rate",
+      xlab = "True Negative Rate")
+abline(a = 0, b = 1, lty = 3, col = "gray")
+```
+
+
+<!-- ![](images/Fig_4_8.png) -->
+
+The commonly reported summary statistic for the ROC curve is the "Area Under the (ROC) Curve" **AUC**
+
+ * Ideal AUC-value is AUC$=1.$
+ * A "no information" classifier has AUC$=0.5.$
+
+The R package `ROCR` contains function for computing and plotting the ROC curve and the AUC value. 
+```{r}
+## install.packages("ROCR")
+library("ROCR")
+
+## Caution: Choose the posterior probability column carefully, 
+## it may be lda.pred$posterior[,1] or lda.pred$posterior[,2], 
+## depending on your factor levels
+
+## Predicted and actual classes:
+predict <- prediction(ldaPredict_obj$posterior[,2], Default$default) 
+## compute TP-Ratios and FP-Ratios:
+perform <- performance(predict, "tpr", "fpr")
+## ROC curve
+plot(perform, colorize = TRUE)
+## AUC
+AUC     <- performance(predict, measure = "auc")
+print(AUC@y.values)
+```
+
 
 
 ### (Ch. 4.4.3) Quadratic Discriminant Analysis (QDA) {-}
@@ -679,7 +775,7 @@ where $\Sigma_k$ is a $(p\times p)$ covariance matrix for the $k$th class.
 Under this assumption, the Bayes classifier assigns an observation $X=x$ to the class for which 
 $$
 \begin{align*}
-\delta_k(x)
+&\delta_k(x)\\
 &= - \frac{1}{2}\left(x-\mu_k\right)^T\Sigma_k^{-1}\left(x-\mu_k\right) 
    - \frac{1}{2}\log\left(|\Sigma_k|\right)
    + \log(\pi_k)\\
@@ -694,7 +790,7 @@ is largest.
 
 This classifier is called *quadratic* discriminant analysis since the quantity $x$ appears as a quadratic function. 
 
-LDA is a much less flexible classifier than QDA:
+QDA has much more parameters than LDA and is thus a much more flexible  classifier than LDA:
 
 * LDA requires 
    * $K$ a-priori probability estimates 
@@ -706,16 +802,16 @@ LDA is a much less flexible classifier than QDA:
    * $K\cdot p$ mean estimations 
    * ${\color{red}K}\cdot(p+1)/2$ covariance estimates
 
-Bias Variance trade-off: 
+The difference in flexibility needs to be considered under the **bias variance trade-off**: 
 
 * Low flexibility generally means low variance, but large bias
 * High flexibility generally means high variance, but low bias
 
 Roughly: 
 
-* LDA tends to be better than QDA if there are relatively few training observations and so reducing variance is crucial.
+* LDA tends to be better than QDA if there are relatively few training observations (small $n_{Train}$) and so reducing variance is crucial.
 * QDA is recommended 
-   * if the training set is very large, so that the variance of the classifier is not a major concern, or 
+   * if the training set $n_{Train}$ is large, so that the variance of the classifier is not a major concern, or 
    * if the assumption of a common covariance matrix for the $K$ classes is clearly unrealistic.
 
 ![](images/Fig_4_9.png)
@@ -723,24 +819,29 @@ Roughly:
 
 ### (Ch. 4.4.4) Naive Bayes {-}
 
-Bayes’ theorem states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
+Remember, that Bayes’ theorem states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
 $$
 
-Estimating the prior probabilities $\pi_1,\dots,\pi_K$ is typically straight forward using 
+We have seen above, that estimating the prior probabilities $\pi_1,\dots,\pi_K$ is typically straight forward using 
 $$
-\hat\pi_k=\frac{n_k}{n},\quad k=1,\dots,K
+\hat\pi_k=\frac{n_k}{n},\quad k=1,\dots,K.
 $$ 
 
-Estimating the $p$ dimensional density functions $f_1(x),\dots,f_K(x)$, however, is more difficult. To make estimation tractable and useful, LDA and QDA assume different parametric families (multivariate normals) for these density functions, 
+However, estimating the $p$ dimensional density functions 
+$$
+f_1(x),\dots,f_K(x)
+$$ 
+is substantially more difficult. To make estimation tractable and useful, LDA and QDA assume parametric families for these density functions; namely, multivariate normals with and without common covariances.  
 
-By contrast, *Naive Bayes* only makes the assumption that the $p$ dimensional components of the predictor are independent from each other. I.e. that the joint density $f_k(x)$ can be written as the product of the $p$ marginal densities $f_{kj}(x_j)$, $j=1,\dots,p$, 
+By contrast, **Naive Bayes** only makes the assumption that the $p$ dimensional components of the predictor are *independent* from each other. I.e. that the joint density $f_k(x)$ can be written as the product of the $p$ marginal densities 
+<!-- $f_{kj}(x_j)$, $j=1,\dots,p$,  -->
 $$
 f_k(x) = f_{k1}(x_1)\times f_{k2}(x_2)\times \dots \times f_{kp}(x_p)
 $$ 
 
-This is a simplifying assumption that may not be completely correct, but which often leads to very good classification results - particularly, in smallish sample sizes.
+This simplifying assumption may not be completely correct, but it often leads to very good classification results - particularly, in classification problems with smallish sample sizes.
 
 Under the naive Bayes assumption, we have that
 $$
@@ -753,7 +854,7 @@ f_{kj}(x),\quad j=1,\dots,p\quad\text{and}\quad k=1,\dots,K
 $$
 we can use ...
 
-* (univariate) normal distribution assumptions, i.e. $X_j|Y=k \sim N(\mu_k,\sigma_k)$
+* (univariate) normal distribution assumptions, i.e. $X_j|Y=k \sim N(\mu_{jk},\sigma_{jk})$
 * non-parametric kernel density estimation (for quantitative predictors)
 * simple relative frequencies (for qualitative predictors)
 
@@ -782,28 +883,28 @@ OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?
 
 We will begin by examining some numerical and graphical summaries of
 the `Smarket` data, which is part of the `ISLR2` library. This
-data set consists of percentage returns for the S\&P 500 stock index
-over $1,250$~days, from the beginning of 2001 until the end of
+data set consists of percentage returns for the S&P 500 stock index
+over $1,250$ days, from the beginning of 2001 until the end of
 2005. For each date, we have recorded the percentage returns for each
-of the five previous trading days, `lagone` through `lagfive`. We
-have also recorded `volume` (the number of shares traded on the previous day, in billions), `Today` (the percentage return on the date in question)  and `direction` (whether the market was `Up` or `Down` on this date). Our goal is to predict `direction` (a qualitative response) using the other features.
+of the five previous trading days: `Lag1`, `Lag2`, ... `Lag5`. We
+have also recorded `Volume` (the number of shares traded on the previous day, in billions), `Today` (the percentage return on the date in question)  and `Direction` (whether the market was `Up` or `Down` on this date). Our goal is to predict `Direction` (a qualitative response) using the other predictors/features.
 
 ```{r chunk1}
-library(ISLR2)
-names(Smarket)
-dim(Smarket)
-summary(Smarket)
-pairs(Smarket)
+library(ISLR2)   # package contains the data
+names(Smarket)   # names of the variables in the Smarket data
+dim(Smarket)     # total sample size n, number of variables
+summary(Smarket) # descriptive statistics (mean, median, ...)
+pairs(Smarket)   # pairwise scatter plots
 ```
 
-The `cor()` function produces a matrix that contains all of the pairwise correlations among the predictors in a data set. The first command below gives an error message because the `direction` variable is qualitative.
+The `cor()` function produces a matrix that contains all of the pairwise correlations among the predictors in a data set. The first command below gives an error message because the `Direction` variable is qualitative (`Up` and `Down`).
 
 ```{r chunk2, error=TRUE}
 cor(Smarket)
-cor(Smarket[, -9])
+round(cor(Smarket[, names(Smarket) != "Direction"]), 2)
 ```
 
-As one would expect, the correlations between the lag variables and today's returns are close to zero. In other words, there appears to be little correlation between today's returns and previous days' returns. The only substantial correlation is between `Year` and `volume`. By plotting the data, which is ordered chronologically, we see that `volume` is increasing over time. In other words, the average number of shares traded daily increased from 2001 to 2005.
+As one would expect, the correlations between the lag variables and today's returns are close to zero. In other words, there appears to be little correlation between today's returns and previous days' returns. The only substantial correlation is between `Year` and `Volume`. By plotting the data, which is ordered chronologically, we see that `Volume` is increasing over time. In other words, the average number of shares traded daily increased from 2001 to 2005.
 
 ```{r chunk3}
 attach(Smarket)
@@ -813,8 +914,7 @@ plot(Volume)
 
 ### Logistic Regression
 
-Next, we will fit a logistic regression model in order to predict `direction` using `lagone` through `lagfive` and `volume`. The `glm()` function  can be used to fit many types of generalized linear models , including logistic regression.
- The syntax of the `glm()` function is similar to that of  `lm()`,  except that we must pass in the argument `family = binomial` in order to tell `R` to run a logistic regression rather than some other type of generalized linear model.
+Next, we will fit a logistic regression model in order to predict `Direction` using `Lag1` through `Lag5` and `Volume`. The `glm()` function  can be used to fit many types of generalized linear models , including logistic regression. The syntax of the `glm()` function is similar to that of  `lm()`,  except that we must pass in the argument `family = binomial` in order to tell `R` to run a logistic regression rather than some other type of generalized linear model.
 
 
 ```{r chunk4}
@@ -825,7 +925,7 @@ glm.fits <- glm(
 summary(glm.fits)
 ```
 
-The smallest $p$-value here is associated with `lagone`. The negative coefficient for this predictor suggests that if the market had a positive return yesterday, then it is less likely to go up today. However, at a value of $0.15$, the $p$-value is still relatively large, and so there is no clear evidence of a real association between `lagone` and `direction`. 
+The smallest $p$-value here is associated with `Lag1`. The negative coefficient for this predictor suggests that if the market had a positive return yesterday, then it is less likely to go up today. However, at a value of $0.145$, the $p$-value is still relatively large, and so there is no clear evidence of a real association between `Lag1` and `Direction`. 
 
  We use the `coef()` function in order to access just the coefficients for this fitted model. We can also use the `summary()` function to access  particular aspects of the fitted model, such as the $p$-values for the coefficients.
 
@@ -837,14 +937,23 @@ summary(glm.fits)$coef[, 4]
 
 
 
-The `predict()` function can be used to predict the probability that the market will go up, given values of the predictors. The `type = "response"` option tells `R` to output probabilities of the form $P(Y=1|X)$, as opposed to other information such as the logit. If no data set is supplied to the `predict()` function,
-then  the probabilities are computed for the training data that was used to fit the logistic regression model. Here we have printed only the first ten probabilities. We know that these values correspond to the probability of the market going up, rather than down, because the `contrasts()` function indicates that `R` has created a dummy variable with a 1 for `Up`.
+The `predict()` function can be used to predict the probability that the market will go up, given values of the predictors. The `type = "response"` option tells `R` to output probabilities of the form $P(Y=1|X)$, as opposed to other information such as the logit. If no data set is supplied to the `predict()` function, then  the probabilities are computed for the training data that was used to fit the logistic regression model. Here we have printed only the first ten probabilities. 
+
 
 ```{r chunk6}
 glm.probs <- predict(glm.fits, type = "response")
 glm.probs[1:10]
-contrasts(Direction)
 ```
+
+
+We know that these values correspond to the probability of the market going up, rather than down, because the `contrasts()` function indicates that `R` has created a dummy variable with a 1 for `Up`.
+
+
+```{r}
+contrasts(Direction)
+
+```
+
 
 In order to make a prediction as to whether the market will go up or down on a particular day, we must convert these predicted probabilities into class labels, `Up` or `Down`.
 The following two commands create a vector of class predictions based on whether the predicted probability of a market increase is greater than or less than $0.5$.
@@ -854,7 +963,7 @@ glm.pred <- rep("Down", 1250)
 glm.pred[glm.probs > .5] = "Up"
 ```
 
-The first command creates a vector of 1,250  `Down` elements. The second line transforms to `Up` all of the elements for which the predicted probability of a market increase exceeds $0.5$. Given these predictions, the `table()` function can be used to produce a confusion matrix   in order to determine how many observations were correctly or incorrectly classified. %By inputting two qualitative vectors R will create a two by two table with counts of the number of times each combination occurred e.g. predicted {\it Up} and market increased, predicted {\it Up} and the market decreased etc.
+The first command creates a vector of 1,250  `Down` elements. The second line transforms to `Up` all of the elements for which the predicted probability of a market increase exceeds $0.5$. Given these predictions, the `table()` function can be used to produce a confusion matrix  in order to determine how many observations were correctly or incorrectly classified. %By inputting two qualitative vectors R will create a two by two table with counts of the number of times each combination occurred e.g. predicted `Up` and market increased, predicted `Up` and the market decreased etc.
 
 ```{r chunk8}
 table(glm.pred, Direction)
