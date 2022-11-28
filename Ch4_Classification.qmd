@@ -892,6 +892,7 @@ have also recorded `Volume` (the number of shares traded on the previous day, in
 
 ```{r chunk1}
 library(ISLR2)   # package contains the data
+attach(Smarket)  # attach Data 'Smarket' (contained in ISLR2)
 names(Smarket)   # names of the variables in the Smarket data
 dim(Smarket)     # total sample size n, number of variables
 summary(Smarket) # descriptive statistics (mean, median, ...)
@@ -955,7 +956,6 @@ We know that these values correspond to the probability of the market going up, 
 
 ```{r}
 contrasts(Direction)
-
 ```
 
 
