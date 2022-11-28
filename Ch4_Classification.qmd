@@ -755,7 +755,7 @@ predict <- prediction(ldaPredict_obj$posterior[,2], Default$default)
 ## compute TP-Ratios and FP-Ratios:
 perform <- performance(predict, "tpr", "fpr")
 ## ROC curve
-plot(perform, colorize = TRUE)
+plot(perform, colorize = FALSE)
 ## AUC
 AUC     <- performance(predict, measure = "auc")
 print(AUC@y.values)
@@ -768,14 +768,14 @@ print(AUC@y.values)
 
 Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form
 $$
-X\sim N(\mu_k,\Sigma_k),
+X|Y=k \sim N(\mu_k,\Sigma_k),
 $$
 where $\Sigma_k$ is a $(p\times p)$ covariance matrix for the $k$th class. 
 
 Under this assumption, the Bayes classifier assigns an observation $X=x$ to the class for which 
 $$
 \begin{align*}
-&\delta_k(x)\\
+&\delta_k(x)=\\
 &= - \frac{1}{2}\left(x-\mu_k\right)^T\Sigma_k^{-1}\left(x-\mu_k\right) 
    - \frac{1}{2}\log\left(|\Sigma_k|\right)
    + \log(\pi_k)\\
@@ -824,16 +824,17 @@ $$
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
 $$
 
-We have seen above, that estimating the prior probabilities $\pi_1,\dots,\pi_K$ is typically straight forward using 
+We have seen above, that estimating the prior probabilities $\pi_1,\dots,\pi_K$ is typically straight forward using the relative frequencies
 $$
 \hat\pi_k=\frac{n_k}{n},\quad k=1,\dots,K.
 $$ 
-
 However, estimating the $p$ dimensional density functions 
 $$
 f_1(x),\dots,f_K(x)
 $$ 
-is substantially more difficult. To make estimation tractable and useful, LDA and QDA assume parametric families for these density functions; namely, multivariate normals with and without common covariances.  
+was and is substantially more difficult. 
+
+To make estimation tractable and useful, LDA and QDA assume parametric families for these density functions; namely, multivariate normals with and without common covariances.  
 
 By contrast, **Naive Bayes** only makes the assumption that the $p$ dimensional components of the predictor are *independent* from each other. I.e. that the joint density $f_k(x)$ can be written as the product of the $p$ marginal densities 
 <!-- $f_{kj}(x_j)$, $j=1,\dots,p$,  -->
@@ -904,13 +905,15 @@ cor(Smarket)
 round(cor(Smarket[, names(Smarket) != "Direction"]), 2)
 ```
 
-As one would expect, the correlations between the lag variables and today's returns are close to zero. In other words, there appears to be little correlation between today's returns and previous days' returns. The only substantial correlation is between `Year` and `Volume`. By plotting the data, which is ordered chronologically, we see that `Volume` is increasing over time. In other words, the average number of shares traded daily increased from 2001 to 2005.
+As one would expect, the correlations between the lag variables and today's returns are close to zero. In other words, there appears to be little correlation between today's returns and previous days' returns. The only substantial correlation is between `Year` and `Volume`. 
+
+<!-- By plotting the data, which is ordered chronologically, we see that `Volume` is increasing over time. In other words, the average number of shares traded daily increased from 2001 to 2005.
 
 ```{r chunk3}
 attach(Smarket)
 plot(Volume)
 ```
-
+ -->
 
 ### Logistic Regression
 
@@ -941,6 +944,7 @@ The `predict()` function can be used to predict the probability that the market 
 
 
 ```{r chunk6}
+## Posterior probabilities
 glm.probs <- predict(glm.fits, type = "response")
 glm.probs[1:10]
 ```
@@ -959,40 +963,52 @@ In order to make a prediction as to whether the market will go up or down on a p
 The following two commands create a vector of class predictions based on whether the predicted probability of a market increase is greater than or less than $0.5$.
 
 ```{r chunk7}
-glm.pred <- rep("Down", 1250)
-glm.pred[glm.probs > .5] = "Up"
+glm.pred                 <- rep("Down", 1250) # sample size: 1250
+glm.pred[glm.probs > .5] <- "Up"
 ```
 
-The first command creates a vector of 1,250  `Down` elements. The second line transforms to `Up` all of the elements for which the predicted probability of a market increase exceeds $0.5$. Given these predictions, the `table()` function can be used to produce a confusion matrix  in order to determine how many observations were correctly or incorrectly classified. %By inputting two qualitative vectors R will create a two by two table with counts of the number of times each combination occurred e.g. predicted `Up` and market increased, predicted `Up` and the market decreased etc.
+The first command creates a vector of 1,250  `Down` elements. The second line transforms to `Up` all of the elements for which the predicted probability of a market increase exceeds $0.5$. Given these predictions, the `table()` function can be used to produce a **confusion matrix** in order to determine how many observations were correctly or incorrectly classified. 
+<!-- %By inputting two qualitative vectors R will create a two by two table with counts of the number of times each combination occurred e.g. predicted `Up` and market increased, predicted `Up` and the market decreased etc. -->
 
 ```{r chunk8}
 table(glm.pred, Direction)
+```
+
+The diagonal elements of the confusion matrix indicate correct predictions, while the off-diagonals represent incorrect predictions. Hence our model correctly predicted that the market would go up on $507$ days and that it would go down on $145$ days, for a total of $507+145 = 652$ correct predictions. The overall training error rate is
+```{r}
+## Overall training error rate 
 (507 + 145) / 1250
+```
+
+Alternatively, the `mean()` function can be used to compute the overall training error rate; i.e., the fraction of days for which the prediction was correct (within the training data). In this case, logistic regression correctly predicted the movement of the market $52.2\%$ of the time.
+
+```{r}
 mean(glm.pred == Direction)
 ```
 
-The diagonal elements of the confusion matrix indicate correct predictions, while the off-diagonals represent incorrect predictions. Hence our model correctly predicted that the market would go up on $507$~days and that it would go down on $145$~days, for a total of $507+145 = 652$ correct predictions. The `mean()` function can be used to compute the fraction of days for which the prediction was correct. In this case, logistic regression correctly predicted the movement of the market  $52.2$\,\% of the time.
 
-At first glance, it appears that the logistic regression model is working a little better than random guessing. However, this result is misleading because we trained and tested the  model on the same set of $1,250$ observations. In other words,
- $100\%-52.2\%=47.8\%$, is the *training* error   rate. As we have seen previously, the training error rate is often overly optimistic---it tends to underestimate the   test error rate.  In order to better assess the accuracy of the logistic regression model in this setting, we can fit the model using part of the data, and then examine how well it predicts the *held out* data.
+At first glance, it appears that the logistic regression model is working a little better than random guessing. However, this result is misleading because we trained and tested the  model on the same set of $1,250$ observations. In other words, $100\%-52.2\%=47.8\%$, is the *training* error rate. 
+
+The training error rate is often overly optimistic: it tends to underestimate the   test error rate.  In order to better assess the accuracy of the logistic regression model in this setting, we can fit the model using part of the data, and then examine how well it predicts the *held out* data.
+
 This will yield a more realistic error rate, in the sense that in practice we will be interested in our model's performance not on the data that we used to fit the model, but rather on days in the future for which the market's movements are unknown.
 
 To implement this strategy, we will first create a vector corresponding to the observations from 2001 through 2004. We will then use this vector to create a held out data set of observations from 2005.
 
 ```{r chunk9}
-train <- (Year < 2005)
-Smarket.2005 <- Smarket[!train, ]
-dim(Smarket.2005)
-Direction.2005 <- Direction[!train]
+train          <- (Year < 2005)
+## Test data 
+Smarket_2005   <- Smarket[!train, ]
+dim(Smarket_2005) # training sample size 
+Direction_2005 <- Direction[!train]
 ```
 
-The object `train` is a vector of $1{,}250$ elements, corresponding to the observations in our data set. The elements of the vector that correspond to observations that occurred before 2005 are set to `TRUE`, whereas those that correspond to observations  in 2005 are set to `FALSE`.
-The object `train` is a  *Boolean*  vector, since its elements are `TRUE` and `FALSE`.
-Boolean vectors can be used to obtain a subset of the rows or columns of a matrix. For instance, the command `Smarket[train, ]` would pick out a submatrix of the stock market data set, corresponding only to the dates before 2005, since
-those are the ones for which the elements of `train` are `TRUE`.
+The object `train` is a vector of $1250$ elements, corresponding to the observations in our data set. The elements of the vector that correspond to observations that occurred before 2005 are set to `TRUE`, whereas those that correspond to observations in 2005 are set to `FALSE`.
+
+The object `train` is a  *Boolean*  vector, since its elements are `TRUE` and `FALSE`. Boolean vectors can be used to obtain a subset of the rows or columns of a matrix. For instance, the command `Smarket[train, ]` would pick out a submatrix of the stock market data set, corresponding only to the dates before 2005, since those are the ones for which the elements of `train` are `TRUE`.
+
 The `!` symbol can be used to reverse all of the elements of  a Boolean vector. That is, `!train` is a vector similar to `train`, except that  the elements that are `TRUE` in `train` get swapped to `FALSE` in `!train`, and the elements that are `FALSE`
-in `train` get swapped to `TRUE` in `!train`. Therefore, `Smarket[!train, ]` yields a submatrix of the stock market data containing only
-the observations for which `train` is `FALSE`---that is, the observations with dates in 2005. The output above indicates that there are 252 such observations.
+in `train` get swapped to `TRUE` in `!train`. Therefore, `Smarket[!train, ]` yields a submatrix of the stock market data containing only the observations for which `train` is `FALSE`---that is, the observations with dates in 2005. The output above indicates that there are 252 such observations.
 
 We now fit a logistic regression model using only the subset of the observations that correspond to dates before 2005, using the `subset` argument. We then obtain predicted probabilities of the stock market going up for each of the days in our test set---that is, for the days in 2005.
 
@@ -1001,44 +1017,48 @@ glm.fits <- glm(
     Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
     data = Smarket, family = binomial, subset = train
   )
-glm.probs <- predict(glm.fits, Smarket.2005,
+## Using the trained model to predict the held out test data  
+glm.probs <- predict(glm.fits, Smarket_2005,
     type = "response")
 ```
 
-Notice that we have trained and tested our model on two completely separate data sets: training was performed using only the dates before 2005, and testing was performed using only the dates in 2005.
-Finally, we compute the predictions for 2005 and compare them to the actual movements of the market over that time period.
+Notice that we have trained and tested our model on two completely separate data sets: training was performed using only the dates before 2005, and testing was performed using only the dates in 2005. Finally, we compute the predictions for 2005 and compare them to the actual movements of the market over that time period.
 
 ```{r chunk11}
-glm.pred <- rep("Down", 252)
+glm.pred                 <- rep("Down", 252)
 glm.pred[glm.probs > .5] <- "Up"
-table(glm.pred, Direction.2005)
-mean(glm.pred == Direction.2005)
-mean(glm.pred != Direction.2005)
+table(glm.pred, Direction_2005)
+
+## Rate of correct predictions in the test data
+mean(glm.pred == Direction_2005)
+## Rate of prediction errors in the test data 
+mean(glm.pred != Direction_2005)
 ```
 
-The `!=` notation means *not equal to*, and  so the last command computes the  test set error rate. The results are rather disappointing: the test error rate is $52$\,\%, which is worse than random guessing! Of course this result is not all that surprising, given that one would not generally expect to be able to  use previous days' returns to predict future market performance. (After all, if it were possible to do so, then the authors of this book would be out striking it rich rather than writing a statistics textbook.)
+The `!=` notation means *not equal to*, and  so the last command computes the  test set error rate. The results are rather disappointing: the test error rate is $52\%$, which is worse than random guessing! Of course this result is not all that surprising, given that one would not generally expect to be able to  use previous days' returns to predict future market performance. (After all, if it were possible to do so, then the authors of this book would be out striking it rich rather than writing a statistics textbook.)
 
-We recall that the logistic regression model had very underwhelming $p$-values associated with all of the predictors, and that the smallest $p$-value, though not very small, corresponded to `lagone`. Perhaps by removing the variables that appear not  to be helpful in
-predicting
-`direction`, we can obtain a more effective model. After all, using predictors that have no relationship with the response tends to cause a deterioration in the test error rate (since such predictors cause an increase in variance without a corresponding decrease in bias), and so removing such predictors may in turn yield an improvement.
- Below we have refit the logistic regression using just `lagone` and `lagtwo`, which seemed to have the highest predictive power in the original logistic regression model.
+We recall that the logistic regression model had very underwhelming $p$-values associated with all of the predictors, and that the smallest $p$-value, though not very small, corresponded to `Lag1`. Perhaps by removing the variables that appear not  to be helpful in predicting `Direction`, we can obtain a more effective model. After all, using predictors that have no relationship with the response tends to cause a deterioration in the test error rate (since such predictors cause an increase in variance without a corresponding decrease in bias), and so removing such predictors may in turn yield an improvement. Below we have refit the logistic regression using just `Lag1` and `Lag2`, which seemed to have the highest predictive power in the original logistic regression model.
 
 ```{r chunk12}
-glm.fits <- glm(Direction ~ Lag1 + Lag2, data = Smarket,
-    family = binomial, subset = train)
-glm.probs <- predict(glm.fits, Smarket.2005,
-    type = "response")
-glm.pred <- rep("Down", 252)
+glm.fits  <- glm(Direction ~ Lag1 + Lag2, data = Smarket, family = binomial, subset = train)
+glm.probs <- predict(glm.fits, Smarket_2005, type = "response")
+##
+glm.pred                 <- rep("Down", 252)
 glm.pred[glm.probs > .5] <- "Up"
-table(glm.pred, Direction.2005)
-mean(glm.pred == Direction.2005)
+##
+table(glm.pred, Direction_2005)
+## Rate of correct prediction (in the test data)
+mean(glm.pred == Direction_2005)
+## Positive predictive value TP/P* (in the test data)
 106 / (106 + 76)
 ```
 
-Now the results appear to be a little better: $56\%$ of the daily movements have been correctly predicted. It is worth noting that in this case, a much simpler strategy of predicting that the market will increase every day will also be correct $56\%$ of the time! Hence, in terms of overall error rate, the logistic regression method is no better than the naive approach. However, the confusion matrix shows that on days when logistic regression predicts an increase in the market, it has a $58\%$ accuracy rate. This suggests a possible trading strategy of buying on days when the model predicts an increasing market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
+Now the results appear to be a little better: $56\%$ of the daily movements have been correctly predicted. It is worth noting that in this case, a much simpler strategy of predicting that the market will increase every day will also be correct $56\%$ of the time! Hence, in terms of overall error rate, the logistic regression method is no better than the naive approach. However, the confusion matrix shows that on days when logistic regression predicts an increase in the market, it has a $58\%$ accuracy rate (Positive predictive value TP/P*). 
+
+This suggests a possible trading strategy of buying on days when the model predicts an increasing market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
 
 
-Suppose that we want to predict the returns associated with particular values of `lagone` and `lagtwo`. In particular, we want to predict `direction` on a day when `lagone` and `lagtwo` equal 1.2 and~1.1, respectively, and  on a day when they equal  1.5 and $-$0.8.
+Suppose that we want to predict the returns associated with particular values of `Lag1` and `Lag2`. In particular, we want to predict `Direction` on a day when `Lag1` and `Lag2` equal $1.2$ and $1.1$, respectively, and  on a day when they equal $1.5$ and $-0.8.$
 We do this using the `predict()` function.
 
 ```{r chunk13}
@@ -1063,17 +1083,17 @@ lda.fit
 plot(lda.fit)
 ```
 
-The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2$\,\% of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The *coefficients of linear discriminants* output provides the linear combination of `lagone` and `lagtwo` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in (4.24). If $-0.642\times$`lagone`$- 0.514 \times$ `lagtwo` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
+The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2$\,\% of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The *coefficients of linear discriminants* output provides the linear combination of `Lag1` and `Lag2` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in (4.24). If $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
 
-The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times$`lagone`$- 0.514 \times$ `lagtwo` for each of the training observations. The `Up` and `Down` observations are displayed separately.
-
-
+The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` for each of the training observations. The `Up` and `Down` observations are displayed separately.
 
 
-The `predict()` function returns a list with three elements. The first element,  `class`,  contains LDA's predictions about the movement of the market. The second element, `posterior`, is a matrix whose $k$th column contains the posterior probability that the corresponding observation belongs to the $k$th class, computed from ( 4.15). Finally, `x` contains the linear discriminants, described earlier.
+
+
+The `predict()` function returns a list with three elements. The first element,  `class`,  contains LDA's predictions about the movement of the market. The second element, `posterior`, is a matrix whose $k$th column contains the posterior probability that the corresponding observation belongs to the $k$th class, computed from (4.15). Finally, `x` contains the linear discriminants, described earlier.
 
 ```{r chunk15}
-lda.pred <- predict(lda.fit, Smarket.2005)
+lda.pred <- predict(lda.fit, Smarket_2005)
 names(lda.pred)
 ```
 
@@ -1081,8 +1101,8 @@ As we observed in Section 4.5, the LDA and logistic regression predictions are a
 
 ```{r chunk16}
 lda.class <- lda.pred$class
-table(lda.class, Direction.2005)
-mean(lda.class == Direction.2005)
+table(lda.class, Direction_2005)
+mean(lda.class == Direction_2005)
 ```
 
 Applying a $50$\,\% threshold to the posterior probabilities allows us to recreate the predictions contained in `lda.pred$class`.
@@ -1121,9 +1141,9 @@ qda.fit
 The output  contains the group means. But it does not contain the coefficients of the linear discriminants, because the QDA classifier involves  a quadratic, rather than a linear, function of the predictors. The `predict()` function works in exactly the same fashion as for LDA.
 
 ```{r chunk21}
-qda.class <- predict(qda.fit, Smarket.2005)$class
-table(qda.class, Direction.2005)
-mean(qda.class == Direction.2005)
+qda.class <- predict(qda.fit, Smarket_2005)$class
+table(qda.class, Direction_2005)
+mean(qda.class == Direction_2005)
 ```
 
 Interestingly, the QDA predictions are accurate almost $60$\,\% of the time, even though the 2005 data was not used  to fit the model. This level of accuracy is quite impressive for stock market data, which is known to be quite hard to model accurately.
@@ -1142,7 +1162,7 @@ nb.fit <- naiveBayes(Direction ~ Lag1 + Lag2, data = Smarket,
 nb.fit
 ```
 
-The output  contains the estimated mean and standard deviation for each variable in each class. For example, the mean for `lagone` is $0.0428$ for 
+The output  contains the estimated mean and standard deviation for each variable in each class. For example, the mean for `Lag1` is $0.0428$ for 
 
   `Direction=Down`, and the standard deviation is $1.23$. We can easily verify this:
 
@@ -1154,9 +1174,9 @@ sd(Lag1[train][Direction[train] == "Down"])
 The `predict()` function is straightforward.
 
 ```{r chunk24}
-nb.class <- predict(nb.fit, Smarket.2005)
-table(nb.class, Direction.2005)
-mean(nb.class == Direction.2005)
+nb.class <- predict(nb.fit, Smarket_2005)
+table(nb.class, Direction_2005)
+mean(nb.class == Direction_2005)
 ```
 
 Naive Bayes performs very well on this data, with accurate predictions over $59\%$ of the time. This is slightly worse than QDA, but much better than LDA.
@@ -1164,7 +1184,7 @@ Naive Bayes performs very well on this data, with accurate predictions over $59\
 The `predict()` function can also generate estimates of the probability that each observation belongs to a particular class. %
 
 ```{r chunk25}
-nb.preds <- predict(nb.fit, Smarket.2005, type = "raw")
+nb.preds <- predict(nb.fit, Smarket_2005, type = "raw")
 nb.preds[1:5, ]
 ```
 
@@ -1179,7 +1199,7 @@ Rather than a two-step approach  in which we first fit the model and then we use
 * A vector containing the class labels for the training observations, labeled `train.Direction` below.
 * A value for $K$, the number of nearest neighbors to be used by the classifier.
 
-We use the `cbind()` function, short for *column bind*, to bind the `lagone` and `lagtwo` variables together into two matrices, one for the training set and the other for the test set.
+We use the `cbind()` function, short for *column bind*, to bind the `Lag1` and `Lag2` variables together into two matrices, one for the training set and the other for the test set.
 
 ```{r chunk26}
 library(class)
@@ -1193,7 +1213,7 @@ Now the `knn()` function can be used to predict the market's movement for the da
 ```{r chunk27}
 set.seed(1)
 knn.pred <- knn(train.X, test.X, train.Direction, k = 1)
-table(knn.pred, Direction.2005)
+table(knn.pred, Direction_2005)
 (83 + 43) / 252
 ```
 
@@ -1201,8 +1221,8 @@ The results using $K=1$ are not very good,  since only $50$\,\% of the observati
 
 ```{r chunk28}
 knn.pred <- knn(train.X, test.X, train.Direction, k = 3)
-table(knn.pred, Direction.2005)
-mean(knn.pred == Direction.2005)
+table(knn.pred, Direction_2005)
+mean(knn.pred == Direction_2005)
 ```
 
 The results have improved slightly. But increasing $K$ further turns out to provide no further improvements. It appears that for this data, QDA provides the best results of the methods that we have examined so far.
@@ -1223,7 +1243,7 @@ summary(Purchase)
 
 Because the KNN classifier predicts the class of a given test observation by identifying the observations that are nearest to it, the scale of the variables matters. Variables that are on a large scale will have a much larger effect
  on the *distance* between the observations, and hence
-on the KNN classifier, than variables that are on a small scale. For instance, imagine a data set that contains two variables, `salary` and `age` (measured in dollars and years, respectively). As far as KNN is concerned, a difference of $1,000 in salary is enormous compared to a difference of $50$~years in age. Consequently, `salary` will drive the KNN classification results, and `age` will have almost no effect. This is contrary to our intuition  that a salary difference of $$1{,}000$ is quite small compared to an age difference of $50$~years.
+on the KNN classifier, than variables that are on a small scale. For instance, imagine a data set that contains two variables, `salary` and `age` (measured in dollars and years, respectively). As far as KNN is concerned, a difference of $1,000 in salary is enormous compared to a difference of $50$ years in age. Consequently, `salary` will drive the KNN classification results, and `age` will have almost no effect. This is contrary to our intuition  that a salary difference of $$1{,}000$ is quite small compared to an age difference of $50$ years.
 Furthermore, the importance of scale to the KNN classifier leads to another issue: if we measured `salary` in Japanese yen, or if we measured `age` in minutes, then we'd get quite different classification results from what we get
  if these two variables are measured in dollars and years.
 
@@ -1265,8 +1285,7 @@ The KNN error rate on the 1,000 test observations is just under $12$\,\%. At fir
 the values of the predictors!
 
 Suppose that there is some non-trivial cost to trying to sell insurance to a given individual. For instance, perhaps a salesperson must  visit each potential customer.
-If the company tries to sell insurance to a random selection of customers, then the success rate will be only $6$\,\%, which may be far too low given the costs involved.
-Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the  overall error rate is not of interest. Instead,  the fraction of individuals that are correctly predicted to buy insurance is of interest.
+If the company tries to sell insurance to a random selection of customers, then the success rate will be only $6$\,\%, which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the  overall error rate is not of interest. Instead,  the fraction of individuals that are correctly predicted to buy insurance is of interest.
 
  It turns out that KNN with $K=1$ does far better than random guessing among the customers that are predicted to buy insurance. Among  $77$ such customers, $9$, or $11.7$\,\%, actually do purchase insurance.
  This is  double the rate that one would obtain from random guessing.
