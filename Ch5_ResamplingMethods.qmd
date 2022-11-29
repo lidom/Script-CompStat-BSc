@@ -32,18 +32,20 @@ The model is fit on the training set, and the fitted model is used to predict th
 
 #### Illustration {-}
 
-Reconsider the `Auto` data set. In Chapter 3, we found that a model that predicts `mpg` using `horsepower` and `horsepower`$^2$ predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree $p$ of the polynomial
+Reconsider the `Auto` data set. In Chapter 3, we found that a model that predicts `mpg` using `horsepower` and `horsepower`$^2$ predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree $p$ of the polynomial regression model
 $$
-\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon
+\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon.
 $$
 
 
-**Step 1:** Randomly split the total data set into a training set and a validation set
+**Step 1:** Randomly split the total data set into mutually exclusive training and test (validation) sets of roughly equal subsample sizes:
+
+* **Training set:** $\{(x_i,y_i), i\in\mathcal{I}_{Train}\},$ where $n_{Train}=|\mathcal{I}_{Train}|<n$
+* **Test set:** $\{(x_i,y_i), i\in\mathcal{I}_{Test}\},$ where $n_{Test}=|\mathcal{I}_{Test}|<n$
+
+such that $n_{Train}\approx n_{Test}$ with $n=n_{Train} + n_{Test}$ and 
 $$
-\begin{align*}
-(x_i,y_i)\quad & i\in\mathcal{I}_{Train}\quad\text{with}n_{Train}=|\mathcal{I}_{Train}| \\
-(x_i,y_i)\quad & i\in\mathcal{I}_{Test}\quad\text{with}n_{Test}=|\mathcal{I}_{Test}|
-\end{align*}
+\mathcal{I}_{Train}\cap \mathcal{I}_{Test}=\emptyset.
 $$
 Code for splitting data randomly into training and validation sets:
 ```{r}
@@ -76,9 +78,9 @@ Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE),
 
 **Step 3:** Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set:
 $$
-\operatorname{MSE}_{test}^{Validation-Set-Approach}(p)=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2,
+\operatorname{MSE}_{Test}^{ValidationSetApproach}=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2,
 $$
-where $\hat{f}$ in $\hat{y}_i=\hat{f}(x_i)$ is computed from the training data with sample size $n_{Train}<n,$ and evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test},$ with sample size $n_{Test}<n.$ 
+where $\hat{f}$ in $\hat{y}_i=\hat{f}(x_i)$ is computed from the training data, but evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test}.$
 
 ```{r}
 y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
@@ -86,7 +88,7 @@ RSS_Valid     <- sum((Auto_Valid_df$mpg - y_fit_Valid)^2)
 MSE           <- RSS_Valid / n_Valid
 ```
 
-Repeating Steps 1-3 for a series of polynomial degrees $p=1,\dots,10$ 
+Repeating Steps 1-3 for a series of polynomial degrees $p=1,\dots,10$ allows us to search for the polynomial degree with lowest test MSE. 
 
 ```{r}
 #| label: fig-VA1
@@ -145,7 +147,7 @@ for(p in 1:p_max){
 }
 
 matplot(y = t(MSE), type="b", ylab="MSE", xlab="Degree of Polynomial", 
-        pch=21, col="black", bg="black", main="")
+        pch=21, col="black", bg="black", lty = 1, main="")
 for(r in 1:R){
   points(y = MSE[r,][which.min(MSE[r,])], 
        x = c(1:p_max)[which.min(MSE[r,])], 
@@ -154,14 +156,11 @@ for(r in 1:R){
 ```
 
 
-@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
+@fig-VA2 shows that the valida* **Training set:** tion set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
 
-A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ using a training set sample size $n_{Train}$ that is typically considerably smaller than the actual sample size $n.$ 
+A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ computed from the training set, where, however, the training set sample size $n_{Train}$ is typically substantially smaller than the actual sample size $n.$ 
 
 This leads to **increased test MSE values** which do not reflect the actual test MSE values under the total sample size $n>n_{Train}.$
-$$
-n_{Train}<n\quad\text{and}\quad n_{Valid}<n.
-$$ 
 
 Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation set approach that addresses these issues. 
 
@@ -169,18 +168,10 @@ Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation 
 
 Like the validation set approach, LOOCV involves splitting the set of validation observations into two parts. 
 
-However, instead of creating two subsets of comparable size, a **single** observation
-$$
-(x_i,y_i)
-$$
-is used for the validation set, and the remaining observations 
-$$
-\{(x_1,y_1),\dots,(x_{i-1},y_{i-1}),(x_{i+1},y_{i+1}),\dots,(x_{n},y_{n})\}
-$$
-are used for the training set. 
+However, instead of creating two subsets of comparable size, a **single** observation is used for the validation set, and the remaining observations are used for the training set. , i.e.
 
-* Sample size of training set: $n-1$
-* Sample size of test set: $1$
+* **Training set:** $\{(x_1,y_1),\dots,(x_{i-1},y_{i-1}),(x_{i+1},y_{i+1}),\dots,(x_{n},y_{n})\}$ with $n_{Train}=n-1$
+* **Test set:** $\{(x_i,y_i)\}$ with $n_{Test}=1$ 
 
 The estimate for the test MSE is thus
 $$
@@ -195,7 +186,7 @@ $$
 
 The LOOCV estimate is then formed by the average of the $n$ MSE estimates:
 $$
-\operatorname{CV}_{n} = \frac{1}{n} \sum_{i=1}^n\operatorname{MSE}_i.
+\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\operatorname{MSE}_i.
 $$
 
 Figure 5.3 shows schematically the leave-one-out data splitting approach. 
@@ -203,12 +194,268 @@ Figure 5.3 shows schematically the leave-one-out data splitting approach.
 ![](images/Fig_5_3.png)
 
 
+Advantages of CV over the Validation Set approach: 
+
+1. Lower bias. Since LOOCV uses\operatorname{LOOCV}= estimates based on training sets with sample sizes $n-1 \approx n,$ LOOCV does not overestimate the test error rate as much the validation set approach does. 
+2. Performing CV multiple times, always yields the same result. I.e., there is no randomness in the training/validation set splits as in the validation set approach.
+
+
+```{r}
+#| label: fig-CV1
+#| fig-cap: LOOCV error estimates for different polynomial degrees $p.$
+set.seed(123)
+
+MSE_i      <- matrix(NA, n, p_max)
+
+## Save starting time of the loop
+start_time <- Sys.time()
+
+for(r in 1:n){
+## Training set 
+Auto_Train_df <- Auto[-r, ]
+## Validation set
+Auto_Valid_df <- Auto[r, ]
+
+for(p in 1:p_max){
+  ## Step 1
+  Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
+                     data = Auto_Train_df)
+  ## Step 2
+  y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+  MSE_i[r,p]    <- (Auto_Valid_df$mpg - y_fit_Valid)^2 
+}
+}
+## Save end time of the loop
+end_time <- Sys.time()
+
+LOOCV  <- colMeans(MSE_i)
+
+plot(x = 1:p_max, y = LOOCV, type = "b", 
+     col = "black", bg = "black", pch = 21,  
+     xlab = "Degree of Polynomial", ylab = "LOOCV")
+points(y = LOOCV[which.min(LOOCV)], 
+       x = c(1:p_max)[which.min(LOOCV)], 
+       col = "red", bg = "red", pch = 21)     
+```
+
+
+LOOCV has the potential to be expensive to implement, since the model
+has to be fit $n$ times. Indeed the above code represents a naive implementation of LOOCV for least squares fits of linear/polynomial regression models and takes  
+<center>
+`end_time`$-$`start_time` $=$ `r round(end_time-start_time,3)` seconds
+</center>
+for the computations. 
+
+Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula
+$$
+\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2,
+$${#eq-CVfast} 
+where 
+
+* $\hat{y}_i$ is the $i$th fitted value from the *original least squares fit,* based on the total sample size $n,$ and 
+* $h_i$ is the leverage statistic for the $i$th observation 
+$$
+h_i=\left[X(X'X)^{-1}X'\right]_{ii}
+$$
+
+The follow codes implement this fast LOOCV version:
+```{r}
+
+LOOCV_fast <- numeric(p_max)
+
+## Save starting time 
+start_time2 <- Sys.time()
+
+for(p in 1:p_max){
+  PolyReg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
+                           data = Auto)
+  h             <- lm.influence(PolyReg)$hat
+  LOOCV_fast[p] <- mean(((Auto$mpg - fitted.values(PolyReg))/(1 - h))^2)
+}
+## Save end time of the loop
+end_time2 <- Sys.time()
+```
+
+Indeed, both approaches yield the same LOOCV values 
+```{r}
+round(max(abs(LOOCV - LOOCV_fast)), 3)
+```
+However, the fast version takes only 
+<center>
+`end_time2`$-$`start_time2` $=$ `r round(end_time2-start_time2,3)` seconds
+</center>
+for the computations. 
+
+
+LOOCV is a very general method, and can be used with any kind of
+predictive modeling; e.g.
+
+* Logistic regression
+* Linear discriminant analysis
+* Quadratic discriminant analysis
+* etc.
+
+and any statistical prediction method discussed in the lecture or in our textbook `ISLR2`. 
+
+
+**Caution:** @eq-CVfast does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.  
+
+## (Ch. 5.1.3) $k$-Fold Cross-Validation {-}
+
+An alternative to LOOCV is $k$-fold CV. 
+
+This approach divides the total index set $\mathcal{I}=\{1,2,\dots,n\}$ of the original data data set into $k$ mutually exclusive subsets (folds) of roughly equal sizes 
+$$
+\mathcal{I}_1,\,\mathcal{I}_2,\dots,\mathcal{I}_k
+$$
+with $|\mathcal{I}_1|\approx |\mathcal{I}_k|\approx n/k.$
+
+These $k$ index sets allow us construct different training and test sets for each $j=1,2,\dots,k$
+
+* **Training set:** $\{(x_i,y_i),\; i\in\mathcal{I}\setminus \mathcal{I}_j\}$ with sample size of $n_{Train}\approx n - n/k$
+* **Test set:** $\{(x_i,y_i),\;i\in\mathcal{I}_j\}$ with sample size of $n_{Test}\approx n/k$ 
+
+Each pair of training and test set allow to compute a estimate of the test error
+$$
+\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k.
+$$
+The $k$-fold CV estimate is computed by averaging these values
+$$
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+$$
+
+Figure 5.5 illustrates the data splitting for $k$-fold CV.
+
+![](images/Fig_5_5.png)
+
+
+* LOOCV is a special case of $k$-fold CV with $k=n$. 
+
+* Most often used $k$-values in practice are $k=5$ or $k=10$. 
+
+**Why $k=5$ or $k=10$ instead of $k=n$?**
+
+* Faster computation times ($k=5$ instead of $k=n$ model fits)
+* Improved estimates of the test MSE (see next section)
+
+### (Ch. 5.1.4) Bias-Variance Trade-Off for $k$-Fold Cross-Validation {-}
+
+There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold CV.
+
+<!-- A small $k$ leads to biased test MSE estimates (systematic overestimations). -->
+
+* Small/large $k$ lead to test MSE estimates with high/low **bias**
+
+**Explanation:** A small $k$ value leads to trainings sets with samples sizes $n_{Train}\approx n - n/k$ substantially smaller than the actual sample size $n.$ This reduces sample size leads to higher estimation errors than expected when using the total sample size $n$ and thus to systematic overestimations of the actual test MSE we are interested in. 
+
+A large $k\approx n$ reduces this bias since $n_{Train}\approx n$  
+
+
+* Small/large $k$ lead to test MSE estimates with low/high **variance**
+
+**Explanation:** In $k$-fold CV, the trainings overlap by roughly $n(k-2)/k$. 
+
+* For $k=2$ (Validation Set approach) there is no overlap
+* For $k=3$ approximately $n/3$ of approximately $n-n/k$ training data points overlap
+* For $k=n$ (LOOCV) $n-2$ data points of $n-1$ training data points overlap
+
+Thus, the larger $k$ the more similar the training data set become. However, very similar training set lead to highly correlated test MSE estimates. Since the mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV.
+
+### (Ch. 5.1.5) Cross-Validation on Classification Problems {-}
+
+Cross-validation can also be a very useful approach in the classification setting when $Y$ is qualitative.
+
+In the classification setting, the LOOCV error rate takes the form
+$$
+\operatorname{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n\operatorname{Err}_i,
+$$
+where 
+$$
+\operatorname{Err}_i=I(y_i\neq \hat{y}_i)
+$$
+with $I(\texttt{TRUE})=1$ and $I(\texttt{FALSE})=0.$
+
+Analogously for the $k$-fold CV error rate and the validation set error
+rate.
+
+We can, for instance, determine the degree $d$ in logistic regression models
+$$
+\left(\frac{p}{1-p}\right)=\beta_0 +\sum_{j=1}^d X_j^d 
+$$
+by selecting that polynomial degree that minimizes the CV error rate.
+
+Likewise, one can select the tuning parameter $K$ in KNN classification by minimizing the CV error rate across different candidate values for $K.$
+
+
+## (Ch. 5.2) The Bootstrap {-}
+
+The bootstrap is a widely applicable and powerful statistical tool to quantify the uncertainty associated with a given estimator or statistical learning method.
+
+#### Illustration {-}
+
+Suppose that we wish to invest a fixed sum of money in two financial
+assets that yield returns of $X$ and $Y.$ These returns $X$ and $Y$ are
+random with 
+
+* $Var(X)=\sigma^2_X$
+* $Var(Y)=\sigma^2_Y$ 
+* $Cov(X,Y)=\sigma_{XY}$
+
+We want to invest a fraction $\alpha\in(0,1)$ in $X$ and invest the remaining $1-\alpha$ in $Y.$
+
+Our aim is to minimize the variance (risk) of our investment, i.e., we want to minimize
+$$
+Var\left(\alpha X + (-\alpha)Y\right).
+$$ 
+One can show that the value $\alpha$ that minimizes this variance is
+$$
+\alpha = \frac{\sigma^2_Y - \sigma_{XY}}{\sigma^2_X + \sigma^2_Y - 2\sigma_{XY}}.
+$$
+Using a data set that contains past measurements for $X$ and $Y,$ we can estimate the unknown $\alpha$ by plugging in estimates of the variances and covariances
+$$
+\hat\alpha = \frac{\hat\sigma^2_Y - \hat\sigma_{XY}}{\hat\sigma^2_X + \hat\sigma^2_Y - 2\hat\sigma_{XY}}.
+$${#eq-alphahat}
+It is natural to wish to quantify the accuracy of our estimate of $\hat\alpha\approx \alpha.$ I.e., to wish to know the standard error of the estimator  
+$$
+\sqrt{Var(\hat\alpha)} = \operatorname{SE}(\hat\alpha)=?
+$$
+Computing $\operatorname{SE}(\hat\alpha)$ is here really difficult due to the definition of $\hat\alpha$ in @eq-alphahat which contains variance estimates also in the denominator. 
+
+
+**The Infeasible Bootstrap**
+
+Let us, for a moment, assume that we know the distributions of $X$ and $Y.$ For simplicity, let's say 
+$$
+\left(\begin{matrix}X\\ Y\end{matrix}\right)\sim 
+\mathcal{N}\left(\left(\begin{matrix}0\\0\end{matrix}\right),\left[\begin{matrix}\sigma_X^2&\sigma_{XY}\\\sigma_{XY}&\sigma_{Y}^2\end{matrix}\right]\right)
+$$
+If this were true, we could simply generate a new dataset containing new observations for $X$ and $Y$ that allow us to compute a new estimate $\hat\alpha.$ 
+
+Repeating this, for instance, $B=1000$ many times would give as $B=1000$ estimates  
+$$
+\hat\alpha_1,\;\hat\alpha_2,\dots,\hat\alpha_{B}.
+$$
+Their sample standard deviation 
+$$
+\sqrt{\frac{1}{B}\sum_{b=1}^B\left(\hat\alpha_b - \bar{\alpha}\right)^2},\quad\text{with}\quad \bar{\alpha} = \frac{1}{B}\sum_{b=1}^B\hat\alpha_b,
+$$
+is then a very good estimate of the (unknown) true $\operatorname{SE}(\hat\alpha).$
+
+Indeed, by the law of large numbers this sample standard deviation consistently estimates the true $\operatorname{SE}(\hat\alpha)$ as $B\to\infty.$ 
+
+Some codes for doing this:
+
+
+But, unfortunately, this depends on our unrealistic assumption that we know the population distribution of $(X,Y),$ which makes this approach infeasible in practice. 😭
+
+
+
 ## `R`-Lab: Resampling Methods
 
 In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.
 
 ### The Validation Set Approach
-
+* **Training set:** 
 We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the `Auto` data set.
 
 Before we begin, we use the `set.seed()` function in order to set a  for `R`'s random number generator, so that the reader of this book will
