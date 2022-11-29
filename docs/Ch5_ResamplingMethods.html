@@ -203,7 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ch.-5.1-cross-validation" id="toc-ch.-5.1-cross-validation" class="nav-link" data-scroll-target="#ch.-5.1-cross-validation">(Ch. 5.1) Cross-Validation</a>
   <ul class="collapse">
   <li><a href="#ch.-5.1.1-validation-set-approach" id="toc-ch.-5.1.1-validation-set-approach" class="nav-link" data-scroll-target="#ch.-5.1.1-validation-set-approach">(Ch. 5.1.1) Validation Set Approach</a></li>
-  <li><a href="#ch.-5.1.2-leave-one-out-cross-validation" id="toc-ch.-5.1.2-leave-one-out-cross-validation" class="nav-link" data-scroll-target="#ch.-5.1.2-leave-one-out-cross-validation">(Ch. 5.1.2) Leave-One-Out Cross-Validation</a></li>
+  <li><a href="#ch.-5.1.2-leave-one-out-cross-validation-loocv" id="toc-ch.-5.1.2-leave-one-out-cross-validation-loocv" class="nav-link" data-scroll-target="#ch.-5.1.2-leave-one-out-cross-validation-loocv">(Ch. 5.1.2) Leave-One-Out Cross-Validation (LOOCV)</a></li>
   </ul></li>
   <li><a href="#r-lab-resampling-methods" id="toc-r-lab-resampling-methods" class="nav-link" data-scroll-target="#r-lab-resampling-methods"><span class="toc-section-number">5.2</span>  <code>R</code>-Lab: Resampling Methods</a>
   <ul class="collapse">
@@ -256,7 +256,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>The model is fit on the training set, and the fitted model is used to predict the responses for the observations in the validation set.</p>
 <p><img src="images/Fig_5_1.png" class="img-fluid"></p>
-<p>Code for splitting data randomly into training and validation sets:</p>
+<section id="illustration" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="illustration">Illustration</h4>
+<p>Reconsider the <code>Auto</code> data set. In Chapter 3, we found that a model that predicts <code>mpg</code> using <code>horsepower</code> and <code>horsepower</code><span class="math inline">\(^2\)</span> predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree <span class="math inline">\(p\)</span> of the polynomial <span class="math display">\[
+\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon
+\]</span></p>
+<p><strong>Step 1:</strong> Randomly split the total data set into a training set and a validation set <span class="math display">\[
+\begin{align*}
+(x_i,y_i)\quad &amp; i\in\mathcal{I}_{Train}\quad\text{with}n_{Train}=|\mathcal{I}_{Train}| \\
+(x_i,y_i)\quad &amp; i\in\mathcal{I}_{Test}\quad\text{with}n_{Test}=|\mathcal{I}_{Test}|
+\end{align*}
+\]</span> Code for splitting data randomly into training and validation sets:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
@@ -275,24 +285,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Validierungsdaten </span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Auto_Valid_df <span class="ot">&lt;-</span> Auto[I_Valid, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="illustration" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="illustration">Illustration</h4>
-<p>Reconsider the <code>Auto</code> data set. In Chapter 3, we found that a model that predicts <code>mpg</code> using <code>horsepower</code> and <code>horsepower</code><span class="math inline">\(^2\)</span> predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree <span class="math inline">\(p\)</span> of the polynomial <span class="math display">\[
-\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon
-\]</span></p>
-<p><strong>Step 1:</strong> Estimation of the polynomial regression model, e.g., for <span class="math inline">\(p=2\)</span> using the training set:</p>
+<p><strong>Step 2:</strong> Estimation of the polynomial regression model, e.g., for <span class="math inline">\(p=2\)</span> using the training set:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p            <span class="ot">&lt;-</span> <span class="dv">2</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Train_polreg <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="at">degree =</span> p, <span class="at">raw=</span><span class="cn">TRUE</span>), </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> Auto_Train_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Step 2:</strong> Validation of the polynomial regression model by computing the test mean squared (prediction) error (<strong>test MSE</strong>) using the validation set:</p>
+<p><strong>Step 3:</strong> Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set: <span class="math display">\[
+\operatorname{MSE}_{test}^{Validation-Set-Approach}(p)=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2,
+\]</span> where <span class="math inline">\(\hat{f}\)</span> in <span class="math inline">\(\hat{y}_i=\hat{f}(x_i)\)</span> is computed from the training data with sample size <span class="math inline">\(n_{Train}&lt;n,\)</span> and evaluated at the test data <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test},\)</span> with sample size <span class="math inline">\(n_{Test}&lt;n.\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>((Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>MSE           <span class="ot">&lt;-</span> RSS_Valid <span class="sc">/</span> n_Valid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Repeating Step 1 and Step 2 for a series of polynomial degrees <span class="math inline">\(p=1,\dots,10\)</span></p>
+<p>Repeating Steps 1-3 for a series of polynomial degrees <span class="math inline">\(p=1,\dots,10\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p_max         <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>MSE           <span class="ot">&lt;-</span> <span class="fu">numeric</span>(p_max)</span>
@@ -322,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p><a href="#fig-VA1">Figure&nbsp;<span>5.1</span></a> shows the test MSE values based on <strong>one</strong> random split of the dataset. The result that <span class="math inline">\(p=9\)</span> minimizes the test MSE, however, may depend on the random split. Different random splits may lead to different model selection (choices of <span class="math inline">\(p\)</span>).</p>
-<p>Repeating the above computations for multiple random splits of the dataset into training and validation sets</p>
+<p>The following code repeats the above computations for multiple random splits of the dataset into training and validation sets:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## R = 10 random splits</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>R        <span class="ot">&lt;-</span> <span class="dv">10</span></span>
@@ -366,18 +373,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p><a href="#fig-VA2">Figure&nbsp;<span>5.2</span></a> shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly vary across the different random splits and thus depend on the data included in the test and validation sets.</p>
-<p>A particular problem with the validation set approach are small sample sizes. Both the training and the validation set have reduced sample sizes <span class="math display">\[
-n_{Train}&lt;n\quad\text{and}\quad n_{Valid}&lt;n
-\]</span> which leads to <strong>increased estimation uncertainties when estimating the test MSE values</strong>.</p>
-<p><em>Cross-validation</em> is a refinement of the validation set approach that addresses this issue.</p>
+<p><a href="#fig-VA2">Figure&nbsp;<span>5.2</span></a> shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets.</p>
+<p>A further serious problem with the validation set approach is that the evaluated predictions <span class="math inline">\(\hat{y}_i=\hat{f}(x_i)\)</span> are based on estimates <span class="math inline">\(\hat{f}\)</span> using a training set sample size <span class="math inline">\(n_{Train}\)</span> that is typically considerably smaller than the actual sample size <span class="math inline">\(n.\)</span></p>
+<p>This leads to <strong>increased test MSE values</strong> which do not reflect the actual test MSE values under the total sample size <span class="math inline">\(n&gt;n_{Train}.\)</span> <span class="math display">\[
+n_{Train}&lt;n\quad\text{and}\quad n_{Valid}&lt;n.
+\]</span></p>
+<p>Leave-One-Out and <span class="math inline">\(k\)</span>-fold <em>Cross-validation</em> are refinements of the validation set approach that addresses these issues.</p>
 </section>
 </section>
-<section id="ch.-5.1.2-leave-one-out-cross-validation" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.2-leave-one-out-cross-validation">(Ch. 5.1.2) Leave-One-Out Cross-Validation</h3>
-<section id="leave-one-out-cross-validation-loocv" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="leave-one-out-cross-validation-loocv">Leave-one-out cross-validation (LOOCV)</h4>
-</section>
+<section id="ch.-5.1.2-leave-one-out-cross-validation-loocv" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.2-leave-one-out-cross-validation-loocv">(Ch. 5.1.2) Leave-One-Out Cross-Validation (LOOCV)</h3>
+<p>Like the validation set approach, LOOCV involves splitting the set of validation observations into two parts.</p>
+<p>However, instead of creating two subsets of comparable size, a <strong>single</strong> observation <span class="math display">\[
+(x_i,y_i)
+\]</span> is used for the validation set, and the remaining observations <span class="math display">\[
+\{(x_1,y_1),\dots,(x_{i-1},y_{i-1}),(x_{i+1},y_{i+1}),\dots,(x_{n},y_{n})\}
+\]</span> are used for the training set.</p>
+<ul>
+<li>Sample size of training set: <span class="math inline">\(n-1\)</span></li>
+<li>Sample size of test set: <span class="math inline">\(1\)</span></li>
+</ul>
+<p>The estimate for the test MSE is thus <span class="math display">\[
+\operatorname{MSE}_i = \left(y_i - \hat{y}_i\right)^2,
+\]</span> which is an (approximately) unbiased estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.</p>
+<p>Repeating this leave-one-out splitting approach for each <span class="math inline">\(i=1,\dots,n,\)</span> produces <span class="math inline">\(n\)</span> many estimates of the test MSE: <span class="math display">\[
+\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_n
+\]</span></p>
+<p>The LOOCV estimate is then formed by the average of the <span class="math inline">\(n\)</span> MSE estimates: <span class="math display">\[
+\operatorname{CV}_{n} = \frac{1}{n} \sum_{i=1}^n\operatorname{MSE}_i.
+\]</span></p>
+<p>Figure 5.3 shows schematically the leave-one-out data splitting approach.</p>
+<p><img src="images/Fig_5_3.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="r-lab-resampling-methods" class="level2" data-number="5.2">
@@ -395,7 +421,9 @@ n_{Train}&lt;n\quad\text{and}\quad n_{Valid}&lt;n
 </div>
 <p>(Here we use a shortcut in the sample command; see <code>?sample</code> for details.) We then use the <code>subset</code> option in <code>lm()</code> to fit a linear regression using only the observations corresponding to the training set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto, <span class="at">subset =</span> train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data   =</span> Auto, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">subset =</span> train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now use the <code>predict()</code> function to estimate the response for all <span class="math inline">\(392\)</span> observations, and we use the <code>mean()</code> function to calculate the MSE of the <span class="math inline">\(196\)</span> observations in the validation set. Note that the <code>-train</code> index below selects only the observations that are not in the training set.</p>
 <div class="cell">
@@ -407,15 +435,20 @@ n_{Train}&lt;n\quad\text{and}\quad n_{Valid}&lt;n
 </div>
 <p>Therefore, the estimated test MSE for the linear regression fit is <span class="math inline">\(23.27\)</span>. We can use the <code>poly()</code> function to estimate the test error for the quadratic and cubic regressions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">2</span>), <span class="at">data =</span> Auto, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit2, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">2</span>), </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data   =</span> Auto, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">subset =</span> train)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Test MSE </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit2, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18.71646</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">3</span>), <span class="at">data =</span> Auto, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> train)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit3, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">3</span>), </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data   =</span> Auto, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">subset =</span> train)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Test MSE             </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((mpg <span class="sc">-</span> <span class="fu">predict</span>(lm.fit3, Auto))[<span class="sc">-</span>train]<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18.79401</code></pre>
 </div>

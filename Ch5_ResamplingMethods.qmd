@@ -29,6 +29,22 @@ The model is fit on the training set, and the fitted model is used to predict th
 
 ![](images/Fig_5_1.png)
 
+
+#### Illustration {-}
+
+Reconsider the `Auto` data set. In Chapter 3, we found that a model that predicts `mpg` using `horsepower` and `horsepower`$^2$ predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree $p$ of the polynomial
+$$
+\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon
+$$
+
+
+**Step 1:** Randomly split the total data set into a training set and a validation set
+$$
+\begin{align*}
+(x_i,y_i)\quad & i\in\mathcal{I}_{Train}\quad\text{with}n_{Train}=|\mathcal{I}_{Train}| \\
+(x_i,y_i)\quad & i\in\mathcal{I}_{Test}\quad\text{with}n_{Test}=|\mathcal{I}_{Test}|
+\end{align*}
+$$
 Code for splitting data randomly into training and validation sets:
 ```{r}
 library("ISLR2")
@@ -50,16 +66,7 @@ Auto_Valid_df <- Auto[I_Valid, ]
 ```
 
 
-
-#### Illustration {-}
-
-Reconsider the `Auto` data set. In Chapter 3, we found that a model that predicts `mpg` using `horsepower` and `horsepower`$^2$ predicts better than a model that uses only the linear term. But maybe a cubic or a higher order polynomial regression model predicts even better? The validation set approach can be used to select the degree $p$ of the polynomial
-$$
-\texttt{mpg}=\beta_0 + \sum_{j=1}^p\beta_j \texttt{horsepower}^j + \epsilon
-$$
-
-
-**Step 1:** Estimation of the polynomial regression model, e.g., for $p=2$ using the training set:
+**Step 2:** Estimation of the polynomial regression model, e.g., for $p=2$ using the training set:
 
 ```{r}
 p            <- 2
@@ -67,7 +74,11 @@ Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE),
                    data = Auto_Train_df)
 ```
 
-**Step 2:** Validation of the polynomial regression model by computing the test mean squared (prediction) error (**test MSE**) using the validation set:
+**Step 3:** Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set:
+$$
+\operatorname{MSE}_{test}^{Validation-Set-Approach}(p)=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2,
+$$
+where $\hat{f}$ in $\hat{y}_i=\hat{f}(x_i)$ is computed from the training data with sample size $n_{Train}<n,$ and evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test},$ with sample size $n_{Test}<n.$ 
 
 ```{r}
 y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
@@ -75,7 +86,7 @@ RSS_Valid     <- sum((Auto_Valid_df$mpg - y_fit_Valid)^2)
 MSE           <- RSS_Valid / n_Valid
 ```
 
-Repeating Step 1 and Step 2 for a series of polynomial degrees $p=1,\dots,10$
+Repeating Steps 1-3 for a series of polynomial degrees $p=1,\dots,10$ 
 
 ```{r}
 #| label: fig-VA1
@@ -103,8 +114,7 @@ points(y = MSE[which.min(MSE)],
 
 @fig-VA1 shows the test MSE values based on **one** random split of the dataset. The result that $p=9$ minimizes the test MSE, however, may depend on the random split. Different random splits may lead to different model selection (choices of $p$). 
 
-Repeating the above computations for multiple random splits of the dataset into training and validation sets
-
+The following code repeats the above computations for multiple random splits of the dataset into training and validation sets:
 ```{r}
 #| label: fig-VA2
 #| fig-cap: Validation error estimates for ten different random splits into training and validation data sets. The polynomial degrees that minimize the test MSE strongly vary across the different random splits.
@@ -144,22 +154,53 @@ for(r in 1:R){
 ```
 
 
-@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly vary across the different random splits and thus depend on the data included in the test and validation sets. 
+@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
 
-A particular problem with the validation set approach are small sample sizes. Both the training and the validation set have reduced sample sizes 
+A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ using a training set sample size $n_{Train}$ that is typically considerably smaller than the actual sample size $n.$ 
+
+This leads to **increased test MSE values** which do not reflect the actual test MSE values under the total sample size $n>n_{Train}.$
 $$
-n_{Train}<n\quad\text{and}\quad n_{Valid}<n
+n_{Train}<n\quad\text{and}\quad n_{Valid}<n.
 $$ 
-which leads to **increased estimation uncertainties when estimating the test MSE values**.
 
+Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation set approach that addresses these issues. 
 
-*Cross-validation* is a refinement of the validation set approach that addresses this issue. 
+### (Ch. 5.1.2) Leave-One-Out Cross-Validation (LOOCV) {-}
 
-### (Ch. 5.1.2) Leave-One-Out Cross-Validation {-}
+Like the validation set approach, LOOCV involves splitting the set of validation observations into two parts. 
 
-#### Leave-one-out cross-validation (LOOCV) {-}
+However, instead of creating two subsets of comparable size, a **single** observation
+$$
+(x_i,y_i)
+$$
+is used for the validation set, and the remaining observations 
+$$
+\{(x_1,y_1),\dots,(x_{i-1},y_{i-1}),(x_{i+1},y_{i+1}),\dots,(x_{n},y_{n})\}
+$$
+are used for the training set. 
 
+* Sample size of training set: $n-1$
+* Sample size of test set: $1$
 
+The estimate for the test MSE is thus
+$$
+\operatorname{MSE}_i = \left(y_i - \hat{y}_i\right)^2,
+$$
+which is an (approximately) unbiased estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.
+
+Repeating this leave-one-out splitting approach for each $i=1,\dots,n,$ produces $n$ many estimates of the test MSE:
+$$
+\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_n
+$$
+
+The LOOCV estimate is then formed by the average of the $n$ MSE estimates:
+$$
+\operatorname{CV}_{n} = \frac{1}{n} \sum_{i=1}^n\operatorname{MSE}_i.
+$$
+
+Figure 5.3 shows schematically the leave-one-out data splitting approach. 
+
+![](images/Fig_5_3.png)
 
 
 ## `R`-Lab: Resampling Methods
@@ -189,7 +230,9 @@ train <- sample(392, 196)
 We then use the `subset` option in `lm()` to fit a linear regression using only the observations corresponding to the training set.
 
 ```{r chunk2}
-lm.fit <- lm(mpg ~ horsepower, data = Auto, subset = train)
+lm.fit <- lm(mpg ~ horsepower, 
+             data   = Auto, 
+             subset = train)
 ```
 
 We now  use
@@ -205,11 +248,18 @@ mean((mpg - predict(lm.fit, Auto))[-train]^2)
 Therefore, the estimated test MSE for the linear regression fit is $23.27$. We can use the `poly()` function to estimate the test error for the quadratic and cubic regressions.
 
 ```{r chunk4}
-lm.fit2 <- lm(mpg ~ poly(horsepower, 2), data = Auto, 
-    subset = train)
+lm.fit2 <- lm(mpg ~ poly(horsepower, 2), 
+             data   = Auto, 
+             subset = train)
+
+## Test MSE 
 mean((mpg - predict(lm.fit2, Auto))[-train]^2)
-lm.fit3 <- lm(mpg ~ poly(horsepower, 3), data = Auto, 
-    subset = train)
+
+
+lm.fit3 <- lm(mpg ~ poly(horsepower, 3), 
+             data   = Auto, 
+             subset = train)
+## Test MSE             
 mean((mpg - predict(lm.fit3, Auto))[-train]^2)
 ```
 

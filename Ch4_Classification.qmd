@@ -671,6 +671,13 @@ For a credit card company, this slight increase in the overall error rate can be
 <!-- Such an adjustment of the threshold increases the overall error rate, and changes the False Positives and False Negatives. The latter can be advantageous in a cost-benefit analysis - even though the overall error rate is increased.   -->
 
 
+#### Classification Performance Measures {-}
+
+Table 4.6 and 4.7 summarize the different classification performance measures.
+
+![](images/Tab_4_6_and_4_7.png)
+
+
 ### The ROC curve {-}
 
 
@@ -892,7 +899,9 @@ have also recorded `Volume` (the number of shares traded on the previous day, in
 
 ```{r chunk1}
 library(ISLR2)   # package contains the data
-attach(Smarket)  # attach Data 'Smarket' (contained in ISLR2)
+attach(Smarket)  # attach(Smarket) allows to use the variables 
+                 # contained Smarket directly 
+                 # (i.e. 'Direction' instead of 'Smarket$Direction')
 names(Smarket)   # names of the variables in the Smarket data
 dim(Smarket)     # total sample size n, number of variables
 summary(Smarket) # descriptive statistics (mean, median, ...)
@@ -983,13 +992,15 @@ The diagonal elements of the confusion matrix indicate correct predictions, whil
 Alternatively, the `mean()` function can be used to compute the overall training error rate; i.e., the fraction of days for which the prediction was correct (within the training data). In this case, logistic regression correctly predicted the movement of the market $52.2\%$ of the time.
 
 ```{r}
+## Alternative way to compute the 
+## overall training error rate 
 mean(glm.pred == Direction)
 ```
 
 
 At first glance, it appears that the logistic regression model is working a little better than random guessing. However, this result is misleading because we trained and tested the  model on the same set of $1,250$ observations. In other words, $100\%-52.2\%=47.8\%$, is the *training* error rate. 
 
-The training error rate is often overly optimistic: it tends to underestimate the   test error rate.  In order to better assess the accuracy of the logistic regression model in this setting, we can fit the model using part of the data, and then examine how well it predicts the *held out* data.
+The training error rate is often overly optimistic. It tends to underestimate the   test error rate.  In order to better assess the accuracy of the logistic regression model in this setting, we can fit the model using part of the data, and then examine how well it predicts the *held out* data.
 
 This will yield a more realistic error rate, in the sense that in practice we will be interested in our model's performance not on the data that we used to fit the model, but rather on days in the future for which the market's movements are unknown.
 
@@ -998,8 +1009,10 @@ To implement this strategy, we will first create a vector corresponding to the o
 ```{r chunk9}
 train          <- (Year < 2005)
 ## Test data 
-Smarket_2005   <- Smarket[!train, ]
-dim(Smarket_2005) # training sample size 
+Smarket_2005   <- Smarket[!train, ] 
+## Test sample size 
+dim(Smarket_2005)[1] 
+## Dependent variable of the test data 
 Direction_2005 <- Direction[!train]
 ```
 
@@ -1007,8 +1020,7 @@ The object `train` is a vector of $1250$ elements, corresponding to the observat
 
 The object `train` is a  *Boolean*  vector, since its elements are `TRUE` and `FALSE`. Boolean vectors can be used to obtain a subset of the rows or columns of a matrix. For instance, the command `Smarket[train, ]` would pick out a submatrix of the stock market data set, corresponding only to the dates before 2005, since those are the ones for which the elements of `train` are `TRUE`.
 
-The `!` symbol can be used to reverse all of the elements of  a Boolean vector. That is, `!train` is a vector similar to `train`, except that  the elements that are `TRUE` in `train` get swapped to `FALSE` in `!train`, and the elements that are `FALSE`
-in `train` get swapped to `TRUE` in `!train`. Therefore, `Smarket[!train, ]` yields a submatrix of the stock market data containing only the observations for which `train` is `FALSE`---that is, the observations with dates in 2005. The output above indicates that there are 252 such observations.
+The `!` symbol can be used to reverse all of the elements of  a Boolean vector. That is, `!train` is a vector similar to `train`, except that  the elements that are `TRUE` in `train` get swapped to `FALSE` in `!train`, and the elements that are `FALSE` in `train` get swapped to `TRUE` in `!train`. Therefore, `Smarket[!train, ]` yields a submatrix of the stock market data containing only the observations for which `train` is `FALSE`---that is, the observations with dates in 2005. The output above indicates that there are 252 such observations.
 
 We now fit a logistic regression model using only the subset of the observations that correspond to dates before 2005, using the `subset` argument. We then obtain predicted probabilities of the stock market going up for each of the days in our test set---that is, for the days in 2005.
 
@@ -1022,13 +1034,18 @@ glm.probs <- predict(glm.fits, Smarket_2005,
     type = "response")
 ```
 
-Notice that we have trained and tested our model on two completely separate data sets: training was performed using only the dates before 2005, and testing was performed using only the dates in 2005. Finally, we compute the predictions for 2005 and compare them to the actual movements of the market over that time period.
+Notice that we have trained and tested our model on two completely separate data sets: 
+
+* training (estimation) was performed using only the dates before 2005
+* testing was performed using only the dates in 2005. 
+
+Finally, we compute the predictions for 2005 and compare them to the actual movements of the market over that time period.
 
 ```{r chunk11}
 glm.pred                 <- rep("Down", 252)
 glm.pred[glm.probs > .5] <- "Up"
+## Test data confusion matrix 
 table(glm.pred, Direction_2005)
-
 ## Rate of correct predictions in the test data
 mean(glm.pred == Direction_2005)
 ## Rate of prediction errors in the test data 
@@ -1037,19 +1054,24 @@ mean(glm.pred != Direction_2005)
 
 The `!=` notation means *not equal to*, and  so the last command computes the  test set error rate. The results are rather disappointing: the test error rate is $52\%$, which is worse than random guessing! Of course this result is not all that surprising, given that one would not generally expect to be able to  use previous days' returns to predict future market performance. (After all, if it were possible to do so, then the authors of this book would be out striking it rich rather than writing a statistics textbook.)
 
-We recall that the logistic regression model had very underwhelming $p$-values associated with all of the predictors, and that the smallest $p$-value, though not very small, corresponded to `Lag1`. Perhaps by removing the variables that appear not  to be helpful in predicting `Direction`, we can obtain a more effective model. After all, using predictors that have no relationship with the response tends to cause a deterioration in the test error rate (since such predictors cause an increase in variance without a corresponding decrease in bias), and so removing such predictors may in turn yield an improvement. Below we have refit the logistic regression using just `Lag1` and `Lag2`, which seemed to have the highest predictive power in the original logistic regression model.
+We recall that the logistic regression model had very underwhelming $p$-values associated with all of the predictors, and that the smallest $p$-value, though not very small, corresponded to `Lag1`. Perhaps by removing the variables that appear not to be helpful in predicting `Direction`, we can obtain a more effective model. After all, using predictors that have no relationship with the response tends to cause a deterioration in the test error rate (since such predictors cause an increase in variance without a corresponding decrease in bias), and so removing such predictors may in turn yield an improvement. Below we have refit the logistic regression using just `Lag1` and `Lag2`, which seemed to have the highest predictive power in the original logistic regression model.
 
 ```{r chunk12}
-glm.fits  <- glm(Direction ~ Lag1 + Lag2, data = Smarket, family = binomial, subset = train)
+## Train model using the training data
+glm.fits  <- glm(Direction ~ Lag1 + Lag2, 
+                 family = binomial, 
+                 data   = Smarket, 
+                 subset = train)
+## Predict the test data                  
 glm.probs <- predict(glm.fits, Smarket_2005, type = "response")
 ##
 glm.pred                 <- rep("Down", 252)
 glm.pred[glm.probs > .5] <- "Up"
-##
+## Test data confusion matrix
 table(glm.pred, Direction_2005)
-## Rate of correct prediction (in the test data)
+## Test data rate of correct predictions
 mean(glm.pred == Direction_2005)
-## Positive predictive value TP/P* (in the test data)
+## Test data positive predictive value TP/P*
 106 / (106 + 76)
 ```
 
@@ -1058,15 +1080,13 @@ Now the results appear to be a little better: $56\%$ of the daily movements have
 This suggests a possible trading strategy of buying on days when the model predicts an increasing market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
 
 
-Suppose that we want to predict the returns associated with particular values of `Lag1` and `Lag2`. In particular, we want to predict `Direction` on a day when `Lag1` and `Lag2` equal $1.2$ and $1.1$, respectively, and  on a day when they equal $1.5$ and $-0.8.$
-We do this using the `predict()` function.
+Suppose that we want to predict the returns associated with particular values of `Lag1` and `Lag2`. In particular, we want to predict `Direction` on a day when `Lag1` and `Lag2` equal $1.2$ and $1.1$, respectively, and  on a day when they equal $1.5$ and $-0.8.$ We do this using the `predict()` function.
 
 ```{r chunk13}
 predict(glm.fits,
-    newdata =
-      data.frame(Lag1 = c(1.2, 1.5),  Lag2 = c(1.1, -0.8)),
-    type = "response"
-  )
+        newdata = data.frame(Lag1 = c(1.2,  1.5),  
+                         Lag2 = c(1.1, -0.8)),
+        type    = "response")
 ```
 
 
@@ -1077,17 +1097,16 @@ Now we will perform LDA on the `Smarket` data. In `R`, we fit an LDA model using
 
 ```{r chunk14}
 library(MASS)
-lda.fit <- lda(Direction ~ Lag1 + Lag2, data = Smarket,
-    subset = train)
+lda.fit <- lda(Direction ~ Lag1 + Lag2, 
+               data   = Smarket,
+               subset = train)
 lda.fit
 plot(lda.fit)
 ```
 
-The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2$\,\% of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The *coefficients of linear discriminants* output provides the linear combination of `Lag1` and `Lag2` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in (4.24). If $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
+The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2\%$ of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The *coefficients of linear discriminants* output provides the linear combination of `Lag1` and `Lag2` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in (4.24). If $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
 
 The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` for each of the training observations. The `Up` and `Down` observations are displayed separately.
-
-
 
 
 The `predict()` function returns a list with three elements. The first element,  `class`,  contains LDA's predictions about the movement of the market. The second element, `posterior`, is a matrix whose $k$th column contains the posterior probability that the corresponding observation belongs to the $k$th class, computed from (4.15). Finally, `x` contains the linear discriminants, described earlier.
@@ -1105,7 +1124,7 @@ table(lda.class, Direction_2005)
 mean(lda.class == Direction_2005)
 ```
 
-Applying a $50$\,\% threshold to the posterior probabilities allows us to recreate the predictions contained in `lda.pred$class`.
+Applying a $50\%$ threshold to the posterior probabilities allows us to recreate the predictions contained in `lda.pred$class`.
 
 ```{r chunk17}
 sum(lda.pred$posterior[, 1] >= .5)
@@ -1119,14 +1138,14 @@ lda.pred$posterior[1:20, 1]
 lda.class[1:20]
 ```
 
-If we wanted to use a posterior probability threshold other than $50$\,\% in order to make predictions, then we could easily do so. For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability
-is at least $90$\,\%.
+If we wanted to use a posterior probability threshold other than $50\%$ in order to make predictions, then we could easily do so. For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability
+is at least $90\%.$
 
 ```{r chunk19}
 sum(lda.pred$posterior[, 1] > .9)
 ```
 
-No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was $52.02$\,\%.
+No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was $52.02\%.$
 
 ### Quadratic Discriminant Analysis
 
@@ -1146,53 +1165,53 @@ table(qda.class, Direction_2005)
 mean(qda.class == Direction_2005)
 ```
 
-Interestingly, the QDA predictions are accurate almost $60$\,\% of the time, even though the 2005 data was not used  to fit the model. This level of accuracy is quite impressive for stock market data, which is known to be quite hard to model accurately.
+Interestingly, the QDA predictions are accurate almost $60\%$ of the time, even though the 2005 data was not used  to fit the model. This level of accuracy is quite impressive for stock market data, which is known to be quite hard to model accurately.
 This  suggests that the quadratic form assumed by QDA may capture the true relationship more accurately than the linear forms assumed by LDA and logistic regression.
  However, we recommend evaluating this method's performance on a larger test set  before betting  that this approach will consistently beat the market!
 
 ### Naive Bayes
 
-Next, we fit a naive Bayes model to the `Smarket` data. Naive Bayes is implemented in `R` using the `naiveBayes()` function, which is part of the `e1071` library. The syntax is identical to that of `lda()` and `qda()`.
-By default, this implementation of the naive Bayes classifier models each quantitative feature using a Gaussian distribution. However, a kernel density method can also be used to estimate the distributions.
+Next, we fit a naive Bayes model to the `Smarket` data. Naive Bayes is implemented in `R` using the `naiveBayes()` function, which is part of the `e1071` library. The syntax is identical to that of `lda()` and `qda()`. By default, this implementation of the naive Bayes classifier models each quantitative feature using a univariate Gaussian distribution. However, a kernel density method can also be used to estimate the distributions.
 
 ```{r chunk22}
-library(e1071)
-nb.fit <- naiveBayes(Direction ~ Lag1 + Lag2, data = Smarket,
-    subset = train)
-nb.fit
+## install.packages("e1071") 
+library("e1071")
+nb_fit <- naiveBayes(Direction ~ Lag1 + Lag2, 
+                     data   = Smarket,
+                     subset = train)
+nb_fit
 ```
 
-The output  contains the estimated mean and standard deviation for each variable in each class. For example, the mean for `Lag1` is $0.0428$ for 
-
-  `Direction=Down`, and the standard deviation is $1.23$. We can easily verify this:
+The output contains the estimated mean and standard deviation for each variable in each class. For example, the mean for `Lag1` is $0.0428$ for `Direction=Down`, and the standard deviation is $1.23$. We can easily verify this:
 
 ```{r chunk23}
 mean(Lag1[train][Direction[train] == "Down"])
 sd(Lag1[train][Direction[train] == "Down"])
 ```
 
-The `predict()` function is straightforward.
+The `predict()` function is straightforward to use:
 
 ```{r chunk24}
-nb.class <- predict(nb.fit, Smarket_2005)
+nb.class <- predict(nb_fit, Smarket_2005)
+## Test data confusion matrix
 table(nb.class, Direction_2005)
+## Test data overall rate of correct classifications
 mean(nb.class == Direction_2005)
 ```
 
 Naive Bayes performs very well on this data, with accurate predictions over $59\%$ of the time. This is slightly worse than QDA, but much better than LDA.
 
-The `predict()` function can also generate estimates of the probability that each observation belongs to a particular class. %
+The `predict()` function can also generate estimates of the probability that each observation belongs to a particular class. 
 
 ```{r chunk25}
-nb.preds <- predict(nb.fit, Smarket_2005, type = "raw")
+nb.preds <- predict(nb_fit, Smarket_2005, type = "raw")
 nb.preds[1:5, ]
 ```
 
 
 ### $K$-Nearest Neighbors
 
-We will now perform KNN using the `knn()` function, which is part of the `class` library. This function works rather differently from the other model-fitting functions that we have encountered thus far.
-Rather than a two-step approach  in which we first fit the model and then we use the model to make predictions, `knn()` forms predictions using a single command. The function requires four inputs.
+We will now perform KNN using the `knn()` function, which is part of the `class` library. This function works rather differently from the other model-fitting functions that we have encountered thus far. Rather than a two-step approach  in which we first fit the model and then we use the model to make predictions, `knn()` forms predictions using a single command. The function requires four inputs.
 
 * A matrix containing the predictors associated with the training data, labeled `train.X` below.
 * A matrix containing the predictors associated with the data for which we wish to make predictions, labeled `test.X` below.
@@ -1202,9 +1221,10 @@ Rather than a two-step approach  in which we first fit the model and then we use
 We use the `cbind()` function, short for *column bind*, to bind the `Lag1` and `Lag2` variables together into two matrices, one for the training set and the other for the test set.
 
 ```{r chunk26}
-library(class)
-train.X <- cbind(Lag1, Lag2)[train, ]
-test.X <- cbind(Lag1, Lag2)[!train, ]
+## install.packages("class")
+library("class")
+train.X         <- cbind(Lag1, Lag2)[train, ]
+test.X          <- cbind(Lag1, Lag2)[!train, ]
 train.Direction <- Direction[train]
 ```
 
@@ -1213,104 +1233,109 @@ Now the `knn()` function can be used to predict the market's movement for the da
 ```{r chunk27}
 set.seed(1)
 knn.pred <- knn(train.X, test.X, train.Direction, k = 1)
+## Test data confusion matrix
 table(knn.pred, Direction_2005)
-(83 + 43) / 252
+## Test data overall rate of correct classifications
+mean(knn.pred == Direction_2005)
 ```
 
-The results using $K=1$ are not very good,  since only $50$\,\% of the observations are correctly predicted. Of course, it may be that $K=1$ results in  an overly flexible fit to the data. Below, we repeat the analysis using $K=3$.
+The results using $K=1$ are not very good,  since only $50\%$ of the observations are correctly predicted. Of course, it may be that $K=1$ results in  an overly flexible fit to the data. Below, we repeat the analysis using $K=3$.
 
 ```{r chunk28}
 knn.pred <- knn(train.X, test.X, train.Direction, k = 3)
+## Test data confusion matrix
 table(knn.pred, Direction_2005)
+## Test data overall rate of correct classifications
 mean(knn.pred == Direction_2005)
 ```
 
 The results have improved slightly. But increasing $K$ further turns out to provide no further improvements. It appears that for this data, QDA provides the best results of the methods that we have examined so far.
 
-
-
-
-KNN does not perform well on the `Smarket` data but it does often provide impressive results. As an example we will apply the KNN approach to the `Insurance` data set, which is part of the `ISLR2` library. This data set includes $85$ predictors that measure
- demographic characteristics for 5,822 individuals. The response variable is `Purchase`, which indicates whether or not a given individual purchases a caravan insurance policy. In this data set, only $6$\,\% of people purchased caravan  insurance.
+KNN does not perform well on the `Smarket` data, but generally, KNN does often provide impressive results. As an example we will apply the KNN approach to the `Insurance` data set, which is part of the `ISLR2` library. This data set includes $85$ predictors that measure demographic characteristics for $5822$ individuals. The response variable is `Purchase`, which indicates whether or not a given individual purchases a caravan insurance policy. In this data set, only $6\%$ of people purchased caravan  insurance.
 
 
 ```{r chunk29}
-dim(Caravan)
-attach(Caravan)
+dim(Caravan)     # sample size and number of variables in the Caravan dataset 
+attach(Caravan)  # makes the variables in Caravan (e.g. Purchase) directly usable
 summary(Purchase)
+## Empirical prior probability of 'Purchase = Yes' 
 348 / 5822
 ```
 
-Because the KNN classifier predicts the class of a given test observation by identifying the observations that are nearest to it, the scale of the variables matters. Variables that are on a large scale will have a much larger effect
- on the *distance* between the observations, and hence
-on the KNN classifier, than variables that are on a small scale. For instance, imagine a data set that contains two variables, `salary` and `age` (measured in dollars and years, respectively). As far as KNN is concerned, a difference of $1,000 in salary is enormous compared to a difference of $50$ years in age. Consequently, `salary` will drive the KNN classification results, and `age` will have almost no effect. This is contrary to our intuition  that a salary difference of $$1{,}000$ is quite small compared to an age difference of $50$ years.
-Furthermore, the importance of scale to the KNN classifier leads to another issue: if we measured `salary` in Japanese yen, or if we measured `age` in minutes, then we'd get quite different classification results from what we get
- if these two variables are measured in dollars and years.
+Because the KNN classifier predicts the class of a given test observation by identifying the observations that are nearest to it, the scale of the variables matters. Variables that are on a large scale will have a much larger effect on the *distance* between the observations, and hence on the KNN classifier, than variables that are on a small scale. For instance, imagine a data set that contains two variables, `salary` and `age` (measured in dollars and years, respectively). As far as KNN is concerned, a difference of $1000$ in salary is enormous compared to a difference of $50$ years in age. Consequently, `salary` will drive the KNN classification results, and `age` will have almost no effect. This is contrary to our intuition  that a salary difference of $1000$ is quite small compared to an age difference of $50$ years. Furthermore, the importance of scale to the KNN classifier leads to another issue: if we measured `salary` in Japanese yen, or if we measured `age` in minutes, then we'd get quite different classification results from what we get if these two variables are measured in dollars and years.
 
 
-A good way to handle this problem is to  the data so that all variables are given a mean of  zero and  a standard deviation of one. Then all variables will be on a comparable scale. The `scale()` function does just this.
- In standardizing the data, we exclude column $86$, because that is the qualitative `Purchase` variable.
+A good way to handle this problem is to  the data so that all variables are given a mean of  zero and  a standard deviation of one. Then all variables will be on a comparable scale. The `scale()` function does just this. In standardizing the data, we exclude column $86$, because that is the qualitative `Purchase` variable.
 
 ```{r chunk30}
 standardized.X <- scale(Caravan[, -86])
 var(Caravan[, 1])
 var(Caravan[, 2])
-var(standardized.X[, 1])
+var(standardized.X[, 1]) 
 var(standardized.X[, 2])
 ```
 
 Now every column of `standardized.X` has a standard deviation of one and a mean of zero.
 
-We now split the observations into a test set, containing the first 1,000 observations, and a training set, containing the remaining observations.
-We fit  a KNN model on the training data using $K=1$, and evaluate its performance on the test data.%
+We now split the observations into a test set, containing the first $1000$ observations, and a training set, containing the remaining observations.
+We fit a KNN model on the training data using $K=1$, and evaluate its performance on the test data. 
 
 ```{r chunk31}
-test <- 1:1000
-train.X <- standardized.X[-test, ]
-test.X <- standardized.X[test, ]
-train.Y <- Purchase[-test]
-test.Y <- Purchase[test]
+test     <- 1:1000
+## Training data 
+train.X  <- standardized.X[-test, ]
+train.Y  <- Purchase[-test]
+## Testing data 
+test.X   <- standardized.X[test, ]
+test.Y   <- Purchase[test]
+## KNN 
 set.seed(1)
 knn.pred <- knn(train.X, test.X, train.Y, k = 1)
+## Test data overall classification error 
 mean(test.Y != knn.pred)
+## Test data overall classification error 
+## of the no information classifier ("always No")
 mean(test.Y != "No")
 ```
 
-The vector `test` is numeric, with values
-from  $1$ through $1,000$. Typing `standardized.X[test, ]` yields the submatrix of the data containing the observations whose indices range from $1$ to $1,000$, whereas typing 
+The vector `test` is numeric, with values from  $1$ through $1000$. Typing `standardized.X[test, ]` yields the submatrix of the data containing the observations whose indices range from $1$ to $1000$, whereas typing `standardized.X[-test, ]` yields the submatrix containing the observations whose indices do *not* range from $1$ to $1,000$.
 
-`standardized.X[-test, ]` yields the submatrix containing the observations whose indices do
-*not* range from $1$ to $1,000$.
-The KNN error rate on the 1,000 test observations is just under $12$\,\%. At first glance, this may appear to be fairly good. However, since only $6$\,\% of customers purchased insurance, we could get the error rate down to $6$\,\% by always predicting `No` regardless of
-the values of the predictors!
+The KNN overall test error rate on the $1000$ test observations is just under $12\%.$ At first glance, this may appear to be fairly good. However, since only $6\%$ of customers purchased insurance, we could get the error rate down to $6\%$ by always predicting `No` regardless of the values of the predictors!
 
-Suppose that there is some non-trivial cost to trying to sell insurance to a given individual. For instance, perhaps a salesperson must  visit each potential customer.
-If the company tries to sell insurance to a random selection of customers, then the success rate will be only $6$\,\%, which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the  overall error rate is not of interest. Instead,  the fraction of individuals that are correctly predicted to buy insurance is of interest.
+Suppose that there is some non-trivial cost to trying to sell insurance to a given individual. For instance, perhaps a salesperson must  visit each potential customer. 
 
- It turns out that KNN with $K=1$ does far better than random guessing among the customers that are predicted to buy insurance. Among  $77$ such customers, $9$, or $11.7$\,\%, actually do purchase insurance.
- This is  double the rate that one would obtain from random guessing.
+If the company tries to sell insurance to a random selection of customers, then the success rate will be only $6\%$ (the empirical prior probability of `Purchase = Yes`), which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the overall error rate is not of interest. Instead, the fraction of individuals that are correctly predicted to buy insurance is of interest.
+
+It turns out that KNN with $K=1$ does far better than random guessing among the customers that are predicted to buy insurance. Among the P*$=77$ `Purchase=Yes` predictions, $9$ (TP), or $11.7\%$ (TP/P*), actually do purchase the insurance. This is double the rate that one would obtain from random guessing.
 
 ```{r chunk32}
+## Test data confusion matrix (KNN, K=1)
 table(knn.pred, test.Y)
+## Test data positive predictive value TP/P*
 9 / (68 + 9)
 ```
 
-Using $K=3$, the success rate increases to $19$\,\%, and with $K=5$ the rate is $26.7$\,\%. This is  over four times the rate that results from random guessing. It appears that KNN is finding some real patterns in a difficult data set!
+Using $K=3$, the success rate increases to $19\%,$ and with $K=5$ the rate is $26.7\%.$ This is  over four times the rate that results from random guessing. It appears that KNN is finding some real patterns in a difficult data set!
 
 ```{r chunk33}
+## K = 3
 knn.pred <- knn(train.X, test.X, train.Y, k = 3)
+## Test data confusion matrix (KNN, K=3)
 table(knn.pred, test.Y)
+## Test data positive predictive value TP/P*
 5 / 26
+## K = 3
 knn.pred <- knn(train.X, test.X, train.Y, k = 5)
+## Test data confusion matrix (KNN, K=5)
 table(knn.pred, test.Y)
+## Test data positive predictive value TP/P*
 4 / 15
 ```
 
 However, while this strategy is cost-effective, it is worth noting that only 15 customers are predicted to purchase insurance using KNN with $K=5$. In practice, the insurance company may wish to expend resources on convincing more than just 15 potential customers to buy insurance.
 
-As a comparison, we can also fit a logistic regression model to the data. If we use $0.5$ as the predicted probability cut-off for the classifier, then we have a problem: only seven of the test observations are predicted to purchase insurance. Even worse, we are wrong about all of these!
- However, we are not required to use a cut-off of  $0.5$. If we instead predict a purchase any time the predicted probability of purchase exceeds  $0.25$, we get much better results: we predict that 33 people will purchase insurance, and
- we are correct for about $33$\,\% of these people. This is  over five times better than random guessing!
+As a comparison, we can also fit a logistic regression model to the data. If we use $0.5$ as the predicted probability cut-off for the classifier, then we have a problem: only seven of the test observations are predicted to purchase insurance. Even worse, we are wrong about all of these! However, we are not required to use a cut-off of  $0.5$. If we instead predict a purchase any time the predicted probability of purchase exceeds  $0.25$, we get much better results: we predict that 33 people will purchase insurance, and
+ we are correct for about $33\%$ of these people. This is  over five times better than random guessing!
 
 ```{r chunk34}
 glm.fits <- glm(Purchase ~ ., data = Caravan,
@@ -1328,7 +1353,7 @@ table(glm.pred, test.Y)
 
 
 
-### Poisson Regression
+<!-- ### Poisson Regression
 
 Finally, we fit a  Poisson regression model to the `Bikeshare` data set, which measures the number of bike rentals (`bikers`) per hour in Washington, DC. The data can be found in the `ISLR2` library.
 
@@ -1440,7 +1465,7 @@ abline(0, 1, col = 2, lwd = 3)
 
 The predictions from the Poisson regression model are correlated with those from the linear model; however, the former are non-negative. As a result the Poisson regression predictions tend to be larger than those from the linear model for either very low or very high levels of ridership.
 
-In this section, we used the `glm()` function with the argument `family = poisson` in order to perform Poisson regression. Earlier in this lab we used the `glm()` function with `family = binomial` to perform logistic regression. Other choices for the `family` argument can be used to fit other types of GLMs. For instance, `family = Gamma` fits a gamma regression model.
+In this section, we used the `glm()` function with the argument `family = poisson` in order to perform Poisson regression. Earlier in this lab we used the `glm()` function with `family = binomial` to perform logistic regression. Other choices for the `family` argument can be used to fit other types of GLMs. For instance, `family = Gamma` fits a gamma regression model. -->
 
 
 ## Exercises
