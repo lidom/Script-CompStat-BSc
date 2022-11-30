@@ -422,31 +422,96 @@ $$
 Computing $\operatorname{SE}(\hat\alpha)$ is here really difficult due to the definition of $\hat\alpha$ in @eq-alphahat which contains variance estimates also in the denominator. 
 
 
-**The Infeasible Bootstrap**
+**The Infeasible Bootstrap: A Monte Carlo Simulation**
 
 Let us, for a moment, assume that we know the distributions of $X$ and $Y.$ For simplicity, let's say 
 $$
-\left(\begin{matrix}X\\ Y\end{matrix}\right)\sim 
-\mathcal{N}\left(\left(\begin{matrix}0\\0\end{matrix}\right),\left[\begin{matrix}\sigma_X^2&\sigma_{XY}\\\sigma_{XY}&\sigma_{Y}^2\end{matrix}\right]\right)
+\left(\begin{matrix}X\\ Y\end{matrix}\right) \sim F_{(X,Y)}, 
 $$
-If this were true, we could simply generate a new dataset containing new observations for $X$ and $Y$ that allow us to compute a new estimate $\hat\alpha.$ 
+where $F_{(X,Y)}$ is the distribution function of the bi-variate normal distribution
+$$
+\mathcal{N}\left(\left(\begin{matrix}0\\0\end{matrix}\right),\left[\begin{matrix}\sigma_X^2&\sigma_{XY}\\\sigma_{XY}&\sigma_{Y}^2\end{matrix}\right]\right).
+$$
+If this were true, i.e., if we would know the true population distribution of $X$ and $Y,$ we could simply generate a new dataset containing new observations for $X$ and $Y$ that allows us to compute a new estimate $\hat\alpha.$ 
 
-Repeating this, for instance, $B=1000$ many times would give as $B=1000$ estimates  
+Repeatedly generating new datasets by sampling new observations from the true population distribution, for instance, $B=1000$ many times, would give as $B=1000$ estimates  
 $$
 \hat\alpha_1,\;\hat\alpha_2,\dots,\hat\alpha_{B}.
 $$
-Their sample standard deviation 
+The empirical standard deviation 
 $$
 \sqrt{\frac{1}{B}\sum_{b=1}^B\left(\hat\alpha_b - \bar{\alpha}\right)^2},\quad\text{with}\quad \bar{\alpha} = \frac{1}{B}\sum_{b=1}^B\hat\alpha_b,
 $$
 is then a very good estimate of the (unknown) true $\operatorname{SE}(\hat\alpha).$
 
-Indeed, by the law of large numbers this sample standard deviation consistently estimates the true $\operatorname{SE}(\hat\alpha)$ as $B\to\infty.$ 
+Indeed, by the law of large numbers this sample standard deviation consistently estimates the true $\operatorname{SE}(\hat\alpha)$ as $B\to\infty,$ provided that we sample from the **true** population distribution $F_{(X,Y)}.$ 
 
 Some codes for doing this:
 
+```{r}
+suppressPackageStartupMessages(library("MASS")) # for mvrnorm()
 
-But, unfortunately, this depends on our unrealistic assumption that we know the population distribution of $(X,Y),$ which makes this approach infeasible in practice. 😭
+n        <- 100 # sample size
+
+## The (usually unknown) population distribution of (X,Y) ~ F_XY
+
+## F_XY: Bi-variate normal distribution with the following parameters: 
+mu_X     <- 0
+mu_Y     <- 0
+
+sigma2_X <- 3
+sigma2_Y <- 4
+sigma_XY <- 1
+
+Sigma    <- rbind(c(sigma2_X, sigma_XY), 
+                  c(sigma_XY, sigma2_Y))
+
+## The true (usually unknown) alpha value: 
+alpha    <- (sigma2_Y - sigma_XY) / (sigma2_X + sigma2_X - 2 * sigma_XY)                  
+
+
+## Infeasible Bootstrap (i.e. a Monte Carlo Simulation)
+
+B         <- 1000
+alpha_hat <- numeric(B)
+
+for(b in 1:B){
+  dat          <- mvrnorm(n = n, mu = c(mu_X, mu_Y), Sigma = Sigma)
+  X            <- dat[,1]
+  Y            <- dat[,2]
+  sigma2_X_hat <- var(X)
+  sigma2_Y_hat <- var(Y)
+  sigma_XY_hat <- cov(X,Y)
+  alpha_hat[b] <- (sigma2_Y_hat - sigma_XY_hat) / (sigma2_X_hat + sigma2_X_hat - 2 * sigma_XY_hat)
+}
+
+## Estimate of the standard error of the estimates for alpha:
+sd(alpha_hat)
+```
+
+
+Thus, this infeasible Boostrap (Monte Carlo simulation) estimates that the true standard error equals `r sd(alpha_hat)`, i.e. 
+<center>
+$\operatorname{SE}(\hat\alpha) \approx$ `sd(alpha_hat)` $=$ `r sd(alpha_hat)`. 
+</center>
+
+But, unfortunately, this result depends on our completely unrealistic assumption that we would know the true population distribution $F_{(X,Y)}$ of $(X,Y),$ which makes this simple resampling approach infeasible in practice. 😭
+
+
+**The (Feasible) Bootstrap**
+
+Fortunately, we can use the **empirical cumulative distribution function** $F_{n,(X,Y)}$ from the originally observed dataset of past measurements for $X$ and $Y,$ as an approximation to the true (unknown) population distribution $F_{(X,Y)}$, 
+$$
+F_{n,(X,Y)}\approx F_{(X,Y)}.
+$$
+
+So, instead of resampling from an unknown population distribution $F_{(X,Y)},$ which is not possible in practice, we resample from the empirical distribution $F_{n,(X,Y)},$ which easily possible in practice. 🥳
+
+This idea will work well, as long as $F_{n,(X,Y)}$ serves as a good approximation of $F_{(X,Y)}$ which will always be the case if the sample size $n$ is sufficiently large since, by the famous [Glivenko-Cantelli Theorem](https://en.wikipedia.org/wiki/Glivenko%E2%80%93Cantelli_theorem), $F_{n,(X,Y)}$ is uniformly consistent for $F_{(X,Y)}.$
+
+
+
+> The bootstrap method is attributed to Bradley Efron, who received the *[International Prize in Statistics](https://statprize.org/pdfs/2019-Efron-Announcement.pdf)* (the Nobel price of statistics) for his seminal works on the bootstrap method. 
 
 
 ## `R`-Lab: Resampling Methods
