@@ -28,7 +28,13 @@ $$
 
 ### Exercise 6 {-}
 
-Suppose we collect data for a group of students in a statistics class with variables $X_1=$`hours studied`, $X_2 =$ `undergrad GPA` (GPA: Grade Point Average), and $Y =$ `receive an A`. We fit a logistic regression and produce estimated coefficients:
+Suppose we collect data for a group of students in a statistics class with variables 
+
+* $X_1=$`hours studied`,
+* $X_2 =$ `undergrad GPA` (GPA: Grade Point Average), and 
+* $Y =$ `receive an A`. 
+
+We fit a logistic regression and produce estimated coefficients:
 
 $$\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.$$
 
