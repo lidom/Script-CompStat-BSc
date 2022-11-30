@@ -507,7 +507,7 @@ Figure 4.5 shows the case of bivariate ($p=2$) Gaussian distribution  predictors
 Under the multivariate normality assumption (with common covariance matrix and group-specific mean vectors) the Bayes classifier assigns an multivariate observation $X=x$ to the class for which the discriminant function 
 $$
 \delta_k(x)=x^T \Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \log(\pi_k)
-$$
+$${#eq-LDA_mult}
 is largest.
 
 
@@ -940,7 +940,7 @@ summary(glm.fits)
 
 The smallest $p$-value here is associated with `Lag1`. The negative coefficient for this predictor suggests that if the market had a positive return yesterday, then it is less likely to go up today. However, at a value of $0.145$, the $p$-value is still relatively large, and so there is no clear evidence of a real association between `Lag1` and `Direction`. 
 
- We use the `coef()` function in order to access just the coefficients for this fitted model. We can also use the `summary()` function to access  particular aspects of the fitted model, such as the $p$-values for the coefficients.
+We use the `coef()` function in order to access just the coefficients for this fitted model. We can also use the `summary()` function to access  particular aspects of the fitted model, such as the $p$-values for the coefficients.
 
 ```{r chunk5}
 coef(glm.fits)
@@ -1104,10 +1104,9 @@ lda.fit
 plot(lda.fit)
 ```
 
-The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2\%$ of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2~days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The *coefficients of linear discriminants* output provides the linear combination of `Lag1` and `Lag2` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in (4.24). If $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
+The LDA output indicates that $\hat\pi_1=0.492$ and $\hat\pi_2=0.508$; in other words, $49.2\%$ of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2 days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The "coefficients of linear discriminants" output provides the linear combination of `Lag1` and `Lag2` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in @eq-LDA_mult. If $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
 
 The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` for each of the training observations. The `Up` and `Down` observations are displayed separately.
-
 
 The `predict()` function returns a list with three elements. The first element,  `class`,  contains LDA's predictions about the movement of the market. The second element, `posterior`, is a matrix whose $k$th column contains the posterior probability that the corresponding observation belongs to the $k$th class, computed from (4.15). Finally, `x` contains the linear discriminants, described earlier.
 
@@ -1116,7 +1115,7 @@ lda.pred <- predict(lda.fit, Smarket_2005)
 names(lda.pred)
 ```
 
-As we observed in Section 4.5, the LDA and logistic regression predictions are almost identical.
+The LDA and logistic regression predictions are almost identical. This observation holds true also general since LDA and logistic regression are effectively very similar classifiers; see Section 4.5 in our textbook `ISLR2`.
 
 ```{r chunk16}
 lda.class <- lda.pred$class
@@ -1138,8 +1137,7 @@ lda.pred$posterior[1:20, 1]
 lda.class[1:20]
 ```
 
-If we wanted to use a posterior probability threshold other than $50\%$ in order to make predictions, then we could easily do so. For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability
-is at least $90\%.$
+If we wanted to use a posterior probability threshold other than $50\%$ in order to make predictions, then we could easily do so. For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability for a decrease is at least $90\%.$
 
 ```{r chunk19}
 sum(lda.pred$posterior[, 1] > .9)
