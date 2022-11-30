@@ -457,7 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 LOOCV has the potential to be expensive to implement, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code represents a naive implementation of LOOCV for least squares fits of linear/polynomial regression models and takes<br>
 
 <center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.554 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.462 seconds
 </center>
 <p>for the computations.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -654,7 +654,7 @@ Thus, this infeasible Boostrap (Monte Carlo simulation) estimates that the true 
 <span class="math inline">\(\operatorname{SE}(\hat\alpha) \approx\)</span> <code>sd(alpha_hat)</code> <span class="math inline">\(=\)</span> 0.2383288.
 </center>
 <p>But, unfortunately, this result depends on our completely unrealistic assumption that we would know the true population distribution <span class="math inline">\(F_{(X,Y)}\)</span> of <span class="math inline">\((X,Y),\)</span> which makes this simple resampling approach infeasible in practice. 😭</p>
-<p><strong>The Feasible Bootstrap</strong></p>
+<p><strong>The (Feasible) Bootstrap</strong></p>
 <p>Fortunately, we can use the <strong>empirical cumulative distribution function</strong> <span class="math inline">\(F_{n,(X,Y)}\)</span> from the originally observed dataset of past measurements for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y,\)</span> as an approximation to the true (unknown) population distribution <span class="math inline">\(F_{(X,Y)}\)</span>, <span class="math display">\[
 F_{n,(X,Y)}\approx F_{(X,Y)}.
 \]</span></p>

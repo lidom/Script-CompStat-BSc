@@ -50,6 +50,11 @@ $$
 p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
 $$
 
+Calculations in `R`:
+```{r}
+( exp(-0.5) )/( 1 + exp(-0.5) )
+```
+
 
 **6 b)** How many hours would the student in part (a) need to study to have a $50\%$ chance of getting an `A` in the class?
 
@@ -68,13 +73,13 @@ $$
 \end{align*}
 $$
 
+Thus, on average, a student with an `undergrad GPA` of $3.5$ needs to study $50$ hours to have a $50\%$ chance of getting an `A`.
 
 ### Exercise 13 {-}
 
-This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the Smarket data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
+This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the `Smarket` data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
 
 **13 a)** Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
-
 
 **Answer:**
 
@@ -89,7 +94,8 @@ This question should be answered using the `Weekly` data set, which is part of t
 # Load the packages you need
 library("ISLR2")
 
-# Eliminates the need of referring to a variable like Weekly$variable
+# Eliminates the need of referring to a variable 
+# like 'Weekly$Year', and thus allows direct use of 'Year'
 attach(Weekly) 
 
 # Use summary function to produce a numerical summary for each variable
@@ -107,7 +113,7 @@ round(cor(Weekly[,-9]), 2)
 pairs(Weekly)
 ```
 
-Yes, it appears that `Year` and `Volume` have a strong, positive, but non-linear relationship.
+Yes, it appears that `Year` and `Volume` have a strong positive, but non-linear relationship.
 
 **13 b)** Use the full data set to perform a logistic regression with `Direction` as the response and the five `Lag` variables plus `Volume` as predictors. Use the `summary()` function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
 
@@ -118,15 +124,15 @@ Yes, it appears that `Year` and `Volume` have a strong, positive, but non-linear
 # and link function to be used in the model, supplied as the result of a call to a family function - here use binomial.
 # Why binomial? Because our independent variable Direction takes two values.
 
-glm.fit <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
-              data=Weekly,
-              family=binomial)
+glm_fit <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
+              data   = Weekly,
+              family = binomial)
 
 # Use summary function to print the results
-summary(glm.fit)
+summary(glm_fit)
 ```
 
-**Conclusion:** The predictor `Lag2` appears to have some statistical significance with a $p$-value smaller than $3\%$.
+**Conclusion:** The predictor `Lag2` appears to have some statistical significance with a $p$-value smaller than $3\%$. (Ignoring issues due to multiple testing.)
 
 **13 c)** Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
 
@@ -134,28 +140,44 @@ summary(glm.fit)
 
 ```{r}
 # Use predict function on results of previous regression in 10 b)
-glm.probs <-  predict(glm.fit, type="response")
+glm_probs <-  predict(glm_fit, type="response")
 
 # Create a vector containing the string "Down" 
-glm.pred <- rep("Down", times = length(glm.probs))
+glm_pred <- rep("Down", times = length(glm_probs))
 
 # Substitute "Down" for "Up", whenever the estimated probability is above 0.5
-glm.pred[glm.probs > 0.5] <- "Up"
+glm_pred[glm_probs > 0.5] <- "Up"
 
 # Construct a summary table with the predictions against 
 # the actual 'Direction'-values
-table(glm.pred, Direction)
+table(glm_pred, Direction)
+
+contrasts(Weekly$Direction)
 ```
 
+Counts of the classification errors are found at the off-diagonal entries of the confusion matrix 
 
-**Conclusions:**
+* Upper off-diagonal entry: Number of False Negatives 
+* Lower off-diagonal entry: Number of False Positives
 
-- Percentage of correct predictions: $(54+557)/(54+557+48+430) = 56.1\%$ 
+Counts of the correct classifications are found at the diagonal entries of the confusion matrix 
 
-- During weeks when the market goes `Up`, the logistic regression is right about $557/(557+48) = 92.1\%$ of the time.
+* Upper diagonal entry: Number of True Negatives
+* Lower diagonal entry: Number of True Positives
 
-- During weeks when the market goes `Down`, the logistic regression is right about $54/(430+54) = 11.2\%$ of the time.
 
+**Possible Conclusions:**
+
+- Percentage of correct predictions (TP+TN)/n: $(54+557)/(54+557+48+430) = 56.1\%$ 
+
+- Percentage of false predictions (FP+FN)/n: $(48+430)/(54+557+48+430) = 43.9\%$ 
+
+- During weeks when the market goes `Up`, the logistic regression is right about (True Pos. Rate TP/P) $557/(557+48) = 92.1\%$ of the time.
+
+- During weeks when the market goes `Down`, the logistic regression is right about (True Neg. Rate TN/N) $54/(430+54) = 11.2\%$ of the time.
+
+
+**Caution:** All these answers are with respect to the training errors - not the test errors. 
 
 **13 d)** Now fit the logistic regression model using a training data period from $1990$ to $2008$, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from $2009$ and $2010$).
 
@@ -167,27 +189,28 @@ train = (Year < 2009)
 
 # create data frame for the Weekly data from 2009 and 2010 
 # (usage of ! to define the "opposite")
-Weekly.0910 <- Weekly[!train,]
+Weekly_0910 <- Weekly[!train,]
 
 # run regression on the training data subset
-glm.fit <- glm(Direction ~ Lag2,
-              data   = Weekly,
-              family = binomial,
-              subset = train)
+glm_fit <- glm(Direction ~ Lag2,
+               data   = Weekly,
+               family = binomial,
+               subset = train)
 
 # create data frame
-glm.probs <- predict(glm.fit, Weekly.0910, type="response")
+glm_probs <- predict(glm_fit, Weekly_0910, type="response")
 
 # fill with our predictions
-glm.pred <- rep("Down", length(glm.probs))
-glm.pred[glm.probs > 0.5] <- "Up"
+glm_pred                  <- rep("Down", length(glm_probs))
+glm_pred[glm_probs > 0.5] <- "Up"
 
 # construct confusion table using only the test data
-Direction.0910 <- Direction[!train]
-table(glm.pred, Direction.0910)
+Direction_0910 <- Direction[!train]
+table(glm_pred, Direction_0910)
 
-# compute the test error rate
-mean(glm.pred != Direction.0910)
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(glm_pred == Direction_0910)
 ```
 
 **13 e)** Repeat (d) using LDA.
@@ -196,17 +219,18 @@ mean(glm.pred != Direction.0910)
 
 ```{r}
 #call the packages you need
-library("MASS")
+suppressPackageStartupMessages(library("MASS"))
 
 # same approach as before but now using LDA method
-lda.fit  <- lda(Direction ~ Lag2, data=Weekly, subset=train)
-lda.pred <- predict(lda.fit, Weekly.0910)
+lda_fit  <- lda(Direction ~ Lag2, data=Weekly, subset=train)
+lda_pred <- predict(lda_fit, Weekly_0910)
 
 # confusion table using only the test data
-table(lda.pred$class, Direction.0910)
+table(lda_pred$class, Direction_0910)
 
-# compute the test error rate
-mean(lda.pred$class != Direction.0910)
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(lda_pred$class == Direction_0910)
 ```
 
 **13 f)** Repeat (d) using QDA.
@@ -215,17 +239,18 @@ mean(lda.pred$class != Direction.0910)
 
 ```{r}
 # same approach as before but now using QDA method
-qda.fit   <- qda(Direction~Lag2, data=Weekly, subset=train)
-qda.class <- predict(qda.fit, Weekly.0910)$class
+qda_fit   <- qda(Direction~Lag2, data=Weekly, subset=train)
+qda_class <- predict(qda_fit, Weekly_0910)$class
 
 # confusion table using only the test data
-table(qda.class, Direction.0910)
+table(qda_class, Direction_0910)
 
-# compute the test error rate
-mean(qda.class != Direction.0910)
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(qda_class == Direction_0910)
 ```
 
-**13 g)** Repeat (d) using KNN with K = 1.
+**13 g)** Repeat (d) using KNN with $K = 1.$
 
 **Answer:** 
 
@@ -234,9 +259,9 @@ mean(qda.class != Direction.0910)
 library("class")
 
 # same approach as before but now using KNN method with K=1
-train.X         <- as.matrix(Lag2[train])
-test.X          <- as.matrix(Lag2[!train])
-train.Direction <- Direction[train]
+train_X         <- as.matrix(Lag2[train])
+test_X          <- as.matrix(Lag2[!train])
+train_Direction <- Direction[train]
 
 # Note: If several observations are tied as nearest neighbors, 
 # then R will randomly break the tie. 
@@ -244,13 +269,14 @@ train.Direction <- Direction[train]
 set.seed(1)
 
 # Caution: KNN prediction uses a different function
-knn.pred <- knn(train.X, test.X, train.Direction, k=1)
+knn_pred <- knn(train_X, test_X, train_Direction, k=1)
 
 # confusion table using only the test data
-table(knn.pred, Direction.0910)
+table(knn_pred, Direction_0910)
 
-# compute the test error rate
-mean(knn.pred != Direction.0910)
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(knn_pred == Direction_0910)
 ```
 
 
@@ -259,15 +285,18 @@ mean(knn.pred != Direction.0910)
 **Answer:** 
 
 ```{r}
-library(e1071)
-nb.fit  <- naiveBayes(Direction ~ Lag2, data=Weekly, subset=train)
-nb.pred <- predict(nb.fit, Weekly.0910)
+library("e1071")
+nb_fit  <- naiveBayes(Direction ~ Lag2, 
+                      data   = Weekly, 
+                      subset = train)
+nb_pred <- predict(nb_fit, Weekly_0910)
 
 # confusion table using only the test data
-table(nb.pred, Direction.0910)
+table(nb_pred, Direction_0910)
 
-# compute the test error rate
-mean(nb.pred != Direction.0910)
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(nb_pred == Direction_0910)
 ```
 
 
@@ -275,7 +304,7 @@ mean(nb.pred != Direction.0910)
 
 **Answer:** 
 
-Logistic regression and LDA have the smallest test error rates.
+Logistic regression and LDA have the largest rates of (overall) correct predictions on the held out test set.
 
 **13 j)** Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
 
@@ -283,48 +312,47 @@ Logistic regression and LDA have the smallest test error rates.
 
 ```{r}
 # Logistic regression with Lag2:Lag1
-glm.fit   <- glm(Direction~Lag2:Lag1, data=Weekly, family=binomial, subset=train)
-glm.probs <- predict(glm.fit, Weekly.0910, type="response")
-glm.pred  <- rep("Down", length(glm.probs))
-glm.pred[glm.probs>.5] <- "Up"
-Direction.0910 <- Direction[!train]
-table(glm.pred, Direction.0910)
-mean(glm.pred == Direction.0910)
+glm_fit   <- glm(Direction~Lag2:Lag1, data=Weekly, family=binomial, subset=train)
+glm_probs <- predict(glm_fit, Weekly_0910, type="response")
+glm_pred  <- rep("Down", length(glm_probs))
+glm_pred[glm_probs>.5] <- "Up"
+Direction_0910 <- Direction[!train]
+table(glm_pred, Direction_0910)
+mean(glm_pred == Direction_0910)
 ```
 
 ```{r}
 # LDA with Lag2 interaction with Lag1
-lda.fit  <- lda(Direction ~ Lag2:Lag1, data=Weekly, subset=train)
-lda.pred <- predict(lda.fit, Weekly.0910)
-mean(lda.pred$class == Direction.0910)
+lda_fit  <- lda(Direction ~ Lag2:Lag1, data=Weekly, subset=train)
+lda_pred <- predict(lda_fit, Weekly_0910)
+mean(lda_pred$class == Direction_0910)
 ```
 
 ```{r}
 # QDA with sqrt(abs(Lag2))
-qda.fit   <- qda(Direction~Lag2+sqrt(abs(Lag2)), data=Weekly, subset=train)
-qda.class <- predict(qda.fit, Weekly.0910)$class
-table(qda.class, Direction.0910)
-mean(qda.class == Direction.0910)
+qda_fit   <- qda(Direction~Lag2+sqrt(abs(Lag2)), data=Weekly, subset=train)
+qda_class <- predict(qda_fit, Weekly_0910)$class
+table(qda_class, Direction_0910)
+mean(qda_class == Direction_0910)
 ```
 
 ```{r}
 # KNN k =10, as before KNN uses a different command
 set.seed(1)
-knn.pred <- knn(train.X, test.X, train.Direction, k=10)
-table(knn.pred, Direction.0910)
-mean(knn.pred == Direction.0910)
+knn_pred <- knn(train_X, test_X, train_Direction, k=10)
+table(knn_pred, Direction_0910)
+mean(knn_pred == Direction_0910)
 ```
 
 ```{r}
 # KNN k = 100
 set.seed(1)
-knn.pred <- knn(train.X, test.X, train.Direction, k=100)
-table(knn.pred, Direction.0910)
-mean(knn.pred == Direction.0910)
+knn_pred <- knn(train_X, test_X, train_Direction, k=100)
+table(knn_pred, Direction_0910)
+mean(knn_pred == Direction_0910)
 ```
 
-**Conclusion:** Out of these experiement, the original LDA and logistic regression have better performance in terms of test error rate.
-
+**Conclusion:** Out of these experiments, the original LDA and logistic regression have better performances in terms of overall correct prediction rates on the held out test set.
 
 
 ### Exercise 15 {-}
@@ -350,7 +378,7 @@ Power()
 Power2 <- function(x, a) {
   x^a
 }
-Power2(3,8)
+Power2(3, 8)
 ```
 
 **15 c)** Using the `Power2()` function that you just wrote, compute $10^3$, $8^{17}$, and $131^3$.
@@ -380,13 +408,19 @@ Power3 <- function(x, a) {
 
 ```{r}
 x <- 1:10
-par(mfrow=c(1,3))# graph parameters
-plot(x, Power3(x, 2),  log="x", ylab=expression(x^2), xlab=expression(x),
-     main="log-transformed\nx-axis")
-plot(x, Power3(x, 2),  log="y", ylab=expression(x^2), xlab=expression(x),
-     main="log-transformed\ny-axis")
-plot(x, Power3(x, 2),  log="xy", ylab=expression(x^2), xlab=expression(x),
-     main="log-transformed\nx and y-axis")
+par(mfrow=c(1,3))# graph parameters (three plots in one column)
+plot(x = x, y = Power3(x, 2), type="b", log="x", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\nx-axis")
+plot(x = x, y = Power3(x, 2), type="b", log="y", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\ny-axis")
+plot(x = x, y = Power3(x, 2), type="b", log="xy", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\nx and y-axis")
 par(mfrow=c(1,1))# reset graphic parameters
 ```
 
@@ -397,7 +431,7 @@ par(mfrow=c(1,1))# reset graphic parameters
 ```{r}
 PlotPower = function(x, a) {
   ylab_text <- bquote('x'^.(a)) # write y-axis label
-  plot(x, Power3(x, a),
+  plot(x = x, y = Power3(x, a), type = "b",
        ylab = ylab_text)
 }
 PlotPower(1:10, 3)
@@ -410,11 +444,10 @@ Using the `Boston` data set, fit classification models in order to predict wheth
 **Answer:** 
 
 ```{r}
-summary(Boston)
 attach(Boston)
 
-crime01 <- rep(0, length(crim))
-crime01[crim > median(crim)] = 1
+crime01                      <- rep(0, length(crim))
+crime01[crim > median(crim)] <- 1
 
 Boston <- data.frame(Boston, crime01)
 
@@ -427,29 +460,31 @@ crime01.test <- crime01[test]
 ```
 
 ```{r}
-# logistic regression
-glm.fit <- glm(crime01~.-crime01-crim, 
+# logistic regression of crime01 on all predictors 
+# except 'crime01' and 'crim'
+glm_fit <- glm(crime01 ~ . -crime01 - crim, 
               data   = Boston, 
               family = binomial, 
               subset = train)
 
-glm.probs <- predict(glm.fit, Boston.test, type="response")
+glm_probs <- predict(glm_fit, Boston.test, type="response")
 
-glm.pred = rep(0, length(glm.probs))
-glm.pred[glm.probs > 0.5] = 1
+glm_pred                  <- rep(0, length(glm_probs))
+glm_pred[glm_probs > 0.5] <- 1
 
-mean(glm.pred != crime01.test)
+mean(glm_pred != crime01.test)
 ```
 
 **Conclusion:** This logistic regression has a test error rate of $18.2\%$.
 
 ```{r}
-glm.fit = glm(crime01~.-crime01-crim-chas-tax, 
+glm_fit   <- glm(crime01 ~ . -crime01 -crim -chas -tax, 
               data=Boston, family=binomial, subset=train)
-glm.probs = predict(glm.fit, Boston.test, type="response")
-glm.pred = rep(0, length(glm.probs))
-glm.pred[glm.probs > 0.5] = 1
-mean(glm.pred != crime01.test)
+glm_probs <- predict(glm_fit, Boston.test, type="response")
+##
+glm_pred                  <- rep(0, length(glm_probs))
+glm_pred[glm_probs > 0.5] <- 1
+mean(glm_pred != crime01.test)
 ```
 
 **Conclusion:** This logistic regression has a test error rate of $18.6\%$.
@@ -457,28 +492,28 @@ mean(glm.pred != crime01.test)
 
 ```{r}
 # LDA
-lda.fit = lda(crime01~.-crime01-crim, data=Boston, subset=train)
-lda.pred = predict(lda.fit, Boston.test)
-mean(lda.pred$class != crime01.test)
+lda_fit  <- lda(crime01~.-crime01-crim, data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
 ```
 
 **Conclusion:** This LDA has a test error rate of $13.4\%$.
 
 
 ```{r}
-lda.fit = lda(crime01~.-crime01-crim-chas-tax, data=Boston, subset=train)
-lda.pred = predict(lda.fit, Boston.test)
-mean(lda.pred$class != crime01.test)
+lda_fit  <- lda(crime01~.-crime01-crim-chas-tax, data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
 ```
 
 **Conclusion:** This LDA has a test error rate of $12.3\%$.
 
 
 ```{r}
-lda.fit = lda(crime01~.-crime01-crim-chas-tax-lstat-indus-age,
+lda_fit  <- lda(crime01~.-crime01-crim-chas-tax-lstat-indus-age,
               data=Boston, subset=train)
-lda.pred = predict(lda.fit, Boston.test)
-mean(lda.pred$class != crime01.test)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
 ```
 
 **Conclusion:** This LDA has a test error rate of $11.9\%$.
@@ -486,16 +521,18 @@ mean(lda.pred$class != crime01.test)
 ```{r}
 # KNN
 library(class)
-train.X = cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
+train_X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
                 lstat, medv)[train,]
-test.X = cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
+test_X  <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
                 lstat, medv)[test,]
-train.crime01 = crime01[train]
+
+train.crime01 <- crime01[train]
 
 set.seed(1)
 # KNN(k=1)
-knn.pred = knn(train.X, test.X, train.crime01, k=1)
-mean(knn.pred != crime01.test)
+knn_pred  <- knn(train_X, test_X, train.crime01, k=1)
+##
+mean(knn_pred != crime01.test)
 ```
 
 **Conclusion:** This KNN prediction has a test error rate of $45.8\%$.
@@ -503,8 +540,8 @@ mean(knn.pred != crime01.test)
 ```{r}
 # KNN(k=10)
 set.seed(1)
-knn.pred = knn(train.X, test.X, train.crime01, k=10)
-mean(knn.pred != crime01.test)
+knn_pred <- knn(train_X, test_X, train.crime01, k=10)
+mean(knn_pred != crime01.test)
 ```
 
 **Conclusion:** This KNN prediction has a test error rate of $11.1\%$.
@@ -512,13 +549,11 @@ mean(knn.pred != crime01.test)
 ```{r}
 # KNN(k=100)
 set.seed(1)
-knn.pred = knn(train.X, test.X, train.crime01, k=100)
-mean(knn.pred != crime01.test)
+knn_pred = knn(train_X, test_X, train.crime01, k=100)
+mean(knn_pred != crime01.test)
 ```
 
 **Conclusion:** This KNN prediction has a test error rate of $48.6\%$.
 
 
-**Overall conclusion:** In general, the best models are the ones with the smaller test error rates. 
-In our case, this means that the smallest LDA-model and the KNN prediction with `K=10` are the best prediction models.
-
+**Overall conclusion:** The best models are the ones with the smaller test error rates. In our case, this means that the smallest (fewest predictors) LDA-model and the KNN prediction with `K=10` are the best prediction models.
