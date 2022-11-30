@@ -1544,7 +1544,8 @@ knn.pred Down Up
 <pre><code>[1] 5822   86</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Caravan)  <span class="co"># makes the variables in Caravan (e.g. Purchase) directly usable</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Purchase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Purchase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  No  Yes 
 5474  348 </code></pre>
@@ -1586,11 +1587,12 @@ knn.pred Down Up
 <span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Testing data </span></span>
 <span id="cb123-6"><a href="#cb123-6" aria-hidden="true" tabindex="-1"></a>test.X   <span class="ot">&lt;-</span> standardized.X[test, ]</span>
 <span id="cb123-7"><a href="#cb123-7" aria-hidden="true" tabindex="-1"></a>test.Y   <span class="ot">&lt;-</span> Purchase[test]</span>
-<span id="cb123-8"><a href="#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="do">## KNN </span></span>
+<span id="cb123-8"><a href="#cb123-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb123-9"><a href="#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb123-10"><a href="#cb123-10" aria-hidden="true" tabindex="-1"></a>knn.pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train.X, test.X, train.Y, <span class="at">k =</span> <span class="dv">1</span>)</span>
-<span id="cb123-11"><a href="#cb123-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data overall classification error </span></span>
-<span id="cb123-12"><a href="#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(test.Y <span class="sc">!=</span> knn.pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb123-10"><a href="#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="do">## KNN (K=1)</span></span>
+<span id="cb123-11"><a href="#cb123-11" aria-hidden="true" tabindex="-1"></a>knn.pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train.X, test.X, train.Y, <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb123-12"><a href="#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data overall classification error </span></span>
+<span id="cb123-13"><a href="#cb123-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(test.Y <span class="sc">!=</span> knn.pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.118</code></pre>
 </div>
@@ -1605,7 +1607,7 @@ knn.pred Down Up
 <p>The KNN overall test error rate on the <span class="math inline">\(1000\)</span> test observations is just under <span class="math inline">\(12\%.\)</span> At first glance, this may appear to be fairly good. However, since only <span class="math inline">\(6\%\)</span> of customers purchased insurance, we could get the error rate down to <span class="math inline">\(6\%\)</span> by always predicting <code>No</code> regardless of the values of the predictors!</p>
 <p>Suppose that there is some non-trivial cost to trying to sell insurance to a given individual. For instance, perhaps a salesperson must visit each potential customer.</p>
 <p>If the company tries to sell insurance to a random selection of customers, then the success rate will be only <span class="math inline">\(6\%\)</span> (the empirical prior probability of <code>Purchase = Yes</code>), which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the overall error rate is not of interest. Instead, the fraction of individuals that are correctly predicted to buy insurance is of interest.</p>
-<p>It turns out that KNN with <span class="math inline">\(K=1\)</span> does far better than random guessing among the customers that are predicted to buy insurance. Among the P<em><span class="math inline">\(=77\)</span> <code>Purchase=Yes</code> predictions, <span class="math inline">\(9\)</span> (TP), or <span class="math inline">\(11.7\%\)</span> (TP/P</em>), actually do purchase the insurance. This is double the rate that one would obtain from random guessing.</p>
+<p>It turns out that KNN with <span class="math inline">\(K=1\)</span> does far better than random guessing among the customers that are predicted to buy insurance. Among the P* <span class="math inline">\(=77\)</span> <code>Purchase=Yes</code> predictions, <span class="math inline">\(9\)</span> (TP), or <span class="math inline">\(11.7\%\)</span> (TP/P*), actually do purchase the insurance. This is double the rate that one would obtain from random guessing.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data confusion matrix (KNN, K=1)</span></span>
 <span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1625,8 +1627,9 @@ knn.pred  No Yes
 <div class="cell">
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## K = 3</span></span>
 <span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>knn.pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train.X, test.X, train.Y, <span class="at">k =</span> <span class="dv">3</span>)</span>
-<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data confusion matrix (KNN, K=3)</span></span>
-<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data confusion matrix (KNN, K=3)</span></span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        test.Y
 knn.pred  No Yes
@@ -1638,10 +1641,11 @@ knn.pred  No Yes
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1923077</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="do">## K = 3</span></span>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="do">## K = 5</span></span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>knn.pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train.X, test.X, train.Y, <span class="at">k =</span> <span class="dv">5</span>)</span>
-<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data confusion matrix (KNN, K=5)</span></span>
-<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Test data confusion matrix (KNN, K=5)</span></span>
+<span id="cb135-5"><a href="#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        test.Y
 knn.pred  No Yes
@@ -1657,25 +1661,32 @@ knn.pred  No Yes
 <p>However, while this strategy is cost-effective, it is worth noting that only 15 customers are predicted to purchase insurance using KNN with <span class="math inline">\(K=5\)</span>. In practice, the insurance company may wish to expend resources on convincing more than just 15 potential customers to buy insurance.</p>
 <p>As a comparison, we can also fit a logistic regression model to the data. If we use <span class="math inline">\(0.5\)</span> as the predicted probability cut-off for the classifier, then we have a problem: only seven of the test observations are predicted to purchase insurance. Even worse, we are wrong about all of these! However, we are not required to use a cut-off of <span class="math inline">\(0.5\)</span>. If we instead predict a purchase any time the predicted probability of purchase exceeds <span class="math inline">\(0.25\)</span>, we get much better results: we predict that 33 people will purchase insurance, and we are correct for about <span class="math inline">\(33\%\)</span> of these people. This is over five times better than random guessing!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>glm.fits <span class="ot">&lt;-</span> <span class="fu">glm</span>(Purchase <span class="sc">~</span> ., <span class="at">data =</span> Caravan,</span>
-<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> binomial, <span class="at">subset =</span> <span class="sc">-</span>test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>glm.fits  <span class="ot">&lt;-</span> <span class="fu">glm</span>(Purchase <span class="sc">~</span> ., <span class="at">data =</span> Caravan,</span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial, </span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> <span class="sc">-</span>test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>glm.probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm.fits, Caravan[test, ],</span>
-<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="dv">1000</span>)</span>
-<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a>glm.pred[glm.probs <span class="sc">&gt;</span> .<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
-<span id="cb141-5"><a href="#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>glm.probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm.fits, Caravan[test, ], <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Classifications (Bayes threshold)</span></span>
+<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a>glm.pred                 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="dv">1000</span>)</span>
+<span id="cb141-5"><a href="#cb141-5" aria-hidden="true" tabindex="-1"></a>glm.pred[glm.probs <span class="sc">&gt;</span> .<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb141-6"><a href="#cb141-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-7"><a href="#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="do">## confusion matrix (test set)</span></span>
+<span id="cb141-8"><a href="#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        test.Y
 glm.pred  No Yes
      No  934  59
      Yes   7   0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="dv">1000</span>)</span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>glm.pred[glm.probs <span class="sc">&gt;</span> .<span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
-<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Classifications (adjusted threshold)</span></span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>glm.pred                  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="dv">1000</span>)</span>
+<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>glm.pred[glm.probs <span class="sc">&gt;</span> .<span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb143-4"><a href="#cb143-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-5"><a href="#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="do">## confusion matrix (test set)</span></span>
+<span id="cb143-6"><a href="#cb143-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm.pred, test.Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        test.Y
 glm.pred  No Yes

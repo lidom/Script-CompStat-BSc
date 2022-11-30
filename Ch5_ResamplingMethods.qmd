@@ -156,11 +156,9 @@ for(r in 1:R){
 ```
 
 
-@fig-VA2 shows that the valida* **Training set:** tion set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
+@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
 
-A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ computed from the training set, where, however, the training set sample size $n_{Train}$ is typically substantially smaller than the actual sample size $n.$ 
-
-This leads to **increased test MSE values** which do not reflect the actual test MSE values under the total sample size $n>n_{Train}.$
+A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ computed from the training set, where, however, the training set sample size $n_{Train}$ is typically substantially smaller than the actual sample size $n.$ This leads to **increased test MSE values** which do not reflect the actual test MSE values under the total sample size $n>n_{Train}.$
 
 Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation set approach that addresses these issues. 
 
@@ -519,7 +517,7 @@ This idea will work well, as long as $F_{n,(X,Y)}$ serves as a good approximatio
 In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.
 
 ### The Validation Set Approach
-* **Training set:** 
+
 We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the `Auto` data set.
 
 Before we begin, we use the `set.seed()` function in order to set a  for `R`'s random number generator, so that the reader of this book will

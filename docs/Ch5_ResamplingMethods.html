@@ -381,9 +381,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p><a href="#fig-VA2">Figure&nbsp;<span>5.2</span></a> shows that the valida* <strong>Training set:</strong> tion set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets.</p>
-<p>A further serious problem with the validation set approach is that the evaluated predictions <span class="math inline">\(\hat{y}_i=\hat{f}(x_i)\)</span> are based on estimates <span class="math inline">\(\hat{f}\)</span> computed from the training set, where, however, the training set sample size <span class="math inline">\(n_{Train}\)</span> is typically substantially smaller than the actual sample size <span class="math inline">\(n.\)</span></p>
-<p>This leads to <strong>increased test MSE values</strong> which do not reflect the actual test MSE values under the total sample size <span class="math inline">\(n&gt;n_{Train}.\)</span></p>
+<p><a href="#fig-VA2">Figure&nbsp;<span>5.2</span></a> shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets.</p>
+<p>A further serious problem with the validation set approach is that the evaluated predictions <span class="math inline">\(\hat{y}_i=\hat{f}(x_i)\)</span> are based on estimates <span class="math inline">\(\hat{f}\)</span> computed from the training set, where, however, the training set sample size <span class="math inline">\(n_{Train}\)</span> is typically substantially smaller than the actual sample size <span class="math inline">\(n.\)</span> This leads to <strong>increased test MSE values</strong> which do not reflect the actual test MSE values under the total sample size <span class="math inline">\(n&gt;n_{Train}.\)</span></p>
 <p>Leave-One-Out and <span class="math inline">\(k\)</span>-fold <em>Cross-validation</em> are refinements of the validation set approach that addresses these issues.</p>
 </section>
 </section>
@@ -457,7 +456,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 LOOCV has the potential to be expensive to implement, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code represents a naive implementation of LOOCV for least squares fits of linear/polynomial regression models and takes<br>
 
 <center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.518 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.489 seconds
 </center>
 <p>for the computations.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -670,9 +669,7 @@ F_{n,(X,Y)}\approx F_{(X,Y)}.
 <p>In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.</p>
 <section id="the-validation-set-approach" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="the-validation-set-approach"><span class="header-section-number">5.2.1</span> The Validation Set Approach</h3>
-<ul>
-<li><strong>Training set:</strong> We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the <code>Auto</code> data set.</li>
-</ul>
+<p>We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the <code>Auto</code> data set.</p>
 <p>Before we begin, we use the <code>set.seed()</code> function in order to set a for <code>R</code>’s random number generator, so that the reader of this book will obtain precisely the same results as those shown below. It is generally a good idea to set a random seed when performing an analysis such as cross-validation that contains an element of randomness, so that the results obtained can be reproduced precisely at a later time.</p>
 <p>We begin by using the <code>sample()</code> function to split the set of observations into two halves, by selecting a random subset of <span class="math inline">\(196\)</span> observations out of the original <span class="math inline">\(392\)</span> observations. We refer to these observations as the training set.</p>
 <div class="cell">

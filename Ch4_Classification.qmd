@@ -1257,7 +1257,9 @@ KNN does not perform well on the `Smarket` data, but generally, KNN does often p
 ```{r chunk29}
 dim(Caravan)     # sample size and number of variables in the Caravan dataset 
 attach(Caravan)  # makes the variables in Caravan (e.g. Purchase) directly usable
+
 summary(Purchase)
+
 ## Empirical prior probability of 'Purchase = Yes' 
 348 / 5822
 ```
@@ -1288,8 +1290,9 @@ train.Y  <- Purchase[-test]
 ## Testing data 
 test.X   <- standardized.X[test, ]
 test.Y   <- Purchase[test]
-## KNN 
+
 set.seed(1)
+## KNN (K=1)
 knn.pred <- knn(train.X, test.X, train.Y, k = 1)
 ## Test data overall classification error 
 mean(test.Y != knn.pred)
@@ -1306,7 +1309,7 @@ Suppose that there is some non-trivial cost to trying to sell insurance to a giv
 
 If the company tries to sell insurance to a random selection of customers, then the success rate will be only $6\%$ (the empirical prior probability of `Purchase = Yes`), which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the overall error rate is not of interest. Instead, the fraction of individuals that are correctly predicted to buy insurance is of interest.
 
-It turns out that KNN with $K=1$ does far better than random guessing among the customers that are predicted to buy insurance. Among the P*$=77$ `Purchase=Yes` predictions, $9$ (TP), or $11.7\%$ (TP/P*), actually do purchase the insurance. This is double the rate that one would obtain from random guessing.
+It turns out that KNN with $K=1$ does far better than random guessing among the customers that are predicted to buy insurance. Among the P* $=77$ `Purchase=Yes` predictions, $9$ (TP), or $11.7\%$ (TP/P*), actually do purchase the insurance. This is double the rate that one would obtain from random guessing.
 
 ```{r chunk32}
 ## Test data confusion matrix (KNN, K=1)
@@ -1320,12 +1323,15 @@ Using $K=3$, the success rate increases to $19\%,$ and with $K=5$ the rate is $2
 ```{r chunk33}
 ## K = 3
 knn.pred <- knn(train.X, test.X, train.Y, k = 3)
+
 ## Test data confusion matrix (KNN, K=3)
 table(knn.pred, test.Y)
 ## Test data positive predictive value TP/P*
 5 / 26
-## K = 3
+
+## K = 5
 knn.pred <- knn(train.X, test.X, train.Y, k = 5)
+
 ## Test data confusion matrix (KNN, K=5)
 table(knn.pred, test.Y)
 ## Test data positive predictive value TP/P*
@@ -1338,15 +1344,23 @@ As a comparison, we can also fit a logistic regression model to the data. If we 
  we are correct for about $33\%$ of these people. This is  over five times better than random guessing!
 
 ```{r chunk34}
-glm.fits <- glm(Purchase ~ ., data = Caravan,
-    family = binomial, subset = -test)
-glm.probs <- predict(glm.fits, Caravan[test, ],
-    type = "response")
-glm.pred <- rep("No", 1000)
+glm.fits  <- glm(Purchase ~ ., data = Caravan,
+                 family = binomial, 
+                 subset = -test)
+glm.probs <- predict(glm.fits, Caravan[test, ], type = "response")
+
+## Classifications (Bayes threshold)
+glm.pred                 <- rep("No", 1000)
 glm.pred[glm.probs > .5] <- "Yes"
+
+## confusion matrix (test set)
 table(glm.pred, test.Y)
-glm.pred <- rep("No", 1000)
+
+## Classifications (adjusted threshold)
+glm.pred                  <- rep("No", 1000)
 glm.pred[glm.probs > .25] <- "Yes"
+
+## confusion matrix (test set)
 table(glm.pred, test.Y)
 11 / (22 + 11)
 ```
