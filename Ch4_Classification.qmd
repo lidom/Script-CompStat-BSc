@@ -733,10 +733,12 @@ for(j in 1:n_thresholds){
 }
 
 ## Plot the ROC curve 
-plot(y = TP_Rate, x = FP_Rate, type = "l", 
-      col = "blue", lwd=1.5, main = "ROC Curve", 
-      ylab = "True Positive Rate",
-      xlab = "True Negative Rate")
+plot(x    = FP_Rate, 
+     y    = TP_Rate, 
+     xlab = "False Positive Rate",
+     ylab = "True Positive Rate",
+     main = "ROC Curve", 
+     type = "l", col = "blue", lwd=1.5)
 abline(a = 0, b = 1, lty = 3, col = "gray")
 ```
 
