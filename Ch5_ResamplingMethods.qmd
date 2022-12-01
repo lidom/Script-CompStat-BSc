@@ -126,24 +126,24 @@ R        <- 10
 MSE      <- matrix(NA, R, p_max)
 
 for(r in 1:R){
-## Index sets for training and validation sets
-I_Train  <- sample(x = 1:n, size = n_Train, replace = FALSE)
-I_Valid  <- c(1:n)[-I_Train]
+  ## Index sets for training and validation sets
+  I_Train  <- sample(x = 1:n, size = n_Train, replace = FALSE)
+  I_Valid  <- c(1:n)[-I_Train]
 
-## Training set 
-Auto_Train_df <- Auto[I_Train, ]
-## Validation set
-Auto_Valid_df <- Auto[I_Valid, ]
+  ## Training set 
+  Auto_Train_df <- Auto[I_Train, ]
+  ## Validation set
+  Auto_Valid_df <- Auto[I_Valid, ]
 
-for(p in 1:p_max){
-  ## Step 1
-  Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
-                     data = Auto_Train_df)
-  ## Step 2
-  y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
-  RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
-  MSE[r,p]      <- RSS_Valid / n_Valid
-}
+  for(p in 1:p_max){
+    ## Step 1
+    Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
+                       data = Auto_Train_df)
+    ## Step 2
+    y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+    RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
+    MSE[r,p]      <- RSS_Valid / n_Valid
+  }
 }
 
 matplot(y = t(MSE), type="b", ylab="MSE", xlab="Degree of Polynomial", 
@@ -209,19 +209,19 @@ MSE_i      <- matrix(NA, n, p_max)
 start_time <- Sys.time()
 
 for(r in 1:n){
-## Training set 
-Auto_Train_df <- Auto[-r, ]
-## Validation set
-Auto_Valid_df <- Auto[r, ]
+  ## Training set 
+  Auto_Train_df <- Auto[-r, ]
+  ## Validation set
+  Auto_Valid_df <- Auto[r, ]
 
-for(p in 1:p_max){
-  ## Step 1
-  Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
-                     data = Auto_Train_df)
-  ## Step 2
-  y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
-  MSE_i[r,p]    <- (Auto_Valid_df$mpg - y_fit_Valid)^2 
-}
+  for(p in 1:p_max){
+    ## Step 1
+    Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
+                       data = Auto_Train_df)
+    ## Step 2
+    y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+    MSE_i[r,p]    <- (Auto_Valid_df$mpg - y_fit_Valid)^2  
+  }
 }
 ## Save end time of the loop
 end_time <- Sys.time()
@@ -336,28 +336,80 @@ Figure 5.5 illustrates the data splitting for $k$-fold CV.
 * Faster computation times ($k=5$ instead of $k=n$ model fits)
 * Improved estimates of the test MSE (see next section)
 
+
+```{r}
+set.seed(123)
+
+## number of folds for k-fold CV 
+k          <- 5
+MSE_folds      <- matrix(NA, k, p_max)
+
+
+n_sub      <- floor(n/k)
+n_sub      <- rep(n_sub, k-1)
+slct_folds <- c(1, cumsum(n_sub), n)
+
+
+## Save starting time of the loop
+start_time <- Sys.time()
+
+for(r in 1:k){
+  fold_pos      <- c(slct_folds[r]:(slct_folds[r+1]-1))
+  ## Training set 
+  Auto_Train_df <- Auto[-fold_pos, ]
+  ## Validation set
+  Auto_Valid_df <- Auto[fold_pos, ]
+
+  for(p in 1:p_max){
+    ## Step 1
+    Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
+                       data = Auto_Train_df)
+    ## Step 2
+    y_fit_Valid    <- predict(Train_polreg, newdata = Auto_Valid_df)
+    MSE_folds[r,p] <- mean((Auto_Valid_df$mpg - y_fit_Valid)^2)
+  }
+}
+## Save end time of the loop
+end_time  <- Sys.time()
+
+CV_kfold  <- colMeans(MSE_folds)
+
+plot(x = 1:p_max, y = CV_kfold, type = "b", 
+     col = "black", bg = "black", pch = 21,  main="k-fold CV", 
+     xlab = "Degree of Polynomial", ylab = expression("CV"[k]))
+points(y = CV_kfold[which.min(CV_kfold)], 
+       x = c(1:p_max)[which.min(CV_kfold)], 
+       col = "red", bg = "red", pch = 21)     
+```
+
+
 ### (Ch. 5.1.4) Bias-Variance Trade-Off for $k$-Fold Cross-Validation {-}
 
 There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold CV.
 
 <!-- A small $k$ leads to biased test MSE estimates (systematic overestimations). -->
 
-* Small/large $k$ lead to test MSE estimates with high/low **bias**
+* Small $k\approx 1$ lead to test MSE estimates with large **bias**
+* Large $k\approx n$ lead to test MSE estimates with small **bias**
 
-**Explanation:** A small $k$ value leads to trainings sets with samples sizes $n_{Train}\approx n - n/k$ substantially smaller than the actual sample size $n.$ This reduces sample size leads to higher estimation errors than expected when using the total sample size $n$ and thus to systematic overestimations of the actual test MSE we are interested in. 
+**Explanation:** 
 
-A large $k\approx n$ reduces this bias since $n_{Train}\approx n$  
+* A small $k\approx 1$ value leads to trainings sets with samples sizes $n_{Train}= n - n/k \ll n$ substantially smaller than the actual sample size $n.$ Thus, we estimate the MSE for a sample size that is substantially smaller than the sample size $n$ we are actually interested in. This leads to systematic overestimations of the actual test MSE for sample size $n.$ 
 
+* A large $k\approx n$ reduces this bias since $n_{Train}\approx n.$ Thus we estimate essentially the actual test MSE for sample size $n.$ 
 
-* Small/large $k$ lead to test MSE estimates with low/high **variance**
+* Small $k\approx 1$ lead to test MSE estimates with small **variance**
+* Large $k\approx n$ lead to test MSE estimates with large **variance**
 
-**Explanation:** In $k$-fold CV, the trainings overlap by roughly $n(k-2)/k$. 
+**Explanation:** In $k$-fold CV, the training sets overlap pairwise by roughly $((k-2)/k)\times 100 \%$. 
 
-* For $k=2$ (Validation Set approach) there is no overlap
-* For $k=3$ approximately $n/3$ of approximately $n-n/k$ training data points overlap
-* For $k=n$ (LOOCV) $n-2$ data points of $n-1$ training data points overlap
+* For $k=2$ (Validation Set approach) there is no overlap since there is only one training set.
+* For $k=5$ ($k$-fold CV) approximately $(k-2)/k=(3/5)=60\%$ of the training data points are equal in each pair of training sets.
+* For $k=n=100$ (LOOCV) $(n-2)/n=98\%$ of the training data points are equal in each pair of trainings sets. 
 
-Thus, the larger $k$ the more similar the training data set become. However, very similar training set lead to highly correlated test MSE estimates. Since the mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV.
+Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates. Since the mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
+
+$k$-fold CV with $k=5$ or $k=10$ is often considered a good compromise balancing these bias and variance issues. 
 
 ### (Ch. 5.1.5) Cross-Validation on Classification Problems {-}
 
