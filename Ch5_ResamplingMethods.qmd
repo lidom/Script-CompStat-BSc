@@ -455,7 +455,7 @@ We want to invest a fraction $\alpha\in(0,1)$ in $X$ and invest the remaining $1
 
 Our aim is to minimize the variance (risk) of our investment, i.e., we want to minimize
 $$
-Var\left(\alpha X + (-\alpha)Y\right).
+Var\left(\alpha X + (1-\alpha)Y\right).
 $$ 
 One can show that the value $\alpha$ that minimizes this variance is
 $$
@@ -469,10 +469,10 @@ It is natural to wish to quantify the accuracy of our estimate of $\hat\alpha\ap
 $$
 \sqrt{Var(\hat\alpha)} = \operatorname{SE}(\hat\alpha)=?
 $$
-Computing $\operatorname{SE}(\hat\alpha)$ is here really difficult due to the definition of $\hat\alpha$ in @eq-alphahat which contains variance estimates also in the denominator. 
+Computing $\operatorname{SE}(\hat\alpha)$ is here difficult due to the definition of $\hat\alpha$ in @eq-alphahat which contains variance estimates also in the denominator. 
 
 
-**The Infeasible Bootstrap: A Monte Carlo Simulation**
+#### The Infeasible Bootstrap: A Monte Carlo Simulation {-}
 
 Let us, for a moment, assume that we know the distributions of $X$ and $Y.$ For simplicity, let's say 
 $$
@@ -484,7 +484,7 @@ $$
 $$
 If this were true, i.e., if we would know the true population distribution of $X$ and $Y,$ we could simply generate a new dataset containing new observations for $X$ and $Y$ that allows us to compute a new estimate $\hat\alpha.$ 
 
-Repeatedly generating new datasets by sampling new observations from the true population distribution, for instance, $B=1000$ many times, would give as $B=1000$ estimates  
+Repeatedly generating new datasets by sampling new observations from the true population distribution, for instance, $B=1000$ many times, would allow us to compute $B=1000$ estimates  
 $$
 \hat\alpha_1,\;\hat\alpha_2,\dots,\hat\alpha_{B}.
 $$
@@ -520,46 +520,94 @@ Sigma    <- rbind(c(sigma2_X, sigma_XY),
 alpha    <- (sigma2_Y - sigma_XY) / (sigma2_X + sigma2_X - 2 * sigma_XY)                  
 
 
-## Infeasible Bootstrap (i.e. a Monte Carlo Simulation)
+## Infeasible Bootstrap (i.e. a Monte Carlo (MC) Simulation)
+set.seed(333)
 
-B         <- 1000
-alpha_hat <- numeric(B)
+B            <- 1000
+alpha_hat_MC <- numeric(B)
 
 for(b in 1:B){
-  dat          <- mvrnorm(n = n, mu = c(mu_X, mu_Y), Sigma = Sigma)
-  X            <- dat[,1]
-  Y            <- dat[,2]
-  sigma2_X_hat <- var(X)
-  sigma2_Y_hat <- var(Y)
-  sigma_XY_hat <- cov(X,Y)
-  alpha_hat[b] <- (sigma2_Y_hat - sigma_XY_hat) / (sigma2_X_hat + sigma2_X_hat - 2 * sigma_XY_hat)
+  dat             <- mvrnorm(n = n, mu = c(mu_X, mu_Y), Sigma = Sigma)
+  X               <- dat[,1]
+  Y               <- dat[,2]
+  ##
+  sigma2_X_hat    <- var(X)
+  sigma2_Y_hat    <- var(Y)
+  sigma_XY_hat    <- cov(X,Y)
+  ##
+  alpha_hat_MC[b] <- (sigma2_Y_hat - sigma_XY_hat) / (sigma2_X_hat + sigma2_X_hat - 2 * sigma_XY_hat)
 }
 
 ## Estimate of the standard error of the estimates for alpha:
-sd(alpha_hat)
+sd(alpha_hat_MC)
 ```
 
 
-Thus, this infeasible Boostrap (Monte Carlo simulation) estimates that the true standard error equals `r sd(alpha_hat)`, i.e. 
+Thus, this Monte Carlo simulation estimates that the true standard error equals `r sd(alpha_hat_MC)`, i.e. 
 <center>
-$\operatorname{SE}(\hat\alpha) \approx$ `sd(alpha_hat)` $=$ `r sd(alpha_hat)`. 
+$\operatorname{SE}(\hat\alpha) \approx$ `sd(alpha_hat_MC)` $=$ `r sd(alpha_hat_MC)`,
 </center>
+and by the law of large number (large `B`), we can expect this estimation to be really good and reliable. 
 
-But, unfortunately, this result depends on our completely unrealistic assumption that we would know the true population distribution $F_{(X,Y)}$ of $(X,Y),$ which makes this simple resampling approach infeasible in practice. 😭
+But, unfortunately, this result depends on our **completely unrealistic assumption that we know the true population distribution $F_{(X,Y)}$ of $(X,Y),$ which makes this simple resampling approach infeasible in practice. 😭
 
 
-**The (Feasible) Bootstrap**
+#### The Actual (Feasible) Bootstrap {-}
 
 Fortunately, we can use the **empirical cumulative distribution function** $F_{n,(X,Y)}$ from the originally observed dataset of past measurements for $X$ and $Y,$ as an approximation to the true (unknown) population distribution $F_{(X,Y)}$, 
 $$
 F_{n,(X,Y)}\approx F_{(X,Y)}.
 $$
 
-So, instead of resampling from an unknown population distribution $F_{(X,Y)},$ which is not possible in practice, we resample from the empirical distribution $F_{n,(X,Y)},$ which easily possible in practice. 🥳
+So, instead of resampling from an unknown population distribution $F_{(X,Y)},$ which is not possible in practice, we resample from the empirical distribution $F_{n,(X,Y)},$ which is easily possible in practice. 🥳
 
 This idea will work well, as long as $F_{n,(X,Y)}$ serves as a good approximation of $F_{(X,Y)}$ which will always be the case if the sample size $n$ is sufficiently large since, by the famous [Glivenko-Cantelli Theorem](https://en.wikipedia.org/wiki/Glivenko%E2%80%93Cantelli_theorem), $F_{n,(X,Y)}$ is uniformly consistent for $F_{(X,Y)}.$
 
+Sampling from an empirical cdf $F_{n}$ simply means sampling from the observed dataset $(X_i,Y_i)$, $i=1,\dots,n$, **with replacement**, for instance like this:
 
+```{r, eval=FALSE}
+bootstrap_sample <- sample(x = 1:n, n, replace = TRUE)
+bootstrap_data   <- data_frame[bootstrap_sample, ]
+```
+
+In order to illustrate the bootstrap, let us generate some artificial data. We use again the bi-variate normal distribution as in the "infeasible bootstrap" illustration. 
+```{r}
+## Generate some artificial data
+observed_data  <- mvrnorm(n = n, mu = c(mu_X, mu_Y), Sigma = Sigma)
+```
+
+Thus, the bootstrap estimate of the standard error $\operatorname{SE}(\hat\alpha)$ should be close to the practically infeasible Monte Carlo estimate of the standard error, even though the bootstrap method does not explicitly use the true data generating process, but only the observed data.  
+
+The following code implements the bootstrap:
+```{r}
+set.seed(123)
+## Bootstrap 
+B              <- 1000
+alpha_hat_boot <- numeric(B)
+
+for(b in 1:B){
+  bootstrap_sample  <- sample(x = 1:n, n, replace = TRUE)
+  bootstrap_data    <- observed_data[bootstrap_sample, ]
+  ##
+  X                 <- bootstrap_data[,1]
+  Y                 <- bootstrap_data[,2]
+  ##
+  sigma2_X_hat      <- var(X)
+  sigma2_Y_hat      <- var(Y)
+  sigma_XY_hat      <- cov(X,Y)
+  ##
+  alpha_hat_boot[b] <- (sigma2_Y_hat - sigma_XY_hat) / (sigma2_X_hat + sigma2_X_hat - 2 * sigma_XY_hat)
+}
+
+## Estimate of the standard error of the estimates for alpha:
+sd(alpha_hat_boot)
+```
+
+The bootstrap estimate of the true standard error equals `r sd(alpha_hat_boot)`, i.e. 
+<center>
+$\operatorname{SE}(\hat\alpha) \approx$ `sd(alpha_hat_boot)` $=$ `r sd(alpha_hat_boot)`.
+</center>
+This is really close to the infeasible Monte Carlo simulation based estimate `sd(alpha_hat_MC)` $=$ `r sd(alpha_hat_MC)`, but without making use of the unknown data generating process. 
 
 > The bootstrap method is attributed to Bradley Efron, who received the *[International Prize in Statistics](https://statprize.org/pdfs/2019-Efron-Announcement.pdf)* (the Nobel price of statistics) for his seminal works on the bootstrap method. 
 
