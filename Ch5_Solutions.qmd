@@ -8,7 +8,7 @@ We now review k-fold cross-validation.
 
 **Answer:**
 
-k-fold cross-validation is implemented by taking the set of $n$ observations and randomly splitting into $K$ non-overlapping groups of roughly equal group-size (approx. $n/K$). To compute the $k$-th ($k=1,2,...,K$) MSE-estimate, group $k$ is used to as a validation set and the remainder as a training set. The test error is estimated by averaging the $K$ resulting MSE estimates.
+k-fold cross-validation is implemented by taking the set of $n$ observations and randomly splitting into $K$ non-overlapping groups of roughly equal group-size (approx. $n/K$). To compute the $k$-th ($k=1,2,\dots,K$) test MSE estimate, group $k$ is used to as a validation set and the remainder as a training set. The test error is estimated by averaging the $K$ resulting test MSE estimates.
 
 **3 b)** What are the advantages and disadvantages of $k$-fold cross-validation relative to: 
 
@@ -20,36 +20,41 @@ ii) LOOCV?
 
 The **validation set** approach is conceptually simple and easily implemented as you are simply partitioning the existing training data into two sets. However, there are two drawbacks: 
 
-1. The estimate of the test error rate can be highly variable/instable, i.e. may strongly depending on which observations are included in the training and validation sets. 
+1. The estimate of the test MSE can be highly variable/instable; i.e. may strongly depend on which observations are included in the training and validation sets. 
 
-2. The validation set error rate may tend to overestimate the test error rate for the actual model fit on the entire data set since the training set has a relatively small sample size.
+2. The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size.
 
 **LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most intense cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV. (On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size ($n-1\approx n$).
 
 ### Exercise 4 {-}
 
-Suppose that we use some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$. Carefully describe how we might estimate the standard deviation of our prediction.
+Suppose that we use some statistical learning method to make a prediction for the response $Y$ for a *particular* value of the predictor $X$. Carefully describe how we might estimate the standard deviation of our prediction.
 
 **Answer:**
 
-
 If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$ we might estimate the standard deviation of our prediction by using the bootstrap approach. 
 
-Let $\hat{Y} = \hat{f}(X)$ denote the predicti onf of $Y$ for the given $X$. The bootstrap approach works by repeatedly sampling $n$ observations (with replacement) from the original data set--- in total $B$ times, for some large value of $B$, each time fitting a new model, $\hat{f}^*_1, \hat{f}^*_2, ..., \hat{f}^*_B$, and subsequently obtaining the RMSE (Root Mean Squared (Prediction) Error) of the estimates for all $B$ models by computing $\sqrt{\sum^B_{b=1} (\hat{f}^*_b(X)-Y)^2}$
+Let $\hat{Y} = \hat{f}(X)$ denote the prediction of $Y$ for the given $X$. The bootstrap approach works by repeatedly ($B$ many times) sampling $n$ observations (with replacement) from the original data set, and to compute new prediction results for each re-sampled bootstrap datasets. This yields to $B$ many bootstrap predictions: 
+$$
+\hat{f}^*_1(X), \hat{f}^*_2(X), \dots, \hat{f}^*_B(X).
+$$
+
+Using these bootstrap predictions we can compute the standard deviation of our prediction by computing 
+$$
+\sqrt{\frac{1}{B}\sum^B_{b=1}\left(\hat{f}^*_b(X)-\left(\frac{1}{B}\sum_{r=1}^B\hat{f}^*_r(X)\right)\right)^2}.
+$$
+
 
 ### Exercise 5 {-}
 
-In Chapter 4, we used logistic regression to predict the probability of `default` using `income` and `balance` on the `Default` data set. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.
+In Chapter 4, we used logistic regression to predict the probability of `default` using `income` and `balance` on the `Default` dataset. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.
 
-**5 a)** Fit a logistic regression model that uses `income` and `balance` to predict default.
+**5 a)** Fit a logistic regression model that uses `income` and `balance` to predict `default`.
 
 **Answer:**
 
 ```{r}
-# install.packages("ISLR")
-
-# Load the packages you need
-library("ISLR")
+library("ISLR2")
 
 # Attaching the data set
 attach(Default) 
@@ -72,27 +77,27 @@ summary(glm.fit)
 
 3. Obtain a prediction of default status for each individual in the validation set by computing the posterior probability of default for that individual, and classifying the individual to the default category if the posterior probability is greater than $0.5$.
 
-4. Compute the validation set error, which is the fraction of the observations in the validation set that are misclassified.**
+4. Compute the validation set error, which is the fraction of the observations in the validation set that are misclassified.
 
 
 **Answer:**
 
 ```{r}
-# We are going to do similar taks several times in this exercise. 
-# Therefore, it's convenient to build a function:
+## We are going to do similar tasks several times in this exercise. 
+## Therefore, it's convenient to build a function:
 
 fun5b <- function(){
     # sample(): takes a sample of the specified size from the elements of x using either with or without replacement.
-    n <- dim(Default)[1]
+    n     <- dim(Default)[1]
     train <- sample(x = n, size = round(n/2, 0), replace = FALSE)
     
-    # logistic function fit
+    # logistic function fit (training dataset)
     glm.fit <- glm(default ~ income + balance, 
         data   = Default, 
         family = binomial, 
         subset = train)
     
-    # test sample predictions
+    # predictions (test dataset)
     glm.pred  <- rep("No", times = round(n/2, 0))
     glm.probs <- predict(glm.fit, Default[-train, ], 
                          type = "response")
@@ -101,11 +106,16 @@ fun5b <- function(){
     # return the test (prediction) error rate 
     return(mean(glm.pred != Default[-train, ]$default))
 }
-set.seed(1)
+
+## set seed
+set.seed(1110)
+
+## compute test prediction error using the 
+## programmed validation set approach
 fun5b()
 ```
 
-**Answer:** There is a 2.54% test error rate from the validation set approach.
+**Answer:** There is a 2.62% test error rate from the validation set approach.
 
 **5 c)** Repeat the process in (b) three times, using three different splits of the observations into a training set and a validation set. Comment on the results obtained.
 
@@ -115,7 +125,7 @@ fun5b()
 fun5b()
 ```
 
-**Answer:** The test error rates seem to average around 2.6%
+**Answer:** The estimates of the test error rates are in the range of 2.5% and 2.8% and are varying with respect to the different training and validation set splittings. 
 
 **5 d)** Now consider a logistic regression model that predicts the probability of default using `income`, `balance`, and a dummy variable for `student`. Estimate the test error for this model using the validation set approach. Comment on whether or not including a dummy variable for `student` leads to a reduction in the test error rate.
 
@@ -175,12 +185,18 @@ glm.fit <- glm(default ~ income + balance,
 summary(glm.fit)
 ```
 
-**6 b)** Write a function, `boot.fn()`, that takes as input the `Default` data set as well as an `index` of the observations, and that outputs the coefficient estimates for `income` and `balance` in the multiple logistic regression model.
+Using the standard formula for the standard errors in logistic regression:
+
+* Estimated standard error of the parameter estimator `income`: $4.985 \cdot 10^{-06}$
+* Estimated standard error of the parameter estimator `balance`: $2.274\cdot 10^{-04}$
+
+
+**6 b)** Write a function, `boot_fn()`, that takes as input the `Default` data set as well as an `index` of the observations, and that outputs the coefficient estimates for `income` and `balance` in the multiple logistic regression model.
 
 **Answer:** 
 
 ```{r}
-boot.fn <- function(data, index){
+boot_fn <- function(data, index){
     return(coef(glm(default ~ income + balance, 
                     data   = data, 
                     family = binomial, 
@@ -188,7 +204,7 @@ boot.fn <- function(data, index){
 }
 ```
 
-**6 c)** Use the `boot()` function together with your `boot.fn()` function to estimate the standard errors of the logistic regression coefficients for `income` and `balance`.
+**6 c)** Use the `boot()` function together with your `boot_fn()` function to estimate the standard errors of the logistic regression coefficients for `income` and `balance`.
 
 **Answer:** 
 
@@ -196,21 +212,25 @@ boot.fn <- function(data, index){
 # install.packages("boot")
 
 # Load the boot package
-library(boot)
+library("boot")
 
 # Set seed
 set.seed(1)
 
 # The boot package provides extensive facilities for bootstrapping 
 # and related resampling methods. 
-boot(Default, boot.fn, 100)
+boot(data = Default, statistic = boot_fn, R = 100)
 ```
 
 **6 d)** Comment on the estimated standard errors obtained using the `glm()` function and using your bootstrap function.
 
 **Answer:** 
 
-We obtain a similar std. error estimate for the balance variable (up to 1 decimal) and for the income variable (up to unity). The std errors computed using the bootstrap approach are smaller.
+
+* Estimated standard error (bootstrap version) of the parameter estimator `income`: $4.186 \cdot 10^{-06}$
+  * The bootstrap approach estimates slightly smaller std errors for `income` than the classic standard formula. 
+* Estimated standard error (bootstrap version) of the parameter estimator `balance`: $2.226\cdot 10^{-04}$
+  * The bootstrap approach and the standard formula yield essentially equal results. 
 
 
 ### Exercise 8 {-}
@@ -247,7 +267,7 @@ In this data set, what is $n$ and what is $p$? Write out the model used to gener
 plot(x,y)
 ```
 
-We can observe a quadratic relationship between $Y$ and $X$. Moreover, $X$ ranges from about $-2$ to $2$, while $Y$ ranges from about $-8$ to $2$.
+We can observe a quadratic relationship between $Y$ and $X.$ Moreover, $X$ ranges from about $-2$ to $2,$ while $Y$ ranges from about $-12$ to $2.$ The largest $Y$ values are observed for $X$ values around $0.$
 
 **8 c)** Set a random seed, and then compute the LOOCV errors that result from fitting the following four models using least squares:
 
@@ -369,5 +389,5 @@ summary(lm.fit4)
 
 **Answer:** 
 
-The $p$-values only show statistical significance of the linear and the quadratic predicor, which agrees with the CV-results.
+The $p$-values only show statistical significance of the linear and the quadratic predictor, which agrees with the CV-results.
 

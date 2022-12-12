@@ -21,7 +21,7 @@ One of the running example for this chapter: The (simulated) `Default` data set 
 Let's take a first look at the a priori default rate in this dataset:
 
 ```{r}
-suppressPackageStartupMessages(library(ISLR2))
+suppressPackageStartupMessages(library("ISLR2"))
 data(Default)
 
 n <- nrow(Default)       # sample size
@@ -694,10 +694,10 @@ for all possible threshold values (from zero to one).
 
 ```{r}
 #| label: fig-ROC
-#| fig-cap: The ROC curve traces out two types of error as we vary the threshold value for the posterior probability of default. The actual thresholds are not shown. The ideal ROC curve hugs the top left corner, indicating a high true positive rate and a low false positive rate. The dotted line represents the "no information" classifier; this is what we would expect if student status and credit card balance are not associated with probability of default.
+#| fig-cap: The ROC curve traces out two types of error as we vary the threshold value for the posterior probability of default. The actual thresholds are often not shown. Here, however, we show them using a color code from yellow [threshold = 1] to purple [threshold = 0]. The ideal ROC curve hugs the top left corner, indicating a high true positive rate and a low false positive rate. The dotted line represents the "no information" classifier; this is what we would expect if student status and credit card balance are not associated with probability of default.
 
 ## Considered thresholds (exclude the trivial 0/1 values)
-thresholds       <- seq(0, 1, length.out = 250)
+thresholds       <- seq(from = 0, to = 1, length.out = 250)
 n_thresholds     <- length(thresholds)
 
 ## Container for the predicted classes
@@ -718,28 +718,44 @@ TP_Rate <- numeric(n_thresholds)
 FP_Rate <- numeric(n_thresholds)
 
 for(j in 1:n_thresholds){
-  ## ClassPredictions for the actually positives
-  ClassPredictions4P <- PredictedDefault_mat[,j][Default$default == "Yes"]
-  ## ClassPredictions for the actually negatives
-  ClassPredictions4N <- PredictedDefault_mat[,j][Default$default == "No"]
-  ## True Positives
-  TP <- length(ClassPredictions4P[ClassPredictions4P == "Yes"])
-  ## False Positives
-  FP <- length(ClassPredictions4N[ClassPredictions4N == "Yes"])
+  ## Classification results among the actually positives
+  Classifications_among_trueYes <- PredictedDefault_mat[,j][Default$default == "Yes"]
+  ## Classification results among the actually negatives
+  Classifications_among_trueNo <- PredictedDefault_mat[,j][Default$default == "No"]
+  ## Number of True Positives
+  TP <- length(Classifications_among_trueYes[Classifications_among_trueYes == "Yes"])
+  ## Number of False Positives
+  FP <- length(Classifications_among_trueNo[Classifications_among_trueNo == "Yes"])
 
-  ## Error rates:
+  ## TP error rate:
   TP_Rate[j] <- TP/P
+  ## FP error rate:
   FP_Rate[j] <- FP/N 
 }
+
+## Layout for the plotting region (two plots side-by-side)
+layout(matrix(1:2, ncol=2), width = c(2,1),height = c(1,1))
+
+col_range <- hcl.colors(n       = n_thresholds, 
+                       palette = "viridis")
 
 ## Plot the ROC curve 
 plot(x    = FP_Rate, 
      y    = TP_Rate, 
+     col  = col_range, 
      xlab = "False Positive Rate",
      ylab = "True Positive Rate",
      main = "ROC Curve", 
-     type = "l", col = "blue", lwd=1.5)
+     type = "o", lwd=1.5, pch = 19)
 abline(a = 0, b = 1, lty = 3, col = "gray")
+
+## Color-Legend for threshold values
+legend_image <- as.raster(matrix(rev(col_range), ncol=1))
+plot(c(0,2),c(0,1), type = "n", axes = FALSE, xlab = "", ylab = "", main = 'Threshold-Value')
+text(x      = 1.5, 
+     y      = seq(from = 0, to = 1, l = 5), 
+     labels = seq(from = 0, to = 1, l=5))
+rasterImage(legend_image, xleft = 0, ybottom = 0, xright = 1, ytop = 1)
 ```
 
 
@@ -764,7 +780,7 @@ predict <- prediction(ldaPredict_obj$posterior[,2], Default$default)
 ## compute TP-Ratios and FP-Ratios:
 perform <- performance(predict, "tpr", "fpr")
 ## ROC curve
-plot(perform, colorize = FALSE)
+plot(perform, colorize = TRUE)
 ## AUC
 AUC     <- performance(predict, measure = "auc")
 print(AUC@y.values)
