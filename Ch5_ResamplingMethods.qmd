@@ -102,6 +102,7 @@ for(p in 1:p_max){
                      data = Auto_Train_df)
   ## Step 2
   y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+  ## Step 3
   RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
   MSE[p]        <- RSS_Valid / n_Valid
 }
@@ -142,6 +143,7 @@ for(r in 1:R){
                        data = Auto_Train_df)
     ## Step 2
     y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+    ## Step 3
     RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
     MSE[r,p]      <- RSS_Valid / n_Valid
   }
@@ -202,7 +204,6 @@ Codes to implement the LOOCV approach for the `Auto` data example:
 ```{r}
 #| label: fig-CV1
 #| fig-cap: LOOCV error estimates for different polynomial degrees $p.$
-set.seed(123)
 
 MSE_i      <- matrix(NA, n, p_max)
 
@@ -221,6 +222,7 @@ for(r in 1:n){
                        data = Auto_Train_df)
     ## Step 2
     y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+    ## Step 3
     MSE_i[r,p]    <- (Auto_Valid_df$mpg - y_fit_Valid)^2  
   }
 }
@@ -368,6 +370,7 @@ for(r in 1:k){
                        data = Auto_Train_df)
     ## Step 2
     y_fit_Valid    <- predict(Train_polreg, newdata = Auto_Valid_df)
+    ## Step 3
     MSE_folds[r,p] <- mean((Auto_Valid_df$mpg - y_fit_Valid)^2)
   }
 }

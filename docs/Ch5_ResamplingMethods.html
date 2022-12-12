@@ -318,16 +318,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> Auto_Train_df)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Step 2</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>( (Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span> )</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  MSE[p]        <span class="ot">&lt;-</span> RSS_Valid <span class="sc">/</span> n_Valid</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>p_max, <span class="at">y =</span> MSE, <span class="at">type =</span> <span class="st">"b"</span>, </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bg =</span> <span class="st">"black"</span>, <span class="at">pch =</span> <span class="dv">21</span>,  </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Degree of Polynomial"</span>, <span class="at">ylab =</span> <span class="st">"MSE"</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y =</span> MSE[<span class="fu">which.min</span>(MSE)], </span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(MSE)], </span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Step 3</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>( (Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span> )</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  MSE[p]        <span class="ot">&lt;-</span> RSS_Valid <span class="sc">/</span> n_Valid</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>p_max, <span class="at">y =</span> MSE, <span class="at">type =</span> <span class="st">"b"</span>, </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bg =</span> <span class="st">"black"</span>, <span class="at">pch =</span> <span class="dv">21</span>,  </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Degree of Polynomial"</span>, <span class="at">ylab =</span> <span class="st">"MSE"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y =</span> MSE[<span class="fu">which.min</span>(MSE)], </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(MSE)], </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-VA1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -361,18 +362,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> Auto_Train_df)</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 2</span></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>( (Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span> )</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    MSE[r,p]      <span class="ot">&lt;-</span> RSS_Valid <span class="sc">/</span> n_Valid</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">y =</span> <span class="fu">t</span>(MSE), <span class="at">type=</span><span class="st">"b"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>, <span class="at">xlab=</span><span class="st">"Degree of Polynomial"</span>, </span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch=</span><span class="dv">21</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">bg=</span><span class="st">"black"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">main=</span><span class="st">""</span>)</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(<span class="at">y =</span> MSE[r,][<span class="fu">which.min</span>(MSE[r,])], </span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(MSE[r,])], </span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 3</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>( (Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span> )</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    MSE[r,p]      <span class="ot">&lt;-</span> RSS_Valid <span class="sc">/</span> n_Valid</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">y =</span> <span class="fu">t</span>(MSE), <span class="at">type=</span><span class="st">"b"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>, <span class="at">xlab=</span><span class="st">"Degree of Polynomial"</span>, </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch=</span><span class="dv">21</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">bg=</span><span class="st">"black"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">main=</span><span class="st">""</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(<span class="at">y =</span> MSE[r,][<span class="fu">which.min</span>(MSE[r,])], </span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(MSE[r,])], </span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-VA2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -413,39 +415,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>Codes to implement the LOOCV approach for the <code>Auto</code> data example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>MSE_i      <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n, p_max)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>MSE_i      <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n, p_max)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Save starting time of the loop</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Training set </span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  Auto_Train_df <span class="ot">&lt;-</span> Auto[<span class="sc">-</span>r, ]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Validation set</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  Auto_Valid_df <span class="ot">&lt;-</span> Auto[r, ]</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p_max){</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 1</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    Train_polreg <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="at">degree =</span> p, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> Auto_Train_df)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 2</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    MSE_i[r,p]    <span class="ot">&lt;-</span> (Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span>  </span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Save end time of the loop</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>LOOCV  <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(MSE_i)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>p_max, <span class="at">y =</span> LOOCV, <span class="at">type =</span> <span class="st">"b"</span>, </span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bg =</span> <span class="st">"black"</span>, <span class="at">pch =</span> <span class="dv">21</span>,  </span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Degree of Polynomial"</span>, <span class="at">ylab =</span> <span class="st">"LOOCV"</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y =</span> LOOCV[<span class="fu">which.min</span>(LOOCV)], </span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(LOOCV)], </span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Save starting time of the loop</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Training set </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  Auto_Train_df <span class="ot">&lt;-</span> Auto[<span class="sc">-</span>r, ]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Validation set</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  Auto_Valid_df <span class="ot">&lt;-</span> Auto[r, ]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p_max){</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 1</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    Train_polreg <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="at">degree =</span> p, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> Auto_Train_df)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 2</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 3</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    MSE_i[r,p]    <span class="ot">&lt;-</span> (Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span>  </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Save end time of the loop</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>LOOCV  <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(MSE_i)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>p_max, <span class="at">y =</span> LOOCV, <span class="at">type =</span> <span class="st">"b"</span>, </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bg =</span> <span class="st">"black"</span>, <span class="at">pch =</span> <span class="dv">21</span>,  </span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Degree of Polynomial"</span>, <span class="at">ylab =</span> <span class="st">"LOOCV"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y =</span> LOOCV[<span class="fu">which.min</span>(LOOCV)], </span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(LOOCV)], </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-CV1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -458,7 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes<br>
 
 <center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.701 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 4.318 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -497,7 +498,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.018 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.02 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -568,20 +569,21 @@ However, the fast version takes only
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> Auto_Train_df)</span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 2</span></span>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    y_fit_Valid    <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    MSE_folds[r,p] <span class="ot">&lt;-</span> <span class="fu">mean</span>((Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Save end time of the loop</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>end_time  <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>CV_kfold  <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(MSE_folds)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>p_max, <span class="at">y =</span> CV_kfold, <span class="at">type =</span> <span class="st">"b"</span>, </span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bg =</span> <span class="st">"black"</span>, <span class="at">pch =</span> <span class="dv">21</span>,  <span class="at">main=</span><span class="st">"k-fold CV"</span>, </span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Degree of Polynomial"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"CV"</span>[k]))</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y =</span> CV_kfold[<span class="fu">which.min</span>(CV_kfold)], </span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(CV_kfold)], </span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Step 3</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    MSE_folds[r,p] <span class="ot">&lt;-</span> <span class="fu">mean</span>((Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Save end time of the loop</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>end_time  <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>CV_kfold  <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(MSE_folds)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>p_max, <span class="at">y =</span> CV_kfold, <span class="at">type =</span> <span class="st">"b"</span>, </span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bg =</span> <span class="st">"black"</span>, <span class="at">pch =</span> <span class="dv">21</span>,  <span class="at">main=</span><span class="st">"k-fold CV"</span>, </span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Degree of Polynomial"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"CV"</span>[k]))</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y =</span> CV_kfold[<span class="fu">which.min</span>(CV_kfold)], </span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p_max)[<span class="fu">which.min</span>(CV_kfold)], </span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">bg =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">21</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch5_ResamplingMethods_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
