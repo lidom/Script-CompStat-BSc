@@ -13,7 +13,7 @@ In the following, we consider the resampling methods:
 
 ## (Ch. 5.1) Cross-Validation {-}
 
-In this section, we instead consider a class of methods that estimate the
+In this section, we consider a class of methods that estimate the
 test error rate by holding out a subset of the training observations from the fitting process, and then applying the statistical learning method to those held out observations.
 
 
@@ -56,8 +56,9 @@ n        <- nrow(Auto)    # Sample size
 n_Train  <- 200           # Sample size of training set 
 n_Valid  <- n - n_Train   # Sample size of test/validation set 
 
+set.seed(1234) 
+
 ## Index-Sets for selecting the training and validation sets
-set.seed(1234) # set seed for reproducible training and validation sets
 I_Train  <- sample(x = 1:n, size = n_Train, replace = FALSE)
 I_Valid  <- c(1:n)[-I_Train]
 
@@ -92,7 +93,7 @@ Repeating Steps 1-3 for a series of polynomial degrees $p=1,\dots,10$ allows us 
 
 ```{r}
 #| label: fig-VA1
-#| fig-cap: Validation error estimates for a single split into training and validation data sets. This result suggests that $p=9$ minimizes the test MSE.
+#| fig-cap: Validation error estimates for a single split into training and validation data sets. This result suggests that $p=9$ minimizes the test MSE; however, the test MSE values for polynomial degrees from $p=2$ to $p=10$ are all of comparable order of magnitude.
 p_max         <- 10
 MSE           <- numeric(p_max)
 for(p in 1:p_max){
@@ -158,7 +159,7 @@ for(r in 1:R){
 
 @fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
 
-A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ computed from the training set, where, however, the training set sample size $n_{Train}$ is typically substantially smaller than the actual sample size $n.$ This leads to **increased test MSE values** which do not reflect the actual test MSE values under the total sample size $n>n_{Train}.$
+A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ computed from the training set, where, however, the training set sample size $n_{Train}$ is typically substantially smaller than the actual sample size $n.$ This leads to **increased (i.e. biased) test MSE values** which do not reflect the actual test MSE values for the total sample size $n.$
 
 Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation set approach that addresses these issues. 
 
@@ -171,7 +172,7 @@ However, instead of creating two subsets of comparable size, a **single** observ
 * **Training set:** $\{(x_1,y_1),\dots,(x_{i-1},y_{i-1}),(x_{i+1},y_{i+1}),\dots,(x_{n},y_{n})\}$ with $n_{Train}=n-1$
 * **Test set:** $\{(x_i,y_i)\}$ with $n_{Test}=1$ 
 
-The estimate for the test MSE is thus
+The $i$th estimate for the test MSE is thus
 $$
 \operatorname{MSE}_i = \left(y_i - \hat{y}_i\right)^2,
 $$
@@ -194,10 +195,10 @@ Figure 5.3 shows schematically the leave-one-out data splitting approach.
 
 Advantages of CV over the Validation Set approach: 
 
-1. Lower bias. Since LOOCV uses\operatorname{LOOCV}= estimates based on training sets with sample sizes $n-1 \approx n,$ LOOCV does not overestimate the test error rate as much the validation set approach does. 
-2. Performing CV multiple times, always yields the same result. I.e., there is no randomness in the training/validation set splits as in the validation set approach.
+1. Lower bias. Since the test MSE estimates are based on training sets with sample sizes $n_{Train}=n-1 \approx n,$, LOOCV does not overestimate the test error rate as much the validation set approach does. 
+2. Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/validation set splits as seen for the validation set approach.
 
-
+Codes to implement the LOOCV approach for the `Auto` data example: 
 ```{r}
 #| label: fig-CV1
 #| fig-cap: LOOCV error estimates for different polynomial degrees $p.$
@@ -237,12 +238,11 @@ points(y = LOOCV[which.min(LOOCV)],
 ```
 
 
-LOOCV has the potential to be expensive to implement, since the model
-has to be fit $n$ times. Indeed the above code represents a naive implementation of LOOCV for least squares fits of linear/polynomial regression models and takes  
+LOOCV has the potential to be **computationally expensive**, since the model has to be fit $n$ times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes  
 <center>
 `end_time`$-$`start_time` $=$ `r round(end_time-start_time,3)` seconds
 </center>
-for the computations. 
+for the computations which is quite long. 
 
 Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula
 $$
@@ -251,12 +251,12 @@ $${#eq-CVfast}
 where 
 
 * $\hat{y}_i$ is the $i$th fitted value from the *original least squares fit,* based on the total sample size $n,$ and 
-* $h_i$ is the leverage statistic for the $i$th observation 
+* $h_i$ is the leverage statistic for the $i$th observation, i.e. 
 $$
-h_i=\left[X(X'X)^{-1}X'\right]_{ii}
+h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 $$
 
-The follow codes implement this fast LOOCV version:
+The following codes implement this fast LOOCV version:
 ```{r}
 
 LOOCV_fast <- numeric(p_max)
@@ -276,6 +276,8 @@ end_time2 <- Sys.time()
 
 Indeed, both approaches yield the same LOOCV values 
 ```{r}
+## Minimal absolute difference between 
+## the naive and the fast implementation: 
 round(max(abs(LOOCV - LOOCV_fast)), 3)
 ```
 However, the fast version takes only 
@@ -296,7 +298,7 @@ predictive modeling; e.g.
 and any statistical prediction method discussed in the lecture or in our textbook `ISLR2`. 
 
 
-**Caution:** @eq-CVfast does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.  
+**Caution:** The fast LOOCV @eq-CVfast does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.  
 
 ## (Ch. 5.1.3) $k$-Fold Cross-Validation {-}
 
@@ -336,7 +338,7 @@ Figure 5.5 illustrates the data splitting for $k$-fold CV.
 * Faster computation times ($k=5$ instead of $k=n$ model fits)
 * Improved estimates of the test MSE (see next section)
 
-
+The following codes illustrate $k$-fold CV:
 ```{r}
 set.seed(123)
 
@@ -389,25 +391,31 @@ There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold
 
 <!-- A small $k$ leads to biased test MSE estimates (systematic overestimations). -->
 
-* Small $k\approx 1$ lead to test MSE estimates with large **bias**
-* Large $k\approx n$ lead to test MSE estimates with small **bias**
+**Bias:**
 
-**Explanation:** 
+* Small $k$ lead to test MSE estimates with large **bias**
+* Large $k$ lead to test MSE estimates with small **bias**
 
-* A small $k\approx 1$ value leads to trainings sets with samples sizes $n_{Train}= n - n/k \ll n$ substantially smaller than the actual sample size $n.$ Thus, we estimate the MSE for a sample size that is substantially smaller than the sample size $n$ we are actually interested in. This leads to systematic overestimations of the actual test MSE for sample size $n.$ 
+*Explanation:*
 
-* A large $k\approx n$ reduces this bias since $n_{Train}\approx n.$ Thus we estimate essentially the actual test MSE for sample size $n.$ 
+* A small $k$ leads to trainings sets with samples sizes $n_{Train} \ll n$ substantially smaller than the actual sample size $n.$ Thus, we estimate the MSE for a sample size that is substantially smaller than the sample size $n$ we are actually interested in. This leads to systematic overestimations of the actual test MSE for sample size $n.$ 
 
-* Small $k\approx 1$ lead to test MSE estimates with small **variance**
-* Large $k\approx n$ lead to test MSE estimates with large **variance**
+* A large $k$ reduces this bias since $n_{Train}\approx n.$ Thus we estimate essentially the actual test MSE for sample size $n.$ 
 
-**Explanation:** In $k$-fold CV, the training sets overlap pairwise by roughly $((k-2)/k)\times 100 \%$. 
 
-* For $k=2$ (Validation Set approach) there is no overlap since there is only one training set.
-* For $k=5$ ($k$-fold CV) approximately $(k-2)/k=(3/5)=60\%$ of the training data points are equal in each pair of training sets.
-* For $k=n=100$ (LOOCV) $(n-2)/n=98\%$ of the training data points are equal in each pair of trainings sets. 
+**Variance:**
 
-Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates. Since the mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
+* Small $k$ lead to test MSE estimates with small **variance**
+* Large $k$ lead to test MSE estimates with large **variance**
+
+*Explanation:* 
+
+* In $k$-fold CV, the training sets overlap pairwise by roughly $((k-2)/k)\times 100 \%$. 
+  * For $k=2$ there is no overlap. 
+  * For $k=5$ ($k$-fold CV) approximately $(k-2)/k=(3/5)=60\%$ of the training data points are equal in each pair of training sets.
+  * For $k=n$ (LOOCV) approximately $(n-2)/n=98\%$ of the training data points are equal in each pair of trainings sets. 
+
+Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates. Since the mean of highly correlated quantities has higher variance than does the mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
 
 $k$-fold CV with $k=5$ or $k=10$ is often considered a good compromise balancing these bias and variance issues. 
 
@@ -430,7 +438,7 @@ rate.
 
 We can, for instance, determine the degree $d$ in logistic regression models
 $$
-\left(\frac{p}{1-p}\right)=\beta_0 +\sum_{j=1}^d X_j^d 
+\log\left(\frac{p(X)}{1-p(X)}\right)=\beta_0 +\sum_{j=1}^d X_j^d 
 $$
 by selecting that polynomial degree that minimizes the CV error rate.
 
