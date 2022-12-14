@@ -469,11 +469,25 @@ One can show that the value $\alpha$ that minimizes this variance is
 $$
 \alpha = \frac{\sigma^2_Y - \sigma_{XY}}{\sigma^2_X + \sigma^2_Y - 2\sigma_{XY}}.
 $${#eq-alpha}
-Using a data set that contains past measurements for $X$ and $Y,$ we can estimate the unknown $\alpha$ by plugging in estimates of the variances and covariances
+Using a data set that contains past measurements 
 $$
-\hat\alpha = \frac{\hat\sigma^2_Y - \hat\sigma_{XY}}{\hat\sigma^2_X + \hat\sigma^2_Y - 2\hat\sigma_{XY}}.
+((X_1,Y_1),\dots,(X_n,Y_n))
+$$
+for $X$ and $Y,$ we can estimate the unknown $\alpha$ by plugging in estimates of the variances and covariances
+$$
+\hat\alpha = \frac{\hat\sigma^2_Y - \hat\sigma_{XY}}{\hat\sigma^2_X + \hat\sigma^2_Y - 2\hat\sigma_{XY}}
 $${#eq-alphahat}
-It is natural to wish to quantify the accuracy of our estimate of $\hat\alpha\approx \alpha.$ I.e., to wish to know the standard error of the estimator  
+with 
+$$
+\begin{align*}
+\hat{\sigma}^2_X&=\frac{1}{n}\sum_{i=1}^n\left(X_i-\bar{X}\right)^2\\ 
+\hat{\sigma}^2_Y&=\frac{1}{n}\sum_{i=1}^n\left(Y_i-\bar{Y}\right)^2\\ 
+\hat{\sigma}_{XY}&=\frac{1}{n}\sum_{i=1}^n\left(X_i-\bar{X}\right)\left(Y_i-\bar{Y}\right),
+\end{align*}
+$$
+where $\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i,$ and likewise for $\bar{Y}.$
+
+It is natural to wish to quantify the accuracy of our estimate $\hat\alpha\approx \alpha.$ I.e., we wish to know the standard error of the estimator $\hat\alpha$, 
 $$
 \sqrt{Var(\hat\alpha)} = \operatorname{SE}(\hat\alpha)=?
 $$
@@ -489,10 +503,10 @@ $$
 where $F_{(X,Y)}$ is the distribution function of the bi-variate normal distribution
 $$
 \mathcal{N}\left(\left(\begin{matrix}0\\0\end{matrix}\right),\left[\begin{matrix}\sigma_X^2&\sigma_{XY}\\\sigma_{XY}&\sigma_{Y}^2\end{matrix}\right]\right).
-$$
+$${#eq-MCDistr}
 If this were true, i.e., if we would know the true population distribution of $X$ and $Y,$ we could simply generate a new dataset containing new observations for $X$ and $Y$ that allows us to compute a new estimate $\hat\alpha.$ 
 
-Repeatedly generating new datasets by sampling new observations from the true population distribution, for instance, $B=1000$ many times, would allow us to compute $B=1000$ estimates  
+Repeatedly generating new datasets $((X_1,Y_1),\dots,(X_n,Y_n))$ by sampling new observations from the (here assumed) true population distribution @eq-MCDistr, for instance, $B=1000$ many times, would allow us to compute $B=1000$ estimates  
 $$
 \hat\alpha_1,\;\hat\alpha_2,\dots,\hat\alpha_{B}.
 $$
@@ -504,16 +518,16 @@ is then a very good estimate of the (unknown) true $\operatorname{SE}(\hat\alpha
 
 Indeed, by the law of large numbers this sample standard deviation consistently estimates the true $\operatorname{SE}(\hat\alpha)$ as $B\to\infty,$ provided that we sample from the **true** population distribution $F_{(X,Y)}.$ 
 
-Some codes for doing this:
-
+`R` code for doing this Monte Carlo simulation:
 ```{r}
 suppressPackageStartupMessages(library("MASS")) # for mvrnorm()
 
 n        <- 100 # sample size
 
-## The (usually unknown) population distribution of (X,Y) ~ F_XY
-
-## F_XY: Bi-variate normal distribution with the following parameters: 
+## Next: Defining the (usually unknown) population 
+## distribution of (X,Y) ~ F_XY, where F_XY is 
+## assumed to be a Bi-variate normal distribution 
+## with the following parameters: 
 mu_X     <- 0
 mu_Y     <- 0
 
@@ -524,8 +538,9 @@ sigma_XY <- 1
 Sigma    <- rbind(c(sigma2_X, sigma_XY), 
                   c(sigma_XY, sigma2_Y))
 
+
 ## The true (usually unknown) alpha value: 
-alpha    <- (sigma2_Y - sigma_XY) / (sigma2_X + sigma2_X - 2 * sigma_XY)                  
+alpha_true  <- (sigma2_Y - sigma_XY) / (sigma2_X + sigma2_X - 2 * sigma_XY)                  
 
 
 ## Infeasible Bootstrap (i.e. a Monte Carlo (MC) Simulation)
