@@ -227,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resampling Methods</span></h1>
+<h1 class="title"><span id="sec-resamplingmethods" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></h1>
 </div>
 
 
@@ -459,7 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes<br>
 
 <center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 4.318 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.896 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -498,7 +498,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.02 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.022 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -630,7 +630,7 @@ However, the fast version takes only
 <p>Analogously for the <span class="math inline">\(k\)</span>-fold CV error rate and the validation set error rate.</p>
 <p>We can, for instance, determine the degree <span class="math inline">\(d\)</span> in logistic regression models <span class="math display">\[
 \log\left(\frac{p(X)}{1-p(X)}\right)=\beta_0 +\sum_{j=1}^d X_j^d
-\]</span> by selecting that polynomial degree that minimizes the CV error rate.</p>
+\]</span> by selecting that polynomial degree <span class="math inline">\(d\)</span> that minimizes the CV error rate.</p>
 <p>Likewise, one can select the tuning parameter <span class="math inline">\(K\)</span> in KNN classification by minimizing the CV error rate across different candidate values for <span class="math inline">\(K.\)</span></p>
 </section>
 </section>

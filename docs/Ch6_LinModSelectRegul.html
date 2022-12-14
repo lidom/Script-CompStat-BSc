@@ -198,7 +198,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#r-lab-linear-model-selection-and-regularization" id="toc-r-lab-linear-model-selection-and-regularization" class="nav-link active" data-scroll-target="#r-lab-linear-model-selection-and-regularization"><span class="toc-section-number">6.1</span>  <code>R</code>-Lab: Linear Model Selection and Regularization</a>
+  <li><a href="#ch.-6.1-subset-selection" id="toc-ch.-6.1-subset-selection" class="nav-link active" data-scroll-target="#ch.-6.1-subset-selection">(Ch. 6.1) Subset Selection</a>
+  <ul class="collapse">
+  <li><a href="#ch.-6.1.1-best-subset-selection" id="toc-ch.-6.1.1-best-subset-selection" class="nav-link" data-scroll-target="#ch.-6.1.1-best-subset-selection">(Ch. 6.1.1) Best Subset Selection</a></li>
+  </ul></li>
+  <li><a href="#r-lab-linear-model-selection-and-regularization" id="toc-r-lab-linear-model-selection-and-regularization" class="nav-link" data-scroll-target="#r-lab-linear-model-selection-and-regularization"><span class="toc-section-number">6.1</span>  <code>R</code>-Lab: Linear Model Selection and Regularization</a>
   <ul class="collapse">
   <li><a href="#subset-selection-methods" id="toc-subset-selection-methods" class="nav-link" data-scroll-target="#subset-selection-methods"><span class="toc-section-number">6.1.1</span>  Subset Selection Methods</a></li>
   <li><a href="#ridge-regression-and-the-lasso" id="toc-ridge-regression-and-the-lasso" class="nav-link" data-scroll-target="#ridge-regression-and-the-lasso"><span class="toc-section-number">6.1.2</span>  Ridge Regression and the Lasso</a></li>
@@ -227,6 +231,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>In this chapter, we revisit the linear regression model <span class="math display">\[
+Y = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \epsilon.
+\]</span> In Chapter <a href="Ch3_LinearRegression.html"><span>Chapter&nbsp;3</span></a>, we focused on fitting a given linear regression model using least squares and completely ignored the model selection process. However, selecting a “good” model is itself a statistical problem which we need to solve using reliable statistical procedures. In this chapter, we consider fitting procedures that integrate the model selection process.</p>
+<p>We discuss three important classes of methods:</p>
+<ul>
+<li><strong>Subset Selection.</strong> This approach involves identifying a subset of the <span class="math inline">\(p\)</span> predictors (from a large set of potential predictors) that we believe to be related to the response <span class="math inline">\(Y\)</span>. We then fit a model using least squares on the identified subset of predictors.</li>
+<li><strong>Shrinkage/Regularization.</strong> This approach involves fitting a model involving all <span class="math inline">\(p\)</span> predictors—possibly with <span class="math inline">\(p\gg n\)</span>, where least squares does not work anymore. However, the coefficient estimates are shrunken towards zero relative to the least squares estimates. This shrinkage (also known as regularization) has the effect of reducing variance, but increasing bias. Depending on what type of shrinkage is performed, some of the coefficients may be estimated to be exactly zero. In this case, shrinkage methods can also perform variable selection.</li>
+<li><strong>Dimension Reduction.</strong> This approach involves projecting the <span class="math inline">\(p\)</span> predictors into an <span class="math inline">\(M\)</span>-dimensional subspace, where <span class="math inline">\(M&lt;p\)</span>. Then these <span class="math inline">\(M\)</span> projections are used as predictors to fit a linear regression model by least squares.</li>
+</ul>
+<!-- This is achieved by computing $M$ different linear combinations, or projections, of the variables.  -->
+<section id="ch.-6.1-subset-selection" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ch.-6.1-subset-selection">(Ch. 6.1) Subset Selection</h2>
+<p>In the following, we consider linear models with some large set of <span class="math inline">\(p\)</span> many potentially relevant predictors <span class="math inline">\(X=(X_1,\dots,X_{p}),\)</span> <span id="eq-modelLarge"><span class="math display">\[
+\begin{align*}
+Y
+&amp;=\mathcal{M}_{p}(X) + \epsilon\\
+&amp;=\beta_0 + \beta_1 X_1 + \dots + \beta_p X_{p} + \epsilon,
+\end{align*}
+\tag{6.1}\]</span></span> where <span class="math inline">\(Var(\epsilon)=\sigma^2,\)</span> and where <span class="math inline">\(\epsilon\)</span> is independent of the predictors <span class="math inline">\(X.\)</span></p>
+<p>Let’s assume that only <span class="math inline">\(k\leq p\)</span> many predictors in <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a> are actually relevant having non-zero slope coefficients <span class="math inline">\(|\beta_j|&gt;0,\)</span> and let denote the index set of these relevant predictors by<br>
+<span class="math display">\[
+\mathcal{I}^*_{k^*}\subset\{1,2,\dots,p\}\quad\text{with}\quad |\mathcal{I}^*_{k^*}|=k^*\leq p.
+\]</span></p>
+<p>In (linear) model selection, one often aims to select the sub-model <span class="math display">\[
+\mathcal{M}_{\mathcal{I}^*_{k^*}}(X)=\beta_0 + \sum_{j\in\mathcal{I}^*_{k^*}}\beta_j X_j
+\]</span> containing all relevant predictors with coefficients <span class="math inline">\(|\beta_j|&gt;0.\)</span></p>
+<p><!-- which contains all predictors with non-zero slope coefficients and no predictor with a zero slope coefficient.  --></p>
+<!-- In the following we will make use of **information criteria**  -->
+<p>A first idea may be to select candidate models <span class="math inline">\(\mathcal{M}_{\mathcal{I}_k}(X)\)</span> by maximizing the fit to the data; i.e.&nbsp;by maximizing the <span class="math inline">\(R^2\)</span> or equivalently by minimizing the Residual Sum of Squares (RSS), <span class="math display">\[
+\begin{align*}
+\operatorname{RSS}_k&amp;=\sum_{i=1}^n\left(y_i - \widehat{\mathcal{M}}_{\mathcal{I}_k}(X)\right)^2\\
+%R^2_p &amp;=1-\frac{\operatorname{RSS}_p}{TSS}\\
+\widehat{\mathcal{M}}_{\mathcal{I}_k}(X) &amp; = \hat\beta_0 + \sum_{j\in\mathcal{I}_k}\hat\beta_j X_j,  
+%TSS&amp;=\sum_{i=1}^n\left(y_i - \bar{y}\right)^2.
+\end{align*}
+\]</span> where <span class="math inline">\(\mathcal{I}_k\)</span> is some candidate sub-set <span class="math inline">\(\mathcal{I}_k\subset\{1,2,\dots,p\}\)</span> with <span class="math inline">\(|\mathcal{I}_k|=k\leq p.\)</span></p>
+<p>While this strategy can be used for selecting the best fitting model among all <span class="math display">\[
+\binom{p}{k}=\frac{p!}{k!(n-k)!}
+\]</span> the models with <span class="math inline">\(k\)</span> parameters, it fails to select the best fitting model with different numbers of parameters. Indeed, one can show that the “fit” of the model can be always increased by adding more predictors; i.e.&nbsp;<span class="math inline">\(\operatorname{RSS}_k\geq \operatorname{RSS}_{k'}\)</span> for <span class="math inline">\(k&lt;k'.\)</span></p>
+<p>Thus, we need alternative criteria to choose between models with different numbers of regressors <span class="math inline">\(k\neq k'\)</span>. One option is to choose the model with the lower Cross-Validation (CV) error (see <a href="Ch5_ResamplingMethods.html"><span>Chapter&nbsp;5</span></a>) which however can be computationally expensive. Alternatively, we can use information criteria such as Mellow’s <span class="math inline">\(C_p\)</span>, Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC), and adjusted <span class="math inline">\(R^2\)</span>. These are discussed in more detail in Chapter 6. We can also deter-</p>
+<p>which are fast to compute (no splits into training and test data needed).</p>
+<section id="mellows-c_p" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="mellows-c_p">Mellow’s <span class="math inline">\(C_p\)</span></h4>
+<p><span id="eq-MCp"><span class="math display">\[
+C_p \equiv C_p(k) \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
+\tag{6.2}\]</span></span> where <span class="math inline">\(\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))\)</span> is the sample variance of the residuals from the large model <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a> with all <span class="math inline">\(p\)</span> predictors, and where <span class="math inline">\(\operatorname{RSS}_k\)</span> are the RSS of the estimated model <span class="math inline">\(\widehat{\mathcal{M}}_{\mathcal{I}_k}(X)\)</span> with <span class="math inline">\(k\leq p\)</span> predictors. Under certain regularity assumptions, one can show that <span class="math inline">\(C_p\)</span> is an unbiased estimate of the test MSE. Thus, the best model is the one with the lowest <span class="math inline">\(C_p\)</span> value.</p>
+</section>
+<section id="the-aic" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-aic">The AIC</h4>
+<p>The AIC is defined for a large class of models fit by maximum likelihood. If the error terms in the linear regression model <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a> are Gaussian, maximum likelihood and least squares estimation are equivalent. In this case AIC is given by <span class="math display">\[
+\operatorname{AIC} \equiv \operatorname{AIC}(k) = \frac{1}{n}\left(\operatorname{RSS}_k + 2 k\hat\sigma^2\right),
+\]</span> where <span class="math inline">\(\hat\sigma^2\)</span> is defined as in <a href="#eq-MCp">Equation&nbsp;<span>6.2</span></a>. Note that the above formula for the AIC omits constants that are irrelevant for choosing between models. Hence for least squares the AIC and Mellow’s <span class="math inline">\(C_p\)</span> are proportional to each other, and thus lead to the same model choices.</p>
+</section>
+<section id="the-bic" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-bic">The BIC</h4>
+<p><span class="math display">\[
+\operatorname{BIC} \equiv \operatorname{BIC}(k) = \frac{1}{n}\left(\operatorname{RSS}_k + \log(n)2 k\hat\sigma^2\right)
+\]</span> where <span class="math inline">\(\hat\sigma^2\)</span> is defined as in <a href="#eq-MCp">Equation&nbsp;<span>6.2</span></a>.</p>
+</section>
+<section id="the-adjusted-r2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-adjusted-r2">The adjusted <span class="math inline">\(R^2\)</span></h4>
+<p><span class="math display">\[
+\operatorname{adjusted } R^2 \equiv (\operatorname{adjusted } R^2)(k) = 1-\frac{\operatorname{RSS}_k/(n-k-1)}{\operatorname{TSS}/(n-1)},
+\]</span> where <span class="math inline">\(\operatorname{TSS}=\sum_{i=1}^n\left(y_i - \bar{y}\right)^2.\)</span></p>
+<!-- Since $\mathcal{I}^*_{k^*}\subset \mathcal{I}_p$, $\hat\sigma^2$ is an unbiased estimator of $\sigma^2$, i.e.
+$$
+E(\hat\sigma^2) = \sigma^2.
+$$
+
+Moreover, for every large enough index set $\mathcal{I}_k$ such that $\mathcal{I}^*_{k^*}\subset \mathcal{I}_k$, we have that  -->
+<!-- , $k^*\leq k$ -->
+<!-- $$
+E(RSS_k) = (n-k)\sigma^2
+$$
+and thus $C_p$ estimates 
+$$
+\begin{align*}
+E(C_p) 
+& = \frac{1}{n}\left( (n-k)\sigma^2 + 2k\sigma^2\right)\\ 
+& = \frac{1}{n}\left( n\sigma^2 +  k\sigma^2\right)\\ 
+& = \sigma^2 +  \frac{k}{n}\sigma^2
+\end{align*}
+$$  -->
+<!-- 
+ how well a model fits the training data. One can show that RSS is monotonically decreasing in $p$ and correspondingly that $R^2$ is monotonically increasing in $p$. Thus, if we aim to select the model giving the smallest RSS or larges $R^2$, the model including all potential predictors would always be selected---even when many of the predictors are non-informative, nonsense predictors. 
+
+The following information criteria include penalization terms for the number of parameters $p$ used in the model. Thus, we can use them to select models with different numbers of predictors $p$. 
+
+Mellow's $C_p$:
+$$
+C_p=\frac{1}{n}\left(RSS + p\hat\sigma^2\right),
+$$
+where $\hat\sigma^2=\frac{1}{n-p_{\max}}\sum_{i=1}^n(y_i - \hat{y}_{i,p_{\max}})$ with $\hat{y}_{i,p_{\max}}$ being the fitted value from the linear regression with all $p_{\max}$ potential predictors included. 
+
+
+
+Akaike information criterion (AIC) -->
+</section>
+<section id="ch.-6.1.1-best-subset-selection" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ch.-6.1.1-best-subset-selection">(Ch. 6.1.1) Best Subset Selection</h3>
+<p><strong>Algorithm: Best Subset Selection:</strong></p>
+<ol type="1">
+<li>Initialization: Let <span class="math inline">\(\mathcal{M}_0\)</span> denote the <em>null model</em> <span class="math inline">\(f(X)=\beta_0\)</span> containing no predictors, except the intercept. (This model predicts each observed outcome by the total sample mean.)</li>
+<li>For <span class="math inline">\(k=1,2,\dots,p:\)</span></li>
+</ol>
+<ol type="a">
+<li>Fit all <span class="math inline">\(\binom{p}{k}\)</span> models that contain exactly <span class="math inline">\(k\)</span> predictors.</li>
+<li>Pick the “best” among these <span class="math inline">\(\binom{p}{k}\)</span> models, and call it <span class="math inline">\(\mathcal{M}_k\)</span>. Here “best” is defined as having smallest RSS, or equivalently larges <span class="math inline">\(R^2.\)</span></li>
+</ol>
+</section>
+</section>
 <section id="r-lab-linear-model-selection-and-regularization" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="r-lab-linear-model-selection-and-regularization"><span class="header-section-number">6.1</span> <code>R</code>-Lab: Linear Model Selection and Regularization</h2>
 <section id="subset-selection-methods" class="level3" data-number="6.1.1">

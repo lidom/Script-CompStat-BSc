@@ -1,4 +1,4 @@
-# Resampling Methods
+# Resampling Methods {#sec-resamplingmethods}
 
 ## Lecture Notes
 
@@ -436,14 +436,13 @@ $$
 $$
 with $I(\texttt{TRUE})=1$ and $I(\texttt{FALSE})=0.$
 
-Analogously for the $k$-fold CV error rate and the validation set error
-rate.
+Analogously for the $k$-fold CV error rate and the validation set error rate.
 
 We can, for instance, determine the degree $d$ in logistic regression models
 $$
 \log\left(\frac{p(X)}{1-p(X)}\right)=\beta_0 +\sum_{j=1}^d X_j^d 
 $$
-by selecting that polynomial degree that minimizes the CV error rate.
+by selecting that polynomial degree $d$ that minimizes the CV error rate.
 
 Likewise, one can select the tuning parameter $K$ in KNN classification by minimizing the CV error rate across different candidate values for $K.$
 
@@ -454,9 +453,7 @@ The bootstrap is a widely applicable and powerful statistical tool to quantify t
 
 #### Illustration {-}
 
-Suppose that we wish to invest a fixed sum of money in two financial
-assets that yield returns of $X$ and $Y.$ These returns $X$ and $Y$ are
-random with 
+Suppose that we wish to invest a fixed sum of money in two financial assets that yield returns of $X$ and $Y.$ These returns $X$ and $Y$ are random with 
 
 * $Var(X)=\sigma^2_X$
 * $Var(Y)=\sigma^2_Y$ 

@@ -1,5 +1,164 @@
 # Linear Model Selection and Regularization
 
+In this chapter, we revisit the linear regression model 
+$$
+Y = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \epsilon.
+$$
+In Chapter @sec-linearRegCh, we focused on fitting a given linear regression model using least squares and completely ignored the model selection process. However, selecting a "good" model is itself a statistical problem which we need to solve using reliable statistical procedures. In this chapter, we consider fitting procedures that integrate the model selection process. 
+
+
+We discuss three important classes of methods:
+
+* **Subset Selection.** This approach involves identifying a subset of the $p$ predictors (from a large set of potential predictors) that we believe to be related to the response $Y$. We then fit a model using least squares on the identified subset of predictors.
+* **Shrinkage/Regularization.** This approach involves fitting a model involving all $p$ predictors---possibly with $p\gg n$, where least squares does not work anymore. However, the coefficient estimates are shrunken towards zero relative to the least squares estimates. This shrinkage (also known as regularization) has the effect of reducing variance, but increasing bias. Depending on what type of shrinkage is performed, some of the coefficients may be estimated to be exactly zero. In this case, shrinkage methods can also perform variable selection.
+* **Dimension Reduction.** This approach involves projecting the $p$ predictors into an $M$-dimensional subspace, where $M<p$. Then these $M$ projections are used as predictors to fit a linear regression model by least squares.
+
+<!-- This is achieved by computing $M$ different linear combinations, or projections, of the variables.  -->
+
+
+## (Ch. 6.1) Subset Selection {-}
+
+
+In the following, we consider linear models with some large set of $p$ many potentially relevant predictors $X=(X_1,\dots,X_{p}),$
+$$
+\begin{align*}
+Y 
+&=\mathcal{M}_{p}(X) + \epsilon\\
+&=\beta_0 + \beta_1 X_1 + \dots + \beta_p X_{p} + \epsilon,
+\end{align*}
+$${#eq-modelLarge}
+where $Var(\epsilon)=\sigma^2,$ and where $\epsilon$ is independent of the predictors $X.$ 
+
+
+Let's assume that only $k\leq p$ many predictors in @eq-modelLarge are actually relevant having non-zero slope coefficients $|\beta_j|>0,$ and let denote the index set of these relevant predictors by  
+$$
+\mathcal{I}^*_{k^*}\subset\{1,2,\dots,p\}\quad\text{with}\quad |\mathcal{I}^*_{k^*}|=k^*\leq p.
+$$
+
+In (linear) model selection, one often aims to select the sub-model 
+$$
+\mathcal{M}_{\mathcal{I}^*_{k^*}}(X)=\beta_0 + \sum_{j\in\mathcal{I}^*_{k^*}}\beta_j X_j
+$$ 
+containing all relevant predictors with coefficients $|\beta_j|>0.$
+
+ <!-- which contains all predictors with non-zero slope coefficients and no predictor with a zero slope coefficient.  -->
+
+<!-- In the following we will make use of **information criteria**  -->
+
+A first idea may be to select candidate models $\mathcal{M}_{\mathcal{I}_k}(X)$ by maximizing the fit to the data; i.e. by maximizing the $R^2$ or equivalently by minimizing the Residual Sum of Squares (RSS), 
+$$
+\begin{align*}
+\operatorname{RSS}_k&=\sum_{i=1}^n\left(y_i - \widehat{\mathcal{M}}_{\mathcal{I}_k}(X)\right)^2\\ 
+%R^2_p &=1-\frac{\operatorname{RSS}_p}{TSS}\\ 
+\widehat{\mathcal{M}}_{\mathcal{I}_k}(X) & = \hat\beta_0 + \sum_{j\in\mathcal{I}_k}\hat\beta_j X_j,  
+%TSS&=\sum_{i=1}^n\left(y_i - \bar{y}\right)^2.
+\end{align*}
+$$ 
+where $\mathcal{I}_k$ is some candidate sub-set $\mathcal{I}_k\subset\{1,2,\dots,p\}$ with $|\mathcal{I}_k|=k\leq p.$
+
+While this strategy can be used for selecting the best fitting model among all
+$$
+\binom{p}{k}=\frac{p!}{k!(n-k)!}
+$$
+the models with $k$ parameters, it fails to select the best fitting model with different numbers of parameters. Indeed, one can show that the "fit" of the model can be always increased by adding more predictors; i.e. $\operatorname{RSS}_k\geq \operatorname{RSS}_{k'}$ for $k<k'.$ 
+
+
+Thus, we need alternative criteria to choose between models with different numbers of regressors $k\neq k'$. One option is to choose the model with the lower Cross-Validation (CV) error (see @sec-resamplingmethods) which however can be computationally expensive. Alternatively, we can use information criteria such as Mellow's $C_p$, Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC), and adjusted
+$R^2$. These are discussed in more detail in Chapter 6. We can also deter-
+
+
+ which are fast to compute (no splits into training and test data needed). 
+
+#### Mellow's $C_p$ {-}
+
+$$
+C_p \equiv C_p(k) \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
+$${#eq-MCp}
+where 
+$\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))$ 
+is the sample variance of the residuals from the large model @eq-modelLarge with all $p$ predictors, and where $\operatorname{RSS}_k$ are the RSS of the estimated model $\widehat{\mathcal{M}}_{\mathcal{I}_k}(X)$ with $k\leq p$ predictors. Under certain regularity assumptions, one can show that $C_p$ is an unbiased estimate of the test MSE. Thus, the best model is the one with the lowest $C_p$ value. 
+
+
+#### The AIC {-}
+
+The AIC is defined for a large class of models fit by maximum likelihood. If the error terms in the linear regression model @eq-modelLarge are Gaussian, maximum likelihood and least squares estimation are equivalent. In this case AIC is given by
+$$
+\operatorname{AIC} \equiv \operatorname{AIC}(k) = \frac{1}{n}\left(\operatorname{RSS}_k + 2 k\hat\sigma^2\right),
+$$
+where $\hat\sigma^2$ is defined as in @eq-MCp. Note that the above formula for the AIC omits constants that are irrelevant for choosing between models. Hence for least squares the AIC and Mellow's $C_p$ are proportional to each other, and thus lead to the same model choices. 
+
+#### The BIC {-}
+
+$$
+\operatorname{BIC} \equiv \operatorname{BIC}(k) = \frac{1}{n}\left(\operatorname{RSS}_k + \log(n)2 k\hat\sigma^2\right)
+$$
+where $\hat\sigma^2$ is defined as in @eq-MCp. 
+
+#### The adjusted $R^2$ {-}
+
+$$
+\operatorname{adjusted } R^2 \equiv (\operatorname{adjusted } R^2)(k) = 1-\frac{\operatorname{RSS}_k/(n-k-1)}{\operatorname{TSS}/(n-1)},
+$$
+where $\operatorname{TSS}=\sum_{i=1}^n\left(y_i - \bar{y}\right)^2.$
+
+
+
+
+
+<!-- Since $\mathcal{I}^*_{k^*}\subset \mathcal{I}_p$, $\hat\sigma^2$ is an unbiased estimator of $\sigma^2$, i.e.
+$$
+E(\hat\sigma^2) = \sigma^2.
+$$
+
+Moreover, for every large enough index set $\mathcal{I}_k$ such that $\mathcal{I}^*_{k^*}\subset \mathcal{I}_k$, we have that  -->
+
+<!-- , $k^*\leq k$ -->
+
+<!-- $$
+E(RSS_k) = (n-k)\sigma^2
+$$
+and thus $C_p$ estimates 
+$$
+\begin{align*}
+E(C_p) 
+& = \frac{1}{n}\left( (n-k)\sigma^2 + 2k\sigma^2\right)\\ 
+& = \frac{1}{n}\left( n\sigma^2 +  k\sigma^2\right)\\ 
+& = \sigma^2 +  \frac{k}{n}\sigma^2
+\end{align*}
+$$  -->
+ 
+
+
+<!-- 
+ how well a model fits the training data. One can show that RSS is monotonically decreasing in $p$ and correspondingly that $R^2$ is monotonically increasing in $p$. Thus, if we aim to select the model giving the smallest RSS or larges $R^2$, the model including all potential predictors would always be selected---even when many of the predictors are non-informative, nonsense predictors. 
+
+The following information criteria include penalization terms for the number of parameters $p$ used in the model. Thus, we can use them to select models with different numbers of predictors $p$. 
+
+Mellow's $C_p$:
+$$
+C_p=\frac{1}{n}\left(RSS + p\hat\sigma^2\right),
+$$
+where $\hat\sigma^2=\frac{1}{n-p_{\max}}\sum_{i=1}^n(y_i - \hat{y}_{i,p_{\max}})$ with $\hat{y}_{i,p_{\max}}$ being the fitted value from the linear regression with all $p_{\max}$ potential predictors included. 
+
+
+
+Akaike information criterion (AIC) -->
+
+
+
+### (Ch. 6.1.1) Best Subset Selection {-}
+
+**Algorithm: Best Subset Selection:**
+
+1. Initialization: Let $\mathcal{M}_0$ denote the *null model* $f(X)=\beta_0$ containing no predictors, except the intercept. (This model predicts each observed outcome by the total sample mean.)
+2. For $k=1,2,\dots,p:$
+  (a) Fit all $\binom{p}{k}$ models that contain exactly $k$ predictors.
+  (b) Pick the "best" among these $\binom{p}{k}$ models, and call it $\mathcal{M}_k$. Here "best" is defined as having smallest RSS, or equivalently larges $R^2.$ 
+
+
+
+
+
 ## `R`-Lab: Linear Model Selection and Regularization
 
 ### Subset Selection Methods
