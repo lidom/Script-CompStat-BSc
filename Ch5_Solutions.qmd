@@ -8,7 +8,7 @@ We now review k-fold cross-validation.
 
 **Answer:**
 
-k-fold cross-validation is implemented by taking the set of $n$ observations and randomly splitting into $K$ non-overlapping groups of roughly equal group-size (approx. $n/K$). To compute the $k$-th ($k=1,2,\dots,K$) test MSE estimate, group $k$ is used to as a validation set and the remainder as a training set. The test error is estimated by averaging the $K$ resulting test MSE estimates.
+k-fold cross-validation is implemented by taking the set of $n$ observations and randomly splitting into $K$ non-overlapping groups of roughly equal group-size (approx. $n/K$). To compute the $k$-th $(k=1,2,\dots,K)$ test MSE estimate, group $k$ is used as a validation set and the remainder as a training set. The test error is estimated by averaging the $K$ resulting test MSE estimates.
 
 **3 b)** What are the advantages and disadvantages of $k$-fold cross-validation relative to: 
 
@@ -22,9 +22,9 @@ The **validation set** approach is conceptually simple and easily implemented as
 
 1. The estimate of the test MSE can be highly variable/instable; i.e. may strongly depend on which observations are included in the training and validation sets. 
 
-2. The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size.
+2. The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size in comparison to the actual data size $n$.
 
-**LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most intense cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV. (On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size ($n-1\approx n$).
+**LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size $(n-1\approx n).$
 
 ### Exercise 4 {-}
 
@@ -32,7 +32,9 @@ Suppose that we use some statistical learning method to make a prediction for th
 
 **Answer:**
 
-If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$ we might estimate the standard deviation of our prediction by using the bootstrap approach. 
+<!-- If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$  -->
+
+We can estimate the standard deviation of our prediction by using the bootstrap approach. 
 
 Let $\hat{Y} = \hat{f}(X)$ denote the prediction of $Y$ for the given $X$. The bootstrap approach works by repeatedly ($B$ many times) sampling $n$ observations (with replacement) from the original data set, and to compute new prediction results for each re-sampled bootstrap datasets. This yields to $B$ many bootstrap predictions: 
 $$
@@ -340,6 +342,9 @@ lm.fit_iv <- glm(y ~ poly(x, 4, raw=TRUE), data = Sim_Data)
 cv.glm(Sim_Data, lm.fit_iv, K = nrow(Sim_Data))$delta
 ```
 
+<!-- 
+**Conclusion:** The (correct) quadratic model has the smallest CV error.   
+-->
 
 **8. d)** Repeat (c) using another random seed, and report your results. Are your results the same as what you got in (c)? Why?
 

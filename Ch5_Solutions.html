@@ -116,7 +116,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We now review k-fold cross-validation.</p>
 <p><strong>3 a)</strong> Explain how k-fold cross-validation is implemented.</p>
 <p><strong>Answer:</strong></p>
-<p>k-fold cross-validation is implemented by taking the set of <span class="math inline">\(n\)</span> observations and randomly splitting into <span class="math inline">\(K\)</span> non-overlapping groups of roughly equal group-size (approx. <span class="math inline">\(n/K\)</span>). To compute the <span class="math inline">\(k\)</span>-th (<span class="math inline">\(k=1,2,\dots,K\)</span>) test MSE estimate, group <span class="math inline">\(k\)</span> is used to as a validation set and the remainder as a training set. The test error is estimated by averaging the <span class="math inline">\(K\)</span> resulting test MSE estimates.</p>
+<p>k-fold cross-validation is implemented by taking the set of <span class="math inline">\(n\)</span> observations and randomly splitting into <span class="math inline">\(K\)</span> non-overlapping groups of roughly equal group-size (approx. <span class="math inline">\(n/K\)</span>). To compute the <span class="math inline">\(k\)</span>-th <span class="math inline">\((k=1,2,\dots,K)\)</span> test MSE estimate, group <span class="math inline">\(k\)</span> is used as a validation set and the remainder as a training set. The test error is estimated by averaging the <span class="math inline">\(K\)</span> resulting test MSE estimates.</p>
 <p><strong>3 b)</strong> What are the advantages and disadvantages of <span class="math inline">\(k\)</span>-fold cross-validation relative to:</p>
 <ol type="i">
 <li><p>the validation set approach?</p></li>
@@ -126,15 +126,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <strong>validation set</strong> approach is conceptually simple and easily implemented as you are simply partitioning the existing training data into two sets. However, there are two drawbacks:</p>
 <ol type="1">
 <li><p>The estimate of the test MSE can be highly variable/instable; i.e.&nbsp;may strongly depend on which observations are included in the training and validation sets.</p></li>
-<li><p>The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size.</p></li>
+<li><p>The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size in comparison to the actual data size <span class="math inline">\(n\)</span>.</p></li>
 </ol>
-<p><strong>LOOCV</strong> is a special case of k-fold cross-validation with <span class="math inline">\(k = n\)</span>. Thus, LOOCV is the computationally most intense cross-validation method since the model must be fit <span class="math inline">\(n\)</span> times. Also, LOOCV has higher variance, but lower bias, than k-fold CV. (On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size (<span class="math inline">\(n-1\approx n\)</span>).</p>
+<p><strong>LOOCV</strong> is a special case of k-fold cross-validation with <span class="math inline">\(k = n\)</span>. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit <span class="math inline">\(n\)</span> times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size <span class="math inline">\((n-1\approx n).\)</span></p>
 </section>
 <section id="exercise-4" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-4">Exercise 4</h3>
 <p>Suppose that we use some statistical learning method to make a prediction for the response <span class="math inline">\(Y\)</span> for a <em>particular</em> value of the predictor <span class="math inline">\(X\)</span>. Carefully describe how we might estimate the standard deviation of our prediction.</p>
 <p><strong>Answer:</strong></p>
-<p>If we suppose using some statistical learning method to make a prediction for the response <span class="math inline">\(Y\)</span> for a particular value of the predictor <span class="math inline">\(X\)</span> we might estimate the standard deviation of our prediction by using the bootstrap approach.</p>
+<!-- If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$  -->
+<p>We can estimate the standard deviation of our prediction by using the bootstrap approach.</p>
 <p>Let <span class="math inline">\(\hat{Y} = \hat{f}(X)\)</span> denote the prediction of <span class="math inline">\(Y\)</span> for the given <span class="math inline">\(X\)</span>. The bootstrap approach works by repeatedly (<span class="math inline">\(B\)</span> many times) sampling <span class="math inline">\(n\)</span> observations (with replacement) from the original data set, and to compute new prediction results for each re-sampled bootstrap datasets. This yields to <span class="math inline">\(B\)</span> many bootstrap predictions: <span class="math display">\[
 \hat{f}^*_1(X), \hat{f}^*_2(X), \dots, \hat{f}^*_B(X).
 \]</span></p>
@@ -479,6 +480,9 @@ t3*  5.647103e-03 -4.116657e-06 2.226242e-04</code></pre>
 <pre><code>[1] 0.9539049 0.9534453</code></pre>
 </div>
 </div>
+<!-- 
+**Conclusion:** The (correct) quadratic model has the smallest CV error.   
+-->
 <p><strong>8. d)</strong> Repeat (c) using another random seed, and report your results. Are your results the same as what you got in (c)? Why?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
