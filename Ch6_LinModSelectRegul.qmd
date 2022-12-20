@@ -159,19 +159,21 @@ Akaike information criterion (AIC) -->
 
 1. Initialization: Let $\mathcal{M}_0$ denote the *null model* $f(X)=\beta_0$ containing no predictors, except the intercept. (This model predicts each observed outcome by the total sample mean.)
 2. For $k=1,2,\dots,p:$
-  2.a Fit all $\binom{p}{k}$ models that contain exactly $k$ predictors.
-  2.b Pick the "best" among these $\binom{p}{k}$ models, and call it $\widehat{\mathcal{M}}_k$. Here "best" is defined as having smallest $\operatorname{RSS}_k$ (or equivalently largest $R^2.$) 
+   i) Fit all $\binom{p}{k}$ models that contain exactly $k$ predictors.
+   ii) Pick the "best" among these $\binom{p}{k}$ models, and call it $\widehat{\mathcal{M}}_k$. Here "best" is defined as having smallest $\operatorname{RSS}_k$ (or equivalently highest $R^2.$) 
 3. Select a single best model from $\widehat{\mathcal{M}}_0,\dots,\widehat{\mathcal{M}}_p$ using CV, Mellow's $C_p$ (AIC), BIC, or $\operatorname{adjusted } R^2.$
 
 
-* Step 2 identifies the best model (on training data) for each subset size $k$, and thus reduces the model selection problem from $2^p$ models to $p+1$ models. 
+<br>
+
+Step 2 of Algorithm 6.1 identifies the best model (on training data) for each subset size $k$, and thus reduces the model selection problem from $2^p$ models to $p+1$ models. 
 
 
 [](images/Fig_6_1.png)
 
 
 
-Best subset selection (Algorithm 6.1) can be computationally (too) expensive. 
+Best subset selection (Algorithm 6.1) can be computationally expensive for largish $p$. 
 
 $p$ | $2^p$
 ----|-----------
@@ -190,6 +192,57 @@ $40$ | $1.1\cdot 10^{12}$
 
 
 ### (Ch. 6.1.2) Stepwise Selection {-}
+
+
+#### Forward Stepwise Selection {-}
+
+**Algorithm 6.2: Forward Stepwise Selection:**
+
+1. Initialization: Let $\mathcal{M}_0$ denote the *null model* $f(X)=\beta_0$ containing no predictors, except the intercept. (This model predicts each observed outcome by the total sample mean.)
+2. For $k=0,2,\dots,p-1:$
+   i) Fit all $p-k$ models that augment the predictors in $\widehat{\mathcal{M}}_k$ with one additional predictor.
+   ii) Pick the "best" among these $p-k$ models, and call it $\widehat{\mathcal{M}}_{k+1}$. Here "best" is defined as having smallest $\operatorname{RSS}_{k+1}$ (or equivalently highest $R^2.$) 
+3. Select a single best model from $\widehat{\mathcal{M}}_0,\dots,\widehat{\mathcal{M}}_p$ using CV, Mellow's $C_p$ (AIC), BIC, or $\operatorname{adjusted } R^2.$
+
+<br>
+
+Unlike best subset selection, which involved fitting $2^p$ models, **forward stepwise selection** considers a much smaller set of models: It begins with fitting the null $(p=0)$ model, and proceeds with fitting $p-k$ models in the $k$th iteration, for $k=1,\dots,p-1.$ This amounts to a total of 
+$$
+1+\sum_{k=0}^{p-1}(p-k) = 1 + p(p+1)/2
+$$
+models. 
+
+
+$p$  | $2^p$               | $1 + p(p+1)/2$
+-----|---------------------|----------------
+$10$ | $1024$              | $56$
+$20$ | $1048576$           | $211$
+$40$ | $1.1\cdot 10^{12}$  | $821$
+
+
+Forward stepwise selection is a guided search strategy, that tends to do well in practice. However, it is not guaranteed to find the best possible model out of all $2^2p$ models containing subsets of the $p$ predictors. 
+
+**Example:** Consider the case of $p=3$ predictors $X_1,\,X_2$ and $X_3.$ Let the best one-predictor model contain $X_1$, and let the best two-predictor model contain $X_2$ and $X_3.$ Then forward stepwise selection will fail to select the best two-predictor model.   
+
+[](images/Tab_6_1.png) 
+
+
+
+#### Backward Stepwise Selection {-}
+
+**Algorithm 6.3: Backward Stepwise Selection:**
+
+1. Initialization: Let $\mathcal{M}_p$ denote the *full model* which contains all $p$ predictors. 
+2. For $k=p,p-1,\dots,1:$
+   i) Fit all $k$ models that contain all but one of the predictors in $\widehat{\mathcal{M}}_k,$ for a total of $k-1$ predictors.
+   ii) Pick the "best" among these $k$ models, and call it $\widehat{\mathcal{M}}_{k-1}$. Here "best" is defined as having smallest $\operatorname{RSS}_{k+1}$ (or equivalently highest $R^2.$) 
+3. Select a single best model from $\widehat{\mathcal{M}}_0,\dots,\widehat{\mathcal{M}}_p$ using CV, Mellow's $C_p$ (AIC), BIC, or $\operatorname{adjusted } R^2.$
+
+
+
+
+
+
 
 
 
