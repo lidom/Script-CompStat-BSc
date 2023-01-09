@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ch.-6.2.1-ridge-regression" id="toc-ch.-6.2.1-ridge-regression" class="nav-link" data-scroll-target="#ch.-6.2.1-ridge-regression">(Ch. 6.2.1) Ridge Regression</a></li>
   <li><a href="#why-and-when-does-ridge-regression-improve-over-least-squares" id="toc-why-and-when-does-ridge-regression-improve-over-least-squares" class="nav-link" data-scroll-target="#why-and-when-does-ridge-regression-improve-over-least-squares"><span class="toc-section-number">6.0.1</span>  Why and When Does Ridge Regression Improve Over Least Squares?</a></li>
   </ul></li>
-  <li><a href="#ch.-6.2.2-the-lasso" id="toc-ch.-6.2.2-the-lasso" class="nav-link" data-scroll-target="#ch.-6.2.2-the-lasso">(Ch. 6.2.2 The Lasso)</a>
+  <li><a href="#ch.-6.2.2-the-lasso" id="toc-ch.-6.2.2-the-lasso" class="nav-link" data-scroll-target="#ch.-6.2.2-the-lasso">(Ch. 6.2.2) The Lasso</a>
   <ul class="collapse">
   <li><a href="#ch.-6.2.3-selecting-the-tuning-parameter" id="toc-ch.-6.2.3-selecting-the-tuning-parameter" class="nav-link" data-scroll-target="#ch.-6.2.3-selecting-the-tuning-parameter">(Ch. 6.2.3) Selecting the Tuning Parameter</a></li>
   </ul></li>
@@ -296,7 +296,7 @@ Y
 <section id="mellows-c_p" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="mellows-c_p">Mellow’s <span class="math inline">\(C_p\)</span></h4>
 <p><span id="eq-MCp"><span class="math display">\[
-C_p \equiv C_p(k) \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
+C_p \equiv C_p(k) = \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
 \tag{6.2}\]</span></span> where <span class="math inline">\(\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))\)</span> is the sample variance of the residuals from the large model <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a> with all <span class="math inline">\(p\)</span> predictors, and where <span class="math inline">\(\operatorname{RSS}_k\)</span> are the RSS of the estimated model <span class="math inline">\(\widehat{\mathcal{M}}_{\mathcal{I}_k}(X)\)</span> with <span class="math inline">\(k\leq p\)</span> predictors.</p>
 <p>Under certain regularity assumptions, one can show that <span class="math inline">\(C_p\)</span> is an unbiased estimate of the test MSE. The best model is the one which has the lowest <span class="math inline">\(C_p\)</span> value.</p>
 </section>
@@ -320,8 +320,7 @@ C_p \equiv C_p(k) \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
 \]</span> where <span class="math inline">\(\operatorname{TSS}=\sum_{i=1}^n\left(y_i - \bar{y}\right)^2.\)</span></p>
 <p>Unlike Mellow’s <span class="math inline">\(C_p,\)</span> AIC, and BIC, <strong>large values</strong> of <span class="math inline">\(\operatorname{adjusted } R^2\)</span> indicate models with low test errors.</p>
 <p>Note that maximizing <span class="math inline">\(\operatorname{adjusted } R^2\)</span> is equivalent to minimizing <span class="math inline">\(\operatorname{RSS}_k/(n-k-1).\)</span> While <span class="math inline">\(\operatorname{RSS}_k\)</span> is a decreasing function of <span class="math inline">\(k,\)</span> <span class="math inline">\(\operatorname{RSS}_k/(n-k-1)\)</span> may decrease or increase when increasing <span class="math inline">\(k,\)</span> depending on the amount of RSS-reduction due to the added predictors.</p>
-<p><strong>Summary:</strong></p>
-<p>Mellow’s <span class="math inline">\(C_p,\)</span> AIC, and BIC have rigorous theoretical justifications. The <span class="math inline">\(\operatorname{adjusted } R^2\)</span> is not es well motivated by statistical theory.</p>
+<p><strong>Note:</strong> Mellow’s <span class="math inline">\(C_p,\)</span> AIC, and BIC have rigorous theoretical justifications. The <span class="math inline">\(\operatorname{adjusted } R^2\)</span> is not es well motivated by statistical theory.</p>
 <!-- Since $\mathcal{I}^*_{k^*}\subset \mathcal{I}_p$, $\hat\sigma^2$ is an unbiased estimator of $\sigma^2$, i.e.
 $$
 E(\hat\sigma^2) = \sigma^2.
@@ -534,12 +533,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-4939.1 4939.1 </code></pre>
+5096.5 5096.5 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10127286461 10127286461</code></pre>
+<pre><code>[1] 9124896221 9124896221</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span> Scaling one or more predictors will generally affect <em>all</em> ridge regression estimates <span class="math inline">\(\hat\beta_{0,\lambda}^R,\dots,\hat\beta_{p,\lambda}^R.\)</span> Therefore, it is best to apply ridge regression <strong>after standardizing the predictors</strong>, using the formula <span id="eq-Standardization"><span class="math display">\[
@@ -577,7 +576,7 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 </section>
 </section>
 <section id="ch.-6.2.2-the-lasso" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="ch.-6.2.2-the-lasso">(Ch. 6.2.2 The Lasso)</h2>
+<h2 class="unnumbered anchored" data-anchor-id="ch.-6.2.2-the-lasso">(Ch. 6.2.2) The Lasso</h2>
 <p>While ridge regression is able to show which predictors are of major vs.&nbsp;minor relevance for predicting the outcome, none of the predictors is actually removed from the model equation since none of the coefficients is exactly set to zero (unless in the limit <span class="math inline">\(\lambda = \infty\)</span>).</p>
 <p>This may not be a problem with respect to prediction accuracy, but it can create a challenge in model interpretation—particularly in settings in which the number of variables <span class="math inline">\(p\)</span> is quite large.</p>
 <p>For example, in the <code>Credit</code> data set, it appears that the most important variables are <code>income</code>, <code>limit</code>, <code>rating</code>, and <code>student</code>. So we might wish to build a model including just these predictors. However, ridge regression will always generate a model involving all ten predictors.</p>

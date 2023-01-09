@@ -80,7 +80,7 @@ The latter option is accomplished using information criteria such as, for instan
 #### Mellow's $C_p$ {-}
 
 $$
-C_p \equiv C_p(k) \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
+C_p \equiv C_p(k) = \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
 $${#eq-MCp}
 where 
 $\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))$ 
@@ -117,9 +117,7 @@ Unlike Mellow's $C_p,$ AIC, and BIC, **large values** of $\operatorname{adjusted
 
 Note that maximizing $\operatorname{adjusted } R^2$ is equivalent to minimizing $\operatorname{RSS}_k/(n-k-1).$ While $\operatorname{RSS}_k$ is a decreasing function of $k,$ $\operatorname{RSS}_k/(n-k-1)$ may decrease or increase when increasing $k,$ depending on the amount of RSS-reduction due to the added predictors.  
 
-**Summary:**
-
-Mellow's $C_p,$ AIC, and BIC have rigorous theoretical justifications. The $\operatorname{adjusted } R^2$ is not es well motivated by statistical theory. 
+**Note:** Mellow's $C_p,$ AIC, and BIC have rigorous theoretical justifications. The $\operatorname{adjusted } R^2$ is not es well motivated by statistical theory. 
 
 <!-- Since $\mathcal{I}^*_{k^*}\subset \mathcal{I}_p$, $\hat\sigma^2$ is an unbiased estimator of $\sigma^2$, i.e.
 $$
@@ -391,7 +389,7 @@ Moreover, ridge regression also has substantial computational advantages over be
 
 
 
-## (Ch. 6.2.2 The Lasso) {-}
+## (Ch. 6.2.2) The Lasso {-}
 
 
 While ridge regression is able to show which predictors are of major vs. minor relevance for predicting the outcome, none of the predictors is actually removed from the model equation since none of the coefficients is exactly set to zero (unless in the limit $\lambda = \infty$).
