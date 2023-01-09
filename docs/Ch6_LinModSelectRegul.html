@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ch.-6.2-shrinkage-methods" id="toc-ch.-6.2-shrinkage-methods" class="nav-link" data-scroll-target="#ch.-6.2-shrinkage-methods">(Ch. 6.2) Shrinkage Methods</a>
   <ul class="collapse">
   <li><a href="#ch.-6.2.1-ridge-regression" id="toc-ch.-6.2.1-ridge-regression" class="nav-link" data-scroll-target="#ch.-6.2.1-ridge-regression">(Ch. 6.2.1) Ridge Regression</a></li>
-  <li><a href="#why-and-when-does-ridge-regression-improve-over-least-squares" id="toc-why-and-when-does-ridge-regression-improve-over-least-squares" class="nav-link" data-scroll-target="#why-and-when-does-ridge-regression-improve-over-least-squares"><span class="toc-section-number">6.0.1</span>  Why and When Does Ridge Regression Improve Over Least Squares?</a></li>
+  <li><a href="#why-and-when-does-ridge-regression-improve-over-least-squares" id="toc-why-and-when-does-ridge-regression-improve-over-least-squares" class="nav-link" data-scroll-target="#why-and-when-does-ridge-regression-improve-over-least-squares">Why and When Does Ridge Regression Improve Over Least Squares?</a></li>
   </ul></li>
   <li><a href="#ch.-6.2.2-the-lasso" id="toc-ch.-6.2.2-the-lasso" class="nav-link" data-scroll-target="#ch.-6.2.2-the-lasso">(Ch. 6.2.2) The Lasso</a>
   <ul class="collapse">
@@ -497,7 +497,7 @@ Akaike information criterion (AIC)
 <li>By making <span class="math inline">\(\sum_{j=1}^p\beta_j^2=||(\beta_{1},\dots,\beta_{p})'||^2_2\)</span> small, ridge regression shrinks all coefficient estimates towards zero—except the intercept <span class="math inline">\(\beta_0.\)</span></li>
 </ol>
 <blockquote class="blockquote">
-<p><span class="math inline">\(||x||_2\sqrt{\sum_{j=1}^px^2}\)</span> denotes the <span class="math inline">\(\ell_2\)</span> (or Euclidean) norm of a <span class="math inline">\(p\)</span>-dimensional vector.</p>
+<p><span class="math inline">\(||x||_2 = \sqrt{\sum_{j=1}^px^2}\)</span> denotes the <span class="math inline">\(\ell_2\)</span> (or Euclidean) norm of a <span class="math inline">\(p\)</span>-dimensional vector.</p>
 </blockquote>
 <p>The tuning parameter <span class="math inline">\(\lambda\)</span> controls the relative impact of these two terms on the regression coefficient estimates:</p>
 <ul>
@@ -532,13 +532,13 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">coef</span>(lm_obj_1)[<span class="dv">2</span>] <span class="sc">/</span> c, <span class="fu">coef</span>(lm_obj_2)[<span class="dv">2</span>]),</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     x    x_S 
-5096.5 5096.5 </code></pre>
+<pre><code>   x  x_S 
+4926 4926 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9124896221 9124896221</code></pre>
+<pre><code>[1] 11207092176 11207092176</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span> Scaling one or more predictors will generally affect <em>all</em> ridge regression estimates <span class="math inline">\(\hat\beta_{0,\lambda}^R,\dots,\hat\beta_{p,\lambda}^R.\)</span> Therefore, it is best to apply ridge regression <strong>after standardizing the predictors</strong>, using the formula <span id="eq-Standardization"><span class="math display">\[
@@ -554,8 +554,8 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 </ul>
 </section>
 </section>
-<section id="why-and-when-does-ridge-regression-improve-over-least-squares" class="level3" data-number="6.0.1">
-<h3 data-number="6.0.1" class="anchored" data-anchor-id="why-and-when-does-ridge-regression-improve-over-least-squares"><span class="header-section-number">6.0.1</span> Why and When Does Ridge Regression Improve Over Least Squares?</h3>
+<section id="why-and-when-does-ridge-regression-improve-over-least-squares" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="why-and-when-does-ridge-regression-improve-over-least-squares">Why and When Does Ridge Regression Improve Over Least Squares?</h3>
 <p>Ridge regression’s (potential) advantage over least squares is rooted in the bias-variance trade-off.</p>
 <ul>
 <li>A large value of <span class="math inline">\(\lambda\)</span> decreases the flexibility of the model, and thus decreases variance, but increases bias.</li>

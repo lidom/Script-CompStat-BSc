@@ -294,7 +294,7 @@ where $\lambda$ is a *tuning parameter* that needs to be determined separately. 
 1. By making RSS small, ridge regression tries to fit the data well.
 2. By making  $\sum_{j=1}^p\beta_j^2=||(\beta_{1},\dots,\beta_{p})'||^2_2$ small, ridge regression shrinks all coefficient estimates towards zero---except the intercept $\beta_0.$
 
-> $||x||_2\sqrt{\sum_{j=1}^px^2}$ denotes the $\ell_2$ (or Euclidean) norm of a $p$-dimensional vector. 
+> $||x||_2 = \sqrt{\sum_{j=1}^px^2}$ denotes the $\ell_2$ (or Euclidean) norm of a $p$-dimensional vector. 
 
 The tuning parameter $\lambda$ controls the relative impact of these two terms on the regression coefficient estimates: 
 
@@ -360,7 +360,7 @@ Figure 6.4 shows the standardized ridge regression coefficient estimates for the
 * The case, where $||\hat\beta^R_\lambda||_2/||\hat\beta||_2=1$, i.e. where $\lambda\approx 0$, is equivalent to the least squares fit. 
 * The case where $||\hat\beta^R_\lambda||_2/||\hat\beta||_2=0$, i.e. where $\lambda$ is very large, corresponds to the case where $\hat\beta^R_\lambda{1}\approx\dots\approx \hat\beta^R_\lambda{p}\approx 0.$
 
-### Why and When Does Ridge Regression Improve Over Least Squares?
+### Why and When Does Ridge Regression Improve Over Least Squares? {-}
 
 
 Ridge regression's (potential) advantage over least squares is rooted in the bias-variance trade-off. 
