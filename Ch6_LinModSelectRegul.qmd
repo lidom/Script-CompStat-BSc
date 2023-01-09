@@ -83,7 +83,7 @@ $$
 C_p \equiv C_p(k) = \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
 $${#eq-MCp}
 where 
-$\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))$ 
+$\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))^2$ 
 is the sample variance of the residuals from the large model @eq-modelLarge with all $p$ predictors, and where $\operatorname{RSS}_k$ are the RSS of the estimated model $\widehat{\mathcal{M}}_{\mathcal{I}_k}(X)$ with $k\leq p$ predictors. 
 
 Under certain regularity assumptions, one can show that $C_p$ is an unbiased estimate of the test MSE. The best model is the one which has the lowest $C_p$ value. 
@@ -205,7 +205,7 @@ $40$ | $1.1\cdot 10^{12}$
 **Algorithm 6.2: Forward Stepwise Selection:**
 
 1. Initialization: Let $\mathcal{M}_0$ denote the *null model* $f(X)=\beta_0$ containing no predictors, except the intercept. (This model predicts each observed outcome by the total sample mean.)
-2. For $k=0,2,\dots,p-1:$
+2. For $k=0,1,\dots,p-1:$
    i) Fit all $p-k$ models that augment the predictors in $\widehat{\mathcal{M}}_k$ with one additional predictor.
    ii) Pick the "best" among these $p-k$ models, and call it $\widehat{\mathcal{M}}_{k+1}$. Here "best" is defined as having smallest $\operatorname{RSS}_{k+1}$ (or equivalently highest $R^2.$) 
 3. Select a single best model from $\widehat{\mathcal{M}}_0,\dots,\widehat{\mathcal{M}}_p$ using CV, Mellow's $C_p$ (AIC), BIC, or $\operatorname{adjusted } R^2.$

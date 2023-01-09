@@ -297,7 +297,7 @@ Y
 <h4 class="unnumbered anchored" data-anchor-id="mellows-c_p">Mellow’s <span class="math inline">\(C_p\)</span></h4>
 <p><span id="eq-MCp"><span class="math display">\[
 C_p \equiv C_p(k) = \frac{1}{n}\left(\operatorname{RSS}_k+2k\hat\sigma^2\right),
-\tag{6.2}\]</span></span> where <span class="math inline">\(\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))\)</span> is the sample variance of the residuals from the large model <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a> with all <span class="math inline">\(p\)</span> predictors, and where <span class="math inline">\(\operatorname{RSS}_k\)</span> are the RSS of the estimated model <span class="math inline">\(\widehat{\mathcal{M}}_{\mathcal{I}_k}(X)\)</span> with <span class="math inline">\(k\leq p\)</span> predictors.</p>
+\tag{6.2}\]</span></span> where <span class="math inline">\(\hat\sigma^2=\frac{1}{n-p}\sum_{i=1}^n(y_i - \widehat{\mathcal{M}}_{p}(X))^2\)</span> is the sample variance of the residuals from the large model <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a> with all <span class="math inline">\(p\)</span> predictors, and where <span class="math inline">\(\operatorname{RSS}_k\)</span> are the RSS of the estimated model <span class="math inline">\(\widehat{\mathcal{M}}_{\mathcal{I}_k}(X)\)</span> with <span class="math inline">\(k\leq p\)</span> predictors.</p>
 <p>Under certain regularity assumptions, one can show that <span class="math inline">\(C_p\)</span> is an unbiased estimate of the test MSE. The best model is the one which has the lowest <span class="math inline">\(C_p\)</span> value.</p>
 </section>
 <section id="the-aic" class="level4 unnumbered">
@@ -410,7 +410,7 @@ Akaike information criterion (AIC)
 <p><strong>Algorithm 6.2: Forward Stepwise Selection:</strong></p>
 <ol type="1">
 <li>Initialization: Let <span class="math inline">\(\mathcal{M}_0\)</span> denote the <em>null model</em> <span class="math inline">\(f(X)=\beta_0\)</span> containing no predictors, except the intercept. (This model predicts each observed outcome by the total sample mean.)</li>
-<li>For <span class="math inline">\(k=0,2,\dots,p-1:\)</span>
+<li>For <span class="math inline">\(k=0,1,\dots,p-1:\)</span>
 <ol type="i">
 <li>Fit all <span class="math inline">\(p-k\)</span> models that augment the predictors in <span class="math inline">\(\widehat{\mathcal{M}}_k\)</span> with one additional predictor.</li>
 <li>Pick the “best” among these <span class="math inline">\(p-k\)</span> models, and call it <span class="math inline">\(\widehat{\mathcal{M}}_{k+1}\)</span>. Here “best” is defined as having smallest <span class="math inline">\(\operatorname{RSS}_{k+1}\)</span> (or equivalently highest <span class="math inline">\(R^2.\)</span>)</li>
@@ -532,13 +532,13 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">coef</span>(lm_obj_1)[<span class="dv">2</span>] <span class="sc">/</span> c, <span class="fu">coef</span>(lm_obj_2)[<span class="dv">2</span>]),</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   x  x_S 
-4926 4926 </code></pre>
+<pre><code>     x    x_S 
+5046.1 5046.1 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 11207092176 11207092176</code></pre>
+<pre><code>[1] 8781857893 8781857893</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span> Scaling one or more predictors will generally affect <em>all</em> ridge regression estimates <span class="math inline">\(\hat\beta_{0,\lambda}^R,\dots,\hat\beta_{p,\lambda}^R.\)</span> Therefore, it is best to apply ridge regression <strong>after standardizing the predictors</strong>, using the formula <span id="eq-Standardization"><span class="math display">\[
