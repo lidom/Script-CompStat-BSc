@@ -283,7 +283,7 @@ Y
 \end{align*}
 \]</span> where <span class="math inline">\(\mathcal{I}_k\)</span> is some candidate sub-set <span class="math inline">\(\mathcal{I}_k\subset\{1,2,\dots,p\}\)</span> with <span class="math inline">\(|\mathcal{I}_k|=k\leq p.\)</span></p>
 <p>While this strategy can be used for selecting the best fitting model among all <span class="math display">\[
-\binom{p}{k}=\frac{p!}{k!(n-k)!}
+\binom{p}{k}=\frac{p!}{k!(p-k)!}
 \]</span> many models with <span class="math inline">\(k\)</span> parameters, it fails to select the best fitting model with different numbers of parameters. Indeed, one can show that the “fit” of the model can be always increased by adding more predictors; i.e.&nbsp; <span class="math display">\[
 \operatorname{RSS}_k\geq \operatorname{RSS}_{k'}\quad\text{for}\quad k&lt;k'.
 \]</span> Thus, we need alternative criteria to choose between models with different numbers of regressors <span class="math inline">\(k\neq k'\)</span>.</p>
@@ -533,12 +533,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-5046.1 5046.1 </code></pre>
+4899.6 4899.6 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8781857893 8781857893</code></pre>
+<pre><code>[1] 9883085813 9883085813</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span> Scaling one or more predictors will generally affect <em>all</em> ridge regression estimates <span class="math inline">\(\hat\beta_{0,\lambda}^R,\dots,\hat\beta_{p,\lambda}^R.\)</span> Therefore, it is best to apply ridge regression <strong>after standardizing the predictors</strong>, using the formula <span id="eq-Standardization"><span class="math display">\[

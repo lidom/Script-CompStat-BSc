@@ -58,7 +58,7 @@ where $\mathcal{I}_k$ is some candidate sub-set $\mathcal{I}_k\subset\{1,2,\dots
 
 While this strategy can be used for selecting the best fitting model among all
 $$
-\binom{p}{k}=\frac{p!}{k!(n-k)!}
+\binom{p}{k}=\frac{p!}{k!(p-k)!}
 $$
 many models with $k$ parameters, it fails to select the best fitting model with different numbers of parameters. Indeed, one can show that the "fit" of the model can be always increased by adding more predictors; i.e. 
 $$
