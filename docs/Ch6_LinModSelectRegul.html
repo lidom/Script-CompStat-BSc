@@ -534,12 +534,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-4863.7 4863.7 </code></pre>
+4894.3 4894.3 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10286062823 10286062823</code></pre>
+<pre><code>[1] 10108735875 10108735875</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>
@@ -591,7 +591,7 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 \end{align*}
 \tag{6.6}\]</span></span></p>
 <p>By contrast to the ridge regression criterion (<a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a>), the lasso criterion uses an <span class="math inline">\(\ell_1\)</span> norm <span class="math display">\[
-||\beta_{1},\dots,\beta_p)'||_1 = \sum_{j=1}^p|\beta_j|
+||(\beta_{1},\dots,\beta_p)'||_1 = \sum_{j=1}^p|\beta_j|
 \]</span> as a shrinkage penalty. The <span class="math inline">\(\ell_1\)</span> penalty has the effect of forcing some of the coefficient estimates to be exactly equal to zero when the tuning parameter <span class="math inline">\(\lambda\)</span> is sufficiently large.</p>
 <p>Lasso yields sparse models—that is, models that involve only a subset of the variables (see Figure 6.6). Sparse models are easier to interpret.</p>
 <p><img src="images/Fig_6_6.png" class="img-fluid"></p>

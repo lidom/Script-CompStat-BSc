@@ -414,7 +414,7 @@ $${#eq-LassoCrit}
 
 By contrast to the ridge regression criterion (@eq-RidgeCrit), the lasso criterion uses an $\ell_1$ norm 
 $$
-||\beta_{1},\dots,\beta_p)'||_1 = \sum_{j=1}^p|\beta_j| 
+||(\beta_{1},\dots,\beta_p)'||_1 = \sum_{j=1}^p|\beta_j| 
 $$
 as a shrinkage penalty. The $\ell_1$ penalty has the effect of forcing some of the coefficient estimates to be exactly equal to zero when the tuning parameter $\lambda$ is sufficiently large.
 

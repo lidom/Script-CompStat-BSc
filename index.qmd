@@ -30,7 +30,7 @@ The above links to the lecture materials can also be found at [eCampus](https://
 
 ### Communication {-}
 
-* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/usgj5ksjvtjddx7356cgkulu/) to post questions, share codes, etc. Happy sharing and discussing! 
+* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/bfmraxkf5rosbd5h3lrfa2jo/) to post questions, share codes, etc. Happy sharing and discussing! 
 
 
 
