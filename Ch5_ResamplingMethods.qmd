@@ -345,20 +345,22 @@ The following codes illustrate $k$-fold CV:
 set.seed(123)
 
 ## number of folds for k-fold CV 
-k          <- 5
+k              <- 5
+
+## container for storing the MSE results
 MSE_folds      <- matrix(NA, k, p_max)
 
+## "sub"-sample size of each hold-out test data set
+n_sub          <- floor(n/k)
 
-n_sub      <- floor(n/k)
-n_sub      <- rep(n_sub, k-1)
-slct_folds <- c(1, cumsum(n_sub), n)
-
+## auxiliary vector for selecting the test/validation-datasets
+test_data_slct <- c(0, n_sub * 1:(k-1), n)
 
 ## Save starting time of the loop
-start_time <- Sys.time()
+start_time     <- Sys.time()
 
 for(r in 1:k){
-  fold_pos      <- c(slct_folds[r]:(slct_folds[r+1]-1))
+  fold_pos      <- (test_data_slct[r]+1):test_data_slct[r+1]
   ## Training set 
   Auto_Train_df <- Auto[-fold_pos, ]
   ## Validation set
