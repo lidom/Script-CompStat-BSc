@@ -532,10 +532,8 @@ $$
 $${#eq-RegulBeta_M}
 serves as a certain regularized version of the coefficients $\beta_j$ in the original linear model @eq-modelLarge.
 
-* If $M=p$ (no dimension reduction), and if all $M$ many $(z_{1m},\dots,z_{nm})'$ vectors are linearly independent from each other (i.e. no redundant vectors), then @eq-RegulBeta_M poses *no constraints* and $\beta_j^M=\beta_j.$
+* If $M=p$ (no dimension reduction), and if all $M$ many $(z_{1m},\dots,z_{nm})',$ $m=1,\dots,M,$ vectors are linearly independent from each other (i.e. no redundant vectors), then @eq-RegulBeta_M poses *no constraints* and $\beta_j^M=\beta_j.$
 * If $M<p$ (dimension reduction), @eq-RegulBeta_M serves to constrain the estimated $\beta_j$ coefficients $(\beta_j^M\neq \beta_j).$   
-
-[^2]: Linear independence of all the $Z_m$ is required anyways to compute the least squares estimates of $\theta_m$.
 
 All dimension reduction methods work in two steps. 
 
@@ -605,16 +603,20 @@ $$
 &=\frac{1}{n}\sum_{i=1}^nz_{i1} \\
 &=\frac{1}{n}\sum_{i=1}^n\left(\phi_{11}x_{i1} + \dots + \phi_{p1}x_{ip}\right)\\
 &= \phi_{11} \frac{1}{n}\sum_{i=1}^n x_{i1} + \dots + \phi_{p1} \frac{1}{n}\sum_{i=1}^nx_{ip}\\
-& = \phi_{11}\bar{x}_{i1} + \dots + \phi_{p1}\bar{x}_{p} = 0.
+& = \phi_{11}\bar{x}_{1} + \dots + \phi_{p1}\bar{x}_{p} = 0.
 \end{align*}
 $$
 
 Therefore, the formula for the sample variance of $z_{i1}$, $i=1,\dots,n$, simplifies as following:
 $$
-\frac{1}{n}\sum_{i=1}^n\left(z_{i1}-\bar{z}_1\right)^2=\frac{1}{n}\sum_{i=1}^nz_{i1}^2.
+\frac{1}{n}\sum_{i=1}^n\left(z_{i1}-\bar{z}_1\right)^2=\frac{1}{n}\sum_{i=1}^nz_{i1}^2
 $${#eq-SampleVarSimple}
 
-To determine the first principal component scores $z_{11},\dots,z_{n1}$, we need to find that loading vector $\phi_1=(\phi_{11},\dots,\phi_{p1})'$ that maximizes the sample variance
+To determine the **first principal component scores** 
+$$
+z_{11},\dots,z_{n1},
+$$ 
+we need to find that loading vector $\phi_1=(\phi_{11},\dots,\phi_{p1})'$ that maximizes the sample variance
 $$
 \frac{1}{n}\sum_{i=1}^nz_{i1}^2 = \frac{1}{n}\sum_{i=1}^n\left(\phi_{11}x_{i1} + \dots + \phi_{p1}x_{ip}\right)^2 
 $$
@@ -624,11 +626,15 @@ $$
 $$ 
 where $\frac{1}{n}\sum_{i=1}^nz_{i1}^2$ equals the sample variance of $z_{11},\dots,z_{n1}$ (see @eq-SampleVarSimple).
 
-There is a nice geometric interpretation for the first principal component (likewise for the further principal components). The first loading vector $\phi_1=(\phi_{11},\dots,\phi_{p1})'$ defines a direction vector in the feature space along which the data points vary the most. If we project each of the $n$ many $p$-dimensional data points 
+There is a nice geometric interpretation for the first principal component (likewise for the further principal components). The first loading vector 
+$$
+\phi_1=(\phi_{11},\dots,\phi_{p1})'
+$$ 
+defines a direction vector in the feature space along which the data points vary the most. If we project each of the $n$ many $p$-dimensional data points 
 $$
 \begin{align*}
 x_1 &=(x_{11},\dots,x_{1p})'\\ 
-    &\;\;\;\vdots \\ 
+    &\; \vdots \\ 
 x_n &=(x_{n1},\dots,x_{np})'
 \end{align*}
 $$
@@ -644,23 +650,23 @@ $$
 The case $p=2$ is simple to visualize. Figure 6.14 displays the direction of the first principal component loading vector $\phi_1$ (green solid line) on an advertising data set. 
 ![](images/Fig_6_14.png)
 
-The left panel in Figure 6.15 displays the projection of the $i$th, $i=1,\dots,n,$ data vectors $x_i=(x_{i1},x_{i2})'$ (purple circles 🟣) onto the first loading vector $\phi_1=(\phi_{11},\phi_{21})'$ leading to the $i$th principal component score $z_{i1}$ (black crosses $\mathbf{\times}$). 
+The left panel in Figure 6.15 displays the projection of the $i$th, $i=1,\dots,n,$ data vectors $x_i=(x_{i1},x_{i2})'$ (purple circles 🟣) onto the first loading vector $\phi_1=(\phi_{11},\phi_{21})'$ leading to the $i$th principal component score $z_{i1},$ $i=1,\dots,n,$ (black crosses $\mathbf{\times}$. 
 
 ![](images/Fig_6_15.png)
 
 
 #### Higher order principal components {-}
 
-After the first principal component $Z_1$ of the features has been determined, we can find the second principal component $Z_2.$ The second principal component is the linear combination of $X_1,X_2,\dots,X_p$ that has maximal variance out of all linear combinations that are **uncorrelated** with $Z_1.$ 
+After the first principal component of the features has been determined, we can find the second principal component. The second principal component is the linear combination of $X_1,X_2,\dots,X_p$ that has maximal variance out of all linear combinations that are **uncorrelated** with $Z_1.$ 
 
 
 Thus, the second principal component scores $z_{12},\dots,z_{np}$ take the form 
 $$
 z_{i2} = \phi_2'x_i = \sum_{j=1}^p \phi_{j2}x_{ij}, 
 $$
-where $\phi_2=(\phi_{12},\dots,\phi_{p2})'$ is the second principal component loading vector. 
+where $\phi_2=(\phi_{12},\dots,\phi_{p2})'$ is the second principal component loading vector with $||\phi_2||_2^2=1.$ 
 
-Constraining $Z_2$ to be uncorrelated with $Z_1$ is equivalent to constraining $\phi_2$ to be orthogonal to $\phi_1$, i.e.
+Constraining $Z_2$ to be uncorrelated with $Z_1$ is equivalent to constraining $\phi_2$ to be orthogonal to $\phi_1$, i.e. the inner product of $\phi_1$ and $\phi_2$ must be zero,
 $$
 \phi_2'\phi_1=\sum_{j=1}^p\phi_{j2}\phi_{j1}=0.
 $$
@@ -677,7 +683,7 @@ $$
 \begin{align*}
 \max_{\phi_{1m},\dots,\phi_{pm}}&\underbrace{\left\{\frac{1}{n}\sum_{i=1}^n\left(\sum_{j=1}^p\phi_{jm}x_{ij}\right)^2\right\}}_{=\frac{1}{n}\sum_{i=1}^nz_{im}^2}\\
 \text{such that}&\quad\sum_{j=1}^p\phi_{jm}^2=1\quad\\ 
-\text{and}&\quad \sum_{j=1}^p\phi_{j\ell}\phi_{jm}=0\quad\text{for all}\quad \ell<m,
+\text{and}&\quad \sum_{j=1}^p\phi_{j\ell}\phi_{jm}=0\quad\text{for all}\quad 0\leq \ell<m,
 \end{align*}
 $$ 
 with $\phi_0=(\phi_{10},\dots,\phi_{p0})'=(0,\dots,0)'.$

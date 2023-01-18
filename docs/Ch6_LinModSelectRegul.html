@@ -534,12 +534,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-5185.5 5185.5 </code></pre>
+4876.9 4876.9 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 11528976362 11528976362</code></pre>
+<pre><code>[1] 10798079282 10798079282</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>
@@ -661,7 +661,7 @@ y_i = \theta_0 +  \sum_{m=1}^M\theta_m z_{im} + \epsilon_i,\quad i=1,\dots,n,
 \beta^M_j = \sum_{m=1}^M\theta_m \phi_{jm}
 \tag{6.12}\]</span></span> serves as a certain regularized version of the coefficients <span class="math inline">\(\beta_j\)</span> in the original linear model <a href="#eq-modelLarge">Equation&nbsp;<span>6.1</span></a>.</p>
 <ul>
-<li>If <span class="math inline">\(M=p\)</span> (no dimension reduction), and if all <span class="math inline">\(M\)</span> many <span class="math inline">\((z_{1m},\dots,z_{nm})'\)</span> vectors are linearly independent from each other (i.e.&nbsp;no redundant vectors), then <a href="#eq-RegulBeta_M">Equation&nbsp;<span>6.12</span></a> poses <em>no constraints</em> and <span class="math inline">\(\beta_j^M=\beta_j.\)</span></li>
+<li>If <span class="math inline">\(M=p\)</span> (no dimension reduction), and if all <span class="math inline">\(M\)</span> many <span class="math inline">\((z_{1m},\dots,z_{nm})',\)</span> <span class="math inline">\(m=1,\dots,M,\)</span> vectors are linearly independent from each other (i.e.&nbsp;no redundant vectors), then <a href="#eq-RegulBeta_M">Equation&nbsp;<span>6.12</span></a> poses <em>no constraints</em> and <span class="math inline">\(\beta_j^M=\beta_j.\)</span></li>
 <li>If <span class="math inline">\(M&lt;p\)</span> (dimension reduction), <a href="#eq-RegulBeta_M">Equation&nbsp;<span>6.12</span></a> serves to constrain the estimated <span class="math inline">\(\beta_j\)</span> coefficients <span class="math inline">\((\beta_j^M\neq \beta_j).\)</span></li>
 </ul>
 <p>All dimension reduction methods work in two steps.</p>
@@ -708,21 +708,25 @@ z_{i1} = \phi_{11}x_{i1} + \dots + \phi_{p1}x_{ip},
 &amp;=\frac{1}{n}\sum_{i=1}^nz_{i1} \\
 &amp;=\frac{1}{n}\sum_{i=1}^n\left(\phi_{11}x_{i1} + \dots + \phi_{p1}x_{ip}\right)\\
 &amp;= \phi_{11} \frac{1}{n}\sum_{i=1}^n x_{i1} + \dots + \phi_{p1} \frac{1}{n}\sum_{i=1}^nx_{ip}\\
-&amp; = \phi_{11}\bar{x}_{i1} + \dots + \phi_{p1}\bar{x}_{p} = 0.
+&amp; = \phi_{11}\bar{x}_{1} + \dots + \phi_{p1}\bar{x}_{p} = 0.
 \end{align*}
 \]</span></p>
 <p>Therefore, the formula for the sample variance of <span class="math inline">\(z_{i1}\)</span>, <span class="math inline">\(i=1,\dots,n\)</span>, simplifies as following: <span id="eq-SampleVarSimple"><span class="math display">\[
-\frac{1}{n}\sum_{i=1}^n\left(z_{i1}-\bar{z}_1\right)^2=\frac{1}{n}\sum_{i=1}^nz_{i1}^2.
+\frac{1}{n}\sum_{i=1}^n\left(z_{i1}-\bar{z}_1\right)^2=\frac{1}{n}\sum_{i=1}^nz_{i1}^2
 \tag{6.13}\]</span></span></p>
-<p>To determine the first principal component scores <span class="math inline">\(z_{11},\dots,z_{n1}\)</span>, we need to find that loading vector <span class="math inline">\(\phi_1=(\phi_{11},\dots,\phi_{p1})'\)</span> that maximizes the sample variance <span class="math display">\[
+<p>To determine the <strong>first principal component scores</strong> <span class="math display">\[
+z_{11},\dots,z_{n1},
+\]</span> we need to find that loading vector <span class="math inline">\(\phi_1=(\phi_{11},\dots,\phi_{p1})'\)</span> that maximizes the sample variance <span class="math display">\[
 \frac{1}{n}\sum_{i=1}^nz_{i1}^2 = \frac{1}{n}\sum_{i=1}^n\left(\phi_{11}x_{i1} + \dots + \phi_{p1}x_{ip}\right)^2
 \]</span> subject to the side constraint that <span class="math inline">\(||\phi_1||_2^2=1.\)</span> In other words, the first principal component loading vector <span class="math inline">\(\phi_1=(\phi_{11},\dots,\phi_{p1})'\)</span> is determined as the solution of the optimization problem <span class="math display">\[
 \max_{\phi_{11},\dots,\phi_{p1}}\underbrace{\left\{\frac{1}{n}\sum_{i=1}^n\left(\sum_{j=1}^p\phi_{j1}x_{ij}\right)^2\right\}}_{=\frac{1}{n}\sum_{i=1}^nz_{i1}^2}\quad\text{s.t.}\quad\sum_{j=1}^p\phi_{j1}^2=1,
 \]</span> where <span class="math inline">\(\frac{1}{n}\sum_{i=1}^nz_{i1}^2\)</span> equals the sample variance of <span class="math inline">\(z_{11},\dots,z_{n1}\)</span> (see <a href="#eq-SampleVarSimple">Equation&nbsp;<span>6.13</span></a>).</p>
-<p>There is a nice geometric interpretation for the first principal component (likewise for the further principal components). The first loading vector <span class="math inline">\(\phi_1=(\phi_{11},\dots,\phi_{p1})'\)</span> defines a direction vector in the feature space along which the data points vary the most. If we project each of the <span class="math inline">\(n\)</span> many <span class="math inline">\(p\)</span>-dimensional data points <span class="math display">\[
+<p>There is a nice geometric interpretation for the first principal component (likewise for the further principal components). The first loading vector <span class="math display">\[
+\phi_1=(\phi_{11},\dots,\phi_{p1})'
+\]</span> defines a direction vector in the feature space along which the data points vary the most. If we project each of the <span class="math inline">\(n\)</span> many <span class="math inline">\(p\)</span>-dimensional data points <span class="math display">\[
 \begin{align*}
 x_1 &amp;=(x_{11},\dots,x_{1p})'\\
-    &amp;\;\;\;\vdots \\
+    &amp;\; \vdots \\
 x_n &amp;=(x_{n1},\dots,x_{np})'
 \end{align*}
 \]</span> onto the direction vector <span class="math inline">\(\phi_1=(\phi_{11},\dots,\phi_{p1})'\)</span>, the projected values are the <strong>principal component scores</strong> <span class="math inline">\(z_{11},\dots,z_{n1}\)</span> themselves, i.e <span class="math display">\[
@@ -733,16 +737,16 @@ z_{n1} &amp; = \phi_1'x_n = \sum_{j=1}^p \phi_{j1}x_{nj}.
 \end{align*}
 \]</span></p>
 <p>The case <span class="math inline">\(p=2\)</span> is simple to visualize. Figure 6.14 displays the direction of the first principal component loading vector <span class="math inline">\(\phi_1\)</span> (green solid line) on an advertising data set. <img src="images/Fig_6_14.png" class="img-fluid"></p>
-<p>The left panel in Figure 6.15 displays the projection of the <span class="math inline">\(i\)</span>th, <span class="math inline">\(i=1,\dots,n,\)</span> data vectors <span class="math inline">\(x_i=(x_{i1},x_{i2})'\)</span> (purple circles 🟣) onto the first loading vector <span class="math inline">\(\phi_1=(\phi_{11},\phi_{21})'\)</span> leading to the <span class="math inline">\(i\)</span>th principal component score <span class="math inline">\(z_{i1}\)</span> (black crosses <span class="math inline">\(\mathbf{\times}\)</span>).</p>
+<p>The left panel in Figure 6.15 displays the projection of the <span class="math inline">\(i\)</span>th, <span class="math inline">\(i=1,\dots,n,\)</span> data vectors <span class="math inline">\(x_i=(x_{i1},x_{i2})'\)</span> (purple circles 🟣) onto the first loading vector <span class="math inline">\(\phi_1=(\phi_{11},\phi_{21})'\)</span> leading to the <span class="math inline">\(i\)</span>th principal component score <span class="math inline">\(z_{i1},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> (black crosses <span class="math inline">\(\mathbf{\times}\)</span>.</p>
 <p><img src="images/Fig_6_15.png" class="img-fluid"></p>
 </section>
 <section id="higher-order-principal-components" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="higher-order-principal-components">Higher order principal components</h4>
-<p>After the first principal component <span class="math inline">\(Z_1\)</span> of the features has been determined, we can find the second principal component <span class="math inline">\(Z_2.\)</span> The second principal component is the linear combination of <span class="math inline">\(X_1,X_2,\dots,X_p\)</span> that has maximal variance out of all linear combinations that are <strong>uncorrelated</strong> with <span class="math inline">\(Z_1.\)</span></p>
+<p>After the first principal component of the features has been determined, we can find the second principal component. The second principal component is the linear combination of <span class="math inline">\(X_1,X_2,\dots,X_p\)</span> that has maximal variance out of all linear combinations that are <strong>uncorrelated</strong> with <span class="math inline">\(Z_1.\)</span></p>
 <p>Thus, the second principal component scores <span class="math inline">\(z_{12},\dots,z_{np}\)</span> take the form <span class="math display">\[
 z_{i2} = \phi_2'x_i = \sum_{j=1}^p \phi_{j2}x_{ij},
-\]</span> where <span class="math inline">\(\phi_2=(\phi_{12},\dots,\phi_{p2})'\)</span> is the second principal component loading vector.</p>
-<p>Constraining <span class="math inline">\(Z_2\)</span> to be uncorrelated with <span class="math inline">\(Z_1\)</span> is equivalent to constraining <span class="math inline">\(\phi_2\)</span> to be orthogonal to <span class="math inline">\(\phi_1\)</span>, i.e. <span class="math display">\[
+\]</span> where <span class="math inline">\(\phi_2=(\phi_{12},\dots,\phi_{p2})'\)</span> is the second principal component loading vector with <span class="math inline">\(||\phi_2||_2^2=1.\)</span></p>
+<p>Constraining <span class="math inline">\(Z_2\)</span> to be uncorrelated with <span class="math inline">\(Z_1\)</span> is equivalent to constraining <span class="math inline">\(\phi_2\)</span> to be orthogonal to <span class="math inline">\(\phi_1\)</span>, i.e.&nbsp;the inner product of <span class="math inline">\(\phi_1\)</span> and <span class="math inline">\(\phi_2\)</span> must be zero, <span class="math display">\[
 \phi_2'\phi_1=\sum_{j=1}^p\phi_{j2}\phi_{j1}=0.
 \]</span> Therefore, the loading vector <span class="math inline">\(\phi_2=(\phi_{12},\dots,\phi_{p2})'\)</span> is determined by the solution of <span class="math display">\[
 \begin{align*}
@@ -754,7 +758,7 @@ z_{i2} = \phi_2'x_i = \sum_{j=1}^p \phi_{j2}x_{ij},
 \begin{align*}
 \max_{\phi_{1m},\dots,\phi_{pm}}&amp;\underbrace{\left\{\frac{1}{n}\sum_{i=1}^n\left(\sum_{j=1}^p\phi_{jm}x_{ij}\right)^2\right\}}_{=\frac{1}{n}\sum_{i=1}^nz_{im}^2}\\
 \text{such that}&amp;\quad\sum_{j=1}^p\phi_{jm}^2=1\quad\\
-\text{and}&amp;\quad \sum_{j=1}^p\phi_{j\ell}\phi_{jm}=0\quad\text{for all}\quad \ell&lt;m,
+\text{and}&amp;\quad \sum_{j=1}^p\phi_{j\ell}\phi_{jm}=0\quad\text{for all}\quad 0\leq \ell&lt;m,
 \end{align*}
 \]</span> with <span class="math inline">\(\phi_0=(\phi_{10},\dots,\phi_{p0})'=(0,\dots,0)'.\)</span></p>
 <p>Again, the case <span class="math inline">\(p=2\)</span> is simple to visualize. If <span class="math inline">\(p=2\)</span> there are only <span class="math inline">\(M=2\)</span> principal components. As shown in Figure 6.14, the second principal components loading vector <span class="math inline">\(\phi_2\)</span> (blue dashed line) is <strong>orthogonal</strong> to the first loading vector <span class="math inline">\(\phi_1\)</span> (green solid line). Thus when rotating the coordinate system such that the direction of the first loading vector becomes the x-axis, then the direction of the second loading vector becomes the the orthogonal y-axis (see right panel of Figure 6.15).</p>
