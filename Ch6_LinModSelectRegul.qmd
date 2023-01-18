@@ -931,11 +931,16 @@ This was a little tedious, partly because there is no `predict()` method for `re
 
 ```{r chunk19}
  predict.regsubsets <- function(object, newdata, id, ...) {
-  form <- as.formula(object$call[[2]])
-  mat <- model.matrix(form, newdata)
-  coefi <- coef(object, id = id)
-  xvars <- names(coefi)
-  mat[, xvars] %*% coefi
+    ## extract regression formula used in regsubsets()
+    form  <- as.formula(object$call[[2]])
+    ## build up the model matrix X of all predictors
+    mat   <- model.matrix(form, newdata)
+    ## extract the coefficients of the best model with 'id' many predictors
+    coefi <- coef(object, id = id)
+    ## ... and the names of those coefficients
+    xvars <- names(coefi)
+    ## compute the predicted values 
+    mat[, xvars] %*% coefi
  }
 ```
 
