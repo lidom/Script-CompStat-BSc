@@ -246,6 +246,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>Lecture videos:</p>
+<ul>
+<li><a href="">1. Video on Dimension Reduction</a></li>
+<li><a href="">2. Video on Dimension Reduction</a></li>
+<li><a href="">3. Video on Dimension Reduction</a></li>
+</ul>
 <p>In this chapter, we revisit the linear regression model <span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \epsilon.
 \]</span> In Chapter <a href="Ch3_LinearRegression.html"><span>Chapter&nbsp;3</span></a>, we focused on fitting a given linear regression model using least squares and completely ignored the model selection process. However, selecting a “good” model is itself a statistical problem which we need to solve using reliable statistical procedures. In this chapter, we consider fitting procedures that integrate the model selection process.</p>
@@ -534,12 +540,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-4876.9 4876.9 </code></pre>
+5031.3 5031.3 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10798079282 10798079282</code></pre>
+<pre><code>[1] 9853402653 9853402653</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>
@@ -770,7 +776,7 @@ z_{i2} = \phi_2'x_i = \sum_{j=1}^p \phi_{j2}x_{ij},
 y_i = \theta_0 +  \sum_{m=1}^M\theta_m z_{im} + \epsilon_i,
 \]</span> where <span class="math inline">\(z_{1m},\dots,z_{nm}\)</span> are the <span class="math inline">\(m\)</span>th principal component scores, and where the number of principal components <span class="math inline">\(M\)</span> acts as a tuning parameter.</p>
 <p>The key idea is that often a small number <span class="math inline">\(M\ll p\)</span> of principal components suffice to explain most of the variability in the data <span class="math inline">\(\mathbf{X}.\)</span> Therefore, often a relatively low number of principal components <span class="math inline">\(M\ll p\)</span> suffices to achieve very good predictions (low test MSE).</p>
-<p>Generally, fitting a least squares model to <span class="math inline">\(z_{i1},\dots,z_{im},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> leads to better results than fitting a least squares model to <span class="math inline">\(x_{i1},\dots,x_{ip},\)</span> particularly when <span class="math inline">\(p\approx n,\)</span> since typically most of the information in the data <span class="math inline">\(\mathbf{X}\)</span> that relates to the response is contained in <span class="math inline">\(z_{i1},\dots,z_{im},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> and by estimating only <span class="math inline">\(M\ll p\)</span> coefficients we can mitigate overfitting (high variance).</p>
+<p>Generally, fitting a least squares model to <span class="math inline">\(z_{i1},\dots,z_{iM},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> leads to better results than fitting a least squares model to <span class="math inline">\(x_{i1},\dots,x_{ip},\)</span> particularly when <span class="math inline">\(p\approx n,\)</span> since typically most of the information in the data <span class="math inline">\(\mathbf{X}\)</span> that relates to the response is contained in <span class="math inline">\(z_{i1},\dots,z_{iM},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> and by estimating only <span class="math inline">\(M\ll p\)</span> coefficients we can mitigate overfitting (high variance).</p>
 <p>Figure 6.18 displays the PCR fits on the simulated data sets from Figures 6.8 and 6.9.</p>
 <blockquote class="blockquote">
 <p>Recall that both data sets were generated using <span class="math inline">\(n = 50\)</span> observations and <span class="math inline">\(p = 45\)</span> predictors. However, while the response in the first data set was a function of all the <span class="math inline">\(p=45\)</span> predictors (Figure 6.8), the response in the second data set was generated using only <span class="math inline">\(p=2\)</span> of the predictors (Figure 6.9).</p>

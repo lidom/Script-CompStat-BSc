@@ -1,5 +1,11 @@
 # Linear Model Selection and Regularization
 
+Lecture videos:
+
+* [1. Video on Dimension Reduction]()
+* [2. Video on Dimension Reduction]()
+* [3. Video on Dimension Reduction]()
+
 In this chapter, we revisit the linear regression model 
 $$
 Y = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \epsilon.
@@ -703,7 +709,7 @@ where $z_{1m},\dots,z_{nm}$ are the $m$th principal component scores, and where 
 The key idea is that often a small number $M\ll p$ of principal components suffice to explain most of the variability in the data $\mathbf{X}.$ Therefore, often a relatively low number of principal components $M\ll p$ suffices to achieve very good predictions (low test MSE). 
 
 
-Generally, fitting a least squares model to $z_{i1},\dots,z_{im},$ $i=1,\dots,n,$ leads to better results than fitting a least squares model to $x_{i1},\dots,x_{ip},$ particularly when $p\approx n,$ since typically most of the information in the data $\mathbf{X}$ that relates to the response is contained in $z_{i1},\dots,z_{im},$ $i=1,\dots,n,$ and by estimating only $M\ll p$ coefficients we can mitigate overfitting (high variance). 
+Generally, fitting a least squares model to $z_{i1},\dots,z_{iM},$ $i=1,\dots,n,$ leads to better results than fitting a least squares model to $x_{i1},\dots,x_{ip},$ particularly when $p\approx n,$ since typically most of the information in the data $\mathbf{X}$ that relates to the response is contained in $z_{i1},\dots,z_{iM},$ $i=1,\dots,n,$ and by estimating only $M\ll p$ coefficients we can mitigate overfitting (high variance). 
 
 
 
