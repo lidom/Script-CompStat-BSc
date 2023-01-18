@@ -248,10 +248,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <p>Lecture videos for Chapter 6.3:</p>
 <ul>
-<li><a href="https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP">1. Video on Dimension Reduction</a></li>
-<li><a href="https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe">2. Video on Dimension Reduction</a></li>
-<li><a href="https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv">3. Video on Dimension Reduction</a></li>
+<li><a href="https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP">1. Video on Dimension Reduction (Ch. 6.3)</a></li>
+<li><a href="https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe">2. Video on Dimension Reduction (Ch. 6.3)</a></li>
+<li><a href="https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv">3. Video on Dimension Reduction (Ch. 6.3)</a></li>
 </ul>
+<p><br></p>
 <p>In this chapter, we revisit the linear regression model <span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \epsilon.
 \]</span> In Chapter <a href="Ch3_LinearRegression.html"><span>Chapter&nbsp;3</span></a>, we focused on fitting a given linear regression model using least squares and completely ignored the model selection process. However, selecting a “good” model is itself a statistical problem which we need to solve using reliable statistical procedures. In this chapter, we consider fitting procedures that integrate the model selection process.</p>
@@ -540,12 +541,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-5085.3 5085.3 </code></pre>
+4990.3 4990.3 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10714340501 10714340501</code></pre>
+<pre><code>[1] 8560852012 8560852012</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>

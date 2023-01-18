@@ -2,9 +2,11 @@
 
 Lecture videos for Chapter 6.3:
 
-* [1. Video on Dimension Reduction](https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP)
-* [2. Video on Dimension Reduction](https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe)
-* [3. Video on Dimension Reduction](https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv)
+* [1. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP)
+* [2. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe)
+* [3. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv)
+
+<br>
 
 In this chapter, we revisit the linear regression model 
 $$
