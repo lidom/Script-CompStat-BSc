@@ -541,12 +541,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-4841.9 4841.9 </code></pre>
+4939.4 4939.4 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8968201258 8968201258</code></pre>
+<pre><code>[1] 14417192231 14417192231</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>
@@ -1244,25 +1244,27 @@ Selection Algorithm: backward
 <p>In fact, we see that the best seven-variable model on the full data set has a different set of variables than the best seven-variable model on the training set.</p>
 <p>We now try to choose among the models of different sizes using cross-validation. This approach is somewhat involved, as we must perform best subset selection <em>within each of the <span class="math inline">\(k\)</span> training sets</em>. Despite this, we see that with its clever subsetting syntax, <code>R</code> makes this job quite easy. First, we create a vector that allocates each observation to one of <span class="math inline">\(k=10\)</span> folds, and we create a matrix in which we will store the results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Hitters)</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>k, <span class="at">length =</span> n))</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>cv.errors <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, k, <span class="dv">19</span>,</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>k         <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>n         <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Hitters)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>folds     <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>k, <span class="at">length =</span> n))</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>cv.errors <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, k, <span class="dv">19</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we write a for loop that performs cross-validation. In the <span class="math inline">\(j\)</span>th fold, the elements of <code>folds</code> that equal <code>j</code> are in the test set, and the remainder are in the training set. We make our predictions for each model size (using our new <code>predict()</code> method), compute the test errors on the appropriate subset, and store them in the appropriate slot in the matrix <code>cv.errors</code>. Note that in the following code <code>R</code> will automatically use our <code>predict.regsubsets()</code> function when we call <code>predict()</code> because the <code>best.fit</code> object has class <code>regsubsets</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  best.fit <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(Salary <span class="sc">~</span> .,</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Hitters[folds <span class="sc">!=</span> j, ],</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">nvmax =</span> <span class="dv">19</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> Hitters[folds <span class="sc">!=</span> j, ],</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">nvmax =</span> <span class="dv">19</span>)</span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>) {</span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(best.fit, Hitters[folds <span class="sc">==</span> j, ], <span class="at">id =</span> i)</span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    cv.errors[j, i] <span class="ot">&lt;-</span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mean</span>((Hitters<span class="sc">$</span>Salary[folds <span class="sc">==</span> j] <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a> }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>    pred            <span class="ot">&lt;-</span> <span class="fu">predict.regsubsets</span>(best.fit, </span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>                                 Hitters[folds <span class="sc">==</span> j, ], </span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">id =</span> i)</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>    cv.errors[j, i] <span class="ot">&lt;-</span> <span class="fu">mean</span>((Hitters<span class="sc">$</span>Salary[folds <span class="sc">==</span> j] <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a> }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This has given us a <span class="math inline">\(10 \times 19\)</span> matrix, of which the <span class="math inline">\((j,i)\)</span>th element corresponds to the test MSE for the <span class="math inline">\(j\)</span>th cross-validation fold for the best <span class="math inline">\(i\)</span>-variable model. We use the <code>apply()</code> function to average over the columns of this matrix in order to obtain a vector for which the <span class="math inline">\(i\)</span>th element is the cross-validation error for the <span class="math inline">\(i\)</span>-variable model.</p>
 <div class="cell">
