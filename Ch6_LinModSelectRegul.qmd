@@ -704,7 +704,7 @@ The *principal components regression* (PCR) approach fits the model in @eq-LinMo
 $$
 y_i = \theta_0 +  \sum_{m=1}^M\theta_m z_{im} + \epsilon_i,
 $$
-where $z_{1m},\dots,z_{nm}$ are the $m$th principal component scores, and where the number of principal components $M$ acts as a tuning parameter. 
+where $z_{im}$ denotes the $i$th $(i=1,\dots,n)$ observation of the $m$th $(m=1,\dots,M)$ principal component score, and where the number of principal components $M$ acts as a tuning parameter. 
 
 The key idea is that often a small number $M\ll p$ of principal components suffice to explain most of the variability in the data $\mathbf{X}.$ Therefore, often a relatively low number of principal components $M\ll p$ suffices to achieve very good predictions (low test MSE). 
 

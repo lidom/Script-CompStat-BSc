@@ -540,12 +540,12 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     x    x_S 
-5031.3 5031.3 </code></pre>
+4892.4 4892.4 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9853402653 9853402653</code></pre>
+<pre><code>[1] 10380971930 10380971930</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>6.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>
@@ -774,7 +774,7 @@ z_{i2} = \phi_2'x_i = \sum_{j=1}^p \phi_{j2}x_{ij},
 <h3 class="unnumbered anchored" data-anchor-id="the-principal-components-regression-approach">The Principal Components Regression Approach</h3>
 <p>The <em>principal components regression</em> (PCR) approach fits the model in <a href="#eq-LinMod_Trans_M">Equation&nbsp;<span>6.11</span></a> which we repeat here for convenience: <span class="math display">\[
 y_i = \theta_0 +  \sum_{m=1}^M\theta_m z_{im} + \epsilon_i,
-\]</span> where <span class="math inline">\(z_{1m},\dots,z_{nm}\)</span> are the <span class="math inline">\(m\)</span>th principal component scores, and where the number of principal components <span class="math inline">\(M\)</span> acts as a tuning parameter.</p>
+\]</span> where <span class="math inline">\(z_{im}\)</span> denotes the <span class="math inline">\(i\)</span>th <span class="math inline">\((i=1,\dots,n)\)</span> observation of the <span class="math inline">\(m\)</span>th <span class="math inline">\((m=1,\dots,M)\)</span> principal component score, and where the number of principal components <span class="math inline">\(M\)</span> acts as a tuning parameter.</p>
 <p>The key idea is that often a small number <span class="math inline">\(M\ll p\)</span> of principal components suffice to explain most of the variability in the data <span class="math inline">\(\mathbf{X}.\)</span> Therefore, often a relatively low number of principal components <span class="math inline">\(M\ll p\)</span> suffices to achieve very good predictions (low test MSE).</p>
 <p>Generally, fitting a least squares model to <span class="math inline">\(z_{i1},\dots,z_{iM},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> leads to better results than fitting a least squares model to <span class="math inline">\(x_{i1},\dots,x_{ip},\)</span> particularly when <span class="math inline">\(p\approx n,\)</span> since typically most of the information in the data <span class="math inline">\(\mathbf{X}\)</span> that relates to the response is contained in <span class="math inline">\(z_{i1},\dots,z_{iM},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> and by estimating only <span class="math inline">\(M\ll p\)</span> coefficients we can mitigate overfitting (high variance).</p>
 <p>Figure 6.18 displays the PCR fits on the simulated data sets from Figures 6.8 and 6.9.</p>
