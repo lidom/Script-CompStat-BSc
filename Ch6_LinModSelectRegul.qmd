@@ -1,10 +1,10 @@
 # Linear Model Selection and Regularization
 
-Lecture videos:
+Lecture videos for Chapter 6.3:
 
-* [1. Video on Dimension Reduction]()
-* [2. Video on Dimension Reduction]()
-* [3. Video on Dimension Reduction]()
+* [1. Video on Dimension Reduction](https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP)
+* [2. Video on Dimension Reduction](https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe)
+* [3. Video on Dimension Reduction](https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv)
 
 In this chapter, we revisit the linear regression model 
 $$
