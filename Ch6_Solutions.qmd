@@ -77,11 +77,11 @@ In this exercise, we will generate simulated data, and will then use this data t
 **Answer:** 
 
 ```{r}
-# set seed for rnorm function
+## set seed for rnorm function
 set.seed(10)
 
-# rnorm simulates pseudo random variates from a  
-# (standard) normal distribution
+## rnorm simulates pseudo random variates from a  
+## (standard) normal distribution
 X    <- rnorm(100)
 eps  <- rnorm(100)
 ```
@@ -95,57 +95,80 @@ where $\beta_0, \beta_1, \beta_2, \beta_3$ are constants of your choice.
 **Answer:** 
 
 ```{r}
-# beta parameters
+## beta parameters
 beta0 <-  2
 beta1 <-  2
 beta2 <- -2
-beta3 <- 4
+beta3 <-  4
 
-# Generate response vector Y
-Y = beta0 + beta1 * X + beta2 * X^2 + beta3 * X^3 + eps
+## Generate response vector Y
+Y <- beta0 + beta1 * X + beta2 * X^2 + beta3 * X^3 + eps
 ```
 
 **8 c)** Use the `regsubsets()` function to perform best subset selection in order to choose the best model containing the predictors $X, X^2, ..., X^{10}$. What is the best model obtained according to Cp, BIC, and adjusted $R^2$? Show some plots to provide evidence for your answer, and report the coefficients of the best model obtained. Note you will need to use the `data.frame()` function to create a single data set containing both $X$ and $Y$.
 
 ```{r}
-#Install package leaps if needed
-#install.packages("leaps")
+## Install package leaps if needed
+# install.packages("leaps")
 options(warn=-1)
 
-#call the leaps package
+## Call the leaps package
 library(leaps)
 
-#use data.frame() function to create single dataset of X and Y
-data.full = data.frame(y = Y, x = X)
+## Use data.frame() function to create single dataset of X and Y
+data.full <- data.frame(y = Y, x = X)
 
-#Use the regsubsets() function to perform best subset selection
-mod.full = regsubsets(y ~ poly(x, 10, raw = T), data = data.full, nvmax = 10)
+## Use the regsubsets() function to perform best subset selection
+mod.full  <- regsubsets(y ~ poly(x, 10, raw = TRUE), 
+                        data  = data.full, 
+                        nvmax = 10)
 
-#store results "printed" when using summary function
-mod.summary = summary(mod.full)
+## Store results "printed" when using summary function
+mod.summary <- summary(mod.full)
 
-# Plot and find the model size for best:
-# cp
+## Find the model size which minimizes Cp:
 which.min(mod.summary$cp)
 
-plot(mod.summary$cp, xlab = "Subset Size", ylab = "Cp", pch = 20, type = "l")
-points(which.min(mod.summary$cp), mod.summary$cp[3], pch = 4, col = "red", lwd = 7)
+## Plot the Cp-values
+plot(mod.summary$cp, 
+     xlab = "Subset Size", 
+     ylab = "Cp", 
+     type = "l")
+points(which.min(mod.summary$cp), 
+       mod.summary$cp[3], 
+       pch = 19, 
+       col = "red", 
+       lwd = 7)
 ```
 
 ```{r}
 # BIC
 which.min(mod.summary$bic)
 
-plot(mod.summary$bic, xlab = "Subset Size", ylab = "BIC", pch = 20, type = "l")
-points(which.min(mod.summary$bic), mod.summary$bic[3], pch = 4, col = "red", lwd = 7)
+plot(mod.summary$bic, 
+     xlab = "Subset Size", 
+     ylab = "BIC", 
+     type = "l")
+points(which.min(mod.summary$bic), 
+       mod.summary$bic[3], 
+       pch = 19, 
+       col = "red", 
+       lwd = 7)
 ```
 
 ```{r}
 # adjr2
 which.max(mod.summary$adjr2)
 
-plot(mod.summary$adjr2, xlab = "Subset Size", ylab = "Adjusted R2", pch = 20, type = "l")
-points(which.max(mod.summary$adjr2), mod.summary$adjr2[3], pch = 4, col = "red", lwd = 7)
+plot(mod.summary$adjr2, 
+     xlab = "Subset Size", 
+     ylab = "Adjusted R2", 
+     type = "l")
+points(which.max(mod.summary$adjr2), 
+       mod.summary$adjr2[3], 
+       pch = 19, 
+       col = "red", 
+       lwd = 7)
 ```
 
 **Answer:** We find that with Cp, BIC and Adjusted R2 criteria, 3, 3, and 3 variable models are respectively picked.
@@ -159,55 +182,61 @@ points(which.max(mod.summary$adjr2), mod.summary$adjr2[3], pch = 4, col = "red",
 **8 d)** Repeat (c), using forward stepwise selection and also using backwards stepwise selection. How does your answer compare to the results in (c)?
 
 ```{r}
-#Use the regsubsets() function to perform best subset selection (look at chosen method!)
-mod.fwd = regsubsets(y ~ poly(x, 10, raw = T), data = data.full, nvmax = 10, 
-    method = "forward")
-mod.bwd = regsubsets(y ~ poly(x, 10, raw = T), data = data.full, nvmax = 10, 
-    method = "backward")
+## Use the regsubsets() function to perform best subset selection 
 
-#store results
-fwd.summary = summary(mod.fwd)
-bwd.summary = summary(mod.bwd)
+## Forward Selection
+mod.fwd <- regsubsets(y ~ poly(x, 10, raw = TRUE), 
+                      data   = data.full, 
+                      nvmax  = 10, 
+                      method = "forward")
 
-# Find the model size for best:
-# cp forward
-which.min(fwd.summary$cp)
+## Backward Selection
+mod.bwd <- regsubsets(y ~ poly(x, 10, raw = TRUE), 
+                      data   = data.full, 
+                      nvmax  = 10, 
+                      method = "backward")
 
-# cp backward
-which.min(bwd.summary$cp)
+## Store results
+fwd.summary <- summary(mod.fwd)
+bwd.summary <- summary(mod.bwd)
+
+## Find the model size for best:
+## Cp 
+which.min(fwd.summary$cp) # forward
+which.min(bwd.summary$cp) # backward
 
 # BIC
-which.min(fwd.summary$bic)
-which.min(bwd.summary$bic)
+which.min(fwd.summary$bic) # forward
+which.min(bwd.summary$bic) # backward
 
 # adjr2
-which.max(fwd.summary$adjr2)
-which.max(bwd.summary$adjr2)
+which.max(fwd.summary$adjr2) # forward
+which.max(bwd.summary$adjr2) # backward
 ```
 
 ```{r}
 # Plot the statistics
 par(mfrow = c(3, 2))
 #cp
-plot(fwd.summary$cp, xlab = "Subset Size", ylab = "Forward Cp", pch = 20, type = "l")
-points(which.min(fwd.summary$cp), fwd.summary$cp[3], pch = 4, col = "red", lwd = 7)
-plot(bwd.summary$cp, xlab = "Subset Size", ylab = "Backward Cp", pch = 20, type = "l")
-points(which.min(bwd.summary$cp), bwd.summary$cp[3], pch = 4, col = "red", lwd = 7)
+plot(fwd.summary$cp, xlab = "Subset Size", ylab = "Forward Cp", type = "l")
+points(which.min(fwd.summary$cp), min(fwd.summary$cp), pch = 19, col = "red", lwd = 7)
+plot(bwd.summary$cp, xlab = "Subset Size", ylab = "Backward Cp", type = "l")
+points(which.min(bwd.summary$cp), min(bwd.summary$cp), pch = 19, col = "red", lwd = 7)
 
-#BIC
-plot(fwd.summary$bic, xlab = "Subset Size", ylab = "Forward BIC", pch = 20, type = "l")
-points(which.min(fwd.summary$bic), fwd.summary$bic[3], pch = 4, col = "red", lwd = 7)
-plot(bwd.summary$bic, xlab = "Subset Size", ylab = "Backward BIC", pch = 20, type = "l")
-points(which.min(bwd.summary$bic), bwd.summary$bic[3], pch = 4, col = "red", lwd = 7)
+## BIC
+plot(fwd.summary$bic, xlab = "Subset Size", ylab = "Forward BIC", type = "l")
+points(which.min(fwd.summary$bic), min(fwd.summary$bic), pch = 19, col = "red", lwd = 7)
+plot(bwd.summary$bic, xlab = "Subset Size", ylab = "Backward BIC", type = "l")
+points(which.min(bwd.summary$bic), min(bwd.summary$bic), pch = 19, col = "red", lwd = 7)
 
 #adjr2
-plot(fwd.summary$adjr2, xlab = "Subset Size", ylab = "Forward Adjusted R2", pch = 20, type = "l")
-points(which.max(fwd.summary$adjr2), fwd.summary$adjr2[3], pch = 4, col = "red", lwd = 7)
-plot(bwd.summary$adjr2, xlab = "Subset Size", ylab = "Backward Adjusted R2", pch = 20, type = "l")
-points(which.max(bwd.summary$adjr2), bwd.summary$adjr2[4], pch = 4, col = "red", lwd = 7)
+plot(fwd.summary$adjr2, xlab = "Subset Size", ylab = "Forward Adjusted R2", type = "l")
+points(which.max(fwd.summary$adjr2), max(fwd.summary$adjr2), pch = 19, col = "red", lwd = 7)
+plot(bwd.summary$adjr2, xlab = "Subset Size", ylab = "Backward Adjusted R2", type = "l")
+points(which.max(bwd.summary$adjr2), max(bwd.summary$adjr2), pch = 19, col = "red", lwd = 7)
 ```
 
-**Answer:** We see that while all backward stepwise with cp, BIC and adjusted $R^2$ pick 5 variable models, the forward stepwise with cp, BIC and adjusted $R^2$ pick only 3 variable models. Here are the coefficients:
+**Answer:** We see that while all backward stepwise with Cp, BIC and adjusted $R^2$ pick 5 variable models, the forward stepwise with Cp, BIC and adjusted $R^2$ pick only 3 variable models. Here are the coefficients:
 
 ```{r}
  round(coefficients(mod.fwd, id = 3), digits=2)
@@ -217,37 +246,41 @@ points(which.max(bwd.summary$adjr2), bwd.summary$adjr2[4], pch = 4, col = "red",
 round(coefficients(mod.bwd, id = 5), digits=2)
 ```
 
-**Answer:** Here, and as expected, all the coefficients for forward stepwise are quite close to our chosen $\beta$ 's. However, for the backward stepwise with 5 variable picks $X^5, X^7, X^9$ and drops $X^3$.
+**Answer:** All the coefficient estimates from forward stepwise selection are quite close to our chosen $\beta$ 's. However, for the backward stepwise with 5 variable picks $X^5, X^7, X^9$ and drops $X^3$.
 
 **8 e)** Now fit a lasso model to the simulated data, again using $X, X^2, ..., X^{10}$ as predictors. Use cross-validation to select the optimal value of $\lambda$. Create plots of the cross-validation error as a function of $\lambda$. Report the resulting coefficient estimates, and discuss the results obtained.
 
 ```{r}
-# install.packages("glmnet")
+## install.packages("glmnet")
 
-# Load the glmnet package
+## Load the glmnet package
 library(glmnet)
 
-#set seed
+## set seed
 set.seed(10)
 
-#training Lasso on the data
-xmat = model.matrix(y ~ poly(x, 10, raw = T), data = data.full)[, -1]
+## Training Lasso on the data
+xmat <- model.matrix(y ~ poly(x, 10, raw = TRUE), 
+                     data = data.full)[, -1]
 
-#Use cross-validation to select the optimal value of  lambda
-mod.lasso = cv.glmnet(xmat, Y, alpha = 1)
+## Use cross-validation to select the optimal value of  lambda
+mod.lasso <- cv.glmnet(xmat, Y, alpha = 1)
 
-#store and display lambda
-best.lambda = mod.lasso$lambda.min
+## Store and display lambda
+best.lambda <- mod.lasso$lambda.min
 best.lambda
 
-#plot
+## Plot
 plot(mod.lasso)
 ```
 
 ```{r}
-# Next fit the model on entire data using best lambda
-best.model = glmnet(xmat, Y, alpha = 1)
-predict(best.model, s = best.lambda, type = "coefficients")
+## Next fit the model on entire data using the best lambda
+best.model <- glmnet(xmat, Y, alpha = 1)
+##
+predict(best.model, 
+        s    = best.lambda, 
+        type = "coefficients") # print the coefficient estimates
 ```
 
 **Answer:** Lasso picks the correct specification.
@@ -259,21 +292,24 @@ $$Y = \beta_0 + \beta_7 X^7 + \epsilon$$
 and perform best subset selection and the lasso. Discuss the results obtained.
 
 ```{r}
-# create new beta 7
-beta7 = 2
+## Create new beta7 value 
+beta7     <- 2
 
-# model
-Y = beta0 + beta7 * X^7 + eps
+## Model
+Y         <- beta0 + beta7 * X^7 + eps
 
-# Predict using regsubsets
-data.full   = data.frame(y = Y, x = X)
-mod.full    = regsubsets(y ~ poly(x, 10, raw = T), data = data.full, nvmax = 10)
-mod.summary = summary(mod.full)
+## Predict using regsubsets
+data.full <- data.frame(y = Y, x = X)
+mod.full  <- regsubsets(y ~ poly(x, 10, raw = TRUE), 
+                        data  = data.full, 
+                        nvmax = 10)
 
-# Find the model size for best cp, BIC and adjr2
+mod.summary <- summary(mod.full)
+
+## Find the model size for best Cp, BIC and adjr2
 which.min(mod.summary$cp)
 which.min(mod.summary$bic)
-which.min(mod.summary$adjr2)
+which.max(mod.summary$adjr2)
 ```
 
 ```{r}
@@ -284,21 +320,25 @@ round(coefficients(mod.full, id = 1), digits=2)
 round(coefficients(mod.full, id = 10), digits=2)
 ```
 
-**Answer:** We see that both cp and BIC pick the most accurate 1-variable model with matching coefficients. Adjusted $R^2$ criteria picks 10(!) variables.
+**Answer:** We see that Cp, BIC, and adjusted $R^2$ pick the correct 1-variable model.
 
 ```{r}
-xmat = model.matrix(y ~ poly(x, 10, raw = T), data = data.full)[, -1]
-mod.lasso = cv.glmnet(xmat, Y, alpha = 1)
-best.lambda = mod.lasso$lambda.min
+xmat <- model.matrix(y ~ poly(x, 10, raw = TRUE), 
+                     data = data.full)[, -1]
+
+mod.lasso   <- cv.glmnet(xmat, Y, alpha = 1)
+best.lambda <- mod.lasso$lambda.min
 best.lambda
 ```
 
 ```{r}
-best.model = glmnet(xmat, Y, alpha = 1)
-predict(best.model, s = best.lambda, type = "coefficients")
+best.model  <- glmnet(xmat, Y, alpha = 1)
+predict(best.model, 
+        s    = best.lambda, 
+        type = "coefficients")
 ```
 
-**Answer:** Lasso also picks the best 1-variable model with coefficients being quite close to our specification.
+**Answer:** Lasso also picks the correct 1-variable model.
 
 
 ### Exercise 10 {-}
@@ -312,102 +352,109 @@ $$Y = X\beta + \epsilon,$$
 where $\beta$ has some elements that are exactly equal to zero.
 
 ```{r}
-# set seed for rnorm function
+## set seed for rnorm function
 set.seed(10)
 
-# select number of features
-p = 20
+## select number of features
+p  <- 20
 
-# select number of observations
-n = 1000
+## select number of observations
+n   <- 1000
 
-# rnorm simulates random variates having a specified normal distribution, here the standard one
-# x is a 1000x20 matrix
-x = matrix(rnorm(n * p), n, p)
-# B and eps are a 20x1 vector
-B = rnorm(p)
-eps = rnorm(p)
+## rnorm simulates realizations of 
+## random variates having a specified 
+## normal distribution (here standard normal)
+## x is a 1000x20 matrix
+x   <- matrix(rnorm(n * p), n, p)
+## B and eps are a 20x1 vector
+B   <- rnorm(p)
+eps <- rnorm(p)
 
-# set some elements of B equal to zero
-B[3] = 0
-B[4] = 0
-B[9] = 0
-B[10] = 0
-B[19] = 0
+## Set some elements of B equal to zero
+B[3]  <- 0
+B[4]  <- 0
+B[9]  <- 0
+B[10] <- 0
+B[19] <- 0
 
-# use %*% for matrix multiplication to obtain a 1000*1 vector
-# if we use * instead we obtain a 1000*20 vector. why? This operation
-# does a simple element by element multiplication up to matrices.
+## Generate the dependent variable Y realizations
 y = x %*% B + eps
 ```
 
 **10 b)** Split your data set into a training set containing 100 observations and a test set containing 900 observations.
 
 ```{r}
-# set seed
+## set seed
 set.seed(10)
 
-# sample function takes a sample of the specified size (100) 
-# from the elements of 1, 2, ..., 1000, without replacement
-train   = sample(seq(1000), 100, replace = FALSE)
+## sample function takes a sample of the specified size (100) 
+## from the elements of 1, 2, ..., 1000, without replacement
+train   <- sample(x       = 1:1000, 
+                  size    = 100, 
+                  replace = FALSE)
 
-# use the previously defined train vector to indicate which
-# data subset is the training and the testing one
-y.train = y[train, ]
-y.test  = y[-train, ]
-x.train = x[train, ]
-x.test  = x[-train, ]
+## use the previously defined train vector to construct 
+## training and testing data
+y.train <- y[ train, ]
+y.test  <- y[-train, ]
+x.train <- x[ train, ]
+x.test  <- x[-train, ]
 ```
 
 **10 c)** Perform best subset selection on the training set, and plot the training set MSE associated with the best model of each size.
 
 ```{r}
-# set seed
+## set seed
 set.seed(10)
 
-# call leaps package
+## call leaps package
 library(leaps)
 
-# nvmax - maximum size of subsets to examine
-regfit.full = regsubsets(y ~ ., data = data.frame(x = x.train, y = y.train), nvmax = p)
+## nvmax - maximum size of subsets to examine
+regfit.full <- regsubsets(y ~ ., 
+                          data = data.frame(x = x.train, 
+                                            y = y.train), 
+                          nvmax = p)
 
-# create storage vector
-val.errors = rep(NA, p)
+## create storage vector
+val.errors <- rep(NA, p)
 
-# store column names
-x_cols = colnames(x, do.NULL = FALSE, prefix = "x.")
+## store column names
+x_cols <- colnames(x, do.NULL = FALSE, prefix = "x.")
 
-# loop over each subset p
+## loop over each subset p
 for (i in 1:p) {
-    # store coefficients
-    coefi = coef(regfit.full, id = i)
-    # make prediction using training subset
-    pred = as.matrix(x.train[, x_cols %in% names(coefi)]) %*% coefi[names(coefi) %in% x_cols]
-    # store MSE of the training subset
-    val.errors[i] = mean((y.train - pred)^2)
+    ## store coefficients
+    coefi <- coef(regfit.full, id = i)
+    ## make prediction using training subset
+    pred  <- as.matrix(x.train[, x_cols %in% names(coefi)]) %*% coefi[names(coefi) %in% x_cols]
+    ## store MSE of the training subset
+    val.errors[i] <- mean((y.train - pred)^2)
 }
 
-#plot
-plot(val.errors, ylab = "Training MSE", pch = 5, type = "b")
+## Plot
+plot(val.errors, 
+     ylab = "Training MSE", 
+     type = "b")
 ```
 
 **10 d)** Plot the test set MSE associated with the best model of each size.
 
 ```{r}
-# create storage vector
-val.errors = rep(NA, p)
+## create storage vector
+val.errors <- rep(NA, p)
 
 # loop over each subset p
 for (i in 1:p) {
-    # store coefficients
-    coefi = coef(regfit.full, id = i)
-    # make prediction using testing subset
-    pred = as.matrix(x.test[, x_cols %in% names(coefi)]) %*% coefi[names(coefi) %in% x_cols]
-    # store MSE of the testing subset
-    val.errors[i] = mean((y.test - pred)^2)
+    ## store coefficients
+    coefi <- coef(regfit.full, id = i)
+    ## make prediction using testing subset
+    pred  <- as.matrix(x.test[, x_cols %in% names(coefi)]) %*% coefi[names(coefi) %in% x_cols]
+    ## store MSE of the testing subset
+    val.errors[i] <- mean((y.test - pred)^2)
 }
 
-# plot
+## Plot
 plot(val.errors, ylab = "Test MSE", pch = 19, type = "b")
 ```
 
@@ -430,31 +477,40 @@ round(coef(regfit.full, id = which.min(val.errors)), digits=2)
 **10 g)** Create a plot displaying $\sqrt{\sum_{j=1}^p (\beta_j - \hat{\beta}_j^r)^2}$ for a range of values of $r$, where $\hat{\beta}_j^r$ is the $j$th coefficient estimate for the best model containing $r$ coefficients. Comment on what you observe. How does this compare to the test MSE plot from (d)?
 
 ```{r}
-# create storage vectors
-val.errors = rep(NA, p)
-a = rep(NA, p)
-b = rep(NA, p)
+## create storage vectors
+val.errors <- rep(NA, p)
+a          <- rep(NA, p)
+b          <- rep(NA, p)
 
-# loop over each subset p
+## loop over each subset p
 for (i in 1:p) {
-    # store coefficients
-    coefi = coef(regfit.full, id = i)
+    ## store coefficients
+    coefi <- coef(regfit.full, id = i)
     
-    # store number of coefficients excluding the intercept
-    a[i] = length(coefi) - 1
+    ## store number of coefficients excluding the intercept
+    a[i] <- length(coefi) - 1
     
-    # compute what is asked in the question   -   to be confirmed!!!
-    b[i] = sqrt(sum((B[x_cols %in% names(coefi)] - coefi[names(coefi) %in% x_cols])^2) + 
-        sum(B[!(x_cols %in% names(coefi))])^2)
+    ## compute what is asked in the question 
+    b[i] <- sqrt(
+        ## Compare estimation results vs true values for the 
+        ## selected predictors 
+        sum((B[x_cols %in% names(coefi)] - coefi[names(coefi) %in% x_cols])^2) + 
+        ## Compare estimation results (=0) vs true values for the 
+        ## **not** selected predictors
+        sum(B[!(x_cols %in% names(coefi))] - 0 )^2)
 }
 
-# plot
-plot(x = a, y = b, xlab = "number of coefficients", ylab = "error between estimated and true coefficients", pch = 19, type = "b")
+## Plot
+plot(x = a, y = b, 
+     xlab = "number of coefficients", 
+     ylab = "error between estimated and true coefficients", 
+     pch  = 19, 
+     type = "b")
 ```
 
 ```{r}
 which.min(b)
 ```
 
-**Answer:** Test error is minimized with a 12 parameter model.
+**Answer:** Test error is minimized with a `r which.min(b)` parameter model.
 
