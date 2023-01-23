@@ -887,20 +887,22 @@ We just saw that it is possible to choose among a set of models of different siz
 
 In order for these approaches to yield accurate estimates of the test error, we must use *only the training observations* to perform all aspects of model-fitting---including variable selection. Therefore, the determination of which model of a given size is best must be made using *only the training observations*. This point is subtle but important. If the full data set is used to perform the best subset selection step, the validation set errors and cross-validation errors that we obtain will not be accurate estimates of the test error.
 
-In order to use the validation set approach, we begin by splitting the observations into a training set and a test set.  We do this by creating a random vector, `train`, of elements equal to `TRUE` if the corresponding observation is in the training set, and `FALSE` otherwise.  The vector `test` has a `TRUE` if the observation is in the test set, and a `FALSE` otherwise. Note the `!` in the command to create `test` causes `TRUE`s to be switched to `FALSE`s and vice versa. We also set a random seed so that the user will obtain the same training set/test set split.
+In order to use the validation set approach, we begin by splitting the observations into a training set and a test set.  We do this by creating a random vector, `train`, of elements equal to `TRUE` if the corresponding observation is in the training set, and `FALSE` otherwise.  The vector `test` has a `TRUE` if the observation is in the test set, and a `FALSE` otherwise. Note the `!` in the command to create `test` causes `TRUE`s to be switched to `FALSE`s and vice versa. We also set a random seed so that the user will obtain the same training/test set split.
 
 ```{r chunk14}
 set.seed(1)
-train <- sample(c(TRUE, FALSE), nrow(Hitters),
-    replace = TRUE)
-test <- (!train)
+train <- sample(x       = c(TRUE, FALSE), 
+                size    = nrow(Hitters),
+                replace = TRUE)
+test  <- (!train)
 ```
 
 Now, we apply `regsubsets()` to the training set in order to perform best subset selection.
 
 ```{r chunk15}
 regfit.best <- regsubsets(Salary ~ .,
-    data = Hitters[train, ], nvmax = 19)
+                          data  = Hitters[train, ], 
+                          nvmax = 19)
 ```
 
 Notice that we subset the `Hitters` data frame directly in the call in order to access only the training subset of the data, using the expression `Hitters[train, ]`. We now compute the validation set error for the best model of each model size. We first make a model matrix from the test data.
@@ -952,8 +954,9 @@ Our function pretty much mimics what we did above. The only complex part is how 
 Finally, we perform best subset selection on the full data set, and select the best seven-variable model. It is important that we make use of  the full data set in order to obtain more accurate coefficient estimates. Note that we perform best subset selection on the full data set and select the best seven-variable model, rather than simply using the variables that were obtained from the training set, because the best seven-variable model on the full data set may differ from the corresponding model on the training set.
 
 ```{r chunk20}
-regfit.best <- regsubsets(Salary ~ ., data = Hitters,
-    nvmax = 19)
+regfit.best <- regsubsets(Salary ~ ., 
+                          data  = Hitters,
+                          nvmax = 19)
 coef(regfit.best, 7)
 ```
 
@@ -970,8 +973,10 @@ set.seed(1)
 k         <- 10
 n         <- nrow(Hitters)
 folds     <- sample(rep(1:k, length = n))
-cv.errors <- matrix(NA, k, 19,
-    dimnames = list(NULL, paste(1:19)))
+cv.errors <- matrix(data     = NA, 
+                    nrow     = k, 
+                    ncol     = 19,
+                    dimnames = list(NULL, paste(1:19)))
 ```
 
 Now we write a for loop that performs cross-validation. In the $j$th fold, the elements of `folds` that equal `j` are in the test set, and the remainder are in the training set. We make our predictions for each model size (using our new `predict()` method), compute the test errors on the appropriate subset, and store them in the appropriate slot in the matrix `cv.errors`. Note that in the following code `R` will automatically use our `predict.regsubsets()` function when we call `predict()` because the `best.fit` object has class `regsubsets`.
@@ -990,7 +995,7 @@ for (j in 1:k) {
  }
 ```
 
-This has given us a $10 \times 19$ matrix, of which the $(j,i)$th element  corresponds to the test MSE for the $j$th cross-validation fold for the best $i$-variable model. We use the `apply()` function to average over the columns of this matrix in order to obtain a vector for which the $i$th element is the cross-validation error for the $i$-variable model.
+This has given us a $10 \times 19$ matrix of which the $(j,i)$th element  corresponds to the test MSE for the $j$th cross-validation fold for the best $i$-variable model. We use the `apply()` function to average over the columns of this matrix in order to obtain a vector for which the $i$th element is the cross-validation error for the $i$-variable model.
 
 ```{r chunk23}
 mean.cv.errors <- apply(cv.errors, 2, mean)
@@ -1002,8 +1007,9 @@ plot(mean.cv.errors, type = "b")
 We see that cross-validation selects a 10-variable model. We now perform best subset selection on the full data set in order to obtain the 10-variable model.
 
 ```{r chunk24}
-reg.best <- regsubsets(Salary ~ ., data = Hitters,
-    nvmax = 19)
+reg.best <- regsubsets(Salary ~ ., 
+                       data  = Hitters,
+                       nvmax = 19)
 coef(reg.best, 10)
 ```
 
@@ -1026,9 +1032,12 @@ The `model.matrix()` function is particularly useful for creating `x`; not only 
 The `glmnet()` function has an `alpha` argument that determines what type of model is fit. If `alpha=0` then a ridge regression model is fit, and if `alpha=1` then a lasso model is fit. We first fit a ridge regression model.
 
 ```{r chunk26}
-library(glmnet)
+library("glmnet")
+
 grid      <- 10^seq(10, -2, length = 100)
-ridge.mod <- glmnet(x, y, alpha = 0, lambda = grid)
+ridge.mod <- glmnet(x, y, 
+                    alpha  = 0, 
+                    lambda = grid)
 ```
 
 By default the `glmnet()` function performs ridge regression for an automatically selected range of $\lambda$ values. However, here we have chosen to implement the function over a grid of values ranging from $\lambda=10^{10}$ to $\lambda=10^{-2}$, essentially covering the full range of scenarios from the null model containing only the intercept, to the least squares fit. As we will see, we can also compute model fits for a particular value of $\lambda$ that is not one of the original `grid` values. Note that by default, the `glmnet()` function **standardizes the variables** so that they are on the same scale. To turn off this default setting, use the argument `standardize = FALSE`.
@@ -1087,14 +1096,13 @@ ridge.pred <- predict(ridge.mod,
 mean((ridge.pred - y.test)^2)
 ```
 
-The test MSE is $142{,}199$.
-Note that if we had instead simply fit a model with just an intercept, we would have predicted each test observation using the mean of the training observations. In that case, we could compute the test set MSE like this:
+The test MSE is $142{,}199$. Note that if we had instead simply fit a model with just an intercept, we would have predicted each test observation using the mean of the training observations. In that case, we could compute the test set MSE like this:
 
 ```{r chunk33}
 mean((mean(y[train]) - y.test)^2)
 ```
 
-We could also get the same result by fitting a ridge regression model with a *very* large value of $\lambda$. Note that `1e10` means $10^{10}$.
+We could also get the same ("just an intercept") result by fitting a ridge regression model with a *very* large value of $\lambda$. Note that `1e10` means $10^{10}$.
 
 ```{r chunk34}
 ridge.pred <- predict(ridge.mod, 
@@ -1105,7 +1113,7 @@ mean((ridge.pred - y.test)^2)
 
 So fitting a ridge regression model with $\lambda=4$ leads to a much lower test MSE than fitting a model with just an intercept. We now check whether there is any benefit to performing ridge regression with $\lambda=4$ instead of just performing least squares regression. Recall that least squares is simply ridge regression with $\lambda=0$.
 
-**Note:** In order for `glmnet()` to yield the exact least squares coefficients when $\lambda=0$, we use the argument `exact = T` when calling the `predict()` function. Otherwise, the `predict()` function will interpolate over the grid of $\lambda$ values used in fitting the `glmnet()` model, yielding approximate results. When we use `exact = T`, there remains a slight discrepancy in the third decimal place between the output of `glmnet()` when $\lambda = 0$ and the output of `lm()`; this  is due to numerical approximation on the part of `glmnet()`.
+**Note:** In order for `glmnet()` to yield the exact least squares coefficients when $\lambda=0$, we use the argument `exact = TRUE` when calling the `predict()` function. Otherwise, the `predict()` function will interpolate over the grid of $\lambda$ values used in fitting the `glmnet()` model, yielding approximate results. When we use `exact = TRUE`, there remains a slight discrepancy in the third decimal place between the output of `glmnet()` when $\lambda = 0$ and the output of `lm()`; this  is due to numerical approximation on the part of `glmnet()`.
 
 
 ```{r chunk35}
@@ -1113,29 +1121,36 @@ ridge.pred <- predict(ridge.mod,
                       s     = 0, 
                       newx  = x[test, ],
                       exact = TRUE, 
-                      x     = x[train, ], 
-                      y     = y[train])
+                      x     = x[train, ], # need to be supplied when exact = TRUE
+                      y     = y[train]    # need to be supplied when exact = TRUE
+                      )
 mean((ridge.pred - y.test)^2)
 
 ## coefficient fits of lm
 lm(y ~ x, subset = train)
 
-## coefficient fits of glmnet with exact == TRUE
+## Coefficient fits of glmnet with exact == TRUE
 predict(ridge.mod, 
         s     = 0, 
         exact = TRUE, 
         type  = "coefficients",
-        x     = x[train, ], 
-        y = y[train])[1:20, ]
+        x     = x[train, ], # need to be supplied when exact = TRUE
+        y     = y[train]    # need to be supplied when exact = TRUE
+        )[1:20, ]
 ```
 
 In general, if we want to fit a (unpenalized) least squares model, then we should use the `lm()` function, since that function provides more useful outputs, such as standard errors and p-values for the coefficients.
 
-In general, instead of arbitrarily choosing $\lambda=4$, it would be better to use cross-validation to choose the tuning parameter $\lambda$. We can do this using the built-in cross-validation function, `cv.glmnet()`.  By default, the function performs ten-fold cross-validation, though this can be changed using the argument `nfolds`. Note that we set a random seed first so our results will be reproducible, since the choice of the cross-validation folds is random.
+In general, instead of arbitrarily choosing $\lambda=4$, it would be better to use cross-validation to choose the tuning parameter $\lambda$. We can do this using the built-in cross-validation function, `cv.glmnet()`.  By default, the function performs **10-fold cross-validation**, though this can be changed using the argument `nfolds`. Note that we set a random seed first so our results will be reproducible, since the choice of the cross-validation folds is random.
 
 ```{r chunk36}
 set.seed(1)
-cv.out  <- cv.glmnet(x[train, ], y[train], alpha = 0)
+
+## Only on the train data to have comparison 
+## with the above chosen lambda values (i.e., 4 and 1e10)
+cv.out  <- cv.glmnet(x[train, ], 
+                     y[train], 
+                     alpha = 0)
 plot(cv.out)
 bestlam <- cv.out$lambda.min
 bestlam
@@ -1144,16 +1159,21 @@ bestlam
 Therefore, we see that the value of $\lambda$ that results in the smallest cross-validation error is $326$. What is the test MSE associated with this value of $\lambda$?
 
 ```{r chunk37}
-ridge.pred <- predict(ridge.mod, s = bestlam,
-    newx = x[test, ])
+ridge.pred <- predict(ridge.mod, 
+                      s    = bestlam,
+                      newx = x[test, ])
 mean((ridge.pred - y.test)^2)
 ```
 
 This represents a further improvement over the test MSE that we got using $\lambda=4$. Finally, we refit our ridge regression model on the full data set, using the value of $\lambda$ chosen by cross-validation, and examine the coefficient estimates.
 
 ```{r chunk38}
-out <- glmnet(x, y, alpha = 0)
-predict(out, type = "coefficients", s = bestlam)[1:20, ]
+out <- glmnet(x, 
+              y, 
+              alpha = 0)
+predict(out, 
+        type = "coefficients", 
+        s    = bestlam)[1:20, ]
 ```
 
 As expected, none of the coefficients are zero---ridge regression does not perform variable selection!
@@ -1175,7 +1195,9 @@ We can see from the coefficient plot that depending on the choice of tuning para
 
 ```{r chunk40}
 set.seed(1)
-cv.out     <- cv.glmnet(x[train, ], y[train], alpha = 1)
+cv.out     <- cv.glmnet(x[train, ], 
+                        y[train], 
+                        alpha = 1)
 plot(cv.out)
 
 ## optimal lambda (according to CV)
@@ -1262,7 +1284,9 @@ validationplot(pcr.fit, val.type = "MSEP")
 Now we find that the lowest cross-validation error occurs when $M=5$ components are used. We compute the test MSE as follows.
 
 ```{r chunk46}
-pcr.pred <- predict(pcr.fit, x[test, ], ncomp = 5)
+pcr.pred <- predict(pcr.fit, 
+                    x[test, ], 
+                    ncomp = 5)
 mean((pcr.pred - y.test)^2)
 ```
 
@@ -1271,7 +1295,9 @@ This test set MSE is competitive with the results obtained using ridge regressio
 Finally, we fit PCR on the full data set, using $M=5$, the number of components identified by cross-validation.
 
 ```{r chunk47}
-pcr.fit <- pcr(y ~ x, scale = TRUE, ncomp = 5)
+pcr.fit <- pcr(y ~ x, 
+               scale = TRUE, 
+               ncomp = 5)
 summary(pcr.fit)
 ```
 

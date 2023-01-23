@@ -171,13 +171,13 @@ points(which.max(mod.summary$adjr2),
        lwd = 7)
 ```
 
-**Answer:** We find that with Cp, BIC and Adjusted R2 criteria, 3, 3, and 3 variable models are respectively picked.
+**Answer:** We find that all criteria (Cp, BIC and Adjusted R2) choose the 3 variables model.
 
 ```{r}
  round(coefficients(mod.full, id = 3), digits=2)
 ```
 
-**Answer:** As expected, all the coefficients are quite close to our chosen $\beta$ 's.
+**Answer:** As expected, all the coefficients are quite close to our chosen parameter values: $\beta_0=\beta_1=2$, $\beta_2=-2$, and $\beta_3=4.$
 
 **8 d)** Repeat (c), using forward stepwise selection and also using backwards stepwise selection. How does your answer compare to the results in (c)?
 
@@ -236,7 +236,7 @@ plot(bwd.summary$adjr2, xlab = "Subset Size", ylab = "Backward Adjusted R2", typ
 points(which.max(bwd.summary$adjr2), max(bwd.summary$adjr2), pch = 19, col = "red", lwd = 7)
 ```
 
-**Answer:** We see that while all backward stepwise with Cp, BIC and adjusted $R^2$ pick 5 variable models, the forward stepwise with Cp, BIC and adjusted $R^2$ pick only 3 variable models. Here are the coefficients:
+**Answer:** While all backward stepwise selection approaches with Cp, BIC and adjusted $R^2$ pick the 5 variables model, the forward stepwise selection approaches with Cp, BIC and adjusted $R^2$ pick the 3 variables model. Here are the coefficients:
 
 ```{r}
  round(coefficients(mod.fwd, id = 3), digits=2)
@@ -316,11 +316,7 @@ which.max(mod.summary$adjr2)
 round(coefficients(mod.full, id = 1), digits=2)
 ```
 
-```{r}
-round(coefficients(mod.full, id = 10), digits=2)
-```
-
-**Answer:** We see that Cp, BIC, and adjusted $R^2$ pick the correct 1-variable model.
+**Answer:** Best subset selection selects the correct 1 variable model---no matter which criterion (Cp, BIC, and adjusted $R^2$) is used. 
 
 ```{r}
 xmat <- model.matrix(y ~ poly(x, 10, raw = TRUE), 
