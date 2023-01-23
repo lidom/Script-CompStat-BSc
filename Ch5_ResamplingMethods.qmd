@@ -350,21 +350,17 @@ k              <- 5
 ## container for storing the MSE results
 MSE_folds      <- matrix(NA, k, p_max)
 
-## "sub"-sample size of each hold-out test data set
-n_sub          <- floor(n/k)
-
-## auxiliary vector for selecting the test/validation-datasets
-test_data_slct <- c(0, n_sub * 1:(k-1), n)
+## selector for the folds 
+folds     <- sample(rep(1:k, length = n))
 
 ## Save starting time of the loop
 start_time     <- Sys.time()
 
-for(r in 1:k){
-  fold_pos      <- (test_data_slct[r]+1):test_data_slct[r+1]
+for(j in 1:k){
   ## Training set 
-  Auto_Train_df <- Auto[-fold_pos, ]
+  Auto_Train_df <- Auto[folds != j, ]
   ## Validation set
-  Auto_Valid_df <- Auto[fold_pos, ]
+  Auto_Valid_df <- Auto[folds == j, ]
 
   for(p in 1:p_max){
     ## Step 1
@@ -373,7 +369,7 @@ for(r in 1:k){
     ## Step 2
     y_fit_Valid    <- predict(Train_polreg, newdata = Auto_Valid_df)
     ## Step 3
-    MSE_folds[r,p] <- mean((Auto_Valid_df$mpg - y_fit_Valid)^2)
+    MSE_folds[j,p] <- mean((Auto_Valid_df$mpg - y_fit_Valid)^2)
   }
 }
 ## Save end time of the loop
