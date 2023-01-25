@@ -459,7 +459,7 @@ poly(x, 10, raw = TRUE)10  .       </code></pre>
                      1.9                      2.0 </code></pre>
 </div>
 </div>
-<p><strong>Answer:</strong> Best subset selection selects the correct 1 variable model (no matter which criterion Cp, BIC, and adjusted <span class="math inline">\(R^2\)</span>) is used.</p>
+<p><strong>Answer:</strong> Best subset selection selects the correct 1 variable model—no matter which criterion (Cp, BIC, and adjusted <span class="math inline">\(R^2\)</span>) is used.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> data.full)[, <span class="sc">-</span><span class="dv">1</span>]</span>
@@ -502,7 +502,7 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <p>where <span class="math inline">\(\beta\)</span> has some elements that are exactly equal to zero.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed for rnorm function</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="do">## select number of features</span></span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>p  <span class="ot">&lt;-</span> <span class="dv">20</span></span>
@@ -514,25 +514,25 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="do">## random variates having a specified </span></span>
 <span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="do">## normal distribution (here standard normal)</span></span>
 <span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="do">## x is a 1000x20 matrix</span></span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>x   <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>x      <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
 <span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="do">## B and eps are a 20x1 vector</span></span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>B   <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(p)</span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(p)</span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>beta   <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">3</span>, p)</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>eps    <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
 <span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Set some elements of B equal to zero</span></span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">3</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">4</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">9</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">19</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">1</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">2</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">3</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">4</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">5</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Generate the dependent variable Y realizations</span></span>
-<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> x <span class="sc">%*%</span> B <span class="sc">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, beta) <span class="sc">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>10 b)</strong> Split your data set into a training set containing 100 observations and a test set containing 900 observations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="do">## sample function takes a sample of the specified size (100) </span></span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="do">## from the elements of 1, 2, ..., 1000, without replacement</span></span>
@@ -550,7 +550,7 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <p><strong>10 c)</strong> Perform best subset selection on the training set, and plot the training set MSE associated with the best model of each size.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="do">## call leaps package</span></span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
@@ -565,14 +565,14 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>val.errors <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, p)</span>
 <span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="do">## store column names</span></span>
-<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>x_cols <span class="ot">&lt;-</span> <span class="fu">colnames</span>(x, <span class="at">do.NULL =</span> <span class="cn">FALSE</span>, <span class="at">prefix =</span> <span class="st">"x."</span>)</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>x_cols     <span class="ot">&lt;-</span> <span class="fu">colnames</span>(x, <span class="at">do.NULL =</span> <span class="cn">FALSE</span>, <span class="at">prefix =</span> <span class="st">"x."</span>)</span>
 <span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="do">## loop over each subset p</span></span>
 <span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
 <span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store coefficients</span></span>
-<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>    coefi <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>    coefi         <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
 <span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>    <span class="do">## make prediction using training subset</span></span>
-<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>    pred  <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(x.train[, x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)]) <span class="sc">%*%</span> coefi[<span class="fu">names</span>(coefi) <span class="sc">%in%</span> x_cols]</span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>    pred          <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x.train[, x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)]) <span class="sc">%*%</span> coefi</span>
 <span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store MSE of the training subset</span></span>
 <span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    val.errors[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>((y.train <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -580,7 +580,11 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
 <span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(val.errors, </span>
 <span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Training MSE"</span>, </span>
-<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y   =</span> val.errors[<span class="fu">which.min</span>(val.errors)], </span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">x   =</span> <span class="fu">which.min</span>(val.errors), </span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -593,15 +597,21 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over each subset p</span></span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store coefficients</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    coefi <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    coefi         <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
 <span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="do">## make prediction using testing subset</span></span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    pred  <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(x.test[, x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)]) <span class="sc">%*%</span> coefi[<span class="fu">names</span>(coefi) <span class="sc">%in%</span> x_cols]</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    pred          <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x.test[, x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)]) <span class="sc">%*%</span> coefi</span>
 <span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store MSE of the testing subset</span></span>
 <span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    val.errors[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>((y.test <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
-<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(val.errors, <span class="at">ylab =</span> <span class="st">"Test MSE"</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">"b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(val.errors, </span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Test MSE"</span>, </span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y   =</span> val.errors[<span class="fu">which.min</span>(val.errors)], </span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x   =</span> <span class="fu">which.min</span>(val.errors), </span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -610,23 +620,23 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(val.errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 13</code></pre>
+<pre><code>[1] 15</code></pre>
 </div>
 </div>
-<p><strong>Answer:</strong> A 13 parameter model has the smallest test MSE.</p>
+<p><strong>Answer:</strong> A 15 parameter model has the smallest test MSE.</p>
 <p><strong>10 f)</strong> How does the model at which the test set MSE is minimized compare to the true model used to generate the data? Comment on the coefficient values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(regfit.full, <span class="at">id =</span> <span class="fu">which.min</span>(val.errors)), <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)         x.1         x.5         x.6         x.7         x.8 
-       0.12        1.06       -1.10       -1.44        2.62       -2.12 
+<pre><code>(Intercept)         x.6         x.7         x.8         x.9        x.10 
+       0.92        3.04        2.88        3.05        3.05        3.13 
        x.11        x.12        x.13        x.14        x.15        x.16 
-       2.22        1.06        2.13        1.30        1.13       -0.51 
-       x.17        x.20 
-       1.07        0.35 </code></pre>
+       3.09        3.12        3.03        2.95        3.04        2.99 
+       x.17        x.18        x.19        x.20 
+       3.00        3.15        2.94        2.79 </code></pre>
 </div>
 </div>
-<p><strong>Answer:</strong> Caught all zeroed coefficients (3,4,9,10,19) and added other zeroed coefficients (2,18).</p>
+<p><strong>Answer:</strong> Best subset regression correctly selected out all irrelevant predictors (1, 2, 3,4, 5).</p>
 <p><strong>10 g)</strong> Create a plot displaying <span class="math inline">\(\sqrt{\sum_{j=1}^p (\beta_j - \hat{\beta}_j^r)^2}\)</span> for a range of values of <span class="math inline">\(r\)</span>, where <span class="math inline">\(\hat{\beta}_j^r\)</span> is the <span class="math inline">\(j\)</span>th coefficient estimate for the best model containing <span class="math inline">\(r\)</span> coefficients. Comment on what you observe. How does this compare to the test MSE plot from (d)?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create storage vectors</span></span>
@@ -646,18 +656,21 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>    b[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(</span>
 <span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Compare estimation results vs true values for the </span></span>
 <span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>        <span class="do">## selected predictors </span></span>
-<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>((B[x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)] <span class="sc">-</span> coefi[<span class="fu">names</span>(coefi) <span class="sc">%in%</span> x_cols])<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>((beta[x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)] <span class="sc">-</span> coefi[<span class="sc">-</span><span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> </span>
 <span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Compare estimation results (=0) vs true values for the </span></span>
 <span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>        <span class="do">## **not** selected predictors</span></span>
-<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(B[<span class="sc">!</span>(x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi))] <span class="sc">-</span> <span class="dv">0</span> )<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(beta[<span class="sc">!</span>(x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi))] <span class="sc">-</span> <span class="dv">0</span> )<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
 <span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> a, <span class="at">y =</span> b, </span>
-<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"number of coefficients"</span>, </span>
-<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"error between estimated and true coefficients"</span>, </span>
-<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">19</span>, </span>
-<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Number of coefficients"</span>, </span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Error between estimated and true coefficients"</span>, </span>
+<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y   =</span> b[<span class="fu">which.min</span>(b)], </span>
+<span id="cb59-30"><a href="#cb59-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">x   =</span> <span class="fu">which.min</span>(b), </span>
+<span id="cb59-31"><a href="#cb59-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -665,10 +678,10 @@ poly(x, 10, raw = TRUE)10 .       </code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 13</code></pre>
+<pre><code>[1] 15</code></pre>
 </div>
 </div>
-<p><strong>Answer:</strong> Test error is minimized with a 13 parameter model.</p>
+<p><strong>Answer:</strong> Test error in the parameter estimates is minimized with a 15 parameter model.</p>
 </section>
 </section>
 
