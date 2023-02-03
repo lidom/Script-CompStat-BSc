@@ -351,7 +351,7 @@ k              <- 5
 MSE_folds      <- matrix(NA, k, p_max)
 
 ## selector for the folds 
-folds     <- sample(rep(1:k, length = n))
+folds          <- sample(rep(1:k, length = n))
 
 ## Save starting time of the loop
 start_time     <- Sys.time()
