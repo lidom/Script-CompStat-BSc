@@ -6,9 +6,12 @@
 suppressPackageStartupMessages(library("kableExtra"))
 suppressPackageStartupMessages(library("tidyverse"))
 
-timetable <- tibble("Day"=c("Monday", "Wednesday"),
-                    "Time"=c("12:15-13:45", "16:15-17:45"),
-                    "Lecture Hall" =c("	Jur / Hörsaal K", "	Jur / Hörsaal K"))
+timetable <- tibble("Day"=c("Monday"),
+                    "Time (Theory 1)"=c("14:15-15:00"),
+                    "Time (Theory 2)"=c("15:15-16:00"),
+                    "Time (Theory 3)"=c("16:15-16:45"),
+                    "Time (Practice)"=c("17:00-17:45"),
+                    "Lecture Hall"   =c("Jur / Hörsaal K"))
            
 timetable %>% kbl() %>%  kable_styling()
 ```
@@ -17,20 +20,19 @@ timetable %>% kbl() %>%  kable_styling()
 ### Lecture Material and Literature {-}
 
 
-* Course Textbook (`ISLR`): 
+* Main Course Textbook (`ISLR`): 
   * [An Introduction to Statistical Learning (2nd Edition)](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
-  * The pdf-Version of the textbook `ISLR` can be downloaded for free: [Free Book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf)  
+  * The PDF-version and further resources (datasets, etc.) of the textbook can be downloaded **for free** from [https://www.statlearning.com/](https://www.statlearning.com/)
 
-* Online resources (datasets, etc.) for the book can be found [HERE](https://www.statlearning.com/resources-second-edition).
-* [eWhiteboard](https://uni-bonn.sciebo.de/s/qdGFYfqMno0QfzX) for the lecture notes.
-* [This online script](https://www.dliebl.com/Script-ISLR/)
+* [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes.
+* [This online script](https://www.dliebl.com/computational-statistics-script-BSc/)
 
 The above links to the lecture materials can also be found at [eCampus](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
 
 
-### Communication {-}
+<!-- ### Communication {-}
 
-* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/bfmraxkf5rosbd5h3lrfa2jo/) to post questions, share codes, etc. Happy sharing and discussing! 
+* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/bfmraxkf5rosbd5h3lrfa2jo/) to post questions, share codes, etc. Happy sharing and discussing!  -->
 
 
 
