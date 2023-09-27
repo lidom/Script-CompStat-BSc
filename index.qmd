@@ -2,6 +2,8 @@
 
 ### Timetable {-}
 
+Monday afternoon is computational statistics afternoon. In each of our sessions, we'll have both theory and practice sessions and a couple of breaks in between. 
+
 ```{r, echo=FALSE}
 suppressPackageStartupMessages(library("kableExtra"))
 suppressPackageStartupMessages(library("tidyverse"))
