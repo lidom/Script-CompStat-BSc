@@ -1,381 +1,565 @@
 ## Solutions
 
-### Exercise 1  {-}
+### Exercise 1 {-}
 
-**1 a)** Describe the null hypotheses to which the $p$-values given in Table 3.4 correspond. 
+Using a little bit of algebra, use (4.2) to achieve (4.3). In other words, the logistic function representation and logit representation for the logistic regression model are equivalent.
 
-![](DATA/Table.PNG)
+**Answer:** 
 
-**1 b)** Explain what conclusions you can draw based on these $p$-values. Your explanation should be phrased in terms of `sales`, `TV`, `radio`, and `newspaper`, rather than in terms of the coefficients of the linear model.
+Equations (4.2) and (4.3) are the following:
+
+$$ 
+(4.2) \quad p(X) = \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}\qquad\qquad
+(4.3)  \quad  \frac {p(X)} {1 - p(X)} =e^{\beta_0 + \beta_1 X}
+$$
 
 
-**Answers:**
-
-**1 a)** In Table 3.4, the null hypothesis for `TV` is that in the presence of `radio` ads and `newspaper` ads, `TV` ads have no effect on sales. Similarly, the null hypothesis for `radio` is that in the presence of `TV` ads and `newspaper` ads, `radio` ads have no effect on sales.
-
-**1 b)** On the one hand, the low p-values of `TV` and `radio` allow us to reject the "no effect" null hypotheses for `TV` and `radio`. Hence, we believe that `TV` (`radio`) ads have an effect on `sales` in the presence of `radio` (`TV`) and `newspaper` ads.<br>
-On the other hand, the high p-value of `newspaper` does *not* allow us to reject the "no effect" null-hypothesis. This constitutes an *inconclusive result* and only says that the possible effects of `newspaper` ads are not large enough to stand out from the estimation errors. 
-
-**Remember:** An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.
-
-### Exercise 2  {-}
-
-Carefully explain the main difference between the KNN classifier and KNN regression methods.
-
-**Answer:**
-
-KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for $Y$ (qualitative), given a certain predictor $x_0$, where as the output for a KNN regression predicts the quantitative value for $f(x_0)$, given a certain predictor $x_0$.
-
-### Exercise 3 {-}
-
-Suppose we have a data set with five predictors:
-
-$X_1 =GPA$
-
-$X_2 = IQ$
-
-$X_3 = Gender$ ($1$ for Female and $0$ for Male)
-
-$X_4 =$ Interaction between $GPA$ and $IQ$
-
-$X_5 =$ Interaction between $GPA$ and $Gender$
-
-The response variable (in thousands of dollars) is defined as:
-
-$Y =$ starting salary after graduation
-
-Suppose we use least squares to fit the model, and get: 
-
-$\hat{\beta}_0 = 50$, $\hat{\beta}_1 = 20$, $\hat{\beta}_2 = 0.07$, $\hat{\beta}_3 = 35$, $\hat{\beta}_4 = 0.01$, and $\hat{\beta}_5 = −10$.
-
-Thus we have:
+Derivations:
 
 $$
 \begin{align*}
-&E[Y|X] = \\
-& 50 + 20\,\overbrace{GPA}^{X_1} + 0.07\,\overbrace{IQ}^{X_2} + 35\,\overbrace{Gender}^{X_3} + 
- 0.01\,\overbrace{GPA\cdot IQ}^{X_4=X_1\cdot X_2} - 10\,\overbrace{GPA\cdot Gender}^{X_5=X_1\cdot X_3}
+\frac {p(X)} {1 - p(X)} 
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex] 
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1 + e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}} - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex]  
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1} {1 + e^{\beta_0 + \beta_1 X}}} 
+= e^{\beta_0 + \beta_1 X}
 \end{align*}
 $$
 
-**3 a)** Which answer is correct, and why?
+### Exercise 6 {-}
 
- i) For a fixed value of $IQ$ and $GPA$, males earn more on average than females.
- ii) For a fixed value of $IQ$ and $GPA$, females earn more on average than males.
- iii) For a fixed value of $IQ$ and $GPA$, males earn more on average than females provided that the $GPA$ is high enough.
- iv) For a fixed value of $IQ$ and $GPA$, females earn more on average than males provided that the $GPA$ is high enough.
+Suppose we collect data for a group of students in a statistics class with variables 
 
+* $X_1=$`hours studied`,
+* $X_2 =$ `undergrad GPA` (GPA: Grade Point Average), and 
+* $Y =$ `receive an A`. 
 
-**Answer:**
-Observe that:
-$$
-\begin{align*}
-\text{Male\; $(X_3 = 0)$:}\quad   & 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
-\text{Female\; $(X_3 = 1)$:}\quad & 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
-\end{align*}
-$$
+We fit a logistic regression and produce estimated coefficients:
 
-Thus 3 a) iii. is correct, since once the $X_1=$`GPA` is high enough ($35-10\,X_1<0 \Leftrightarrow X_1>3.5$), males earn more on average.
+$$\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.$$
 
-**3 b)** Predict the salary of a female with `IQ` of 110 and a `GPA` of 4.0.
+**6 a)** Estimate the probability that a student who studies for $40$ h and has an `undergrad GPA` of $3.5$ gets an `A` in the class.
 
 **Answer:**
 
+Remember from the previous exercise that:
+
+$$ 
+p(X) = \frac {\exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
+             {1 + \exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
+\\
+$$
+
+Thus, the probability of $Y=1$ given $X=[x_1,x_2]$ with $x_1 =40$ (hours) and $x_2=3.5$ (GPA) yields:
+
+$$ 
+p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
+$$
+
+Calculations in `R`:
 ```{r}
-GPA    <-   4
-IQ     <- 110
-Gender <-   1 # female = 1
-## Prediction
-Y_hat  <- 50 + 20*GPA + 0.07*IQ + 35*Gender + 0.01*GPA*IQ - 10*GPA
-Y_hat
+( exp(-0.5) )/( 1 + exp(-0.5) )
 ```
 
 
-**3 c)** True or false: Since the coefficient for the `GPA`$\times$`IQ` interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.
+**6 b)** How many hours would the student in part (a) need to study to have a $50\%$ chance of getting an `A` in the class?
 
 **Answer:**
 
-False. We must examine the $p$-value (or the $t$-statistic) of the regression coefficient to determine if the interaction term is statistically significant or not.
+Finding $x_1$, where $X = [x_1, 3.5]$, such that $p(X) = 0.5$ yields:
 
-### Exercise 8 {-}
+$$
+\begin{align*}
+0.50 &= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\
+\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\
+\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\
+\Leftrightarrow 0.50 &= 0.50 \exp(-2.5 + 0.05\,x_1)\\
+\Leftrightarrow \log(1) &= -2.5 + 0.05\,x_1 \\
+\Leftrightarrow x_1 &= 2.5 / 0.05 = 50 
+\end{align*}
+$$
 
-This question involves the use of simple linear regression on the `Auto` data set.
+Thus, on average, a student with an `undergrad GPA` of $3.5$ needs to study $50$ hours to have a $50\%$ chance of getting an `A`.
 
-**8 a)** Use the `lm()` function to perform a simple linear regression with `mpg` as the response and `horsepower` as the predictor. Use the `summary()` function to print the results. 
+### Exercise 13 {-}
+
+This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the `Smarket` data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
+
+**13 a)** Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
+
+**Answer:**
+
 
 ```{r}
+# You may need to install first the following R-packages:
+# install.packages("ISLR2")
+# install.packages("MASS")
+# install.packages("class")
+# install.packages("e1071") # naiveBayes()
+
+# Load the packages you need
 library("ISLR2")
 
-data("Auto")
+# Eliminates the need of referring to a variable 
+# like 'Weekly$Year', and thus allows direct use of 'Year'
+attach(Weekly) 
 
-# Perform linear regression
-lmObj_1 <- lm(mpg ~ horsepower, data=Auto)
+# Use summary function to produce a numerical summary for each variable
+summary(Weekly)
+```
+
+```{r}
+# Use cor function to produce a table of correlations for all variables 
+# (excluding the non-numerical variable 'Direction')
+round(cor(Weekly[,-9]), 2)
+```
+
+```{r}
+# Use pairs function to produce pairwise scatter plots
+pairs(Weekly)
+```
+
+Yes, it appears that `Year` and `Volume` have a strong positive, but non-linear relationship.
+
+**13 b)** Use the full data set to perform a logistic regression with `Direction` as the response and the five `Lag` variables plus `Volume` as predictors. Use the `summary()` function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
+
+**Answer:** 
+
+```{r}
+# Estimate a generalized linear regression model where the third input family is a description of the error distribution 
+# and link function to be used in the model, supplied as the result of a call to a family function - here use binomial.
+# Why binomial? Because our independent variable Direction takes two values.
+
+glm_fit <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
+              data   = Weekly,
+              family = binomial)
 
 # Use summary function to print the results
-summary(lmObj_1)
+summary(glm_fit)
 ```
 
-Comment on the output. For example:
+**Conclusion:** The predictor `Lag2` appears to have some statistical significance with a $p$-value smaller than $3\%$. (Ignoring issues due to multiple testing.)
 
-**i)** Is there a relationship between the predictor and the response?
+**13 c)** Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
 
-**Answer:**
-
-Yes, there is. The predictor horsepower has a statistically significant ($p<0.001$) linear relationship with the response.
-
-**ii)** How strong is the relationship between the predictor and the response?
-
-**Answer:**
-
-Statistical significance does not necessarily mean a practically strong or important relationship. 
-
-To quantify the strength of the relationship between the predictor and the response, we can look at the following quantities: 
-
-- Residual Standard Error (RSE) (estimate of the standard deviation of $\epsilon$) in comparison to the RSE of the trivial linear regression model with only an intercept.
-- The $R^2$ Statistic (the proportion of variance explained by the model)
-- The $F$-Statistic
-
-The Residual Standard Error (RSE) of the regression model with `intercept` and `horsepower` as predictors is given by:
+**Answer:** 
 
 ```{r}
-## RSE of lm(mpg ~ horsepower):
-RSS <- sum(resid(lmObj_1)^2)
-n   <- length(resid(lmObj_1))
-RSE <- sqrt(RSS/(n-2))
-round(RSE, 3)
+# Use predict function on results of previous regression in 10 b)
+glm_probs <-  predict(glm_fit, type="response")
 
-## Alternatively: 
-round(summary(lmObj_1)$sigma, 3)
+# Create a vector containing the string "Down" 
+glm_pred <- rep("Down", times = length(glm_probs))
+
+# Substitute "Down" for "Up", whenever the estimated probability is above 0.5
+glm_pred[glm_probs > 0.5] <- "Up"
+
+# Construct a summary table with the predictions against 
+# the actual 'Direction'-values
+table(glm_pred, Direction)
+
+contrasts(Weekly$Direction)
 ```
 
-This RSE value is considerable smaller than the RSE of a model with only an intercept:
+Counts of the classification errors are found at the off-diagonal entries of the confusion matrix 
+
+* Upper off-diagonal entry: Number of False Negatives 
+* Lower off-diagonal entry: Number of False Positives
+
+Counts of the correct classifications are found at the diagonal entries of the confusion matrix 
+
+* Upper diagonal entry: Number of True Negatives
+* Lower diagonal entry: Number of True Positives
+
+
+**Possible Conclusions:**
+
+- Percentage of correct predictions (TP+TN)/n: $(54+557)/(54+557+48+430) = 56.1\%$ 
+
+- Percentage of false predictions (FP+FN)/n: $(48+430)/(54+557+48+430) = 43.9\%$ 
+
+- During weeks when the market goes `Up`, the logistic regression is right about (True Pos. Rate TP/P) $557/(557+48) = 92.1\%$ of the time.
+
+- During weeks when the market goes `Down`, the logistic regression is right about (True Neg. Rate TN/N) $54/(430+54) = 11.2\%$ of the time.
+
+
+**Caution:** All these answers are with respect to the training errors - not the test errors. 
+
+**13 d)** Now fit the logistic regression model using a training data period from $1990$ to $2008$, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from $2009$ and $2010$).
+
+**Answer:** 
 
 ```{r}
-lmObj_onlyIntercept <- lm(mpg ~ +1, data = Auto)
-RSS_onlyIntercept   <- sum(resid(lmObj_onlyIntercept)^2)
-n                   <- length(resid(lmObj_onlyIntercept))
-RSE_onlyIntercept   <- sqrt(RSS_onlyIntercept/(n-1))
-round(RSE_onlyIntercept, 3)
+# generate condition for our training data
+train = (Year < 2009)
+
+# create data frame for the Weekly data from 2009 and 2010 
+# (usage of ! to define the "opposite")
+Weekly_0910 <- Weekly[!train,]
+
+# run regression on the training data subset
+glm_fit <- glm(Direction ~ Lag2,
+               data   = Weekly,
+               family = binomial,
+               subset = train)
+
+# create data frame
+glm_probs <- predict(glm_fit, Weekly_0910, type="response")
+
+# fill with our predictions
+glm_pred                  <- rep("Down", length(glm_probs))
+glm_pred[glm_probs > 0.5] <- "Up"
+
+# construct confusion table using only the test data
+Direction_0910 <- Direction[!train]
+table(glm_pred, Direction_0910)
+
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(glm_pred == Direction_0910)
 ```
 
-Thus, the larger model with `horsepower` included explains more of the variances in the response variable `mpg`. Including `horsepower` as a predictor reduces the RSE by `((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100` %; i.e. by `r round(((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100, 2)`%.
+**13 e)** Repeat (d) using LDA.
 
-The $R^2$ value:
+**Answer:** 
 
 ```{r}
-round(summary(lmObj_1)$r.squared, 2)
-```
-shows that  $60\%$ of variability in $Y$ can be explained using an intercept and `horsepower` as predictors. 
+#call the packages you need
+suppressPackageStartupMessages(library("MASS"))
 
-The value of the $F$ statistic
-```{r}
-round(summary(lmObj_1)$fstatistic, 2)
-```
-is much larger than $1$ which means that the linear regression model with intercept and `horsepower` fits the data significantly better than the trivial regression model with only an intercept. 
+# same approach as before but now using LDA method
+lda_fit  <- lda(Direction ~ Lag2, data=Weekly, subset=train)
+lda_pred <- predict(lda_fit, Weekly_0910)
 
+# confusion table using only the test data
+table(lda_pred$class, Direction_0910)
 
-**iii)** Is the relationship between the predictor and the response positive or negative?
-
-**Answer:**
-
-The relationship is negative, as we can see from the parameter estimate for `horsepower`
-
-```{r}
-coef(lmObj_1)[2]
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(lda_pred$class == Direction_0910)
 ```
 
-**iv)** What is the predicted `mpg` associated with a `horsepower` of $98$? What are the associated $95\%$ confidence and prediction intervals?
+**13 f)** Repeat (d) using QDA.
 
-**Answer:**
-
-The predicted value plus confidence interval:
+**Answer:** 
 
 ```{r}
-# Horsepower of 98
-new_df <- data.frame(horsepower = 98)
+# same approach as before but now using QDA method
+qda_fit   <- qda(Direction~Lag2, data=Weekly, subset=train)
+qda_class <- predict(qda_fit, Weekly_0910)$class
 
-# confidence interval 
-predict(object = lmObj_1, newdata = new_df, interval = "confidence")
+# confusion table using only the test data
+table(qda_class, Direction_0910)
+
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(qda_class == Direction_0910)
 ```
 
-The predicted value plus prediction interval:
-```{r}
-# Horsepower of 98
-new_df <- data.frame(horsepower = 98)
+**13 g)** Repeat (d) using KNN with $K = 1.$
 
-# prediction interval
-predict(object = lmObj_1, newdata = new_df, interval = "prediction")
-```
-
-**8 b)** Plot the response and the predictor. Use the `abline()` function to display the least squares regression line.
-
-**Answer:**
+**Answer:** 
 
 ```{r}
-plot(x = Auto$horsepower, y = Auto$mpg, ylab = "MPG", xlab = "Horsepower")
-abline(lmObj_1, col="blue")
-legend("topright", 
-       legend = c("(y,x)", expression(paste("(",hat(y),",x)"))), 
-       pch=c(1,NA), lty=c(NA,1), col=c("black", "blue"))
+# call the package you need
+library("class")
+
+# same approach as before but now using KNN method with K=1
+train_X         <- as.matrix(Lag2[train])
+test_X          <- as.matrix(Lag2[!train])
+train_Direction <- Direction[train]
+
+# Note: If several observations are tied as nearest neighbors, 
+# then R will randomly break the tie. 
+# Setting a common seed guarantees that we get the same results 
+set.seed(1)
+
+# Caution: KNN prediction uses a different function
+knn_pred <- knn(train_X, test_X, train_Direction, k=1)
+
+# confusion table using only the test data
+table(knn_pred, Direction_0910)
+
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(knn_pred == Direction_0910)
 ```
 
-**8 c)** Use the `plot()` function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.
 
-**Answer:**
+**13 h)** Repeat (d) using naive Bayes. 
+
+**Answer:** 
 
 ```{r}
-par(mfrow=c(2,2))
-plot(lmObj_1, col='blue')
+library("e1071")
+nb_fit  <- naiveBayes(Direction ~ Lag2, 
+                      data   = Weekly, 
+                      subset = train)
+nb_pred <- predict(nb_fit, Weekly_0910)
+
+# confusion table using only the test data
+table(nb_pred, Direction_0910)
+
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(nb_pred == Direction_0910)
 ```
 
-Looking at the smoothing line of the residuals ($e_i=y_i−\hat{y}_i$) vs. the fitted values ($\hat{y}_i$), there is a strong pattern in the residuals, indicating non-linearity. You can see evidence of this also in the scatter plot in the answer for question 8 b).
 
-There also appears to be non-constant variance in the error terms (heteroscedasticity), but this may be corrected to an extent when trying a quadratic fit. If not, transformations such as $log(y)$ or $\sqrt{y}$ can shrink larger responses by a greater amount and reduce this issue.
+**13 i)** Which of these methods appears to provide the best results on this data?
 
-There are some observations with large standardized residuals & high leverage (hence, high Cook’s Distance) that we need to review.
+**Answer:** 
 
-### Exercise 9 {-}
+Logistic regression and LDA have the largest rates of (overall) correct predictions on the held out test set.
 
-This question involves the use of multiple linear regression on the `Auto` data set.
+**13 j)** Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
 
-**9 a)** Produce a scatterplot matrix which includes all of the variables in the data set.
-
-**Answer:**
+**Answer:** 
 
 ```{r}
-library("ISLR2")
-
-data("Auto")
-
-# Produce scatterplot matrix
-pairs(Auto)
+# Logistic regression with Lag2:Lag1
+glm_fit   <- glm(Direction~Lag2:Lag1, data=Weekly, family=binomial, subset=train)
+glm_probs <- predict(glm_fit, Weekly_0910, type="response")
+glm_pred  <- rep("Down", length(glm_probs))
+glm_pred[glm_probs>.5] <- "Up"
+Direction_0910 <- Direction[!train]
+table(glm_pred, Direction_0910)
+mean(glm_pred == Direction_0910)
 ```
-
-**9 b)** Compute the matrix of correlations between the variables using the function `cor()`. You will need to exclude the `name` variable, which is qualitative.
-
-**Answer:**
 
 ```{r}
-round(cor(subset(Auto, select = -name)), 1)
+# LDA with Lag2 interaction with Lag1
+lda_fit  <- lda(Direction ~ Lag2:Lag1, data=Weekly, subset=train)
+lda_pred <- predict(lda_fit, Weekly_0910)
+mean(lda_pred$class == Direction_0910)
 ```
-
-**9 c)** Use the `lm()` function to perform a multiple linear regression with `mpg` as the response and all other variables except `name` as the predictors. Use the `summary()` function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).
-
-**Answer:**
 
 ```{r}
-#| scrolled: true
-# Perform multiplie linear regression
-fit.lm <- lm(mpg ~ . -name, data=Auto)
-
-# Print results
-summary(fit.lm)
+# QDA with sqrt(abs(Lag2))
+qda_fit   <- qda(Direction~Lag2+sqrt(abs(Lag2)), data=Weekly, subset=train)
+qda_class <- predict(qda_fit, Weekly_0910)$class
+table(qda_class, Direction_0910)
+mean(qda_class == Direction_0910)
 ```
-
-**9 c i)** Is there a relationship between the predictors and the response?
-
-**Answer:**
-
-Yes, there is a relationship between the predictors and the response. By testing the null hypothesis of whether all (except intercept) the regression coefficients are zero (i.e. H$_0$: $\beta_1=\dots=\beta_7=0$), we can see that the $F$-statistic is big and its $p$-value is close to zero, indicating evidence against the null hypothesis.
-
-**9 c ii)** Which predictors appear to have a statistically significant relationship to the response?
-
-**Answer:**
-
-Looking at the $p$-values associated with each predictor's $t$-statistic, we see that `displacement`, `weight`, `year`, and `origin` have a statistically significant relationship, while `cylinders`, `horsepower`, and `acceleration` do not. 
-
-**Caution:** This consideration neglects issues due to multiple testing. When testing at the significance level $\alpha=0.05$, then each single test has a type I error (false H$_0$ rejections) rate of up to $5\%$. These type I error rates accumulate since we consider seven hypothesis tests simultaneously, and thus the probability of seeing one type I error among the seven tests is up to $7\cdot 5\%=35\%$. So is quite likely to see one type I error.  
-
-**Bonferroni correction for multiple testing:** To determine if any of the seven predictors is statistically significant, the corresponding $p$-value must be smaller than $\alpha/7$. For instance, with $\alpha/7=0.05/7\approx 0.007$, only `weight`, `year`, and `origin` have a statistically significant relationships to the response.
-
-
-**9 c iii)** What does the coefficient for the `year` variable suggest?
-
-**Answer:**
-
-The regression coefficient for `year` suggests that, on average, one `year` later year-of-construction is associated with an  increased `mpg` by $0.75$, when holding every other predictor value constant. 
-
-**9 d)** Use the `plot()` function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage? 
-
-**Answer:**
-
-```{r, fig.height=20}
-par(mfrow=c(4,1))
-plot(fit.lm)
-```
-
-- The "Residuals vs Fitted" plot (1st plot) shows some systematic deviations of the residuals from $0$. 
-The reason is that we are imposing a straight "line" (better hyper plane) fit for the conditional mean function $E[Y|X]=f(X)$ which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values $\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p$. 
-
-- The "Normal Q-Q" plot (2nd plot) suggests non-normally distributed residuals--particularly the upper tail deviates from that of a normal distribution. 
-
-
-- The "Residuals vs Leverage" plot (3rd plot) shows that there are some potential outliers that we can see when: standardized residuals are below $-2$  or above $+2$. Moreover, the plot shows also potentially problematic "high-leverage" points with leverage values heavily exceeding the rule-of-thumb threshold $(p+1)/n=8/392=0.02$. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation. 
-
-
-- The "Scale-Location" plot (4th plot) shows is rather inconclusive about heteroscedasticity. However the "Residuals vs Fitted" plot (1st plot)shows some clear sign of heteroscedastic residuals.
-
-
-**9 e)** Use the `*` and `:` symbols to fit linear regression models with interaction effects. Do any interactions appear to be statistically significant?
-
-**Answer:**
-
-Violating the hierarchy principle:
 
 ```{r}
-fit.lm0 <- lm(mpg ~ horsepower+cylinders+year+weight:displacement, 
-              data=Auto)
-summary(fit.lm0)
+# KNN k =10, as before KNN uses a different command
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train_Direction, k=10)
+table(knn_pred, Direction_0910)
+mean(knn_pred == Direction_0910)
 ```
 
-Following the hierarchical principle:
 ```{r}
-fit.lm1 <- lm(mpg~horsepower+cylinders+year+weight*displacement, 
-              data=Auto)
-summary(fit.lm1)
+# KNN k = 100
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train_Direction, k=100)
+table(knn_pred, Direction_0910)
+mean(knn_pred == Direction_0910)
 ```
 
-
-Note that there is a difference between using `A:B` and `A*B` when running a regression. While the first includes only the interaction term between the variable `A` and `B`, the second one also includes the stand-alone variables `A` and `B`. 
-
-
-Generally, you should follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
+**Conclusion:** Out of these experiments, the original LDA and logistic regression have better performances in terms of overall correct prediction rates on the held out test set.
 
 
-**9 f)**
+### Exercise 15 {-}
 
-Try a few different transformations of the variables, such as $\log(X)$, $\sqrt{X}$, $X^2$. Comment on your findings.
+This problem involves writing functions.
 
-**Answer:**
+**15 a)** Write a function, `Power()`, that prints out the result of raising 2 to the 3rd power. In other words, your function should compute $2^3$ and print out the results. Hint: Recall that `x^a` raises `x` to the power `a`. Use the `print()` function to output the result.
 
-```{r, fig.height=20}
-fit.lm2 <- lm(mpg~log(weight)+sqrt(horsepower)+
-                acceleration+I(acceleration^2),
-              data=Auto)
-summary(fit.lm2)
+**Answer:** 
+
+```{r}
+Power <- function() {
+  2^3
+}
+Power()
+```
+
+**15 b)** Create a new function, `Power2()`, that allows you to pass any two numbers, `x` and `a`, and prints out the value of `x^a`. You can do this by beginning your function with the line `Power2 <- function (x,a){`. You should be able to call your function by entering, for instance, `Power2 (3,8)` on the command line. This should output the value of $38$, namely, $6,561$.
+
+**Answer:** 
+
+```{r}
+Power2 <- function(x, a) {
+  x^a
+}
+Power2(3, 8)
+```
+
+**15 c)** Using the `Power2()` function that you just wrote, compute $10^3$, $8^{17}$, and $131^3$.
+
+**Answer:** 
+
+```{r}
+Power2(10, 3)
+Power2(8, 17)
+Power2(131, 3)
+```
+
+**15 d)** Now create a new function, `Power3()`, that actually returns the result `x^a` as an R object, rather than simply printing it to the screen. That is, if you store the value `x^a` in an object called result within your function, then you can simply `return()` this result, using the following line: `return(result)`. This should be the last line in your function, before the `}` symbol.
+
+**Answer:** 
+
+```{r}
+Power3 <- function(x, a) {
+  result <- x^a
+  return(result)
+}
+```
+
+**15 e)** Now using the `Power3()` function, create a plot of f(x) = $x^2$. The x-axis should display a range of integers from 1 to 10, and the y-axis should display $x^2$. Label the axes appropriately, and use an appropriate title for the figure. Consider displaying either the x-axis, the y-axis, or both on the log-scale. You can do this by using `log="x"`, `log="y"`, or `log="xy"` as arguments to the `plot()` function.
+
+**Answer:** 
+
+```{r}
+x <- 1:10
+par(mfrow=c(1,3))# graph parameters (three plots in one column)
+plot(x = x, y = Power3(x, 2), type="b", log="x", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\nx-axis")
+plot(x = x, y = Power3(x, 2), type="b", log="y", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\ny-axis")
+plot(x = x, y = Power3(x, 2), type="b", log="xy", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\nx and y-axis")
+par(mfrow=c(1,1))# reset graphic parameters
+```
+
+**15 f)** Create a function, `PlotPower()`, that allows you to create a plot of `x` against `x^a` for a fixed `a` and for a range of values of `x`. For instance, if you call `PlotPower (1:10 ,3)` then a plot should be created with an x-axis taking on values $1, 2, \dots , 10$, and a y-axis taking on values $1^3$, $2^3$, . . . , $10^3$.
+
+**Answer:** 
+
+```{r}
+PlotPower = function(x, a) {
+  ylab_text <- bquote('x'^.(a)) # write y-axis label
+  plot(x = x, y = Power3(x, a), type = "b",
+       ylab = ylab_text)
+}
+PlotPower(1:10, 3)
+```
+
+### Exercise 16 {-}
+
+Using the `Boston` data set, fit classification models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, and KNN models using various subsets of the predictors. Describe your findings.
+
+**Answer:** 
+
+```{r}
+attach(Boston)
+
+crime01                      <- rep(0, length(crim))
+crime01[crim > median(crim)] <- 1
+
+Boston <- data.frame(Boston, crime01)
+
+train <- 1:(dim(Boston)[1]/2)
+test  <- (dim(Boston)[1]/2+1):dim(Boston)[1]
+
+Boston.train <- Boston[train,]
+Boston.test  <- Boston[test,]
+crime01.test <- crime01[test]
+```
+
+```{r}
+# logistic regression of crime01 on all predictors 
+# except 'crime01' and 'crim'
+glm_fit <- glm(crime01 ~ . -crime01 - crim, 
+              data   = Boston, 
+              family = binomial, 
+              subset = train)
+
+glm_probs <- predict(glm_fit, Boston.test, type="response")
+
+glm_pred                  <- rep(0, length(glm_probs))
+glm_pred[glm_probs > 0.5] <- 1
+
+mean(glm_pred != crime01.test)
+```
+
+**Conclusion:** This logistic regression has a test error rate of $18.2\%$.
+
+```{r}
+glm_fit   <- glm(crime01 ~ . -crime01 -crim -chas -tax, 
+              data=Boston, family=binomial, subset=train)
+glm_probs <- predict(glm_fit, Boston.test, type="response")
 ##
-par(mfrow=c(4,1))
-plot(fit.lm2)
+glm_pred                  <- rep(0, length(glm_probs))
+glm_pred[glm_probs > 0.5] <- 1
+mean(glm_pred != crime01.test)
 ```
 
-This try suffers basically from the same issues as the model considered in 9 d)
+**Conclusion:** This logistic regression has a test error rate of $18.6\%$.
 
 
-Let's consider again the model with all predictors (except `name`), but with transforming the outcome variable `mpg` by a $\log$-transformation.
+```{r}
+# LDA
+lda_fit  <- lda(crime01~.-crime01-crim, data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
+```
 
-```{r, fig.height=20}
-fit.lm3 <-lm(log(mpg)~ . -name, data=Auto)
-summary(fit.lm3)
+**Conclusion:** This LDA has a test error rate of $13.4\%$.
+
+
+```{r}
+lda_fit  <- lda(crime01~.-crime01-crim-chas-tax, data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
+```
+
+**Conclusion:** This LDA has a test error rate of $12.3\%$.
+
+
+```{r}
+lda_fit  <- lda(crime01~.-crime01-crim-chas-tax-lstat-indus-age,
+              data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
+```
+
+**Conclusion:** This LDA has a test error rate of $11.9\%$.
+
+```{r}
+# KNN
+library(class)
+train_X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
+                lstat, medv)[train,]
+test_X  <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
+                lstat, medv)[test,]
+
+train.crime01 <- crime01[train]
+
+set.seed(1)
+# KNN(k=1)
+knn_pred  <- knn(train_X, test_X, train.crime01, k=1)
 ##
-par(mfrow=c(4,1))
-plot(fit.lm3)
+mean(knn_pred != crime01.test)
 ```
 
-This model specification is much better! 
+**Conclusion:** This KNN prediction has a test error rate of $45.8\%$.
 
-- No clear issues of systematic under/over estimations for given fitted values. 
-- No clear issues of heteroscedastic residuals.
-- Normality assumption may be wrong, but this isn't problematic since we have a large dataset, such that a central limit theorem will make the estimators asymptotically normal distributed.
-- One large leverage point which, however, has a small residual. 
+```{r}
+# KNN(k=10)
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train.crime01, k=10)
+mean(knn_pred != crime01.test)
+```
+
+**Conclusion:** This KNN prediction has a test error rate of $11.1\%$.
+
+```{r}
+# KNN(k=100)
+set.seed(1)
+knn_pred = knn(train_X, test_X, train.crime01, k=100)
+mean(knn_pred != crime01.test)
+```
+
+**Conclusion:** This KNN prediction has a test error rate of $48.6\%$.
 
 
+**Overall conclusion:** The best models are the ones with the smaller test error rates. In our case, this means that the smallest (fewest predictors) LDA-model and the KNN prediction with `K=10` are the best prediction models.

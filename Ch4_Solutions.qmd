@@ -1,565 +1,398 @@
 ## Solutions
 
-### Exercise 1 {-}
+### Exercise 3 {-}
 
-Using a little bit of algebra, use (4.2) to achieve (4.3). In other words, the logistic function representation and logit representation for the logistic regression model are equivalent.
+We now review k-fold cross-validation.
+
+**3 a)** Explain how k-fold cross-validation is implemented.
+
+**Answer:**
+
+k-fold cross-validation is implemented by taking the set of $n$ observations and randomly splitting into $K$ non-overlapping groups of roughly equal group-size (approx. $n/K$). To compute the $k$-th $(k=1,2,\dots,K)$ test MSE estimate, group $k$ is used as a validation set and the remainder as a training set. The test error is estimated by averaging the $K$ resulting test MSE estimates.
+
+**3 b)** What are the advantages and disadvantages of $k$-fold cross-validation relative to: 
+
+i) the validation set approach?
+
+ii) LOOCV?
+
+**Answer:**
+
+The **validation set** approach is conceptually simple and easily implemented as you are simply partitioning the existing training data into two sets. However, there are two drawbacks: 
+
+1. The estimate of the test MSE can be highly variable/instable; i.e. may strongly depend on which observations are included in the training and validation sets. 
+
+2. The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size in comparison to the actual data size $n$.
+
+**LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size $(n-1\approx n).$
+
+### Exercise 4 {-}
+
+Suppose that we use some statistical learning method to make a prediction for the response $Y$ for a *particular* value of the predictor $X$. Carefully describe how we might estimate the standard deviation of our prediction.
+
+**Answer:**
+
+<!-- If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$  -->
+
+We can estimate the standard deviation of our prediction by using the bootstrap approach. 
+
+Let $\hat{Y} = \hat{f}(X)$ denote the prediction of $Y$ for the given $X$. The bootstrap approach works by repeatedly ($B$ many times) sampling $n$ observations (with replacement) from the original data set, and to compute new prediction results for each re-sampled bootstrap datasets. This yields to $B$ many bootstrap predictions: 
+$$
+\hat{f}^*_1(X), \hat{f}^*_2(X), \dots, \hat{f}^*_B(X).
+$$
+
+Using these bootstrap predictions we can compute the standard deviation of our prediction by computing 
+$$
+\sqrt{\frac{1}{B}\sum^B_{b=1}\left(\hat{f}^*_b(X)-\left(\frac{1}{B}\sum_{r=1}^B\hat{f}^*_r(X)\right)\right)^2}.
+$$
+
+
+### Exercise 5 {-}
+
+In Chapter 4, we used logistic regression to predict the probability of `default` using `income` and `balance` on the `Default` dataset. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.
+
+**5 a)** Fit a logistic regression model that uses `income` and `balance` to predict `default`.
+
+**Answer:**
+
+```{r}
+library("ISLR2")
+
+# Attaching the data set
+attach(Default) 
+
+# Estimate a GLM model where "family=binomial" selects a logistic regression
+glm.fit <- glm(default ~ income + balance, 
+                data   = Default, 
+                family = binomial)
+
+# Use summary function to print the results
+summary(glm.fit)
+```
+
+
+**5 b)** Using the validation set approach, estimate the test error of this model. In order to do this, you must perform the following steps: 
+
+1. Split the sample set into a training set and a validation set.
+
+2. Fit a multiple logistic regression model using only the training observations.
+
+3. Obtain a prediction of default status for each individual in the validation set by computing the posterior probability of default for that individual, and classifying the individual to the default category if the posterior probability is greater than $0.5$.
+
+4. Compute the validation set error, which is the fraction of the observations in the validation set that are misclassified.
+
+
+**Answer:**
+
+```{r}
+## We are going to do similar tasks several times in this exercise. 
+## Therefore, it's convenient to build a function:
+
+fun5b <- function(){
+    # sample(): takes a sample of the specified size from the elements of x using either with or without replacement.
+    n     <- dim(Default)[1]
+    train <- sample(x = n, size = round(n/2, 0), replace = FALSE)
+    
+    # logistic function fit (training dataset)
+    glm.fit <- glm(default ~ income + balance, 
+        data   = Default, 
+        family = binomial, 
+        subset = train)
+    
+    # predictions (test dataset)
+    glm.pred  <- rep("No", times = round(n/2, 0))
+    glm.probs <- predict(glm.fit, Default[-train, ], 
+                         type = "response")
+    glm.pred[glm.probs > 0.5] <- "Yes"
+    
+    # return the test (prediction) error rate 
+    return(mean(glm.pred != Default[-train, ]$default))
+}
+
+## set seed
+set.seed(1110)
+
+## compute test prediction error using the 
+## programmed validation set approach
+fun5b()
+```
+
+**Answer:** There is a 2.62% test error rate from the validation set approach.
+
+**5 c)** Repeat the process in (b) three times, using three different splits of the observations into a training set and a validation set. Comment on the results obtained.
+
+```{r}
+fun5b()
+fun5b()
+fun5b()
+```
+
+**Answer:** The estimates of the test error rates are in the range of 2.5% and 2.8% and are varying with respect to the different training and validation set splittings. 
+
+**5 d)** Now consider a logistic regression model that predicts the probability of default using `income`, `balance`, and a dummy variable for `student`. Estimate the test error for this model using the validation set approach. Comment on whether or not including a dummy variable for `student` leads to a reduction in the test error rate.
 
 **Answer:** 
 
-Equations (4.2) and (4.3) are the following:
+```{r}
+set.seed(1)
 
-$$ 
-(4.2) \quad p(X) = \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}\qquad\qquad
-(4.3)  \quad  \frac {p(X)} {1 - p(X)} =e^{\beta_0 + \beta_1 X}
-$$
+# generate our training data
+n     <- dim(Default)[1]
+train <- sample(n, round(n/2, 0))
 
+# run regression on the training data subset
+glm.fit <- glm(default ~ income + balance + student, 
+                data   = Default, 
+                family = binomial, 
+                subset = train)
 
-Derivations:
+# test sample predictions
+glm.pred <- rep("No", times = round(n/2, 0))
 
-$$
-\begin{align*}
-\frac {p(X)} {1 - p(X)} 
-&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex] 
-&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1 + e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}} - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex]  
-&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1} {1 + e^{\beta_0 + \beta_1 X}}} 
-= e^{\beta_0 + \beta_1 X}
-\end{align*}
-$$
+# fill with our predictions
+glm.probs <- predict(glm.fit, Default[-train, ], 
+                    type = "response")
+glm.pred[glm.probs > 0.5] <- "Yes"
+
+# test (prediction) error rate 
+mean(glm.pred != Default[-train, ]$default)
+```
+
+**Answer:** 
+
+The test error rate is 2.6%. Thus adding the `student` dummy variable to our specification doesn't appear to reduce the test error rate.
+
 
 ### Exercise 6 {-}
 
-Suppose we collect data for a group of students in a statistics class with variables 
+We continue to consider the use of a logistic regression model to predict the probability of `default` using `income` and `balance` on the `Default` data set. In particular, we will now compute estimates for the standard errors of the `income` and `balance` logistic regression coefficients in two different ways: (1) using the bootstrap, and (2) using the standard formula for computing the standard errors in the `glm()` function. Do not forget to set a random seed before beginning your analysis.
 
-* $X_1=$`hours studied`,
-* $X_2 =$ `undergrad GPA` (GPA: Grade Point Average), and 
-* $Y =$ `receive an A`. 
-
-We fit a logistic regression and produce estimated coefficients:
-
-$$\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.$$
-
-**6 a)** Estimate the probability that a student who studies for $40$ h and has an `undergrad GPA` of $3.5$ gets an `A` in the class.
-
-**Answer:**
-
-Remember from the previous exercise that:
-
-$$ 
-p(X) = \frac {\exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
-             {1 + \exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
-\\
-$$
-
-Thus, the probability of $Y=1$ given $X=[x_1,x_2]$ with $x_1 =40$ (hours) and $x_2=3.5$ (GPA) yields:
-
-$$ 
-p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
-$$
-
-Calculations in `R`:
-```{r}
-( exp(-0.5) )/( 1 + exp(-0.5) )
-```
-
-
-**6 b)** How many hours would the student in part (a) need to study to have a $50\%$ chance of getting an `A` in the class?
-
-**Answer:**
-
-Finding $x_1$, where $X = [x_1, 3.5]$, such that $p(X) = 0.5$ yields:
-
-$$
-\begin{align*}
-0.50 &= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\
-\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow 0.50 &= 0.50 \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow \log(1) &= -2.5 + 0.05\,x_1 \\
-\Leftrightarrow x_1 &= 2.5 / 0.05 = 50 
-\end{align*}
-$$
-
-Thus, on average, a student with an `undergrad GPA` of $3.5$ needs to study $50$ hours to have a $50\%$ chance of getting an `A`.
-
-### Exercise 13 {-}
-
-This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the `Smarket` data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
-
-**13 a)** Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
-
-**Answer:**
-
-
-```{r}
-# You may need to install first the following R-packages:
-# install.packages("ISLR2")
-# install.packages("MASS")
-# install.packages("class")
-# install.packages("e1071") # naiveBayes()
-
-# Load the packages you need
-library("ISLR2")
-
-# Eliminates the need of referring to a variable 
-# like 'Weekly$Year', and thus allows direct use of 'Year'
-attach(Weekly) 
-
-# Use summary function to produce a numerical summary for each variable
-summary(Weekly)
-```
-
-```{r}
-# Use cor function to produce a table of correlations for all variables 
-# (excluding the non-numerical variable 'Direction')
-round(cor(Weekly[,-9]), 2)
-```
-
-```{r}
-# Use pairs function to produce pairwise scatter plots
-pairs(Weekly)
-```
-
-Yes, it appears that `Year` and `Volume` have a strong positive, but non-linear relationship.
-
-**13 b)** Use the full data set to perform a logistic regression with `Direction` as the response and the five `Lag` variables plus `Volume` as predictors. Use the `summary()` function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
+**6 a)** Using the `summary()` and `glm()` functions, determine the estimated standard errors for the coefficients associated with `income` and `balance` in a multiple logistic regression model that uses both predictors.
 
 **Answer:** 
 
 ```{r}
-# Estimate a generalized linear regression model where the third input family is a description of the error distribution 
-# and link function to be used in the model, supplied as the result of a call to a family function - here use binomial.
-# Why binomial? Because our independent variable Direction takes two values.
+# Same as in 5 a)
 
-glm_fit <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
-              data   = Weekly,
-              family = binomial)
+# Estimate a generalized linear regression model using glm(), 
+# where the third function argument ('family') allows to specify 
+# distribution---here, 'binomial' since our independent variable
+# 'default' takes two values '0' and '1'
 
-# Use summary function to print the results
-summary(glm_fit)
+glm.fit <- glm(default ~ income + balance, 
+                data   = Default, 
+                family = binomial)
+
+# Use summary function to print a summary of the the results
+summary(glm.fit)
 ```
 
-**Conclusion:** The predictor `Lag2` appears to have some statistical significance with a $p$-value smaller than $3\%$. (Ignoring issues due to multiple testing.)
+Using the standard formula for the standard errors in logistic regression:
 
-**13 c)** Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
+* Estimated standard error of the parameter estimator `income`: $4.985 \cdot 10^{-06}$
+* Estimated standard error of the parameter estimator `balance`: $2.274\cdot 10^{-04}$
+
+
+**6 b)** Write a function, `boot_fn()`, that takes as input the `Default` data set as well as an `index` of the observations, and that outputs the coefficient estimates for `income` and `balance` in the multiple logistic regression model.
 
 **Answer:** 
 
 ```{r}
-# Use predict function on results of previous regression in 10 b)
-glm_probs <-  predict(glm_fit, type="response")
-
-# Create a vector containing the string "Down" 
-glm_pred <- rep("Down", times = length(glm_probs))
-
-# Substitute "Down" for "Up", whenever the estimated probability is above 0.5
-glm_pred[glm_probs > 0.5] <- "Up"
-
-# Construct a summary table with the predictions against 
-# the actual 'Direction'-values
-table(glm_pred, Direction)
-
-contrasts(Weekly$Direction)
-```
-
-Counts of the classification errors are found at the off-diagonal entries of the confusion matrix 
-
-* Upper off-diagonal entry: Number of False Negatives 
-* Lower off-diagonal entry: Number of False Positives
-
-Counts of the correct classifications are found at the diagonal entries of the confusion matrix 
-
-* Upper diagonal entry: Number of True Negatives
-* Lower diagonal entry: Number of True Positives
-
-
-**Possible Conclusions:**
-
-- Percentage of correct predictions (TP+TN)/n: $(54+557)/(54+557+48+430) = 56.1\%$ 
-
-- Percentage of false predictions (FP+FN)/n: $(48+430)/(54+557+48+430) = 43.9\%$ 
-
-- During weeks when the market goes `Up`, the logistic regression is right about (True Pos. Rate TP/P) $557/(557+48) = 92.1\%$ of the time.
-
-- During weeks when the market goes `Down`, the logistic regression is right about (True Neg. Rate TN/N) $54/(430+54) = 11.2\%$ of the time.
-
-
-**Caution:** All these answers are with respect to the training errors - not the test errors. 
-
-**13 d)** Now fit the logistic regression model using a training data period from $1990$ to $2008$, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from $2009$ and $2010$).
-
-**Answer:** 
-
-```{r}
-# generate condition for our training data
-train = (Year < 2009)
-
-# create data frame for the Weekly data from 2009 and 2010 
-# (usage of ! to define the "opposite")
-Weekly_0910 <- Weekly[!train,]
-
-# run regression on the training data subset
-glm_fit <- glm(Direction ~ Lag2,
-               data   = Weekly,
-               family = binomial,
-               subset = train)
-
-# create data frame
-glm_probs <- predict(glm_fit, Weekly_0910, type="response")
-
-# fill with our predictions
-glm_pred                  <- rep("Down", length(glm_probs))
-glm_pred[glm_probs > 0.5] <- "Up"
-
-# construct confusion table using only the test data
-Direction_0910 <- Direction[!train]
-table(glm_pred, Direction_0910)
-
-# compute the overall rate of correct predictions 
-# in the test set 
-mean(glm_pred == Direction_0910)
-```
-
-**13 e)** Repeat (d) using LDA.
-
-**Answer:** 
-
-```{r}
-#call the packages you need
-suppressPackageStartupMessages(library("MASS"))
-
-# same approach as before but now using LDA method
-lda_fit  <- lda(Direction ~ Lag2, data=Weekly, subset=train)
-lda_pred <- predict(lda_fit, Weekly_0910)
-
-# confusion table using only the test data
-table(lda_pred$class, Direction_0910)
-
-# compute the overall rate of correct predictions 
-# in the test set 
-mean(lda_pred$class == Direction_0910)
-```
-
-**13 f)** Repeat (d) using QDA.
-
-**Answer:** 
-
-```{r}
-# same approach as before but now using QDA method
-qda_fit   <- qda(Direction~Lag2, data=Weekly, subset=train)
-qda_class <- predict(qda_fit, Weekly_0910)$class
-
-# confusion table using only the test data
-table(qda_class, Direction_0910)
-
-# compute the overall rate of correct predictions 
-# in the test set 
-mean(qda_class == Direction_0910)
-```
-
-**13 g)** Repeat (d) using KNN with $K = 1.$
-
-**Answer:** 
-
-```{r}
-# call the package you need
-library("class")
-
-# same approach as before but now using KNN method with K=1
-train_X         <- as.matrix(Lag2[train])
-test_X          <- as.matrix(Lag2[!train])
-train_Direction <- Direction[train]
-
-# Note: If several observations are tied as nearest neighbors, 
-# then R will randomly break the tie. 
-# Setting a common seed guarantees that we get the same results 
-set.seed(1)
-
-# Caution: KNN prediction uses a different function
-knn_pred <- knn(train_X, test_X, train_Direction, k=1)
-
-# confusion table using only the test data
-table(knn_pred, Direction_0910)
-
-# compute the overall rate of correct predictions 
-# in the test set 
-mean(knn_pred == Direction_0910)
-```
-
-
-**13 h)** Repeat (d) using naive Bayes. 
-
-**Answer:** 
-
-```{r}
-library("e1071")
-nb_fit  <- naiveBayes(Direction ~ Lag2, 
-                      data   = Weekly, 
-                      subset = train)
-nb_pred <- predict(nb_fit, Weekly_0910)
-
-# confusion table using only the test data
-table(nb_pred, Direction_0910)
-
-# compute the overall rate of correct predictions 
-# in the test set 
-mean(nb_pred == Direction_0910)
-```
-
-
-**13 i)** Which of these methods appears to provide the best results on this data?
-
-**Answer:** 
-
-Logistic regression and LDA have the largest rates of (overall) correct predictions on the held out test set.
-
-**13 j)** Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
-
-**Answer:** 
-
-```{r}
-# Logistic regression with Lag2:Lag1
-glm_fit   <- glm(Direction~Lag2:Lag1, data=Weekly, family=binomial, subset=train)
-glm_probs <- predict(glm_fit, Weekly_0910, type="response")
-glm_pred  <- rep("Down", length(glm_probs))
-glm_pred[glm_probs>.5] <- "Up"
-Direction_0910 <- Direction[!train]
-table(glm_pred, Direction_0910)
-mean(glm_pred == Direction_0910)
-```
-
-```{r}
-# LDA with Lag2 interaction with Lag1
-lda_fit  <- lda(Direction ~ Lag2:Lag1, data=Weekly, subset=train)
-lda_pred <- predict(lda_fit, Weekly_0910)
-mean(lda_pred$class == Direction_0910)
-```
-
-```{r}
-# QDA with sqrt(abs(Lag2))
-qda_fit   <- qda(Direction~Lag2+sqrt(abs(Lag2)), data=Weekly, subset=train)
-qda_class <- predict(qda_fit, Weekly_0910)$class
-table(qda_class, Direction_0910)
-mean(qda_class == Direction_0910)
-```
-
-```{r}
-# KNN k =10, as before KNN uses a different command
-set.seed(1)
-knn_pred <- knn(train_X, test_X, train_Direction, k=10)
-table(knn_pred, Direction_0910)
-mean(knn_pred == Direction_0910)
-```
-
-```{r}
-# KNN k = 100
-set.seed(1)
-knn_pred <- knn(train_X, test_X, train_Direction, k=100)
-table(knn_pred, Direction_0910)
-mean(knn_pred == Direction_0910)
-```
-
-**Conclusion:** Out of these experiments, the original LDA and logistic regression have better performances in terms of overall correct prediction rates on the held out test set.
-
-
-### Exercise 15 {-}
-
-This problem involves writing functions.
-
-**15 a)** Write a function, `Power()`, that prints out the result of raising 2 to the 3rd power. In other words, your function should compute $2^3$ and print out the results. Hint: Recall that `x^a` raises `x` to the power `a`. Use the `print()` function to output the result.
-
-**Answer:** 
-
-```{r}
-Power <- function() {
-  2^3
-}
-Power()
-```
-
-**15 b)** Create a new function, `Power2()`, that allows you to pass any two numbers, `x` and `a`, and prints out the value of `x^a`. You can do this by beginning your function with the line `Power2 <- function (x,a){`. You should be able to call your function by entering, for instance, `Power2 (3,8)` on the command line. This should output the value of $38$, namely, $6,561$.
-
-**Answer:** 
-
-```{r}
-Power2 <- function(x, a) {
-  x^a
-}
-Power2(3, 8)
-```
-
-**15 c)** Using the `Power2()` function that you just wrote, compute $10^3$, $8^{17}$, and $131^3$.
-
-**Answer:** 
-
-```{r}
-Power2(10, 3)
-Power2(8, 17)
-Power2(131, 3)
-```
-
-**15 d)** Now create a new function, `Power3()`, that actually returns the result `x^a` as an R object, rather than simply printing it to the screen. That is, if you store the value `x^a` in an object called result within your function, then you can simply `return()` this result, using the following line: `return(result)`. This should be the last line in your function, before the `}` symbol.
-
-**Answer:** 
-
-```{r}
-Power3 <- function(x, a) {
-  result <- x^a
-  return(result)
+boot_fn <- function(data, index){
+    return(coef(glm(default ~ income + balance, 
+                    data   = data, 
+                    family = binomial, 
+                    subset = index)))
 }
 ```
 
-**15 e)** Now using the `Power3()` function, create a plot of f(x) = $x^2$. The x-axis should display a range of integers from 1 to 10, and the y-axis should display $x^2$. Label the axes appropriately, and use an appropriate title for the figure. Consider displaying either the x-axis, the y-axis, or both on the log-scale. You can do this by using `log="x"`, `log="y"`, or `log="xy"` as arguments to the `plot()` function.
+**6 c)** Use the `boot()` function together with your `boot_fn()` function to estimate the standard errors of the logistic regression coefficients for `income` and `balance`.
 
 **Answer:** 
 
 ```{r}
-x <- 1:10
-par(mfrow=c(1,3))# graph parameters (three plots in one column)
-plot(x = x, y = Power3(x, 2), type="b", log="x", 
-     ylab = expression(x^2), 
-     xlab = expression(x),
-     main = "log-transformed\nx-axis")
-plot(x = x, y = Power3(x, 2), type="b", log="y", 
-     ylab = expression(x^2), 
-     xlab = expression(x),
-     main = "log-transformed\ny-axis")
-plot(x = x, y = Power3(x, 2), type="b", log="xy", 
-     ylab = expression(x^2), 
-     xlab = expression(x),
-     main = "log-transformed\nx and y-axis")
-par(mfrow=c(1,1))# reset graphic parameters
+# install.packages("boot")
+
+# Load the boot package
+library("boot")
+
+# Set seed
+set.seed(1)
+
+# The boot package provides extensive facilities for bootstrapping 
+# and related resampling methods. 
+boot(data = Default, statistic = boot_fn, R = 100)
 ```
 
-**15 f)** Create a function, `PlotPower()`, that allows you to create a plot of `x` against `x^a` for a fixed `a` and for a range of values of `x`. For instance, if you call `PlotPower (1:10 ,3)` then a plot should be created with an x-axis taking on values $1, 2, \dots , 10$, and a y-axis taking on values $1^3$, $2^3$, . . . , $10^3$.
+**6 d)** Comment on the estimated standard errors obtained using the `glm()` function and using your bootstrap function.
+
+**Answer:** 
+
+
+* Estimated standard error (bootstrap version) of the parameter estimator `income`: $4.186 \cdot 10^{-06}$
+  * The bootstrap approach estimates slightly smaller std errors for `income` than the classic standard formula. 
+* Estimated standard error (bootstrap version) of the parameter estimator `balance`: $2.226\cdot 10^{-04}$
+  * The bootstrap approach and the standard formula yield essentially equal results. 
+
+
+### Exercise 8 {-}
+
+We will now perform cross-validation on a simulated data set.
+
+**8 a)** Generate a simulated data set as follows. 
+
+```{r}
+# set seed for rnorm function
+set.seed(1)
+
+# rnorm draws pseudo-random variables from a 
+# (standard) normal distribution
+x <- rnorm(100)
+y <- x - 2 * x^2 + rnorm(100)
+```
+
+In this data set, what is $n$ and what is $p$? Write out the model used to generate the data in equation form.
+
+**Answer:** 
+
+- The sample size: $n=100$
+
+- Number of predictors: $p=2$ 
+
+- Model: $Y_i= X_i -2 \, X_i^2 + \epsilon_i$ with i.i.d. errors $\epsilon_i \sim \mathcal{N}(0,1)$, $i=1,...,n=100$
+
+**8 b)** Create a scatterplot of $X$ against $Y$. Comment on what you find.
 
 **Answer:** 
 
 ```{r}
-PlotPower = function(x, a) {
-  ylab_text <- bquote('x'^.(a)) # write y-axis label
-  plot(x = x, y = Power3(x, a), type = "b",
-       ylab = ylab_text)
-}
-PlotPower(1:10, 3)
+plot(x,y)
 ```
 
-### Exercise 16 {-}
+We can observe a quadratic relationship between $Y$ and $X.$ Moreover, $X$ ranges from about $-2$ to $2,$ while $Y$ ranges from about $-12$ to $2.$ The largest $Y$ values are observed for $X$ values around $0.$
 
-Using the `Boston` data set, fit classification models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, and KNN models using various subsets of the predictors. Describe your findings.
+**8 c)** Set a random seed, and then compute the LOOCV errors that result from fitting the following four models using least squares:
+
+i. $Y = \beta_0 +\beta_1 X + \epsilon$
+
+ii. $Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \epsilon$
+
+iii. $Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \epsilon$
+
+iv. $Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \beta_4 X^4 + \epsilon$
+
+
+**Answers:** 
+
+```{r}
+# call boot package
+library(boot)
+
+# create data frame containing the simulated data for X and Y
+Sim_Data <- data.frame(x, y)
+
+#set seed
+set.seed(1)
+```
+
+
+**8 c i)** 
+
+
+```{r}
+# i
+# Caution:
+# This performes linear regression (no 'family' argument specified)
+lm.fit_i <- glm(y ~ x, data = Sim_Data)
+
+# cv.glm calculates the estimated K-fold cross-validation prediction
+# error for generalized linear models (with K=n by default).
+# '$delta' selects a vector of length two: 
+# The first component is the raw cross-validation estimate of the 
+# prediction error. 
+# The second component is the adjusted cross-validation estimate. 
+# (The adjustment is designed to compensate for bias.)
+cv.glm(data   = Sim_Data, 
+       glmfit = lm.fit_i, 
+       K      = nrow(Sim_Data))$delta
+```
+
+**8 c ii)** 
+
+```{r}
+# ii 
+# see ?poly for infos on poly()
+lm.fit_ii <- glm(y ~ poly(x, 2, raw=TRUE), data = Sim_Data)
+cv.glm(Sim_Data, lm.fit_ii, K = nrow(Sim_Data))$delta
+```
+
+**8 c iii)** 
+
+```{r}
+# iii
+lm.fit_iii <- glm(y ~ poly(x, 3, raw=TRUE), data = Sim_Data)
+cv.glm(Sim_Data, lm.fit_iii, K = nrow(Sim_Data))$delta
+```
+
+**8 c iv)** 
+
+```{r}
+# iv
+lm.fit_iv <- glm(y ~ poly(x, 4, raw=TRUE), data = Sim_Data)
+cv.glm(Sim_Data, lm.fit_iv, K = nrow(Sim_Data))$delta
+```
+
+<!-- 
+**Conclusion:** The (correct) quadratic model has the smallest CV error.   
+-->
+
+**8. d)** Repeat (c) using another random seed, and report your results. Are your results the same as what you got in (c)? Why?
+
+```{r}
+set.seed(10)
+# i.
+lm.fit1 <- glm(y ~ x, data = Sim_Data)
+cv.glm(Sim_Data, lm.fit1)$delta
+# ii.
+lm.fit2 <- glm(y ~ poly(x, 2, raw=TRUE), data = Sim_Data)
+cv.glm(Sim_Data, lm.fit2)$delta
+# iii.
+lm.fit3 <- glm(y ~ poly(x, 3, raw=TRUE), data = Sim_Data)
+cv.glm(Sim_Data, lm.fit3)$delta
+# iv.
+lm.fit4 <- glm(y ~ poly(x, 4, raw=TRUE), data = Sim_Data)
+cv.glm(Sim_Data, lm.fit4)$delta
+```
 
 **Answer:** 
 
+The results are exactly the same, because LOOCV will be the same since it evaluates n folds of a single observation.
+
+**8 e)** Which of the models in (c) had the smallest LOOCV error? Is this what you expected? Explain your answer.
+
+**Answer:** 
+
+The quadratic polynomial had the lowest LOOCV test error rate. This was expected as it matches the true form of $Y$.
+
+**8 f)** Comment on the statistical significance of the coefficient estimates that results from fitting each of the models in (c) using least squares. Do these results agree with the conclusions drawn based on the cross-validation results?
+
 ```{r}
-attach(Boston)
-
-crime01                      <- rep(0, length(crim))
-crime01[crim > median(crim)] <- 1
-
-Boston <- data.frame(Boston, crime01)
-
-train <- 1:(dim(Boston)[1]/2)
-test  <- (dim(Boston)[1]/2+1):dim(Boston)[1]
-
-Boston.train <- Boston[train,]
-Boston.test  <- Boston[test,]
-crime01.test <- crime01[test]
+summary(lm.fit1)
 ```
 
 ```{r}
-# logistic regression of crime01 on all predictors 
-# except 'crime01' and 'crim'
-glm_fit <- glm(crime01 ~ . -crime01 - crim, 
-              data   = Boston, 
-              family = binomial, 
-              subset = train)
-
-glm_probs <- predict(glm_fit, Boston.test, type="response")
-
-glm_pred                  <- rep(0, length(glm_probs))
-glm_pred[glm_probs > 0.5] <- 1
-
-mean(glm_pred != crime01.test)
+summary(lm.fit2)
 ```
-
-**Conclusion:** This logistic regression has a test error rate of $18.2\%$.
 
 ```{r}
-glm_fit   <- glm(crime01 ~ . -crime01 -crim -chas -tax, 
-              data=Boston, family=binomial, subset=train)
-glm_probs <- predict(glm_fit, Boston.test, type="response")
-##
-glm_pred                  <- rep(0, length(glm_probs))
-glm_pred[glm_probs > 0.5] <- 1
-mean(glm_pred != crime01.test)
+summary(lm.fit3)
 ```
-
-**Conclusion:** This logistic regression has a test error rate of $18.6\%$.
-
 
 ```{r}
-# LDA
-lda_fit  <- lda(crime01~.-crime01-crim, data=Boston, subset=train)
-lda_pred <- predict(lda_fit, Boston.test)
-mean(lda_pred$class != crime01.test)
+summary(lm.fit4)
 ```
 
-**Conclusion:** This LDA has a test error rate of $13.4\%$.
+**Answer:** 
 
+The $p$-values only show statistical significance of the linear and the quadratic predictor, which agrees with the CV-results.
 
-```{r}
-lda_fit  <- lda(crime01~.-crime01-crim-chas-tax, data=Boston, subset=train)
-lda_pred <- predict(lda_fit, Boston.test)
-mean(lda_pred$class != crime01.test)
-```
-
-**Conclusion:** This LDA has a test error rate of $12.3\%$.
-
-
-```{r}
-lda_fit  <- lda(crime01~.-crime01-crim-chas-tax-lstat-indus-age,
-              data=Boston, subset=train)
-lda_pred <- predict(lda_fit, Boston.test)
-mean(lda_pred$class != crime01.test)
-```
-
-**Conclusion:** This LDA has a test error rate of $11.9\%$.
-
-```{r}
-# KNN
-library(class)
-train_X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
-                lstat, medv)[train,]
-test_X  <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
-                lstat, medv)[test,]
-
-train.crime01 <- crime01[train]
-
-set.seed(1)
-# KNN(k=1)
-knn_pred  <- knn(train_X, test_X, train.crime01, k=1)
-##
-mean(knn_pred != crime01.test)
-```
-
-**Conclusion:** This KNN prediction has a test error rate of $45.8\%$.
-
-```{r}
-# KNN(k=10)
-set.seed(1)
-knn_pred <- knn(train_X, test_X, train.crime01, k=10)
-mean(knn_pred != crime01.test)
-```
-
-**Conclusion:** This KNN prediction has a test error rate of $11.1\%$.
-
-```{r}
-# KNN(k=100)
-set.seed(1)
-knn_pred = knn(train_X, test_X, train.crime01, k=100)
-mean(knn_pred != crime01.test)
-```
-
-**Conclusion:** This KNN prediction has a test error rate of $48.6\%$.
-
-
-**Overall conclusion:** The best models are the ones with the smaller test error rates. In our case, this means that the smallest (fewest predictors) LDA-model and the KNN prediction with `K=10` are the best prediction models.

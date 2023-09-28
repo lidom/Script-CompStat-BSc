@@ -2,6 +2,8 @@
 
 ## Lecture Notes
 
+Reading: Chapter 4 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+
 ## (Ch. 4.1) An Overview of Classification {-}
 
 Classification problems occur often, perhaps even more so than regression problems. 
@@ -1508,4 +1510,4 @@ Prepare the following exercises of Chapter 4 in our course textbook `ISLR`:
 - Exercise 15
 - Exercise 16
 
-{{< include Ch4_Solutions.qmd >}}
+<!-- {{< include Ch3_Solutions.qmd >}} -->

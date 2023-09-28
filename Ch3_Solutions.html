@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ch3_solutions</title>
+<title>ch4_solutions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,16 +86,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="Ch3_Solutions_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Ch3_Solutions_files/libs/quarto-html/quarto.js"></script>
-<script src="Ch3_Solutions_files/libs/quarto-html/popper.min.js"></script>
-<script src="Ch3_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Ch3_Solutions_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Ch3_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Ch3_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Ch3_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Ch3_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Ch3_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Ch4_Solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ch4_Solutions_files/libs/quarto-html/quarto.js"></script>
+<script src="Ch4_Solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ch4_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ch4_Solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ch4_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ch4_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ch4_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ch4_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ch4_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -113,477 +113,666 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
 <section id="exercise-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-1">Exercise 1</h3>
-<p><strong>1 a)</strong> Describe the null hypotheses to which the <span class="math inline">\(p\)</span>-values given in Table 3.4 correspond.</p>
-<p><img src="DATA/Table.PNG" class="img-fluid"></p>
-<p><strong>1 b)</strong> Explain what conclusions you can draw based on these <span class="math inline">\(p\)</span>-values. Your explanation should be phrased in terms of <code>sales</code>, <code>TV</code>, <code>radio</code>, and <code>newspaper</code>, rather than in terms of the coefficients of the linear model.</p>
-<p><strong>Answers:</strong></p>
-<p><strong>1 a)</strong> In Table 3.4, the null hypothesis for <code>TV</code> is that in the presence of <code>radio</code> ads and <code>newspaper</code> ads, <code>TV</code> ads have no effect on sales. Similarly, the null hypothesis for <code>radio</code> is that in the presence of <code>TV</code> ads and <code>newspaper</code> ads, <code>radio</code> ads have no effect on sales.</p>
-<p><strong>1 b)</strong> On the one hand, the low p-values of <code>TV</code> and <code>radio</code> allow us to reject the “no effect” null hypotheses for <code>TV</code> and <code>radio</code>. Hence, we believe that <code>TV</code> (<code>radio</code>) ads have an effect on <code>sales</code> in the presence of <code>radio</code> (<code>TV</code>) and <code>newspaper</code> ads.<br> On the other hand, the high p-value of <code>newspaper</code> does <em>not</em> allow us to reject the “no effect” null-hypothesis. This constitutes an <em>inconclusive result</em> and only says that the possible effects of <code>newspaper</code> ads are not large enough to stand out from the estimation errors.</p>
-<p><strong>Remember:</strong> An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.</p>
-</section>
-<section id="exercise-2" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-2">Exercise 2</h3>
-<p>Carefully explain the main difference between the KNN classifier and KNN regression methods.</p>
+<p>Using a little bit of algebra, use (4.2) to achieve (4.3). In other words, the logistic function representation and logit representation for the logistic regression model are equivalent.</p>
 <p><strong>Answer:</strong></p>
-<p>KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for <span class="math inline">\(Y\)</span> (qualitative), given a certain predictor <span class="math inline">\(x_0\)</span>, where as the output for a KNN regression predicts the quantitative value for <span class="math inline">\(f(x_0)\)</span>, given a certain predictor <span class="math inline">\(x_0\)</span>.</p>
-</section>
-<section id="exercise-3" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-3">Exercise 3</h3>
-<p>Suppose we have a data set with five predictors:</p>
-<p><span class="math inline">\(X_1 =GPA\)</span></p>
-<p><span class="math inline">\(X_2 = IQ\)</span></p>
-<p><span class="math inline">\(X_3 = Gender\)</span> (<span class="math inline">\(1\)</span> for Female and <span class="math inline">\(0\)</span> for Male)</p>
-<p><span class="math inline">\(X_4 =\)</span> Interaction between <span class="math inline">\(GPA\)</span> and <span class="math inline">\(IQ\)</span></p>
-<p><span class="math inline">\(X_5 =\)</span> Interaction between <span class="math inline">\(GPA\)</span> and <span class="math inline">\(Gender\)</span></p>
-<p>The response variable (in thousands of dollars) is defined as:</p>
-<p><span class="math inline">\(Y =\)</span> starting salary after graduation</p>
-<p>Suppose we use least squares to fit the model, and get:</p>
-<p><span class="math inline">\(\hat{\beta}_0 = 50\)</span>, <span class="math inline">\(\hat{\beta}_1 = 20\)</span>, <span class="math inline">\(\hat{\beta}_2 = 0.07\)</span>, <span class="math inline">\(\hat{\beta}_3 = 35\)</span>, <span class="math inline">\(\hat{\beta}_4 = 0.01\)</span>, and <span class="math inline">\(\hat{\beta}_5 = −10\)</span>.</p>
-<p>Thus we have:</p>
+<p>Equations (4.2) and (4.3) are the following:</p>
+<p><span class="math display">\[
+(4.2) \quad p(X) = \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}\qquad\qquad
+(4.3)  \quad  \frac {p(X)} {1 - p(X)} =e^{\beta_0 + \beta_1 X}
+\]</span></p>
+<p>Derivations:</p>
 <p><span class="math display">\[
 \begin{align*}
-&amp;E[Y|X] = \\
-&amp; 50 + 20\,\overbrace{GPA}^{X_1} + 0.07\,\overbrace{IQ}^{X_2} + 35\,\overbrace{Gender}^{X_3} +
-0.01\,\overbrace{GPA\cdot IQ}^{X_4=X_1\cdot X_2} - 10\,\overbrace{GPA\cdot Gender}^{X_5=X_1\cdot X_3}
+\frac {p(X)} {1 - p(X)}
+&amp;= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex]
+&amp;= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1 + e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}} - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex]  
+&amp;= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1} {1 + e^{\beta_0 + \beta_1 X}}}
+= e^{\beta_0 + \beta_1 X}
 \end{align*}
 \]</span></p>
-<p><strong>3 a)</strong> Which answer is correct, and why?</p>
-<ol type="i">
-<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, males earn more on average than females.</li>
-<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, females earn more on average than males.</li>
-<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, males earn more on average than females provided that the <span class="math inline">\(GPA\)</span> is high enough.</li>
-<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, females earn more on average than males provided that the <span class="math inline">\(GPA\)</span> is high enough.</li>
-</ol>
-<p><strong>Answer:</strong> Observe that: <span class="math display">\[
+</section>
+<section id="exercise-6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-6">Exercise 6</h3>
+<p>Suppose we collect data for a group of students in a statistics class with variables</p>
+<ul>
+<li><span class="math inline">\(X_1=\)</span><code>hours studied</code>,</li>
+<li><span class="math inline">\(X_2 =\)</span> <code>undergrad GPA</code> (GPA: Grade Point Average), and</li>
+<li><span class="math inline">\(Y =\)</span> <code>receive an A</code>.</li>
+</ul>
+<p>We fit a logistic regression and produce estimated coefficients:</p>
+<p><span class="math display">\[\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.\]</span></p>
+<p><strong>6 a)</strong> Estimate the probability that a student who studies for <span class="math inline">\(40\)</span> h and has an <code>undergrad GPA</code> of <span class="math inline">\(3.5\)</span> gets an <code>A</code> in the class.</p>
+<p><strong>Answer:</strong></p>
+<p>Remember from the previous exercise that:</p>
+<p><span class="math display">\[
+p(X) = \frac {\exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
+             {1 + \exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
+\\
+\]</span></p>
+<p>Thus, the probability of <span class="math inline">\(Y=1\)</span> given <span class="math inline">\(X=[x_1,x_2]\)</span> with <span class="math inline">\(x_1 =40\)</span> (hours) and <span class="math inline">\(x_2=3.5\)</span> (GPA) yields:</p>
+<p><span class="math display">\[
+p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
+\]</span></p>
+<p>Calculations in <code>R</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>( <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span>) )<span class="sc">/</span>( <span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3775407</code></pre>
+</div>
+</div>
+<p><strong>6 b)</strong> How many hours would the student in part (a) need to study to have a <span class="math inline">\(50\%\)</span> chance of getting an <code>A</code> in the class?</p>
+<p><strong>Answer:</strong></p>
+<p>Finding <span class="math inline">\(x_1\)</span>, where <span class="math inline">\(X = [x_1, 3.5]\)</span>, such that <span class="math inline">\(p(X) = 0.5\)</span> yields:</p>
+<p><span class="math display">\[
 \begin{align*}
-\text{Male\; $(X_3 = 0)$:}\quad   &amp; 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
-\text{Female\; $(X_3 = 1)$:}\quad &amp; 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
+0.50 &amp;= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\
+\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &amp;= \exp(-2.5 + 0.05\,x_1)\\
+\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &amp;= \exp(-2.5 + 0.05\,x_1)\\
+\Leftrightarrow 0.50 &amp;= 0.50 \exp(-2.5 + 0.05\,x_1)\\
+\Leftrightarrow \log(1) &amp;= -2.5 + 0.05\,x_1 \\
+\Leftrightarrow x_1 &amp;= 2.5 / 0.05 = 50
 \end{align*}
 \]</span></p>
-<p>Thus 3 a) iii. is correct, since once the <span class="math inline">\(X_1=\)</span><code>GPA</code> is high enough (<span class="math inline">\(35-10\,X_1&lt;0 \Leftrightarrow X_1&gt;3.5\)</span>), males earn more on average.</p>
-<p><strong>3 b)</strong> Predict the salary of a female with <code>IQ</code> of 110 and a <code>GPA</code> of 4.0.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>GPA    <span class="ot">&lt;-</span>   <span class="dv">4</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>IQ     <span class="ot">&lt;-</span> <span class="dv">110</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Gender <span class="ot">&lt;-</span>   <span class="dv">1</span> <span class="co"># female = 1</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Prediction</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Y_hat  <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">20</span><span class="sc">*</span>GPA <span class="sc">+</span> <span class="fl">0.07</span><span class="sc">*</span>IQ <span class="sc">+</span> <span class="dv">35</span><span class="sc">*</span>Gender <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span>GPA<span class="sc">*</span>IQ <span class="sc">-</span> <span class="dv">10</span><span class="sc">*</span>GPA</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 137.1</code></pre>
-</div>
-</div>
-<p><strong>3 c)</strong> True or false: Since the coefficient for the <code>GPA</code><span class="math inline">\(\times\)</span><code>IQ</code> interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.</p>
-<p><strong>Answer:</strong></p>
-<p>False. We must examine the <span class="math inline">\(p\)</span>-value (or the <span class="math inline">\(t\)</span>-statistic) of the regression coefficient to determine if the interaction term is statistically significant or not.</p>
+<p>Thus, on average, a student with an <code>undergrad GPA</code> of <span class="math inline">\(3.5\)</span> needs to study <span class="math inline">\(50\)</span> hours to have a <span class="math inline">\(50\%\)</span> chance of getting an <code>A</code>.</p>
 </section>
-<section id="exercise-8" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8</h3>
-<p>This question involves the use of simple linear regression on the <code>Auto</code> data set.</p>
-<p><strong>8 a)</strong> Use the <code>lm()</code> function to perform a simple linear regression with <code>mpg</code> as the response and <code>horsepower</code> as the predictor. Use the <code>summary()</code> function to print the results.</p>
+<section id="exercise-13" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-13">Exercise 13</h3>
+<p>This question should be answered using the <code>Weekly</code> data set, which is part of the <code>ISLR2</code> package. This data is similar in nature to the <code>Smarket</code> data from this chapter’s lab, except that it contains <span class="math inline">\(1,089\)</span> weekly returns for <span class="math inline">\(21\)</span> years, from the beginning of <span class="math inline">\(1990\)</span> to the end of <span class="math inline">\(2010\)</span>.</p>
+<p><strong>13 a)</strong> Produce some numerical and graphical summaries of the <code>Weekly</code> data. Do there appear to be any patterns?</p>
+<p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform linear regression</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>lmObj_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data=</span>Auto)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to print the results</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmObj_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You may need to install first the following R-packages:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ISLR2")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("MASS")</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("class")</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("e1071") # naiveBayes()</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the packages you need</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminates the need of referring to a variable </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># like 'Weekly$Year', and thus allows direct use of 'Year'</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Weekly) </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to produce a numerical summary for each variable</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Weekly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Year           Lag1               Lag2               Lag3         
+ Min.   :1990   Min.   :-18.1950   Min.   :-18.1950   Min.   :-18.1950  
+ 1st Qu.:1995   1st Qu.: -1.1540   1st Qu.: -1.1540   1st Qu.: -1.1580  
+ Median :2000   Median :  0.2410   Median :  0.2410   Median :  0.2410  
+ Mean   :2000   Mean   :  0.1506   Mean   :  0.1511   Mean   :  0.1472  
+ 3rd Qu.:2005   3rd Qu.:  1.4050   3rd Qu.:  1.4090   3rd Qu.:  1.4090  
+ Max.   :2010   Max.   : 12.0260   Max.   : 12.0260   Max.   : 12.0260  
+      Lag4               Lag5              Volume            Today         
+ Min.   :-18.1950   Min.   :-18.1950   Min.   :0.08747   Min.   :-18.1950  
+ 1st Qu.: -1.1580   1st Qu.: -1.1660   1st Qu.:0.33202   1st Qu.: -1.1540  
+ Median :  0.2380   Median :  0.2340   Median :1.00268   Median :  0.2410  
+ Mean   :  0.1458   Mean   :  0.1399   Mean   :1.57462   Mean   :  0.1499  
+ 3rd Qu.:  1.4090   3rd Qu.:  1.4050   3rd Qu.:2.05373   3rd Qu.:  1.4050  
+ Max.   : 12.0260   Max.   : 12.0260   Max.   :9.32821   Max.   : 12.0260  
+ Direction 
+ Down:484  
+ Up  :605  
+           
+           
+           
+           </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use cor function to produce a table of correlations for all variables </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (excluding the non-numerical variable 'Direction')</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(Weekly[,<span class="sc">-</span><span class="dv">9</span>]), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Year  Lag1  Lag2  Lag3  Lag4  Lag5 Volume Today
+Year    1.00 -0.03 -0.03 -0.03 -0.03 -0.03   0.84 -0.03
+Lag1   -0.03  1.00 -0.07  0.06 -0.07 -0.01  -0.06 -0.08
+Lag2   -0.03 -0.07  1.00 -0.08  0.06 -0.07  -0.09  0.06
+Lag3   -0.03  0.06 -0.08  1.00 -0.08  0.06  -0.07 -0.07
+Lag4   -0.03 -0.07  0.06 -0.08  1.00 -0.08  -0.06 -0.01
+Lag5   -0.03 -0.01 -0.07  0.06 -0.08  1.00  -0.06  0.01
+Volume  0.84 -0.06 -0.09 -0.07 -0.06 -0.06   1.00 -0.03
+Today  -0.03 -0.08  0.06 -0.07 -0.01  0.01  -0.03  1.00</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use pairs function to produce pairwise scatter plots</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Weekly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch4_Solutions_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Yes, it appears that <code>Year</code> and <code>Volume</code> have a strong positive, but non-linear relationship.</p>
+<p><strong>13 b)</strong> Use the full data set to perform a logistic regression with <code>Direction</code> as the response and the five <code>Lag</code> variables plus <code>Volume</code> as predictors. Use the <code>summary()</code> function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate a generalized linear regression model where the third input family is a description of the error distribution </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and link function to be used in the model, supplied as the result of a call to a family function - here use binomial.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Why binomial? Because our independent variable Direction takes two values.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Direction<span class="sc">~</span>Lag1<span class="sc">+</span>Lag2<span class="sc">+</span>Lag3<span class="sc">+</span>Lag4<span class="sc">+</span>Lag5<span class="sc">+</span>Volume,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">data   =</span> Weekly,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> binomial)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to print the results</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = mpg ~ horsepower, data = Auto)
+glm(formula = Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + 
+    Volume, family = binomial, data = Weekly)
 
-Residuals:
-     Min       1Q   Median       3Q      Max 
--13.5710  -3.2592  -0.3435   2.7630  16.9240 
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6949  -1.2565   0.9913   1.0849   1.4579  
 
 Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 39.935861   0.717499   55.66   &lt;2e-16 ***
-horsepower  -0.157845   0.006446  -24.49   &lt;2e-16 ***
+            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)  0.26686    0.08593   3.106   0.0019 **
+Lag1        -0.04127    0.02641  -1.563   0.1181   
+Lag2         0.05844    0.02686   2.175   0.0296 * 
+Lag3        -0.01606    0.02666  -0.602   0.5469   
+Lag4        -0.02779    0.02646  -1.050   0.2937   
+Lag5        -0.01447    0.02638  -0.549   0.5833   
+Volume      -0.02274    0.03690  -0.616   0.5377   
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 4.906 on 390 degrees of freedom
-Multiple R-squared:  0.6059,    Adjusted R-squared:  0.6049 
-F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1496.2  on 1088  degrees of freedom
+Residual deviance: 1486.4  on 1082  degrees of freedom
+AIC: 1500.4
+
+Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
-<p>Comment on the output. For example:</p>
-<p><strong>i)</strong> Is there a relationship between the predictor and the response?</p>
+<p><strong>Conclusion:</strong> The predictor <code>Lag2</code> appears to have some statistical significance with a <span class="math inline">\(p\)</span>-value smaller than <span class="math inline">\(3\%\)</span>. (Ignoring issues due to multiple testing.)</p>
+<p><strong>13 c)</strong> Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.</p>
 <p><strong>Answer:</strong></p>
-<p>Yes, there is. The predictor horsepower has a statistically significant (<span class="math inline">\(p&lt;0.001\)</span>) linear relationship with the response.</p>
-<p><strong>ii)</strong> How strong is the relationship between the predictor and the response?</p>
-<p><strong>Answer:</strong></p>
-<p>Statistical significance does not necessarily mean a practically strong or important relationship.</p>
-<p>To quantify the strength of the relationship between the predictor and the response, we can look at the following quantities:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use predict function on results of previous regression in 10 b)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>glm_probs <span class="ot">&lt;-</span>  <span class="fu">predict</span>(glm_fit, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector containing the string "Down" </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>glm_pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"Down"</span>, <span class="at">times =</span> <span class="fu">length</span>(glm_probs))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Substitute "Down" for "Up", whenever the estimated probability is above 0.5</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>glm_pred[glm_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="st">"Up"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct a summary table with the predictions against </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># the actual 'Direction'-values</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm_pred, Direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Direction
+glm_pred Down  Up
+    Down   54  48
+    Up    430 557</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(Weekly<span class="sc">$</span>Direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Up
+Down  0
+Up    1</code></pre>
+</div>
+</div>
+<p>Counts of the classification errors are found at the off-diagonal entries of the confusion matrix</p>
 <ul>
-<li>Residual Standard Error (RSE) (estimate of the standard deviation of <span class="math inline">\(\epsilon\)</span>) in comparison to the RSE of the trivial linear regression model with only an intercept.</li>
-<li>The <span class="math inline">\(R^2\)</span> Statistic (the proportion of variance explained by the model)</li>
-<li>The <span class="math inline">\(F\)</span>-Statistic</li>
+<li>Upper off-diagonal entry: Number of False Negatives</li>
+<li>Lower off-diagonal entry: Number of False Positives</li>
 </ul>
-<p>The Residual Standard Error (RSE) of the regression model with <code>intercept</code> and <code>horsepower</code> as predictors is given by:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## RSE of lm(mpg ~ horsepower):</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(lmObj_1)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(lmObj_1))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>RSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS<span class="sc">/</span>(n<span class="dv">-2</span>))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.906</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alternatively: </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lmObj_1)<span class="sc">$</span>sigma, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.906</code></pre>
-</div>
-</div>
-<p>This RSE value is considerable smaller than the RSE of a model with only an intercept:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lmObj_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="sc">+</span><span class="dv">1</span>, <span class="at">data =</span> Auto)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>RSS_onlyIntercept   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(lmObj_onlyIntercept)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>n                   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(lmObj_onlyIntercept))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>RSE_onlyIntercept   <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS_onlyIntercept<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE_onlyIntercept, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 7.805</code></pre>
-</div>
-</div>
-<p>Thus, the larger model with <code>horsepower</code> included explains more of the variances in the response variable <code>mpg</code>. Including <code>horsepower</code> as a predictor reduces the RSE by <code>((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100</code> %; i.e.&nbsp;by 37.15%.</p>
-<p>The <span class="math inline">\(R^2\)</span> value:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lmObj_1)<span class="sc">$</span>r.squared, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.61</code></pre>
-</div>
-</div>
-<p>shows that <span class="math inline">\(60\%\)</span> of variability in <span class="math inline">\(Y\)</span> can be explained using an intercept and <code>horsepower</code> as predictors.</p>
-<p>The value of the <span class="math inline">\(F\)</span> statistic</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lmObj_1)<span class="sc">$</span>fstatistic, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> value  numdf  dendf 
-599.72   1.00 390.00 </code></pre>
-</div>
-</div>
-<p>is much larger than <span class="math inline">\(1\)</span> which means that the linear regression model with intercept and <code>horsepower</code> fits the data significantly better than the trivial regression model with only an intercept.</p>
-<p><strong>iii)</strong> Is the relationship between the predictor and the response positive or negative?</p>
-<p><strong>Answer:</strong></p>
-<p>The relationship is negative, as we can see from the parameter estimate for <code>horsepower</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmObj_1)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>horsepower 
--0.1578447 </code></pre>
-</div>
-</div>
-<p><strong>iv)</strong> What is the predicted <code>mpg</code> associated with a <code>horsepower</code> of <span class="math inline">\(98\)</span>? What are the associated <span class="math inline">\(95\%\)</span> confidence and prediction intervals?</p>
-<p><strong>Answer:</strong></p>
-<p>The predicted value plus confidence interval:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower of 98</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># confidence interval </span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object =</span> lmObj_1, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       fit      lwr      upr
-1 24.46708 23.97308 24.96108</code></pre>
-</div>
-</div>
-<p>The predicted value plus prediction interval:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower of 98</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction interval</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object =</span> lmObj_1, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       fit     lwr      upr
-1 24.46708 14.8094 34.12476</code></pre>
-</div>
-</div>
-<p><strong>8 b)</strong> Plot the response and the predictor. Use the <code>abline()</code> function to display the least squares regression line.</p>
+<p>Counts of the correct classifications are found at the diagonal entries of the confusion matrix</p>
+<ul>
+<li>Upper diagonal entry: Number of True Negatives</li>
+<li>Lower diagonal entry: Number of True Positives</li>
+</ul>
+<p><strong>Possible Conclusions:</strong></p>
+<ul>
+<li><p>Percentage of correct predictions (TP+TN)/n: <span class="math inline">\((54+557)/(54+557+48+430) = 56.1\%\)</span></p></li>
+<li><p>Percentage of false predictions (FP+FN)/n: <span class="math inline">\((48+430)/(54+557+48+430) = 43.9\%\)</span></p></li>
+<li><p>During weeks when the market goes <code>Up</code>, the logistic regression is right about (True Pos. Rate TP/P) <span class="math inline">\(557/(557+48) = 92.1\%\)</span> of the time.</p></li>
+<li><p>During weeks when the market goes <code>Down</code>, the logistic regression is right about (True Neg. Rate TN/N) <span class="math inline">\(54/(430+54) = 11.2\%\)</span> of the time.</p></li>
+</ul>
+<p><strong>Caution:</strong> All these answers are with respect to the training errors - not the test errors.</p>
+<p><strong>13 d)</strong> Now fit the logistic regression model using a training data period from <span class="math inline">\(1990\)</span> to <span class="math inline">\(2008\)</span>, with <code>Lag2</code> as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from <span class="math inline">\(2009\)</span> and <span class="math inline">\(2010\)</span>).</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Auto<span class="sc">$</span>horsepower, <span class="at">y =</span> Auto<span class="sc">$</span>mpg, <span class="at">ylab =</span> <span class="st">"MPG"</span>, <span class="at">xlab =</span> <span class="st">"Horsepower"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmObj_1, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">",x)"</span>))), </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><strong>8 c)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmObj_1, <span class="at">col=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Looking at the smoothing line of the residuals (<span class="math inline">\(e_i=y_i−\hat{y}_i\)</span>) vs.&nbsp;the fitted values (<span class="math inline">\(\hat{y}_i\)</span>), there is a strong pattern in the residuals, indicating non-linearity. You can see evidence of this also in the scatter plot in the answer for question 8 b).</p>
-<p>There also appears to be non-constant variance in the error terms (heteroscedasticity), but this may be corrected to an extent when trying a quadratic fit. If not, transformations such as <span class="math inline">\(log(y)\)</span> or <span class="math inline">\(\sqrt{y}\)</span> can shrink larger responses by a greater amount and reduce this issue.</p>
-<p>There are some observations with large standardized residuals &amp; high leverage (hence, high Cook’s Distance) that we need to review.</p>
-</section>
-<section id="exercise-9" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-9">Exercise 9</h3>
-<p>This question involves the use of multiple linear regression on the <code>Auto</code> data set.</p>
-<p><strong>9 a)</strong> Produce a scatterplot matrix which includes all of the variables in the data set.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce scatterplot matrix</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><strong>9 b)</strong> Compute the matrix of correlations between the variables using the function <code>cor()</code>. You will need to exclude the <code>name</code> variable, which is qualitative.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(<span class="fu">subset</span>(Auto, <span class="at">select =</span> <span class="sc">-</span>name)), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate condition for our training data</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">=</span> (Year <span class="sc">&lt;</span> <span class="dv">2009</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame for the Weekly data from 2009 and 2010 </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (usage of ! to define the "opposite")</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>Weekly_0910 <span class="ot">&lt;-</span> Weekly[<span class="sc">!</span>train,]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># run regression on the training data subset</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Direction <span class="sc">~</span> Lag2,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">data   =</span> Weekly,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> binomial,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">subset =</span> train)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>glm_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm_fit, Weekly_0910, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># fill with our predictions</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>glm_pred                  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"Down"</span>, <span class="fu">length</span>(glm_probs))</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>glm_pred[glm_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="st">"Up"</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># construct confusion table using only the test data</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>Direction_0910 <span class="ot">&lt;-</span> Direction[<span class="sc">!</span>train]</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm_pred, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              mpg cylinders displacement horsepower weight acceleration year
-mpg           1.0      -0.8         -0.8       -0.8   -0.8          0.4  0.6
-cylinders    -0.8       1.0          1.0        0.8    0.9         -0.5 -0.3
-displacement -0.8       1.0          1.0        0.9    0.9         -0.5 -0.4
-horsepower   -0.8       0.8          0.9        1.0    0.9         -0.7 -0.4
-weight       -0.8       0.9          0.9        0.9    1.0         -0.4 -0.3
-acceleration  0.4      -0.5         -0.5       -0.7   -0.4          1.0  0.3
-year          0.6      -0.3         -0.4       -0.4   -0.3          0.3  1.0
-origin        0.6      -0.6         -0.6       -0.5   -0.6          0.2  0.2
-             origin
-mpg             0.6
-cylinders      -0.6
-displacement   -0.6
-horsepower     -0.5
-weight         -0.6
-acceleration    0.2
-year            0.2
-origin          1.0</code></pre>
+<pre><code>        Direction_0910
+glm_pred Down Up
+    Down    9  5
+    Up     34 56</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the overall rate of correct predictions </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the test set </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(glm_pred <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.625</code></pre>
 </div>
 </div>
-<p><strong>9 c)</strong> Use the <code>lm()</code> function to perform a multiple linear regression with <code>mpg</code> as the response and all other variables except <code>name</code> as the predictors. Use the <code>summary()</code> function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).</p>
+<p><strong>13 e)</strong> Repeat (d) using LDA.</p>
 <p><strong>Answer:</strong></p>
-<div class="cell" data-scrolled="true">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform multiplie linear regression</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#call the packages you need</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(<span class="st">"MASS"</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same approach as before but now using LDA method</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>lda_fit  <span class="ot">&lt;-</span> <span class="fu">lda</span>(Direction <span class="sc">~</span> Lag2, <span class="at">data=</span>Weekly, <span class="at">subset=</span>train)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>lda_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lda_fit, Weekly_0910)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion table using only the test data</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lda_pred<span class="sc">$</span>class, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Direction_0910
+       Down Up
+  Down    9  5
+  Up     34 56</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the overall rate of correct predictions </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the test set </span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lda_pred<span class="sc">$</span>class <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.625</code></pre>
+</div>
+</div>
+<p><strong>13 f)</strong> Repeat (d) using QDA.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same approach as before but now using QDA method</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>qda_fit   <span class="ot">&lt;-</span> <span class="fu">qda</span>(Direction<span class="sc">~</span>Lag2, <span class="at">data=</span>Weekly, <span class="at">subset=</span>train)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>qda_class <span class="ot">&lt;-</span> <span class="fu">predict</span>(qda_fit, Weekly_0910)<span class="sc">$</span>class</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion table using only the test data</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(qda_class, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Direction_0910
+qda_class Down Up
+     Down    0  0
+     Up     43 61</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the overall rate of correct predictions </span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the test set </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(qda_class <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5865385</code></pre>
+</div>
+</div>
+<p><strong>13 g)</strong> Repeat (d) using KNN with <span class="math inline">\(K = 1.\)</span></p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the package you need</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"class"</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same approach as before but now using KNN method with K=1</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>train_X         <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Lag2[train])</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>test_X          <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Lag2[<span class="sc">!</span>train])</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>train_Direction <span class="ot">&lt;-</span> Direction[train]</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: If several observations are tied as nearest neighbors, </span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># then R will randomly break the tie. </span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting a common seed guarantees that we get the same results </span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Caution: KNN prediction uses a different function</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train_X, test_X, train_Direction, <span class="at">k=</span><span class="dv">1</span>)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion table using only the test data</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn_pred, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = mpg ~ . - name, data = Auto)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--9.5903 -2.1565 -0.1169  1.8690 13.0604 
-
-Coefficients:
-               Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  -17.218435   4.644294  -3.707  0.00024 ***
-cylinders     -0.493376   0.323282  -1.526  0.12780    
-displacement   0.019896   0.007515   2.647  0.00844 ** 
-horsepower    -0.016951   0.013787  -1.230  0.21963    
-weight        -0.006474   0.000652  -9.929  &lt; 2e-16 ***
-acceleration   0.080576   0.098845   0.815  0.41548    
-year           0.750773   0.050973  14.729  &lt; 2e-16 ***
-origin         1.426141   0.278136   5.127 4.67e-07 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.328 on 384 degrees of freedom
-Multiple R-squared:  0.8215,    Adjusted R-squared:  0.8182 
-F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>        Direction_0910
+knn_pred Down Up
+    Down   21 30
+    Up     22 31</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the overall rate of correct predictions </span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the test set </span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(knn_pred <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
 </div>
 </div>
-<p><strong>9 c i)</strong> Is there a relationship between the predictors and the response?</p>
-<p><strong>Answer:</strong></p>
-<p>Yes, there is a relationship between the predictors and the response. By testing the null hypothesis of whether all (except intercept) the regression coefficients are zero (i.e.&nbsp;H<span class="math inline">\(_0\)</span>: <span class="math inline">\(\beta_1=\dots=\beta_7=0\)</span>), we can see that the <span class="math inline">\(F\)</span>-statistic is big and its <span class="math inline">\(p\)</span>-value is close to zero, indicating evidence against the null hypothesis.</p>
-<p><strong>9 c ii)</strong> Which predictors appear to have a statistically significant relationship to the response?</p>
-<p><strong>Answer:</strong></p>
-<p>Looking at the <span class="math inline">\(p\)</span>-values associated with each predictor’s <span class="math inline">\(t\)</span>-statistic, we see that <code>displacement</code>, <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationship, while <code>cylinders</code>, <code>horsepower</code>, and <code>acceleration</code> do not.</p>
-<p><strong>Caution:</strong> This consideration neglects issues due to multiple testing. When testing at the significance level <span class="math inline">\(\alpha=0.05\)</span>, then each single test has a type I error (false H<span class="math inline">\(_0\)</span> rejections) rate of up to <span class="math inline">\(5\%\)</span>. These type I error rates accumulate since we consider seven hypothesis tests simultaneously, and thus the probability of seeing one type I error among the seven tests is up to <span class="math inline">\(7\cdot 5\%=35\%\)</span>. So is quite likely to see one type I error.</p>
-<p><strong>Bonferroni correction for multiple testing:</strong> To determine if any of the seven predictors is statistically significant, the corresponding <span class="math inline">\(p\)</span>-value must be smaller than <span class="math inline">\(\alpha/7\)</span>. For instance, with <span class="math inline">\(\alpha/7=0.05/7\approx 0.007\)</span>, only <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationships to the response.</p>
-<p><strong>9 c iii)</strong> What does the coefficient for the <code>year</code> variable suggest?</p>
-<p><strong>Answer:</strong></p>
-<p>The regression coefficient for <code>year</code> suggests that, on average, one <code>year</code> later year-of-construction is associated with an increased <code>mpg</code> by <span class="math inline">\(0.75\)</span>, when holding every other predictor value constant.</p>
-<p><strong>9 d)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?</p>
+<p><strong>13 h)</strong> Repeat (d) using naive Bayes.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"e1071"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>nb_fit  <span class="ot">&lt;-</span> <span class="fu">naiveBayes</span>(Direction <span class="sc">~</span> Lag2, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data   =</span> Weekly, </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">subset =</span> train)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>nb_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb_fit, Weekly_0910)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion table using only the test data</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nb_pred, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Direction_0910
+nb_pred Down Up
+   Down    0  0
+   Up     43 61</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the overall rate of correct predictions </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the test set </span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(nb_pred <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5865385</code></pre>
+</div>
+</div>
+<p><strong>13 i)</strong> Which of these methods appears to provide the best results on this data?</p>
+<p><strong>Answer:</strong></p>
+<p>Logistic regression and LDA have the largest rates of (overall) correct predictions on the held out test set.</p>
+<p><strong>13 j)</strong> Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for <span class="math inline">\(K\)</span> in the KNN classifier.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic regression with Lag2:Lag1</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>glm_fit   <span class="ot">&lt;-</span> <span class="fu">glm</span>(Direction<span class="sc">~</span>Lag2<span class="sc">:</span>Lag1, <span class="at">data=</span>Weekly, <span class="at">family=</span>binomial, <span class="at">subset=</span>train)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>glm_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm_fit, Weekly_0910, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>glm_pred  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"Down"</span>, <span class="fu">length</span>(glm_probs))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>glm_pred[glm_probs<span class="sc">&gt;</span>.<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">"Up"</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>Direction_0910 <span class="ot">&lt;-</span> Direction[<span class="sc">!</span>train]</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glm_pred, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Direction_0910
+glm_pred Down Up
+    Down    1  1
+    Up     42 60</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(glm_pred <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5865385</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LDA with Lag2 interaction with Lag1</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>lda_fit  <span class="ot">&lt;-</span> <span class="fu">lda</span>(Direction <span class="sc">~</span> Lag2<span class="sc">:</span>Lag1, <span class="at">data=</span>Weekly, <span class="at">subset=</span>train)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>lda_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lda_fit, Weekly_0910)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lda_pred<span class="sc">$</span>class <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5769231</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># QDA with sqrt(abs(Lag2))</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>qda_fit   <span class="ot">&lt;-</span> <span class="fu">qda</span>(Direction<span class="sc">~</span>Lag2<span class="sc">+</span><span class="fu">sqrt</span>(<span class="fu">abs</span>(Lag2)), <span class="at">data=</span>Weekly, <span class="at">subset=</span>train)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>qda_class <span class="ot">&lt;-</span> <span class="fu">predict</span>(qda_fit, Weekly_0910)<span class="sc">$</span>class</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(qda_class, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Direction_0910
+qda_class Down Up
+     Down   12 13
+     Up     31 48</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(qda_class <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5769231</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN k =10, as before KNN uses a different command</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train_X, test_X, train_Direction, <span class="at">k=</span><span class="dv">10</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn_pred, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Direction_0910
+knn_pred Down Up
+    Down   17 21
+    Up     26 40</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(knn_pred <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5480769</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN k = 100</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train_X, test_X, train_Direction, <span class="at">k=</span><span class="dv">100</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(knn_pred, Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Direction_0910
+knn_pred Down Up
+    Down   10 11
+    Up     33 50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(knn_pred <span class="sc">==</span> Direction_0910)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5769231</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> Out of these experiments, the original LDA and logistic regression have better performances in terms of overall correct prediction rates on the held out test set.</p>
+</section>
+<section id="exercise-15" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-15">Exercise 15</h3>
+<p>This problem involves writing functions.</p>
+<p><strong>15 a)</strong> Write a function, <code>Power()</code>, that prints out the result of raising 2 to the 3rd power. In other words, your function should compute <span class="math inline">\(2^3\)</span> and print out the results. Hint: Recall that <code>x^a</code> raises <code>x</code> to the power <code>a</code>. Use the <code>print()</code> function to output the result.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Power <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span><span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Power</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+</div>
+<p><strong>15 b)</strong> Create a new function, <code>Power2()</code>, that allows you to pass any two numbers, <code>x</code> and <code>a</code>, and prints out the value of <code>x^a</code>. You can do this by beginning your function with the line <code>Power2 &lt;- function (x,a){</code>. You should be able to call your function by entering, for instance, <code>Power2 (3,8)</code> on the command line. This should output the value of <span class="math inline">\(38\)</span>, namely, <span class="math inline">\(6,561\)</span>.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Power2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, a) {</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  x<span class="sc">^</span>a</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Power2</span>(<span class="dv">3</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6561</code></pre>
+</div>
+</div>
+<p><strong>15 c)</strong> Using the <code>Power2()</code> function that you just wrote, compute <span class="math inline">\(10^3\)</span>, <span class="math inline">\(8^{17}\)</span>, and <span class="math inline">\(131^3\)</span>.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Power2</span>(<span class="dv">10</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Power2</span>(<span class="dv">8</span>, <span class="dv">17</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.2518e+15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Power2</span>(<span class="dv">131</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2248091</code></pre>
+</div>
+</div>
+<p><strong>15 d)</strong> Now create a new function, <code>Power3()</code>, that actually returns the result <code>x^a</code> as an R object, rather than simply printing it to the screen. That is, if you store the value <code>x^a</code> in an object called result within your function, then you can simply <code>return()</code> this result, using the following line: <code>return(result)</code>. This should be the last line in your function, before the <code>}</code> symbol.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>Power3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, a) {</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> x<span class="sc">^</span>a</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>15 e)</strong> Now using the <code>Power3()</code> function, create a plot of f(x) = <span class="math inline">\(x^2\)</span>. The x-axis should display a range of integers from 1 to 10, and the y-axis should display <span class="math inline">\(x^2\)</span>. Label the axes appropriately, and use an appropriate title for the figure. Consider displaying either the x-axis, the y-axis, or both on the log-scale. You can do this by using <code>log="x"</code>, <code>log="y"</code>, or <code>log="xy"</code> as arguments to the <code>plot()</code> function.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))<span class="co"># graph parameters (three plots in one column)</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">Power3</span>(x, <span class="dv">2</span>), <span class="at">type=</span><span class="st">"b"</span>, <span class="at">log=</span><span class="st">"x"</span>, </span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(x<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(x),</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"log-transformed</span><span class="sc">\n</span><span class="st">x-axis"</span>)</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">Power3</span>(x, <span class="dv">2</span>), <span class="at">type=</span><span class="st">"b"</span>, <span class="at">log=</span><span class="st">"y"</span>, </span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(x<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(x),</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"log-transformed</span><span class="sc">\n</span><span class="st">y-axis"</span>)</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">Power3</span>(x, <span class="dv">2</span>), <span class="at">type=</span><span class="st">"b"</span>, <span class="at">log=</span><span class="st">"xy"</span>, </span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(x<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(x),</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"log-transformed</span><span class="sc">\n</span><span class="st">x and y-axis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch4_Solutions_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="co"># reset graphic parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li><p>The “Residuals vs Fitted” plot (1st plot) shows some systematic deviations of the residuals from <span class="math inline">\(0\)</span>. The reason is that we are imposing a straight “line” (better hyper plane) fit for the conditional mean function <span class="math inline">\(E[Y|X]=f(X)\)</span> which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values <span class="math inline">\(\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p\)</span>.</p></li>
-<li><p>The “Normal Q-Q” plot (2nd plot) suggests non-normally distributed residuals–particularly the upper tail deviates from that of a normal distribution.</p></li>
-<li><p>The “Residuals vs Leverage” plot (3rd plot) shows that there are some potential outliers that we can see when: standardized residuals are below <span class="math inline">\(-2\)</span> or above <span class="math inline">\(+2\)</span>. Moreover, the plot shows also potentially problematic “high-leverage” points with leverage values heavily exceeding the rule-of-thumb threshold <span class="math inline">\((p+1)/n=8/392=0.02\)</span>. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation.</p></li>
-<li><p>The “Scale-Location” plot (4th plot) shows is rather inconclusive about heteroscedasticity. However the “Residuals vs Fitted” plot (1st plot)shows some clear sign of heteroscedastic residuals.</p></li>
-</ul>
-<p><strong>9 e)</strong> Use the <code>*</code> and <code>:</code> symbols to fit linear regression models with interaction effects. Do any interactions appear to be statistically significant?</p>
-<p><strong>Answer:</strong></p>
-<p>Violating the hierarchy principle:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = mpg ~ horsepower + cylinders + year + weight:displacement, 
-    data = Auto)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--9.1046 -2.8861 -0.2415  2.3967 15.3221 
-
-Coefficients:
-                      Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)         -1.343e+01  5.043e+00  -2.663  0.00807 ** 
-horsepower          -3.914e-02  1.278e-02  -3.063  0.00234 ** 
-cylinders           -1.358e+00  3.233e-01  -4.201 3.31e-05 ***
-year                 6.661e-01  6.019e-02  11.067  &lt; 2e-16 ***
-weight:displacement -3.354e-06  1.352e-06  -2.480  0.01355 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.985 on 387 degrees of freedom
-Multiple R-squared:  0.7419,    Adjusted R-squared:  0.7393 
-F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Following the hierarchical principle:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = mpg ~ horsepower + cylinders + year + weight * displacement, 
-    data = Auto)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--9.7530 -1.8228 -0.0602  1.5780 12.6133 
-
-Coefficients:
-                      Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)         -2.210e+00  3.819e+00  -0.579  0.56316    
-horsepower          -3.396e-02  9.560e-03  -3.552  0.00043 ***
-cylinders            2.072e-01  2.914e-01   0.711  0.47756    
-year                 7.858e-01  4.555e-02  17.250  &lt; 2e-16 ***
-weight              -1.084e-02  6.346e-04 -17.076  &lt; 2e-16 ***
-displacement        -7.947e-02  9.905e-03  -8.023 1.26e-14 ***
-weight:displacement  2.431e-05  2.141e-06  11.355  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.976 on 385 degrees of freedom
-Multiple R-squared:  0.8568,    Adjusted R-squared:  0.8546 
-F-statistic: 384.1 on 6 and 385 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Note that there is a difference between using <code>A:B</code> and <code>A*B</code> when running a regression. While the first includes only the interaction term between the variable <code>A</code> and <code>B</code>, the second one also includes the stand-alone variables <code>A</code> and <code>B</code>.</p>
-<p>Generally, you should follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the <span class="math inline">\(p\)</span>-values associated with their coefficients are not significant.</p>
-<p><strong>9 f)</strong></p>
-<p>Try a few different transformations of the variables, such as <span class="math inline">\(\log(X)\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, <span class="math inline">\(X^2\)</span>. Comment on your findings.</p>
+<p><strong>15 f)</strong> Create a function, <code>PlotPower()</code>, that allows you to create a plot of <code>x</code> against <code>x^a</code> for a fixed <code>a</code> and for a range of values of <code>x</code>. For instance, if you call <code>PlotPower (1:10 ,3)</code> then a plot should be created with an x-axis taking on values <span class="math inline">\(1, 2, \dots , 10\)</span>, and a y-axis taking on values <span class="math inline">\(1^3\)</span>, <span class="math inline">\(2^3\)</span>, . . . , <span class="math inline">\(10^3\)</span>.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span><span class="fu">log</span>(weight)<span class="sc">+</span><span class="fu">sqrt</span>(horsepower)<span class="sc">+</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                acceleration<span class="sc">+</span><span class="fu">I</span>(acceleration<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = mpg ~ log(weight) + sqrt(horsepower) + acceleration + 
-    I(acceleration^2), data = Auto)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--11.2932  -2.5082  -0.2237   2.0237  15.7650 
-
-Coefficients:
-                   Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       178.30303   10.80451  16.503  &lt; 2e-16 ***
-log(weight)       -14.74259    1.73994  -8.473 5.06e-16 ***
-sqrt(horsepower)   -1.85192    0.36005  -5.144 4.29e-07 ***
-acceleration       -2.19890    0.63903  -3.441 0.000643 ***
-I(acceleration^2)   0.06139    0.01857   3.305 0.001037 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.99 on 387 degrees of freedom
-Multiple R-squared:  0.7414,    Adjusted R-squared:  0.7387 
-F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>PlotPower <span class="ot">=</span> <span class="cf">function</span>(x, a) {</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  ylab_text <span class="ot">&lt;-</span> <span class="fu">bquote</span>(<span class="st">'x'</span><span class="sc">^</span>.(a)) <span class="co"># write y-axis label</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">Power3</span>(x, a), <span class="at">type =</span> <span class="st">"b"</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> ylab_text)</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">PlotPower</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch4_Solutions_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>This try suffers basically from the same issues as the model considered in 9 d)</p>
-<p>Let’s consider again the model with all predictors (except <code>name</code>), but with transforming the outcome variable <code>mpg</code> by a <span class="math inline">\(\log\)</span>-transformation.</p>
+</section>
+<section id="exercise-16" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-16">Exercise 16</h3>
+<p>Using the <code>Boston</code> data set, fit classification models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, and KNN models using various subsets of the predictors. Describe your findings.</p>
+<p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fit.lm3 <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(mpg)<span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>crime01                      <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(crim))</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>crime01[crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>Boston <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Boston, crime01)</span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">dim</span>(Boston)[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> (<span class="fu">dim</span>(Boston)[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span><span class="fu">dim</span>(Boston)[<span class="dv">1</span>]</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>Boston.train <span class="ot">&lt;-</span> Boston[train,]</span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>Boston.test  <span class="ot">&lt;-</span> Boston[test,]</span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>crime01.test <span class="ot">&lt;-</span> crime01[test]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># logistic regression of crime01 on all predictors </span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># except 'crime01' and 'crim'</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(crime01 <span class="sc">~</span> . <span class="sc">-</span>crime01 <span class="sc">-</span> crim, </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data   =</span> Boston, </span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> binomial, </span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">subset =</span> train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>glm_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm_fit, Boston.test, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>glm_pred                  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(glm_probs))</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>glm_pred[glm_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(glm_pred <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = log(mpg) ~ . - name, data = Auto)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.40955 -0.06533  0.00079  0.06785  0.33925 
-
-Coefficients:
-               Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   1.751e+00  1.662e-01  10.533  &lt; 2e-16 ***
-cylinders    -2.795e-02  1.157e-02  -2.415  0.01619 *  
-displacement  6.362e-04  2.690e-04   2.365  0.01852 *  
-horsepower   -1.475e-03  4.935e-04  -2.989  0.00298 ** 
-weight       -2.551e-04  2.334e-05 -10.931  &lt; 2e-16 ***
-acceleration -1.348e-03  3.538e-03  -0.381  0.70339    
-year          2.958e-02  1.824e-03  16.211  &lt; 2e-16 ***
-origin        4.071e-02  9.955e-03   4.089 5.28e-05 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.1191 on 384 degrees of freedom
-Multiple R-squared:  0.8795,    Adjusted R-squared:  0.8773 
-F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<pre><code>[1] 0.1818182</code></pre>
 </div>
 </div>
-<p>This model specification is much better!</p>
-<ul>
-<li>No clear issues of systematic under/over estimations for given fitted values.</li>
-<li>No clear issues of heteroscedastic residuals.</li>
-<li>Normality assumption may be wrong, but this isn’t problematic since we have a large dataset, such that a central limit theorem will make the estimators asymptotically normal distributed.</li>
-<li>One large leverage point which, however, has a small residual.</li>
-</ul>
+<p><strong>Conclusion:</strong> This logistic regression has a test error rate of <span class="math inline">\(18.2\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>glm_fit   <span class="ot">&lt;-</span> <span class="fu">glm</span>(crime01 <span class="sc">~</span> . <span class="sc">-</span>crime01 <span class="sc">-</span>crim <span class="sc">-</span>chas <span class="sc">-</span>tax, </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Boston, <span class="at">family=</span>binomial, <span class="at">subset=</span>train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>glm_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm_fit, Boston.test, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>glm_pred                  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(glm_probs))</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>glm_pred[glm_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(glm_pred <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1857708</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This logistic regression has a test error rate of <span class="math inline">\(18.6\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LDA</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>lda_fit  <span class="ot">&lt;-</span> <span class="fu">lda</span>(crime01<span class="sc">~</span>.<span class="sc">-</span>crime01<span class="sc">-</span>crim, <span class="at">data=</span>Boston, <span class="at">subset=</span>train)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>lda_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lda_fit, Boston.test)</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lda_pred<span class="sc">$</span>class <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1343874</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This LDA has a test error rate of <span class="math inline">\(13.4\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>lda_fit  <span class="ot">&lt;-</span> <span class="fu">lda</span>(crime01<span class="sc">~</span>.<span class="sc">-</span>crime01<span class="sc">-</span>crim<span class="sc">-</span>chas<span class="sc">-</span>tax, <span class="at">data=</span>Boston, <span class="at">subset=</span>train)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>lda_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lda_fit, Boston.test)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lda_pred<span class="sc">$</span>class <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1225296</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This LDA has a test error rate of <span class="math inline">\(12.3\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>lda_fit  <span class="ot">&lt;-</span> <span class="fu">lda</span>(crime01<span class="sc">~</span>.<span class="sc">-</span>crime01<span class="sc">-</span>crim<span class="sc">-</span>chas<span class="sc">-</span>tax<span class="sc">-</span>lstat<span class="sc">-</span>indus<span class="sc">-</span>age,</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Boston, <span class="at">subset=</span>train)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>lda_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lda_fit, Boston.test)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lda_pred<span class="sc">$</span>class <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1185771</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This LDA has a test error rate of <span class="math inline">\(11.9\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(class)</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>train_X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>                lstat, medv)[train,]</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>test_X  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>                lstat, medv)[test,]</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>train.crime01 <span class="ot">&lt;-</span> crime01[train]</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN(k=1)</span></span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a>knn_pred  <span class="ot">&lt;-</span> <span class="fu">knn</span>(train_X, test_X, train.crime01, <span class="at">k=</span><span class="dv">1</span>)</span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(knn_pred <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.458498</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This KNN prediction has a test error rate of <span class="math inline">\(45.8\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN(k=10)</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(train_X, test_X, train.crime01, <span class="at">k=</span><span class="dv">10</span>)</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(knn_pred <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1106719</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This KNN prediction has a test error rate of <span class="math inline">\(11.1\%\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN(k=100)</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">=</span> <span class="fu">knn</span>(train_X, test_X, train.crime01, <span class="at">k=</span><span class="dv">100</span>)</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(knn_pred <span class="sc">!=</span> crime01.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.486166</code></pre>
+</div>
+</div>
+<p><strong>Conclusion:</strong> This KNN prediction has a test error rate of <span class="math inline">\(48.6\%\)</span>.</p>
+<p><strong>Overall conclusion:</strong> The best models are the ones with the smaller test error rates. In our case, this means that the smallest (fewest predictors) LDA-model and the KNN prediction with <code>K=10</code> are the best prediction models.</p>
 </section>
 </section>
 

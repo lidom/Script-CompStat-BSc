@@ -1,320 +1,177 @@
-# `R`-Lab Ch 4: Classification
+# `R`-Lab Ch 5: Resampling Methods
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## The Validation Set Approach
+
+We explore the use of the validation set approach in order to estimate the
+test error rates that result from fitting various linear models on the Auto data set. Before we begin, we use the \texttt{set.seed()} function in order to set a seed for R ’s random number generator, so that you will obtain precisely the same results as those shown below. It is generally a good idea
+to set a random seed when performing an analysis such as cross-validation
+that contains an element of randomness, so that the results obtained can
+be reproduced precisely at a later time.
+We begin by using the \texttt{sample()} function to split the set of observations
+into two halves, by selecting a random subset of 196 observations out of
+the original 392 observations. We refer to these observations as the training
+set.
+```{r}
+library(ISLR)
+set.seed (1)
+train = sample(x = 392, size = 196)
+# equivalent:
+# train = sample(x = 1:392, size = 196)
 ```
-
-
-We will begin by examining some numerical and graphical summaries of the \texttt{Smarket} data, which is part of the \texttt{ISLR library}. This data set consists of percentage returns for the $\mathrm{S} \& \mathrm{P} 500$ stock index over 1,250 days, from the beginning of 2001 until the end of $2005.$ For each date, we have recorded the percentage returns for each of the five previous trading days, \texttt{Lag1} through \texttt{Lag5}. We have also recorded volume (the number of shares traded on the previous day, in billions), \texttt{Today} (the percentage return on the date in question) and \texttt{Direction} (whether the market was \texttt{Up} or \texttt{Down} on this date).
+(Here we use a shortcut in the sample command; see \texttt{?sample} for details.) We then use the \texttt{subset} option in \texttt{lm()} to fit a linear regression using only the observations corresponding to the training set.
 
 ```{r}
-library("ISLR")
-names(Smarket)
-dim(Smarket)
-summary(Smarket)
-# pairs(Smarket)
+lm.fit=lm(mpg ~ horsepower, data=Auto, subset=train)
 ```
-The \texttt{cor()} function produces a matrix that contains all of the pairwise
-correlations among the predictors in a data set. The first command below
-gives an error message because the \texttt{Direction} variable is qualitative.
+We now use the \texttt{predict()} function to estimate the response for all 392 observations, and we use the \texttt{mean()} function to calculate the MSE of the 196 observations in the validation set. Note that the \texttt{-train} index below selects only the observations that are *not* in the training set.
 ```{r}
-# cor(Smarket)
-cor(Smarket[,-9])
+attach(Auto)
+mean((mpg-predict(lm.fit, Auto))[-train]^2)
 ```
-As one would expect, the correlations between the lag variables and today's returns are close to zero. In other words, there appears to be little correlation between today's returns and previous days' returns. The only substantial correlation is between \texttt{Year} and \texttt{Volume}. By plotting the data we see that \texttt{Volume} is increasing over time. In other words, the average number of shares traded daily increased from 2001 to 2005.
+Therefore, the estimated test MSE for the linear regression fit is 26.14. We can use the \texttt{poly()} function to estimate the test error for the quadratic and cubic regressions.
 ```{r}
-attach(Smarket)
-plot(Volume)
+lm.fit2 = lm(mpg ~ poly(horsepower,2), data=Auto, subset=train)
+mean((mpg-predict(lm.fit2,Auto))[-train]^2)
+lm.fit3=lm(mpg ~ poly(horsepower,3), data=Auto, subset=train)
+mean((mpg-predict(lm.fit3,Auto))[-train]^2)
 ```
-
-
-## Logistic Regression
-
-Next, we will fit a logistic regression model in order to predict \texttt{Direction} using \texttt{Lag1} through \texttt{Lag5} and \texttt{Volume}. The \texttt{glm()} function fits generalized linear models, a class of models that includes logistic regression. The syntax of the \texttt{glm()} function is similar to that of \texttt{lm()}, except that we must pass in the argument \texttt{family=binomial} in order to tell \texttt{R} to run a logistic regression rather than some other type of generalized linear model.
+These error rates are 19.82 and 19.78, respectively. If we choose a different training set instead, then we will obtain somewhat different errors on the validation set.
 ```{r}
-glm.fits <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,data=Smarket,family=binomial)
-contrasts(Direction)
-summary(glm.fits)
+set.seed(2)
+train=sample(392,196)
+lm.fit=lm(mpg~horsepower,subset=train)
+mean((mpg-predict(lm.fit,Auto))[-train]^2)
+lm.fit2=lm(mpg~poly(horsepower,2),data=Auto,subset=train)
+mean((mpg-predict(lm.fit2,Auto))[-train]^2)
+lm.fit3=lm(mpg~poly(horsepower,3),data=Auto,subset=train)
+mean((mpg-predict(lm.fit3,Auto))[-train]^2)
 ```
-The smallest p-value here is associated with \texttt{Lag1}. The negative coefficient
-for this predictor suggests that if the market had a positive return yesterday,
-then it is less likely to go up today (coding: \texttt{UP}$=1$, \texttt{Down}$=0$). However, at a value of 0.15, the p-value
-is still relatively large, and so there is no clear evidence of a real association
-between \texttt{Lag1} and \texttt{Direction}.
+Using this split of the observations into a training set and a validation set, we find that the validation set error rates for the models with linear, quadratic, and cubic terms are 23.30, 18.90, and 19.26, respectively. These results are consistent with our previous findings: a model that predicts \texttt{mpg} using a quadratic function of \texttt{horsepower} performs better than a model that involves only a linear function of \texttt{horsepower}, and there is little evidence in favor of a model that uses a cubic function of \texttt{horsepower}. By contrast, the former split would suggest a cubic function of \texttt{horsepower}. 
 
-We use the \texttt{coef()} function in order to access just the coefficients for this
-fitted model. We can also use the \texttt{summary()} function to access particular
-aspects of the fitted model, such as the p-values for the coefficients.
+
+## Leave-One-Out Cross-Validation
+
+The LOOCV estimate can be automatically computed for any generalized linear model using the \texttt{glm()} and \texttt{cv.glm()} functions. In the lab for Chapter 4, we used the \texttt{glm()} function to perform logistic regression by passing in the \texttt{family="binomial"} argument. But if we use \texttt{glm()} to fit a model without passing in the \texttt{family} argument, then it performs **linear regression**, just like the \texttt{lm()} function. So for instance,
 ```{r}
-coef(glm.fits)
-summary(glm.fits)$coef
-summary(glm.fits)$coef[,4]
+glm.fit=glm(mpg~horsepower,data=Auto)
+coef(glm.fit)
 ```
-
-The \texttt{predict()} function can be used to predict the probability that the
-market will go up, given values of the predictors. The \texttt{type="response"} 
-option tells \texttt{R} to output probabilities of the form $P(Y = 1|X)$, as opposed
-to other information such as the logit-value. If no data set is supplied to the
-\texttt{predict()} function, then the probabilities are computed for the training
-data that was used to fit the logistic regression model. Here we have printed
-only the first ten probabilities. We know that these values correspond to
-the probability of the market going up, rather than down, because the
-\texttt{contrasts()} function indicates that \texttt{R} has created a dummy variable with
-a 1 for \texttt{Up}.
+and
 ```{r}
-glm.probs <- predict(glm.fits,type="response")
-glm.probs[1:10]
-contrasts(Direction)
+lm.fit=lm(mpg~horsepower,data=Auto)
+coef(lm.fit)
 ```
-In order to make a prediction as to whether the market will go up or
-down on a particular day, we must convert these predicted probabilities
-into class labels, \texttt{Up} or \texttt{Down}. The following two commands create a vector
-of class predictions based on whether the predicted probability of a market
-increase is greater than or less than $0.5$.
+yield identical linear regression models. In this lab, we will perform linear regression using the \texttt{glm()} function rather than the \texttt{lm()} function because the former can be used together with \texttt{cv.glm()}.The \texttt{cv.glm()} function is part of the \texttt{boot} library.
 ```{r}
-glm.pred               <- rep("Down",1250)
-glm.pred[glm.probs>.5] <- "Up"
+library(boot)
+glm.fit=glm(mpg~horsepower,data=Auto)
+cv.err=cv.glm(Auto,glm.fit)
+cv.err$delta
 ```
-The first command creates a vector of 1,250 ``\texttt{Down}'' elements. The second line transforms to \texttt{Up} all of the elements for which the predicted probability of a market increase exceeds $0.5.$ Given these predictions, the \texttt{table()} function can be used to produce a \emph{confusion matrix} in order to determine how many observations were correctly or incorrectly classified.
+The \texttt{cv.glm()} function produces a list with several components. The two numbers in the \texttt{delta} vector contain the cross-validation results. In this case the numbers are identical (up to two decimal places). The first value is computed by the LOOCV statistic given in Equation (5.1) of our textbook. The second value returned in delta provides a bias adjustment which becomes more visible for $K<n$ fold cross validation. Below, we discuss a situation in which the two numbers differ. 
+
+
+Our cross-validation estimate for the test error is approximately 24.23.
+We can repeat this procedure for increasingly complex polynomial fits. To automate the process, we use the \texttt{for()} function to initiate a \textit{for loop} which iteratively fits polynomial regressions for polynomials of order $i=1$ to $i=5$, computes the associated cross-validation error, and stores it in the $i$th element of the vector \texttt{cv.error}. We begin by initializing the vector. This command will likely take some time (maybe even minutes) to run.
 ```{r}
-table(glm.pred, Direction) # confusion matrix
-(507+145)/1250 # fraction of correct classifications (option 1)
-mean(glm.pred==Direction) # fraction of correct classifications (option 2)
+cv.error=rep(x = 0, times = 5)
+for (i in 1:5){
+        glm.fit=glm(mpg~poly(horsepower,i),data=Auto)
+        cv.error[i]=cv.glm(Auto,glm.fit)$delta[1]
+}
+
+plot(cv.error, type="b")
 ```
-The diagonal elements of the confusion matrix indicate correct predictions, while the off-diagonals represent incorrect predictions. Hence our model correctly predicted that the market would go up on 507 days and that it would go down on 145 days, for a total of $507+145=652$ correct predictions. The \texttt{mean()} function can be used to compute the fraction of days for which the prediction was correct. In this case, logistic regression correctly predicted the movement of the market $52.2 %$ of the time. (In other words, $100-52.2=47.8 %$ is the training error rate.) 
 
-At first glance, it appears that the logistic regression model is working a little better than random guessing. However, this result is misleading because we trained and tested the model on the same set of 1,250 observations. As we have seen previously, the \emph{training error} rate is often overly optimistic--it tends to underestimate the test error rate. In order to better assess the accuracy of the logistic regression model in this setting, we can fit the model using part of the data, and then examine how well it predicts the held out data. This will yield a more realistic error rate, in the sense that in practice we will be interested in our model's performance not on the data that we used to fit the model, but rather on days in the future for which the market's movements are unknown.
+As in Figure 5.4 of our textbook, we see a sharp drop in the estimated test MSE between the linear and quadratic fits, but then no clear improvement from using higher-order polynomials.
 
-To implement this strategy, we will first create a vector corresponding
-to the observations from 2001 through 2004. We will then use this vector
-to create a held out data set of observations from 2005.
+
+## K-Fold Cross-Validation
+
+The \texttt{cv.glm()} function can also be used to implement $K$-fold CV. Below we use $K=5$, a common choice for $K$, on the \texttt{Auto} data set. We once again set a random seed and initialize a vector in which we will store the CV errors corresponding to the polynomial fits of orders one to ten.
 ```{r}
-train         <- (Year<2005)        # Boolean-variable for selecting data before 2005
-Smarket_2005  <- Smarket[!train,]   # !TRUE == FALSE
-dim(Smarket_2005)
-Direction_2005 <- Direction[!train]                  
+set.seed(17)
+cv.error.5         = rep(0,5)
+cv.error.5.bias_adj= rep(0,5)
+for (i in 1:5){
+        glm.fit=glm(mpg~poly(horsepower,i),data=Auto)
+        cv.error.5[i]=cv.glm(Auto,glm.fit,K=5)$delta[1]
+        cv.error.5.bias_adj[i]=cv.glm(Auto,glm.fit,K=5)$delta[2]
+}
+plot(cv.error.5, type="b", ylim = range(cv.error.5, cv.error.5.bias_adj))
+lines(y=cv.error.5.bias_adj, x=1:5, "b", lty=2)
 ```
-The object \texttt{train} is a vector of 1250 elements, corresponding to the observations in our data set. The elements of the vector that correspond to observations that occurred before 2005 are set to \texttt{TRUE}, whereas those that correspond to observations in 2005 are set to \texttt{FALSE}. The object \texttt{train} is a \emph{Boolean} vector, since its elements are \texttt{TRUE} and \texttt{FALSE}. Boolean vectors can be used to obtain a subset of the rows or columns of a matrix. For instance, the command \texttt{Smarket[train,]} would pick out a submatrix of the stock market data set, corresponding only to the dates before 2005, since those are the ones for which the elements of \texttt{train} are \texttt{TRUE}. The \texttt{!} symbol can be used to reverse all of the elements of a Boolean vector. That is, \texttt{!train} is a vector similar to \texttt{train}, except that the elements that are \texttt{TRUE}
-in \texttt{train} get swapped to \texttt{FALSE} in \texttt{!train}, and the elements that are \texttt{FALSE} in \texttt{train} get swapped to \texttt{TRUE} in \texttt{!train}. Therefore, \texttt{Smarket[!train,]} yields a submatrix of the stock market data containing only the observations for
-which \texttt{train} is \texttt{FALSE}--that is, the observations with dates in 2005. The
-output above indicates that there are 252 such observations. 
 
-We now fit a logistic regression model using only the subset of the observations that correspond to dates before 2005, using the \texttt{subset} argument. We then obtain predicted probabilities of the stock market going up for each of the days in our test set--that is, for the days in 2005.
+
+## The Bootstrap
+
+We illustrate the use of the bootstrap in the simple example of Section 5.2 of our textbook, as well as on an example involving estimating the accuracy of the linear regression model on the \texttt{Auto} data set.
+
+
+### Estimating the Accuracy of a Statistic of Interest
+
+One of the great advantages of the bootstrap approach is that it can be applied in almost all situations. No complicated mathematical calculations are required. Performing a bootstrap analysis in \texttt{R} entails only two steps. First, we must create a function that computes the statistic of interest. Second, we use the \texttt{boot()} function, which is part of the \texttt{boot} library, to perform the bootstrap by repeatedly sampling observations from the dataset with replacement. The \texttt{Portfolio} data set in the \texttt{ISLR} package is described in Section 5.2 of our textbook. To illustrate the use of the bootstrap on this data, we must first create a function, \texttt{alpha.fn()}, which takes as input the $(X,Y)$ data as well as a vector indicating which observations should be used to estimate $\alpha$. The function then outputs the estimate for $\alpha$ based on the selected observations.
 ```{r}
-glm.fits  <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,data=Smarket,family=binomial,subset=train)
-glm.probs <- predict(glm.fits,Smarket_2005,type="response")
+alpha.fn=function(data,index){
+        X=data$X[index]
+        Y=data$Y[index]
+        return((var(Y)-cov(X,Y))/(var(X)+var(Y)-2*cov(X,Y)))
+}
 ```
-Notice that we have trained and tested our model on two completely separate data sets: training was performed using only the dates before 2005, and testing was performed using only the dates in 2005. Finally, we compute the predictions for 2005 and compare them to the actual movements
-of the market over that time period.
+This function \textit{returns}, or outputs, an estimate for $\alpha$ based on applying Equation (5.7) from our textbook to the observations indexed by the argument \texttt{index}. For instance, the following command tells \texttt{R} to estimate $\alpha$ using all 100 observations.
 ```{r}
-glm.pred <- rep("Down",252) # a container for saving the prediction/classifications
-glm.pred[glm.probs>.5] <- "Up"
-table(glm.pred,Direction_2005)
-
-mean(glm.pred == Direction_2005) # fraction of correct predictions
-mean(glm.pred != Direction_2005) # fraction of false predictions
+# ? Portfolio # Portfolio data of the ISLR R-package
+alpha.fn(data = Portfolio, index = 1:100)
 ```
-The \texttt{!=} notation means \emph{not equal to}, and so the last command computes the test set error rate. The results are rather disappointing: the test error rate is 52%, which is worse than random guessing! Of course this result is not all that surprising, given that one would not generally expect to be able to use previous days’ returns to predict future market performance. (After all, if it were possible to do so, then the authors of this book would be out striking it rich rather than writing a statistics textbook.)
-
-
-We recall that the logistic regression model had very underwhelming p-values associated with all of the predictors, and that the smallest p-value, though not very small, corresponded to \texttt{Lag1}. Perhaps by removing the variables that appear not to be helpful in predicting \texttt{Direction}, we can
-obtain a more effective model. After all, using predictors that have no
-relationship with the response tends to cause a deterioration in the test
-error rate (since such predictors cause an increase in variance without a
-corresponding decrease in bias), and so removing such predictors may in
-turn yield an improvement. Below we have refit the logistic regression using
-just \texttt{Lag1} and \texttt{Lag2}, which seemed to have the highest predictive power in
-the original logistic regression model.
-```{r}
-glm.fits  <- glm(Direction~Lag1+Lag2,data=Smarket,family=binomial,subset=train)
-glm.probs <- predict(glm.fits,Smarket_2005,type="response")
-glm.pred               <- rep("Down",252)
-glm.pred[glm.probs>.5] <- "Up"
-table(glm.pred,Direction_2005)   # confusion matrix
-mean(glm.pred == Direction_2005) # fraction of correct predictions
-106/(106+76)                     # fraction of correct 'up'-predictions
-```
-Now the results appear to be a little better: 56% of the daily movements have been correctly predicted. It is worth noting that in this case, a much simpler strategy of predicting that the market will increase every day will also be correct 56%($=(35+106)/(35+106+35+76)$) of the time! Hence, in terms of overall error rate, the logistic regression method is no better than the naive approach. However, the confusion matrix shows that on days when logistic regression predicts an increase in the market, it has a 58% accuracy rate. This suggests a possible trading strategy of buying on days when the model predicts an increasing market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
-
-Suppose that we want to predict the returns associated with particular
-values of \texttt{Lag1} and \texttt{Lag2}. In particular, we want to predict \texttt{Direction} on a
-day when \texttt{Lag1} and \texttt{Lag2} equal \texttt{1.2} and \texttt{1.1}, respectively, and on a day when they equal $1.5$ and $-0.8$. We do this using the \texttt{predict()} function.
-```{r}
-predict(glm.fits, newdata=data.frame(Lag1=c(1.2,  1.5),
-                                     Lag2=c(1.1, -0.8)), 
-        type="response")
-```
-
-
-
-
-## Linear Discriminant Analysis
-
-Now we will perform LDA on the \texttt{Smarket} data. In \texttt{R}, we fit an LDA model using the \texttt{lda()} function, which is part of the \texttt{MASS} library. Notice that the syntax for the \texttt{lda()} function is identical to that of \texttt{lm()}, and to that of \texttt{glm()} except for the absence of the family option. We fit the model using only the observations before 2005.
-```{r}
-library("MASS")
-lda.fit <- lda(Direction~Lag1+Lag2,data=Smarket,subset=train)
-lda.fit
-plot(lda.fit)
-plot(lda.fit)
-```
-
-The LDA output indicates that $\hat{\pi}_1 = 0.492$ and $\hat{\pi}_2 = 0.508$; in other words, 49.2% of the training observations correspond to days during which the market went down. It also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2 days’ returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. The \emph{coefficients of linear discriminants} output provides the linear combination of \texttt{Lag1} and \texttt{Lag2} that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X =x$ in Equation (4.19) of our textbook. If $-0.642\times \texttt{Lag1} -0.514\times\texttt{Lag2}$ is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline. The \texttt{plot()} function produces plots of the linear discriminants, obtained by computing $-0.642\times\texttt{Lag1}-0.514\times\texttt{Lag2}$ for each of the training observations.
-
-
-The `predict()` function returns a list with three elements. The first element, \texttt{class}, contains LDA's predictions about the movement of the market. The second element, \texttt{posterior}, is a matrix whose $k$th column contains the posterior probability that the corresponding observation belongs to the $k$th class, computed from Equation (4.10) of our textbook. Finally, \texttt{x} contains the linear discriminants, described earlier.
-
-```{r}
-lda.pred=predict(lda.fit, Smarket_2005)
-names(lda.pred)
-
-## Plotting the density-estimates of the discriminants 
-## for group 'up' and 'down'
-plot(density(lda.pred$x[Smarket_2005$Direction=="Up"]),
-     main="", xlab="",
-     col="darkblue", lwd=2)
-lines(density(lda.pred$x[Smarket_2005$Direction=="Down"]),
-      col="darkred", lwd=2)
-```
-As we already observed in Section 4.5 of our textbook, the LDA and logistic regression predictions are almost identical.
-```{r}
-lda.class=lda.pred$class
-table(lda.class,Direction_2005)
-mean(lda.class==Direction_2005)
-```
-Applying a 50% threshold to the posterior probabilities allows us to recreate the predictions contained in \texttt{lda.pred\$class}.
-```{r}
-sum(lda.pred$posterior[,1]>=.5)
-length(lda.pred$class[lda.pred$class == "Down"])
-sum(lda.pred$posterior[,1]<.5)
-length(lda.pred$class[lda.pred$class == "Up"])
-```
-Notice that the posterior probability output by the model corresponds to the probability that the market will \emph{decrease}:
-```{r}
-lda.pred$posterior[1:20,1]
-lda.class[1:20]
-```
-If we wanted to use a posterior probability threshold other than 50% in order to make predictions, then we could easily do so. For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day--say, if the posterior probability is at least 90%.
-```{r}
-sum(lda.pred$posterior[,1]>.9)
-```
-No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was 52.02%.
-```{r}
-max(lda.pred$posterior[,1])
-which.max(lda.pred$posterior[,1])
-```
-
-
-
-## Quadratic Discriminant Analysis
-
-We will now fit a QDA model to the \texttt{Smarket} data. QDA is implemented in \texttt{R} using the \texttt{qda()} function, which is also part of the \texttt{MASS} library. The syntax is identical to that of \texttt{lda()}.
-```{r}
-qda.fit=qda(Direction~Lag1+Lag2,data=Smarket,subset=train)
-qda.fit
-```
-The output contains the group means. But it does not contain the coefficients of the linear discriminants, because the QDA classifier involves a quadratic, rather than a linear, function of the predictors. The \texttt{predict()} function works in exactly the same fashion as for LDA.
-```{r}
-qda.class=predict(qda.fit,Smarket_2005)$class
-table(qda.class,Direction_2005)
-mean(qda.class==Direction_2005)
-```
-Interestingly, the QDA predictions are accurate almost 60% of the time, even though the 2005 data was not used to fit the model. This level of accuracy is quite impressive for stock market data, which is known to be quite hard to model accurately. This suggests that the quadratic form assumed by QDA may capture the true relationship more accurately than the linear forms assumed by LDA and logistic regression. However, we recommend evaluating this method's performance on a larger test set before betting that this approach will consistently beat the market!
-
-
-## K-Nearest Neighbors
-
-We will now perform KNN using the \texttt{knn()} function, which is part of the \texttt{class} library. This function works rather differently from the other modelfitting functions that we have encountered thus far. Rather than a two-step approach in which we first fit the model and then we use the model to make predictions, \texttt{knn()} forms predictions using a single command. The function requires four inputs.
-
-* A matrix containing the predictors associated with the training data, labeled \texttt{train.X} below.
-* A matrix containing the predictors associated with the data for which we wish to make predictions, labeled \texttt{test.X} below.
-* A vector containing the class labels for the training observations, labeled \texttt{train.Direction} below.
-* A value for $K$, the number of nearest neighbors to be used by the classifier. \end{enumerate} We use the \texttt{cbind()} function, short for column bind, to bind the \texttt{Lag1} and \texttt{Lag2} variables together into two matrices, one for the training set and the other for the test set.
-```{r}
-library(class)
-train.X=cbind(Lag1,Lag2)[train,]
-test.X=cbind(Lag1,Lag2)[!train,]
-train.Direction=Direction[train]
-```
-Now the \texttt{knn()} function can be used to predict the market's movement for the dates in 2005. We set a random seed before we apply \texttt{knn()} because if several observations are tied as nearest neighbors, then `R` will randomly break the tie. Therefore, a seed must be set in order to ensure reproducibility of results.
+The next command uses the \texttt{sample()} function to randomly select 100 observations from the range 1 to 100, with replacement. This is equivalent to constructing a new bootstrap data set and recomputing $\hat\alpha$ based on the new data set.
 ```{r}
 set.seed(1)
-knn.pred=knn(train.X,test.X,train.Direction,k=1)
-table(knn.pred,Direction_2005)
-(83+43)/252
+alpha.fn(Portfolio,sample(100,100,replace=T))
 ```
-The results using $K=1$ are not very good, since only 50% of the observations are correctly predicted. Of course, it may be that $K=1$ results in an overly flexible fit to the data. Below, we repeat the analysis using $K=3$.
+We can implement a bootstrap analysis by performing this command many times, recording all of the corresponding estimates for $\alpha$, and computing the resulting standard deviation. However, the \texttt{boot()} function automates this approach. Below we produce $R=1,000$ bootstrap estimates for $\alpha$.
 ```{r}
-knn.pred=knn(train.X,test.X,train.Direction,k=3)
-table(knn.pred,Direction_2005)
-mean(knn.pred==Direction_2005)
-```
-The results have improved slightly. But increasing K further turns out to provide no further improvements. It appears that for this data, QDA provides the best results of the methods that we have examined so far.
-
-## An Application to Caravan Insurance Data
-
-Finally, we will apply the KNN approach to the \texttt{Caravan} data set, which is part of the \texttt{ISLR} library. This data set includes 85 predictors that measure demographic characteristics for 5,822 individuals. The response variable is \texttt{Purchase}, which indicates whether or not a given individual purchases a caravan insurance policy. In this data set, only 6% of people purchased caravan insurance. 
-```{r}
-dim(Caravan)
-attach(Caravan)
-summary(Purchase)
-348/5822
-```
-Because the KNN classifier predicts the class of a given test observation by identifying the observations that are nearest to it, the scale of the variables matters. Any variables that are on a large scale will have a much larger effect on the distance between the observations, and hence on the KNN classifier, than variables that are on a small scale. For instance, imagine a data set that contains two variables, \texttt{salary} and \texttt{age} (measured in dollars and years, respectively). As far as KNN is concerned, a difference of $1,000 in salary is enormous compared to a difference of 50 years in age. Consequently, \texttt{salary} will drive the KNN classification results, and \texttt{age} will have almost no effect. This is contrary to our intuition that a salary difference of $1,000 is quite small compared to an age difference of 50 years. Furthermore, the importance of scale to the KNN classifier leads to another issue: if we measured salary in Japanese yen, or if we measured \texttt{age} in minutes, then we’d get quite different classification results from what we get if these two variables are measured in dollars and years.
-
-A good way to handle this problem is to \emph{standardize} the data so that all  variables are given a mean of zero and a standard deviation of one. Then all variables will be on a comparable scale. The \texttt{scale()} function does just this. In standardizing the data, we exclude column 86, because that is the qualitative \texttt{Purchase} variable.
-```{r}
-standardized.X=scale(Caravan[,-86])
-var(Caravan[,1])
-var(Caravan[,2])
-var(standardized.X[,1])
-var(standardized.X[,2])
-```
-Now every column of \texttt{standardized.X} has a standard deviation of one and a mean of zero.
-
-We now split the observations into a test set, containing the first 1,000 observations, and a training set, containing the remaining observations. We fit a KNN model on the training data using $K=1$, and evaluate its performance on the test data.
-```{r}
-test=1:1000
-train.X=standardized.X[-test,]
-test.X=standardized.X[test,]
-train.Y=Purchase[-test]
-test.Y=Purchase[test]
+# ? boot
 set.seed(1)
-knn.pred=knn(train.X,test.X,train.Y,k=1)
-mean(test.Y!=knn.pred)
-mean(test.Y!="No")
+boot(Portfolio,alpha.fn,R=1000)
 ```
+The final output shows that using the original data, $\hat\alpha=0.5758$, and that the bootstrap estimate for $SE(\hat\alpha)$ is 0.09.
 
-The vector \texttt{test} is numeric, with values from 1 through 1,000. Typing \texttt{standardized.X[test,]} yields the submatrix of the data containing the observations whose indices range from 1 to 1, 000, whereas typing \texttt{standardized.X[-test,]} yields the submatrix containing the observations whose indices do not range from 1 to 1, 000. The KNN error rate on the 1,000 test observations is just under 12%. At first glance, this may appear to be fairly good. However, since only 6% of customers purchased insurance, we could get the error rate down to 6% by always predicting No regardless of the values of the predictors!
 
-Suppose that there is some non-trivial cost to trying to sell insurance to a given individual. For instance, perhaps a salesperson must visit each potential customer. If the company tries to sell insurance to a random selection of customers, then the success rate will be only 6%, which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the overall error rate is not of interest. Instead, the fraction of individuals that are correctly predicted to buy insurance is of interest.
+### Estimating the Accuracy of a Linear Regression Model
 
-It turns out that KNN with $K = 1$ does far better than random guessing among the customers that are predicted to buy insurance. Among 77 such customers, 9, or 11.7%, actually do purchase insurance. This is double the rate that one would obtain from random guessing.
+The bootstrap approach can be used to assess the variability of the coefficient estimates and predictions from a statistical learning method. Here we use the bootstrap approach in order to assess the variability of the estimates for $\beta_0$ and $\beta_1$, the intercept and slope terms for the linear regression model that uses \texttt{horsepower} to predict \texttt{mpg} in the \texttt{Auto} data set. We will compare the estimates obtained using the bootstrap to those obtained using the formulas for $SE(\hat\beta_0)$ and $SE(\hat\beta_1)$ described in Section 3.1.2 of our textbook. 
+We first create a simple function, \texttt{boot.fn()}, which takes in the \texttt{Auto} dataset as well as a set of indices for the observations, and returns the intercept and slope estimates for the linear regression model. We then apply this function to the full set of 392 observations in order to compute the estimates of $\beta_0$ and $\beta_1$ on the entire data set using the usual linear regression coefficient estimate formulas from Chapter 3 of our textbook. Note that we do not need the \texttt{\{}and \texttt{\}} at the beginning and end of the function because it is only one line long.
 ```{r}
-table(knn.pred,test.Y)
-9/(68+9)
+boot.fn=function(data,index)
+        return(coef(lm(mpg~horsepower,data=data,subset=index)))
+boot.fn(Auto,1:392)
 ```
-Using $K=3$, the success rate increases to 19%, and with $K=5$ the rate is 26.7%. This is over four times the rate that results from random guessing. It appears that KNN is finding some real patterns in a difficult data set!
+The \texttt{boot.fn()} function can also be used in order to create bootstrap estimates for the intercept and slope terms by randomly sampling from among the observations with replacement. Here we give two examples.
 ```{r}
-knn.pred=knn(train.X,test.X,train.Y,k=3)
-table(knn.pred,test.Y)
-5/26
-knn.pred=knn(train.X,test.X,train.Y,k=5)
-table(knn.pred,test.Y)
-4/15
+set.seed(1)
+boot.fn(Auto,sample(392,392,replace=T))
+boot.fn(Auto,sample(392,392,replace=T))
 ```
-As a comparison, we can also fit a logistic regression model to the data. If we use $0.5$ as the predicted probability cut-off for the classifier, then we have a problem: only seven of the test observations are predicted to purchase insurance. Even worse, we are wrong about all of these! However, we are not required to use a cut-off of $0.5$. If we instead predict a purchase any time the predicted probability of purchase exceeds $0.25$, we get much better results: we predict that 33 people will purchase insurance, and we are correct for about 33% of these people. This is over five times better than random guessing!
+Next, we use the \texttt{boot()} function to compute the standard errors of 1,000 bootstrap estimates for the intercept and slope terms.
 ```{r}
-glm.fits=glm(Purchase~.,data=Caravan,family=binomial,subset=-test)
-glm.probs=predict(glm.fits,Caravan[test,],type="response")
-glm.pred=rep("No",1000)
-glm.pred[glm.probs>.5]="Yes"
-table(glm.pred,test.Y)
-glm.pred=rep("No",1000)
-glm.pred[glm.probs>.25]="Yes"
-table(glm.pred,test.Y)
-11/(22+11)
+boot(Auto,boot.fn,1000)
 ```
+This indicates that the bootstrap estimate for $SE(\hat\beta_0)$ is 0.8, and that the bootstrap estimate for $SE(\hat\beta_1)$ is 0.007. As discussed in Section 3.1.2 of our textbook, standard formulas can be used to compute the standard errors for the regression coefficients in a linear model. These can be obtained using the \texttt{summary()} function.
+```{r}
+summary(lm(mpg~horsepower,data=Auto))$coef
+```
+The standard error estimates for $\hat\beta_0$ and $\hat\beta_1$ obtained using the formulas from Section 3.1.2 of our textbook are 0.7 for the intercept and 0.006 for the slope. Interestingly, these are somewhat different from the estimates obtained using the bootstrap. Does this indicate a problem with the bootstrap? In fact, it suggests the opposite. Recall that the standard formulas given in Equation (3.8) on page 66 of our textbook rely on certain assumptions. For example, they depend on the unknown parameter $\sigma^2$, the noise variance.  We then estimate $\sigma^2$ using the Residual Sum of Squares (RSS). Remember, however, that there is a non-linear relationship in the data; see Figure 3.8 on page 91 of our textbook.  Since we do not consider this in our model, the residuals from a linear fit will be inflated, and so will $\hat\sigma^2$
 
 
+Secondly, the standard formulas assume (somewhat unrealistically) that the predictors $X_i$ are fixed, and all the variability comes from the variation in the errors terms $\epsilon_i$. The bootstrap approach does not rely on any of these assumptions, and so it is likely giving a more accurate estimate of the standard errors of $\hat\beta_0$ and $\hat\beta_1$ than is the \texttt{summary()} function. 
+
+
+Below we compute the bootstrap standard error estimates and the standard linear regression estimates that result from fitting the quadratic model to the data. Since this model provides a good fit to the data (Figure 3.8 of our textbook), there is now a better correspondence between the bootstrap estimates and the standard estimates of $SE(\hat\beta_0)$, $SE(\hat\beta_1)$ and $SE(\hat\beta_2)$. 
+```{r}
+boot.fn=function(data,index)
+        coefficients(lm(mpg~horsepower+I(horsepower^2),data=data,subset=index))
+set.seed(1)
+boot(Auto,boot.fn,1000)
+summary(lm(mpg~horsepower+I(horsepower^2),data=Auto))$coef
+```

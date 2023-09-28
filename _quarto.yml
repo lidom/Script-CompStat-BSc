@@ -12,11 +12,11 @@ book:
     chapters: true
   chapters:
     - index.qmd
-    - Ch2_StatLearning.qmd     # Reads in Ch2_Solutions.qmd
-    - Ch3_LinearRegression.qmd # Reads in Ch3_Solutions.qmd
-    - Ch4_Classification.qmd   # Reads in Ch4_Solutions.qmd
-    - Ch5_ResamplingMethods.qmd # Reads in Ch5_Solutions.qmd
-    - Ch6_LinModSelectRegul.qmd # Reads in Ch6_Solutions.qmd
+    - Ch1_StatLearning.qmd      # Reads in Ch1_Solutions.qmd
+    - Ch2_LinearRegression.qmd  # Reads in Ch2_Solutions.qmd
+    - Ch3_Classification.qmd    # Reads in Ch3_Solutions.qmd
+    - Ch4_ResamplingMethods.qmd # Reads in Ch4_Solutions.qmd
+    - Ch5_LinModSelectRegul.qmd # Reads in Ch5_Solutions.qmd
 
 #bibliography: references.bib
 

@@ -2,6 +2,8 @@
 
 ## Lecture Notes
 
+Reading: Chapter 3 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+
 ## (Ch. 3.1) Simple Linear Regression {-}
 
 The linear regression model assumes a *linear relationship* between $Y$ and the predictor(s) $X$. 
@@ -1159,4 +1161,4 @@ Prepare the following exercises of Chapter 3 in our course textbook `ISLR`:
 - Exercise 8
 - Exercise 9
 
-{{< include Ch3_Solutions.qmd >}}
+<!-- {{< include Ch2_Solutions.qmd >}} -->

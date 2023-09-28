@@ -1,6 +1,8 @@
 # Statistical Learning
 
-Reading: Chapter 2 of our course textbook `ISLR` [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
+## Lecture Notes 
+
+Reading: Chapter 2 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
 
 ## What is Statistical Learning? 
@@ -1188,7 +1190,7 @@ Prepare the following exercises of Chapter 2 in our course textbook `ISLR`:
 - Exercise 9
 
 
-{{< include Ch2_Solutions.qmd >}}
+<!-- {{< include Ch1_Solutions.qmd >}} -->
 
 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ch2_solutions</title>
+<title>ch3_solutions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,16 +86,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="Ch2_Solutions_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/quarto.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/popper.min.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Ch2_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Ch2_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Ch2_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Ch2_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Ch2_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Ch3_Solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/quarto.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ch3_Solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ch3_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ch3_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ch3_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ch3_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ch3_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -109,435 +109,481 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="solutions" class="level3">
-<h3 class="anchored" data-anchor-id="solutions">Solutions</h3>
-<section id="exercise-7" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="exercise-7">Exercise 7</h4>
-<p>The table below provides a training data set containing six observations, three predictors, and one qualitative response variable. Suppose we wish to use this data set to make a prediction for <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span> using K-nearest neighbors.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Obs.</th>
-<th style="text-align: center;"><span class="math inline">\(X_1\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(X_2\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(X_3\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(Y\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">Red</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">Red</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">Red</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">Green</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">−1</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">Green</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">Red</td>
-</tr>
-</tbody>
-</table>
-<p><strong>7. a)</strong> Compute the Euclidean distance between each observation and the test point, <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span>.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outcome</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Y    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"red"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictor values</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>obs1 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>obs2 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>obs3 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>obs4 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>obs5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>obs6 <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Point</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>obs0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Vector Dist_vec to store the results</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Dist <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">6</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the Euclidean distances</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs1<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs2<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs3<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs4<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs5<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>)) </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Dist[<span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((obs6<span class="sc">-</span>obs0)<span class="sc">^</span><span class="dv">2</span>))  </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.000000 2.000000 3.162278 2.236068 1.414214 1.732051</code></pre>
-</div>
-</div>
-<p><strong>7. b)</strong> What is your prediction with <span class="math inline">\(K = 1\)</span>? Why?</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(Dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which.min</span>(Dist)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "green"</code></pre>
-</div>
-</div>
-<p>Closest <span class="math inline">\(K=1\)</span> neighbor is <code>obs5</code> and thus, our prediction is <code>Green</code> because <code>Green</code> is the <span class="math inline">\(Y\)</span> value associated to <code>obs5</code>.</p>
-<p><strong>7. c)</strong> What is your prediction with <span class="math inline">\(K = 3\)</span>? Why?</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(Dist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5 6 2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">order</span>(Dist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "green" "red"   "red"  </code></pre>
-</div>
-</div>
-<p>Closest <span class="math inline">\(K=3\)</span> neighbors are <code>obs5</code>, <code>obs6</code>, <code>obs2</code> and thus, our prediction is <code>Red</code> because it is the <span class="math inline">\(Y\)</span> value associated to <code>obs2</code> and <code>obs6</code> (majority rule).</p>
-<p><strong>7. d)</strong> If the Bayes decision boundary in this problem is highly nonlinear, then would we expect the best value for <span class="math inline">\(K\)</span> to be large or small? Why?</p>
-<p><strong>Answer:</strong></p>
-<!-- A large value of K means that the $Y$-values from a large neighborhood are contributing to the prediction at one chosen $X$-point. This requires that the neighborhood consists of relatively similar $Y$-values.  -->
-<p>In the case of a highly nonlinear&nbsp;decision boundary, the neighborhoods of similar <span class="math inline">\(Y\)</span>-values become generally small. Therefore, also <span class="math inline">\(K\)</span> must be chosen relatively small so that we can capture more of the non-linear decision boundary.&nbsp;</p>
+<section id="solutions" class="level2">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section id="exercise-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-1">Exercise 1</h3>
+<p><strong>1 a)</strong> Describe the null hypotheses to which the <span class="math inline">\(p\)</span>-values given in Table 3.4 correspond.</p>
+<p><img src="DATA/Table.PNG" class="img-fluid"></p>
+<p><strong>1 b)</strong> Explain what conclusions you can draw based on these <span class="math inline">\(p\)</span>-values. Your explanation should be phrased in terms of <code>sales</code>, <code>TV</code>, <code>radio</code>, and <code>newspaper</code>, rather than in terms of the coefficients of the linear model.</p>
+<p><strong>Answers:</strong></p>
+<p><strong>1 a)</strong> In Table 3.4, the null hypothesis for <code>TV</code> is that in the presence of <code>radio</code> ads and <code>newspaper</code> ads, <code>TV</code> ads have no effect on sales. Similarly, the null hypothesis for <code>radio</code> is that in the presence of <code>TV</code> ads and <code>newspaper</code> ads, <code>radio</code> ads have no effect on sales.</p>
+<p><strong>1 b)</strong> On the one hand, the low p-values of <code>TV</code> and <code>radio</code> allow us to reject the “no effect” null hypotheses for <code>TV</code> and <code>radio</code>. Hence, we believe that <code>TV</code> (<code>radio</code>) ads have an effect on <code>sales</code> in the presence of <code>radio</code> (<code>TV</code>) and <code>newspaper</code> ads.<br> On the other hand, the high p-value of <code>newspaper</code> does <em>not</em> allow us to reject the “no effect” null-hypothesis. This constitutes an <em>inconclusive result</em> and only says that the possible effects of <code>newspaper</code> ads are not large enough to stand out from the estimation errors.</p>
+<p><strong>Remember:</strong> An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.</p>
 </section>
-<section id="exercise-8" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8:</h4>
-<p>This exercise relates to the College data set, which can be found in the file <code>College.csv</code> (<a href="https://www.statlearning.com/s/College.csv">LINK-TO-DATA</a>). It contains a number of variables for <span class="math inline">\(777\)</span> different universities and colleges in the US. The variables are:</p>
+<section id="exercise-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<p>Carefully explain the main difference between the KNN classifier and KNN regression methods.</p>
+<p><strong>Answer:</strong></p>
+<p>KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for <span class="math inline">\(Y\)</span> (qualitative), given a certain predictor <span class="math inline">\(x_0\)</span>, where as the output for a KNN regression predicts the quantitative value for <span class="math inline">\(f(x_0)\)</span>, given a certain predictor <span class="math inline">\(x_0\)</span>.</p>
+</section>
+<section id="exercise-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-3">Exercise 3</h3>
+<p>Suppose we have a data set with five predictors:</p>
+<p><span class="math inline">\(X_1 =GPA\)</span></p>
+<p><span class="math inline">\(X_2 = IQ\)</span></p>
+<p><span class="math inline">\(X_3 = Gender\)</span> (<span class="math inline">\(1\)</span> for Female and <span class="math inline">\(0\)</span> for Male)</p>
+<p><span class="math inline">\(X_4 =\)</span> Interaction between <span class="math inline">\(GPA\)</span> and <span class="math inline">\(IQ\)</span></p>
+<p><span class="math inline">\(X_5 =\)</span> Interaction between <span class="math inline">\(GPA\)</span> and <span class="math inline">\(Gender\)</span></p>
+<p>The response variable (in thousands of dollars) is defined as:</p>
+<p><span class="math inline">\(Y =\)</span> starting salary after graduation</p>
+<p>Suppose we use least squares to fit the model, and get:</p>
+<p><span class="math inline">\(\hat{\beta}_0 = 50\)</span>, <span class="math inline">\(\hat{\beta}_1 = 20\)</span>, <span class="math inline">\(\hat{\beta}_2 = 0.07\)</span>, <span class="math inline">\(\hat{\beta}_3 = 35\)</span>, <span class="math inline">\(\hat{\beta}_4 = 0.01\)</span>, and <span class="math inline">\(\hat{\beta}_5 = −10\)</span>.</p>
+<p>Thus we have:</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;E[Y|X] = \\
+&amp; 50 + 20\,\overbrace{GPA}^{X_1} + 0.07\,\overbrace{IQ}^{X_2} + 35\,\overbrace{Gender}^{X_3} +
+0.01\,\overbrace{GPA\cdot IQ}^{X_4=X_1\cdot X_2} - 10\,\overbrace{GPA\cdot Gender}^{X_5=X_1\cdot X_3}
+\end{align*}
+\]</span></p>
+<p><strong>3 a)</strong> Which answer is correct, and why?</p>
+<ol type="i">
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, males earn more on average than females.</li>
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, females earn more on average than males.</li>
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, males earn more on average than females provided that the <span class="math inline">\(GPA\)</span> is high enough.</li>
+<li>For a fixed value of <span class="math inline">\(IQ\)</span> and <span class="math inline">\(GPA\)</span>, females earn more on average than males provided that the <span class="math inline">\(GPA\)</span> is high enough.</li>
+</ol>
+<p><strong>Answer:</strong> Observe that: <span class="math display">\[
+\begin{align*}
+\text{Male\; $(X_3 = 0)$:}\quad   &amp; 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
+\text{Female\; $(X_3 = 1)$:}\quad &amp; 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
+\end{align*}
+\]</span></p>
+<p>Thus 3 a) iii. is correct, since once the <span class="math inline">\(X_1=\)</span><code>GPA</code> is high enough (<span class="math inline">\(35-10\,X_1&lt;0 \Leftrightarrow X_1&gt;3.5\)</span>), males earn more on average.</p>
+<p><strong>3 b)</strong> Predict the salary of a female with <code>IQ</code> of 110 and a <code>GPA</code> of 4.0.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>GPA    <span class="ot">&lt;-</span>   <span class="dv">4</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>IQ     <span class="ot">&lt;-</span> <span class="dv">110</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Gender <span class="ot">&lt;-</span>   <span class="dv">1</span> <span class="co"># female = 1</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Prediction</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Y_hat  <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">20</span><span class="sc">*</span>GPA <span class="sc">+</span> <span class="fl">0.07</span><span class="sc">*</span>IQ <span class="sc">+</span> <span class="dv">35</span><span class="sc">*</span>Gender <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span>GPA<span class="sc">*</span>IQ <span class="sc">-</span> <span class="dv">10</span><span class="sc">*</span>GPA</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 137.1</code></pre>
+</div>
+</div>
+<p><strong>3 c)</strong> True or false: Since the coefficient for the <code>GPA</code><span class="math inline">\(\times\)</span><code>IQ</code> interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.</p>
+<p><strong>Answer:</strong></p>
+<p>False. We must examine the <span class="math inline">\(p\)</span>-value (or the <span class="math inline">\(t\)</span>-statistic) of the regression coefficient to determine if the interaction term is statistically significant or not.</p>
+</section>
+<section id="exercise-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8</h3>
+<p>This question involves the use of simple linear regression on the <code>Auto</code> data set.</p>
+<p><strong>8 a)</strong> Use the <code>lm()</code> function to perform a simple linear regression with <code>mpg</code> as the response and <code>horsepower</code> as the predictor. Use the <code>summary()</code> function to print the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform linear regression</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>lmObj_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data=</span>Auto)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to print the results</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmObj_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ horsepower, data = Auto)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.5710  -3.2592  -0.3435   2.7630  16.9240 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 39.935861   0.717499   55.66   &lt;2e-16 ***
+horsepower  -0.157845   0.006446  -24.49   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.906 on 390 degrees of freedom
+Multiple R-squared:  0.6059,    Adjusted R-squared:  0.6049 
+F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Comment on the output. For example:</p>
+<p><strong>i)</strong> Is there a relationship between the predictor and the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Yes, there is. The predictor horsepower has a statistically significant (<span class="math inline">\(p&lt;0.001\)</span>) linear relationship with the response.</p>
+<p><strong>ii)</strong> How strong is the relationship between the predictor and the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Statistical significance does not necessarily mean a practically strong or important relationship.</p>
+<p>To quantify the strength of the relationship between the predictor and the response, we can look at the following quantities:</p>
 <ul>
-<li><strong>Private</strong> : Public/private indicator</li>
-<li><strong>Apps</strong> : Number of applications received</li>
-<li><strong>Accept</strong> : Number of applicants accepted</li>
-<li><strong>Enroll</strong> : Number of new students enrolled</li>
-<li><strong>Top10perc</strong> : New students from top 10% of high school class</li>
-<li><strong>Top25perc</strong> : New students from top 25% of high school class</li>
-<li><strong>F.Undergrad</strong> : Number of full-time undergraduates</li>
-<li><strong>P.Undergrad</strong> : Number of part-time undergraduates</li>
-<li><strong>Outstate</strong> : Out-of-state tuition</li>
-<li><strong>Room.Board</strong> : Room and board costs</li>
-<li><strong>Books</strong> : Estimated book costs</li>
-<li><strong>Personal</strong> : Estimated personal spending</li>
-<li><strong>PhD</strong> : Percent of faculty with Ph.D.’s</li>
-<li><strong>Terminal</strong> : Percent of faculty with terminal degree</li>
-<li><strong>S.F.Ratio</strong> : Student/faculty ratio</li>
-<li><strong>perc.alumni</strong> : Percent of alumni who donate</li>
-<li><strong>Expend</strong> : Instructional expenditure per student</li>
-<li><strong>Grad.Rate</strong> : Graduation rate</li>
+<li>Residual Standard Error (RSE) (estimate of the standard deviation of <span class="math inline">\(\epsilon\)</span>) in comparison to the RSE of the trivial linear regression model with only an intercept.</li>
+<li>The <span class="math inline">\(R^2\)</span> Statistic (the proportion of variance explained by the model)</li>
+<li>The <span class="math inline">\(F\)</span>-Statistic</li>
 </ul>
-<p><strong>8. a)</strong> Use the <code>read.csv()</code> function to read the data into <code>R</code>. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.</p>
-<p><strong>Answer:</strong></p>
+<p>The Residual Standard Error (RSE) of the regression model with <code>intercept</code> and <code>horsepower</code> as predictors is given by:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/College.csv"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows and 5 collumns of the data</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(college[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## RSE of lm(mpg ~ horsepower):</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(lmObj_1)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(lmObj_1))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>RSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS<span class="sc">/</span>(n<span class="dv">-2</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                              X Private Apps Accept Enroll
-1  Abilene Christian University     Yes 1660   1232    721
-2            Adelphi University     Yes 2186   1924    512
-3                Adrian College     Yes 1428   1097    336
-4           Agnes Scott College     Yes  417    349    137
-5     Alaska Pacific University     Yes  193    146     55
-6             Albertson College     Yes  587    479    158
-7       Albertus Magnus College     Yes  353    340    103
-8                Albion College     Yes 1899   1720    489
-9              Albright College     Yes 1038    839    227
-10    Alderson-Broaddus College     Yes  582    498    172</code></pre>
+<pre><code>[1] 4.906</code></pre>
 </div>
-</div>
-<p><strong>8. b)</strong> Look at the data using the <code>fix()</code> function.</p>
-<p><strong>Answer:</strong></p>
-<p>You should notice that the first column is just the name of each university. We don’t really want <code>R</code> to treat this as data. However, it may be handy to have these names for later. Try the following commands:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store row names</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[,<span class="dv">1</span>]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pops up a window for data visualization</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Alteratively you can use: </span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># View(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>You should see that there is now a row.names column with the name of each university recorded. This means that <code>R</code> has given each row a name corresponding to the appropriate university. <code>R</code> will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminates first column (containing the row names)</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college[,<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fix(college)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now you should see that the first data column is <code>Private</code>. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.</p>
-<p><strong>8. c.&nbsp;i)</strong> Use the <code>summary()</code> function to produce a numerical summary of the variables in the data set.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alternatively: </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lmObj_1)<span class="sc">$</span>sigma, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Private               Apps           Accept          Enroll    
- Length:777         Min.   :   81   Min.   :   72   Min.   :  35  
- Class :character   1st Qu.:  776   1st Qu.:  604   1st Qu.: 242  
- Mode  :character   Median : 1558   Median : 1110   Median : 434  
-                    Mean   : 3002   Mean   : 2019   Mean   : 780  
-                    3rd Qu.: 3624   3rd Qu.: 2424   3rd Qu.: 902  
-                    Max.   :48094   Max.   :26330   Max.   :6392  
-   Top10perc    
- Min.   : 1.00  
- 1st Qu.:15.00  
- Median :23.00  
- Mean   :27.56  
- 3rd Qu.:35.00  
- Max.   :96.00  </code></pre>
+<pre><code>[1] 4.906</code></pre>
 </div>
 </div>
-<p><strong>8. c.&nbsp;ii)</strong> Use the <code>pairs()</code> function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix <code>A</code> using <code>A[,2:10]</code>.</p>
+<p>This RSE value is considerable smaller than the RSE of a model with only an intercept:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lmObj_onlyIntercept <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="sc">+</span><span class="dv">1</span>, <span class="at">data =</span> Auto)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>RSS_onlyIntercept   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(lmObj_onlyIntercept)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>n                   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">resid</span>(lmObj_onlyIntercept))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>RSE_onlyIntercept   <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(RSS_onlyIntercept<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(RSE_onlyIntercept, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.805</code></pre>
+</div>
+</div>
+<p>Thus, the larger model with <code>horsepower</code> included explains more of the variances in the response variable <code>mpg</code>. Including <code>horsepower</code> as a predictor reduces the RSE by <code>((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100</code> %; i.e.&nbsp;by 37.15%.</p>
+<p>The <span class="math inline">\(R^2\)</span> value:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lmObj_1)<span class="sc">$</span>r.squared, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.61</code></pre>
+</div>
+</div>
+<p>shows that <span class="math inline">\(60\%\)</span> of variability in <span class="math inline">\(Y\)</span> can be explained using an intercept and <code>horsepower</code> as predictors.</p>
+<p>The value of the <span class="math inline">\(F\)</span> statistic</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lmObj_1)<span class="sc">$</span>fstatistic, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> value  numdf  dendf 
+599.72   1.00 390.00 </code></pre>
+</div>
+</div>
+<p>is much larger than <span class="math inline">\(1\)</span> which means that the linear regression model with intercept and <code>horsepower</code> fits the data significantly better than the trivial regression model with only an intercept.</p>
+<p><strong>iii)</strong> Is the relationship between the predictor and the response positive or negative?</p>
 <p><strong>Answer:</strong></p>
+<p>The relationship is negative, as we can see from the parameter estimate for <code>horsepower</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="at">x =</span> college[,<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmObj_1)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>horsepower 
+-0.1578447 </code></pre>
 </div>
 </div>
-<p><strong>8. c.&nbsp;iii)</strong> Use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Private.</p>
+<p><strong>iv)</strong> What is the predicted <code>mpg</code> associated with a <code>horsepower</code> of <span class="math inline">\(98\)</span>? What are the associated <span class="math inline">\(95\%\)</span> confidence and prediction intervals?</p>
 <p><strong>Answer:</strong></p>
+<p>The predicted value plus confidence interval:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate<span class="sc">~</span>Private, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Private"</span>, </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower of 98</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># confidence interval </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object =</span> lmObj_1, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 24.46708 23.97308 24.96108</code></pre>
 </div>
 </div>
-<p><strong>8. c.&nbsp;iv)</strong> Create a new qualitative variable, called <code>Elite</code>, by binning the <code>Top10perc</code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p>
+<p>The predicted value plus prediction interval:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a vector called ELite with only "No" entrances amounting the number of college rows</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>,<span class="fu">nrow</span>(college))</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower of 98</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Replacing "No" with "Yes" if the proportion of students coming from the top 10% of their HS classes exceeds 50%.</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Elite[college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode a vector as a factor</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Elite)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Elite variable to our current dataset "college"</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(college, Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Use the <code>summary()</code> function to see how many elite universities there are. Now use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Elite.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college<span class="sc">$</span>Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction interval</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object =</span> lmObj_1, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> No Yes 
-699  78 </code></pre>
+<pre><code>       fit     lwr      upr
+1 24.46708 14.8094 34.12476</code></pre>
 </div>
 </div>
-<p>There are <span class="math inline">\(78\)</span> elite Universities. The boxplots of <code>Outstate</code> versus Elite-Status are generated as following:</p>
-<div class="cell" data-scrolled="false">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate <span class="sc">~</span> Elite, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, <span class="at">xlab=</span><span class="st">"Elite"</span>, <span class="at">ylab=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><strong>8. c.&nbsp;v)</strong> Use the <code>hist()</code> function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command <code>par(mfrow=c(2,2))</code> useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.</p>
+<p><strong>8 b)</strong> Plot the response and the predictor. Use the <code>abline()</code> function to display the least squares regression line.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Apps,     <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Apps"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Enroll"</span>)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Auto<span class="sc">$</span>horsepower, <span class="at">y =</span> Auto<span class="sc">$</span>mpg, <span class="at">ylab =</span> <span class="st">"MPG"</span>, <span class="at">xlab =</span> <span class="st">"Horsepower"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmObj_1, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">",x)"</span>))), </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>8 c)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmObj_1, <span class="at">col=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Looking at the smoothing line of the residuals (<span class="math inline">\(e_i=y_i−\hat{y}_i\)</span>) vs.&nbsp;the fitted values (<span class="math inline">\(\hat{y}_i\)</span>), there is a strong pattern in the residuals, indicating non-linearity. You can see evidence of this also in the scatter plot in the answer for question 8 b).</p>
+<p>There also appears to be non-constant variance in the error terms (heteroscedasticity), but this may be corrected to an extent when trying a quadratic fit. If not, transformations such as <span class="math inline">\(log(y)\)</span> or <span class="math inline">\(\sqrt{y}\)</span> can shrink larger responses by a greater amount and reduce this issue.</p>
+<p>There are some observations with large standardized residuals &amp; high leverage (hence, high Cook’s Distance) that we need to review.</p>
 </section>
-<section id="exercise-9" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="exercise-9">Exercise 9:</h4>
-<p>This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows of the data</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Auto[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   mpg cylinders displacement horsepower weight acceleration year origin
-1   18         8          307        130   3504         12.0   70      1
-2   15         8          350        165   3693         11.5   70      1
-3   18         8          318        150   3436         11.0   70      1
-4   16         8          304        150   3433         12.0   70      1
-5   17         8          302        140   3449         10.5   70      1
-6   15         8          429        198   4341         10.0   70      1
-7   14         8          454        220   4354          9.0   70      1
-8   14         8          440        215   4312          8.5   70      1
-9   14         8          455        225   4425         10.0   70      1
-10  15         8          390        190   3850          8.5   70      1
-                        name
-1  chevrolet chevelle malibu
-2          buick skylark 320
-3         plymouth satellite
-4              amc rebel sst
-5                ford torino
-6           ford galaxie 500
-7           chevrolet impala
-8          plymouth fury iii
-9           pontiac catalina
-10        amc ambassador dpl</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find more info on the variables here: https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>9. a)</strong> Which of the predictors are quantitative, and which are qualitative?</p>
+<section id="exercise-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-9">Exercise 9</h3>
+<p>This question involves the use of multiple linear regression on the <code>Auto</code> data set.</p>
+<p><strong>9 a)</strong> Produce a scatterplot matrix which includes all of the variables in the data set.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      mpg          cylinders      displacement     horsepower        weight    
- Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
- 1st Qu.:17.00   1st Qu.:4.000   1st Qu.:105.0   1st Qu.: 75.0   1st Qu.:2225  
- Median :22.75   Median :4.000   Median :151.0   Median : 93.5   Median :2804  
- Mean   :23.45   Mean   :5.472   Mean   :194.4   Mean   :104.5   Mean   :2978  
- 3rd Qu.:29.00   3rd Qu.:8.000   3rd Qu.:275.8   3rd Qu.:126.0   3rd Qu.:3615  
- Max.   :46.60   Max.   :8.000   Max.   :455.0   Max.   :230.0   Max.   :5140  
-  acceleration        year           origin          name          
- Min.   : 8.00   Min.   :70.00   Min.   :1.000   Length:392        
- 1st Qu.:13.78   1st Qu.:73.00   1st Qu.:1.000   Class :character  
- Median :15.50   Median :76.00   Median :1.000   Mode  :character  
- Mean   :15.54   Mean   :75.98   Mean   :1.577                     
- 3rd Qu.:17.02   3rd Qu.:79.00   3rd Qu.:2.000                     
- Max.   :24.80   Max.   :82.00   Max.   :3.000                     </code></pre>
-</div>
-</div>
-<ul>
-<li><strong>Quantitative predictors:</strong> <code>mpg</code>, <code>cylinders</code>, <code>displacement</code>, <code>horsepower</code>, <code>weight</code>, <code>acceleration</code>, <code>year</code></li>
-<li><strong>Qualitative predictors:</strong> <code>name</code>, <code>origin</code></li>
-</ul>
-<p><strong>9. b)</strong> What is the range of each quantitative predictor? You can answer this using the <code>range()</code> function.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the range function to the first seven columns of Auto</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print to console</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      mpg cylinders displacement horsepower weight acceleration year
-[1,]  9.0         3           68         46   1613          8.0   70
-[2,] 46.6         8          455        230   5140         24.8   82</code></pre>
-</div>
-</div>
-<p><strong>9. c)</strong> What is the mean and standard deviation of each quantitative predictor?</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute mean for the first seven variables and store it in a vector</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># round the values inside the vectors to 2 decimal cases</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(mean,round,<span class="dv">2</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviation and round it up </span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sd,round,<span class="dv">2</span>)</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print both vectors</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
-       23.45         5.47       194.41       104.47      2977.58        15.54 
-        year 
-       75.98 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
-        7.81         1.71       104.64        38.49       849.40         2.76 
-        year 
-        3.68 </code></pre>
-</div>
-</div>
-<p><strong>9.d)</strong> Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove observations and store them </span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>newAuto <span class="ot">=</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>),]</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-do exercises 9. b) and 9.c)</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, create an empty Matrix "Results" to store the results</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">7</span>, </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"SD"</span>, <span class="st">"Minimum"</span>, <span class="st">"Maximum"</span>), </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">colnames</span>(newAuto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))))</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the results</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)  <span class="co"># Standard Deviation</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">3</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], min)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">4</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], max)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round them</span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>Results[] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Results[],round,<span class="dv">2</span>)</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Results[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          mpg cylinders displacement horsepower  weight acceleration
-Mean    24.40      5.37       187.24     100.72 2935.97        15.73
-SD       7.87      1.65        99.68      35.71  811.30         2.69
-Minimum 11.00      3.00        68.00      46.00 1649.00         8.50
-Maximum 46.60      8.00       455.00     230.00 4997.00        24.80</code></pre>
-</div>
-</div>
-<p><strong>9. e)</strong> Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce scatterplot matrix</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>9 b)</strong> Compute the matrix of correlations between the variables using the function <code>cor()</code>. You will need to exclude the <code>name</code> variable, which is qualitative.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(<span class="fu">subset</span>(Auto, <span class="at">select =</span> <span class="sc">-</span>name)), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              mpg cylinders displacement horsepower weight acceleration year
+mpg           1.0      -0.8         -0.8       -0.8   -0.8          0.4  0.6
+cylinders    -0.8       1.0          1.0        0.8    0.9         -0.5 -0.3
+displacement -0.8       1.0          1.0        0.9    0.9         -0.5 -0.4
+horsepower   -0.8       0.8          0.9        1.0    0.9         -0.7 -0.4
+weight       -0.8       0.9          0.9        0.9    1.0         -0.4 -0.3
+acceleration  0.4      -0.5         -0.5       -0.7   -0.4          1.0  0.3
+year          0.6      -0.3         -0.4       -0.4   -0.3          0.3  1.0
+origin        0.6      -0.6         -0.6       -0.5   -0.6          0.2  0.2
+             origin
+mpg             0.6
+cylinders      -0.6
+displacement   -0.6
+horsepower     -0.5
+weight         -0.6
+acceleration    0.2
+year            0.2
+origin          1.0</code></pre>
+</div>
+</div>
+<p><strong>9 c)</strong> Use the <code>lm()</code> function to perform a multiple linear regression with <code>mpg</code> as the response and all other variables except <code>name</code> as the predictors. Use the <code>summary()</code> function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).</p>
+<p><strong>Answer:</strong></p>
+<div class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform multiplie linear regression</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ . - name, data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.5903 -2.1565 -0.1169  1.8690 13.0604 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -17.218435   4.644294  -3.707  0.00024 ***
+cylinders     -0.493376   0.323282  -1.526  0.12780    
+displacement   0.019896   0.007515   2.647  0.00844 ** 
+horsepower    -0.016951   0.013787  -1.230  0.21963    
+weight        -0.006474   0.000652  -9.929  &lt; 2e-16 ***
+acceleration   0.080576   0.098845   0.815  0.41548    
+year           0.750773   0.050973  14.729  &lt; 2e-16 ***
+origin         1.426141   0.278136   5.127 4.67e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.328 on 384 degrees of freedom
+Multiple R-squared:  0.8215,    Adjusted R-squared:  0.8182 
+F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>9 c i)</strong> Is there a relationship between the predictors and the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Yes, there is a relationship between the predictors and the response. By testing the null hypothesis of whether all (except intercept) the regression coefficients are zero (i.e.&nbsp;H<span class="math inline">\(_0\)</span>: <span class="math inline">\(\beta_1=\dots=\beta_7=0\)</span>), we can see that the <span class="math inline">\(F\)</span>-statistic is big and its <span class="math inline">\(p\)</span>-value is close to zero, indicating evidence against the null hypothesis.</p>
+<p><strong>9 c ii)</strong> Which predictors appear to have a statistically significant relationship to the response?</p>
+<p><strong>Answer:</strong></p>
+<p>Looking at the <span class="math inline">\(p\)</span>-values associated with each predictor’s <span class="math inline">\(t\)</span>-statistic, we see that <code>displacement</code>, <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationship, while <code>cylinders</code>, <code>horsepower</code>, and <code>acceleration</code> do not.</p>
+<p><strong>Caution:</strong> This consideration neglects issues due to multiple testing. When testing at the significance level <span class="math inline">\(\alpha=0.05\)</span>, then each single test has a type I error (false H<span class="math inline">\(_0\)</span> rejections) rate of up to <span class="math inline">\(5\%\)</span>. These type I error rates accumulate since we consider seven hypothesis tests simultaneously, and thus the probability of seeing one type I error among the seven tests is up to <span class="math inline">\(7\cdot 5\%=35\%\)</span>. So is quite likely to see one type I error.</p>
+<p><strong>Bonferroni correction for multiple testing:</strong> To determine if any of the seven predictors is statistically significant, the corresponding <span class="math inline">\(p\)</span>-value must be smaller than <span class="math inline">\(\alpha/7\)</span>. For instance, with <span class="math inline">\(\alpha/7=0.05/7\approx 0.007\)</span>, only <code>weight</code>, <code>year</code>, and <code>origin</code> have a statistically significant relationships to the response.</p>
+<p><strong>9 c iii)</strong> What does the coefficient for the <code>year</code> variable suggest?</p>
+<p><strong>Answer:</strong></p>
+<p>The regression coefficient for <code>year</code> suggests that, on average, one <code>year</code> later year-of-construction is associated with an increased <code>mpg</code> by <span class="math inline">\(0.75\)</span>, when holding every other predictor value constant.</p>
+<p><strong>9 d)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ul>
-<li>heavier weight is related with lower mpg and with higher horsepower;</li>
-<li>higher horsepower correlates with lower acceleration;</li>
-<li><code>mpg</code> (miles per gallon) mostly increases for newer model years meaning that cars become more efficient over time.</li>
+<li><p>The “Residuals vs Fitted” plot (1st plot) shows some systematic deviations of the residuals from <span class="math inline">\(0\)</span>. The reason is that we are imposing a straight “line” (better hyper plane) fit for the conditional mean function <span class="math inline">\(E[Y|X]=f(X)\)</span> which appears non-linear here. This results in a systematic underestimation of the true conditional mean function for large and small fitted values <span class="math inline">\(\hat{y}=\hat\beta_0+\hat\beta_1x_1+\dots+\hat\beta_px_p\)</span>.</p></li>
+<li><p>The “Normal Q-Q” plot (2nd plot) suggests non-normally distributed residuals–particularly the upper tail deviates from that of a normal distribution.</p></li>
+<li><p>The “Residuals vs Leverage” plot (3rd plot) shows that there are some potential outliers that we can see when: standardized residuals are below <span class="math inline">\(-2\)</span> or above <span class="math inline">\(+2\)</span>. Moreover, the plot shows also potentially problematic “high-leverage” points with leverage values heavily exceeding the rule-of-thumb threshold <span class="math inline">\((p+1)/n=8/392=0.02\)</span>. All points with simultaneously high-leverages and large absolute standardized residuals should be handled with care since these may distort the estimation.</p></li>
+<li><p>The “Scale-Location” plot (4th plot) shows is rather inconclusive about heteroscedasticity. However the “Residuals vs Fitted” plot (1st plot)shows some clear sign of heteroscedastic residuals.</p></li>
 </ul>
-<p><strong>9. f)</strong> Suppose that we wish to predict gas mileage (<code>mpg</code>) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting <code>mpg</code>? Justify your answer.</p>
+<p><strong>9 e)</strong> Use the <code>*</code> and <code>:</code> symbols to fit linear regression models with interaction effects. Do any interactions appear to be statistically significant?</p>
 <p><strong>Answer:</strong></p>
-<p>Yes. On the one hand, as we can see from the plot above, all of the quantitative variables show some sort of relation (either linear or non-linear) with mpg and hence, they might be useful in predicting <code>mpg</code>. The origin qualitative variable might also be useful in predicting <code>mpg</code>, with cars originated from region 3 being associated with higher <code>mpg</code>. On the other hand, the name predictor has too little observations per name though, so using this as a predictor is likely to result in overfitting the data and will not generalize well.</p>
+<p>Violating the hierarchy principle:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ horsepower + cylinders + year + weight:displacement, 
+    data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.1046 -2.8861 -0.2415  2.3967 15.3221 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         -1.343e+01  5.043e+00  -2.663  0.00807 ** 
+horsepower          -3.914e-02  1.278e-02  -3.063  0.00234 ** 
+cylinders           -1.358e+00  3.233e-01  -4.201 3.31e-05 ***
+year                 6.661e-01  6.019e-02  11.067  &lt; 2e-16 ***
+weight:displacement -3.354e-06  1.352e-06  -2.480  0.01355 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.985 on 387 degrees of freedom
+Multiple R-squared:  0.7419,    Adjusted R-squared:  0.7393 
+F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Following the hierarchical principle:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ horsepower + cylinders + year + weight * displacement, 
+    data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.7530 -1.8228 -0.0602  1.5780 12.6133 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         -2.210e+00  3.819e+00  -0.579  0.56316    
+horsepower          -3.396e-02  9.560e-03  -3.552  0.00043 ***
+cylinders            2.072e-01  2.914e-01   0.711  0.47756    
+year                 7.858e-01  4.555e-02  17.250  &lt; 2e-16 ***
+weight              -1.084e-02  6.346e-04 -17.076  &lt; 2e-16 ***
+displacement        -7.947e-02  9.905e-03  -8.023 1.26e-14 ***
+weight:displacement  2.431e-05  2.141e-06  11.355  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.976 on 385 degrees of freedom
+Multiple R-squared:  0.8568,    Adjusted R-squared:  0.8546 
+F-statistic: 384.1 on 6 and 385 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Note that there is a difference between using <code>A:B</code> and <code>A*B</code> when running a regression. While the first includes only the interaction term between the variable <code>A</code> and <code>B</code>, the second one also includes the stand-alone variables <code>A</code> and <code>B</code>.</p>
+<p>Generally, you should follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the <span class="math inline">\(p\)</span>-values associated with their coefficients are not significant.</p>
+<p><strong>9 f)</strong></p>
+<p>Try a few different transformations of the variables, such as <span class="math inline">\(\log(X)\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, <span class="math inline">\(X^2\)</span>. Comment on your findings.</p>
+<p><strong>Answer:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span><span class="fu">log</span>(weight)<span class="sc">+</span><span class="fu">sqrt</span>(horsepower)<span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                acceleration<span class="sc">+</span><span class="fu">I</span>(acceleration<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ log(weight) + sqrt(horsepower) + acceleration + 
+    I(acceleration^2), data = Auto)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.2932  -2.5082  -0.2237   2.0237  15.7650 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       178.30303   10.80451  16.503  &lt; 2e-16 ***
+log(weight)       -14.74259    1.73994  -8.473 5.06e-16 ***
+sqrt(horsepower)   -1.85192    0.36005  -5.144 4.29e-07 ***
+acceleration       -2.19890    0.63903  -3.441 0.000643 ***
+I(acceleration^2)   0.06139    0.01857   3.305 0.001037 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.99 on 387 degrees of freedom
+Multiple R-squared:  0.7414,    Adjusted R-squared:  0.7387 
+F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This try suffers basically from the same issues as the model considered in 9 d)</p>
+<p>Let’s consider again the model with all predictors (except <code>name</code>), but with transforming the outcome variable <code>mpg</code> by a <span class="math inline">\(\log\)</span>-transformation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fit.lm3 <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(mpg)<span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(mpg) ~ . - name, data = Auto)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.40955 -0.06533  0.00079  0.06785  0.33925 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.751e+00  1.662e-01  10.533  &lt; 2e-16 ***
+cylinders    -2.795e-02  1.157e-02  -2.415  0.01619 *  
+displacement  6.362e-04  2.690e-04   2.365  0.01852 *  
+horsepower   -1.475e-03  4.935e-04  -2.989  0.00298 ** 
+weight       -2.551e-04  2.334e-05 -10.931  &lt; 2e-16 ***
+acceleration -1.348e-03  3.538e-03  -0.381  0.70339    
+year          2.958e-02  1.824e-03  16.211  &lt; 2e-16 ***
+origin        4.071e-02  9.955e-03   4.089 5.28e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1191 on 384 degrees of freedom
+Multiple R-squared:  0.8795,    Adjusted R-squared:  0.8773 
+F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This model specification is much better!</p>
+<ul>
+<li>No clear issues of systematic under/over estimations for given fitted values.</li>
+<li>No clear issues of heteroscedastic residuals.</li>
+<li>Normality assumption may be wrong, but this isn’t problematic since we have a large dataset, such that a central limit theorem will make the estimators asymptotically normal distributed.</li>
+<li>One large leverage point which, however, has a small residual.</li>
+</ul>
 </section>
 </section>
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ch5_solutions</title>
+<title>ch6_solutions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,16 +86,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="Ch5_Solutions_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Ch5_Solutions_files/libs/quarto-html/quarto.js"></script>
-<script src="Ch5_Solutions_files/libs/quarto-html/popper.min.js"></script>
-<script src="Ch5_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Ch5_Solutions_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Ch5_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Ch5_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Ch5_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Ch5_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Ch5_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Ch6_Solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ch6_Solutions_files/libs/quarto-html/quarto.js"></script>
+<script src="Ch6_Solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ch6_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ch6_Solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ch6_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ch6_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ch6_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ch6_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ch6_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -111,528 +111,577 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="solutions" class="level2">
 <h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
-<section id="exercise-3" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-3">Exercise 3</h3>
-<p>We now review k-fold cross-validation.</p>
-<p><strong>3 a)</strong> Explain how k-fold cross-validation is implemented.</p>
-<p><strong>Answer:</strong></p>
-<p>k-fold cross-validation is implemented by taking the set of <span class="math inline">\(n\)</span> observations and randomly splitting into <span class="math inline">\(K\)</span> non-overlapping groups of roughly equal group-size (approx. <span class="math inline">\(n/K\)</span>). To compute the <span class="math inline">\(k\)</span>-th <span class="math inline">\((k=1,2,\dots,K)\)</span> test MSE estimate, group <span class="math inline">\(k\)</span> is used as a validation set and the remainder as a training set. The test error is estimated by averaging the <span class="math inline">\(K\)</span> resulting test MSE estimates.</p>
-<p><strong>3 b)</strong> What are the advantages and disadvantages of <span class="math inline">\(k\)</span>-fold cross-validation relative to:</p>
+<section id="exercise-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<p>For parts (a) through (c), indicate which of i. through iv. is correct. Justify your answer.</p>
+<p><strong>2 a)</strong> The Lasso, relative to least squares, is:</p>
 <ol type="i">
-<li><p>the validation set approach?</p></li>
-<li><p>LOOCV?</p></li>
+<li><p>More flexible and hence will give improved prediction accuracy when its increase in bias is less than its decrease in variance.</p></li>
+<li><p>More flexible and hence will give improved prediction accuracy when its increase in variance is less than its decrease in bias.</p></li>
+<li><p>Less flexible and hence will give improved prediction accuracy when its increase in bias is less than its decrease in variance.</p></li>
+<li><p>Less flexible and hence will give improved prediction accuracy when its increase in variance is less than its decrease in bias.</p></li>
 </ol>
-<p><strong>Answer:</strong></p>
-<p>The <strong>validation set</strong> approach is conceptually simple and easily implemented as you are simply partitioning the existing training data into two sets. However, there are two drawbacks:</p>
-<ol type="1">
-<li><p>The estimate of the test MSE can be highly variable/instable; i.e.&nbsp;may strongly depend on which observations are included in the training and validation sets.</p></li>
-<li><p>The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size in comparison to the actual data size <span class="math inline">\(n\)</span>.</p></li>
-</ol>
-<p><strong>LOOCV</strong> is a special case of k-fold cross-validation with <span class="math inline">\(k = n\)</span>. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit <span class="math inline">\(n\)</span> times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size <span class="math inline">\((n-1\approx n).\)</span></p>
+<p><strong>Answer:</strong> Claim iii is correct. Relative to least squares, the Lasso is less flexible and hence it will give us better predictions when its increase in (squared) bias is less than its decrease in variance.</p>
+<p><strong>2 b)</strong> Repeat a) for ridge regression relative to least squares.</p>
+<p><strong>Answer:</strong> Claim iii is correct with the same justification as in a).</p>
+<p><strong>2 c)</strong> Repeat a) for non-linear methods relative to least squares.</p>
+<p><strong>Answer:</strong> Claim ii is correct. Relative to least squares, non-linear methods are typically more flexible and hence, these methods will give us better predictions when the increase in variance is less than the decrease in bias.</p>
 </section>
 <section id="exercise-4" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-4">Exercise 4</h3>
-<p>Suppose that we use some statistical learning method to make a prediction for the response <span class="math inline">\(Y\)</span> for a <em>particular</em> value of the predictor <span class="math inline">\(X\)</span>. Carefully describe how we might estimate the standard deviation of our prediction.</p>
-<p><strong>Answer:</strong></p>
-<!-- If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$  -->
-<p>We can estimate the standard deviation of our prediction by using the bootstrap approach.</p>
-<p>Let <span class="math inline">\(\hat{Y} = \hat{f}(X)\)</span> denote the prediction of <span class="math inline">\(Y\)</span> for the given <span class="math inline">\(X\)</span>. The bootstrap approach works by repeatedly (<span class="math inline">\(B\)</span> many times) sampling <span class="math inline">\(n\)</span> observations (with replacement) from the original data set, and to compute new prediction results for each re-sampled bootstrap datasets. This yields to <span class="math inline">\(B\)</span> many bootstrap predictions: <span class="math display">\[
-\hat{f}^*_1(X), \hat{f}^*_2(X), \dots, \hat{f}^*_B(X).
-\]</span></p>
-<p>Using these bootstrap predictions we can compute the standard deviation of our prediction by computing <span class="math display">\[
-\sqrt{\frac{1}{B}\sum^B_{b=1}\left(\hat{f}^*_b(X)-\left(\frac{1}{B}\sum_{r=1}^B\hat{f}^*_r(X)\right)\right)^2}.
-\]</span></p>
-</section>
-<section id="exercise-5" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-5">Exercise 5</h3>
-<p>In Chapter 4, we used logistic regression to predict the probability of <code>default</code> using <code>income</code> and <code>balance</code> on the <code>Default</code> dataset. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.</p>
-<p><strong>5 a)</strong> Fit a logistic regression model that uses <code>income</code> and <code>balance</code> to predict <code>default</code>.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Attaching the data set</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Default) </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate a GLM model where "family=binomial" selects a logistic regression</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(default <span class="sc">~</span> income <span class="sc">+</span> balance, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">data   =</span> Default, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> binomial)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to print the results</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = default ~ income + balance, family = binomial, 
-    data = Default)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.4725  -0.1444  -0.0574  -0.0211   3.7245  
-
-Coefficients:
-              Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -1.154e+01  4.348e-01 -26.545  &lt; 2e-16 ***
-income       2.081e-05  4.985e-06   4.174 2.99e-05 ***
-balance      5.647e-03  2.274e-04  24.836  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2920.6  on 9999  degrees of freedom
-Residual deviance: 1579.0  on 9997  degrees of freedom
-AIC: 1585
-
-Number of Fisher Scoring iterations: 8</code></pre>
-</div>
-</div>
-<p><strong>5 b)</strong> Using the validation set approach, estimate the test error of this model. In order to do this, you must perform the following steps:</p>
-<ol type="1">
-<li><p>Split the sample set into a training set and a validation set.</p></li>
-<li><p>Fit a multiple logistic regression model using only the training observations.</p></li>
-<li><p>Obtain a prediction of default status for each individual in the validation set by computing the posterior probability of default for that individual, and classifying the individual to the default category if the posterior probability is greater than <span class="math inline">\(0.5\)</span>.</p></li>
-<li><p>Compute the validation set error, which is the fraction of the observations in the validation set that are misclassified.</p></li>
+<p>Suppose we estimate the regression coefficients in a linear regression model by minimizing:</p>
+<p><span class="math display">\[\sum^n_{i=1} \left(y_i - \beta_0 - \sum^p_{j=1} \beta_j x_{ij}\right)^2 + \lambda \sum^p_{j=1} \beta_j^2\]</span></p>
+<p>for a particular value of <span class="math inline">\(\lambda\)</span>. For parts (a) through (e), indicate which of i. through v. is correct. Justify your answer.</p>
+<p><strong>4 a)</strong> As we increase <span class="math inline">\(\lambda\)</span> from 0, the training RSS will:</p>
+<ol type="i">
+<li><p>Increase initially, and then eventually start decreasing in an inverted U shape.</p></li>
+<li><p>Decrease initially, and then eventually start increasing in a U shape.</p></li>
+<li><p>Steadily increase.</p></li>
+<li><p>Steadily decrease.</p></li>
+<li><p>Remain constant.</p></li>
 </ol>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## We are going to do similar tasks several times in this exercise. </span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Therefore, it's convenient to build a function:</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fun5b <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sample(): takes a sample of the specified size from the elements of x using either with or without replacement.</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    n     <span class="ot">&lt;-</span> <span class="fu">dim</span>(Default)[<span class="dv">1</span>]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> n, <span class="at">size =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># logistic function fit (training dataset)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(default <span class="sc">~</span> income <span class="sc">+</span> balance, </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">data   =</span> Default, </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> binomial, </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">subset =</span> train)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># predictions (test dataset)</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    glm.pred  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="at">times =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    glm.probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm.fit, Default[<span class="sc">-</span>train, ], </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    glm.pred[glm.probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the test (prediction) error rate </span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">mean</span>(glm.pred <span class="sc">!=</span> Default[<span class="sc">-</span>train, ]<span class="sc">$</span>default))</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1110</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="do">## compute test prediction error using the </span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="do">## programmed validation set approach</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">fun5b</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0262</code></pre>
-</div>
-</div>
-<p><strong>Answer:</strong> There is a 2.62% test error rate from the validation set approach.</p>
-<p><strong>5 c)</strong> Repeat the process in (b) three times, using three different splits of the observations into a training set and a validation set. Comment on the results obtained.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fun5b</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.028</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fun5b</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0272</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fun5b</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.025</code></pre>
-</div>
-</div>
-<p><strong>Answer:</strong> The estimates of the test error rates are in the range of 2.5% and 2.8% and are varying with respect to the different training and validation set splittings.</p>
-<p><strong>5 d)</strong> Now consider a logistic regression model that predicts the probability of default using <code>income</code>, <code>balance</code>, and a dummy variable for <code>student</code>. Estimate the test error for this model using the validation set approach. Comment on whether or not including a dummy variable for <code>student</code> leads to a reduction in the test error rate.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># generate our training data</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>n     <span class="ot">&lt;-</span> <span class="fu">dim</span>(Default)[<span class="dv">1</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, <span class="fu">round</span>(n<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># run regression on the training data subset</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(default <span class="sc">~</span> income <span class="sc">+</span> balance <span class="sc">+</span> student, </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">data   =</span> Default, </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> binomial, </span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">subset =</span> train)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># test sample predictions</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="at">times =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># fill with our predictions</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>glm.probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm.fit, Default[<span class="sc">-</span>train, ], </span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>glm.pred[glm.probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># test (prediction) error rate </span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(glm.pred <span class="sc">!=</span> Default[<span class="sc">-</span>train, ]<span class="sc">$</span>default)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.026</code></pre>
-</div>
-</div>
-<p><strong>Answer:</strong></p>
-<p>The test error rate is 2.6%. Thus adding the <code>student</code> dummy variable to our specification doesn’t appear to reduce the test error rate.</p>
-</section>
-<section id="exercise-6" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-6">Exercise 6</h3>
-<p>We continue to consider the use of a logistic regression model to predict the probability of <code>default</code> using <code>income</code> and <code>balance</code> on the <code>Default</code> data set. In particular, we will now compute estimates for the standard errors of the <code>income</code> and <code>balance</code> logistic regression coefficients in two different ways: (1) using the bootstrap, and (2) using the standard formula for computing the standard errors in the <code>glm()</code> function. Do not forget to set a random seed before beginning your analysis.</p>
-<p><strong>6 a)</strong> Using the <code>summary()</code> and <code>glm()</code> functions, determine the estimated standard errors for the coefficients associated with <code>income</code> and <code>balance</code> in a multiple logistic regression model that uses both predictors.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same as in 5 a)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate a generalized linear regression model using glm(), </span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># where the third function argument ('family') allows to specify </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution---here, 'binomial' since our independent variable</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 'default' takes two values '0' and '1'</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(default <span class="sc">~</span> income <span class="sc">+</span> balance, </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">data   =</span> Default, </span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> binomial)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summary function to print a summary of the the results</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = default ~ income + balance, family = binomial, 
-    data = Default)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.4725  -0.1444  -0.0574  -0.0211   3.7245  
-
-Coefficients:
-              Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -1.154e+01  4.348e-01 -26.545  &lt; 2e-16 ***
-income       2.081e-05  4.985e-06   4.174 2.99e-05 ***
-balance      5.647e-03  2.274e-04  24.836  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2920.6  on 9999  degrees of freedom
-Residual deviance: 1579.0  on 9997  degrees of freedom
-AIC: 1585
-
-Number of Fisher Scoring iterations: 8</code></pre>
-</div>
-</div>
-<p>Using the standard formula for the standard errors in logistic regression:</p>
-<ul>
-<li>Estimated standard error of the parameter estimator <code>income</code>: <span class="math inline">\(4.985 \cdot 10^{-06}\)</span></li>
-<li>Estimated standard error of the parameter estimator <code>balance</code>: <span class="math inline">\(2.274\cdot 10^{-04}\)</span></li>
-</ul>
-<p><strong>6 b)</strong> Write a function, <code>boot_fn()</code>, that takes as input the <code>Default</code> data set as well as an <code>index</code> of the observations, and that outputs the coefficient estimates for <code>income</code> and <code>balance</code> in the multiple logistic regression model.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>boot_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(data, index){</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">coef</span>(<span class="fu">glm</span>(default <span class="sc">~</span> income <span class="sc">+</span> balance, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data   =</span> data, </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> binomial, </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subset =</span> index)))</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>6 c)</strong> Use the <code>boot()</code> function together with your <code>boot_fn()</code> function to estimate the standard errors of the logistic regression coefficients for <code>income</code> and <code>balance</code>.</p>
-<p><strong>Answer:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("boot")</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the boot package</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"boot"</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># The boot package provides extensive facilities for bootstrapping </span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># and related resampling methods. </span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(<span class="at">data =</span> Default, <span class="at">statistic =</span> boot_fn, <span class="at">R =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-ORDINARY NONPARAMETRIC BOOTSTRAP
-
-
-Call:
-boot(data = Default, statistic = boot_fn, R = 100)
-
-
-Bootstrap Statistics :
-         original        bias     std. error
-t1* -1.154047e+01  8.556378e-03 4.122015e-01
-t2*  2.080898e-05 -3.993598e-07 4.186088e-06
-t3*  5.647103e-03 -4.116657e-06 2.226242e-04</code></pre>
-</div>
-</div>
-<p><strong>6 d)</strong> Comment on the estimated standard errors obtained using the <code>glm()</code> function and using your bootstrap function.</p>
-<p><strong>Answer:</strong></p>
-<ul>
-<li>Estimated standard error (bootstrap version) of the parameter estimator <code>income</code>: <span class="math inline">\(4.186 \cdot 10^{-06}\)</span>
-<ul>
-<li>The bootstrap approach estimates slightly smaller std errors for <code>income</code> than the classic standard formula.</li>
-</ul></li>
-<li>Estimated standard error (bootstrap version) of the parameter estimator <code>balance</code>: <span class="math inline">\(2.226\cdot 10^{-04}\)</span>
-<ul>
-<li>The bootstrap approach and the standard formula yield essentially equal results.</li>
-</ul></li>
-</ul>
+<p><strong>Answer:</strong> Claim iii. (Steadily increase) is correct. As we increase <span class="math inline">\(\lambda\)</span> from <span class="math inline">\(0\)</span>, all <span class="math inline">\(\beta\)</span>’s are shrunk from their unrestricted least square estimates to <span class="math inline">\(0\)</span>. Training error is minimized for the most flexible model (i.e.&nbsp;<span class="math inline">\(\lambda=0\)</span>), and steadily increases as <span class="math inline">\(\beta\)</span>’s are shrunk twards <span class="math inline">\(0\)</span>, since this hinders the model to “follow” the training data.</p>
+<p><strong>4 b)</strong> Repeat 4 a) for test RSS.</p>
+<p><strong>Answer:</strong> Claim ii. (Decrease initially, and then eventually start increasing in a U shape) is correct. When <span class="math inline">\(\lambda=0\)</span>, all <span class="math inline">\(\beta\)</span>’s have their least square estimate values. In this case, the model is most flexible which typically results in a small bias, but (too) large variance and hence a high test RSS value. As we increase <span class="math inline">\(\lambda\)</span>, the <span class="math inline">\(\beta\)</span> estimates are shrunk to zero which reduces variance. Thus, test RSS initially decreases; however, as <span class="math inline">\(\beta\)</span>’s approach infinity, the model becomes too simple (small variance, but (too) large bias) and test RSS increases.</p>
+<p><strong>4 c)</strong> Repeat a) for variance.</p>
+<p><strong>Answer:</strong> Claim iv. (Steadily decrease) is correct.</p>
+<p>When <span class="math inline">\(\lambda =0\)</span>, the <span class="math inline">\(\beta\)</span>’s have their least square estimate values. The actual estimates heavily depend on the training data and hence variance is high. As we increase <span class="math inline">\(\lambda\)</span>, the estimates of <span class="math inline">\(\beta\)</span> are shrunk towards zero. In the limiting case of <span class="math inline">\(\lambda\)</span> approaching infinity, all <span class="math inline">\(\beta\)</span> ’s reduce to zero and model predicts a constant and has minimal variance.</p>
+<p><strong>4 d)</strong> Repeat a) for (squared) bias.</p>
+<p><strong>Answer:</strong> iii. Steadily increase.</p>
+<p>When <span class="math inline">\(\lambda =0\)</span>, the <span class="math inline">\(\beta\)</span> ’s have their least-square estimate values and hence have the least bias. As <span class="math inline">\(\lambda\)</span> increases, <span class="math inline">\(\beta\)</span> ’s start reducing towards zero, the model fits less accurately to training data and hence bias increases. In the limiting case of <span class="math inline">\(\lambda\)</span> approaching infinity, the model predicts a constant and hence bias is maximum.</p>
+<p><strong>4 e)</strong> Repeat a) for the irreducible error.</p>
+<p><strong>Answer:</strong> Claim v. (Remain constant) is correct.</p>
+<p>By definition, irreducible error is model independent and hence irrespective of the choice of <span class="math inline">\(\lambda\)</span>, it remains constant.</p>
 </section>
 <section id="exercise-8" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8</h3>
-<p>We will now perform cross-validation on a simulated data set.</p>
-<p><strong>8 a)</strong> Generate a simulated data set as follows.</p>
+<p>In this exercise, we will generate simulated data, and will then use this data to perform best subset selection.</p>
+<p><strong>8 a)</strong> Use the <code>rnorm()</code> function to generate a predictor <span class="math inline">\(X\)</span> of length <span class="math inline">\(n = 100\)</span>, as well as a noise vector <span class="math inline">\(\epsilon\)</span> of length <span class="math inline">\(n = 100\)</span>.</p>
+<p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed for rnorm function</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rnorm draws pseudo-random variables from a </span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (standard) normal distribution</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed for rnorm function</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## rnorm simulates pseudo random variates from a  </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## (standard) normal distribution</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X    <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>eps  <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this data set, what is <span class="math inline">\(n\)</span> and what is <span class="math inline">\(p\)</span>? Write out the model used to generate the data in equation form.</p>
-<p><strong>Answer:</strong></p>
-<ul>
-<li><p>The sample size: <span class="math inline">\(n=100\)</span></p></li>
-<li><p>Number of predictors: <span class="math inline">\(p=2\)</span></p></li>
-<li><p>Model: <span class="math inline">\(Y_i= X_i -2 \, X_i^2 + \epsilon_i\)</span> with i.i.d. errors <span class="math inline">\(\epsilon_i \sim \mathcal{N}(0,1)\)</span>, <span class="math inline">\(i=1,...,n=100\)</span></p></li>
-</ul>
-<p><strong>8 b)</strong> Create a scatterplot of <span class="math inline">\(X\)</span> against <span class="math inline">\(Y\)</span>. Comment on what you find.</p>
+<p><strong>8 b)</strong> Generate a response vector <span class="math inline">\(Y\)</span> of length <span class="math inline">\(n = 100\)</span> according to the model:</p>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \epsilon,\]</span></p>
+<p>where <span class="math inline">\(\beta_0, \beta_1, \beta_2, \beta_3\)</span> are constants of your choice.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## beta parameters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span>  <span class="dv">2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span>  <span class="dv">2</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>beta3 <span class="ot">&lt;-</span>  <span class="dv">4</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Generate response vector Y</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> X <span class="sc">+</span> beta2 <span class="sc">*</span> X<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> beta3 <span class="sc">*</span> X<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>8 c)</strong> Use the <code>regsubsets()</code> function to perform best subset selection in order to choose the best model containing the predictors <span class="math inline">\(X, X^2, ..., X^{10}\)</span>. What is the best model obtained according to Cp, BIC, and adjusted <span class="math inline">\(R^2\)</span>? Show some plots to provide evidence for your answer, and report the coefficients of the best model obtained. Note you will need to use the <code>data.frame()</code> function to create a single data set containing both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Install package leaps if needed</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("leaps")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">warn=</span><span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Call the leaps package</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Use data.frame() function to create single dataset of X and Y</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>data.full <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> Y, <span class="at">x =</span> X)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Use the regsubsets() function to perform best subset selection</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>mod.full  <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data  =</span> data.full, </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nvmax =</span> <span class="dv">10</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Store results "printed" when using summary function</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>mod.summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod.full)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the model size which minimizes Cp:</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(mod.summary<span class="sc">$</span>cp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot the Cp-values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod.summary<span class="sc">$</span>cp, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cp"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.min</span>(mod.summary<span class="sc">$</span>cp), </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>       mod.summary<span class="sc">$</span>cp[<span class="dv">3</span>], </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch5_Solutions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>We can observe a quadratic relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X.\)</span> Moreover, <span class="math inline">\(X\)</span> ranges from about <span class="math inline">\(-2\)</span> to <span class="math inline">\(2,\)</span> while <span class="math inline">\(Y\)</span> ranges from about <span class="math inline">\(-12\)</span> to <span class="math inline">\(2.\)</span> The largest <span class="math inline">\(Y\)</span> values are observed for <span class="math inline">\(X\)</span> values around <span class="math inline">\(0.\)</span></p>
-<p><strong>8 c)</strong> Set a random seed, and then compute the LOOCV errors that result from fitting the following four models using least squares:</p>
-<ol type="i">
-<li><p><span class="math inline">\(Y = \beta_0 +\beta_1 X + \epsilon\)</span></p></li>
-<li><p><span class="math inline">\(Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \epsilon\)</span></p></li>
-<li><p><span class="math inline">\(Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \epsilon\)</span></p></li>
-<li><p><span class="math inline">\(Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \beta_4 X^4 + \epsilon\)</span></p></li>
-</ol>
-<p><strong>Answers:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call boot package</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame containing the simulated data for X and Y</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>Sim_Data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>8 c i)</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># i</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Caution:</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This performes linear regression (no 'family' argument specified)</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>lm.fit_i <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sim_Data)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cv.glm calculates the estimated K-fold cross-validation prediction</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># error for generalized linear models (with K=n by default).</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># '$delta' selects a vector of length two: </span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># The first component is the raw cross-validation estimate of the </span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction error. </span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># The second component is the adjusted cross-validation estimate. </span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># (The adjustment is designed to compensate for bias.)</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(<span class="at">data   =</span> Sim_Data, </span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">glmfit =</span> lm.fit_i, </span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">K      =</span> <span class="fu">nrow</span>(Sim_Data))<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 7.288162 7.284744</code></pre>
-</div>
-</div>
-<p><strong>8 c ii)</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ii </span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># see ?poly for infos on poly()</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>lm.fit_ii <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>, <span class="at">raw=</span><span class="cn">TRUE</span>), <span class="at">data =</span> Sim_Data)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit_ii, <span class="at">K =</span> <span class="fu">nrow</span>(Sim_Data))<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9374236 0.9371789</code></pre>
-</div>
-</div>
-<p><strong>8 c iii)</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># iii</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lm.fit_iii <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">3</span>, <span class="at">raw=</span><span class="cn">TRUE</span>), <span class="at">data =</span> Sim_Data)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit_iii, <span class="at">K =</span> <span class="fu">nrow</span>(Sim_Data))<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9566218 0.9562538</code></pre>
-</div>
-</div>
-<p><strong>8 c iv)</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># iv</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>lm.fit_iv <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">4</span>, <span class="at">raw=</span><span class="cn">TRUE</span>), <span class="at">data =</span> Sim_Data)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit_iv, <span class="at">K =</span> <span class="fu">nrow</span>(Sim_Data))<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9539049 0.9534453</code></pre>
-</div>
-</div>
-<!-- 
-**Conclusion:** The (correct) quadratic model has the smallest CV error.   
--->
-<p><strong>8. d)</strong> Repeat (c) using another random seed, and report your results. Are your results the same as what you got in (c)? Why?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># i.</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sim_Data)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit1)<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 7.288162 7.284744</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ii.</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>, <span class="at">raw=</span><span class="cn">TRUE</span>), <span class="at">data =</span> Sim_Data)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit2)<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9374236 0.9371789</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># iii.</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>lm.fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">3</span>, <span class="at">raw=</span><span class="cn">TRUE</span>), <span class="at">data =</span> Sim_Data)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit3)<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9566218 0.9562538</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># iv.</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>lm.fit4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">4</span>, <span class="at">raw=</span><span class="cn">TRUE</span>), <span class="at">data =</span> Sim_Data)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(Sim_Data, lm.fit4)<span class="sc">$</span>delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9539049 0.9534453</code></pre>
-</div>
-</div>
-<p><strong>Answer:</strong></p>
-<p>The results are exactly the same, because LOOCV will be the same since it evaluates n folds of a single observation.</p>
-<p><strong>8 e)</strong> Which of the models in (c) had the smallest LOOCV error? Is this what you expected? Explain your answer.</p>
-<p><strong>Answer:</strong></p>
-<p>The quadratic polynomial had the lowest LOOCV test error rate. This was expected as it matches the true form of <span class="math inline">\(Y\)</span>.</p>
-<p><strong>8 f)</strong> Comment on the statistical significance of the coefficient estimates that results from fitting each of the models in (c) using least squares. Do these results agree with the conclusions drawn based on the cross-validation results?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = y ~ x, data = Sim_Data)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--9.5161  -0.6800   0.6812   1.5491   3.8183  
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  -1.6254     0.2619  -6.205 1.31e-08 ***
-x             0.6925     0.2909   2.380   0.0192 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for gaussian family taken to be 6.760719)
-
-    Null deviance: 700.85  on 99  degrees of freedom
-Residual deviance: 662.55  on 98  degrees of freedom
-AIC: 478.88
-
-Number of Fisher Scoring iterations: 2</code></pre>
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># BIC</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(mod.summary<span class="sc">$</span>bic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = y ~ poly(x, 2, raw = TRUE), data = Sim_Data)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.9650  -0.6254  -0.1288   0.5803   2.2700  
-
-Coefficients:
-                        Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              0.05672    0.11766   0.482    0.631    
-poly(x, 2, raw = TRUE)1  1.01716    0.10798   9.420  2.4e-15 ***
-poly(x, 2, raw = TRUE)2 -2.11892    0.08477 -24.997  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for gaussian family taken to be 0.9178258)
-
-    Null deviance: 700.852  on 99  degrees of freedom
-Residual deviance:  89.029  on 97  degrees of freedom
-AIC: 280.17
-
-Number of Fisher Scoring iterations: 2</code></pre>
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod.summary<span class="sc">$</span>bic, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"BIC"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.min</span>(mod.summary<span class="sc">$</span>bic), </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       mod.summary<span class="sc">$</span>bic[<span class="dv">3</span>], </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjr2</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(mod.summary<span class="sc">$</span>adjr2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = y ~ poly(x, 3, raw = TRUE), data = Sim_Data)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.9765  -0.6302  -0.1227   0.5545   2.2843  
-
-Coefficients:
-                        Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              0.06151    0.11950   0.515    0.608    
-poly(x, 3, raw = TRUE)1  0.97528    0.18728   5.208 1.09e-06 ***
-poly(x, 3, raw = TRUE)2 -2.12379    0.08700 -24.411  &lt; 2e-16 ***
-poly(x, 3, raw = TRUE)3  0.01764    0.06429   0.274    0.784    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for gaussian family taken to be 0.9266599)
-
-    Null deviance: 700.852  on 99  degrees of freedom
-Residual deviance:  88.959  on 96  degrees of freedom
-AIC: 282.09
-
-Number of Fisher Scoring iterations: 2</code></pre>
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod.summary<span class="sc">$</span>adjr2, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Adjusted R2"</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.max</span>(mod.summary<span class="sc">$</span>adjr2), </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       mod.summary<span class="sc">$</span>adjr2[<span class="dv">3</span>], </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Answer:</strong> We find that all criteria (Cp, BIC and Adjusted R2) choose the 3 variables model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">round</span>(<span class="fu">coefficients</span>(mod.full, <span class="at">id =</span> <span class="dv">3</span>), <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             (Intercept) poly(x, 10, raw = TRUE)1 poly(x, 10, raw = TRUE)2 
+                    1.93                     1.88                    -2.04 
+poly(x, 10, raw = TRUE)3 
+                    4.02 </code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> As expected, all the coefficients are quite close to our chosen parameter values: <span class="math inline">\(\beta_0=\beta_1=2\)</span>, <span class="math inline">\(\beta_2=-2\)</span>, and <span class="math inline">\(\beta_3=4.\)</span></p>
+<p><strong>8 d)</strong> Repeat (c), using forward stepwise selection and also using backwards stepwise selection. How does your answer compare to the results in (c)?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Use the regsubsets() function to perform best subset selection </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Forward Selection</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mod.fwd <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data   =</span> data.full, </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">nvmax  =</span> <span class="dv">10</span>, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"forward"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Backward Selection</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>mod.bwd <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data   =</span> data.full, </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">nvmax  =</span> <span class="dv">10</span>, </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"backward"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Store results</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>fwd.summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod.fwd)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>bwd.summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod.bwd)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the model size for best:</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Cp </span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(fwd.summary<span class="sc">$</span>cp) <span class="co"># forward</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(bwd.summary<span class="sc">$</span>cp) <span class="co"># backward</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># BIC</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(fwd.summary<span class="sc">$</span>bic) <span class="co"># forward</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(bwd.summary<span class="sc">$</span>bic) <span class="co"># backward</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjr2</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(fwd.summary<span class="sc">$</span>adjr2) <span class="co"># forward</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(bwd.summary<span class="sc">$</span>adjr2) <span class="co"># backward</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the statistics</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#cp</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fwd.summary<span class="sc">$</span>cp, <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, <span class="at">ylab =</span> <span class="st">"Forward Cp"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.min</span>(fwd.summary<span class="sc">$</span>cp), <span class="fu">min</span>(fwd.summary<span class="sc">$</span>cp), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">7</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bwd.summary<span class="sc">$</span>cp, <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, <span class="at">ylab =</span> <span class="st">"Backward Cp"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.min</span>(bwd.summary<span class="sc">$</span>cp), <span class="fu">min</span>(bwd.summary<span class="sc">$</span>cp), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">7</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="do">## BIC</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fwd.summary<span class="sc">$</span>bic, <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, <span class="at">ylab =</span> <span class="st">"Forward BIC"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.min</span>(fwd.summary<span class="sc">$</span>bic), <span class="fu">min</span>(fwd.summary<span class="sc">$</span>bic), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">7</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bwd.summary<span class="sc">$</span>bic, <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, <span class="at">ylab =</span> <span class="st">"Backward BIC"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.min</span>(bwd.summary<span class="sc">$</span>bic), <span class="fu">min</span>(bwd.summary<span class="sc">$</span>bic), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">7</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co">#adjr2</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fwd.summary<span class="sc">$</span>adjr2, <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, <span class="at">ylab =</span> <span class="st">"Forward Adjusted R2"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.max</span>(fwd.summary<span class="sc">$</span>adjr2), <span class="fu">max</span>(fwd.summary<span class="sc">$</span>adjr2), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">7</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bwd.summary<span class="sc">$</span>adjr2, <span class="at">xlab =</span> <span class="st">"Subset Size"</span>, <span class="at">ylab =</span> <span class="st">"Backward Adjusted R2"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">which.max</span>(bwd.summary<span class="sc">$</span>adjr2), <span class="fu">max</span>(bwd.summary<span class="sc">$</span>adjr2), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Answer:</strong> While all backward stepwise selection approaches with Cp, BIC and adjusted <span class="math inline">\(R^2\)</span> pick the 5 variables model, the forward stepwise selection approaches with Cp, BIC and adjusted <span class="math inline">\(R^2\)</span> pick the 3 variables model. Here are the coefficients:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">round</span>(<span class="fu">coefficients</span>(mod.fwd, <span class="at">id =</span> <span class="dv">3</span>), <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = y ~ poly(x, 4, raw = TRUE), data = Sim_Data)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.0550  -0.6212  -0.1567   0.5952   2.2267  
-
-Coefficients:
-                         Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              0.156703   0.139462   1.124    0.264    
-poly(x, 4, raw = TRUE)1  1.030826   0.191337   5.387 5.17e-07 ***
-poly(x, 4, raw = TRUE)2 -2.409898   0.234855 -10.261  &lt; 2e-16 ***
-poly(x, 4, raw = TRUE)3 -0.009133   0.067229  -0.136    0.892    
-poly(x, 4, raw = TRUE)4  0.069785   0.053240   1.311    0.193    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for gaussian family taken to be 0.9197797)
-
-    Null deviance: 700.852  on 99  degrees of freedom
-Residual deviance:  87.379  on 95  degrees of freedom
-AIC: 282.3
-
-Number of Fisher Scoring iterations: 2</code></pre>
+<pre><code>             (Intercept) poly(x, 10, raw = TRUE)1 poly(x, 10, raw = TRUE)2 
+                    1.93                     1.88                    -2.04 
+poly(x, 10, raw = TRUE)3 
+                    4.02 </code></pre>
 </div>
 </div>
-<p><strong>Answer:</strong></p>
-<p>The <span class="math inline">\(p\)</span>-values only show statistical significance of the linear and the quadratic predictor, which agrees with the CV-results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coefficients</span>(mod.bwd, <span class="at">id =</span> <span class="dv">5</span>), <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             (Intercept) poly(x, 10, raw = TRUE)1 poly(x, 10, raw = TRUE)2 
+                    1.98                     3.14                    -2.08 
+poly(x, 10, raw = TRUE)5 poly(x, 10, raw = TRUE)7 poly(x, 10, raw = TRUE)9 
+                    3.42                    -1.05                     0.11 </code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> All the coefficient estimates from forward stepwise selection are quite close to our chosen <span class="math inline">\(\beta\)</span> ’s. However, for the backward stepwise with 5 variable picks <span class="math inline">\(X^5, X^7, X^9\)</span> and drops <span class="math inline">\(X^3\)</span>.</p>
+<p><strong>8 e)</strong> Now fit a lasso model to the simulated data, again using <span class="math inline">\(X, X^2, ..., X^{10}\)</span> as predictors. Use cross-validation to select the optimal value of <span class="math inline">\(\lambda\)</span>. Create plots of the cross-validation error as a function of <span class="math inline">\(\lambda\)</span>. Report the resulting coefficient estimates, and discuss the results obtained.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages("glmnet")</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the glmnet package</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loaded glmnet 4.1-4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Training Lasso on the data</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> data.full)[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Use cross-validation to select the optimal value of  lambda</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>mod.lasso <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(xmat, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Store and display lambda</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>best.lambda <span class="ot">&lt;-</span> mod.lasso<span class="sc">$</span>lambda.min</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>best.lambda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.05988275</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod.lasso)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Next fit the model on entire data using the best lambda</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>best.model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(xmat, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(best.model, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">s    =</span> best.lambda, </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"coefficients"</span>) <span class="co"># print the coefficient estimates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>11 x 1 sparse Matrix of class "dgCMatrix"
+                                 s1
+(Intercept)                1.881373
+poly(x, 10, raw = TRUE)1   1.854449
+poly(x, 10, raw = TRUE)2  -1.991838
+poly(x, 10, raw = TRUE)3   4.010379
+poly(x, 10, raw = TRUE)4   .       
+poly(x, 10, raw = TRUE)5   .       
+poly(x, 10, raw = TRUE)6   .       
+poly(x, 10, raw = TRUE)7   .       
+poly(x, 10, raw = TRUE)8   .       
+poly(x, 10, raw = TRUE)9   .       
+poly(x, 10, raw = TRUE)10  .       </code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> Lasso picks the correct specification.</p>
+<p><strong>8 f)</strong> Now generate a response vector Y according to the model:</p>
+<p><span class="math display">\[Y = \beta_0 + \beta_7 X^7 + \epsilon\]</span></p>
+<p>and perform best subset selection and the lasso. Discuss the results obtained.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create new beta7 value </span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>beta7     <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Model</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>Y         <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta7 <span class="sc">*</span> X<span class="sc">^</span><span class="dv">7</span> <span class="sc">+</span> eps</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict using regsubsets</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>data.full <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> Y, <span class="at">x =</span> X)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>mod.full  <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data  =</span> data.full, </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nvmax =</span> <span class="dv">10</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>mod.summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod.full)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the model size for best Cp, BIC and adjr2</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(mod.summary<span class="sc">$</span>cp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(mod.summary<span class="sc">$</span>bic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(mod.summary<span class="sc">$</span>adjr2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coefficients</span>(mod.full, <span class="at">id =</span> <span class="dv">1</span>), <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             (Intercept) poly(x, 10, raw = TRUE)7 
+                     1.9                      2.0 </code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> Best subset selection selects the correct 1 variable model—no matter which criterion (Cp, BIC, and adjusted <span class="math inline">\(R^2\)</span>) is used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">10</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> data.full)[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>mod.lasso   <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(xmat, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>best.lambda <span class="ot">&lt;-</span> mod.lasso<span class="sc">$</span>lambda.min</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>best.lambda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.717423</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>best.model  <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(xmat, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(best.model, </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">s    =</span> best.lambda, </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"coefficients"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>11 x 1 sparse Matrix of class "dgCMatrix"
+                                s1
+(Intercept)               1.783453
+poly(x, 10, raw = TRUE)1  .       
+poly(x, 10, raw = TRUE)2  .       
+poly(x, 10, raw = TRUE)3  .       
+poly(x, 10, raw = TRUE)4  .       
+poly(x, 10, raw = TRUE)5  .       
+poly(x, 10, raw = TRUE)6  .       
+poly(x, 10, raw = TRUE)7  1.941570
+poly(x, 10, raw = TRUE)8  .       
+poly(x, 10, raw = TRUE)9  .       
+poly(x, 10, raw = TRUE)10 .       </code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> Lasso also picks the correct 1-variable model.</p>
+</section>
+<section id="exercise-10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-10">Exercise 10</h3>
+<p>We have seen that as the number of features used in a model increases, the training error will necessarily decrease, but the test error may not. We will now explore this in a simulated data set.</p>
+<p><strong>10 a)</strong> Generate a data set with <span class="math inline">\(p = 20\)</span> features, <span class="math inline">\(n = 1000\)</span> observations, and an associated quantitative response vector generated according to the model:</p>
+<p><span class="math display">\[Y = X\beta + \epsilon,\]</span></p>
+<p>where <span class="math inline">\(\beta\)</span> has some elements that are exactly equal to zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed for rnorm function</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="do">## select number of features</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>p  <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="do">## select number of observations</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="do">## rnorm simulates realizations of </span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="do">## random variates having a specified </span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="do">## normal distribution (here standard normal)</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="do">## x is a 1000x20 matrix</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>x      <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="do">## B and eps are a 20x1 vector</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>beta   <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">3</span>, p)</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>eps    <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Set some elements of B equal to zero</span></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">1</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">2</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">3</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">4</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">5</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Generate the dependent variable Y realizations</span></span>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, beta) <span class="sc">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>10 b)</strong> Split your data set into a training set containing 100 observations and a test set containing 900 observations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="do">## sample function takes a sample of the specified size (100) </span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="do">## from the elements of 1, 2, ..., 1000, without replacement</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>train   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x       =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, </span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size    =</span> <span class="dv">100</span>, </span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="do">## use the previously defined train vector to construct </span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="do">## training and testing data</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>y.train <span class="ot">&lt;-</span> y[ train, ]</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>y.test  <span class="ot">&lt;-</span> y[<span class="sc">-</span>train, ]</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>x.train <span class="ot">&lt;-</span> x[ train, ]</span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>x.test  <span class="ot">&lt;-</span> x[<span class="sc">-</span>train, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>10 c)</strong> Perform best subset selection on the training set, and plot the training set MSE associated with the best model of each size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="do">## call leaps package</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="do">## nvmax - maximum size of subsets to examine</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>regfit.full <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(y <span class="sc">~</span> ., </span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x.train, </span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">y =</span> y.train), </span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>                          <span class="at">nvmax =</span> p)</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="do">## create storage vector</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>val.errors <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, p)</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="do">## store column names</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>x_cols     <span class="ot">&lt;-</span> <span class="fu">colnames</span>(x, <span class="at">do.NULL =</span> <span class="cn">FALSE</span>, <span class="at">prefix =</span> <span class="st">"x."</span>)</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="do">## loop over each subset p</span></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store coefficients</span></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>    coefi         <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>    <span class="do">## make prediction using training subset</span></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>    pred          <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x.train[, x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)]) <span class="sc">%*%</span> coefi</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store MSE of the training subset</span></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    val.errors[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>((y.train <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(val.errors, </span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Training MSE"</span>, </span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y   =</span> val.errors[<span class="fu">which.min</span>(val.errors)], </span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">x   =</span> <span class="fu">which.min</span>(val.errors), </span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>10 d)</strong> Plot the test set MSE associated with the best model of each size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create storage vector</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>val.errors <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, p)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over each subset p</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store coefficients</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    coefi         <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="do">## make prediction using testing subset</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    pred          <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x.test[, x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)]) <span class="sc">%*%</span> coefi</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store MSE of the testing subset</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    val.errors[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>((y.test <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(val.errors, </span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Test MSE"</span>, </span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y   =</span> val.errors[<span class="fu">which.min</span>(val.errors)], </span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x   =</span> <span class="fu">which.min</span>(val.errors), </span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>10 e)</strong> For which model size does the test set MSE take on its minimum value? Comment on your results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(val.errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15</code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> A 15 parameter model has the smallest test MSE.</p>
+<p><strong>10 f)</strong> How does the model at which the test set MSE is minimized compare to the true model used to generate the data? Comment on the coefficient values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(regfit.full, <span class="at">id =</span> <span class="fu">which.min</span>(val.errors)), <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         x.6         x.7         x.8         x.9        x.10 
+       0.92        3.04        2.88        3.05        3.05        3.13 
+       x.11        x.12        x.13        x.14        x.15        x.16 
+       3.09        3.12        3.03        2.95        3.04        2.99 
+       x.17        x.18        x.19        x.20 
+       3.00        3.15        2.94        2.79 </code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> Best subset regression correctly selected out all irrelevant predictors (1, 2, 3,4, 5).</p>
+<p><strong>10 g)</strong> Create a plot displaying <span class="math inline">\(\sqrt{\sum_{j=1}^p (\beta_j - \hat{\beta}_j^r)^2}\)</span> for a range of values of <span class="math inline">\(r\)</span>, where <span class="math inline">\(\hat{\beta}_j^r\)</span> is the <span class="math inline">\(j\)</span>th coefficient estimate for the best model containing <span class="math inline">\(r\)</span> coefficients. Comment on what you observe. How does this compare to the test MSE plot from (d)?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create storage vectors</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>val.errors <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, p)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>a          <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, p)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>b          <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, p)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="do">## loop over each subset p</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store coefficients</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    coefi <span class="ot">&lt;-</span> <span class="fu">coef</span>(regfit.full, <span class="at">id =</span> i)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>    <span class="do">## store number of coefficients excluding the intercept</span></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>    a[i] <span class="ot">&lt;-</span> <span class="fu">length</span>(coefi) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    <span class="do">## compute what is asked in the question </span></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>    b[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(</span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Compare estimation results vs true values for the </span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>        <span class="do">## selected predictors </span></span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>((beta[x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi)] <span class="sc">-</span> coefi[<span class="sc">-</span><span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Compare estimation results (=0) vs true values for the </span></span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>        <span class="do">## **not** selected predictors</span></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(beta[<span class="sc">!</span>(x_cols <span class="sc">%in%</span> <span class="fu">names</span>(coefi))] <span class="sc">-</span> <span class="dv">0</span> )<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> a, <span class="at">y =</span> b, </span>
+<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Number of coefficients"</span>, </span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Error between estimated and true coefficients"</span>, </span>
+<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"b"</span>)</span>
+<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">y   =</span> b[<span class="fu">which.min</span>(b)], </span>
+<span id="cb59-30"><a href="#cb59-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">x   =</span> <span class="fu">which.min</span>(b), </span>
+<span id="cb59-31"><a href="#cb59-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>)     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch6_Solutions_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15</code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong> Test error in the parameter estimates is minimized with a 15 parameter model.</p>
 </section>
 </section>
 
