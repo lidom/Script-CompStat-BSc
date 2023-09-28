@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Computer-Aided Statistical Analysis (B.Sc.) - 3&nbsp; Linear Regression</title>
+<title>Computer-Aided Statistical Analysis (B.Sc.) - 2&nbsp; Linear Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -162,32 +162,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Organization of the Course</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Organization of the Course</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch2_StatLearning.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning</span></a>
+  <a href="./Ch2_StatLearning.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch3_LinearRegression.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression</span></a>
+  <a href="./Ch3_LinearRegression.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch4_Classification.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Classification</span></a>
+  <a href="./Ch4_Classification.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch5_ResamplingMethods.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a>
+  <a href="./Ch5_ResamplingMethods.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch6_LinModSelectRegul.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Model Selection and Regularization</span></a>
+  <a href="./Ch6_LinModSelectRegul.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Model Selection and Regularization</span></a>
   </div>
 </li>
     </ul>
@@ -199,7 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lecture-notes" id="toc-lecture-notes" class="nav-link active" data-scroll-target="#lecture-notes"><span class="toc-section-number">3.1</span>  Lecture Notes</a></li>
+  <li><a href="#lecture-notes" id="toc-lecture-notes" class="nav-link active" data-scroll-target="#lecture-notes"><span class="toc-section-number">2.1</span>  Lecture Notes</a></li>
   <li><a href="#ch.-3.1-simple-linear-regression" id="toc-ch.-3.1-simple-linear-regression" class="nav-link" data-scroll-target="#ch.-3.1-simple-linear-regression">(Ch. 3.1) Simple Linear Regression</a>
   <ul class="collapse">
   <li><a href="#ch.-3.1.1-estimating-the-coefficients" id="toc-ch.-3.1.1-estimating-the-coefficients" class="nav-link" data-scroll-target="#ch.-3.1.1-estimating-the-coefficients">(Ch. 3.1.1) Estimating the Coefficients</a></li>
@@ -218,18 +218,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ch.-3.3.3-potential-problems" id="toc-ch.-3.3.3-potential-problems" class="nav-link" data-scroll-target="#ch.-3.3.3-potential-problems">(Ch. 3.3.3) Potential Problems</a></li>
   </ul></li>
   <li><a href="#ch.-3.5-comparison-of-linear-regression-with-k-nearest-neighbors" id="toc-ch.-3.5-comparison-of-linear-regression-with-k-nearest-neighbors" class="nav-link" data-scroll-target="#ch.-3.5-comparison-of-linear-regression-with-k-nearest-neighbors">(Ch. 3.5) Comparison of Linear Regression with K-Nearest Neighbors</a></li>
-  <li><a href="#r-lab-linear-regression" id="toc-r-lab-linear-regression" class="nav-link" data-scroll-target="#r-lab-linear-regression"><span class="toc-section-number">3.2</span>  <code>R</code>-Lab: Linear Regression</a>
+  <li><a href="#r-lab-linear-regression" id="toc-r-lab-linear-regression" class="nav-link" data-scroll-target="#r-lab-linear-regression"><span class="toc-section-number">2.2</span>  <code>R</code>-Lab: Linear Regression</a>
   <ul class="collapse">
-  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries"><span class="toc-section-number">3.2.1</span>  Libraries</a></li>
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="toc-section-number">3.2.2</span>  Simple Linear Regression</a></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="toc-section-number">3.2.3</span>  Multiple Linear Regression</a></li>
-  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="toc-section-number">3.2.4</span>  Interaction Terms</a></li>
-  <li><a href="#non-linear-transformations-of-the-predictors" id="toc-non-linear-transformations-of-the-predictors" class="nav-link" data-scroll-target="#non-linear-transformations-of-the-predictors"><span class="toc-section-number">3.2.5</span>  Non-linear Transformations of the Predictors</a></li>
-  <li><a href="#qualitative-predictors" id="toc-qualitative-predictors" class="nav-link" data-scroll-target="#qualitative-predictors"><span class="toc-section-number">3.2.6</span>  Qualitative Predictors</a></li>
-  <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="toc-section-number">3.2.7</span>  Writing Functions</a></li>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries"><span class="toc-section-number">2.2.1</span>  Libraries</a></li>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="toc-section-number">2.2.2</span>  Simple Linear Regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="toc-section-number">2.2.3</span>  Multiple Linear Regression</a></li>
+  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="toc-section-number">2.2.4</span>  Interaction Terms</a></li>
+  <li><a href="#non-linear-transformations-of-the-predictors" id="toc-non-linear-transformations-of-the-predictors" class="nav-link" data-scroll-target="#non-linear-transformations-of-the-predictors"><span class="toc-section-number">2.2.5</span>  Non-linear Transformations of the Predictors</a></li>
+  <li><a href="#qualitative-predictors" id="toc-qualitative-predictors" class="nav-link" data-scroll-target="#qualitative-predictors"><span class="toc-section-number">2.2.6</span>  Qualitative Predictors</a></li>
+  <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="toc-section-number">2.2.7</span>  Writing Functions</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">3.3</span>  Exercises</a></li>
-  <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions"><span class="toc-section-number">3.4</span>  Solutions</a>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">2.3</span>  Exercises</a></li>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions"><span class="toc-section-number">2.4</span>  Solutions</a>
   <ul class="collapse">
   <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-linearRegCh" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1>
+<h1 class="title"><span id="sec-linearRegCh" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1>
 </div>
 
 
@@ -259,8 +259,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="lecture-notes" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="lecture-notes"><span class="header-section-number">3.1</span> Lecture Notes</h2>
+<section id="lecture-notes" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lecture-notes"><span class="header-section-number">2.1</span> Lecture Notes</h2>
 </section>
 <section id="ch.-3.1-simple-linear-regression" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ch.-3.1-simple-linear-regression">(Ch. 3.1) Simple Linear Regression</h2>
@@ -830,10 +830,10 @@ f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p
 <p>When <span class="math inline">\(p=1\)</span>, <span class="math inline">\(50\)</span> data points can provide enough information to estimate <span class="math inline">\(f(X)\)</span> accurately using non-parametric methods since the <span class="math inline">\(K\)</span> nearest neighbors can actually be close to a given test observation <span class="math inline">\(x_0.\)</span> However, when spreading the <span class="math inline">\(50\)</span> data points over a large number of, for instance, <span class="math inline">\(p=20\)</span> dimensions, even the <span class="math inline">\(K\)</span> nearest neighbors tend to become far away from <span class="math inline">\(x_0.\)</span></p>
 </section>
 </section>
-<section id="r-lab-linear-regression" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="r-lab-linear-regression"><span class="header-section-number">3.2</span> <code>R</code>-Lab: Linear Regression</h2>
-<section id="libraries" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="libraries"><span class="header-section-number">3.2.1</span> Libraries</h3>
+<section id="r-lab-linear-regression" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="r-lab-linear-regression"><span class="header-section-number">2.2</span> <code>R</code>-Lab: Linear Regression</h2>
+<section id="libraries" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="libraries"><span class="header-section-number">2.2.1</span> Libraries</h3>
 <p>The <code>library()</code> function is used to load <em>libraries</em>, or groups of functions and data sets that are not included in the base <code>R</code> distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution, but more exotic functions require additional libraries. Here we load the <code>MASS</code> package, which is a very large collection of data sets and functions. We also load the <code>ISLR2</code> package, which includes the data sets associated with this book.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(MASS))</span>
@@ -841,8 +841,8 @@ f(X) \neq \beta_0+\beta_1X_1+\dots+\beta_pX_p
 </div>
 <p>If you receive an error message when loading any of these libraries, it likely indicates that the corresponding library has not yet been installed on your system. Some libraries, such as <code>MASS</code>, come with <code>R</code> and do not need to be separately installed on your computer. However, other packages, such as <code>ISLR2</code>, must be downloaded the first time they are used. This can be done directly from within <code>R</code>. For example, on a Windows system, select the <code>Install package</code> option under the <code>Packages</code> tab. After you select any mirror site, a list of available packages will appear. Simply select the package you wish to install and <code>R</code> will automatically download the package. Alternatively, this can be done at the <code>R</code> command line via <code>install.packages("ISLR2")</code>. This installation only needs to be done the first time you use a package. However, the <code>library()</code> function must be called within each <code>R</code> session.</p>
 </section>
-<section id="simple-linear-regression" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">3.2.2</span> Simple Linear Regression</h3>
+<section id="simple-linear-regression" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">2.2.2</span> Simple Linear Regression</h3>
 <p>The <code>ISLR2</code> library contains the <code>Boston</code> data set, which records <code>medv</code> (median house value) for <span class="math inline">\(506\)</span> census tracts in Boston. We will seek to predict <code>medv</code> using <span class="math inline">\(12\)</span> predictors such as <code>rmvar</code> (average number of rooms per house), <code>age</code> (average age of houses), and <code>lstat</code> (percent of households with low socioeconomic status).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1034,8 +1034,8 @@ lstat       -1.026148 -0.8739505</code></pre>
 </div>
 <p>The <code>sort()</code> function can be used to sort and print values of a vector like <code>hatvalues(lm.fit)</code>.</p>
 </section>
-<section id="multiple-linear-regression" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">3.2.3</span> Multiple Linear Regression</h3>
+<section id="multiple-linear-regression" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">2.2.3</span> Multiple Linear Regression</h3>
 <p>In order to fit a multiple linear regression model using least squares, we again use the <code>lm()</code> function. The syntax <code>lm(y ~ x1 + x2 + x3)</code> is used to fit a model with three predictors, <code>x1</code>, <code>x2</code>, and <code>x3</code>. The <code>summary()</code> function now outputs the regression coefficients for all the predictors.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> age, <span class="at">data =</span> Boston)</span>
@@ -1151,8 +1151,8 @@ F-statistic: 117.3 on 12 and 493 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>lm.fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm.fit, <span class="sc">~</span> . <span class="sc">-</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="interaction-terms" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="interaction-terms"><span class="header-section-number">3.2.4</span> Interaction Terms</h3>
+<section id="interaction-terms" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="interaction-terms"><span class="header-section-number">2.2.4</span> Interaction Terms</h3>
 <p>It is easy to include interaction terms in a linear model using the <code>lm()</code> function. The syntax <code>lstat:black</code> tells <code>R</code> to include an interaction term between <code>lstat</code> and <code>black</code>. The syntax <code>lstat * age</code> simultaneously includes <code>lstat</code>, <code>age</code>, and the interaction term <code>lstat</code><span class="math inline">\(\times\)</span><code>age</code> as predictors; it is a shorthand for <code>lstat + age + lstat:age</code>. %We can also pass in transformed versions of the predictors.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">*</span> age, <span class="at">data =</span> Boston))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1180,8 +1180,8 @@ F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="non-linear-transformations-of-the-predictors" class="level3" data-number="3.2.5">
-<h3 data-number="3.2.5" class="anchored" data-anchor-id="non-linear-transformations-of-the-predictors"><span class="header-section-number">3.2.5</span> Non-linear Transformations of the Predictors</h3>
+<section id="non-linear-transformations-of-the-predictors" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="non-linear-transformations-of-the-predictors"><span class="header-section-number">2.2.5</span> Non-linear Transformations of the Predictors</h3>
 <p>The <code>lm()</code> function can also accommodate non-linear transformations of the predictors. For instance, given a predictor <span class="math inline">\(X\)</span>, we can create a predictor <span class="math inline">\(X^2\)</span> using <code>I(X^2)</code>. The function <code>I()</code> is needed since the <code>^</code> has a special meaning in a formula object; wrapping as we do allows the standard usage in <code>R</code>, which is to raise <code>X</code> to the power <code>2</code>. We now perform a regression of <code>medv</code> onto <code>lstat</code> and <code>lstat^2</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>lm.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>))</span>
@@ -1289,8 +1289,8 @@ F-statistic: 389.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="qualitative-predictors" class="level3" data-number="3.2.6">
-<h3 data-number="3.2.6" class="anchored" data-anchor-id="qualitative-predictors"><span class="header-section-number">3.2.6</span> Qualitative Predictors</h3>
+<section id="qualitative-predictors" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="qualitative-predictors"><span class="header-section-number">2.2.6</span> Qualitative Predictors</h3>
 <p>We will now examine the <code>Carseats</code> data, which is part of the <code>ISLR2</code> library. We will attempt to predict <code>Sales</code> (child car seat sales) in <span class="math inline">\(400\)</span> locations based on a number of predictors.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Carseats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1363,8 +1363,8 @@ Medium    0      1</code></pre>
 <p>Use <code>?contrasts</code> to learn about other contrasts, and how to set them.</p>
 <p><code>R</code> has created a <code>ShelveLocGood</code> dummy variable that takes on a value of 1 if the shelving location is good, and 0 otherwise. It has also created a <code>ShelveLocMedium</code> dummy variable that equals 1 if the shelving location is medium, and 0 otherwise. A bad shelving location corresponds to a zero for each of the two dummy variables. The fact that the coefficient for <code>ShelveLocGood</code> in the regression output is positive indicates that a good shelving location is associated with high sales (relative to a bad location). And <code>ShelveLocMedium</code> has a smaller positive coefficient, indicating that a medium shelving location is associated with higher sales than a bad shelving location but lower sales than a good shelving location.</p>
 </section>
-<section id="writing-functions" class="level3" data-number="3.2.7">
-<h3 data-number="3.2.7" class="anchored" data-anchor-id="writing-functions"><span class="header-section-number">3.2.7</span> Writing Functions</h3>
+<section id="writing-functions" class="level3" data-number="2.2.7">
+<h3 data-number="2.2.7" class="anchored" data-anchor-id="writing-functions"><span class="header-section-number">2.2.7</span> Writing Functions</h3>
 <p>As we have seen, <code>R</code> comes with many useful functions, and still more functions are available by way of <code>R</code> libraries. However, we will often be interested in performing an operation for which no function is available. In this setting, we may want to write our own function. For instance, below we provide a simple function that reads in the <code>ISLR2</code> and <code>MASS</code> libraries, called <code>LoadLibraries()</code>. Before we have created the function, <code>R</code> returns an error if we try to call it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>LoadLibraries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1404,8 +1404,8 @@ Medium    0      1</code></pre>
 </div>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.3</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.3</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 3 in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 1</li>
@@ -1415,8 +1415,8 @@ Medium    0      1</code></pre>
 <li>Exercise 9</li>
 </ul>
 </section>
-<section id="solutions" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="solutions"><span class="header-section-number">3.4</span> Solutions</h2>
+<section id="solutions" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="solutions"><span class="header-section-number">2.4</span> Solutions</h2>
 <section id="exercise-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-1">Exercise 1</h3>
 <p><strong>1 a)</strong> Describe the null hypotheses to which the <span class="math inline">\(p\)</span>-values given in Table 3.4 correspond.</p>
@@ -1999,12 +1999,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./Ch2_StatLearning.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./Ch4_Classification.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Classification</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
