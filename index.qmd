@@ -1,19 +1,16 @@
-# Organization of the Course 
+# Organization of the Course {-}
 
 ### Timetable {-}
 
-Monday afternoon is computational statistics afternoon. In each of our sessions, we'll have both theory and practice sessions and a couple of breaks in between. 
+Monday afternoon is computational-statistics-afternoon. We'll have both theory and practice sessions and a couple of breaks in between. 
 
 ```{r, echo=FALSE}
 suppressPackageStartupMessages(library("kableExtra"))
 suppressPackageStartupMessages(library("tidyverse"))
 
-timetable <- tibble("Day"=c("Monday"),
-                    "Time (Theory 1)"=c("14:15-15:00"),
-                    "Time (Theory 2)"=c("15:15-16:00"),
-                    "Time (Theory 3)"=c("16:15-16:45"),
-                    "Time (Practice)"=c("17:00-17:45"),
-                    "Lecture Hall"   =c("Jur / Hörsaal K"))
+timetable <- tibble("Day"          = c("Monday (Theory 1)", "Monday (Theory 2)", "Monday (Theory 3)", "Monday (Practice)"),
+                    "Time"         = c("14:15-15:00", "15:15-16:00", "16:15-16:45", "17:00-17:45"),
+                    "Lecture Hall" = c("Jur / Hörsaal K"))
            
 timetable %>% kbl() %>%  kable_styling()
 ```
@@ -23,7 +20,7 @@ timetable %>% kbl() %>%  kable_styling()
 
 
 * Main Course Textbook (`ISLR`): 
-  * [An Introduction to Statistical Learning (2nd Edition)](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
+  * [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
   * The PDF-version and further resources (datasets, etc.) of the textbook can be downloaded **for free** from [https://www.statlearning.com/](https://www.statlearning.com/)
 
 * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes.

@@ -1,5 +1,275 @@
 # Statistical Learning
 
+Reading: Chapter 2 of our course textbook `ISLR` [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
+
+
+## What is Statistical Learning? 
+
+Suppose that we observe a quantitative response $Y$ and $p$
+different predictors, $X_1, X_2, \dots, X_p.$ 
+
+We assume that there is some relationship between $Y$ and 
+$$
+X = (X_1, X_2, \dots, X_p),
+$$ 
+which can be written in the very general form 
+$$
+Y = f(X) + \epsilon. 
+$$
+
+* $f$ is some fixed but unknown function of $X = (X_1, X_2, \dots, X_p).$ 
+* $\epsilon$ a random error term, which is independent of $X$ and has mean zero. 
+
+In this formulation, $f$ represents the *systematic* information that $X$ provides about $Y.$
+
+In essence, **statistical learning** refers to a set of approaches for estimating $f.$ In this chapter we outline some of the key theoretical concepts that arise in estimating $f,$ as well as tools for evaluating the estimates obtained.
+
+### Why Estimate $f$?
+
+There are **two main reasons** that we may wish to estimate $f$: 
+
+* prediction and 
+* inference. 
+
+We discuss each in turn.
+
+
+## Prediction {-}
+
+In many situations, a set of inputs $X$ are readily available, but the output $Y$ cannot be easily obtained. In this setting, since the error term averages to zero, we can predict $Y$ using
+$$
+\hat{Y} = \hat{f}(X),
+$$
+
+* $\hat{f}$  represents our estimate for $f$ 
+* $\hat{Y}$ represents the resulting prediction for $Y$ 
+
+In this setting, $\hat{f}$ is often treated as a **black box**, in the sense that one is not typically concerned with the exact form of $\hat{f},$ provided that it yields accurate predictions for $Y.$
+
+
+**Example:** As an example, suppose that $(X_1, X_2, \dots, X_p)$ are characteristics of a patient's blood sample that can be easily measured in a lab, and $Y$ is a variable encoding the patient's risk for a severe adverse reaction to a particular drug. It is natural to seek to predict $Y$ using $X,$ since we can then avoid giving the drug in question to patients who are at high risk of an adverse reaction--that is, patients for whom the estimate of $Y$ is high.
+
+
+### Accuracy of a Prediction {-}
+
+The accuracy of $\hat{Y}$ as a prediction for $Y$ depends on two quantities: 
+* the **reducible error** and 
+* the **irreducible error.** 
+
+In general, $\hat{f}$ will not be a perfect estimate for $f,$ and this inaccuracy will introduce some error. This error is **reducible**, because we can potentially improve the accuracy of $\hat{f}$ by using the most appropriate statistical learning technique to estimate $f.$ 
+
+However, even if it were possible to form a perfect estimate for
+$f,$ so that our estimated response took the form 
+$$
+\hat{Y} = f (X), 
+$$
+our prediction would still have some error in it! This is because $Y$ is also a function of $\epsilon$ which, by definition, cannot be predicted using $X.$ Therefore, variability associated with $\epsilon$ also affects the accuracy of our predictions. This is known as the **irreducible error**, because no matter how well we estimate $f,$ we cannot reduce the error introduced by $\epsilon.$
+
+
+
+Consider a *given* estimate $\hat{f}$ and a *given* set of predictors $X,$ which yields the prediction $\hat{Y} = \hat{f}(X).$ Assume for a moment that both $\hat{f}$ and $X$ are fixed, so that the only variability comes from $\epsilon.$ Then, it is easy to show that
+\begin{align*}
+&E\left[(Y - \hat{Y})^2\right]\\ 
+&=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\ 
+% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\ 
+&=\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\ 
+&=\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
+&=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}, 
+\end{align*}
+where $E\left[(Y - \hat{Y})^2\right]$ represents the expected value,of the squared difference between the predicted and actual value of $Y,$ and where $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
+
+
+The focus of this course is on techniques for estimating $f$ with the aim of **minimizing the reducible error**. 
+
+It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for $Y.$ This bound is almost always unknown in practice.
+
+## (Parameter) Inference {-}
+
+We are often interested in understanding the association between $Y$ and $X_1,\dots,X_p.$ In this situation we wish to estimate $f,$ but our goal is not necessarily to make predictions for $Y.$ Now $\hat{f}$ cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:
+
+* Which predictors are associated with the response? 
+* What is the relationship between the response and each predictor?
+* Can the relationship between $Y$ and each predictor be adequately summarized using a *linear equation*, or is the relationship more complicated? 
+
+
+In this course, we will see a number of examples that fall into the **prediction setting**, the **inference setting**, or a **combination** of the two.
+
+
+## How Do We Estimate $f$?
+
+
+We will always assume that we have observed a set of $n$ different
+data points
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+$$
+where 
+$$
+x_i=(x_{i1},x_{i2},\dots,x_{ip})^T
+$$
+for all $i=1,2,\dots,n.$
+
+These $n$ observations are called **training data** because we will use these training observations to train, or teach, our method how to estimate $f.$ 
+
+
+Our goal is to find a function $hat{f}$ such that 
+$$
+Y \approx \hat{f}(X) 
+$$
+for any observation $(X, Y)$. 
+
+Broadly speaking, most statistical learning methods for this task can be characterized as either **parametric** or **non-parametric**. 
+
+
+### Parametric Methods {-}
+
+
+Parametric methods involve a two-step model-based approach.
+
+1. First, we make an assumption about the functional form, or shape,
+of $f.$ For example, a very simple, but often used assumption is that $f$ is linear in $X$:
+$$
+f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+$${#eq-linmodeq}
+
+2. After a model has been selected, we need a procedure that uses the
+training data to fit or train the model. For example, in the case of the linear model @eq-linmodeq, we need to estimate the parameters $\beta_0,\beta_1,\dots,\beta_p$ such that 
+$$
+Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+$$
+
+Most common estimation technique: **(Ordinary) Least Squares**
+
+
+The parametric model-based approach reduces the problem of estimating $f$ down to one of estimating a set of parameters. 
+
+* Pro: Simple to estimate
+* Con: Possible model misspecification (Why shall we know that the shape/form of the true $f$?)
+
+We can try to address the problem of model misspecification by choosing flexible models that can fit many different possible functional forms for $f.$ 
+
+**But:** Fitting a more flexible model requires estimating a greater number of parameters. These more complex models can lead to a phenomenon known as **overfitting** the data, which essentially means they follow the errors, or noise, too closely. 
+
+These issues are discussed through-out this course.
+
+
+
+### Non-Parametric Methods {-}
+
+Non-parametric methods do not make explicit assumptions about the functional form of $f.$ Instead, they make qualitative assumptions on $f$ being a *smooth* function (i.e. continuously differentiable). 
+
+By avoiding the assumption of a particular, parametric functional form for $f,$ non-parametric methods have the potential to accurately fit a wider range of possible shapes for $f.$
+
+
+Major disadvantage: Non-parametric methods require a large number of observations to obtain an accurate estimate for $f;$ far more than is typically needed for a parametric approach if the parametric model assumption is correct. 
+
+
+### The Trade-Off Between Prediction Accuracy and Model Interpretability
+
+One might reasonably ask the following question: 
+
+>  Why would we ever choose to use a more restrictive method instead of a very flexible approach?
+
+If we are mainly interested in inference, then restrictive models are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between $Y$ and $X_1,\dots,X_p.$
+
+By contrast, very flexible approaches, such as purely non-parametric methods, can lead to such complicated estimates of $f$ that it is difficult to understand how any individual predictor $X_j$ is associated with the response $Y.$
+
+In some settings, we are only interested in prediction, and the interpretability of the predictive model is simply not of interest. For instance, if we seek to develop an algorithm to predict the price of a stock, our sole requirement for the algorithm is that it predict accurately--interpretability is not a concern. In such settings, we might expect that it will be best to use the most flexible model available. Right? 
+
+Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for **overfitting** in highly flexible methods. 
+
+
+### Supervised Versus Unsupervised Learning
+
+Most statistical learning problems fall into one of two categories: 
+
+* supervised or 
+* unsupervised. 
+
+In supervised learning problems, we observe for each predictor $x_i,$ $i=1,\dots,n,$ also a response $y_i.$
+
+In unsupervised learning problems, we only the predictor  $x_i,$ $i=1,\dots,n,$ but not the associated responses $y_i.$
+
+
+Supervised learning methods: 
+
+* regression analysis
+* logistic regression
+* lasso
+* ridge regression 
+
+Unsupervised learning methods: 
+
+* cluster analysis (clustering)
+* $K$-means 
+
+
+### Regression Versus Classification Problems
+
+
+Variables can be characterized as either *quantitative* or *qualitative* (also known as categorical).
+
+**Quantitative:** Quantitative variables take on numerical values. Examples include a person’s age, height, or income, the value of a house, and categorical the price of a stock. 
+
+**Qualitative/Categorial:** Examples of qualitative variables include a person's marital status (married or not), the brand of product purchased (brand A, B, or C), whether a person defaults on a debt (yes or no), or a cancer diagnosis (Acute Myelogenous Leukemia, Acute Lymphoblastic Leukemia, or No Leukemia).
+
+
+We tend to refer to problems with a *quantitative response* as **regression problems**, while those involving a *qualitative response* are often referred to as **classification problems**. 
+
+
+However, the distinction (regression vs. classification) is not always that crisp. Least squares linear regression is used with a quantitative response, whereas logistic regression is typically used with a qualitative (two-class, or binary). Thus, despite its name, logistic regression is a classification method. But since it estimates class probabilities, it can be thought of as a regression method as well. Some statistical methods, such as K-nearest neighbors can be used in the case of either quantitative or qualitative responses.
+
+
+## Assessing Model Accuracy
+
+**There is no free lunch in statistics:** no one method dominates all others over all possible data sets. On a particular data set, one specific method may work best, but some other method may work better on a similar but different data set. 
+
+
+Therefore, it is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
+
+### Measuring the Quality of Fit
+
+
+In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE). 
+
+The training (data) MSE is given by
+\begin{align*}
+\operatorname{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
+\end{align*}
+where 
+* $\hat{f}$ is computed from the training data
+* $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
+
+In general, however, we do not really care how well the method works on the training data. In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$
+
+
+We are interested in the accuracy of the predictions that we obtain when we apply our method to previously unseen **test data**. 
+
+**Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
+or next month's price. 
+
+**Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements. 
+
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest training MSE. 
+
+Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.$ And let 
+$$
+\{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
+$$
+denote the set of $m$ test data points. Then, the test MSE is given by,
+\begin{align*}
+\operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
+\end{align*}
+
+Note that if $\hat{f}\approx f,$ then 
+$$
+\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_i^2
+$$
+estimates the variance of the error term, i.e., equals the irreducible error component of the mean squared (prediction) error. 
+
+
+
 
 ## `R`-Lab: Introduction to `R` 
 

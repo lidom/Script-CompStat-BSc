@@ -1,7 +1,6 @@
 {
     "spellright.language": [
-        "German_de_DE",
-        "en-US-10-1."
+        "en_US"
     ],
     "spellright.documentTypes": [
         "markdown",
