@@ -8,8 +8,8 @@ Monday afternoon is computational-statistics-afternoon. We'll have both theory a
 suppressPackageStartupMessages(library("kableExtra"))
 suppressPackageStartupMessages(library("tidyverse"))
 
-timetable <- tibble("Day"          = c("Monday (Theory 1)", "Monday (Theory 2)", "Monday (Theory 3)", "Monday (Practice)"),
-                    "Time"         = c("14:15-15:00", "15:15-16:00", "16:15-16:45", "17:00-17:45"),
+timetable <- tibble("Mondays"      = c("Theory 1", "Q/A & Coffee Break", "Theory 2", "Q/A & Coffee Break", "Practice"),
+                    "Time"         = c("14:15-15:15", "15:15-15:30", "15:30-16:30", "16:30-17:00", "17:00-17:45"),
                     "Lecture Hall" = c("Jur / Hörsaal K"))
            
 timetable %>% kbl() %>%  kable_styling()
