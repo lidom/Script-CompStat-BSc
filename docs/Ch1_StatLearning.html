@@ -220,6 +220,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#assessing-model-accuracy" id="toc-assessing-model-accuracy" class="nav-link" data-scroll-target="#assessing-model-accuracy"><span class="toc-section-number">1.4</span>  Assessing Model Accuracy</a>
   <ul class="collapse">
   <li><a href="#measuring-the-quality-of-fit" id="toc-measuring-the-quality-of-fit" class="nav-link" data-scroll-target="#measuring-the-quality-of-fit"><span class="toc-section-number">1.4.1</span>  Measuring the Quality of Fit</a></li>
+  <li><a href="#the-bias-variance-trade-off" id="toc-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-bias-variance-trade-off"><span class="toc-section-number">1.4.2</span>  The Bias-Variance Trade-Off</a></li>
+  <li><a href="#the-classification-setting" id="toc-the-classification-setting" class="nav-link" data-scroll-target="#the-classification-setting"><span class="toc-section-number">1.4.3</span>  The Classification Setting</a></li>
+  <li><a href="#the-bayes-classifier" id="toc-the-bayes-classifier" class="nav-link" data-scroll-target="#the-bayes-classifier">The Bayes Classifier</a></li>
+  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</a></li>
   </ul></li>
   <li><a href="#r-lab-introduction-to-r" id="toc-r-lab-introduction-to-r" class="nav-link" data-scroll-target="#r-lab-introduction-to-r"><span class="toc-section-number">1.5</span>  <code>R</code>-Lab: Introduction to <code>R</code></a>
   <ul class="collapse">
@@ -412,22 +416,199 @@ Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
 <section id="measuring-the-quality-of-fit" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="measuring-the-quality-of-fit"><span class="header-section-number">1.4.1</span> Measuring the Quality of Fit</h3>
 <p>In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE).</p>
-<p>The training (data) MSE is given by <span class="math display">\[\begin{align*}
+<p>The global training (data) MSE is given by <span class="math display">\[\begin{align*}
 \operatorname{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
-\end{align*}\]</span> where * <span class="math inline">\(\hat{f}\)</span> is computed from the training data * <span class="math inline">\(\hat{f}(x_i)\)</span> is the prediction that <span class="math inline">\(\hat{f}\)</span> gives for the <span class="math inline">\(i\)</span>th training data observation.</p>
+\end{align*}\]</span> where</p>
+<ul>
+<li><span class="math inline">\(\hat{f}\)</span> is computed from the training data</li>
+<li><span class="math inline">\(\hat{f}(x_i)\)</span> is the prediction that <span class="math inline">\(\hat{f}\)</span> gives for the <span class="math inline">\(i\)</span>th training data observation.</li>
+</ul>
 <p>In general, however, we do not really care how well the method works on the training data. In fact, a very flexible (e.g.&nbsp;non-parametric) estimation method will tend to overfit the training data such that <span class="math inline">\(y_i\approx \hat{f}(x_i)\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span> resulting in a training MSE that is close to zero since <span class="math inline">\(\hat{f}(x_i)\)</span> fits also the errors <span class="math inline">\(\epsilon_i.\)</span></p>
 <p>We are interested in the accuracy of the predictions that we obtain when we apply our method to previously unseen <strong>test data</strong>.</p>
 <p><strong>Example:</strong> Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don’t really care how well our method predicts last week’s stock price. We instead care about how well it will predict tomorrow’s price or next month’s price.</p>
 <p><strong>Example:</strong> Suppose that we have clinical measurements (e.g.&nbsp;weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.</p>
-<p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest training MSE.</p>
+<p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest <em>training</em> MSE.</p>
 <p>Let <span class="math inline">\(\hat{f}\)</span> be computed from the training data <span class="math inline">\(\{(x_1,y_1),\dots,(x_n,y_n)\}.\)</span> And let <span class="math display">\[
+\{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
+\]</span> denote the set of <span class="math inline">\(m\)</span> test data points <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for a given predictor value <span class="math inline">\(x_0\)</span>.</p>
+<p>Then, the point-wise test MSE at <span class="math inline">\(x_0\)</span> is given by, <span class="math display">\[\begin{align*}
+\operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
+\end{align*}\]</span></p>
+<p>Typically, however, we want that a method has a <em>globally</em> low test MSE, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, not only at a certain given value <span class="math inline">\(x_0\)</span>. Let <span class="math display">\[
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
-\]</span> denote the set of <span class="math inline">\(m\)</span> test data points. Then, the test MSE is given by, <span class="math display">\[\begin{align*}
+\]</span> denote the set of <span class="math inline">\(m\)</span> test data points with predictor values <span class="math inline">\(x_{01},\dots,x_{0m}\)</span> in the range of <span class="math inline">\(X\)</span>. Then, the global test MSE is given by, <span class="math display">\[\begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}\]</span></p>
 <p>Note that if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
 \operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_i^2
-\]</span> estimates the variance of the error term, i.e., equals the irreducible error component of the mean squared (prediction) error.</p>
+\]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)\)</span>, i.e., equals the <strong>irreducible error component</strong> of the mean squared (prediction) error.</p>
+<p><br></p>
+<p><img src="images/Fig_2_9.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_10.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_11.png" class="img-fluid"></p>
+<p><br></p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Coding Challenge
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11 of our textbook. Discuss your results.</p>
+</div>
+</div>
+<p>In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available.</p>
+<p>As the three examples in Figures 2.9, 2.10, and 2.11 of our textbook illustrate, the flexibility level corresponding to the model with the minimal test MSE can vary considerably.</p>
+<p>Throughout this book, we discuss a variety of approaches that can be used in practice to estimate the minimum point of the test MSE.</p>
+<p>One important method is <strong>cross-validation</strong>, which is a method for estimating the test MSE using the training data.</p>
+</section>
+<section id="the-bias-variance-trade-off" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="the-bias-variance-trade-off"><span class="header-section-number">1.4.2</span> The Bias-Variance Trade-Off</h3>
+<p>The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.</p>
+<ul>
+<li>Let <span class="math inline">\(x_0\)</span> denote a given value of the predictor <span class="math inline">\(X\)</span></li>
+<li>Let <span class="math inline">\(\hat{f}\)</span> be estimated from the training data</li>
+<li>Let <span class="math display">\[
+Y_0=f(x_0)+\epsilon
+\]</span> be the response random variable defined for the given predictor value <span class="math inline">\(x_0.\)</span></li>
+<li>Let <span class="math inline">\(Y_{01},\dots,Y_{0m}\)</span> be all independently and identically distributed as <span class="math inline">\(Y_0;\)</span> shortly <span class="math display">\[
+Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
+\]</span><br>
+</li>
+<li>Realizations of <span class="math inline">\(Y_{01},\dots,Y_{0m}\)</span> generate the test data at the predictor value <span class="math inline">\(x_0.\)</span></li>
+</ul>
+<p>One can show that the expected test MSE can be decomposed as following: <span class="math display">\[\begin{align*}
+E\left[\operatorname{MSE}_{test}(x_0)\right]
+&amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
+&amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
+%&amp; =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
+%&amp; =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
+%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
+%&amp;\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
+%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon)\\[2ex]
+%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon)\\[2ex]
+%&amp; =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon)\\[2ex]
+&amp;\quad\text{(steps skipped since beyond scope)}\\[2ex]
+&amp; = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon\right)
+\end{align*}\]</span></p>
+<p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right],\)</span> refers to the average test MSE that we would obtain if we repeatedly estimated <span class="math inline">\(f\)</span> using training data set, and evaluated each at <span class="math inline">\(x_0.\)</span></p>
+<p>A computed value of <span class="math inline">\(\operatorname{MSE}_{test}(x_0)\)</span> is one estimate of <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span></p>
+<p>To minimize the expected test MSE, we need to select a statistical learning method that <em>simultaneously</em> achieves <strong>low variance</strong> and <strong>low bias</strong>.</p>
+<p>Note that <span class="math display">\[
+Var\left(\hat{f}(x_0)\right)\geq 0
+\]</span> and that <span class="math display">\[
+\left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2\geq 0.
+\]</span> Thus, the expected test MSE can never lie below of <span class="math inline">\(Var(\epsilon),\)</span> i.e. <span class="math display">\[
+\begin{align*}
+E\left[\operatorname{MSE}_{test}(x_0)\right]
+&amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
+\geq Var\left(\epsilon\right).
+\end{align*}
+\]</span></p>
+<p>The overall, i.e., global expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<section id="variance-of-hatf" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf">Variance of <span class="math inline">\(\hat{f}\)</span></h4>
+<p><strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> But ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
+</section>
+<section id="bias-of-hatf" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf">Bias of <span class="math inline">\(\hat{f}\)</span></h4>
+<p><strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias.</p>
+<p>As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
+</section>
+</section>
+<section id="the-classification-setting" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="the-classification-setting"><span class="header-section-number">1.4.3</span> The Classification Setting</h3>
+<p>Setup:</p>
+<ul>
+<li>Observed training data <span class="math display">\[
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+\]</span></li>
+<li>Qualitative response <span class="math inline">\(y_i\)</span> with categorical class labels (e.g.&nbsp;<span class="math inline">\(y_i\in\{\text{red},\text{blue}\}\)</span>)</li>
+<li>The <strong>classifier</strong> <span class="math inline">\(\hat{f}\)</span> is computed from the training data.</li>
+<li>Predicted training data class labels: <span class="math display">\[
+\hat{y}_i = \hat{f}(x_i)
+\]</span></li>
+</ul>
+<p>The alternative to the training MSE is here the <strong>training error rate</strong> <span class="math display">\[
+\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
+\]</span> which gives the relative frequency of false categorical predictions.</p>
+<p>Here, <span class="math display">\[
+I(\cdot)
+\]</span> is an indicator function with <span class="math inline">\(I(\text{true})=1\)</span> and <span class="math inline">\(I(\text{false})=0.\)</span></p>
+<p>Let <span class="math display">\[
+\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
+\]</span> denote <span class="math inline">\(m\)</span> test data observations.</p>
+<p>The alternative to the test MSE is here the <strong>test error rate</strong> <span class="math display">\[
+\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
+\]</span> where <span class="math inline">\(\hat{y}_{0i}\)</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation with predictor value <span class="math inline">\(x_{i0}.\)</span></p>
+<p>A good classifier is one for which the test error rate is smallest.</p>
+</section>
+<section id="the-bayes-classifier" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="the-bayes-classifier">The Bayes Classifier</h3>
+<p>It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by a very simple classifier that assigns each observation <span class="math inline">\(i\)</span> to the most likely class, given its predictor values <span class="math inline">\(x_{0}\)</span>.</p>
+<p>In other words, we should simply assign a test observation with predictor vector <span class="math inline">\(x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
+P(Y = j | X = x_{0})
+\]</span> is largest.</p>
+<p>This very simple classifier is called the <strong>Bayes classifier</strong>.</p>
+<p>In a two-class problem where there are only two possible response values, say class <span class="math inline">\(1\)</span> or class <span class="math inline">\(2,\)</span> the Bayes classifier corresponds to predicting class <span class="math inline">\(1\)</span> if <span class="math display">\[
+P(Y = 1| X = x_0 ) &gt; 0.5,
+\]</span> and class two otherwise.</p>
+<p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The point-wise Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
+1 - \max_{j}P(Y = 1| X = x_0 ),
+\]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>)</p>
+<p>The global overall Bayes error rate is given by <span class="math display">\[
+1 - E\left(\max_{j}P(Y = 1| X )\right),
+\]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X.\)</span></p>
+</section>
+<section id="k-nearest-neighbors" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</h3>
+<p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and so computing the Bayes classifier is impossible.</p>
+<p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-nearest neighbors</strong> (KNN) classifier.</p>
+<p>Given a positive integer <span class="math inline">\(K\)</span> and a test observation <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> points in the training data <span class="math display">\[
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+\]</span> that are closest to <span class="math inline">\(x_0,\)</span> represented by <span class="math display">\[
+\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+\]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is an index set that allows to select the <span class="math inline">\(K\)</span> nearest neighbors in the training data.</p>
+<ul>
+<li><span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n\}\)</span></li>
+<li><span class="math inline">\(|\mathcal{N}_0|=K\)</span></li>
+</ul>
+<p>KNN estimates the conditional probability for class <span class="math inline">\(j\)</span> as the fraction of points in <span class="math inline">\(\mathcal{N}_0\)</span> whose response value <span class="math inline">\(y_i\)</span> equals <span class="math inline">\(j:\)</span> <span id="eq-DefKNN"><span class="math display">\[
+\begin{align}
+P(Y = j | X = x_{0})
+&amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
+&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j)
+\end{align}
+\tag{1.2}\]</span></span> Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.2</span></a>.</p>
+<p>Figure 2.14 provides an illustrative example of the KNN approach. In the left-hand panel, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. In the right-hand panel of Figure 2.14 we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</p>
+<p><br></p>
+<p><img src="images/Fig_2_14.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_15.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_16.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_17.png" class="img-fluid"></p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Coding Challenge
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate classification results similar to those shown in Figures 2.15 and 2.16 of our textbook. Discuss your results.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="r-lab-introduction-to-r" class="level2" data-number="1.5">

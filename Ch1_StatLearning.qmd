@@ -232,14 +232,14 @@ Therefore, it is an important task to decide for any given set of data which met
 
 ### Measuring the Quality of Fit
 
-
 In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE). 
 
-The training (data) MSE is given by
+The global training (data) MSE is given by
 \begin{align*}
 \operatorname{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
 \end{align*}
 where 
+
 * $\hat{f}$ is computed from the training data
 * $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
 
@@ -253,13 +253,24 @@ or next month's price.
 
 **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements. 
 
-Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest training MSE. 
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
 
 Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.$ And let 
 $$
+\{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
+$$
+denote the set of $m$ test data points $y_{01},\dots,y_{0m}$ for a given predictor value $x_0$. 
+
+Then, the point-wise test MSE at $x_0$ is given by,
+\begin{align*}
+\operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
+\end{align*}
+
+Typically, however, we want that a method has a *globally* low test MSE, i.e. for all predictor values in the range of $X$, not only at a certain given value $x_0$. Let 
+$$
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
 $$
-denote the set of $m$ test data points. Then, the test MSE is given by,
+denote the set of $m$ test data points with predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. Then, the global test MSE is given by,
 \begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
@@ -268,7 +279,256 @@ Note that if $\hat{f}\approx f,$ then
 $$
 \operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_i^2
 $$
-estimates the variance of the error term, i.e., equals the irreducible error component of the mean squared (prediction) error. 
+estimates the variance of the error term $Var(\epsilon)$, i.e., equals the **irreducible error component** of the mean squared (prediction) error. 
+
+<br>
+
+![](images/Fig_2_9.png)
+
+<br>
+
+![](images/Fig_2_10.png)
+
+<br>
+
+![](images/Fig_2_11.png)
+
+<br>
+
+::: {.callout-caution}
+
+## Coding Challenge
+
+Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11 of our textbook. Discuss your results.   
+
+:::
+
+
+In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available. 
+
+As the three examples in Figures 2.9, 2.10, and 2.11 of our textbook illustrate, the flexibility level corresponding to the model with the minimal test MSE can vary considerably. 
+
+Throughout this book, we discuss a variety of approaches that can be used in practice to estimate the minimum point of the test MSE. 
+
+One important method is **cross-validation**, which is a method for estimating the test MSE using the training data.
+
+
+
+### The Bias-Variance Trade-Off
+
+The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.
+
+* Let $x_0$ denote a given value of the predictor $X$
+* Let $\hat{f}$ be estimated from the training data
+* Let 
+$$
+Y_0=f(x_0)+\epsilon
+$$ 
+be the response random variable defined for the given predictor value $x_0.$ 
+* Let $Y_{01},\dots,Y_{0m}$ be all independently and identically distributed as $Y_0;$ shortly
+$$
+Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
+$$  
+* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$
+
+One can show that the expected test MSE can be decomposed as following: 
+\begin{align*}
+E\left[\operatorname{MSE}_{test}(x_0)\right] 
+& =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
+& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
+%& =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
+%& =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
+%&\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon)\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon)\\[2ex]
+%& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon)\\[2ex]
+&\quad\text{(steps skipped since beyond scope)}\\[2ex]
+& = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon\right)
+\end{align*}
+
+
+The **expected MSE** at $x_0,$ $E\left[\operatorname{MSE}_{test}(x_0)\right],$ refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$ 
+
+
+A computed value of $\operatorname{MSE}_{test}(x_0)$ is one estimate of $E\left[\operatorname{MSE}_{test}(x_0)\right].$
+
+
+To minimize the expected test MSE, we need to select a statistical learning method that *simultaneously* achieves **low variance** and **low bias**. 
+
+
+Note that 
+$$
+Var\left(\hat{f}(x_0)\right)\geq 0
+$$ 
+and that 
+$$
+\left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2\geq 0.
+$$
+Thus, the expected test MSE can never lie below of $Var(\epsilon),$ i.e.
+$$
+\begin{align*}
+E\left[\operatorname{MSE}_{test}(x_0)\right] 
+& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
+\geq Var\left(\epsilon\right).
+\end{align*}
+$$
+
+
+The overall, i.e., global expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set. 
+
+#### Variance of $\hat{f}$ {-}
+
+**Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ But ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
+
+
+#### Bias of $\hat{f}$ {-}
+
+**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias.
+
+
+As a general rule, as we use more flexible methods, the variance will
+increase and the bias will decrease---and vice versa. 
+
+
+
+
+### The Classification Setting
+
+
+Setup: 
+
+* Observed training data 
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+$$
+* Qualitative response $y_i$ with categorical class labels (e.g. $y_i\in\{\text{red},\text{blue}\}$)
+* The **classifier** $\hat{f}$ is computed from the training data.
+* Predicted training data class labels: 
+$$
+\hat{y}_i = \hat{f}(x_i)
+$$
+
+The alternative to the training MSE is here the **training error rate**
+$$
+\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
+$$
+which gives the relative frequency of false categorical predictions. 
+
+Here, 
+$$
+I(\cdot)
+$$
+is an indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
+
+
+Let 
+$$
+\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
+$$
+denote $m$ test data observations. 
+
+The alternative to the test MSE is here the **test error rate**
+$$
+\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
+$$
+where $\hat{y}_{0i}$ is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation with predictor value $x_{i0}.$ 
+
+A good classifier is one for which the test error rate is smallest.
+
+### The Bayes Classifier {-}
+
+It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by a very simple classifier that assigns each observation $i$ to the most likely class, given its predictor values $x_{0}$. 
+
+In other words, we should simply assign a test observation with predictor vector $x_{0}$ to the class $j$ for which
+$$
+P(Y = j | X = x_{0})
+$$
+is largest. 
+
+This very simple classifier is called the **Bayes classifier**.
+
+
+In a two-class problem where there are only two possible response values, say class $1$ or class $2,$ the Bayes classifier corresponds to predicting class $1$ if 
+$$
+P(Y = 1| X = x_0 ) > 0.5,
+$$ 
+and class two otherwise.
+
+
+The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The point-wise Bayes error rate at $x_0$ is given by
+$$
+1 - \max_{j}P(Y = 1| X = x_0 ),
+$$
+where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$)
+
+The global overall Bayes error rate is given by
+$$
+1 - E\left(\max_{j}P(Y = 1| X )\right),
+$$
+where the expectation averages the probability over all possible values of $X.$ 
+
+
+### $K$-Nearest Neighbors {-}
+
+In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of $Y$ given $X,$ and so computing the Bayes classifier is impossible. 
+
+
+Many approaches attempt to estimate the conditional distribution of $Y$ given $X,$ and then classify a given observation to the class with highest estimated probability. One such method is the **$K$-nearest neighbors** (KNN) classifier. 
+
+Given a positive integer $K$ and a test observation $x_0,$ the KNN classifier first identifies the $K$ points in the training data
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+$$
+that are closest to $x_0,$ represented by 
+$$
+\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+$$
+I.e. $\mathcal{N}_0$ is an index set that allows to select the $K$ nearest neighbors in the training data. 
+
+* $\mathcal{N}_0\subset\{1,2,\dots,n\}$
+* $|\mathcal{N}_0|=K$
+
+KNN estimates the conditional probability for class $j$ as the fraction of points in $\mathcal{N}_0$ whose response value $y_i$ equals $j:$
+$$
+\begin{align}
+P(Y = j | X = x_{0}) 
+&\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
+&= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j)
+\end{align}
+$${#eq-DefKNN}
+Finally, KNN classifies the test observation $x_0$ to the class $j$ with the largest probability from @eq-DefKNN. 
+
+
+Figure 2.14 provides an illustrative example of the KNN approach. In the left-hand panel, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. In the right-hand panel of Figure 2.14 we have applied the KNN approach with $K = 3$ at all of the possible values for $X_1$ and $X_2,$ and have drawn in the corresponding KNN decision boundary.
+
+<br>
+
+![](images/Fig_2_14.png)
+
+<br>
+
+![](images/Fig_2_15.png)
+
+<br>
+
+![](images/Fig_2_16.png)
+
+<br>
+
+![](images/Fig_2_17.png)
+
+
+
+::: {.callout-caution}
+
+## Coding Challenge
+
+Generate classification results similar to those shown in Figures 2.15 and 2.16 of our textbook. Discuss your results.   
+
+:::
 
 
 
