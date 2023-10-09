@@ -353,8 +353,11 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 The **expected MSE** at $x_0,$ $E\left[\operatorname{MSE}_{test}(x_0)\right],$ refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$ 
 
 
-A computed value of $\operatorname{MSE}_{test}(x_0)$ is one estimate of $E\left[\operatorname{MSE}_{test}(x_0)\right].$
+::: {.callout-note}
+A computed value of $\operatorname{MSE}_{test}(x_0)$ is only **one estimate** of $E\left[\operatorname{MSE}_{test}(x_0)\right].$
 
+To get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right];$ see @sec-resamplingmethods.
+:::
 
 To minimize the expected test MSE, we need to select a statistical learning method that *simultaneously* achieves **low variance** and **low bias**. 
 
@@ -379,19 +382,24 @@ $$
 
 The overall, i.e., global expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set. 
 
-#### Variance of $\hat{f}$ {-}
-
+#### Variance of $\hat{f}$ at $x_0$ {-}
+$$
+Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
+$$
 **Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ But ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
 
+The overall, i.e., global variance can be computed by averaging $Var(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
 
-#### Bias of $\hat{f}$ {-}
+#### Bias of $\hat{f}$ at $x_0$ {-}
+$$
+\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
+$$
+**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
 
-**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias.
+The overall, i.e., global bias can be computed by averaging $\operatorname{Bias}(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
 
 
-As a general rule, as we use more flexible methods, the variance will
-increase and the bias will decrease---and vice versa. 
-
+![](images/Fig_2_12.png)
 
 
 

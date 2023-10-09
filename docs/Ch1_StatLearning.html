@@ -499,7 +499,20 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 &amp; = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon\right)
 \end{align*}\]</span></p>
 <p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right],\)</span> refers to the average test MSE that we would obtain if we repeatedly estimated <span class="math inline">\(f\)</span> using training data set, and evaluated each at <span class="math inline">\(x_0.\)</span></p>
-<p>A computed value of <span class="math inline">\(\operatorname{MSE}_{test}(x_0)\)</span> is one estimate of <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A computed value of <span class="math inline">\(\operatorname{MSE}_{test}(x_0)\)</span> is only <strong>one estimate</strong> of <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span></p>
+<p>To get information about Bias and Variance of a method, we need to approximate <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right];\)</span> see <a href="Ch4_ResamplingMethods.html"><span>Chapter&nbsp;4</span></a>.</p>
+</div>
+</div>
 <p>To minimize the expected test MSE, we need to select a statistical learning method that <em>simultaneously</em> achieves <strong>low variance</strong> and <strong>low bias</strong>.</p>
 <p>Note that <span class="math display">\[
 Var\left(\hat{f}(x_0)\right)\geq 0
@@ -513,14 +526,20 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 \end{align*}
 \]</span></p>
 <p>The overall, i.e., global expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
-<section id="variance-of-hatf" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf">Variance of <span class="math inline">\(\hat{f}\)</span></h4>
-<p><strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> But ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
+<section id="variance-of-hatf-at-x_0" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
+<p><span class="math display">\[
+Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
+\]</span> <strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> But ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
+<p>The overall, i.e., global variance can be computed by averaging <span class="math inline">\(Var(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
 </section>
-<section id="bias-of-hatf" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf">Bias of <span class="math inline">\(\hat{f}\)</span></h4>
-<p><strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias.</p>
-<p>As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
+<section id="bias-of-hatf-at-x_0" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0">Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
+<p><span class="math display">\[
+\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
+\]</span> <strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
+<p>The overall, i.e., global bias can be computed by averaging <span class="math inline">\(\operatorname{Bias}(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<p><img src="images/Fig_2_12.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="the-classification-setting" class="level3" data-number="1.4.3">
