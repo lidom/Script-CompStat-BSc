@@ -1,8 +1,6 @@
 # Resampling Methods {#sec-resamplingmethods}
 
-## Lecture Notes
-
-Reading: Chapter 5 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+> Reading: Chapter 5 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
 
 **Resampling methods** involve repeatedly drawing samples from a *training data set* and refitting a model of interest on each of these samples. The different estimation results across resamples can be used, for instance, to estimate the variability of a linear regression fit. 

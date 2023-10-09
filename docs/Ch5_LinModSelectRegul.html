@@ -198,8 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lecture-notes" id="toc-lecture-notes" class="nav-link active" data-scroll-target="#lecture-notes"><span class="toc-section-number">5.1</span>  Lecture Notes</a></li>
-  <li><a href="#ch.-6.1-subset-selection" id="toc-ch.-6.1-subset-selection" class="nav-link" data-scroll-target="#ch.-6.1-subset-selection">(Ch. 6.1) Subset Selection</a>
+  <li><a href="#ch.-6.1-subset-selection" id="toc-ch.-6.1-subset-selection" class="nav-link active" data-scroll-target="#ch.-6.1-subset-selection">(Ch. 6.1) Subset Selection</a>
   <ul class="collapse">
   <li><a href="#ch.-6.1.1-best-subset-selection" id="toc-ch.-6.1.1-best-subset-selection" class="nav-link" data-scroll-target="#ch.-6.1.1-best-subset-selection">(Ch. 6.1.1) Best Subset Selection</a></li>
   <li><a href="#ch.-6.1.2-stepwise-selection" id="toc-ch.-6.1.2-stepwise-selection" class="nav-link" data-scroll-target="#ch.-6.1.2-stepwise-selection">(Ch. 6.1.2) Stepwise Selection</a></li>
@@ -218,13 +217,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ch.-6.3.1-principal-components-regression" id="toc-ch.-6.3.1-principal-components-regression" class="nav-link" data-scroll-target="#ch.-6.3.1-principal-components-regression">(Ch. 6.3.1) Principal Components Regression</a></li>
   <li><a href="#the-principal-components-regression-approach" id="toc-the-principal-components-regression-approach" class="nav-link" data-scroll-target="#the-principal-components-regression-approach">The Principal Components Regression Approach</a></li>
   </ul></li>
-  <li><a href="#r-lab-linear-model-selection-and-regularization" id="toc-r-lab-linear-model-selection-and-regularization" class="nav-link" data-scroll-target="#r-lab-linear-model-selection-and-regularization"><span class="toc-section-number">5.2</span>  <code>R</code>-Lab: Linear Model Selection and Regularization</a>
+  <li><a href="#r-lab-linear-model-selection-and-regularization" id="toc-r-lab-linear-model-selection-and-regularization" class="nav-link" data-scroll-target="#r-lab-linear-model-selection-and-regularization"><span class="toc-section-number">5.1</span>  <code>R</code>-Lab: Linear Model Selection and Regularization</a>
   <ul class="collapse">
-  <li><a href="#subset-selection-methods" id="toc-subset-selection-methods" class="nav-link" data-scroll-target="#subset-selection-methods"><span class="toc-section-number">5.2.1</span>  Subset Selection Methods</a></li>
-  <li><a href="#ridge-regression-and-the-lasso" id="toc-ridge-regression-and-the-lasso" class="nav-link" data-scroll-target="#ridge-regression-and-the-lasso"><span class="toc-section-number">5.2.2</span>  Ridge Regression and the Lasso</a></li>
-  <li><a href="#principal-components-regression" id="toc-principal-components-regression" class="nav-link" data-scroll-target="#principal-components-regression"><span class="toc-section-number">5.2.3</span>  Principal Components Regression</a></li>
+  <li><a href="#subset-selection-methods" id="toc-subset-selection-methods" class="nav-link" data-scroll-target="#subset-selection-methods"><span class="toc-section-number">5.1.1</span>  Subset Selection Methods</a></li>
+  <li><a href="#ridge-regression-and-the-lasso" id="toc-ridge-regression-and-the-lasso" class="nav-link" data-scroll-target="#ridge-regression-and-the-lasso"><span class="toc-section-number">5.1.2</span>  Ridge Regression and the Lasso</a></li>
+  <li><a href="#principal-components-regression" id="toc-principal-components-regression" class="nav-link" data-scroll-target="#principal-components-regression"><span class="toc-section-number">5.1.3</span>  Principal Components Regression</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">5.3</span>  Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">5.2</span>  Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -247,9 +246,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="lecture-notes" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="lecture-notes"><span class="header-section-number">5.1</span> Lecture Notes</h2>
-<p>Reading: Chapter 6 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a> Lecture videos for Chapter 6.3:</p>
+<blockquote class="blockquote">
+<p>Reading: Chapter 6 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
+</blockquote>
+<!-- Lecture videos for Chapter 6.3: -->
 <!-- * [1. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP)
 * [2. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe)
 * [3. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv) -->
@@ -264,7 +264,6 @@ Y = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \epsilon.
 <li><strong>Dimension Reduction.</strong> This approach involves projecting the <span class="math inline">\(p\)</span> predictors into an <span class="math inline">\(M\)</span>-dimensional subspace, where <span class="math inline">\(M&lt;p\)</span>. Then these <span class="math inline">\(M\)</span> projections are used as predictors to fit a linear regression model by least squares.</li>
 </ul>
 <!-- This is achieved by computing $M$ different linear combinations, or projections, of the variables.  -->
-</section>
 <section id="ch.-6.1-subset-selection" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ch.-6.1-subset-selection">(Ch. 6.1) Subset Selection</h2>
 <p>In the following, we consider linear models with some large set of <span class="math inline">\(p\)</span> many potentially relevant predictors <span class="math inline">\(X=(X_1,\dots,X_{p}),\)</span> <span id="eq-modelLarge"><span class="math display">\[
@@ -542,13 +541,13 @@ x_{ij}\hat\beta_j = x_{ij}^S\hat\beta_j^S,\quad i=1,\dots,n
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(lm_obj_2)[<span class="dv">2</span>]),</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     x    x_S 
-5101.9 5101.9 </code></pre>
+<pre><code>   x  x_S 
+4931 4931 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## comparing the RSS's:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(RSS_1, RSS_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9107930816 9107930816</code></pre>
+<pre><code>[1] 11592034997 11592034997</code></pre>
 </div>
 </div>
 <p>By contrast, the ridge regression criterion in <a href="#eq-RidgeCrit">Equation&nbsp;<span>5.4</span></a> is <strong><em>not</em> scale invariant</strong> since scaling the predictors will lead (as seen above) to a rescaling of the coefficient estimates and thus affects the penalty term <span class="math inline">\(\lambda\sum_{j=1}^p\beta_j^2.\)</span></p>
@@ -796,12 +795,12 @@ y_i = \theta_0 +  \sum_{m=1}^M\theta_m z_{im} + \epsilon_i,
 <p><strong>Standardize the predictor variables.</strong> When performing PCR, it is generally a good idea to <strong>standardize</strong> each predictor, using <a href="#eq-Standardization">Equation&nbsp;<span>5.5</span></a>, prior to generating the principal components. Standardization ensures that all variables are on the same scale. In the absence of standardization, the high-variance predictors will tend to play a larger role in the principal components obtained, and thus the scale on which the variables are measured will ultimately have an effect on the final PCR model.</p>
 </section>
 </section>
-<section id="r-lab-linear-model-selection-and-regularization" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="r-lab-linear-model-selection-and-regularization"><span class="header-section-number">5.2</span> <code>R</code>-Lab: Linear Model Selection and Regularization</h2>
-<section id="subset-selection-methods" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="subset-selection-methods"><span class="header-section-number">5.2.1</span> Subset Selection Methods</h3>
-<section id="best-subset-selection" class="level4" data-number="5.2.1.1">
-<h4 data-number="5.2.1.1" class="anchored" data-anchor-id="best-subset-selection"><span class="header-section-number">5.2.1.1</span> Best Subset Selection</h4>
+<section id="r-lab-linear-model-selection-and-regularization" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="r-lab-linear-model-selection-and-regularization"><span class="header-section-number">5.1</span> <code>R</code>-Lab: Linear Model Selection and Regularization</h2>
+<section id="subset-selection-methods" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="subset-selection-methods"><span class="header-section-number">5.1.1</span> Subset Selection Methods</h3>
+<section id="best-subset-selection" class="level4" data-number="5.1.1.1">
+<h4 data-number="5.1.1.1" class="anchored" data-anchor-id="best-subset-selection"><span class="header-section-number">5.1.1.1</span> Best Subset Selection</h4>
 <p>Here we apply the best subset selection approach to the <code>Hitters</code> data. We wish to predict a baseball player’s <code>Salary</code> on the basis of various statistics associated with performance in the previous year.</p>
 <p>First of all, we note that the <code>Salary</code> variable is missing for some of the players. The <code>is.na()</code> function can be used to identify the missing observations. It returns a vector of the same length as the input vector, with a <code>TRUE</code> for any elements that are missing, and a <code>FALSE</code> for non-missing elements. The <code>sum()</code> function can then be used to count all of the missing elements.</p>
 <div class="cell">
@@ -996,8 +995,8 @@ Selection Algorithm: exhaustive
 </div>
 </div>
 </section>
-<section id="forward-and-backward-stepwise-selection" class="level4" data-number="5.2.1.2">
-<h4 data-number="5.2.1.2" class="anchored" data-anchor-id="forward-and-backward-stepwise-selection"><span class="header-section-number">5.2.1.2</span> Forward and Backward Stepwise Selection</h4>
+<section id="forward-and-backward-stepwise-selection" class="level4" data-number="5.1.1.2">
+<h4 data-number="5.1.1.2" class="anchored" data-anchor-id="forward-and-backward-stepwise-selection"><span class="header-section-number">5.1.1.2</span> Forward and Backward Stepwise Selection</h4>
 <p>We can also use the <code>regsubsets()</code> function to perform forward stepwise or backward stepwise selection, using the argument <code>method = "forward"</code> or <code>method = "backward"</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>regfit.fwd <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(Salary <span class="sc">~</span> ., <span class="at">data =</span> Hitters,</span>
@@ -1166,8 +1165,8 @@ Selection Algorithm: backward
 </div>
 </div>
 </section>
-<section id="choosing-among-models-using-the-validation-set-approach-and-cross-validation" class="level4" data-number="5.2.1.3">
-<h4 data-number="5.2.1.3" class="anchored" data-anchor-id="choosing-among-models-using-the-validation-set-approach-and-cross-validation"><span class="header-section-number">5.2.1.3</span> Choosing Among Models Using the Validation-Set Approach and Cross-Validation</h4>
+<section id="choosing-among-models-using-the-validation-set-approach-and-cross-validation" class="level4" data-number="5.1.1.3">
+<h4 data-number="5.1.1.3" class="anchored" data-anchor-id="choosing-among-models-using-the-validation-set-approach-and-cross-validation"><span class="header-section-number">5.1.1.3</span> Choosing Among Models Using the Validation-Set Approach and Cross-Validation</h4>
 <section id="validation-set-approach" class="level5 unnumbered">
 <h5 class="unnumbered anchored" data-anchor-id="validation-set-approach">Validation-Set Approach</h5>
 <p>We just saw that it is possible to choose among a set of models of different sizes using <span class="math inline">\(C_p\)</span>, BIC, and adjusted <span class="math inline">\(R^2\)</span>. We will now consider how to do this using the validation set and cross-validation approaches.</p>
@@ -1312,16 +1311,16 @@ Selection Algorithm: backward
 </section>
 </section>
 </section>
-<section id="ridge-regression-and-the-lasso" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="ridge-regression-and-the-lasso"><span class="header-section-number">5.2.2</span> Ridge Regression and the Lasso</h3>
+<section id="ridge-regression-and-the-lasso" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="ridge-regression-and-the-lasso"><span class="header-section-number">5.1.2</span> Ridge Regression and the Lasso</h3>
 <p>We will use the <code>glmnet</code> package in order to perform ridge regression and the lasso. The main function in this package is <code>glmnet()</code>, which can be used to fit ridge regression models, lasso models, and more. This function has slightly different syntax from other model-fitting functions that we have encountered thus far in this book. In particular, we must pass in an <code>x</code> matrix as well as a <code>y</code> vector, and we do not use the {} syntax. We will now perform ridge regression and the lasso in order to predict <code>Salary</code> on the <code>Hitters</code> data. Before proceeding ensure that the missing values have been removed from the data, as described in Section 6.5.1.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(Salary <span class="sc">~</span> ., Hitters)[, <span class="sc">-</span><span class="dv">1</span>]</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> Hitters<span class="sc">$</span>Salary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>model.matrix()</code> function is particularly useful for creating <code>x</code>; not only does it produce a matrix corresponding to the <span class="math inline">\(19\)</span> predictors but it also automatically transforms any qualitative variables into dummy variables. The latter property is important because <code>glmnet()</code> can only take numerical, quantitative inputs.</p>
-<section id="ridge-regression" class="level4" data-number="5.2.2.1">
-<h4 data-number="5.2.2.1" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">5.2.2.1</span> Ridge Regression</h4>
+<section id="ridge-regression" class="level4" data-number="5.1.2.1">
+<h4 data-number="5.1.2.1" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">5.1.2.1</span> Ridge Regression</h4>
 <p>The <code>glmnet()</code> function has an <code>alpha</code> argument that determines what type of model is fit. If <code>alpha=0</code> then a ridge regression model is fit, and if <code>alpha=1</code> then a lasso model is fit. We first fit a ridge regression model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"glmnet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1543,8 +1542,8 @@ Coefficients:
 </div>
 <p>As expected, none of the coefficients are zero—ridge regression does not perform variable selection!</p>
 </section>
-<section id="the-lasso" class="level4" data-number="5.2.2.2">
-<h4 data-number="5.2.2.2" class="anchored" data-anchor-id="the-lasso"><span class="header-section-number">5.2.2.2</span> The Lasso</h4>
+<section id="the-lasso" class="level4" data-number="5.1.2.2">
+<h4 data-number="5.1.2.2" class="anchored" data-anchor-id="the-lasso"><span class="header-section-number">5.1.2.2</span> The Lasso</h4>
 <p>We saw that ridge regression with a wise choice of <span class="math inline">\(\lambda\)</span> can outperform least squares as well as the null model on the <code>Hitters</code> data set. We now ask whether the lasso can yield either a more accurate or a more interpretable model than ridge regression. In order to fit a lasso model, we once again use the <code>glmnet()</code> function; however, this time we use the argument <code>alpha=1</code>. Other than that change, we proceed just as we did in fitting a ridge model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>lasso.mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], </span>
@@ -1616,8 +1615,8 @@ collapsing to unique 'x' values</code></pre>
 </div>
 </section>
 </section>
-<section id="principal-components-regression" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="principal-components-regression"><span class="header-section-number">5.2.3</span> Principal Components Regression</h3>
+<section id="principal-components-regression" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="principal-components-regression"><span class="header-section-number">5.1.3</span> Principal Components Regression</h3>
 <p>Principal components regression (PCR) can be performed using the <code>pcr()</code> function, which is part of the <code>pls</code> library. We now apply PCR to the <code>Hitters</code> data, in order to predict <code>Salary</code>. Again, we ensure that the missing values have been removed from the data, as described in Section 6.5.1.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1831,8 +1830,8 @@ Notice that the percentage of variance in `Salary` that the one-component PLS fi
 -->
 </section>
 </section>
-<section id="exercises" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.3</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.2</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 6 in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 2</li>

@@ -1,10 +1,9 @@
 # Linear Model Selection and Regularization
 
-## Lecture Notes
 
-Reading: Chapter 6 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
-Lecture videos for Chapter 6.3:
+> Reading: Chapter 6 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
+<!-- Lecture videos for Chapter 6.3: -->
 <!-- * [1. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/oeGCEKxh0mwY3IP)
 * [2. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/BHJpoqp0gUfzCMe)
 * [3. Video on Dimension Reduction (Ch. 6.3)](https://uni-bonn.sciebo.de/s/wyNNfhLanjSGfEv) -->

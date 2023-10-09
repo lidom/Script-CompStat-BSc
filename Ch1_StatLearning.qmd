@@ -1,8 +1,6 @@
 # Statistical Learning
 
-## Lecture Notes 
-
-Reading: Chapter 2 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+> Reading: Chapter 2 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
 
 ## What is Statistical Learning? 
