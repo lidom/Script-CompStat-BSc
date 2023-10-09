@@ -459,7 +459,7 @@ is largest.
 This very simple classifier is called the **Bayes classifier**.
 
 
-In a two-class problem where there are only two possible response values, say class $1$ or class $2,$ the Bayes classifier corresponds to predicting class $1$ if 
+In a **two-class problem** where there are only two possible response values, say class $1$ or class $2,$ the Bayes classifier corresponds to predicting class $1$ if 
 $$
 P(Y = 1| X = x_0 ) > 0.5,
 $$ 
@@ -534,7 +534,89 @@ Figure 2.14 provides an illustrative example of the KNN approach. In the left-ha
 
 ## Coding Challenge
 
-Generate classification results similar to those shown in Figures 2.15 and 2.16 of our textbook. Discuss your results.   
+The following `R`-code generates training data for the two-class classification problem with 
+
+* Class 1: Circle with center $(x_1,x_2)=(0.5,0.5)$ and radius $r=0.2,$ i.e.
+$$
+\text{Cl1} = \{(x_1,x_2)\in[0,1]^2:(x_1-0.5)^2+(x_2-0.5)^2\leq 0.2^2\}
+$$
+* Class 2: All data points in the square $[0,1]^2$ that do not belong to Class 1, i.e.
+$$
+\text{Cl2} = \{(x_1,x_2)\in[0,1]^2: (x_1,x_2)\not\in\text{Cl1}\}
+$$
+
+
+```{r}
+# install.packages("plotrix") # Install plotrix package
+library("plotrix")   # Load plotrix package (draw.circle())
+
+## Class 1: Circle  
+radius <- 0.2
+center <- c(0.5,0.5)
+## Class 2: [0,1] x [0,1] \ Class 1
+
+## function to map data points to class labels "Cl1" and "Cl2"
+my_class_fun <- function(x1, x2, cent = center, rad = radius, error = 0){
+  tmp    <- (x1 - cent[1])^2 + (x2 - cent[2])^2
+  rad    <- rad + sample(c(-1,1), 1) * error
+  ifelse(tmp <= rad^2, "Cl1", "Cl2")
+}
+my_class_fun <- Vectorize(my_class_fun, c("x1", "x2"))
+
+## ##################################
+## Generate training data (with error)
+## ##################################
+set.seed(321)
+
+## number of training data points
+n_train    <- 500
+
+## error
+error  <- 0.05
+
+train_X1 <- runif(n_train, min = 0, max = 1)
+train_X2 <- runif(n_train, min = 0, max = 1)
+train_Cl <- my_class_fun(x1 = train_X1, 
+                         x2 = train_X2, error = error)
+train_Cl <- as.factor(train_Cl)
+summary(train_Cl)
+
+data_train <- data.frame(
+  "Cl" = train_Cl,
+  "X1" = train_X1, 
+  "X2" = train_X2
+)
+
+head(data_train)
+
+par(mfrow = c(1,2))
+plot(x = 0, y = 0, 
+     type = "n", 
+     xlim = c(0,1),
+     ylim = c(0,1), 
+     xlab = expression(X[1]),
+     ylab = expression(X[2]), asp=1)
+abline(h = c(0,1))
+draw.circle(x = center[1], y = center[2], radius = radius)
+text(x = 0.5, y = 0.5, label = "Class 1")
+text(x = 0.1, y = 0.9, label = "Class 2")
+
+plot(x = 0, y = 0, 
+     type = "n", 
+     xlim = c(0,1),
+     ylim = c(0,1), 
+     xlab = expression(X[1]),
+     ylab = expression(X[2]), asp=1,
+     main = "Training data with errors")
+abline(h = c(0,1))
+draw.circle(x = center[1], y = center[2], radius = radius)
+
+points(x   = data_train$X1, 
+       y   = data_train$X2, 
+       col = data_train$Cl,  pch = 19)
+```
+
+**Challenge:** Write a KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
 
 :::
 
