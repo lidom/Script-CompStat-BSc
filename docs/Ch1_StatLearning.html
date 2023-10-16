@@ -298,72 +298,132 @@ Y = f(X) + \epsilon.
 <p><strong>Example:</strong> As an example, suppose that <span class="math inline">\((X_1, X_2, \dots, X_p)\)</span> are characteristics of a patient’s blood sample that can be easily measured in a lab, and <span class="math inline">\(Y\)</span> is a variable encoding the patient’s risk for a severe adverse reaction to a particular drug. It is natural to seek to predict <span class="math inline">\(Y\)</span> using <span class="math inline">\(X,\)</span> since we can then avoid giving the drug in question to patients who are at high risk of an adverse reaction–that is, patients for whom the estimate of <span class="math inline">\(Y\)</span> is high.</p>
 <section id="accuracy-of-a-prediction" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="accuracy-of-a-prediction">Accuracy of a Prediction</h3>
-<p>The accuracy of <span class="math inline">\(\hat{Y}\)</span> as a prediction for <span class="math inline">\(Y\)</span> depends on two quantities: * the <strong>reducible error</strong> and * the <strong>irreducible error.</strong></p>
+<p>The accuracy of <span class="math inline">\(\hat{Y}\)</span> as a prediction for <span class="math inline">\(Y\)</span> depends on two quantities:</p>
+<ul>
+<li>the <strong>reducible error</strong> and</li>
+<li>the <strong>irreducible error.</strong></li>
+</ul>
 <p>In general, <span class="math inline">\(\hat{f}\)</span> will not be a perfect estimate for <span class="math inline">\(f,\)</span> and this inaccuracy will introduce some error. This error is <strong>reducible</strong>, because we can potentially improve the accuracy of <span class="math inline">\(\hat{f}\)</span> by using the most appropriate statistical learning technique to estimate <span class="math inline">\(f.\)</span></p>
 <p>However, even if it were possible to form a perfect estimate for <span class="math inline">\(f,\)</span> so that our estimated response took the form <span class="math display">\[
 \hat{Y} = f (X),
 \]</span> our prediction would still have some error in it! This is because <span class="math inline">\(Y\)</span> is also a function of <span class="math inline">\(\epsilon\)</span> which, by definition, cannot be predicted using <span class="math inline">\(X.\)</span> Therefore, variability associated with <span class="math inline">\(\epsilon\)</span> also affects the accuracy of our predictions. This is known as the <strong>irreducible error</strong>, because no matter how well we estimate <span class="math inline">\(f,\)</span> we cannot reduce the error introduced by <span class="math inline">\(\epsilon.\)</span></p>
 <p>Consider a <em>given</em> estimate <span class="math inline">\(\hat{f}\)</span> and a <em>given</em> set of predictors <span class="math inline">\(X,\)</span> which yields the prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> Assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are fixed, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span class="math display">\[\begin{align*}
+\overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
+=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}},
+\end{align*}\]</span> where</p>
+<ul>
+<li><span class="math inline">\(E\left[(Y - \hat{Y})^2\right]\)</span> represents the expected value, of the squared difference between the predicted <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> and actual value of <span class="math inline">\(Y,\)</span></li>
+<li>and <span class="math inline">\(Var(\epsilon)\)</span> represents the variance associated with the error term <span class="math inline">\(\epsilon.\)</span></li>
+</ul>
+<p>Derivation:</p>
+<p><span class="math display">\[\begin{align*}
 &amp;E\left[(Y - \hat{Y})^2\right]\\
 &amp;=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
-&amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\
-% &amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\
-&amp;=\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\
-&amp;=\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
-&amp;=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}},
-\end{align*}\]</span> where <span class="math inline">\(E\left[(Y - \hat{Y})^2\right]\)</span> represents the expected value,of the squared difference between the predicted and actual value of <span class="math inline">\(Y,\)</span> and where <span class="math inline">\(Var(\epsilon)\)</span> represents the variance associated with the error term <span class="math inline">\(\epsilon.\)</span></p>
+&amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\
+% &amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\
+&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\
+&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
+&amp;=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
+\end{align*}\]</span></p>
+<p>It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for <span class="math inline">\(Y,\)</span> i.e.&nbsp; <span class="math display">\[
+E\left[(Y - \hat{Y})^2\right] \geq Var\left(\epsilon\right)
+\]</span> This bound is almost always unknown in practice.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The focus of this course is on techniques for estimating <span class="math inline">\(f\)</span> with the aim of <strong>minimizing the reducible error</strong>.</p>
-<p>It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for <span class="math inline">\(Y.\)</span> This bound is almost always unknown in practice.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="parameter-inference" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="parameter-inference">(Parameter) Inference</h2>
-<p>We are often interested in understanding the association between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1,\dots,X_p.\)</span> In this situation we wish to estimate <span class="math inline">\(f,\)</span> but our goal is not necessarily to make predictions for <span class="math inline">\(Y.\)</span> Now <span class="math inline">\(\hat{f}\)</span> cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:</p>
+<p>We are often interested in <em>understanding</em> the association between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1,\dots,X_p.\)</span> In this situation we wish to estimate <span class="math inline">\(f,\)</span> but our goal is not necessarily to make predictions for <span class="math inline">\(Y.\)</span> Now <span class="math inline">\(\hat{f}\)</span> cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:</p>
 <ul>
 <li>Which predictors are associated with the response?</li>
 <li>What is the relationship between the response and each predictor?</li>
 <li>Can the relationship between <span class="math inline">\(Y\)</span> and each predictor be adequately summarized using a <em>linear equation</em>, or is the relationship more complicated?</li>
 </ul>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In this course, we will see a number of examples that fall into the <strong>prediction setting</strong>, the <strong>inference setting</strong>, or a <strong>combination</strong> of the two.</p>
+</div>
+</div>
 </section>
 <section id="how-do-we-estimate-f" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="how-do-we-estimate-f"><span class="header-section-number">1.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</h2>
 <p>We will always assume that we have observed a set of <span class="math inline">\(n\)</span> different data points <span class="math display">\[
 \{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
 \]</span> where <span class="math display">\[
-x_i=(x_{i1},x_{i2},\dots,x_{ip})^T
+x_i=(x_{i1},x_{i2},\dots,x_{ip})^T\in\mathbb{R}^p
+\]</span> and <span class="math display">\[
+y_i\in\mathbb{R}
 \]</span> for all <span class="math inline">\(i=1,2,\dots,n.\)</span></p>
 <p>These <span class="math inline">\(n\)</span> observations are called <strong>training data</strong> because we will use these training observations to train, or teach, our method how to estimate <span class="math inline">\(f.\)</span></p>
-<p>Our goal is to find a function <span class="math inline">\(hat{f}\)</span> such that <span class="math display">\[
+<p>Our goal is to find a function <span class="math inline">\(\hat{f}\)</span> such that <span class="math display">\[
 Y \approx \hat{f}(X)
-\]</span> for any observation <span class="math inline">\((X, Y)\)</span>.</p>
-<p>Broadly speaking, most statistical learning methods for this task can be characterized as either <strong>parametric</strong> or <strong>non-parametric</strong>.</p>
+\]</span> for any observed realization of <span class="math inline">\((X, Y).\)</span></p>
+<p>Broadly speaking, most statistical learning methods for this task can be characterized as either</p>
+<ul>
+<li><strong>parametric</strong> or</li>
+<li><strong>non-parametric</strong>.</li>
+</ul>
+<p>We discuss each in turn.</p>
 <section id="parametric-methods" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="parametric-methods">Parametric Methods</h3>
-<p>Parametric methods involve a two-step model-based approach.</p>
+<p>Parametric methods involve a <strong>two-step model-based estimation approach:</strong></p>
 <ol type="1">
-<li><p>First, we make an assumption about the functional form, or shape, of <span class="math inline">\(f.\)</span> For example, a very simple, but often used assumption is that <span class="math inline">\(f\)</span> is linear in <span class="math inline">\(X\)</span>: <span id="eq-linmodeq"><span class="math display">\[
-f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+<li><p>First, we make an assumption about the functional form, or shape, of <span class="math inline">\(f.\)</span> For example, a very simple, but often used assumption is that <span class="math inline">\(f\)</span> is a linear function, i.e. <span id="eq-linmodeq"><span class="math display">\[
+f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p.
 \tag{1.1}\]</span></span></p></li>
 <li><p>After a model has been selected, we need a procedure that uses the training data to fit or train the model. For example, in the case of the linear model <a href="#eq-linmodeq">Equation&nbsp;<span>1.1</span></a>, we need to estimate the parameters <span class="math inline">\(\beta_0,\beta_1,\dots,\beta_p\)</span> such that <span class="math display">\[
 Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
 \]</span></p></li>
 </ol>
-<p>Most common estimation technique: <strong>(Ordinary) Least Squares</strong></p>
-<p>The parametric model-based approach reduces the problem of estimating <span class="math inline">\(f\)</span> down to one of estimating a set of parameters.</p>
+<p>Most common estimation technique: <strong>(Ordinary) Least Squares (OLS)</strong></p>
+<p>The parametric model-based approach reduces the problem of estimating <span class="math inline">\(f\)</span> down to one of estimating a <em>finite</em> set of parameters <span class="math inline">\(\beta_0,\beta_1,\dots,\beta_p.\)</span></p>
 <ul>
-<li>Pro: Simple to estimate</li>
-<li>Con: Possible model misspecification (Why shall we know that the shape/form of the true <span class="math inline">\(f\)</span>?)</li>
+<li><strong>Pro:</strong> Simple to estimate</li>
+<li><strong>Con:</strong> Possible model misspecification (Why should we know the true shape/form of <span class="math inline">\(f\)</span>?)</li>
 </ul>
 <p>We can try to address the problem of model misspecification by choosing flexible models that can fit many different possible functional forms for <span class="math inline">\(f.\)</span></p>
-<p><strong>But:</strong> Fitting a more flexible model requires estimating a greater number of parameters. These more complex models can lead to a phenomenon known as <strong>overfitting</strong> the data, which essentially means they follow the errors, or noise, too closely.</p>
-<p>These issues are discussed through-out this course.</p>
+<p><strong>But:</strong> Fitting a more flexible model requires estimating a greater number of parameters (large <span class="math inline">\(p\)</span>). These more complex models can lead to a phenomenon known as <strong>overfitting</strong> the data, which essentially means they follow the errors/noise too closely.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These issues (model-flexibility and overfitting) are discussed through-out this course.</p>
+</div>
+</div>
 </section>
 <section id="non-parametric-methods" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h3>
-<p>Non-parametric methods do not make explicit assumptions about the functional form of <span class="math inline">\(f.\)</span> Instead, they make qualitative assumptions on <span class="math inline">\(f\)</span> being a <em>smooth</em> function (i.e.&nbsp;continuously differentiable).</p>
-<p>By avoiding the assumption of a particular, parametric functional form for <span class="math inline">\(f,\)</span> non-parametric methods have the potential to accurately fit a wider range of possible shapes for <span class="math inline">\(f.\)</span></p>
-<p>Major disadvantage: Non-parametric methods require a large number of observations to obtain an accurate estimate for <span class="math inline">\(f;\)</span> far more than is typically needed for a parametric approach if the parametric model assumption is correct.</p>
+<p>Non-parametric methods do not make explicit assumptions about the functional form of <span class="math inline">\(f.\)</span> Instead, they make qualitative assumptions on <span class="math inline">\(f\)</span> such as, for instance, requiring that <span class="math inline">\(f\)</span> is a <em>smooth</em> (e.g.&nbsp;two times continuously differentiable) function.</p>
+<ul>
+<li><p><strong>Pro:</strong> By avoiding the assumption of a particular parametric functional form for <span class="math inline">\(f,\)</span> non-parametric methods have the potential to accurately fit a wider range of possible shapes for <span class="math inline">\(f.\)</span></p></li>
+<li><p><strong>Con:</strong> Non-parametric methods require a large number of observations to obtain an accurate estimate for <span class="math inline">\(f;\)</span> far more observations than is typically needed for a parametric approach if the parametric model assumption is correct. (Non-parametric methods are “data-hungry”.)</p></li>
+</ul>
 </section>
 <section id="the-trade-off-between-prediction-accuracy-and-model-interpretability" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="the-trade-off-between-prediction-accuracy-and-model-interpretability"><span class="header-section-number">1.2.1</span> The Trade-Off Between Prediction Accuracy and Model Interpretability</h3>

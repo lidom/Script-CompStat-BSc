@@ -53,6 +53,7 @@ In this setting, $\hat{f}$ is often treated as a **black box**, in the sense tha
 ### Accuracy of a Prediction {-}
 
 The accuracy of $\hat{Y}$ as a prediction for $Y$ depends on two quantities: 
+
 * the **reducible error** and 
 * the **irreducible error.** 
 
@@ -69,31 +70,50 @@ our prediction would still have some error in it! This is because $Y$ is also a 
 
 Consider a *given* estimate $\hat{f}$ and a *given* set of predictors $X,$ which yields the prediction $\hat{Y} = \hat{f}(X).$ Assume for a moment that both $\hat{f}$ and $X$ are fixed, so that the only variability comes from $\epsilon.$ Then, it is easy to show that
 \begin{align*}
+\overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
+=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}, 
+\end{align*}
+where 
+
+* $E\left[(Y - \hat{Y})^2\right]$ represents the expected value, of the squared difference between the predicted $\hat{Y}=\hat{f}(X)$ and actual value of $Y,$ 
+* and $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
+
+
+Derivation: 
+
+\begin{align*}
 &E\left[(Y - \hat{Y})^2\right]\\ 
 &=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
-&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\ 
-% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\ 
-&=\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\ 
-&=\left(f(X) -\hat{f}(X)\right)^2 - \left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
-&=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}, 
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\ 
+% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\ 
+&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\ 
+&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
+&=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
 \end{align*}
-where $E\left[(Y - \hat{Y})^2\right]$ represents the expected value,of the squared difference between the predicted and actual value of $Y,$ and where $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
+
+It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for $Y,$ i.e. 
+$$
+E\left[(Y - \hat{Y})^2\right] \geq Var\left(\epsilon\right)
+$$
+This bound is almost always unknown in practice.
 
 
+::: {.callout-tip}
 The focus of this course is on techniques for estimating $f$ with the aim of **minimizing the reducible error**. 
+::: 
 
-It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for $Y.$ This bound is almost always unknown in practice.
 
 ## (Parameter) Inference {-}
 
-We are often interested in understanding the association between $Y$ and $X_1,\dots,X_p.$ In this situation we wish to estimate $f,$ but our goal is not necessarily to make predictions for $Y.$ Now $\hat{f}$ cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:
+We are often interested in *understanding* the association between $Y$ and $X_1,\dots,X_p.$ In this situation we wish to estimate $f,$ but our goal is not necessarily to make predictions for $Y.$ Now $\hat{f}$ cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:
 
 * Which predictors are associated with the response? 
 * What is the relationship between the response and each predictor?
 * Can the relationship between $Y$ and each predictor be adequately summarized using a *linear equation*, or is the relationship more complicated? 
 
-
+::: {.callout-tip}
 In this course, we will see a number of examples that fall into the **prediction setting**, the **inference setting**, or a **combination** of the two.
+:::
 
 
 ## How Do We Estimate $f$?
@@ -106,31 +126,39 @@ $$
 $$
 where 
 $$
-x_i=(x_{i1},x_{i2},\dots,x_{ip})^T
+x_i=(x_{i1},x_{i2},\dots,x_{ip})^T\in\mathbb{R}^p
+$$
+and
+$$
+y_i\in\mathbb{R}
 $$
 for all $i=1,2,\dots,n.$
 
 These $n$ observations are called **training data** because we will use these training observations to train, or teach, our method how to estimate $f.$ 
 
 
-Our goal is to find a function $hat{f}$ such that 
+Our goal is to find a function $\hat{f}$ such that 
 $$
 Y \approx \hat{f}(X) 
 $$
-for any observation $(X, Y)$. 
+for any observed realization of $(X, Y).$ 
 
-Broadly speaking, most statistical learning methods for this task can be characterized as either **parametric** or **non-parametric**. 
+Broadly speaking, most statistical learning methods for this task can be characterized as either 
 
+* **parametric** or 
+* **non-parametric**. 
+
+We discuss each in turn.
 
 ### Parametric Methods {-}
 
 
-Parametric methods involve a two-step model-based approach.
+Parametric methods involve a **two-step model-based estimation approach:**
 
 1. First, we make an assumption about the functional form, or shape,
-of $f.$ For example, a very simple, but often used assumption is that $f$ is linear in $X$:
+of $f.$ For example, a very simple, but often used assumption is that $f$ is a linear function, i.e.
 $$
-f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p.
 $${#eq-linmodeq}
 
 2. After a model has been selected, we need a procedure that uses the
@@ -139,30 +167,30 @@ $$
 Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
 $$
 
-Most common estimation technique: **(Ordinary) Least Squares**
+Most common estimation technique: **(Ordinary) Least Squares (OLS)**
 
 
-The parametric model-based approach reduces the problem of estimating $f$ down to one of estimating a set of parameters. 
+The parametric model-based approach reduces the problem of estimating $f$ down to one of estimating a *finite* set of parameters $\beta_0,\beta_1,\dots,\beta_p.$ 
 
-* Pro: Simple to estimate
-* Con: Possible model misspecification (Why shall we know that the shape/form of the true $f$?)
+* **Pro:** Simple to estimate
+* **Con:** Possible model misspecification (Why should we know the true shape/form of $f$?)
 
 We can try to address the problem of model misspecification by choosing flexible models that can fit many different possible functional forms for $f.$ 
 
-**But:** Fitting a more flexible model requires estimating a greater number of parameters. These more complex models can lead to a phenomenon known as **overfitting** the data, which essentially means they follow the errors, or noise, too closely. 
+**But:** Fitting a more flexible model requires estimating a greater number of parameters (large $p$). These more complex models can lead to a phenomenon known as **overfitting** the data, which essentially means they follow the errors/noise too closely. 
 
-These issues are discussed through-out this course.
-
+::: {.callout-tip}
+These issues (model-flexibility and overfitting) are discussed through-out this course.
+::: 
 
 
 ### Non-Parametric Methods {-}
 
-Non-parametric methods do not make explicit assumptions about the functional form of $f.$ Instead, they make qualitative assumptions on $f$ being a *smooth* function (i.e. continuously differentiable). 
+Non-parametric methods do not make explicit assumptions about the functional form of $f.$ Instead, they make qualitative assumptions on $f$ such as, for instance, requiring that $f$ is a *smooth* (e.g. two times continuously differentiable) function. 
 
-By avoiding the assumption of a particular, parametric functional form for $f,$ non-parametric methods have the potential to accurately fit a wider range of possible shapes for $f.$
+* **Pro:** By avoiding the assumption of a particular parametric functional form for $f,$ non-parametric methods have the potential to accurately fit a wider range of possible shapes for $f.$
 
-
-Major disadvantage: Non-parametric methods require a large number of observations to obtain an accurate estimate for $f;$ far more than is typically needed for a parametric approach if the parametric model assumption is correct. 
+* **Con:** Non-parametric methods require a large number of observations to obtain an accurate estimate for $f;$ far more observations than is typically needed for a parametric approach if the parametric model assumption is correct. (Non-parametric methods are "data-hungry".)
 
 
 ### The Trade-Off Between Prediction Accuracy and Model Interpretability
