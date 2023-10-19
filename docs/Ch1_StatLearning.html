@@ -213,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#parametric-methods" id="toc-parametric-methods" class="nav-link" data-scroll-target="#parametric-methods">Parametric Methods</a></li>
   <li><a href="#non-parametric-methods" id="toc-non-parametric-methods" class="nav-link" data-scroll-target="#non-parametric-methods">Non-Parametric Methods</a></li>
   <li><a href="#the-trade-off-between-prediction-accuracy-and-model-interpretability" id="toc-the-trade-off-between-prediction-accuracy-and-model-interpretability" class="nav-link" data-scroll-target="#the-trade-off-between-prediction-accuracy-and-model-interpretability"><span class="toc-section-number">1.2.1</span>  The Trade-Off Between Prediction Accuracy and Model Interpretability</a></li>
-  <li><a href="#supervised-versus-unsupervised-learning" id="toc-supervised-versus-unsupervised-learning" class="nav-link" data-scroll-target="#supervised-versus-unsupervised-learning"><span class="toc-section-number">1.2.2</span>  Supervised Versus Unsupervised Learning</a></li>
+  <li><a href="#supervised-versus-unsupervised-learning" id="toc-supervised-versus-unsupervised-learning" class="nav-link" data-scroll-target="#supervised-versus-unsupervised-learning"><span class="toc-section-number">1.2.2</span>  Supervised versus Unsupervised Learning</a></li>
   <li><a href="#regression-versus-classification-problems" id="toc-regression-versus-classification-problems" class="nav-link" data-scroll-target="#regression-versus-classification-problems"><span class="toc-section-number">1.2.3</span>  Regression Versus Classification Problems</a></li>
   </ul></li>
   <li><a href="#assessing-model-accuracy" id="toc-assessing-model-accuracy" class="nav-link" data-scroll-target="#assessing-model-accuracy"><span class="toc-section-number">1.3</span>  Assessing Model Accuracy</a>
@@ -367,17 +367,55 @@ Tip
 </section>
 <section id="how-do-we-estimate-f" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="how-do-we-estimate-f"><span class="header-section-number">1.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</h2>
-<p>We will always assume that we have observed a set of <span class="math inline">\(n\)</span> different data points <span class="math display">\[
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
-\]</span> where <span class="math display">\[
-x_i=(x_{i1},x_{i2},\dots,x_{ip})^T\in\mathbb{R}^p
-\]</span> and <span class="math display">\[
-y_i\in\mathbb{R}
-\]</span> for all <span class="math inline">\(i=1,2,\dots,n.\)</span></p>
-<p>These <span class="math inline">\(n\)</span> observations are called <strong>training data</strong> because we will use these training observations to train, or teach, our method how to estimate <span class="math inline">\(f.\)</span></p>
+<p>Consider the general regression model <span id="eq-GRegMod"><span class="math display">\[
+Y=f(X)+\epsilon,
+\tag{1.1}\]</span></span> where <span class="math display">\[
+X=(X_{1}, \dots,X_{p})
+\]</span> is a multivariate predictor.</p>
+<p>Let <span id="eq-randomsample"><span class="math display">\[
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
+\tag{1.2}\]</span></span> be a <strong>random sample</strong> from <a href="#eq-GRegMod">Equation&nbsp;<span>1.1</span></a>, i.e.</p>
+<ol type="1">
+<li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math display">\[
+(X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
+\]</span> are independent of each other for all <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(j=1,\dots,n\)</span> with <span class="math inline">\(i\neq j.\)</span><br><br></li>
+<li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math inline">\((X_i,Y_i),\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> have all the same distribution as <span class="math inline">\((X,Y)\)</span> from <a href="#eq-GRegMod">Equation&nbsp;<span>1.1</span></a>, i.e. <span class="math display">\[
+(X_i,Y_i)\sim(X,Y)
+\]</span> for all <span class="math inline">\(i=1,\dots,n.\)</span> <br><br></li>
+</ol>
+<p>The random sample <a href="#eq-randomsample">Equation&nbsp;<span>1.2</span></a> is thus a set of <span class="math inline">\(n\)</span> many <strong>independent and identically distributed (iid)</strong> multivariate random variables <span class="math display">\[
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}.
+\]</span></p>
+<p>An observed realization of the random sample will be denoted using lowercase letters <span class="math display">\[
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}.
+\]</span> These <span class="math inline">\(n\)</span> observations are called <strong>training data</strong> because we will use these training observations to train, i.e., compute and estimate <span class="math inline">\(\hat{f}\)</span> of the unknown <span class="math inline">\(f.\)</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Our goal is to find a function <span class="math inline">\(\hat{f}\)</span> such that <span class="math display">\[
 Y \approx \hat{f}(X)
-\]</span> for any observed realization of <span class="math inline">\((X, Y).\)</span></p>
+\]</span> for <strong><em>any</em></strong> observed realization of <span class="math inline">\((X, Y).\)</span></p>
+<p>That is, the estimate <span class="math inline">\(\hat{f}\)</span> needs to provide a good approximation <span class="math display">\[
+y_{i} \approx \hat{f}(x_{i})
+\]</span> <strong>not only</strong> for the observed training data points <span class="math display">\[
+(x_i,y_i),\quad i=1,\dots,n,
+\]</span> <strong>but also</strong> for any possible <em>new</em> realization <span class="math inline">\((x_{new},y_{new})\)</span> of <span class="math inline">\((X,Y)\)</span> <span class="math display">\[
+y_{new} \approx \hat{f}(x_{new}).
+\]</span></p>
+<p>Thus, fitting the noise (irreducible component) in the training data will typically lead to bad approximations of new observations from a test data set.</p>
+<img src="images/Traintest.png" class="img-fluid"> <br>
+<center>
+<img src="images/test_vs_train.jpeg" class="img-fluid">
+</center>
+</div>
+</div>
 <p>Broadly speaking, most statistical learning methods for this task can be characterized as either</p>
 <ul>
 <li><strong>parametric</strong> or</li>
@@ -390,8 +428,8 @@ Y \approx \hat{f}(X)
 <ol type="1">
 <li><p>First, we make an assumption about the functional form, or shape, of <span class="math inline">\(f.\)</span> For example, a very simple, but often used assumption is that <span class="math inline">\(f\)</span> is a linear function, i.e. <span id="eq-linmodeq"><span class="math display">\[
 f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p.
-\tag{1.1}\]</span></span></p></li>
-<li><p>After a model has been selected, we need a procedure that uses the training data to fit or train the model. For example, in the case of the linear model <a href="#eq-linmodeq">Equation&nbsp;<span>1.1</span></a>, we need to estimate the parameters <span class="math inline">\(\beta_0,\beta_1,\dots,\beta_p\)</span> such that <span class="math display">\[
+\tag{1.3}\]</span></span></p></li>
+<li><p>After a model has been selected, we need a procedure that uses the training data to fit or train the model. For example, in the case of the linear model <a href="#eq-linmodeq">Equation&nbsp;<span>1.3</span></a>, we need to estimate the parameters <span class="math inline">\(\beta_0,\beta_1,\dots,\beta_p\)</span> such that <span class="math display">\[
 Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
 \]</span></p></li>
 </ol>
@@ -437,11 +475,11 @@ Tip
 <p>Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for <strong>overfitting</strong> in highly flexible methods.</p>
 </section>
 <section id="supervised-versus-unsupervised-learning" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="supervised-versus-unsupervised-learning"><span class="header-section-number">1.2.2</span> Supervised Versus Unsupervised Learning</h3>
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="supervised-versus-unsupervised-learning"><span class="header-section-number">1.2.2</span> Supervised versus Unsupervised Learning</h3>
 <p>Most statistical learning problems fall into one of two categories:</p>
 <ul>
-<li>supervised or</li>
-<li>unsupervised.</li>
+<li>supervised</li>
+<li>unsupervised</li>
 </ul>
 <p>In supervised learning problems, we observe for each predictor <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> also a response <span class="math inline">\(y_i.\)</span></p>
 <p>In unsupervised learning problems, we only the predictor <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> but not the associated responses <span class="math inline">\(y_i.\)</span></p>
@@ -469,8 +507,7 @@ Tip
 </section>
 <section id="assessing-model-accuracy" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="assessing-model-accuracy"><span class="header-section-number">1.3</span> Assessing Model Accuracy</h2>
-<p><strong>There is no free lunch in statistics:</strong> no one method dominates all others over all possible data sets. On a particular data set, one specific method may work best, but some other method may work better on a similar but different data set.</p>
-<p>Therefore, it is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.</p>
+<p>It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.</p>
 <section id="measuring-the-quality-of-fit" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="measuring-the-quality-of-fit"><span class="header-section-number">1.3.1</span> Measuring the Quality of Fit</h3>
 <p>In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE).</p>
@@ -482,24 +519,25 @@ Tip
 <li><span class="math inline">\(\hat{f}(x_i)\)</span> is the prediction that <span class="math inline">\(\hat{f}\)</span> gives for the <span class="math inline">\(i\)</span>th training data observation.</li>
 </ul>
 <p>In general, however, we do not really care how well the method works on the training data. In fact, a very flexible (e.g.&nbsp;non-parametric) estimation method will tend to overfit the training data such that <span class="math inline">\(y_i\approx \hat{f}(x_i)\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span> resulting in a training MSE that is close to zero since <span class="math inline">\(\hat{f}(x_i)\)</span> fits also the errors <span class="math inline">\(\epsilon_i.\)</span></p>
-<p>We are interested in the accuracy of the predictions that we obtain when we apply our method to previously unseen <strong>test data</strong>.</p>
+<p>We are interested in the accuracy of the predictions that we obtain when we apply our method to <strong>previously unseen test data</strong>.</p>
 <p><strong>Example:</strong> Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don’t really care how well our method predicts last week’s stock price. We instead care about how well it will predict tomorrow’s price or next month’s price.</p>
-<p><strong>Example:</strong> Suppose that we have clinical measurements (e.g.&nbsp;weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.</p>
+<!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
 <p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest <em>training</em> MSE.</p>
 <p>Let <span class="math inline">\(\hat{f}\)</span> be computed from the training data <span class="math inline">\(\{(x_1,y_1),\dots,(x_n,y_n)\}.\)</span> And let <span class="math display">\[
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
-\]</span> denote the set of <span class="math inline">\(m\)</span> test data points <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for a given predictor value <span class="math inline">\(x_0\)</span>.</p>
-<p>Then, the point-wise test MSE at <span class="math inline">\(x_0\)</span> is given by, <span class="math display">\[\begin{align*}
+\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for one given predictor value <span class="math inline">\(x_0\)</span>.</p>
+<p>Then, the <strong>point-wise test MSE</strong> at <span class="math inline">\(x_0\)</span> is given by, <span class="math display">\[\begin{align*}
 \operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
 \end{align*}\]</span></p>
-<p>Typically, however, we want that a method has a <em>globally</em> low test MSE, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, not only at a certain given value <span class="math inline">\(x_0\)</span>. Let <span class="math display">\[
+<p>Typically, however, we want that a method has <strong>globally</strong>, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, a low test MSE (not only at a certain given value <span class="math inline">\(x_0\)</span>). Let <span class="math display">\[
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
-\]</span> denote the set of <span class="math inline">\(m\)</span> test data points with predictor values <span class="math inline">\(x_{01},\dots,x_{0m}\)</span> in the range of <span class="math inline">\(X\)</span>. Then, the global test MSE is given by, <span class="math display">\[\begin{align*}
+\]</span> denote the set of <span class="math inline">\(m\)</span> test data points with different predictor values <span class="math inline">\(x_{01},\dots,x_{0m}\)</span> in the range of <span class="math inline">\(X\)</span>. Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[\begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}\]</span></p>
 <p>Note that if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
-\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_i^2
+\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
 \]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)\)</span>, i.e., equals the <strong>irreducible error component</strong> of the mean squared (prediction) error.</p>
+<p>Figures 2.9 to 2.11 shows training and test MSEs for estimates <span class="math inline">\(\hat{f}\)</span> for <span class="math inline">\(f\)</span> with varying complexities and different signal-to-noise ratios <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span>.</p>
 <p><br></p>
 <p><img src="images/Fig_2_9.png" class="img-fluid"></p>
 <p><br></p>
@@ -663,7 +701,7 @@ P(Y = j | X = x_{0})
 &amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
 &amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j)
 \end{align}
-\tag{1.2}\]</span></span> Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.2</span></a>.</p>
+\tag{1.4}\]</span></span> Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.4</span></a>.</p>
 <p>Figure 2.14 provides an illustrative example of the KNN approach. In the left-hand panel, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. In the right-hand panel of Figure 2.14 we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</p>
 <p><br></p>
 <p><img src="images/Fig_2_14.png" class="img-fluid"></p>

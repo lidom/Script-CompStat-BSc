@@ -119,29 +119,74 @@ In this course, we will see a number of examples that fall into the **prediction
 ## How Do We Estimate $f$?
 
 
-We will always assume that we have observed a set of $n$ different
-data points
+Consider the general regression model
 $$
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
-$$
+Y=f(X)+\epsilon,
+$${#eq-GRegMod}
 where 
 $$
-x_i=(x_{i1},x_{i2},\dots,x_{ip})^T\in\mathbb{R}^p
+X=(X_{1}, \dots,X_{p})
 $$
-and
+is a multivariate predictor. 
+
+Let 
 $$
-y_i\in\mathbb{R}
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
+$${#eq-randomsample}
+be a **random sample** from @eq-GRegMod, i.e.
+
+1. The multivariate, $p+1$ dimensional, random vectors 
 $$
-for all $i=1,2,\dots,n.$
+(X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
+$$
+are independent of each other for all $i=1,\dots,n$ and $j=1,\dots,n$ with $i\neq j.$<br><br>
+2. The multivariate, $p+1$ dimensional, random vectors $(X_i,Y_i),$ $i=1,\dots,n,$ have all the same distribution as $(X,Y)$ from @eq-GRegMod, i.e.
+$$
+(X_i,Y_i)\sim(X,Y)
+$$
+for all $i=1,\dots,n.$ <br><br>
 
-These $n$ observations are called **training data** because we will use these training observations to train, or teach, our method how to estimate $f.$ 
+
+The random sample @eq-randomsample is thus a set of $n$ many **independent and identically distributed (iid)** multivariate random variables
+$$
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}.
+$$
 
 
+An observed realization of the random sample will be denoted using lowercase letters 
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}.
+$$
+These $n$ observations are called **training data** because we will use these training observations to train, i.e., compute and estimate $\hat{f}$ of the unknown $f.$ 
+
+::: {.callout-note}
 Our goal is to find a function $\hat{f}$ such that 
 $$
 Y \approx \hat{f}(X) 
 $$
-for any observed realization of $(X, Y).$ 
+for ***any*** observed realization of $(X, Y).$ 
+
+That is, the estimate $\hat{f}$ needs to provide a good approximation 
+$$
+y_{i} \approx \hat{f}(x_{i})
+$$
+**not only** for the observed training data points 
+$$
+(x_i,y_i),\quad i=1,\dots,n,
+$$ 
+**but also** for any possible *new* realization $(x_{new},y_{new})$ of $(X,Y)$
+$$
+y_{new} \approx \hat{f}(x_{new}).
+$$
+
+Thus, fitting the noise (irreducible component) in the training data will typically lead to bad approximations of new observations from a test data set. 
+
+![](images/Traintest.png)
+<br>
+<center>
+![](images/test_vs_train.jpeg)
+</center>
+:::
 
 Broadly speaking, most statistical learning methods for this task can be characterized as either 
 
@@ -208,12 +253,12 @@ In some settings, we are only interested in prediction, and the interpretability
 Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for **overfitting** in highly flexible methods. 
 
 
-### Supervised Versus Unsupervised Learning
+### Supervised versus Unsupervised Learning
 
 Most statistical learning problems fall into one of two categories: 
 
-* supervised or 
-* unsupervised. 
+* supervised 
+* unsupervised 
 
 In supervised learning problems, we observe for each predictor $x_i,$ $i=1,\dots,n,$ also a response $y_i.$
 
@@ -251,10 +296,7 @@ However, the distinction (regression vs. classification) is not always that cris
 
 ## Assessing Model Accuracy
 
-**There is no free lunch in statistics:** no one method dominates all others over all possible data sets. On a particular data set, one specific method may work best, but some other method may work better on a similar but different data set. 
-
-
-Therefore, it is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
+It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
 
 ### Measuring the Quality of Fit
 
@@ -272,12 +314,12 @@ where
 In general, however, we do not really care how well the method works on the training data. In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$
 
 
-We are interested in the accuracy of the predictions that we obtain when we apply our method to previously unseen **test data**. 
+We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
 
 **Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
 or next month's price. 
 
-**Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements. 
+<!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
 
 Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
 
@@ -285,27 +327,31 @@ Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.
 $$
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
 $$
-denote the set of $m$ test data points $y_{01},\dots,y_{0m}$ for a given predictor value $x_0$. 
+denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. 
 
-Then, the point-wise test MSE at $x_0$ is given by,
+Then, the **point-wise test MSE** at $x_0$ is given by,
 \begin{align*}
 \operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
 \end{align*}
 
-Typically, however, we want that a method has a *globally* low test MSE, i.e. for all predictor values in the range of $X$, not only at a certain given value $x_0$. Let 
+Typically, however, we want that a method has **globally**, i.e. for all predictor values in the range of $X$, a low test MSE (not only at a certain given value $x_0$). Let 
 $$
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
 $$
-denote the set of $m$ test data points with predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. Then, the global test MSE is given by,
+denote the set of $m$ test data points with different predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. Then, the **global test MSE** is given by,
 \begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
 
 Note that if $\hat{f}\approx f,$ then 
 $$
-\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_i^2
+\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
 $$
 estimates the variance of the error term $Var(\epsilon)$, i.e., equals the **irreducible error component** of the mean squared (prediction) error. 
+
+
+Figures 2.9 to 2.11 shows training and test MSEs for estimates $\hat{f}$ for $f$ with varying complexities and different signal-to-noise ratios $Var(f(X))/Var(\epsilon)$. 
+
 
 <br>
 
