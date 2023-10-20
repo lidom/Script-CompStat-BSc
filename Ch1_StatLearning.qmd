@@ -353,7 +353,7 @@ or next month's price.  -->
 Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
 
 
-### Point-Wise Test MSE {-}
+### Local (i.e. Point-Wise) Test MSE {-}
 
 Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.$ And let 
 $$
@@ -361,8 +361,9 @@ $$
 $$
 denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. This type of $x_0$-specific test data is a realization of a random sample conditional on $X=x_0$
 $$
-(x_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
 $$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
 
 Then, the **point-wise test MSE** at $X=x_0$ is given by,
 \begin{align*}
@@ -376,7 +377,17 @@ Typically, however, we want that a method has **globally**, i.e. for all predict
 $$
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
 $$
-denote the set of $m$ test data points with different predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. Then, the **global test MSE** is given by,
+denote the set of $m$ test data points with different predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. This type of test data is a realization of a random sample 
+$$
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+$$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+
+
+
+
+
+Then, the **global test MSE** is given by,
 \begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
@@ -390,7 +401,7 @@ estimates the variance of the error term $Var(\epsilon)$, i.e., equals the **irr
 
 <br>
 
-Figures 2.9 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+Figure 2.9 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
 
 * a moderately complex $f$ 
 * a moderate signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
@@ -399,7 +410,7 @@ Figures 2.9 shows training and test MSEs for smoothing spline estimates $\hat{f}
 
 <br>
 
-Figures 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+Figure 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
 
 * a very simple $f$ 
 * a moderate signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
@@ -408,7 +419,7 @@ Figures 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f
 
 <br>
 
-Figures 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+Figure 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
 
 * a moderately complex $f$
 * a very large signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
