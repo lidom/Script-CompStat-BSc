@@ -186,7 +186,7 @@ $$
 y_{new} \approx \hat{f}(x_{new}).
 $$
 
-Thus, fitting the noise (irreducible component) in the training data will typically lead to bad approximations of new observations from a test data set. 
+Fitting the noise (irreducible component) in the training data will typically lead to bad approximations of new observations of a test data set. 
 
 ![](images/Traintest.png)
 <br>
