@@ -261,6 +261,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>Reading: Chapter 2 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
 </blockquote>
+<section id="r-codes-for-this-chapter" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="r-codes-for-this-chapter"><code>R</code>-Codes for this Chapter</h4>
+<ul>
+<li>Introduction to <code>R</code>: <a href="https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&amp;dl=0">Ch1_0_Rcodes.R</a></li>
+</ul>
+</section>
 <section id="what-is-statistical-learning" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="what-is-statistical-learning"><span class="header-section-number">1.1</span> What is Statistical Learning?</h2>
 <p>Suppose that we observe a quantitative response <span class="math inline">\(Y\)</span> and <span class="math inline">\(p\)</span> different predictors, <span class="math inline">\(X_1, X_2, \dots, X_p.\)</span></p>
@@ -270,8 +276,12 @@ X = (X_1, X_2, \dots, X_p),
 Y = f(X) + \epsilon.
 \]</span></p>
 <ul>
-<li><span class="math inline">\(f\)</span> is some fixed but unknown function of <span class="math inline">\(X = (X_1, X_2, \dots, X_p).\)</span></li>
-<li><span class="math inline">\(\epsilon\)</span> a random error term, which is independent of <span class="math inline">\(X\)</span> and has mean zero.</li>
+<li><span class="math inline">\(f\)</span> is some fixed but unknown function of <span class="math inline">\(X = (X_1, X_2, \dots, X_p):\)</span></li>
+<li><span class="math inline">\(\epsilon\)</span> a random error term fulfilling the following two assumptions:
+<ul>
+<li><span class="math inline">\(\epsilon\)</span> and <span class="math inline">\(X\)</span> are independent of each other</li>
+<li><span class="math inline">\(\epsilon\)</span> has mean zero <span class="math inline">\(E(\epsilon)=0.\)</span></li>
+</ul></li>
 </ul>
 <p>In this formulation, <span class="math inline">\(f\)</span> represents the <em>systematic</em> information that <span class="math inline">\(X\)</span> provides about <span class="math inline">\(Y.\)</span></p>
 <p>In essence, <strong>statistical learning</strong> refers to a set of approaches for estimating <span class="math inline">\(f.\)</span> In this chapter we outline some of the key theoretical concepts that arise in estimating <span class="math inline">\(f,\)</span> as well as tools for evaluating the estimates obtained.</p>
@@ -537,12 +547,26 @@ Tip
 <p>Note that if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
 \operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
 \]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)\)</span>, i.e., equals the <strong>irreducible error component</strong> of the mean squared (prediction) error.</p>
-<p>Figures 2.9 to 2.11 shows training and test MSEs for estimates <span class="math inline">\(\hat{f}\)</span> for <span class="math inline">\(f\)</span> with varying complexities and different signal-to-noise ratios <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span>.</p>
 <p><br></p>
+<p>Figures 2.9 shows training and test MSEs for smoothing spline estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
+<ul>
+<li>a moderately complex <span class="math inline">\(f\)</span></li>
+<li>a moderate signal-to-noise ratio <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span></li>
+</ul>
 <p><img src="images/Fig_2_9.png" class="img-fluid"></p>
 <p><br></p>
+<p>Figures 2.10 shows training and test MSEs for smoothing spline estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
+<ul>
+<li>a very simple <span class="math inline">\(f\)</span></li>
+<li>a moderate signal-to-noise ratio <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span></li>
+</ul>
 <p><img src="images/Fig_2_10.png" class="img-fluid"></p>
 <p><br></p>
+<p>Figures 2.11 shows training and test MSEs for smoothing spline estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
+<ul>
+<li>a moderately complex <span class="math inline">\(f\)</span></li>
+<li>a very large signal-to-noise ratio <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span></li>
+</ul>
 <p><img src="images/Fig_2_11.png" class="img-fluid"></p>
 <p><br></p>
 <div class="callout-caution callout callout-style-default callout-captioned">
@@ -551,11 +575,11 @@ Tip
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Coding Challenge
+Coding Challenge:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11 of our textbook. Discuss your results.</p>
+<p>Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11.</p>
 </div>
 </div>
 <p>In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available.</p>
@@ -717,7 +741,7 @@ P(Y = j | X = x_{0})
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Coding Challenge
+Coding Challenge:
 </div>
 </div>
 <div class="callout-body-container callout-body">

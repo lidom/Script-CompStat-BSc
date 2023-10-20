@@ -23,7 +23,7 @@ timetable %>% kbl() %>%  kable_styling()
   * [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
   * The PDF-version and further resources (datasets, etc.) of the textbook can be downloaded **for free** from [https://www.statlearning.com/](https://www.statlearning.com/)
 
-* [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes.
+<!-- * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes. -->
 * [This online script](https://www.dliebl.com/Script-CompStat-BSc/)
 * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0)
 

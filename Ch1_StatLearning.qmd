@@ -3,6 +3,11 @@
 > Reading: Chapter 2 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
 
+#### `R`-Codes for this Chapter {-}
+
+* Introduction to `R`: [Ch1_0_Rcodes.R](https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&dl=0)
+
+
 ## What is Statistical Learning? 
 
 Suppose that we observe a quantitative response $Y$ and $p$
@@ -17,8 +22,10 @@ $$
 Y = f(X) + \epsilon. 
 $$
 
-* $f$ is some fixed but unknown function of $X = (X_1, X_2, \dots, X_p).$ 
-* $\epsilon$ a random error term, which is independent of $X$ and has mean zero. 
+* $f$ is some fixed but unknown function of $X = (X_1, X_2, \dots, X_p):$
+* $\epsilon$ a random error term fulfilling the following two assumptions:  
+  * $\epsilon$ and $X$ are independent of each other 
+  * $\epsilon$ has mean zero $E(\epsilon)=0.$ 
 
 In this formulation, $f$ represents the *systematic* information that $X$ provides about $Y.$
 
@@ -350,18 +357,30 @@ $$
 estimates the variance of the error term $Var(\epsilon)$, i.e., equals the **irreducible error component** of the mean squared (prediction) error. 
 
 
-Figures 2.9 to 2.11 shows training and test MSEs for estimates $\hat{f}$ for $f$ with varying complexities and different signal-to-noise ratios $Var(f(X))/Var(\epsilon)$. 
-
-
 <br>
+
+Figures 2.9 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a moderately complex $f$ 
+* a moderate signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
 
 ![](images/Fig_2_9.png)
 
 <br>
 
+Figures 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a very simple $f$ 
+* a moderate signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
+
 ![](images/Fig_2_10.png)
 
 <br>
+
+Figures 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a moderately complex $f$
+* a very large signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
 
 ![](images/Fig_2_11.png)
 
@@ -369,9 +388,9 @@ Figures 2.9 to 2.11 shows training and test MSEs for estimates $\hat{f}$ for $f$
 
 ::: {.callout-caution}
 
-## Coding Challenge
+## Coding Challenge:
 
-Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11 of our textbook. Discuss your results.   
+Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11.   
 
 :::
 
@@ -604,7 +623,7 @@ Figure 2.14 provides an illustrative example of the KNN approach. In the left-ha
 
 ::: {.callout-caution}
 
-## Coding Challenge
+## Coding Challenge:
 
 The following `R`-code generates training data for the two-class classification problem with 
 
