@@ -602,20 +602,26 @@ Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
 </li>
 <li>Realizations of <span class="math inline">\(Y_{01},\dots,Y_{0m}\)</span> generate the test data at the predictor value <span class="math inline">\(x_0.\)</span></li>
 </ul>
-<p>One can show that the expected test MSE can be decomposed as following: <span class="math display">\[\begin{align*}
+<p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following: <span class="math display">\[\begin{align*}
 E\left[\operatorname{MSE}_{test}(x_0)\right]
 &amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp; =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
 &amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =E\left[\left(f(x_0) + \epsilon_0 - \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_0 + \epsilon_0^2 \right]\\[2ex]
+&amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp;+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_0\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex]
+&amp;+ E\left[\epsilon_0^2 \right]\\[2ex]
+&amp; =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_0)\\[2ex]
 %&amp; =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
 %&amp; =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
 %&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
 %&amp;\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
-%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon)\\[2ex]
+%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon_0)\\[2ex]
 %&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon)\\[2ex]
 %&amp; =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon)\\[2ex]
-&amp;\quad\text{(steps skipped since beyond scope)}\\[2ex]
+%&amp;\quad\text{(steps skipped since beyond scope)}\\[2ex]
 &amp; = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon\right)
 \end{align*}\]</span></p>
 <p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right],\)</span> refers to the average test MSE that we would obtain if we repeatedly estimated <span class="math inline">\(f\)</span> using training data set, and evaluated each at <span class="math inline">\(x_0.\)</span></p>
