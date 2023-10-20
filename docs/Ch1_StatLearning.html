@@ -219,6 +219,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#assessing-model-accuracy" id="toc-assessing-model-accuracy" class="nav-link" data-scroll-target="#assessing-model-accuracy"><span class="toc-section-number">1.3</span>  Assessing Model Accuracy</a>
   <ul class="collapse">
   <li><a href="#measuring-the-quality-of-fit" id="toc-measuring-the-quality-of-fit" class="nav-link" data-scroll-target="#measuring-the-quality-of-fit"><span class="toc-section-number">1.3.1</span>  Measuring the Quality of Fit</a></li>
+  <li><a href="#point-wise-test-mse" id="toc-point-wise-test-mse" class="nav-link" data-scroll-target="#point-wise-test-mse">Point-Wise Test MSE</a></li>
+  <li><a href="#global-test-mse" id="toc-global-test-mse" class="nav-link" data-scroll-target="#global-test-mse">Global Test MSE</a></li>
   <li><a href="#the-bias-variance-trade-off" id="toc-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-bias-variance-trade-off"><span class="toc-section-number">1.3.2</span>  The Bias-Variance Trade-Off</a></li>
   <li><a href="#the-classification-setting" id="toc-the-classification-setting" class="nav-link" data-scroll-target="#the-classification-setting"><span class="toc-section-number">1.3.3</span>  The Classification Setting</a></li>
   <li><a href="#the-bayes-classifier" id="toc-the-bayes-classifier" class="nav-link" data-scroll-target="#the-bayes-classifier">The Bayes Classifier</a></li>
@@ -479,10 +481,8 @@ Tip
 <blockquote class="blockquote">
 <p>Why would we ever choose to use a more restrictive method instead of a very flexible approach?</p>
 </blockquote>
-<p>If we are mainly interested in inference, then restrictive models are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1,\dots,X_p.\)</span></p>
-<p>By contrast, very flexible approaches, such as purely non-parametric methods, can lead to such complicated estimates of <span class="math inline">\(f\)</span> that it is difficult to understand how any individual predictor <span class="math inline">\(X_j\)</span> is associated with the response <span class="math inline">\(Y.\)</span></p>
-<p>In some settings, we are only interested in prediction, and the interpretability of the predictive model is simply not of interest. For instance, if we seek to develop an algorithm to predict the price of a stock, our sole requirement for the algorithm is that it predict accurately–interpretability is not a concern. In such settings, we might expect that it will be best to use the most flexible model available. Right?</p>
-<p>Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for <strong>overfitting</strong> in highly flexible methods.</p>
+<p>If we are mainly <strong>interested in inference</strong>, then <strong>restrictive models</strong> are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1,\dots,X_p.\)</span> <br> By contrast, very flexible approaches, such as purely non-parametric methods, can lead to such complicated estimates of <span class="math inline">\(f\)</span> that it is difficult to understand how any individual predictor <span class="math inline">\(X_j\)</span> is associated with the response <span class="math inline">\(Y.\)</span></p>
+<p>In some settings, we are only <strong>interested in prediction</strong>, and the interpretability of the predictive model is simply not of interest. For instance, if we seek to develop an algorithm to predict the price of a stock, our sole requirement for the algorithm is that it predict accurately. In such settings, we might expect that it will be best to use the most flexible model available. Right?<br> Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for <strong>overfitting</strong> in highly flexible methods.</p>
 </section>
 <section id="supervised-versus-unsupervised-learning" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="supervised-versus-unsupervised-learning"><span class="header-section-number">1.2.2</span> Supervised versus Unsupervised Learning</h3>
@@ -518,6 +518,19 @@ Tip
 <section id="assessing-model-accuracy" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="assessing-model-accuracy"><span class="header-section-number">1.3</span> Assessing Model Accuracy</h2>
 <p>It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.</p>
+<p>Let <span id="eq-trainingsample"><span class="math display">\[
+\{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0n},Y_{0m})\},
+\tag{1.4}\]</span></span> denote the test data random sample, where <span class="math display">\[
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
+\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math inline">\(Y=f(X)+\epsilon\)</span> in <a href="#eq-GRegMod">Equation&nbsp;<span>1.1</span></a>.</p>
+<p>The new test data random sample <a href="#eq-trainingsample">Equation&nbsp;<span>1.4</span></a></p>
+<ul>
+<li>is independent of the training data random sample <a href="#eq-randomsample">Equation&nbsp;<span>1.2</span></a></li>
+<li>has the same distribution as the training data random sample <a href="#eq-randomsample">Equation&nbsp;<span>1.2</span></a></li>
+</ul>
+<p>The observed realization <span class="math display">\[
+\{(x_{01},y_{01}),(x_{02},y_{02}),\dots,(x_{0m},y_{0m})\},
+\]</span> of the test data random sample is used to check the accuracy of the estimate <span class="math inline">\(\hat{f}.\)</span></p>
 <section id="measuring-the-quality-of-fit" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="measuring-the-quality-of-fit"><span class="header-section-number">1.3.1</span> Measuring the Quality of Fit</h3>
 <p>In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE).</p>
@@ -528,17 +541,26 @@ Tip
 <li><span class="math inline">\(\hat{f}\)</span> is computed from the training data</li>
 <li><span class="math inline">\(\hat{f}(x_i)\)</span> is the prediction that <span class="math inline">\(\hat{f}\)</span> gives for the <span class="math inline">\(i\)</span>th training data observation.</li>
 </ul>
-<p>In general, however, we do not really care how well the method works on the training data. In fact, a very flexible (e.g.&nbsp;non-parametric) estimation method will tend to overfit the training data such that <span class="math inline">\(y_i\approx \hat{f}(x_i)\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span> resulting in a training MSE that is close to zero since <span class="math inline">\(\hat{f}(x_i)\)</span> fits also the errors <span class="math inline">\(\epsilon_i.\)</span></p>
-<p>We are interested in the accuracy of the predictions that we obtain when we apply our method to <strong>previously unseen test data</strong>.</p>
-<p><strong>Example:</strong> Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don’t really care how well our method predicts last week’s stock price. We instead care about how well it will predict tomorrow’s price or next month’s price.</p>
+<p>In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to <strong>previously unseen test data</strong>.</p>
+<!-- In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$ -->
+<!-- **Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
+or next month's price.  -->
 <!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
 <p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest <em>training</em> MSE.</p>
+</section>
+<section id="point-wise-test-mse" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="point-wise-test-mse">Point-Wise Test MSE</h3>
 <p>Let <span class="math inline">\(\hat{f}\)</span> be computed from the training data <span class="math inline">\(\{(x_1,y_1),\dots,(x_n,y_n)\}.\)</span> And let <span class="math display">\[
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
-\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for one given predictor value <span class="math inline">\(x_0\)</span>.</p>
-<p>Then, the <strong>point-wise test MSE</strong> at <span class="math inline">\(x_0\)</span> is given by, <span class="math display">\[\begin{align*}
+\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for one given predictor value <span class="math inline">\(x_0\)</span>. This type of <span class="math inline">\(x_0\)</span>-specific test data is a realization of a random sample conditional on <span class="math inline">\(X=x_0\)</span> <span class="math display">\[
+(x_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+\]</span></p>
+<p>Then, the <strong>point-wise test MSE</strong> at <span class="math inline">\(X=x_0\)</span> is given by, <span class="math display">\[\begin{align*}
 \operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
 \end{align*}\]</span></p>
+</section>
+<section id="global-test-mse" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="global-test-mse">Global Test MSE</h3>
 <p>Typically, however, we want that a method has <strong>globally</strong>, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, a low test MSE (not only at a certain given value <span class="math inline">\(x_0\)</span>). Let <span class="math display">\[
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
 \]</span> denote the set of <span class="math inline">\(m\)</span> test data points with different predictor values <span class="math inline">\(x_{01},\dots,x_{0m}\)</span> in the range of <span class="math inline">\(X\)</span>. Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[\begin{align*}
@@ -731,7 +753,7 @@ P(Y = j | X = x_{0})
 &amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
 &amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j)
 \end{align}
-\tag{1.4}\]</span></span> Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.4</span></a>.</p>
+\tag{1.5}\]</span></span> Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.5</span></a>.</p>
 <p>Figure 2.14 provides an illustrative example of the KNN approach. In the left-hand panel, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. In the right-hand panel of Figure 2.14 we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</p>
 <p><br></p>
 <p><img src="images/Fig_2_14.png" class="img-fluid"></p>

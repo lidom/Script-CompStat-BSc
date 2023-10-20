@@ -251,12 +251,10 @@ One might reasonably ask the following question:
 
 >  Why would we ever choose to use a more restrictive method instead of a very flexible approach?
 
-If we are mainly interested in inference, then restrictive models are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between $Y$ and $X_1,\dots,X_p.$
-
+If we are mainly **interested in inference**, then **restrictive models** are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between $Y$ and $X_1,\dots,X_p.$ <br>
 By contrast, very flexible approaches, such as purely non-parametric methods, can lead to such complicated estimates of $f$ that it is difficult to understand how any individual predictor $X_j$ is associated with the response $Y.$
 
-In some settings, we are only interested in prediction, and the interpretability of the predictive model is simply not of interest. For instance, if we seek to develop an algorithm to predict the price of a stock, our sole requirement for the algorithm is that it predict accurately--interpretability is not a concern. In such settings, we might expect that it will be best to use the most flexible model available. Right? 
-
+In some settings, we are only **interested in prediction**, and the interpretability of the predictive model is simply not of interest. For instance, if we seek to develop an algorithm to predict the price of a stock, our sole requirement for the algorithm is that it predict accurately. In such settings, we might expect that it will be best to use the most flexible model available. Right?<br> 
 Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for **overfitting** in highly flexible methods. 
 
 
@@ -305,6 +303,30 @@ However, the distinction (regression vs. classification) is not always that cris
 
 It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
 
+Let 
+$$
+\{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0n},Y_{0m})\},
+$${#eq-trainingsample}
+denote the test data random sample, where 
+$$
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
+$$ 
+with $(X,Y)$ being defined by the general regression model $Y=f(X)+\epsilon$ in @eq-GRegMod. 
+
+The new test data random sample @eq-trainingsample 
+
+* is independent of the training data random sample @eq-randomsample
+* has the same distribution as the training data random sample @eq-randomsample
+
+The observed realization 
+$$
+\{(x_{01},y_{01}),(x_{02},y_{02}),\dots,(x_{0m},y_{0m})\},
+$$
+of the test data random sample is used to check the accuracy of the estimate $\hat{f}.$ 
+
+
+
+
 ### Measuring the Quality of Fit
 
 In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE). 
@@ -318,28 +340,37 @@ where
 * $\hat{f}$ is computed from the training data
 * $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
 
-In general, however, we do not really care how well the method works on the training data. In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$
+In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
+
+<!-- In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$ -->
 
 
-We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
-
-**Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
-or next month's price. 
+<!-- **Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
+or next month's price.  -->
 
 <!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
 
 Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
 
+
+### Point-Wise Test MSE {-}
+
 Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.$ And let 
 $$
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
 $$
-denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. 
+denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. This type of $x_0$-specific test data is a realization of a random sample conditional on $X=x_0$
+$$
+(x_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+$$ 
 
-Then, the **point-wise test MSE** at $x_0$ is given by,
+Then, the **point-wise test MSE** at $X=x_0$ is given by,
 \begin{align*}
 \operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
 \end{align*}
+
+
+### Global Test MSE {-}
 
 Typically, however, we want that a method has **globally**, i.e. for all predictor values in the range of $X$, a low test MSE (not only at a certain given value $x_0$). Let 
 $$
