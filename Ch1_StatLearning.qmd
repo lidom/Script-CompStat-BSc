@@ -274,7 +274,7 @@ Most statistical learning problems fall into one of two categories:
 
 In supervised learning problems, we observe for each predictor $x_i,$ $i=1,\dots,n,$ also a response $y_i.$
 
-In unsupervised learning problems, we only the predictor  $x_i,$ $i=1,\dots,n,$ but not the associated responses $y_i.$
+In unsupervised learning problems, we only observe the predictor  $x_i,$ $i=1,\dots,n,$ but not the associated responses $y_i.$
 
 
 Supervised learning methods: 
@@ -312,7 +312,7 @@ It is an important task to decide for any given set of data which method produce
 
 Let 
 $$
-\{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0n},Y_{0m})\},
+\{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0m},Y_{0m})\},
 $${#eq-trainingsample}
 denote the **test data random sample**, where 
 $$
@@ -330,7 +330,6 @@ $$
 \{(x_{01},y_{01}),(x_{02},y_{02}),\dots,(x_{0m},y_{0m})\},
 $$
 of the test data random sample is used to check the accuracy of the estimate $\hat{f}.$ 
-
 
 
 
