@@ -86,7 +86,7 @@ where
 * and $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
 
 
-Derivation: 
+Derivation (for a *given* $\hat{f}$ and a *given* $X;$ i.e. only $\epsilon$ is random): 
 
 \begin{align*}
 &E\left[(Y - \hat{Y})^2\right]\\ 
@@ -126,7 +126,7 @@ In this course, we will see a number of examples that fall into the **prediction
 ## How Do We Estimate $f$?
 
 
-Consider the general regression model
+**Setup:** Consider the general regression model
 $$
 Y=f(X)+\epsilon,
 $${#eq-GRegMod}
@@ -134,7 +134,7 @@ where
 $$
 X=(X_{1}, \dots,X_{p})
 $$
-is a multivariate predictor. 
+is a multivariate ($p$-dimensional) predictor. 
 
 Let 
 $$
@@ -147,7 +147,7 @@ $$
 (X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
 $$
 are independent of each other for all $i=1,\dots,n$ and $j=1,\dots,n$ with $i\neq j.$<br><br>
-2. The multivariate, $p+1$ dimensional, random vectors $(X_i,Y_i),$ $i=1,\dots,n,$ have all the same distribution as $(X,Y)$ from @eq-GRegMod, i.e.
+2. The multivariate, $p+1$ dimensional, random vectors $(X_i,Y_i),$ $i=1,\dots,n,$ have all the same distribution as $(X,Y),$ i.e.
 $$
 (X_i,Y_i)\sim(X,Y)
 $$
@@ -156,18 +156,25 @@ for all $i=1,\dots,n.$ <br><br>
 
 The random sample @eq-randomsample is thus a set of $n$ many **independent and identically distributed (iid)** multivariate random variables
 $$
-\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}.
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}
+$$
+with 
+$$
+(X_i,Y_i)\overset{\text{iid}}{\sim} (X,Y),\quad i=1,\dots,n.
 $$
 
 
-An observed realization of the random sample will be denoted using lowercase letters 
+An observed **realization** of the random sample will be denoted using lowercase letters 
 $$
 \{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}.
 $$
-These $n$ observations are called **training data** because we will use these training observations to train, i.e., compute and estimate $\hat{f}$ of the unknown $f.$ 
+These $n$ observations are called **training data** because we will use these  observations to train/learn $\hat{f}$, i.e., to compute the estimate $\hat{f}$ of the unknown $f.$ 
 
 ::: {.callout-note}
-Our goal is to find a function $\hat{f}$ such that 
+
+## Goal of Statistical Learning
+
+Our goal is to find (i.e. learn from training data) a function $\hat{f}$ such that 
 $$
 Y \approx \hat{f}(X) 
 $$
@@ -307,16 +314,16 @@ Let
 $$
 \{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0n},Y_{0m})\},
 $${#eq-trainingsample}
-denote the test data random sample, where 
+denote the **test data random sample**, where 
 $$
 (X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
 $$ 
 with $(X,Y)$ being defined by the general regression model $Y=f(X)+\epsilon$ in @eq-GRegMod. 
 
-The new test data random sample @eq-trainingsample 
+That is, the new test data random sample @eq-trainingsample 
 
-* is independent of the training data random sample @eq-randomsample
-* has the same distribution as the training data random sample @eq-randomsample
+1. is independent of the training data random sample @eq-randomsample
+2. has the same distribution as the training data random sample @eq-randomsample
 
 The observed realization 
 $$
@@ -359,7 +366,9 @@ Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.
 $$
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
 $$
-denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. This type of $x_0$-specific test data is a realization of a random sample conditional on $X=x_0$
+denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. 
+
+This type of $x_0$-specific test data is a realization of a **conditional random sample** given $X=x_0,$
 $$
 (x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
 $$ 
@@ -379,7 +388,7 @@ $$
 $$
 denote the set of $m$ test data points with different predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. This type of test data is a realization of a random sample 
 $$
-(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
 $$ 
 This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
 
@@ -392,19 +401,19 @@ Then, the **global test MSE** is given by,
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
 
-Note that if $\hat{f}\approx f,$ then 
+Note that if $\hat{f}$ is a really good estimate of $f,$ i.e. if $\hat{f}\approx f,$ then 
 $$
 \operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
 $$
-estimates the variance of the error term $Var(\epsilon)$, i.e., equals the **irreducible error component** of the mean squared (prediction) error. 
+estimates the variance of the error term $Var(\epsilon)$, i.e., the **irreducible error component**. 
 
 
 <br>
 
-Figure 2.9 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+Figure 2.9 shows training and test MSEs for smoothing spline (`R` command `smooth.spline()`) estimates $\hat{f}$ in the case of 
 
 * a moderately complex $f$ 
-* a moderate signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
+* a moderate signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
 
 ![](images/Fig_2_9.png)
 
@@ -413,7 +422,7 @@ Figure 2.9 shows training and test MSEs for smoothing spline estimates $\hat{f}$
 Figure 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
 
 * a very simple $f$ 
-* a moderate signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
+* a moderate signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
 
 ![](images/Fig_2_10.png)
 
@@ -422,7 +431,7 @@ Figure 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}
 Figure 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
 
 * a moderately complex $f$
-* a very large signal-to-noise ratio $Var(f(X))/Var(\epsilon)$
+* a very large signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
 
 ![](images/Fig_2_11.png)
 

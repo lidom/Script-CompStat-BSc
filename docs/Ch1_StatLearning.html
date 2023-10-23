@@ -327,7 +327,7 @@ Y = f(X) + \epsilon.
 <li><span class="math inline">\(E\left[(Y - \hat{Y})^2\right]\)</span> represents the expected value, of the squared difference between the predicted <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> and actual value of <span class="math inline">\(Y,\)</span></li>
 <li>and <span class="math inline">\(Var(\epsilon)\)</span> represents the variance associated with the error term <span class="math inline">\(\epsilon.\)</span></li>
 </ul>
-<p>Derivation:</p>
+<p>Derivation (for a <em>given</em> <span class="math inline">\(\hat{f}\)</span> and a <em>given</em> <span class="math inline">\(X;\)</span> i.e.&nbsp;only <span class="math inline">\(\epsilon\)</span> is random):</p>
 <p><span class="math display">\[\begin{align*}
 &amp;E\left[(Y - \hat{Y})^2\right]\\
 &amp;=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
@@ -379,11 +379,11 @@ Tip
 </section>
 <section id="how-do-we-estimate-f" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="how-do-we-estimate-f"><span class="header-section-number">1.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</h2>
-<p>Consider the general regression model <span id="eq-GRegMod"><span class="math display">\[
+<p><strong>Setup:</strong> Consider the general regression model <span id="eq-GRegMod"><span class="math display">\[
 Y=f(X)+\epsilon,
 \tag{1.1}\]</span></span> where <span class="math display">\[
 X=(X_{1}, \dots,X_{p})
-\]</span> is a multivariate predictor.</p>
+\]</span> is a multivariate (<span class="math inline">\(p\)</span>-dimensional) predictor.</p>
 <p>Let <span id="eq-randomsample"><span class="math display">\[
 \{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
 \tag{1.2}\]</span></span> be a <strong>random sample</strong> from <a href="#eq-GRegMod">Equation&nbsp;<span>1.1</span></a>, i.e.</p>
@@ -391,27 +391,29 @@ X=(X_{1}, \dots,X_{p})
 <li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math display">\[
 (X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
 \]</span> are independent of each other for all <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(j=1,\dots,n\)</span> with <span class="math inline">\(i\neq j.\)</span><br><br></li>
-<li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math inline">\((X_i,Y_i),\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> have all the same distribution as <span class="math inline">\((X,Y)\)</span> from <a href="#eq-GRegMod">Equation&nbsp;<span>1.1</span></a>, i.e. <span class="math display">\[
+<li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math inline">\((X_i,Y_i),\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> have all the same distribution as <span class="math inline">\((X,Y),\)</span> i.e. <span class="math display">\[
 (X_i,Y_i)\sim(X,Y)
 \]</span> for all <span class="math inline">\(i=1,\dots,n.\)</span> <br><br></li>
 </ol>
 <p>The random sample <a href="#eq-randomsample">Equation&nbsp;<span>1.2</span></a> is thus a set of <span class="math inline">\(n\)</span> many <strong>independent and identically distributed (iid)</strong> multivariate random variables <span class="math display">\[
-\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}.
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}
+\]</span> with <span class="math display">\[
+(X_i,Y_i)\overset{\text{iid}}{\sim} (X,Y),\quad i=1,\dots,n.
 \]</span></p>
-<p>An observed realization of the random sample will be denoted using lowercase letters <span class="math display">\[
+<p>An observed <strong>realization</strong> of the random sample will be denoted using lowercase letters <span class="math display">\[
 \{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}.
-\]</span> These <span class="math inline">\(n\)</span> observations are called <strong>training data</strong> because we will use these training observations to train, i.e., compute and estimate <span class="math inline">\(\hat{f}\)</span> of the unknown <span class="math inline">\(f.\)</span></p>
+\]</span> These <span class="math inline">\(n\)</span> observations are called <strong>training data</strong> because we will use these observations to train/learn <span class="math inline">\(\hat{f}\)</span>, i.e., to compute the estimate <span class="math inline">\(\hat{f}\)</span> of the unknown <span class="math inline">\(f.\)</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Note
+Goal of Statistical Learning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Our goal is to find a function <span class="math inline">\(\hat{f}\)</span> such that <span class="math display">\[
+<p>Our goal is to find (i.e.&nbsp;learn from training data) a function <span class="math inline">\(\hat{f}\)</span> such that <span class="math display">\[
 Y \approx \hat{f}(X)
 \]</span> for <strong><em>any</em></strong> observed realization of <span class="math inline">\((X, Y).\)</span></p>
 <p>That is, the estimate <span class="math inline">\(\hat{f}\)</span> needs to provide a good approximation <span class="math display">\[
@@ -520,14 +522,14 @@ Tip
 <p>It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.</p>
 <p>Let <span id="eq-trainingsample"><span class="math display">\[
 \{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0n},Y_{0m})\},
-\tag{1.4}\]</span></span> denote the test data random sample, where <span class="math display">\[
+\tag{1.4}\]</span></span> denote the <strong>test data random sample</strong>, where <span class="math display">\[
 (X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
 \]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math inline">\(Y=f(X)+\epsilon\)</span> in <a href="#eq-GRegMod">Equation&nbsp;<span>1.1</span></a>.</p>
-<p>The new test data random sample <a href="#eq-trainingsample">Equation&nbsp;<span>1.4</span></a></p>
-<ul>
+<p>That is, the new test data random sample <a href="#eq-trainingsample">Equation&nbsp;<span>1.4</span></a></p>
+<ol type="1">
 <li>is independent of the training data random sample <a href="#eq-randomsample">Equation&nbsp;<span>1.2</span></a></li>
 <li>has the same distribution as the training data random sample <a href="#eq-randomsample">Equation&nbsp;<span>1.2</span></a></li>
-</ul>
+</ol>
 <p>The observed realization <span class="math display">\[
 \{(x_{01},y_{01}),(x_{02},y_{02}),\dots,(x_{0m},y_{0m})\},
 \]</span> of the test data random sample is used to check the accuracy of the estimate <span class="math inline">\(\hat{f}.\)</span></p>
@@ -552,7 +554,8 @@ or next month's price.  -->
 <h3 class="unnumbered anchored" data-anchor-id="local-i.e.-point-wise-test-mse">Local (i.e.&nbsp;Point-Wise) Test MSE</h3>
 <p>Let <span class="math inline">\(\hat{f}\)</span> be computed from the training data <span class="math inline">\(\{(x_1,y_1),\dots,(x_n,y_n)\}.\)</span> And let <span class="math display">\[
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
-\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for one given predictor value <span class="math inline">\(x_0\)</span>. This type of <span class="math inline">\(x_0\)</span>-specific test data is a realization of a random sample conditional on <span class="math inline">\(X=x_0\)</span> <span class="math display">\[
+\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for one given predictor value <span class="math inline">\(x_0\)</span>.</p>
+<p>This type of <span class="math inline">\(x_0\)</span>-specific test data is a realization of a <strong>conditional random sample</strong> given <span class="math inline">\(X=x_0,\)</span> <span class="math display">\[
 (x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
 <p>Then, the <strong>point-wise test MSE</strong> at <span class="math inline">\(X=x_0\)</span> is given by, <span class="math display">\[\begin{align*}
@@ -564,33 +567,33 @@ or next month's price.  -->
 <p>Typically, however, we want that a method has <strong>globally</strong>, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, a low test MSE (not only at a certain given value <span class="math inline">\(x_0\)</span>). Let <span class="math display">\[
 \{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
 \]</span> denote the set of <span class="math inline">\(m\)</span> test data points with different predictor values <span class="math inline">\(x_{01},\dots,x_{0m}\)</span> in the range of <span class="math inline">\(X\)</span>. This type of test data is a realization of a random sample <span class="math display">\[
-(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
 <p>Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[\begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}\]</span></p>
-<p>Note that if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
+<p>Note that if <span class="math inline">\(\hat{f}\)</span> is a really good estimate of <span class="math inline">\(f,\)</span> i.e.&nbsp;if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
 \operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
-\]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)\)</span>, i.e., equals the <strong>irreducible error component</strong> of the mean squared (prediction) error.</p>
+\]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)\)</span>, i.e., the <strong>irreducible error component</strong>.</p>
 <p><br></p>
-<p>Figure 2.9 shows training and test MSEs for smoothing spline estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
+<p>Figure 2.9 shows training and test MSEs for smoothing spline (<code>R</code> command <code>smooth.spline()</code>) estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
 <ul>
 <li>a moderately complex <span class="math inline">\(f\)</span></li>
-<li>a moderate signal-to-noise ratio <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span></li>
+<li>a moderate signal-to-noise ratio <span class="math inline">\(\frac{Var(f(X))}{Var(\epsilon)}\)</span></li>
 </ul>
 <p><img src="images/Fig_2_9.png" class="img-fluid"></p>
 <p><br></p>
 <p>Figure 2.10 shows training and test MSEs for smoothing spline estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
 <ul>
 <li>a very simple <span class="math inline">\(f\)</span></li>
-<li>a moderate signal-to-noise ratio <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span></li>
+<li>a moderate signal-to-noise ratio <span class="math inline">\(\frac{Var(f(X))}{Var(\epsilon)}\)</span></li>
 </ul>
 <p><img src="images/Fig_2_10.png" class="img-fluid"></p>
 <p><br></p>
 <p>Figure 2.11 shows training and test MSEs for smoothing spline estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
 <ul>
 <li>a moderately complex <span class="math inline">\(f\)</span></li>
-<li>a very large signal-to-noise ratio <span class="math inline">\(Var(f(X))/Var(\epsilon)\)</span></li>
+<li>a very large signal-to-noise ratio <span class="math inline">\(\frac{Var(f(X))}{Var(\epsilon)}\)</span></li>
 </ul>
 <p><img src="images/Fig_2_11.png" class="img-fluid"></p>
 <p><br></p>
