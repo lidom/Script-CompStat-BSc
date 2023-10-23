@@ -619,17 +619,28 @@ Coding Challenge:
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="the-bias-variance-trade-off"><span class="header-section-number">1.3.2</span> The Bias-Variance Trade-Off</h3>
 <p>The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.</p>
 <ul>
-<li>Let <span class="math inline">\(x_0\)</span> denote a given value of the predictor <span class="math inline">\(X\)</span></li>
-<li>Let <span class="math inline">\(\hat{f}\)</span> be estimated from the training data</li>
-<li>Let <span class="math display">\[
-Y_0=f(x_0)+\epsilon
-\]</span> be the response random variable defined for the given predictor value <span class="math inline">\(x_0.\)</span></li>
-<li>Let <span class="math inline">\(Y_{01},\dots,Y_{0m}\)</span> be all independently and identically distributed as <span class="math inline">\(Y_0;\)</span> shortly <span class="math display">\[
-Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
-\]</span><br>
-</li>
-<li>Realizations of <span class="math inline">\(Y_{01},\dots,Y_{0m}\)</span> generate the test data at the predictor value <span class="math inline">\(x_0.\)</span></li>
+<li><p>Let <span class="math inline">\(\hat{f}\)</span> be estimated from the training data random sample <span class="math display">\[
+\{(X_1,Y_1),\dots,(X_n,Y_n)\},
+\]</span> <span class="math display">\[
+(X_i,Y_i)\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n.
+\]</span> I.e. each given <span class="math inline">\(\hat{f}\)</span> is based on a given realized observation of the training data random sample.</p></li>
+<li><p>Let <span class="math inline">\(x_0\)</span> denote a given value of the predictor <span class="math inline">\(X\)</span></p></li>
+<li><p>Let <span class="math display">\[
+\{(x_{0},Y_{01}),\dots,(x_0,Y_{0n})\}
+\]</span> <span class="math display">\[
+(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,n.
+\]</span> be the conditional test data random sample given <span class="math inline">\(X=x_0.\)</span></p></li>
 </ul>
+<!-- * Let 
+$$
+Y_0=f(x_0)+\epsilon
+$$ 
+be the response random variable defined for the given predictor value $x_0.$ 
+* Let $Y_{01},\dots,Y_{0m}$ be all independently and identically distributed as $Y_0;$ shortly
+$$
+Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
+$$  
+* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ -->
 <p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following: <span class="math display">\[\begin{align*}
 E\left[\operatorname{MSE}_{test}(x_0)\right]
 &amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]

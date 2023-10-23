@@ -460,9 +460,27 @@ One important method is **cross-validation**, which is a method for estimating t
 
 The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.
 
+* Let $\hat{f}$ be estimated from the training data random sample
+$$
+\{(X_1,Y_1),\dots,(X_n,Y_n)\},
+$$
+$$
+(X_i,Y_i)\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n.
+$$
+I.e. each given $\hat{f}$ is based on a given realized observation of the training data random sample. 
+
 * Let $x_0$ denote a given value of the predictor $X$
-* Let $\hat{f}$ be estimated from the training data
+
 * Let 
+$$
+\{(x_{0},Y_{01}),\dots,(x_0,Y_{0n})\}
+$$
+$$
+(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,n.
+$$
+be the conditional test data random sample given $X=x_0.$
+
+<!-- * Let 
 $$
 Y_0=f(x_0)+\epsilon
 $$ 
@@ -471,7 +489,7 @@ be the response random variable defined for the given predictor value $x_0.$
 $$
 Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
 $$  
-* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$
+* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ -->
 
 One can show that the expected test MSE at a given predictor value $x_0$ can be decomposed as following: 
 \begin{align*}
