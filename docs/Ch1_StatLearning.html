@@ -224,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#the-bias-variance-trade-off" id="toc-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-bias-variance-trade-off"><span class="toc-section-number">1.3.2</span>  The Bias-Variance Trade-Off</a></li>
   <li><a href="#the-classification-setting" id="toc-the-classification-setting" class="nav-link" data-scroll-target="#the-classification-setting"><span class="toc-section-number">1.3.3</span>  The Classification Setting</a></li>
   <li><a href="#the-bayes-classifier" id="toc-the-bayes-classifier" class="nav-link" data-scroll-target="#the-bayes-classifier">The Bayes Classifier</a></li>
-  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</a></li>
+  <li><a href="#k-nearest-neighbors-classification" id="toc-k-nearest-neighbors-classification" class="nav-link" data-scroll-target="#k-nearest-neighbors-classification"><span class="math inline">\(K\)</span>-Nearest Neighbors Classification</a></li>
   </ul></li>
   <li><a href="#r-lab-introduction-to-r" id="toc-r-lab-introduction-to-r" class="nav-link" data-scroll-target="#r-lab-introduction-to-r"><span class="toc-section-number">1.4</span>  <code>R</code>-Lab: Introduction to <code>R</code></a>
   <ul class="collapse">
@@ -471,7 +471,7 @@ Tip
 </section>
 <section id="non-parametric-methods" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h3>
-<p>Non-parametric methods do not make explicit assumptions about the functional form of <span class="math inline">\(f.\)</span> Instead, they make qualitative assumptions on <span class="math inline">\(f\)</span> such as, for instance, requiring that <span class="math inline">\(f\)</span> is a <em>smooth</em> (e.g.&nbsp;two times continuously differentiable) function.</p>
+<p>Non-parametric methods (e.g.&nbsp;<span class="math inline">\(K\)</span> nearest neighbor regression) do not make explicit assumptions about the functional form of <span class="math inline">\(f.\)</span> Instead, they make qualitative assumptions on <span class="math inline">\(f\)</span> such as, for instance, requiring that <span class="math inline">\(f\)</span> is a <em>smooth</em> (e.g.&nbsp;two times continuously differentiable) function.</p>
 <ul>
 <li><p><strong>Pro:</strong> By avoiding the assumption of a particular parametric functional form for <span class="math inline">\(f,\)</span> non-parametric methods have the potential to accurately fit a wider range of possible shapes for <span class="math inline">\(f.\)</span></p></li>
 <li><p><strong>Con:</strong> Non-parametric methods require a large number of observations to obtain an accurate estimate for <span class="math inline">\(f;\)</span> far more observations than is typically needed for a parametric approach if the parametric model assumption is correct. (Non-parametric methods are “data-hungry”.)</p></li>
@@ -623,7 +623,7 @@ Coding Challenge:
 \{(X_1,Y_1),\dots,(X_n,Y_n)\},
 \]</span> <span class="math display">\[
 (X_i,Y_i)\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n.
-\]</span> I.e. each given <span class="math inline">\(\hat{f}\)</span> is based on a given realized observation of the training data random sample.</p></li>
+\]</span> I.e., since <span class="math inline">\(\hat{f}\)</span> is based on the random variables in the random sample, <span class="math inline">\(\hat{f}\)</span> is it self a random variable. (A realized observation of the training data random sample yields a realized observation of <span class="math inline">\(\hat{f}\)</span>.)</p></li>
 <li><p>Let <span class="math inline">\(x_0\)</span> denote a given value of the predictor <span class="math inline">\(X\)</span></p></li>
 <li><p>Let <span class="math display">\[
 \{(x_{0},Y_{01}),\dots,(x_0,Y_{0n})\}
@@ -644,10 +644,10 @@ $$
 <p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following: <span class="math display">\[\begin{align*}
 E\left[\operatorname{MSE}_{test}(x_0)\right]
 &amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
-&amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
 &amp; =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
 &amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
-&amp; =E\left[\left(f(x_0) + \epsilon_0 - \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =E\left[\left(f(x_0) + \epsilon_0 - \hat{f}(x_0)\right)^2\right]\quad(Y_0=f(x_0)+\epsilon_0)\\[2ex]
 &amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_0 + \epsilon_0^2 \right]\\[2ex]
 &amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp;+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_0\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex]
@@ -674,8 +674,8 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A computed value of <span class="math inline">\(\operatorname{MSE}_{test}(x_0)\)</span> is only <strong>one estimate</strong> of <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span></p>
-<p>To get information about Bias and Variance of a method, we need to approximate <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right];\)</span> see <a href="Ch4_ResamplingMethods.html"><span>Chapter&nbsp;4</span></a>.</p>
+<p>A computed value of <span class="math inline">\(\operatorname{MSE}_{test}(x_0)\)</span> (as done in the coding challenge) is not able to consistently approximate <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span></p>
+<p>However, to get information about Bias and Variance of a method, we need to approximate <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span> This will be (among others) the topic of <a href="Ch4_ResamplingMethods.html"><span>Chapter&nbsp;4</span></a>.</p>
 </div>
 </div>
 <p>To minimize the expected test MSE, we need to select a statistical learning method that <em>simultaneously</em> achieves <strong>low variance</strong> and <strong>low bias</strong>.</p>
@@ -690,20 +690,20 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 \geq Var\left(\epsilon\right).
 \end{align*}
 \]</span></p>
-<p>The overall, i.e., global expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<p>➡️ The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
 <section id="variance-of-hatf-at-x_0" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
 <p><span class="math display">\[
 Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
 \]</span> <strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> But ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
-<p>The overall, i.e., global variance can be computed by averaging <span class="math inline">\(Var(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<p>➡️ The overall, i.e., <strong>global</strong> variance can be computed by averaging <span class="math inline">\(Var(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
 </section>
 <section id="bias-of-hatf-at-x_0" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0">Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
 <p><span class="math display">\[
 \operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
 \]</span> <strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
-<p>The overall, i.e., global bias can be computed by averaging <span class="math inline">\(\operatorname{Bias}(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<p>➡️ The overall, i.e., <em>global</em> bias can be computed by averaging <span class="math inline">\(\operatorname{Bias}(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
 <p><img src="images/Fig_2_12.png" class="img-fluid"></p>
 </section>
 </section>
@@ -712,9 +712,13 @@ Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^
 <p>Setup:</p>
 <ul>
 <li>Observed training data <span class="math display">\[
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
 \]</span></li>
-<li>Qualitative response <span class="math inline">\(y_i\)</span> with categorical class labels (e.g.&nbsp;<span class="math inline">\(y_i\in\{\text{red},\text{blue}\}\)</span>)</li>
+<li>Qualitative response <span class="math inline">\(y_i\)</span> with categorical class labels. E.g.
+<ul>
+<li><span class="math inline">\(y_i\in\{\text{red},\text{blue}\}\)</span></li>
+<li><span class="math inline">\(y_i\in\{\text{positive returns},\text{negative returns}\}\)</span></li>
+</ul></li>
 <li>The <strong>classifier</strong> <span class="math inline">\(\hat{f}\)</span> is computed from the training data.</li>
 <li>Predicted training data class labels: <span class="math display">\[
 \hat{y}_i = \hat{f}(x_i)
@@ -736,44 +740,69 @@ I(\cdot)
 </section>
 <section id="the-bayes-classifier" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="the-bayes-classifier">The Bayes Classifier</h3>
-<p>It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by a very simple classifier that assigns each observation <span class="math inline">\(i\)</span> to the most likely class, given its predictor values <span class="math inline">\(x_{0}\)</span>.</p>
-<p>In other words, we should simply assign a test observation with predictor vector <span class="math inline">\(x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
+<p>It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value <span class="math inline">\(x_{0}.\)</span> This classifier is called the <strong>Bayes classifier</strong>.</p>
+<p>In other words, the Bayes classifier assigns a test observation with predictor vector <span class="math inline">\(x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
 P(Y = j | X = x_{0})
-\]</span> is largest.</p>
-<p>This very simple classifier is called the <strong>Bayes classifier</strong>.</p>
+\]</span> is largest among all possible class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
 <p>In a <strong>two-class problem</strong> where there are only two possible response values, say class <span class="math inline">\(1\)</span> or class <span class="math inline">\(2,\)</span> the Bayes classifier corresponds to predicting class <span class="math inline">\(1\)</span> if <span class="math display">\[
-P(Y = 1| X = x_0 ) &gt; 0.5,
-\]</span> and class two otherwise.</p>
+P(Y = 1| X = x_0 ) \geq 0.5,
+\]</span> and class <span class="math inline">\(2\)</span> if <span class="math display">\[\begin{align*}
+&amp; P(Y = 1| X = x_0 ) &lt; 0.5 \\[2ex]
+\Leftrightarrow\; &amp; P(Y = 2| X = x_0 ) &gt; 0.5  
+\end{align*}\]</span></p>
+<p>Those values of <span class="math inline">\(x_0\)</span> for which <span class="math display">\[\begin{align*}
+P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
+\end{align*}\]</span> are called the <strong>Bayes decision boundary</strong>. (Likewise for more than two class labels.) An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.</p>
+<p><img src="images/Fig_2_13.png" class="img-fluid"></p>
+<ul>
+<li>Note to Fig. 2.13: Here, a perfect classification of a zero classification error rate is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups.</li>
+</ul>
 <p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The point-wise Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
 1 - \max_{j}P(Y = 1| X = x_0 ),
-\]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>)</p>
-<p>The global overall Bayes error rate is given by <span class="math display">\[
+\]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
+<p>The <em>global</em> overall Bayes error rate is given by <span class="math display">\[
 1 - E\left(\max_{j}P(Y = 1| X )\right),
 \]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X.\)</span></p>
 </section>
-<section id="k-nearest-neighbors" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</h3>
+<section id="k-nearest-neighbors-classification" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="k-nearest-neighbors-classification"><span class="math inline">\(K\)</span>-Nearest Neighbors Classification</h3>
 <p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and so computing the Bayes classifier is impossible.</p>
 <p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-nearest neighbors</strong> (KNN) classifier.</p>
 <p>Given a positive integer <span class="math inline">\(K\)</span> and a test observation <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> points in the training data <span class="math display">\[
 \{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
-\]</span> that are closest to <span class="math inline">\(x_0,\)</span> represented by <span class="math display">\[
+\]</span> that are closest to <span class="math inline">\(x_0.\)</span></p>
+<p>This set of <span class="math inline">\(K\)</span> nearest points (near to <span class="math inline">\(x_0\)</span>) can be represented by the <span class="math inline">\(x_0\)</span>-specfic index set <span class="math display">\[
 \mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
 \]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is an index set that allows to select the <span class="math inline">\(K\)</span> nearest neighbors in the training data.</p>
+<p>From the definition of <span class="math inline">\(\mathcal{N}_0\)</span> is follows that:</p>
 <ul>
 <li><span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n\}\)</span></li>
 <li><span class="math inline">\(|\mathcal{N}_0|=K\)</span></li>
 </ul>
-<p>KNN estimates the conditional probability for class <span class="math inline">\(j\)</span> as the fraction of points in <span class="math inline">\(\mathcal{N}_0\)</span> whose response value <span class="math inline">\(y_i\)</span> equals <span class="math inline">\(j:\)</span> <span id="eq-DefKNN"><span class="math display">\[
+<p>KNN estimates the conditional probability for class <span class="math inline">\(j\)</span> as the fraction of the <span class="math inline">\(K\)</span> points <span class="math inline">\((x_i,y_i)\)</span> selected by the index-set <span class="math inline">\(\mathcal{N}_0\)</span> whose response value <span class="math inline">\(y_i\)</span> equals <span class="math inline">\(j:\)</span> <span id="eq-DefKNN"><span class="math display">\[
 \begin{align}
 P(Y = j | X = x_{0})
 &amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
-&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j)
+&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
 \end{align}
-\tag{1.5}\]</span></span> Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.5</span></a>.</p>
-<p>Figure 2.14 provides an illustrative example of the KNN approach. In the left-hand panel, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. In the right-hand panel of Figure 2.14 we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</p>
+\tag{1.5}\]</span></span> where <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
+<p>Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN">Equation&nbsp;<span>1.5</span></a>.</p>
+<p>Figure 2.14 provides an illustrative example of the KNN approach.</p>
+<ul>
+<li>Two-dimensional predictor <span class="math inline">\(X=(X_1,X_2),\)</span> where <span class="math inline">\(X_1\)</span> is shown on the x-axis and <span class="math inline">\(X_2\)</span> on the y-axis.</li>
+<li>Two class labels <span class="math inline">\(Y\in\{\text{yellow}, \text{blue}\}.\)</span></li>
+<li>Training data consists of six data points <span class="math display">\[
+\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
+\]</span> (See the left panel of Figure 2.14.)</li>
+<li>Class-label prediction (“classification”) are computed for a regular grid of predictor values <span class="math inline">\(x_{0}=(x_{01},x_{02}).\)</span> (See the regular grid of points in the right panel of Figure 2.14.)</li>
+<li><span class="math inline">\(K=3\)</span> nearest neighbors are used to compute the class-label predictions.</li>
+</ul>
 <p><br></p>
 <p><img src="images/Fig_2_14.png" class="img-fluid"></p>
+<ul>
+<li>In the <strong>left-hand panel</strong> of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross.</li>
+<li>In the <strong>right-hand panel</strong> of Figure 2.14, we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</li>
+</ul>
 <p><br></p>
 <p><img src="images/Fig_2_15.png" class="img-fluid"></p>
 <p><br></p>
