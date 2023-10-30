@@ -750,6 +750,27 @@ P(Y = 1| X = x_0 ) \geq 0.5,
 &amp; P(Y = 1| X = x_0 ) &lt; 0.5 \\[2ex]
 \Leftrightarrow\; &amp; P(Y = 2| X = x_0 ) &gt; 0.5  
 \end{align*}\]</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Classification threshold <span class="math inline">\(0.5\)</span>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If no further information is given, one uses usually a threshold of <span class="math inline">\(0.5\)</span> in a two-class classification problem; or, more generally, a threshold of <span class="math inline">\(\frac{1}{G}\)</span> in a <span class="math inline">\(G\)</span>-classes classification problem.</p>
+<p>However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.</p>
+<p>Example: <span class="math display">\[
+y\in\{\text{Person pays back}, \text{Person does not pay back}\}
+\]</span> The classification error <span class="math display">\[
+\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
+\]</span> can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value <span class="math inline">\(x_0\)</span> to the “Person pays back”-class only if, for instance, <span class="math display">\[
+\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
+\]</span> and otherwise classify this person to the “Person does not pay back”-class. This will reduce the frequency of miss-classifications when classifying into the “Person pays back”-class, and thus reduce the costs.</p>
+</div>
+</div>
 <p>Those values of <span class="math inline">\(x_0\)</span> for which <span class="math display">\[\begin{align*}
 P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
 \end{align*}\]</span> are called the <strong>Bayes decision boundary</strong>. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.</p>
@@ -758,7 +779,7 @@ P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
 <li>Note to Fig. 2.13: Here, a <em>perfect</em> classification (i.e.&nbsp;zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups.</li>
 </ul>
 <p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The point-wise Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
-1 - \max_{j}P(Y = 1| X = x_0 ),
+1 - \max_{j}P(Y = j| X = x_0 ),
 \]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
 <p>The <em>global</em> overall Bayes error rate is given by <span class="math display">\[
 1 - E\left(\max_{j}P(Y = 1| X )\right),

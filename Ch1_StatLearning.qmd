@@ -634,6 +634,27 @@ and class $2$ if
 \Leftrightarrow\; & P(Y = 2| X = x_0 ) > 0.5  
 \end{align*}
 
+::: {.callout-note}
+## Classification threshold $0.5$?
+
+If no further information is given, one uses usually a threshold of $0.5$ in a two-class classification problem; or, more generally, a threshold of $\frac{1}{G}$ in a $G$-classes classification problem. 
+
+However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.
+
+Example: 
+$$
+y\in\{\text{Person pays back}, \text{Person does not pay back}\}
+$$
+The classification error 
+$$
+\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
+$$
+can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value $x_0$ to the "Person pays back"-class only if, for instance, 
+$$
+\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
+$$
+and otherwise classify this person to the "Person does not pay back"-class. This will reduce the frequency of miss-classifications when classifying into the "Person pays back"-class, and thus reduce the costs. 
+:::
 
 Those values of $x_0$ for which 
 \begin{align*}
