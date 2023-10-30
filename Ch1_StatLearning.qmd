@@ -6,7 +6,7 @@
 #### `R`-Codes for this Chapter {-}
 
 * Introduction to `R`: [Ch1_0_Rcodes.R](https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&dl=0)
-
+* `R`-codes for the first coding challenge (replicate Fig. 2.9): [Ch1_1_Rcodes.R](https://www.dropbox.com/scl/fi/8dtu5kje5am70l2dh6w9b/Ch1_1_Rcodes.R?rlkey=o6ucjdql0f88d9wcopj0q0esa&dl=0)
 
 ## What is Statistical Learning? 
 
@@ -440,7 +440,7 @@ Figure 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}
 
 ## Coding Challenge:
 
-Generate MSE-results similar to those shown in Figures 2.9, 2.10, and 2.11.   
+Generate MSE-results similar to those shown in Figure 2.9.   
 
 :::
 
