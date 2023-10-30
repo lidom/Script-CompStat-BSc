@@ -472,12 +472,12 @@ I.e., since $\hat{f}$ is based on the random variables in the random sample, $\h
 
 * Let 
 $$
-\{(x_{0},Y_{01}),\dots,(x_0,Y_{0n})\}
+\{(x_{0},Y_{01}),\dots,(x_0,Y_{0m})\}
 $$
 $$
-(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,n.
+(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
 $$
-be the conditional test data random sample given $X=x_0.$
+be the conditional **test data** random sample given $X=x_0.$
 
 <!-- * Let 
 $$
@@ -508,10 +508,10 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 %& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
 %&\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
 %& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon_0)\\[2ex]
-%& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon)\\[2ex]
-%& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon)\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
+%& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&\quad\text{(steps skipped since beyond scope)}\\[2ex]
-& = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon\right)
+& = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon_0\right)
 \end{align*}
 
 
@@ -573,7 +573,7 @@ $$
 
 Setup: 
 
-* Observed training data 
+* Observed **training data** 
 $$
 \{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
 $$
@@ -603,7 +603,7 @@ Let
 $$
 \{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
 $$
-denote $m$ test data observations. 
+denote $m$ **test data** observations. 
 
 The alternative to the test MSE is here the **test error rate**
 $$
@@ -639,11 +639,11 @@ Those values of $x_0$ for which
 \begin{align*}
 P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
 \end{align*}
-are called the **Bayes decision boundary**. (Likewise for more than two class labels.) An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.
+are called the **Bayes decision boundary**. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.
 
 ![](images/Fig_2_13.png)
 
-* Note to Fig. 2.13: Here, a perfect classification of a zero classification error rate is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups. 
+* Note to Fig. 2.13: Here, a *perfect* classification (i.e. zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups. 
 
 
 The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The point-wise Bayes error rate at $x_0$ is given by
