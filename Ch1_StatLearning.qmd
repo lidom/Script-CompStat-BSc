@@ -648,7 +648,7 @@ are called the **Bayes decision boundary**. An example of a Bayes decision bound
 
 The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The point-wise Bayes error rate at $x_0$ is given by
 $$
-1 - \max_{j}P(Y = 1| X = x_0 ),
+1 - \max_{j}P(Y = j| X = x_0 ),
 $$
 where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$).
 
