@@ -7,6 +7,7 @@
 
 * Introduction to `R`: [Ch1_0_Rcodes.R](https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&dl=0)
 * `R`-codes for the first coding challenge (replicate Fig. 2.9): [Ch1_1_Rcodes.R](https://www.dropbox.com/scl/fi/8dtu5kje5am70l2dh6w9b/Ch1_1_Rcodes.R?rlkey=o6ucjdql0f88d9wcopj0q0esa&dl=0)
+* `R`-codes for the second coding challenge (KNN-classification): [Ch1_2_Rcodes.R](https://www.dropbox.com/scl/fi/p7rm2ziytfl68s2h6i4gf/Ch1_2_Rcodes.R?rlkey=5rgl4y9xbxejafi32oe1baoza&dl=0) 
 
 ## What is Statistical Learning? 
 
@@ -1762,7 +1763,7 @@ Prepare the following exercises of Chapter 2 in our course textbook `ISLR`:
 - Exercise 9
 
 
-<!-- {{< include Ch1_Solutions.qmd >}} -->
+{{< include Ch1_Solutions.qmd >}}
 
 
 
