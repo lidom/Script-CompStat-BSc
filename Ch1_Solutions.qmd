@@ -232,12 +232,18 @@ boxplot(Outstate ~ Elite,
 ```{r}
 par(mfrow=c(2,2))
 hist(college$Apps,     breaks=50, xlim=c(0,25000), 
-     main="Apps")
-hist(college$Enroll,   breaks=25, main="Enroll")
-hist(college$Expend,   breaks=25, main="Expend")
-hist(college$Outstate, main="Outstate")
-par(mfrow=c(1,1))
+     xlab = "", main="Apps")
+hist(college$Enroll,   breaks=25, xlab = "", main="Enroll")
+hist(college$Expend,   breaks=25, xlab = "", main="Expend")
+hist(college$Outstate,            xlab = "", main="Outstate")
 ```
+
+Remember: 
+
+* **Enroll:** Number of new students enrolled
+* **Expend:** Instructional expenditure per student
+* **Outstate:** Out-of-state tuition
+
 
 #### Exercise 9: {-}
 
@@ -253,8 +259,22 @@ Auto <- na.omit(Auto)
 # Print first 10 rows of the data
 print(Auto[c(1:10),])
 
-# Find more info on the variables here: https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html
+# Find more info on the variables here:
+# library(ISLR2)
+# ?Auto
 ```
+
+
+* **mpg:** miles per gallon
+* **cylinders:** Number of cylinders between 4 and 8
+* **displacement:** Engine displacement (cu. inches)
+* **horsepower:** Engine horsepower
+* **weight:** Vehicle weight (lbs.)
+* **acceleration:** Time to accelerate from 0 to 60 mph (sec.)
+* **year:** Model year (modulo 100)
+* **origin:** Origin of car (1. American, 2. European, 3. Japanese)
+* **name:** Vehicle name
+
 
 **9. a)** Which of the predictors are quantitative, and which are qualitative?
 
@@ -274,9 +294,13 @@ summary(Auto)
 
 ```{r}
 # apply the range function to the first seven columns of Auto
-c <- sapply(Auto[, 1:7], range)
+ranges <- sapply(Auto[, 1:7], range)
 # print to console
-c
+ranges
+
+# adding row names:
+row.names(ranges) <- c("min", "max")
+ranges
 ```
 
 **9. c)** What is the mean and standard deviation of each quantitative predictor?
@@ -284,18 +308,17 @@ c
 **Answer:**
 
 ```{r}
-# compute mean for the first seven variables and store it in a vector
+# compute the means and round to 2 decimal places 
 mean <- sapply(Auto[,1:7], mean)
+mean <- sapply(mean, round, 2)
 
-# round the values inside the vectors to 2 decimal cases
-mean <- sapply(mean,round,2)
-
-# compute the standard deviation and round it up 
+# compute the standard deviations (sd) and round to 2 decimal places 
 sd <- sapply(Auto[, 1:7], sd)
 sd <- sapply(sd,round,2)
 
-# print both vectors
+# print mean values 
 mean
+# print sd values 
 sd
 ```
 
@@ -310,21 +333,17 @@ newAuto = Auto[-(10:85),]
 # Re-do exercises 9. b) and 9.c)
 # This time, create an empty Matrix "Results" to store the results
 Results <- matrix(NA, nrow = 4, ncol = 7, 
-                  dimnames = list(c("Mean", "SD", "Minimum", "Maximum"), 
-                                  c(colnames(newAuto[,1:7]))))
+                  dimnames = list(c("Mean", "SD", "Min", "Max"),# row names 
+                                  c(colnames(newAuto[,1:7])))) # column names
 
-# Store the results
+# Compute and store the results
 Results[1,] <- sapply(newAuto[, 1:7], mean)
-Results[2,] <- sapply(newAuto[, 1:7], sd)  # Standard Deviation
+Results[2,] <- sapply(newAuto[, 1:7], sd)  
 Results[3,] <- sapply(newAuto[, 1:7], min)
 Results[4,] <- sapply(newAuto[, 1:7], max)
 
-# Round them
-Results[] <- sapply(Results[],round,2)
-
-# Print the results
-# Results
-print(Results[,1:6])
+# Round to 0 decimal and print
+round(Results, digits = 0)
 ```
 
 **9. e)** Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
@@ -332,15 +351,23 @@ print(Results[,1:6])
 **Answer:**
 
 ```{r}
-pairs(Auto[, -9])
+pairs(Auto[, -9]) # remove the character-variable 'name'
 ```
 
-- heavier weight is related with lower mpg and with higher horsepower;
-- higher horsepower correlates with lower acceleration;
-- `mpg` (miles per gallon) mostly increases for newer model years meaning that cars become more efficient over time.
+Findings: 
+
+- higher `weight` is related with lower `mpg` 
+- higher `weight` is related with higher `displacement` 
+- higher `weight` is related with higher `horsepower`
+- higher `horsepower` is related with lower `acceleration`
+- higher model `years` are related with higher `mpg`
 
 **9. f)** Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
 
 **Answer:**
 
-Yes. On the one hand, as we can see from the plot above, all of the quantitative variables show some sort of relation (either linear or non-linear) with mpg and hence, they might be useful in predicting `mpg`. The origin qualitative variable might also be useful in predicting `mpg`, with cars originated from region 3 being associated with higher `mpg`. On the other hand, the name predictor has too little observations per name though, so using this as a predictor is likely to result in overfitting the data and will not generalize well.
+Yes, there are multiple potentially useful predictor variables. 
+
+All of the *quantitative* variables show some sort of relation (either linear or non-linear) with `mpg` and hence, they might be useful in predicting `mpg`. 
+
+Moreover, the qualitative variable `origin` might also be useful in predicting `mpg`: cars originated from region 1, 2, and 3 are  associated with lower, intermediate, higher `mpg` values. 

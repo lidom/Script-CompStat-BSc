@@ -351,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <blockquote class="blockquote">
-<p><code>Outstate</code>-Variable explained: Many US colleges charge extra tuition fees from non-resident students. <!-- Schools' reasoning for charging higher out-of-state tuition is because non-resident students' come from families who haven't paid tax dollars to the state.  --></p>
+<p><code>Outstate</code>-Variable explained: The <code>Outstate</code>-variable is the tuition fee charged from non-resident students. (Many US colleges charge high tuition fees from non-resident students.) <!-- Schools' reasoning for charging higher out-of-state tuition is because non-resident students' come from families who haven't paid tax dollars to the state.  --></p>
 </blockquote>
 <p><strong>8. c.&nbsp;iv)</strong> Create a new qualitative variable, called <code>Elite</code>, by binning the <code>Top10perc</code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p>
 <div class="cell">
@@ -389,28 +389,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Apps,     <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Apps"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Enroll"</span>)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">main=</span><span class="st">"Apps"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">main=</span><span class="st">"Enroll"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate,            <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Remember:</p>
+<ul>
+<li><strong>Enroll:</strong> Number of new students enrolled</li>
+<li><strong>Expend:</strong> Instructional expenditure per student</li>
+<li><strong>Outstate:</strong> Out-of-state tuition</li>
+</ul>
 </section>
 <section id="exercise-9" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="exercise-9">Exercise 9:</h4>
 <p>This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows of the data</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Auto[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/Auto.csv"</span>, <span class="at">header=</span>T, <span class="at">na.strings=</span><span class="st">"?"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from the data</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows of the data</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Auto[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   mpg cylinders displacement horsepower weight acceleration year origin
 1   18         8          307        130   3504         12.0   70      1
@@ -435,13 +440,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 9           pontiac catalina
 10        amc ambassador dpl</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find more info on the variables here: https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find more info on the variables here:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(ISLR2)</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ?Auto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li><strong>mpg:</strong> miles per gallon</li>
+<li><strong>cylinders:</strong> Number of cylinders between 4 and 8</li>
+<li><strong>displacement:</strong> Engine displacement (cu. inches)</li>
+<li><strong>horsepower:</strong> Engine horsepower</li>
+<li><strong>weight:</strong> Vehicle weight (lbs.)</li>
+<li><strong>acceleration:</strong> Time to accelerate from 0 to 60 mph (sec.)</li>
+<li><strong>year:</strong> Model year (modulo 100)</li>
+<li><strong>origin:</strong> Origin of car (1. American, 2. European, 3. Japanese)</li>
+<li><strong>name:</strong> Vehicle name</li>
+</ul>
 <p><strong>9. a)</strong> Which of the predictors are quantitative, and which are qualitative?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg          cylinders      displacement     horsepower        weight    
  Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
@@ -466,38 +484,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>9. b)</strong> What is the range of each quantitative predictor? You can answer this using the <code>range()</code> function.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the range function to the first seven columns of Auto</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print to console</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the range function to the first seven columns of Auto</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ranges <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print to console</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>ranges</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg cylinders displacement horsepower weight acceleration year
 [1,]  9.0         3           68         46   1613          8.0   70
 [2,] 46.6         8          455        230   5140         24.8   82</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adding row names:</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(ranges) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"min"</span>, <span class="st">"max"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ranges</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     mpg cylinders displacement horsepower weight acceleration year
+min  9.0         3           68         46   1613          8.0   70
+max 46.6         8          455        230   5140         24.8   82</code></pre>
+</div>
 </div>
 <p><strong>9. c)</strong> What is the mean and standard deviation of each quantitative predictor?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute mean for the first seven variables and store it in a vector</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># round the values inside the vectors to 2 decimal cases</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(mean,round,<span class="dv">2</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviation and round it up </span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sd,round,<span class="dv">2</span>)</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print both vectors</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the means and round to 2 decimal places </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(mean, round, <span class="dv">2</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviations (sd) and round to 2 decimal places </span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sd,round,<span class="dv">2</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># print mean values </span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
        23.45         5.47       194.41       104.47      2977.58        15.54 
         year 
        75.98 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print sd values </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
         7.81         1.71       104.64        38.49       849.40         2.76 
@@ -508,51 +533,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>9.d)</strong> Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove observations and store them </span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>newAuto <span class="ot">=</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>),]</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-do exercises 9. b) and 9.c)</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, create an empty Matrix "Results" to store the results</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">7</span>, </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"SD"</span>, <span class="st">"Minimum"</span>, <span class="st">"Maximum"</span>), </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">colnames</span>(newAuto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]))))</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the results</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)  <span class="co"># Standard Deviation</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">3</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], min)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">4</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], max)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round them</span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>Results[] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Results[],round,<span class="dv">2</span>)</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Results[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove observations and store them </span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>newAuto <span class="ot">=</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>),]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-do exercises 9. b) and 9.c)</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, create an empty Matrix "Results" to store the results</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">7</span>, </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"SD"</span>, <span class="st">"Min"</span>, <span class="st">"Max"</span>),<span class="co"># row names </span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">colnames</span>(newAuto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>])))) <span class="co"># column names</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the results</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)  </span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">3</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], min)</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>Results[<span class="dv">4</span>,] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(newAuto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], max)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round to 0 decimal and print</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Results, <span class="at">digits =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          mpg cylinders displacement horsepower  weight acceleration
-Mean    24.40      5.37       187.24     100.72 2935.97        15.73
-SD       7.87      1.65        99.68      35.71  811.30         2.69
-Minimum 11.00      3.00        68.00      46.00 1649.00         8.50
-Maximum 46.60      8.00       455.00     230.00 4997.00        24.80</code></pre>
+<pre><code>     mpg cylinders displacement horsepower weight acceleration year
+Mean  24         5          187        101   2936           16   77
+SD     8         2          100         36    811            3    3
+Min   11         3           68         46   1649            8   70
+Max   47         8          455        230   4997           25   82</code></pre>
 </div>
 </div>
 <p><strong>9. e)</strong> Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>]) <span class="co"># remove the character-variable 'name'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Findings:</p>
 <ul>
-<li>heavier weight is related with lower mpg and with higher horsepower;</li>
-<li>higher horsepower correlates with lower acceleration;</li>
-<li><code>mpg</code> (miles per gallon) mostly increases for newer model years meaning that cars become more efficient over time.</li>
+<li>higher <code>weight</code> is related with lower <code>mpg</code></li>
+<li>higher <code>weight</code> is related with higher <code>displacement</code></li>
+<li>higher <code>weight</code> is related with higher <code>horsepower</code></li>
+<li>higher <code>horsepower</code> is related with lower <code>acceleration</code></li>
+<li>higher model <code>years</code> are related with higher <code>mpg</code></li>
 </ul>
 <p><strong>9. f)</strong> Suppose that we wish to predict gas mileage (<code>mpg</code>) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting <code>mpg</code>? Justify your answer.</p>
 <p><strong>Answer:</strong></p>
-<p>Yes. On the one hand, as we can see from the plot above, all of the quantitative variables show some sort of relation (either linear or non-linear) with mpg and hence, they might be useful in predicting <code>mpg</code>. The origin qualitative variable might also be useful in predicting <code>mpg</code>, with cars originated from region 3 being associated with higher <code>mpg</code>. On the other hand, the name predictor has too little observations per name though, so using this as a predictor is likely to result in overfitting the data and will not generalize well.</p>
+<p>Yes, there are multiple potentially useful predictor variables.</p>
+<p>All of the <em>quantitative</em> variables show some sort of relation (either linear or non-linear) with <code>mpg</code> and hence, they might be useful in predicting <code>mpg</code>.</p>
+<p>Moreover, the qualitative variable <code>origin</code> might also be useful in predicting <code>mpg</code>: cars originated from region 1, 2, and 3 are associated with lower, intermediate, higher <code>mpg</code> values.</p>
 </section>
 </section>
 
