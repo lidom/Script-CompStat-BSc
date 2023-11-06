@@ -2,7 +2,7 @@
 
 > Reading: Chapter 3 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
-## (Ch. 3.1) Simple Linear Regression {-}
+## Simple Linear Regression 
 
 The linear regression model assumes a *linear relationship* between $Y$ and the predictor(s) $X$. 
 
@@ -16,14 +16,18 @@ For instance,
 `sales` $\approx \beta_0 + \beta_1$ `TV`
 </center>
 
-### (Ch. 3.1.1) Estimating the Coefficients {-}
+### Estimating the Coefficients 
 
-We choose $\hat\beta_0$ and $\hat\beta_1$ such that the Residual Sum of Squares criterion is minimized:
+For a given observed realization of the training data random sample 
+$$
+(x_1,y_1),\dots,(x_n,y_n)
+$$
+we choose $\hat\beta_0$ and $\hat\beta_1$ such that the Residual Sum of Squares criterion is minimized:
 $$
 \begin{align*}
 \operatorname{RSS}\equiv \operatorname{RSS}(\hat{\beta}_0,\hat{\beta_1})
 & = e_1^2 + \dots + e_n^2\\
-&=)\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2
+&=\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2
 \end{align*}
 $$
 The minimizers are 
@@ -45,7 +49,7 @@ $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$.
 ![](images/Fig_3_2.png)
 
 
-### (Ch. 3.1.2) Assessing the Accuracy of the Coefficient Estimates {-}
+### Assessing the Accuracy of the Coefficient Estimates
 
 True unknown model 
 $$
@@ -55,11 +59,13 @@ $$
 In in linear regression analysis, we assume[^1] that 
 $$
 f(X) = \beta_0 + \beta_1 X
-$$
+$${#eq-simpleLinMod}
 
-[^1]: The assumption $f(X) = \beta_0 + \beta_1 X$ is often a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple. 
+::: {.callout-note}
+The assumption $f(X) = \beta_0 + \beta_1 X$ is often a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple. 
+:::
 
-Ordinary least squares estimators 
+If the assumption of @eq-simpleLinMod is correct, i.e., if the data is actually generated according to the model $f(X) = \beta_0 + \beta_1 X,$ then ordinary least squares estimators 
 $$
 \hat\beta_0\quad\text{and}\quad\hat\beta_1
 $$
@@ -83,9 +89,6 @@ The following code generates artificial data to reproduce the plot in Figure 3.3
 ## A function to generate data 
 ## similar to that shown in Fig 3.3
 ## ##############################
-
-beta_0 <- 0.1                          # intercept parameter
-beta_1 <- 5  
 
 ## A Function to simulate data
 myDataGenerator <- function(){
@@ -112,6 +115,11 @@ Using repeated samples form the data generating process defined in `myDataGenera
 lm_obj <- lm(Y ~ X, data = data_sim)
 
 ## Plotting the results
+
+## True (usually unknown) parameter values
+beta_0 <- 0.1  # intercept parameter
+beta_1 <- 5    # slope parameter
+
 par(mfrow=c(1,2)) # Two plots side by side
 
 ## First Plot (fit for the first realization of the data)
@@ -132,47 +140,74 @@ abline(a = beta_0, b = beta_1, col = "red", lwd = 2)
 abline(lm_obj, col = "blue", lwd = 2)
 ```
 
-*  Coding-Questions: Can you do this animated? https://gganimate.com/articles/gganimate.html
+<!-- *  Coding-Questions: Can you do this animated? https://gganimate.com/articles/gganimate.html -->
 
 
 
 The magnitude of the estimation errors is expressed in unites of **standard errors**:
 $$
-\operatorname{SE}(\hat\beta_0)=\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]
+\operatorname{SE}(\hat\beta_0)=\sqrt{\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]}
 $$
 and
 $$
-\operatorname{SE}(\hat\beta_1)=\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2},
+\operatorname{SE}(\hat\beta_1)=\sqrt{\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}},
 $$
-where $Var(\epsilon)=\sigma^2\Leftrightarrow \operatorname{SD}(\epsilon)=\sqrt{Var(\epsilon)}=\sigma$. 
-
-Typically, $\sigma$ is unknown, but can be estimated by 
+where 
 $$
-\sigma\approx\hat{\sigma}=\operatorname{RSE}=\sqrt{\frac{\operatorname(RSS)}{n-2}},
+Var(\epsilon)=\sigma^2.
+$$ 
+
+Typically, $\sigma^2$ 
 $$
-where we subtract $2$ from the sampel size $n$ since $n-2$ are the remaining degrees of freedom in the data after estimating two parameters $\hat\beta_0$ and $\hat\beta_1$. 
+\sigma = \operatorname{SD}(\epsilon)=\sqrt{Var(\epsilon)}=\sigma
+$$ 
+is unknown, but can be estimated by 
+\begin{align*}
+\sigma\approx\hat{\sigma}=\operatorname{RSE}
+&=\sqrt{\frac{1}{n-2}\operatorname{RSS}}\\[2ex]
+&=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2},
+\end{align*}
+where 
+$$
+\operatorname{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2
+$$
+are the residual sum of squares. 
 
+::: {.callout-note}
+We subtract $2$ from the sample size $n$ since $n-2$ are the remaining degrees of freedom in the data after estimating two parameters $\hat\beta_0$ and $\hat\beta_1$. 
+:::
 
-Knowing $\operatorname{SE}(\hat\beta_0)$ and $\operatorname{SE}(\hat\beta_1)$ allows us to construct **Confidence Intervals**:
+Knowing $\operatorname{SE}(\hat\beta_0)$ and $\operatorname{SE}(\hat\beta_1)$ allows us to construct 95% **Confidence Intervals**:
 $$
 \begin{align*}
 \operatorname{CI}_{\beta_1}
-&=\left[\hat{\beta_1}-2\operatorname{SE}(\hat\beta_1),\;
-        \hat{\beta_1}+2\operatorname{SE}(\hat\beta_1)\right]\\
-&=\hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
+&=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
+        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right]
 \end{align*}
 $$
 likewise for $\operatorname{CI}_{\beta_1}$. 
 
-**Interpretation:** There is approximately a 95% change (in infinite resamplings) that the (random) confidence interval $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$.
+Short notation: 
+$$
+\begin{align*}
+\operatorname{CI}_{\beta_1}
+&=\hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
+\end{align*}
+$$
 
-Thus, a given confidence interval either contains the true parameter value or not and we usually do not know it. To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
+
+**Interpretation:** There is approximately a 95% change (in resamplings) that the (random) confidence interval $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$.
+
+::: {.callout-note}
+Thus, a given confidence interval either contains the true parameter value or not and we typically we do not know it. To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
 
 * [Interactive visualization for interpreting confidence intervals](https://rpsychologist.com/d3/ci/)
+::: 
 
 
-Standard errors can also be used to do hypothesis testing: 
+#### Confidence Intervals for Statistical Hypothesis Testing {-}
 
+We can use a 95% confidence interval to do statistical hypothesis testing. Let us consider the following standard null $(H_0)$ and alternative hypothesis $(H_1):$ 
 $$
 \begin{align*}
 H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
@@ -180,8 +215,34 @@ H_1:&\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
 \end{align*}
 $$
 
-$t$-test statistic
+* If the observed realization of the confidence interval 
+$$
+\begin{align*}
+\operatorname{CI}_{\beta_1}
+&=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
+        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right]
+\end{align*}
+$$
+contains the value $0,$ we cannot reject the null hypothesis that $\beta_1=0.$
 
+* If, however, the observed realization of the confidence interval does not contain the value $0,$ we can reject the null hypothesis and adopt the alternative that $\beta_1\neq 0.$
+
+::: {.callout-note}
+The probability of doing a false decision (i.e. reject the null hypothesis even though the null hypothesis is true) is here $1-95\%=5\%.$
+::: 
+
+
+#### Test Statistics {-}
+
+Standard errors can also be used to do hypothesis testing based on test statistics. Let us again consider the standard null and alternative hypothesis: 
+$$
+\begin{align*}
+H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
+H_1:&\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
+\end{align*}
+$$
+
+This statistical hypothesis test can be conducted using the $t$-test statistic:
 $$
 t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-1)}
 $$
@@ -189,24 +250,37 @@ $$
 
 $p$-value
 
-$$
 \begin{align*}
 p
-&=P_{H_0}\left(|t|\geq|t_{obs}|\right)
+&=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
 &=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\},
 \end{align*}
-$$
 where $t_{obs}$ denotes the observed value of the $t$-test statistic and where $t$ is $t$-distributed with $(n-2)$ degrees of freedom. 
 
-Select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$) and reject $H_0$ if 
+Select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$). 
+
+
+* If the observed realization of the $p$-value is larger than or equal to the significance level 
 $$
-p<\alpha
+p\geq \alpha,
 $$
+then we cannot reject the null hypothesis. 
+
+* If, however, the observed realization of the $p$-value is strictly smaller than the significance level 
+$$
+p<\alpha,
+$$
+then we can reject the null hypothesis and adopt the alternative hypothesis. 
+
+
+::: {.callout-note}
+Again, the probability of doing a false test decision (i.e. reject the null hypothesis even though the null hypothesis is true) is here $1-95\%=5\%.$
+::: 
 
 ![](images/Tab_3_1.png)
 
 
-### (Ch. 3.1.3) Assessing the Accuracy of the Model {-}
+### Assessing the Accuracy of the Model
 
 In tendency an accurate model has ...
 
@@ -231,13 +305,20 @@ $$
 \end{align*}
 $$
 
-**Caution:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
+**Cautionary Note Nr 1:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
 
 * very low $\operatorname{RSE}$ values, $\operatorname{RSE}\approx 0$, and 
 * very high $R^2$ values, $R^2\approx 1$, 
 
 can be warning signals indicating overfitting. 
 
+**Cautionary Note Nr 2:** The above assessment is only based on training data. We have seen in @sec-SL that we usually want to assess the model accuracy using testing data.  
+
+
+<!-- A proper assessment of the model accuracy needs to take into account test data.  -->
+
+
+#### $R^2$ and correlation coefficient {-}
 
 In the case of the simple linear regression model, $R^2$ equals the squared sample correlation coefficient between $Y$ and $X$,
 $$
@@ -249,7 +330,7 @@ r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{
 $$
 
 
-## Multiple Linear Regression (Ch. 3.2) {-}
+## Multiple Linear Regression 
 
 
 The multiple linear regression model allows for more than only one predictor:  
@@ -264,10 +345,13 @@ For instance,
 
 
 
-### (Ch. 3.2.1) Estimating the Regression Coefficients {-}
+### Estimating the Regression Coefficients 
 
-Select 
-
+For a given observed realization of the training data random sample
+$$
+(x_{11},\dots,x_{1p},y_1),\dots,(x_{n1},\dots,x_{np},y_n)
+$$
+select 
 $$
 \hat\beta_0,\dots,\hat\beta_p
 $$ 
@@ -281,8 +365,29 @@ $$
 $$
 
 
+Let
+\begin{equation*}
+Y=\left(\begin{matrix}y_1\\ \vdots\\y_n\end{matrix}\right),
+\end{equation*}
+denote the $(n\times 1)$ vector containing all response values of the training data and 
+\begin{equation*}
+X=\left(\begin{matrix}x_{11}&\dots&x_{1K}\\\vdots&\ddots&\vdots\\ x_{n1}&\dots&x_{nK}\\\end{matrix}\right)
+\end{equation*}
+denote the $(n\times K)$ matrix containing all predictor values of the training data. 
+
+Then
+$$
+\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)=\hat{\beta}=(X'X)^{-1}X'Y
+$$
+denotes the $(K\times 1)$ vector of parameter estimates. 
+
+
+
 ![](images/Fig_3_4.png)
 
+
+
+#### Interpretation of Multiple Linear Regressions and the Omitted Variable Bias {-}
 
 Multiple linear regression is more than mere composition of single simple linear regression models. 
 

@@ -1,4 +1,4 @@
-# Statistical Learning
+# Statistical Learning {#sec-SL}
 
 > Reading: Chapter 2 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
