@@ -841,7 +841,7 @@ points(x   = data_train$X1,
 
 **Challenge:** 
 
-* Write a KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
+* Write an KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
 :::
 
 
