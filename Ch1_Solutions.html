@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ch2_solutions</title>
+<title>ch1_solutions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,16 +86,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="Ch2_Solutions_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/quarto.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/popper.min.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Ch2_Solutions_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Ch2_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Ch2_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Ch2_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Ch2_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Ch2_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Ch1_Solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ch1_Solutions_files/libs/quarto-html/quarto.js"></script>
+<script src="Ch1_Solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ch1_Solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ch1_Solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ch1_Solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ch1_Solutions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ch1_Solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ch1_Solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ch1_Solutions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -227,11 +227,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>[1] "green" "red"   "red"  </code></pre>
 </div>
 </div>
-<p>Closest <span class="math inline">\(K=3\)</span> neighbors are <code>obs5</code>, <code>obs6</code>, <code>obs2</code> and thus, our prediction is <code>Red</code> because it is the <span class="math inline">\(Y\)</span> value associated to <code>obs2</code> and <code>obs6</code> (majority rule).</p>
+<p>Closest <span class="math inline">\(K=3\)</span> neighbors are:</p>
+<ul>
+<li><code>obs5</code> with <span class="math inline">\(Y=\)</span><code>green</code></li>
+<li><code>obs6</code> with <span class="math inline">\(Y=\)</span><code>red</code></li>
+<li><code>obs2</code> with <span class="math inline">\(Y=\)</span><code>red</code></li>
+</ul>
+<p>This leads to the following local (at <span class="math inline">\(X_1=X_2=X_3=0)\)</span> relative frequencies:</p>
+<ul>
+<li>for <code>green</code>: <span class="math inline">\(1/K=1/3\)</span></li>
+<li>for <code>red</code>: <span class="math inline">\(2/K=2/3\)</span></li>
+</ul>
+<p>Thus, our prediction for <span class="math inline">\(X_1=X_2=X_3=0\)</span> is <code>Red</code>.</p>
 <p><strong>7. d)</strong> If the Bayes decision boundary in this problem is highly nonlinear, then would we expect the best value for <span class="math inline">\(K\)</span> to be large or small? Why?</p>
 <p><strong>Answer:</strong></p>
 <!-- A large value of K means that the $Y$-values from a large neighborhood are contributing to the prediction at one chosen $X$-point. This requires that the neighborhood consists of relatively similar $Y$-values.  -->
-<p>In the case of a highly nonlinear&nbsp;decision boundary, the neighborhoods of similar <span class="math inline">\(Y\)</span>-values become generally small. Therefore, also <span class="math inline">\(K\)</span> must be chosen relatively small so that we can capture more of the non-linear decision boundary.&nbsp;</p>
+<p>In the case of a highly nonlinear&nbsp;decision boundary, the neighborhoods of similar <span class="math inline">\(Y\)</span>-values close to the boundary become generally small. Therefore, also <span class="math inline">\(K\)</span> must be chosen relatively small so that we can capture more of the non-linear decision boundary.&nbsp;</p>
 </section>
 <section id="exercise-8" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8:</h4>
@@ -262,8 +273,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data into dataframe college</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"DATA/College.csv"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows and 5 collumns of the data</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(college[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 rows and first 5 collumns of the data</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>college[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                              X Private Apps Accept Enroll
 1  Abilene Christian University     Yes 1660   1232    721
@@ -280,7 +291,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><strong>8. b)</strong> Look at the data using the <code>fix()</code> function.</p>
 <p><strong>Answer:</strong></p>
-<p>You should notice that the first column is just the name of each university. We don’t really want <code>R</code> to treat this as data. However, it may be handy to have these names for later. Try the following commands:</p>
+<p>The <code>fix()</code> command allows you to look at the data and change values in the data in a spread-sheet like format.</p>
+<p>We can do some additional data-wrangling:<br> You should notice that the first column is just the name of each university. We don’t really want <code>R</code> to treat this as data. However, it may be handy to have these names for later. Try the following commands:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store row names</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[,<span class="dv">1</span>]</span>
@@ -324,10 +336,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="at">x =</span> college[,<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><strong>8. c.&nbsp;iii)</strong> Use the <code>boxplot()</code> function to produce side-by-side boxplots of Outstate versus Private.</p>
+<p><strong>8. c.&nbsp;iii)</strong> Use the <code>boxplot()</code> function to produce side-by-side boxplots of <code>Outstate</code> versus <code>Private</code>.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate<span class="sc">~</span>Private, </span>
@@ -335,9 +347,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Private"</span>, </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<blockquote class="blockquote">
+<p><code>Outstate</code>-Variable explained: Many US colleges charge extra tuition fees from non-resident students. <!-- Schools' reasoning for charging higher out-of-state tuition is because non-resident students' come from families who haven't paid tax dollars to the state.  --></p>
+</blockquote>
 <p><strong>8. c.&nbsp;iv)</strong> Create a new qualitative variable, called <code>Elite</code>, by binning the <code>Top10perc</code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a vector called ELite with only "No" entrances amounting the number of college rows</span></span>
@@ -366,7 +381,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Outstate <span class="sc">~</span> Elite, </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> college, <span class="at">xlab=</span><span class="st">"Elite"</span>, <span class="at">ylab=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>8. c.&nbsp;v)</strong> Use the <code>hist()</code> function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command <code>par(mfrow=c(2,2))</code> useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.</p>
@@ -379,7 +394,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Expend,   <span class="at">breaks=</span><span class="dv">25</span>, <span class="at">main=</span><span class="st">"Expend"</span>)</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Outstate, <span class="at">main=</span><span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -527,7 +542,7 @@ Maximum 46.60      8.00       455.00     230.00 4997.00        24.80</code></pre
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="sc">-</span><span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="Ch1_Solutions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ul>

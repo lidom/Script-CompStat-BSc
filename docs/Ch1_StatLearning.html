@@ -691,7 +691,9 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 \geq Var\left(\epsilon\right).
 \end{align*}
 \]</span></p>
-<p>➡️ The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<p>➡️ The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set. <!-- $$
+E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
+$$ --></p>
 <section id="variance-of-hatf-at-x_0" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
 <p><span class="math display">\[
@@ -933,7 +935,10 @@ Coding Challenge:
 <p><img src="Ch1_StatLearning_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><strong>Challenge:</strong> Write a KNN-function that uses the training data to classify a grid of test data in <span class="math inline">\([0,1]^2\)</span> into the two classes.</p>
+<p><strong>Challenge:</strong></p>
+<ul>
+<li>Write a KNN-function that uses the training data to classify a grid of test data in <span class="math inline">\([0,1]^2\)</span> into the two classes.</li>
+</ul>
 </div>
 </div>
 </section>

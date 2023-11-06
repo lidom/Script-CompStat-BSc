@@ -393,8 +393,6 @@ This test data random sample is independent of the training data random sample w
 
 
 
-
-
 Then, the **global test MSE** is given by,
 \begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
@@ -545,7 +543,10 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 $$
 
 
-➡️ The overall, i.e., **global** expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set. 
+➡️ The overall, i.e., **global** expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set.
+<!-- $$
+E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
+$$ -->
 
 #### Variance of $\hat{f}$ at $x_0$ {-}
 $$
@@ -838,11 +839,10 @@ points(x   = data_train$X1,
        col = data_train$Cl,  pch = 19)
 ```
 
-**Challenge:** Write a KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
+**Challenge:** 
 
+* Write a KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
 :::
-
-
 
 
 ## `R`-Lab: Introduction to `R` 
