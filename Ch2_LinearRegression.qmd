@@ -31,10 +31,9 @@ $$
 Y_i=\beta_0 + \beta_1 X_i +\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
 $${#eq-simpleLinMod}
 where 
-$$
-\sigma^2=Var(\epsilon)\quad\text{for all}\quad i=1,\dots,n.
-$$
 
+* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$ and 
+* $Var(\epsilon_i)=\sigma^2>0$ is constant for all $i=1,\dots,n$
 
 ::: {.callout-note}
 The assumption $f(X) = \beta_0 + \beta_1 X$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple. 
@@ -188,8 +187,8 @@ $$
 The averages of these realizations can be used to approximate the true means of the estimators, i.e.
 $$
 \begin{align*}
-E(\hat\beta_0)&\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{0,b}\\[2ex]
-E(\hat\beta_1)&\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{1,b}
+E(\hat\beta_0)&\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{0,b}\\[2ex]
+E(\hat\beta_1)&\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{1,b}
 \end{align*}
 $$
 and thus also the biases
@@ -249,8 +248,8 @@ allows us to construct approximate 95% **Confidence Intervals**:
 $$
 \begin{align*}
 \operatorname{CI}_{\beta_0}
-&=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_0),\;
-        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_0)\right] = \hat\beta_0\pm 2\operatorname{SE}(\hat\beta_1)\\[2ex]
+&=\left[\hat{\beta}_0-2\operatorname{SE}(\hat\beta_0),\;
+        \hat{\beta}_0+2\operatorname{SE}(\hat\beta_0)\right] = \hat\beta_0\pm 2\operatorname{SE}(\hat\beta_0)\\[2ex]
 \operatorname{CI}_{\beta_1}
 &=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
         \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right] = \hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)

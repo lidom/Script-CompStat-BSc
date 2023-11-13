@@ -272,9 +272,11 @@ For instance,
 (X_{i},Y_i)\overset{iid}{\sim}(X,Y),\quad\text{for all}\quad i=1,\dots,n.
 \]</span> Moreover, let <span id="eq-simpleLinMod"><span class="math display">\[
 Y_i=\beta_0 + \beta_1 X_i +\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
-\tag{2.1}\]</span></span> where <span class="math display">\[
-\sigma^2=Var(\epsilon)\quad\text{for all}\quad i=1,\dots,n.
-\]</span></p>
+\tag{2.1}\]</span></span> where</p>
+<ul>
+<li><span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_i\)</span> are independent from each other for all <span class="math inline">\(i=1,\dots,n\)</span> and</li>
+<li><span class="math inline">\(Var(\epsilon_i)=\sigma^2&gt;0\)</span> is constant for all <span class="math inline">\(i=1,\dots,n\)</span></li>
+</ul>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -413,8 +415,8 @@ Coding Challenge:
 \hat\beta_{1,1},\hat\beta_{1,2},\dots,\hat\beta_{1,B}
 \]</span> The averages of these realizations can be used to approximate the true means of the estimators, i.e. <span class="math display">\[
 \begin{align*}
-E(\hat\beta_0)&amp;\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{0,b}\\[2ex]
-E(\hat\beta_1)&amp;\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{1,b}
+E(\hat\beta_0)&amp;\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{0,b}\\[2ex]
+E(\hat\beta_1)&amp;\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{1,b}
 \end{align*}
 \]</span> and thus also the biases <span class="math display">\[
 \begin{align*}
@@ -460,8 +462,8 @@ Note
 \]</span> allows us to construct approximate 95% <strong>Confidence Intervals</strong>: <span class="math display">\[
 \begin{align*}
 \operatorname{CI}_{\beta_0}
-&amp;=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_0),\;
-        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_0)\right] = \hat\beta_0\pm 2\operatorname{SE}(\hat\beta_1)\\[2ex]
+&amp;=\left[\hat{\beta}_0-2\operatorname{SE}(\hat\beta_0),\;
+        \hat{\beta}_0+2\operatorname{SE}(\hat\beta_0)\right] = \hat\beta_0\pm 2\operatorname{SE}(\hat\beta_0)\\[2ex]
 \operatorname{CI}_{\beta_1}
 &amp;=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
         \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right] = \hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
