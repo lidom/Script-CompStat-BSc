@@ -16,18 +16,42 @@ For instance,
 `sales` $\approx \beta_0 + \beta_1$ `TV`
 </center>
 
-### Estimating the Coefficients 
+### Estimating the Regression Coefficients 
+
+Let 
+$$
+(X_{1},Y_1),\dots,(X_{n},Y_n)
+$$
+denote a training data random sample. I.e.  
+$$
+(X_{i},Y_i)\overset{iid}{\sim}(X,Y),\quad\text{for all}\quad i=1,\dots,n.
+$$
+Moreover, let 
+$$
+Y_i=\beta_0 + \beta_1 X_i +\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
+$${#eq-simpleLinMod}
+where 
+$$
+\sigma^2=Var(\epsilon)\quad\text{for all}\quad i=1,\dots,n.
+$$
+
+
+::: {.callout-note}
+The assumption $f(X) = \beta_0 + \beta_1 X$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple. 
+:::
+
 
 For a given observed realization of the training data random sample 
 $$
 (x_1,y_1),\dots,(x_n,y_n)
 $$
-we choose $\hat\beta_0$ and $\hat\beta_1$ such that the Residual Sum of Squares criterion is minimized:
+we choose $\hat\beta_0$ and $\hat\beta_1$ such that the **R**esidual **S**um of **S**quares criterion is minimized:
 $$
 \begin{align*}
 \operatorname{RSS}\equiv \operatorname{RSS}(\hat{\beta}_0,\hat{\beta_1})
-& = e_1^2 + \dots + e_n^2\\
-&=\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2
+& = e_1^2 + \dots + e_n^2\\[2ex]
+&=\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2\\[2ex]
+&=\sum_{i=1}^n\left(y_i - \hat{y}_i\right)^2
 \end{align*}
 $$
 The minimizers are 
@@ -51,36 +75,41 @@ $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$.
 
 ### Assessing the Accuracy of the Coefficient Estimates
 
-True unknown model 
+If the assumption of @eq-simpleLinMod is correct, i.e., if the data is actually generated according to the model 
 $$
-Y=f(X)+\epsilon
-$$
-
-In in linear regression analysis, we assume[^1] that 
-$$
-f(X) = \beta_0 + \beta_1 X
-$${#eq-simpleLinMod}
-
-::: {.callout-note}
-The assumption $f(X) = \beta_0 + \beta_1 X$ is often a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple. 
-:::
-
-If the assumption of @eq-simpleLinMod is correct, i.e., if the data is actually generated according to the model $f(X) = \beta_0 + \beta_1 X,$ then ordinary least squares estimators 
+Y_i=\beta_0 + \beta_1 X_i +\epsilon_i,
+$$ 
+then ordinary least squares estimators 
 $$
 \hat\beta_0\quad\text{and}\quad\hat\beta_1
 $$
-are **unbiased**, that is
+are **unbiased estimators**, that is
 $$
 \begin{align*}
 \operatorname{Bias}(\hat\beta_0)&=E(\hat\beta_0)-\beta_0=0\\
-\operatorname{Bias}(\hat\beta_1)&=E(\hat\beta_1)-\beta_1=0
+\operatorname{Bias}(\hat\beta_1)&=E(\hat\beta_1)-\beta_1=0.
 \end{align*}
+$${#eq-SimpleRegBias}
+I.e., on average, the estimation results equal the true (unknown) parameters. 
+
+**Note:** In @eq-SimpleRegBias, we consider $\hat\beta_0$ and $\hat\beta_1$ as **random variables** from which we can compute mean values. The estimators $\hat\beta_0$ and $\hat\beta_1$ are indeed **random variables** since they depend on the random variables in the **random sample** $(X_i,Y_i)\overset{iid}{\sim}(X,Y)$:  
 $$
-I.e., on average, the estimation results equal the true (unknown) parameters. However, in an actual data analysis, we only have one realization of the estimators $\hat\beta_0$ and $\hat\beta_1$ computed from one give dataset and thus we cannot compute averages of estimation results. Each single estimation result will have estimation errors, i.e., 
+\hat\beta_1=\frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}
+$$
+and
+$$
+\hat\beta_0=\bar{Y} - \hat\beta_1\bar{X}.
+$$
+
+<!-- For each observed realization of the random sample, we get one observed realization of the random variables 
+$$
+\hat\beta_0\quad\text{and}\quad \hat\beta_1.
+$$ -->
+
+In an actual data analysis, we only have *one* realization of the estimators $\hat\beta_0$ and $\hat\beta_1$ computed from the given dataset (i.e. the observed realization of the random sample). Each single estimation result will have estimation errors, i.e., 
 $$
 \hat\beta_0\neq \beta_0\quad\text{and}\quad\hat\beta_1\neq \beta_1.
 $$ 
-
 
 The following code generates artificial data to reproduce the plot in Figure 3.3 of our course textbook `ISLR`. 
 
@@ -109,7 +138,7 @@ head(data_sim)
 ```
 
 
-Using repeated samples form the data generating process defined in `myDataGenerator()`, we can generate multiple estimation results of the unknown simple linear regression parameters $\beta_0$ and $\beta_1$ and plot the corresponding empirical regression lines:
+Using repeated samples form the data generating process defined in `myDataGenerator()`, we can generate multiple estimation results $\hat\beta_0$ and $\hat\beta_1$ of the unknown simple linear regression parameters $\beta_0$ and $\beta_1$ and plot the corresponding empirical regression lines:
 ```{r}
 ## Estimation
 lm_obj <- lm(Y ~ X, data = data_sim)
@@ -144,7 +173,44 @@ abline(lm_obj, col = "blue", lwd = 2)
 
 
 
-The magnitude of the estimation errors is expressed in unites of **standard errors**:
+
+::: {.callout-caution}
+
+## Coding Challenge:
+
+Use the above `myDataGenerator()` function to generate many, for instance $B=10000$, realizations of the artificial data generating process, and based on these $B$ many realizations of $\hat\beta_0$ and $\hat\beta_1:$
+$$
+\hat\beta_{0,1},\hat\beta_{0,2},\dots,\hat\beta_{0,B}
+$$
+$$
+\hat\beta_{1,1},\hat\beta_{1,2},\dots,\hat\beta_{1,B}
+$$
+The averages of these realizations can be used to approximate the true means of the estimators, i.e.
+$$
+\begin{align*}
+E(\hat\beta_0)&\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{0,b}\\[2ex]
+E(\hat\beta_1)&\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{1,b}
+\end{align*}
+$$
+and thus also the biases
+$$
+\begin{align*}
+\operatorname{Bias}(\hat\beta_0)&\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{0,b} -\beta_0\\
+\operatorname{Bias}(\hat\beta_1)&\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{0,b}-\beta_1.
+\end{align*}
+$$
+The approximations become arbitrarily precise as $B\to\infty$ due to the Law of Large Numbers. 
+
+**Question:** Are the estimators $\hat\beta_0$ and $\hat\beta_1$ unbiased for the artificial data generating process defined by our `myDataGenerator()` function? 
+:::
+
+
+
+The magnitude of the estimation errors 
+$$
+\hat\beta_0-\beta_0\neq 0 \quad\text{and}\quad\hat\beta_1-\beta_1\neq 0.
+$$ 
+is expressed in unites of **Standard Errors**:
 $$
 \operatorname{SE}(\hat\beta_0)=\sqrt{\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]}
 $$
@@ -153,61 +219,70 @@ $$
 \operatorname{SE}(\hat\beta_1)=\sqrt{\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}},
 $$
 where 
-$$
-Var(\epsilon)=\sigma^2.
-$$ 
-
-Typically, $\sigma^2$ 
-$$
-\sigma = \operatorname{SD}(\epsilon)=\sqrt{Var(\epsilon)}=\sigma
-$$ 
-is unknown, but can be estimated by 
 \begin{align*}
-\sigma\approx\hat{\sigma}=\operatorname{RSE}
+\sigma^2 & =Var(\epsilon)\\
+\sigma  &  =SD(\epsilon) = \sqrt{Var(\epsilon)}
+\end{align*}
+
+Typically, the variance and thus also the **S**tandard **D**eviation of the error term, $\sigma = SD(\epsilon),$ are unknown, but we can estimate $\sigma$ by the **R**esidual **S**tandard **E**rror: 
+\begin{align*}
+\hat{\sigma}=\operatorname{RSE}
 &=\sqrt{\frac{1}{n-2}\operatorname{RSS}}\\[2ex]
 &=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2},
 \end{align*}
 where 
-$$
-\operatorname{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2
-$$
+$\operatorname{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2$
 are the residual sum of squares. 
 
 ::: {.callout-note}
 We subtract $2$ from the sample size $n$ since $n-2$ are the remaining degrees of freedom in the data after estimating two parameters $\hat\beta_0$ and $\hat\beta_1$. 
 :::
 
-Knowing $\operatorname{SE}(\hat\beta_0)$ and $\operatorname{SE}(\hat\beta_1)$ allows us to construct 95% **Confidence Intervals**:
+
+#### Confidence Intervals {-}
+
+Knowing the standard errors 
+$$
+\operatorname{SE}(\hat\beta_0)\quad\text{and}\quad\operatorname{SE}(\hat\beta_1)
+$$ 
+allows us to construct approximate 95% **Confidence Intervals**:
 $$
 \begin{align*}
+\operatorname{CI}_{\beta_0}
+&=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_0),\;
+        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_0)\right] = \hat\beta_0\pm 2\operatorname{SE}(\hat\beta_1)\\[2ex]
 \operatorname{CI}_{\beta_1}
 &=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
-        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right]
-\end{align*}
-$$
-likewise for $\operatorname{CI}_{\beta_1}$. 
-
-Short notation: 
-$$
-\begin{align*}
-\operatorname{CI}_{\beta_1}
-&=\hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
+        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right] = \hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
 \end{align*}
 $$
 
+::: {.callout-tip}
+# Interpretation 
+There is approximately a 95% change (in resamplings from the data generating process) that the **random** confidence interval $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$. 
 
-**Interpretation:** There is approximately a 95% change (in resamplings) that the (random) confidence interval $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$.
-
-::: {.callout-note}
-Thus, a given confidence interval either contains the true parameter value or not and we typically we do not know it. To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
+To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
 
 * [Interactive visualization for interpreting confidence intervals](https://rpsychologist.com/d3/ci/)
+:::
+
+::: {.callout-caution}
+Only the above frequentist point of view can be nicely interpreted.  Interpreting a given, observed confidence interval is hard and often done wrong. 
+
+![](images/CI_meme.jpg)
+
+A given, observed confidence interval (computed from the observed realization of the training data) either contains the true parameter value or not and usually we do not know it. 
 ::: 
 
 
 #### Confidence Intervals for Statistical Hypothesis Testing {-}
 
-We can use a 95% confidence interval to do statistical hypothesis testing. Let us consider the following standard null $(H_0)$ and alternative hypothesis $(H_1):$ 
+We can use a $(1-\alpha)\cdot 100\%$ confidence interval to do statistical hypothesis testing at the significance level $0<\alpha<1.$ Typical significance levels: 
+
+* $\alpha=0.05$
+* $\alpha=0.01$
+
+Let us consider the following standard null $(H_0)$ and alternative hypothesis $(H_1):$ 
 $$
 \begin{align*}
 H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
@@ -223,18 +298,25 @@ $$
         \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right]
 \end{align*}
 $$
-contains the value $0,$ we cannot reject the null hypothesis that $\beta_1=0.$
+contains the value $0,$ then we cannot reject the null hypothesis that $\beta_1=0.$
 
-* If, however, the observed realization of the confidence interval does not contain the value $0,$ we can reject the null hypothesis and adopt the alternative that $\beta_1\neq 0.$
+* If, however, the observed realization of the confidence interval does not contain the value $0,$ then we can reject the null hypothesis and adopt the alternative that $\beta_1\neq 0.$
 
 ::: {.callout-note}
-The probability of doing a false decision (i.e. reject the null hypothesis even though the null hypothesis is true) is here $1-95\%=5\%.$
+
+# Probability of a type I error 
+
+The probability of falsely rejecting the null hypothesis even though the null hypothesis is true (i.e. doing a type I error) is smaller or equal to the chosen significance level $\alpha.$
+
+Note: A type I error (rejecting $H_0$ even though $H_0$ is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level $\alpha.$
 ::: 
 
 
 #### Test Statistics {-}
 
-Standard errors can also be used to do hypothesis testing based on test statistics. Let us again consider the standard null and alternative hypothesis: 
+Standard errors can also be used to do hypothesis testing based on test statistics. 
+
+Let us again consider the standard null $(H_0)$ and alternative hypothesis $(H_1)$: 
 $$
 \begin{align*}
 H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
@@ -244,9 +326,9 @@ $$
 
 This statistical hypothesis test can be conducted using the $t$-test statistic:
 $$
-t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-1)}
+t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}
 $$
-
+The $t$-test statistic is a random variable. Under $H_0,$ i.e. if $H_0$ is true, the $t$-test statistic has a $t$-distribution with $(n-2)$ degrees of freedom. 
 
 $p$-value
 
@@ -255,10 +337,9 @@ p
 &=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
 &=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\},
 \end{align*}
-where $t_{obs}$ denotes the observed value of the $t$-test statistic and where $t$ is $t$-distributed with $(n-2)$ degrees of freedom. 
+where $t_{obs}$ denotes the observed value of the $t$-test statistic computed from the observed training data, and where $t$ is $t$-distributed with $(n-2)$ degrees of freedom. $P_{H_0}$ means that the probability is computed for the scenario that $H_0$ is true. 
 
-Select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$). 
-
+To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$). 
 
 * If the observed realization of the $p$-value is larger than or equal to the significance level 
 $$
@@ -274,7 +355,7 @@ then we can reject the null hypothesis and adopt the alternative hypothesis.
 
 
 ::: {.callout-note}
-Again, the probability of doing a false test decision (i.e. reject the null hypothesis even though the null hypothesis is true) is here $1-95\%=5\%.$
+Again, the probability of rejecting the null hypothesis even though the null hypothesis is true is smaller or equal to the chosen significance level $\alpha.$
 ::: 
 
 ![](images/Tab_3_1.png)
@@ -305,15 +386,17 @@ $$
 \end{align*}
 $$
 
+::: {.callout-caution}
+
 **Cautionary Note Nr 1:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
 
 * very low $\operatorname{RSE}$ values, $\operatorname{RSE}\approx 0$, and 
 * very high $R^2$ values, $R^2\approx 1$, 
 
-can be warning signals indicating overfitting. 
+can be warning signals indicating overfitting. While overfitting typically does not happen in simple linear regression analysis, it can happen in multiple linear regression analysis (see below).
 
-**Cautionary Note Nr 2:** The above assessment is only based on training data. We have seen in @sec-SL that we usually want to assess the model accuracy using testing data.  
-
+**Cautionary Note Nr 2:** The $R^2$ and \operatorname{RSE} are only based on training data. We have seen in @sec-SL that we usually want to assess the model accuracy using testing data.  
+:::
 
 <!-- A proper assessment of the model accuracy needs to take into account test data.  -->
 
@@ -347,62 +430,96 @@ For instance,
 
 ### Estimating the Regression Coefficients 
 
-For a given observed realization of the training data random sample
+Let 
 $$
-(x_{11},\dots,x_{1p},y_1),\dots,(x_{n1},\dots,x_{np},y_n)
+(X_{11},\dots,X_{1p},Y_1),\dots,(X_{n1},\dots,X_{np},Y_n)
 $$
-select 
+denote a training data random sample. I.e.  
 $$
-\hat\beta_0,\dots,\hat\beta_p
-$$ 
-by minimizing 
+(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X,Y),\quad\text{for all}\quad i=1,\dots,n.
 $$
-\operatorname{RSS}=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2,
+Moreover, let 
+$$
+Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
 $$
 where 
 $$
-\hat{y}_i=\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}
+\sigma^2=Var(\epsilon)\quad\text{for all}\quad i=1,\dots,n.
 $$
-
-
-Let
+Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let
 \begin{equation*}
-Y=\left(\begin{matrix}y_1\\ \vdots\\y_n\end{matrix}\right),
+X_i=\left(\begin{matrix}X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
+\beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
 \end{equation*}
-denote the $(n\times 1)$ vector containing all response values of the training data and 
+This allows us to write the multiple linear regression model more compactly
+$$
+Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
+$$
+
+Next, we can stack all components. Let 
 \begin{equation*}
-X=\left(\begin{matrix}x_{11}&\dots&x_{1K}\\\vdots&\ddots&\vdots\\ x_{n1}&\dots&x_{nK}\\\end{matrix}\right)
+Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
+\epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
 \end{equation*}
-denote the $(n\times K)$ matrix containing all predictor values of the training data. 
-
-Then
+denote the $(n\times 1)$ vector containing all response values of the random sample and all error terms of the random sample. Moreover, let
+\begin{equation*}
+X=\left(\begin{matrix}X_{11}&\dots&X_{1K}\\\vdots&\ddots&\vdots\\ X_{n1}&\dots&X_{nK}\\\end{matrix}\right)
+\end{equation*}
+denote the $(n\times K)$ matrix containing all predictor values of the random sample. Then
 $$
-\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)=\hat{\beta}=(X'X)^{-1}X'Y
+Y=X\beta+\epsilon.
 $$
-denotes the $(K\times 1)$ vector of parameter estimates. 
 
-
+Using matrix algebra, it can be shown that the ordinary least squares estimator of $\beta=(\beta_0,\beta_1,\dots,\beta_p)'$ is given by the following $(K\times 1)$ vector of parameter estimates
+$$
+\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)=\hat{\beta}=(X'X)^{-1}X'Y.
+$$
+ 
+For a given observed realization of the training data random sample
+$$
+(x_{11},\dots,x_{1p},y_1),\dots,(x_{n1},\dots,x_{np},y_n),
+$$
+the estimator $\hat\beta=(\beta_0,\beta_1,\dots,\beta_p)'$ is selected by minimizing 
+\begin{align*}
+\operatorname{RSS}
+&=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2\\[2ex]
+&=\sum_{i=1}^n\left(y_i-\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}\right)^2.
+\end{align*}
 
 ![](images/Fig_3_4.png)
 
+Since the estimator 
+$$
+\hat\beta=\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)
+$$
+depends on the random sample, it is itself a $(p+1)$-dimensional **random variable**. 
+
+For each realization of the random sample, we observe a realization of the estimator. In an actual data analysis, we only have *one* realization of the estimators $\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p$ computed from the given dataset (i.e. the observed realization of the random sample).
 
 
 #### Interpretation of Multiple Linear Regressions and the Omitted Variable Bias {-}
 
-Multiple linear regression is more than mere composition of single simple linear regression models. 
-
-Take a look at the following two simple linear regression results: 
+Multiple linear regression is more than mere composition of single simple linear regression models. Take a look at the following two simple linear regression results: 
 
 ![](images/Tab_3_3.png)
 
-Thus in separate simple linear regressions, the effects of `radio` and the effect of `newspaper` on `sales` are both (but separately) statistically. 
+Thus in separate simple linear regressions, the effects of `radio` and the effect of `newspaper` on `sales` are both (but separately) statistically significant. I.e., in each separate regression, we can reject the null hypotheses 
+$$
+H_0:\beta_{radio}=0\quad\text{and}\quad H_0:\beta_{newspaper}=0
+$$
+and adopt the alternative hypotheses 
+$$
+H_1:\beta_{radio}\neq 0\quad\text{and}\quad H_1:\beta_{newspaper}\neq 0.
+$$
 
-By contrast, when looking at the multiple linear regression when regressing `sales` onto both `radio` and `newspaper`, only the effect of `radio` remains statistically significant: 
+By contrast, when looking at the multiple linear regression when regressing `sales` onto `TV`, `radio` and `newspaper`, only the effect of `radio` remains statistically significant: 
 
 ![](images/Tab_3_4.png)
 
 
 **Reason: Omitted Variable Bias** 
+
+The reason for this change from a statistically significant effect of `newspaper` in the simple linear regression, to an insignificant effect in the multiple linear regression  is the so-called **Omitted Variable Bias**.
 
 * `radio` has an effect on `sales`
 * `newspaper` has actually no effect on `sales`
@@ -410,16 +527,19 @@ By contrast, when looking at the multiple linear regression when regressing `sal
 
 ![](images/Tab_3_5.png)
 
-* Thus, when omitting `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio`. This is called a *Omitted Variable Bias*.
+* Thus, when **omitting** `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio`. 
 
-Conclusion: Simple linear regression can be dangerous. We need to control for all possibly relevant variables if we want to interpret the estimation results ("Inference"). 
+::: {.callout-caution}
+Interpreting statistically significant results as true effects (changing $X_j$ by one unit causes a change in the mean of $Y$ by $\beta_{j}$) is a delectate thing. Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
+:::
 
-**Interpretation of the Coefficients in Table 3.5** 
+
+**Interpretation of the Coefficients in Table 3.4** 
 
 For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
 
 
-### (Ch. 3.2.2) Some Important Questions {-}
+### Some Important Questions 
 
 **1. Is There a Relationship Between the Response and Predictors?**
 
@@ -433,8 +553,9 @@ $$
 $F$-test statistic
 $$
 F=\frac{(\operatorname{TSS}-\operatorname{RSS})/p}{\operatorname{
-  RSS}/(n-p-1)}
+  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{q,n-p-1}
 $$
+Under $H_0,$ i.e. if $H_0$ is true, the $F$-test statistic has a $F$-distribution with $q$ numerator and $(n-p-1)$ denominator degrees of freedom. 
 
 If $H_0$ is correct
 $$
@@ -448,13 +569,36 @@ $$
 * Thus, if $H_0$ is correct, we expect values of $F\approx 1$. 
 * But if $H_1$ is correct, we expect values of $F\gg 1$.
 
+$p$-value
 
-Caution: Cannot be computed if $p>n$. (Chapter 6 on "high dimensional problems")
+\begin{align*}
+p
+&=P_{H_0}\left( F \geq F_{obs} \right),
+\end{align*}
+where $F_{obs}$ denotes the observed value of the $F$-test statistic computed from the observed training data, and where $F$ is a random variable that has a $F_{q,n-p-1}$ distribution. $P_{H_0}$ means that the probability is computed for the scenario that $H_0$ is true. 
+
+To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$). 
+
+* If the observed realization of the $p$-value is larger than or equal to the significance level 
+$$
+p\geq \alpha,
+$$
+then we cannot reject the null hypothesis. 
+
+* If, however, the observed realization of the $p$-value is strictly smaller than the significance level 
+$$
+p<\alpha,
+$$
+then we can reject the null hypothesis and adopt the alternative hypothesis. 
 
 
-## (Ch. 3.3) Other Considerations in the Regression Model {-}
 
-### (Ch. 3.3.1) Qualitative Predictors {-}
+<!-- Caution: Cannot be computed if $p>n$. (Chapter 6 on "high dimensional problems") -->
+
+
+## Other Considerations in the Regression Model
+
+###  Qualitative Predictors
 
 Often some predictors are *qualitative* variables (also known as a *factor* variables). For instance, the `Credit` dataset contains the following qualitative predictors: 
 
@@ -475,13 +619,15 @@ x_{i} = \left\{
   \end{array}\right.
 $$
 Using this dummy variable as a predictor in the regression equation results in the following regression model:
-$$
-y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
+\begin{align*}
+y_{i}
+&=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex] 
+&= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1 + \epsilon_i &\quad \text{if the $i$th person owns a house}\\
   \beta_0 + \epsilon_i           &\quad \text{if the $i$th person does not own a house}
   \end{array}\right.
-$$
+\end{align*}
 
 **Interpretation:**
 
@@ -499,13 +645,15 @@ x_{i} = \left\{
  -1 &\quad \text{if the $i$th person does not own a house.}
   \end{array}\right.
 $$
-$$
-y_{i}=\beta_0 + \beta_1 x_i + \epsilon_i = \left\{
+\begin{align*}
+y_{i}
+&=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex] 
+&= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1 + \epsilon_i&\quad \text{if the $i$th person owns a house}\\
   \beta_0 - \beta_1 + \epsilon_i&\quad \text{if the $i$th person does not own a house}
   \end{array}\right.
-$$
+\end{align*}
 
 **Interpretation:**
 
@@ -533,14 +681,15 @@ x_{i2} = \left\{
 $$
 Using both of these dummy variables results in the following regression model:
 order to obtain the model
-$$
-y_{i}=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i = \left\{
+\begin{align*}
+y_{i}&=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i\\[2ex] 
+&= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1  + \epsilon_i& \quad \text{if the $i$th person is from the South}\\
   \beta_0 + \beta_2  + \epsilon_i& \quad \text{if the $i$th person is from the West}\\ 
   \beta_0            + \epsilon_i& \quad \text{if the $i$th person is from the East.}\\ 
   \end{array}\right.
-$$
+\end{align*}
 
 
 **Interpretation:**
@@ -556,9 +705,9 @@ $$
 There are many different ways of coding qualitative variables besides the dummy variable approach taken here. All of these approaches lead to equivalent model fits, but the coefficients are different and have different interpretations, and are designed to measure particular **contrasts**. (A detailed discussion of *contrasts* is beyond the scope of this lecture.)
 
 
-### (Ch. 3.3.2) Extensions of the Linear Model {-}
+### Extensions of the Linear Model 
 
-#### Interaction Effects: Removing the Additive Assumption using Interaction Effects {-}
+#### Interaction Effects {-}
 
 Previously, we used the following model 
 
@@ -687,7 +836,7 @@ So we can use standard linear regression software to estimate $\beta_0$, $\beta_
 ![](images/Tab_3_10.png)
 
 
-### (Ch. 3.3.3) Potential Problems {-}
+### Potential Problems 
 
 
 **1. Non-linearity of the response-predictor relationships.**
@@ -855,7 +1004,7 @@ fit, since the presence of collinearity implies that the information that this v
 
 
 
-## (Ch. 3.5) Comparison of Linear Regression with K-Nearest Neighbors {-}
+## Comparison of Linear Regression with K-Nearest Neighbors
 
 
 Linear regression is an example of a parametric approach because it assumes a linear model form for $f(X).$
