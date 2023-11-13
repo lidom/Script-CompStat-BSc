@@ -330,6 +330,13 @@ t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n
 $$
 The $t$-test statistic is a random variable. Under $H_0,$ i.e. if $H_0$ is true, the $t$-test statistic has a $t$-distribution with $(n-2)$ degrees of freedom. 
 
+::: {.callout-tip}
+In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (see below), the corrsponding $t$-test for the $j$th predictor has the following null-distribution: 
+$$
+t=\frac{\hat\beta_j - 0}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
+$$
+:::
+
 $p$-value
 
 \begin{align*}

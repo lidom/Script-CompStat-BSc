@@ -550,6 +550,21 @@ H_1:&amp;\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 
 <p>This statistical hypothesis test can be conducted using the <span class="math inline">\(t\)</span>-test statistic: <span class="math display">\[
 t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}
 \]</span> The <span class="math inline">\(t\)</span>-test statistic is a random variable. Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if <span class="math inline">\(H_0\)</span> is true, the <span class="math inline">\(t\)</span>-test statistic has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\((n-2)\)</span> degrees of freedom.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (see below), the corrsponding <span class="math inline">\(t\)</span>-test for the <span class="math inline">\(j\)</span>th predictor has the following null-distribution: <span class="math display">\[
+t=\frac{\hat\beta_j - 0}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
+\]</span></p>
+</div>
+</div>
 <p><span class="math inline">\(p\)</span>-value</p>
 <p><span class="math display">\[\begin{align*}
 p
