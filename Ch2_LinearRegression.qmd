@@ -211,23 +211,25 @@ $$
 $$ 
 is expressed in unites of **Standard Errors**:
 $$
-\operatorname{SE}(\hat\beta_0)=\sqrt{\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]}
+\operatorname{SE}(\hat\beta_0)=\sqrt{Var(\hat\beta_1)}=\sqrt{\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]}
 $$
 and
 $$
-\operatorname{SE}(\hat\beta_1)=\sqrt{\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}},
+\operatorname{SE}(\hat\beta_1)=\sqrt{Var(\hat\beta_1)}=\sqrt{\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}},
 $$
 where 
 \begin{align*}
-\sigma^2 & =Var(\epsilon)\\
-\sigma  &  =SD(\epsilon) = \sqrt{Var(\epsilon)}
+\sigma^2 & =Var(\epsilon_i)\\
+\Leftrightarrow\quad \sigma  &  =SD(\epsilon_i) = \sqrt{Var(\epsilon_i)}
 \end{align*}
+for all $i=1,\dots,n.$
 
 Typically, the variance and thus also the **S**tandard **D**eviation of the error term, $\sigma = SD(\epsilon),$ are unknown, but we can estimate $\sigma$ by the **R**esidual **S**tandard **E**rror: 
 \begin{align*}
 \hat{\sigma}=\operatorname{RSE}
 &=\sqrt{\frac{1}{n-2}\operatorname{RSS}}\\[2ex]
-&=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2},
+&=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2}\\[2ex]
+&=\sqrt{\frac{1}{n-2}\sum_{i=1}^n\left(y_i-\left(\hat{\beta}_0+\hat{\beta}_1x_i\right)\right)^2}
 \end{align*}
 where 
 $\operatorname{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2$

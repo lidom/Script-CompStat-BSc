@@ -430,17 +430,18 @@ E(\hat\beta_1)&amp;\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{1,b}
 <p>The magnitude of the estimation errors <span class="math display">\[
 \hat\beta_0-\beta_0\neq 0 \quad\text{and}\quad\hat\beta_1-\beta_1\neq 0.
 \]</span> is expressed in unites of <strong>Standard Errors</strong>: <span class="math display">\[
-\operatorname{SE}(\hat\beta_0)=\sqrt{\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]}
+\operatorname{SE}(\hat\beta_0)=\sqrt{Var(\hat\beta_1)}=\sqrt{\sigma^2\left[\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n(x_i-\bar{x})^2}\right]}
 \]</span> and <span class="math display">\[
-\operatorname{SE}(\hat\beta_1)=\sqrt{\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}},
+\operatorname{SE}(\hat\beta_1)=\sqrt{Var(\hat\beta_1)}=\sqrt{\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}},
 \]</span> where <span class="math display">\[\begin{align*}
-\sigma^2 &amp; =Var(\epsilon)\\
-\sigma  &amp;  =SD(\epsilon) = \sqrt{Var(\epsilon)}
-\end{align*}\]</span></p>
+\sigma^2 &amp; =Var(\epsilon_i)\\
+\Leftrightarrow\quad \sigma  &amp;  =SD(\epsilon_i) = \sqrt{Var(\epsilon_i)}
+\end{align*}\]</span> for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
 <p>Typically, the variance and thus also the <strong>S</strong>tandard <strong>D</strong>eviation of the error term, <span class="math inline">\(\sigma = SD(\epsilon),\)</span> are unknown, but we can estimate <span class="math inline">\(\sigma\)</span> by the <strong>R</strong>esidual <strong>S</strong>tandard <strong>E</strong>rror: <span class="math display">\[\begin{align*}
 \hat{\sigma}=\operatorname{RSE}
 &amp;=\sqrt{\frac{1}{n-2}\operatorname{RSS}}\\[2ex]
-&amp;=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2},
+&amp;=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2}\\[2ex]
+&amp;=\sqrt{\frac{1}{n-2}\sum_{i=1}^n\left(y_i-\left(\hat{\beta}_0+\hat{\beta}_1x_i\right)\right)^2}
 \end{align*}\]</span> where <span class="math inline">\(\operatorname{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2\)</span> are the residual sum of squares.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
