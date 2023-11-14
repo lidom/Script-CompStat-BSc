@@ -289,7 +289,7 @@ We can use a $(1-\alpha)\cdot 100\%$ confidence interval to do statistical hypot
 * $\alpha=0.05$
 * $\alpha=0.01$
 
-Let us consider the following null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_1$ equals the **null-hypothetical value** $\beta^{(H_0)}_{1}$ versus the alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_1$ does not equal the null-hypothetical value $\beta^{(H_0)}_{1}:$
+Let us consider the following null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_1$ equals the **null-hypothetical value** $\beta^{(H_0)}_{1}$ versus the two-sided alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_1$ does not equal the null-hypothetical value $\beta^{(H_0)}_{1}:$
 $$
 \begin{align*}
 H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
@@ -393,57 +393,64 @@ i.e. with a false null-hypothesis (since $\beta_1=5$ in `mySimpleRegrDataGenerat
 
 :::
 
-#### Test Statistics {-}
+#### Test Statistics for Statistical Hypothesis Testing {-}
 
-Standard errors can also be used to do hypothesis testing based on test statistics. 
+Standard errors can also be used to construct test-statistics for statistical hypothesis testing. 
 
-Let us again consider the standard null $(H_0)$ and alternative hypothesis $(H_1)$: 
+Choose a significance level $0<\alpha<1$ such as, for instance,
+
+* $\alpha=0.05$
+* $\alpha=0.01$
+
+Let us (again) consider the following null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_1$ equals the **null-hypothetical value** $\beta^{(H_0)}_{1}$ versus the two-sided alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_1$ does not equal the null-hypothetical value $\beta^{(H_0)}_{1}:$
 $$
 \begin{align*}
-H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
-H_1:&\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
+H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
+H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
 \end{align*}
 $$
 
-This statistical hypothesis test can be conducted using the $t$-test statistic:
+Under $H_0,$ i.e. if the (unknown) true parameter value equals the null-hypothetical value $(\beta_1=\beta^{(H_0)}_{1}),$ the **random** $t$-test statistic has a $t$-distribution with $(n-1)$ degrees of freedom, 
 $$
-t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}
+t=\frac{\hat\beta_1 - \beta^{(H_0)}_{1}}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}.
 $$
-The $t$-test statistic is a random variable. Under $H_0,$ i.e. if $H_0$ is true, the $t$-test statistic has a $t$-distribution with $(n-2)$ degrees of freedom. 
 
 ::: {.callout-tip}
 In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (see below), the corrsponding $t$-test for the $j$th predictor has the following null-distribution: 
 $$
-t=\frac{\hat\beta_j - 0}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
+t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
 $$
 :::
 
-$p$-value
-
+**$p$-value:**</br> 
+The $p$-value is the probability of seeing a realization of the random test-statistic $t$ which is more extreme than the observed value of the test-statistic $t_{obs},$ 
 \begin{align*}
 p
 &=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
 &=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\},
 \end{align*}
-where $t_{obs}$ denotes the observed value of the $t$-test statistic computed from the observed training data, and where $t$ is $t$-distributed with $(n-2)$ degrees of freedom. $P_{H_0}$ means that the probability is computed for the scenario that $H_0$ is true. 
+where $t_{obs}$ denotes the given observed value of the $t$-test statistic computed from the observed training data, and where $t$ is the **random** $t$-test statistic which is $t$-distributed with $(n-2)$ degrees of freedom if $H_0$ is true. Finally, $P_{H_0}$ means that the probability is computed for the scenario that $H_0$ is true. 
+
+**Testing-Procedure:**
 
 To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$). 
 
 * If the observed realization of the $p$-value is larger than or equal to the significance level 
 $$
-p\geq \alpha,
+p_{obs}\geq \alpha,
 $$
 then we cannot reject the null hypothesis. 
 
 * If, however, the observed realization of the $p$-value is strictly smaller than the significance level 
 $$
-p<\alpha,
+p_{obs}<\alpha,
 $$
 then we can reject the null hypothesis and adopt the alternative hypothesis. 
 
-
 ::: {.callout-note}
-Again, the probability of rejecting the null hypothesis even though the null hypothesis is true is smaller or equal to the chosen significance level $\alpha.$
+It can be shown that the statistical hypothesis tests based on confidence intervals are equivalent to statistical hypothesis tests based on corresponding test statistics. 
+
+Thus, the probability of falsely rejecting the null hypothesis even though the null hypothesis is true, is also here smaller or equal to the chosen significance level $\alpha.$
 ::: 
 
 ![](images/Tab_3_1.png)
@@ -481,9 +488,9 @@ $$
 * very low $\operatorname{RSE}$ values, $\operatorname{RSE}\approx 0$, and 
 * very high $R^2$ values, $R^2\approx 1$, 
 
-can be warning signals indicating overfitting. While overfitting typically does not happen in simple linear regression analysis, it can happen in multiple linear regression analysis (see below).
+can be warning signals indicating overfitting. While overfitting typically does not happen with simple linear regression models, it can happen in multiple linear regression analysis (see below).
 
-**Cautionary Note Nr 2:** The $R^2$ and \operatorname{RSE} are only based on training data. We have seen in @sec-SL that we usually want to assess the model accuracy using testing data.  
+**Cautionary Note Nr 2:** The $R^2$ and $\operatorname{RSE}$ are only based on training data. In @sec-SL, we have seen that one usually wants to assess the model accuracy using testing data.  
 :::
 
 <!-- A proper assessment of the model accuracy needs to take into account test data.  -->
@@ -524,22 +531,23 @@ $$
 $$
 denote a training data random sample. I.e.  
 $$
-(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X,Y),\quad\text{for all}\quad i=1,\dots,n.
+(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X_{1},\dots,X_{p},Y),\quad\text{for all}\quad i=1,\dots,n.
 $$
 Moreover, let 
 $$
 Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
-$$
+$${#eq-MultLinReg1}
 where 
-$$
-\sigma^2=Var(\epsilon)\quad\text{for all}\quad i=1,\dots,n.
-$$
+
+* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$ and 
+* $Var(\epsilon_i)=\sigma^2>0$ is constant for all $i=1,\dots,n$
+
 Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let
 \begin{equation*}
 X_i=\left(\begin{matrix}X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
 \end{equation*}
-This allows us to write the multiple linear regression model more compactly
+This allows us to write @eq-MultLinReg1 more compactly
 $$
 Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
 $$
@@ -549,11 +557,13 @@ Next, we can stack all components. Let
 Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
 \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
 \end{equation*}
-denote the $(n\times 1)$ vector containing all response values of the random sample and all error terms of the random sample. Moreover, let
+denote the $(n\times 1)$ vectors containing all response values and all error terms of the random sample. Moreover, let
 \begin{equation*}
 X=\left(\begin{matrix}X_{11}&\dots&X_{1K}\\\vdots&\ddots&\vdots\\ X_{n1}&\dots&X_{nK}\\\end{matrix}\right)
 \end{equation*}
-denote the $(n\times K)$ matrix containing all predictor values of the random sample. Then
+denote the $(n\times K)$ matrix containing all predictor values of the random sample. 
+
+This allows us to write @eq-MultLinReg1 even more compactly as 
 $$
 Y=X\beta+\epsilon.
 $$

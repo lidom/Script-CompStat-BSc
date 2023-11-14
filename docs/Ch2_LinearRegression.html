@@ -517,7 +517,7 @@ Danger
 <li><span class="math inline">\(\alpha=0.05\)</span></li>
 <li><span class="math inline">\(\alpha=0.01\)</span></li>
 </ul>
-<p>Let us consider the following null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> versus the alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}:\)</span> <span class="math display">\[
+<p>Let us consider the following null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> versus the two-sided alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}:\)</span> <span class="math display">\[
 \begin{align*}
 H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
 H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
@@ -621,18 +621,23 @@ H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
 </div>
 </div>
 </section>
-<section id="test-statistics" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="test-statistics">Test Statistics</h4>
-<p>Standard errors can also be used to do hypothesis testing based on test statistics.</p>
-<p>Let us again consider the standard null <span class="math inline">\((H_0)\)</span> and alternative hypothesis <span class="math inline">\((H_1)\)</span>: <span class="math display">\[
+<section id="test-statistics-for-statistical-hypothesis-testing" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="test-statistics-for-statistical-hypothesis-testing">Test Statistics for Statistical Hypothesis Testing</h4>
+<p>Standard errors can also be used to construct test-statistics for statistical hypothesis testing.</p>
+<p>Choose a significance level <span class="math inline">\(0&lt;\alpha&lt;1\)</span> such as, for instance,</p>
+<ul>
+<li><span class="math inline">\(\alpha=0.05\)</span></li>
+<li><span class="math inline">\(\alpha=0.01\)</span></li>
+</ul>
+<p>Let us (again) consider the following null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> versus the two-sided alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}:\)</span> <span class="math display">\[
 \begin{align*}
-H_0:&amp;\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\
-H_1:&amp;\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
+H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
+H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
 \end{align*}
 \]</span></p>
-<p>This statistical hypothesis test can be conducted using the <span class="math inline">\(t\)</span>-test statistic: <span class="math display">\[
-t=\frac{\hat\beta_1 - 0}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}
-\]</span> The <span class="math inline">\(t\)</span>-test statistic is a random variable. Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if <span class="math inline">\(H_0\)</span> is true, the <span class="math inline">\(t\)</span>-test statistic has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\((n-2)\)</span> degrees of freedom.</p>
+<p>Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if the (unknown) true parameter value equals the null-hypothetical value <span class="math inline">\((\beta_1=\beta^{(H_0)}_{1}),\)</span> the <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\((n-1)\)</span> degrees of freedom, <span class="math display">\[
+t=\frac{\hat\beta_1 - \beta^{(H_0)}_{1}}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}.
+\]</span></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -644,23 +649,23 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (see below), the corrsponding <span class="math inline">\(t\)</span>-test for the <span class="math inline">\(j\)</span>th predictor has the following null-distribution: <span class="math display">\[
-t=\frac{\hat\beta_j - 0}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
+t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
 \]</span></p>
 </div>
 </div>
-<p><span class="math inline">\(p\)</span>-value</p>
-<p><span class="math display">\[\begin{align*}
+<p><strong><span class="math inline">\(p\)</span>-value:</strong><br> The <span class="math inline">\(p\)</span>-value is the probability of seeing a realization of the random test-statistic <span class="math inline">\(t\)</span> which is more extreme than the observed value of the test-statistic <span class="math inline">\(t_{obs},\)</span> <span class="math display">\[\begin{align*}
 p
 &amp;=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
 &amp;=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\},
-\end{align*}\]</span> where <span class="math inline">\(t_{obs}\)</span> denotes the observed value of the <span class="math inline">\(t\)</span>-test statistic computed from the observed training data, and where <span class="math inline">\(t\)</span> is <span class="math inline">\(t\)</span>-distributed with <span class="math inline">\((n-2)\)</span> degrees of freedom. <span class="math inline">\(P_{H_0}\)</span> means that the probability is computed for the scenario that <span class="math inline">\(H_0\)</span> is true.</p>
+\end{align*}\]</span> where <span class="math inline">\(t_{obs}\)</span> denotes the given observed value of the <span class="math inline">\(t\)</span>-test statistic computed from the observed training data, and where <span class="math inline">\(t\)</span> is the <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic which is <span class="math inline">\(t\)</span>-distributed with <span class="math inline">\((n-2)\)</span> degrees of freedom if <span class="math inline">\(H_0\)</span> is true. Finally, <span class="math inline">\(P_{H_0}\)</span> means that the probability is computed for the scenario that <span class="math inline">\(H_0\)</span> is true.</p>
+<p><strong>Testing-Procedure:</strong></p>
 <p>To do the statistical hypothesis test, we need to select a significance level <span class="math inline">\(\alpha\)</span> (e.g.&nbsp;<span class="math inline">\(\alpha=0.01\)</span> or <span class="math inline">\(\alpha=0.05\)</span>).</p>
 <ul>
 <li><p>If the observed realization of the <span class="math inline">\(p\)</span>-value is larger than or equal to the significance level <span class="math display">\[
-p\geq \alpha,
+p_{obs}\geq \alpha,
 \]</span> then we cannot reject the null hypothesis.</p></li>
 <li><p>If, however, the observed realization of the <span class="math inline">\(p\)</span>-value is strictly smaller than the significance level <span class="math display">\[
-p&lt;\alpha,
+p_{obs}&lt;\alpha,
 \]</span> then we can reject the null hypothesis and adopt the alternative hypothesis.</p></li>
 </ul>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -673,7 +678,8 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Again, the probability of rejecting the null hypothesis even though the null hypothesis is true is smaller or equal to the chosen significance level <span class="math inline">\(\alpha.\)</span></p>
+<p>It can be shown that the statistical hypothesis tests based on confidence intervals are equivalent to statistical hypothesis tests based on corresponding test statistics.</p>
+<p>Thus, the probability of falsely rejecting the null hypothesis even though the null hypothesis is true, is also here smaller or equal to the chosen significance level <span class="math inline">\(\alpha.\)</span></p>
 </div>
 </div>
 <p><img src="images/Tab_3_1.png" class="img-fluid"></p>
@@ -714,8 +720,8 @@ Danger
 <li>very low <span class="math inline">\(\operatorname{RSE}\)</span> values, <span class="math inline">\(\operatorname{RSE}\approx 0\)</span>, and</li>
 <li>very high <span class="math inline">\(R^2\)</span> values, <span class="math inline">\(R^2\approx 1\)</span>,</li>
 </ul>
-<p>can be warning signals indicating overfitting. While overfitting typically does not happen in simple linear regression analysis, it can happen in multiple linear regression analysis (see below).</p>
-<p><strong>Cautionary Note Nr 2:</strong> The <span class="math inline">\(R^2\)</span> and are only based on training data. We have seen in <a href="Ch1_StatLearning.html"><span>Chapter&nbsp;1</span></a> that we usually want to assess the model accuracy using testing data.</p>
+<p>can be warning signals indicating overfitting. While overfitting typically does not happen with simple linear regression models, it can happen in multiple linear regression analysis (see below).</p>
+<p><strong>Cautionary Note Nr 2:</strong> The <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\operatorname{RSE}\)</span> are only based on training data. In <a href="Ch1_StatLearning.html"><span>Chapter&nbsp;1</span></a>, we have seen that one usually wants to assess the model accuracy using testing data.</p>
 </div>
 </div>
 <!-- A proper assessment of the model accuracy needs to take into account test data.  -->
@@ -745,23 +751,27 @@ For instance,
 (X_{11},\dots,X_{1p},Y_1),\dots,(X_{n1},\dots,X_{np},Y_n)
 \]</span> denote a training data random sample. I.e.<br>
 <span class="math display">\[
-(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X,Y),\quad\text{for all}\quad i=1,\dots,n.
-\]</span> Moreover, let <span class="math display">\[
+(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X_{1},\dots,X_{p},Y),\quad\text{for all}\quad i=1,\dots,n.
+\]</span> Moreover, let <span id="eq-MultLinReg1"><span class="math display">\[
 Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
-\]</span> where <span class="math display">\[
-\sigma^2=Var(\epsilon)\quad\text{for all}\quad i=1,\dots,n.
-\]</span> Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let <span class="math display">\[\begin{equation*}
+\tag{2.3}\]</span></span> where</p>
+<ul>
+<li><span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_i\)</span> are independent from each other for all <span class="math inline">\(i=1,\dots,n\)</span> and</li>
+<li><span class="math inline">\(Var(\epsilon_i)=\sigma^2&gt;0\)</span> is constant for all <span class="math inline">\(i=1,\dots,n\)</span></li>
+</ul>
+<p>Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let <span class="math display">\[\begin{equation*}
 X_i=\left(\begin{matrix}X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
-\end{equation*}\]</span> This allows us to write the multiple linear regression model more compactly <span class="math display">\[
+\end{equation*}\]</span> This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> more compactly <span class="math display">\[
 Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
 \]</span></p>
 <p>Next, we can stack all components. Let <span class="math display">\[\begin{equation*}
 Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
 \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
-\end{equation*}\]</span> denote the <span class="math inline">\((n\times 1)\)</span> vector containing all response values of the random sample and all error terms of the random sample. Moreover, let <span class="math display">\[\begin{equation*}
+\end{equation*}\]</span> denote the <span class="math inline">\((n\times 1)\)</span> vectors containing all response values and all error terms of the random sample. Moreover, let <span class="math display">\[\begin{equation*}
 X=\left(\begin{matrix}X_{11}&amp;\dots&amp;X_{1K}\\\vdots&amp;\ddots&amp;\vdots\\ X_{n1}&amp;\dots&amp;X_{nK}\\\end{matrix}\right)
-\end{equation*}\]</span> denote the <span class="math inline">\((n\times K)\)</span> matrix containing all predictor values of the random sample. Then <span class="math display">\[
+\end{equation*}\]</span> denote the <span class="math inline">\((n\times K)\)</span> matrix containing all predictor values of the random sample.</p>
+<p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> even more compactly as <span class="math display">\[
 Y=X\beta+\epsilon.
 \]</span></p>
 <p>Using matrix algebra, it can be shown that the ordinary least squares estimator of <span class="math inline">\(\beta=(\beta_0,\beta_1,\dots,\beta_p)'\)</span> is given by the following <span class="math inline">\((K\times 1)\)</span> vector of parameter estimates <span class="math display">\[
