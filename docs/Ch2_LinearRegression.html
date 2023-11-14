@@ -253,6 +253,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>Reading: Chapter 3 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
 </blockquote>
+<section id="r-codes-for-this-chapter" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="r-codes-for-this-chapter"><code>R</code>-Codes for this Chapter</h4>
+<ul>
+<li><code>R</code>-codes for Coding Challenge Nr 1: <a href="https://www.dropbox.com/scl/fi/fkbf7z5qp53ib3m57thrp/Ch2_1_Rcodes.R?rlkey=9u8yeehf3zcpym4i3h36p0sd9&amp;dl=0">Ch2_1_Rcodes.R</a></li>
+<li><code>R</code>-codes for Coding Challenge Nr 2: <a href="https://www.dropbox.com/scl/fi/5437hqcw13x9zgn0beues/Ch2_2_Rcodes.R?rlkey=td89o175f1efy1dflucmdjfgs&amp;dl=0">Ch2_2_Rcodes.R</a></li>
+</ul>
+</section>
 <section id="simple-linear-regression" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">2.1</span> Simple Linear Regression</h2>
 <p>The linear regression model assumes a <em>linear relationship</em> between <span class="math inline">\(Y\)</span> and the predictor(s) <span class="math inline">\(X\)</span>.</p>
@@ -340,7 +347,7 @@ $$ -->
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ##############################</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## A Function to simulate data</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>myDataGenerator <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>mySimpleRegrDataGenerator <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  n      <span class="ot">&lt;-</span> <span class="dv">50</span>                           <span class="co"># sample size</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  beta_0 <span class="ot">&lt;-</span> <span class="fl">0.1</span>                          <span class="co"># intercept parameter</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  beta_1 <span class="ot">&lt;-</span> <span class="dv">5</span>                            <span class="co"># slope parameter</span></span>
@@ -353,7 +360,7 @@ $$ -->
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Generate a first realization of the data</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>data_sim <span class="ot">&lt;-</span> <span class="fu">myDataGenerator</span>()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>data_sim <span class="ot">&lt;-</span> <span class="fu">mySimpleRegrDataGenerator</span>()</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_sim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Y          X
@@ -365,7 +372,7 @@ $$ -->
 6  -5.3639241 -1.8177740</code></pre>
 </div>
 </div>
-<p>Using repeated samples form the data generating process defined in <code>myDataGenerator()</code>, we can generate multiple estimation results <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> of the unknown simple linear regression parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> and plot the corresponding empirical regression lines:</p>
+<p>Using repeated samples form the data generating process defined in <code>mySimpleRegrDataGenerator()</code>, we can generate multiple estimation results <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> of the unknown simple linear regression parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> and plot the corresponding empirical regression lines:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimation</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lm_obj <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X, <span class="at">data =</span> data_sim)</span>
@@ -387,7 +394,7 @@ $$ -->
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> data_sim<span class="sc">$</span>X, <span class="at">y =</span> data_sim<span class="sc">$</span>Y, <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">type =</span> <span class="st">"n"</span>) <span class="co"># type = "n": empty plot</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  data_sim_new <span class="ot">&lt;-</span> <span class="fu">myDataGenerator</span>()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  data_sim_new <span class="ot">&lt;-</span> <span class="fu">mySimpleRegrDataGenerator</span>()</span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  lm_obj_new   <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X, <span class="at">data=</span>data_sim_new)</span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(lm_obj_new, <span class="at">col =</span> <span class="st">"lightskyblue"</span>)</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -405,11 +412,11 @@ $$ -->
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Coding Challenge:
+Coding Challenge (Nr 1):
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use the above <code>myDataGenerator()</code> function to generate many, for instance <span class="math inline">\(B=10000\)</span>, realizations of the artificial data generating process, and based on these <span class="math inline">\(B\)</span> many realizations of <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1:\)</span> <span class="math display">\[
+<p>Use the above <code>mySimpleRegrDataGenerator()</code> function to generate many, for instance <span class="math inline">\(B=10000\)</span>, realizations of the artificial data generating process, and based on these <span class="math inline">\(B\)</span> many realizations of <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1:\)</span> <span class="math display">\[
 \hat\beta_{0,1},\hat\beta_{0,2},\dots,\hat\beta_{0,B}
 \]</span> <span class="math display">\[
 \hat\beta_{1,1},\hat\beta_{1,2},\dots,\hat\beta_{1,B}
@@ -424,7 +431,7 @@ E(\hat\beta_1)&amp;\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{1,b}
 \operatorname{Bias}(\hat\beta_1)&amp;\approx \frac{1}{B}\sum_{b=}^B\hat\beta_{0,b}-\beta_1.
 \end{align*}
 \]</span> The approximations become arbitrarily precise as <span class="math inline">\(B\to\infty\)</span> due to the Law of Large Numbers.</p>
-<p><strong>Question:</strong> Are the estimators <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> unbiased for the artificial data generating process defined by our <code>myDataGenerator()</code> function?</p>
+<p><strong>Question:</strong> Are the estimators <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> unbiased for the artificial data generating process defined by our <code>mySimpleRegrDataGenerator()</code> function?</p>
 </div>
 </div>
 <p>The magnitude of the estimation errors <span class="math display">\[
@@ -480,7 +487,7 @@ Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is approximately a 95% change (in resamplings from the data generating process) that the <strong>random</strong> confidence interval <span class="math inline">\(\operatorname{CI}_{\beta_1}\)</span> contains the true (fix) parameter value <span class="math inline">\(\beta_1\)</span>.</p>
+<p>There is approximately a 95% change (in resamplings from the data generating process) that the <strong>random confidence interval</strong> <span class="math inline">\(\operatorname{CI}_{\beta_1}\)</span> contains the true (fix) parameter value <span class="math inline">\(\beta_1\)</span>.</p>
 <p>To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:</p>
 <ul>
 <li><a href="https://rpsychologist.com/d3/ci/">Interactive visualization for interpreting confidence intervals</a></li>
@@ -510,21 +517,44 @@ Danger
 <li><span class="math inline">\(\alpha=0.05\)</span></li>
 <li><span class="math inline">\(\alpha=0.01\)</span></li>
 </ul>
-<p>Let us consider the following standard null <span class="math inline">\((H_0)\)</span> and alternative hypothesis <span class="math inline">\((H_1):\)</span> <span class="math display">\[
+<p>Let us consider the following null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> versus the alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}:\)</span> <span class="math display">\[
+\begin{align*}
+H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
+H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
+\end{align*}
+\]</span></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Classic No-Effect Null-Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the special case, where the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}=0\)</span> we test the classic no-effect null-hypothesis: <span class="math display">\[
 \begin{align*}
 H_0:&amp;\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\
 H_1:&amp;\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
 \end{align*}
 \]</span></p>
+</div>
+</div>
+<p><strong>Testing-Procedure:</strong></p>
 <ul>
-<li><p>If the observed realization of the confidence interval <span class="math display">\[
+<li><p>If the observed (obs) realization of the confidence interval, <span class="math inline">\(\operatorname{CI}_{\beta_1,obs},\)</span> <strong>contains</strong> the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1},\)</span> i.e. <span class="math display">\[
 \begin{align*}
-\operatorname{CI}_{\beta_1}
-&amp;=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
-      \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right]
+\beta^{(H_0)}_{1}&amp;\in\operatorname{CI}_{\beta_1,obs}\\
+\Leftrightarrow\beta^{(H_0)}_{1}&amp;\in\left[\hat{\beta}_{1,obs}-2\operatorname{SE}_{obs}(\hat\beta_1),\;\hat{\beta}_{1,obs}+2\operatorname{SE}_{obs}(\hat\beta_1)\right],
 \end{align*}
-\]</span> contains the value <span class="math inline">\(0,\)</span> then we cannot reject the null hypothesis that <span class="math inline">\(\beta_1=0.\)</span></p></li>
-<li><p>If, however, the observed realization of the confidence interval does not contain the value <span class="math inline">\(0,\)</span> then we can reject the null hypothesis and adopt the alternative that <span class="math inline">\(\beta_1\neq 0.\)</span></p></li>
+\]</span> then we <strong>cannot reject</strong> the null hypothesis that <span class="math inline">\(\beta_1=\beta^{(H_0)}_{1}.\)</span></p></li>
+<li><p>If, however, the observed (obs) realization of the confidence interval, <span class="math inline">\(\operatorname{CI}_{\beta_1,obs},\)</span> does <strong>not contain</strong> the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1},\)</span> i.e. <span class="math display">\[
+\begin{align*}
+\beta^{(H_0)}_{1}&amp;\not\in\operatorname{CI}_{\beta_1,obs}\\
+\Leftrightarrow\beta^{(H_0)}_{1}&amp;\not\in\left[\hat{\beta}_{1,obs}-2\operatorname{SE}_{obs}(\hat\beta_1),\;\hat{\beta}_{1,obs}+2\operatorname{SE}_{obs}(\hat\beta_1)\right],
+\end{align*}
+\]</span> then we <strong>can reject</strong> the null hypothesis and adopt the alternative that <span class="math inline">\(\beta_1\neq\beta^{(H_0)}_{1}.\)</span></p></li>
 </ul>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -532,12 +562,62 @@ H_1:&amp;\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Probability of a type I error
+Probability of a Type I Error is Smaller than <span class="math inline">\(\alpha\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The probability of falsely rejecting the null hypothesis even though the null hypothesis is true (i.e.&nbsp;doing a type I error) is smaller or equal to the chosen significance level <span class="math inline">\(\alpha.\)</span></p>
-<p>Note: A type I error (rejecting <span class="math inline">\(H_0\)</span> even though <span class="math inline">\(H_0\)</span> is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level <span class="math inline">\(\alpha.\)</span></p>
+<p>If the null-hypothesis is true, i.e.&nbsp;if the true (unknown) <span class="math inline">\(\beta_1\)</span> equals the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1},\)</span> <span class="math display">\[
+\beta_1 = \beta^{(H_0)}_{1}
+\]</span> then the <strong>random confidence interval</strong> <span class="math inline">\(\operatorname{CI}_{\beta_1}\)</span> covers the deterministic null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> with probability at least <span class="math inline">\(1-\alpha\)</span> <span class="math display">\[
+P(\beta^{(H_0)}_{1} \in \operatorname{CI}_{\beta_1}| H_0\text{ is true})\geq 1-\alpha.
+\]</span> I.e., in <span class="math inline">\(100\)</span> resamples we expect to see at least <span class="math inline">\((1-\alpha)\cdot 100\)</span> coverage events.</p>
+<p><strong>Probability of a Type I Error:</strong><br> Thus, the probability of falsely rejecting the null hypothesis even though the null hypothesis is true (i.e.&nbsp;doing a type I error) is smaller or equal to the chosen significance level <span class="math inline">\(\alpha,\)</span> since <span class="math display">\[
+\begin{align*}
+P(\beta^{(H_0)}_{1} \in \operatorname{CI}_{\beta_1}| H_0\text{ is true})&amp;\geq 1-\alpha\\
+\Leftrightarrow\quad 1-P(\beta^{(H_0)}_{1} \not\in \operatorname{CI}_{\beta_1}| H_0\text{ is true})&amp;\geq 1-\alpha\\
+\Leftrightarrow\quad \underbrace{P(\beta^{(H_0)}_{1} \not\in \operatorname{CI}_{\beta_1}| H_0\text{ is true})}_{\text{Probability of a Type I Error}}&amp;\leq \alpha
+\end{align*}
+\]</span> Note: A type I error (rejecting <span class="math inline">\(H_0\)</span> even though <span class="math inline">\(H_0\)</span> is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level <span class="math inline">\(\alpha\)</span> such as <span class="math inline">\(\alpha=0.05\)</span> or <span class="math inline">\(\alpha=0.01.\)</span></p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Coding Challenge (Nr 2):
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use the above <code>mySimpleRegrDataGenerator()</code> function to generate one data set. Use this data set to compute the observed realization of the confidence interval, <span class="math inline">\(\operatorname{CI}_{\beta_1,obs}\)</span> for the (in principle unknown) parameter <span class="math inline">\(\beta_1.\)</span> Use this observed realization of the confidence interval to test <span class="math display">\[
+\begin{align*}
+H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
+\text{versus}\quad
+H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
+\end{align*}
+\]</span> with <span class="math inline">\(\beta^{(H_0)}_{1}=5;\)</span> i.e.&nbsp;with a correct null-hypothesis, since <span class="math inline">\(\beta_1=5\)</span> in <code>mySimpleRegrDataGenerator()</code>.
+<ul>
+<li>Can you reject <span class="math inline">\(H_0\)</span>? Is the test-decision in line with your expectation?</li>
+</ul></li>
+<li>Now, use the above <code>mySimpleRegrDataGenerator()</code> function to generate <span class="math inline">\(B=10,000\)</span> many data sets. Compute for each of these data sets the observed realizations of the confidence interval, <span class="math display">\[
+\operatorname{CI}_{\beta_1,obs,b}\quad\text{for}\quad b=1,\dots,B.
+\]</span><br>
+Use each of the observed confidence interval realizations to test <span class="math display">\[
+\begin{align*}
+H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
+\text{versus}\quad
+H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
+\end{align*}
+\]</span> with <span class="math inline">\(\beta^{(H_0)}_{1}=5;\)</span> i.e.&nbsp;with a correct null-hypothesis, since <span class="math inline">\(\beta_1=5\)</span> in <code>mySimpleRegrDataGenerator()</code>.
+<ul>
+<li>What is the relative frequency of <span class="math inline">\(H_0\)</span>-rejections? Is this relative frequency in line with your expectation?</li>
+</ul></li>
+<li>Repeat 1. and 2., but with <span class="math display">\[
+\beta^{(H_0)}_{1}=0;
+\]</span> i.e.&nbsp;with a false null-hypothesis (since <span class="math inline">\(\beta_1=5\)</span> in <code>mySimpleRegrDataGenerator()</code>).</li>
+</ol>
 </div>
 </div>
 </section>

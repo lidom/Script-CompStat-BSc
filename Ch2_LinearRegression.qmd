@@ -2,6 +2,12 @@
 
 > Reading: Chapter 3 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
+
+#### `R`-Codes for this Chapter {-}
+
+* `R`-codes for Coding Challenge Nr 1: [Ch2_1_Rcodes.R](https://www.dropbox.com/scl/fi/fkbf7z5qp53ib3m57thrp/Ch2_1_Rcodes.R?rlkey=9u8yeehf3zcpym4i3h36p0sd9&dl=0)
+* `R`-codes for Coding Challenge Nr 2: [Ch2_2_Rcodes.R](https://www.dropbox.com/scl/fi/5437hqcw13x9zgn0beues/Ch2_2_Rcodes.R?rlkey=td89o175f1efy1dflucmdjfgs&dl=0)  
+
 ## Simple Linear Regression 
 
 The linear regression model assumes a *linear relationship* between $Y$ and the predictor(s) $X$. 
@@ -119,7 +125,7 @@ The following code generates artificial data to reproduce the plot in Figure 3.3
 ## ##############################
 
 ## A Function to simulate data
-myDataGenerator <- function(){
+mySimpleRegrDataGenerator <- function(){
   n      <- 50                           # sample size
   beta_0 <- 0.1                          # intercept parameter
   beta_1 <- 5                            # slope parameter
@@ -132,12 +138,12 @@ myDataGenerator <- function(){
 
 ## Generate a first realization of the data
 set.seed(123)
-data_sim <- myDataGenerator()
+data_sim <- mySimpleRegrDataGenerator()
 head(data_sim)
 ```
 
 
-Using repeated samples form the data generating process defined in `myDataGenerator()`, we can generate multiple estimation results $\hat\beta_0$ and $\hat\beta_1$ of the unknown simple linear regression parameters $\beta_0$ and $\beta_1$ and plot the corresponding empirical regression lines:
+Using repeated samples form the data generating process defined in `mySimpleRegrDataGenerator()`, we can generate multiple estimation results $\hat\beta_0$ and $\hat\beta_1$ of the unknown simple linear regression parameters $\beta_0$ and $\beta_1$ and plot the corresponding empirical regression lines:
 ```{r}
 ## Estimation
 lm_obj <- lm(Y ~ X, data = data_sim)
@@ -159,7 +165,7 @@ abline(lm_obj, col = "blue")
 plot(x = data_sim$X, y = data_sim$Y, xlab = "X", ylab = "Y", type = "n") # type = "n": empty plot
 ##
 for(r in 1:10){
-  data_sim_new <- myDataGenerator()
+  data_sim_new <- mySimpleRegrDataGenerator()
   lm_obj_new   <- lm(Y ~ X, data=data_sim_new)
   abline(lm_obj_new, col = "lightskyblue")
 }
@@ -175,9 +181,9 @@ abline(lm_obj, col = "blue", lwd = 2)
 
 ::: {.callout-caution}
 
-## Coding Challenge:
+## Coding Challenge (Nr 1):
 
-Use the above `myDataGenerator()` function to generate many, for instance $B=10000$, realizations of the artificial data generating process, and based on these $B$ many realizations of $\hat\beta_0$ and $\hat\beta_1:$
+Use the above `mySimpleRegrDataGenerator()` function to generate many, for instance $B=10000$, realizations of the artificial data generating process, and based on these $B$ many realizations of $\hat\beta_0$ and $\hat\beta_1:$
 $$
 \hat\beta_{0,1},\hat\beta_{0,2},\dots,\hat\beta_{0,B}
 $$
@@ -200,7 +206,7 @@ $$
 $$
 The approximations become arbitrarily precise as $B\to\infty$ due to the Law of Large Numbers. 
 
-**Question:** Are the estimators $\hat\beta_0$ and $\hat\beta_1$ unbiased for the artificial data generating process defined by our `myDataGenerator()` function? 
+**Question:** Are the estimators $\hat\beta_0$ and $\hat\beta_1$ unbiased for the artificial data generating process defined by our `mySimpleRegrDataGenerator()` function? 
 :::
 
 
@@ -260,7 +266,7 @@ $$
 
 ::: {.callout-tip}
 # Interpretation 
-There is approximately a 95% change (in resamplings from the data generating process) that the **random** confidence interval $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$. 
+There is approximately a 95% change (in resamplings from the data generating process) that the **random confidence interval** $\operatorname{CI}_{\beta_1}$ contains the true (fix) parameter value $\beta_1$. 
 
 To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
 
@@ -283,35 +289,109 @@ We can use a $(1-\alpha)\cdot 100\%$ confidence interval to do statistical hypot
 * $\alpha=0.05$
 * $\alpha=0.01$
 
-Let us consider the following standard null $(H_0)$ and alternative hypothesis $(H_1):$ 
+Let us consider the following null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_1$ equals the **null-hypothetical value** $\beta^{(H_0)}_{1}$ versus the alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_1$ does not equal the null-hypothetical value $\beta^{(H_0)}_{1}:$
+$$
+\begin{align*}
+H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
+H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
+\end{align*}
+$$
+
+::: {.callout-tip}
+# Classic No-Effect Null-Hypothesis
+For the special case, where the null-hypothetical value $\beta^{(H_0)}_{1}=0$ we test the classic no-effect null-hypothesis: 
 $$
 \begin{align*}
 H_0:&\;\text{There is no relationship between $Y$ and $X$; i.e. $\beta_1=0$}\\ 
 H_1:&\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 0$}
 \end{align*}
 $$
+:::
 
-* If the observed realization of the confidence interval 
+**Testing-Procedure:**
+
+* If the observed (obs) realization of the confidence interval, $\operatorname{CI}_{\beta_1,obs},$ **contains** the null-hypothetical value $\beta^{(H_0)}_{1},$ i.e.
 $$
 \begin{align*}
-\operatorname{CI}_{\beta_1}
-&=\left[\hat{\beta}_1-2\operatorname{SE}(\hat\beta_1),\;
-        \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right]
+\beta^{(H_0)}_{1}&\in\operatorname{CI}_{\beta_1,obs}\\
+\Leftrightarrow\beta^{(H_0)}_{1}&\in\left[\hat{\beta}_{1,obs}-2\operatorname{SE}_{obs}(\hat\beta_1),\;\hat{\beta}_{1,obs}+2\operatorname{SE}_{obs}(\hat\beta_1)\right],
 \end{align*}
 $$
-contains the value $0,$ then we cannot reject the null hypothesis that $\beta_1=0.$
+then we **cannot reject** the null hypothesis that $\beta_1=\beta^{(H_0)}_{1}.$
 
-* If, however, the observed realization of the confidence interval does not contain the value $0,$ then we can reject the null hypothesis and adopt the alternative that $\beta_1\neq 0.$
+* If, however, the observed (obs) realization of the confidence interval, $\operatorname{CI}_{\beta_1,obs},$ does **not contain** the null-hypothetical value $\beta^{(H_0)}_{1},$ i.e.
+$$
+\begin{align*}
+\beta^{(H_0)}_{1}&\not\in\operatorname{CI}_{\beta_1,obs}\\
+\Leftrightarrow\beta^{(H_0)}_{1}&\not\in\left[\hat{\beta}_{1,obs}-2\operatorname{SE}_{obs}(\hat\beta_1),\;\hat{\beta}_{1,obs}+2\operatorname{SE}_{obs}(\hat\beta_1)\right],
+\end{align*}
+$$
+then we **can reject** the null hypothesis and adopt the alternative that $\beta_1\neq\beta^{(H_0)}_{1}.$
 
 ::: {.callout-note}
 
-# Probability of a type I error 
+# Probability of a Type I Error is Smaller than $\alpha$ 
 
-The probability of falsely rejecting the null hypothesis even though the null hypothesis is true (i.e. doing a type I error) is smaller or equal to the chosen significance level $\alpha.$
+If the null-hypothesis is true, i.e. if the true (unknown) $\beta_1$ equals the null-hypothetical value $\beta^{(H_0)}_{1},$ 
+$$
+\beta_1 = \beta^{(H_0)}_{1}
+$$
+then the **random confidence interval** $\operatorname{CI}_{\beta_1}$ covers the deterministic null-hypothetical value $\beta^{(H_0)}_{1}$ with probability at least $1-\alpha$
+$$
+P(\beta^{(H_0)}_{1} \in \operatorname{CI}_{\beta_1}| H_0\text{ is true})\geq 1-\alpha.
+$$
+I.e., in $100$ resamples we expect to see at least $(1-\alpha)\cdot 100$ coverage events.
 
-Note: A type I error (rejecting $H_0$ even though $H_0$ is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level $\alpha.$
+
+**Probability of a Type I Error:**</br>
+Thus, the probability of falsely rejecting the null hypothesis even though the null hypothesis is true (i.e. doing a type I error) is smaller or equal to the chosen significance level $\alpha,$ since
+$$
+\begin{align*}
+P(\beta^{(H_0)}_{1} \in \operatorname{CI}_{\beta_1}| H_0\text{ is true})&\geq 1-\alpha\\
+\Leftrightarrow\quad 1-P(\beta^{(H_0)}_{1} \not\in \operatorname{CI}_{\beta_1}| H_0\text{ is true})&\geq 1-\alpha\\
+\Leftrightarrow\quad \underbrace{P(\beta^{(H_0)}_{1} \not\in \operatorname{CI}_{\beta_1}| H_0\text{ is true})}_{\text{Probability of a Type I Error}}&\leq \alpha
+\end{align*}
+$$
+Note: A type I error (rejecting $H_0$ even though $H_0$ is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level $\alpha$ such as $\alpha=0.05$ or $\alpha=0.01.$
 ::: 
 
+::: {.callout-caution}
+
+## Coding Challenge (Nr 2):
+
+1. Use the above `mySimpleRegrDataGenerator()` function to generate one data set. Use this data set to compute the observed realization of the confidence interval, $\operatorname{CI}_{\beta_1,obs}$ for the (in principle unknown) parameter $\beta_1.$ Use this observed realization of the confidence interval to test
+$$
+\begin{align*}
+H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
+\text{versus}\quad 
+H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
+\end{align*}
+$$
+with $\beta^{(H_0)}_{1}=5;$ i.e. with a correct null-hypothesis, since $\beta_1=5$ in `mySimpleRegrDataGenerator()`.
+   * Can you reject $H_0$? Is the test-decision in line with your expectation? 
+
+2. Now, use the above `mySimpleRegrDataGenerator()` function to generate $B=10,000$ many data sets. Compute for each of these data sets the observed realizations of the confidence interval, 
+$$
+\operatorname{CI}_{\beta_1,obs,b}\quad\text{for}\quad b=1,\dots,B.
+$$  
+Use each of the observed confidence interval realizations to test
+$$
+\begin{align*}
+H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
+\text{versus}\quad 
+H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
+\end{align*}
+$$
+with $\beta^{(H_0)}_{1}=5;$ i.e. with a correct null-hypothesis, since $\beta_1=5$ in `mySimpleRegrDataGenerator()`.
+   * What is the relative frequency of $H_0$-rejections? Is this relative frequency in line with your expectation? 
+
+3. Repeat 1. and 2., but with 
+$$
+\beta^{(H_0)}_{1}=0;
+$$ 
+i.e. with a false null-hypothesis (since $\beta_1=5$ in `mySimpleRegrDataGenerator()`).    
+
+:::
 
 #### Test Statistics {-}
 
