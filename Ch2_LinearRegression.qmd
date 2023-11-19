@@ -38,7 +38,8 @@ Y_i=\beta_0 + \beta_1 X_i +\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
 $${#eq-simpleLinMod}
 where 
 
-* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$ and 
+* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$  
+* $E(\epsilon_i)=0$ for all $i=1,\dots,n$
 * $Var(\epsilon_i)=\sigma^2>0$ is constant for all $i=1,\dots,n$
 
 ::: {.callout-note}
@@ -416,24 +417,24 @@ t=\frac{\hat\beta_1 - \beta^{(H_0)}_{1}}{\operatorname{SE}(\hat\beta_1)}\overset
 $$
 
 ::: {.callout-tip}
-In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (see below), the corrsponding $t$-test for the $j$th predictor has the following null-distribution: 
+In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (@sec-MultLinReg), the $t$-test for the $j$th predictor has the following null-distribution: 
 $$
 t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
 $$
 :::
 
 **$p$-value:**</br> 
-The $p$-value is the probability of seeing a realization of the random test-statistic $t$ which is more extreme than the observed value of the test-statistic $t_{obs},$ 
+The $p$-value is the probability of seeing a realization of the **random** $t$-test statistic, $t,$ which is more extreme than the observed value of the test-statistic, $t_{obs},$ 
 \begin{align*}
-p
+p_{obs}
 &=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
-&=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\},
+&=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\}.
 \end{align*}
-where $t_{obs}$ denotes the given observed value of the $t$-test statistic computed from the observed training data, and where $t$ is the **random** $t$-test statistic which is $t$-distributed with $(n-2)$ degrees of freedom if $H_0$ is true. Finally, $P_{H_0}$ means that the probability is computed for the scenario that $H_0$ is true. 
+where, $P_{H_0}$ means that the probability is computed "under $H_0$;" i.e. for the scenario that $H_0$ is true. 
 
 **Testing-Procedure:**
 
-To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g. $\alpha=0.01$ or $\alpha=0.05$). 
+To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$). 
 
 * If the observed realization of the $p$-value is larger than or equal to the significance level 
 $$
@@ -448,9 +449,9 @@ $$
 then we can reject the null hypothesis and adopt the alternative hypothesis. 
 
 ::: {.callout-note}
-It can be shown that the statistical hypothesis tests based on confidence intervals are equivalent to statistical hypothesis tests based on corresponding test statistics. 
+It can be shown that the above statistical hypothesis test based on confidence intervals is equivalent to the statistical hypothesis test based on the $t$-test statistic. 
 
-Thus, the probability of falsely rejecting the null hypothesis even though the null hypothesis is true, is also here smaller or equal to the chosen significance level $\alpha.$
+In both cases, the probability of falsely rejecting the null hypothesis even though the null hypothesis is true, is smaller than or equal to the chosen significance level $\alpha.$
 ::: 
 
 ![](images/Tab_3_1.png)
@@ -460,7 +461,7 @@ Thus, the probability of falsely rejecting the null hypothesis even though the n
 
 In tendency an accurate model has ...
 
-* a low $\operatorname{RSE}$
+* a low residual standard error $\operatorname{RSE}$
 $$
 \operatorname{RSE}=\hat\sigma=\sqrt{\frac{\operatorname{RSS}}{n-2}}
 $$
@@ -481,8 +482,11 @@ $$
 \end{align*}
 $$
 
-::: {.callout-caution}
+TSS: "Total Sum of Squares"
 
+RSS: "Residual Sum of Squares"
+
+::: {.callout-caution}
 **Cautionary Note Nr 1:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
 
 * very low $\operatorname{RSE}$ values, $\operatorname{RSE}\approx 0$, and 
@@ -508,7 +512,7 @@ r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{
 $$
 
 
-## Multiple Linear Regression 
+## Multiple Linear Regression {#sec-MultLinReg}
 
 
 The multiple linear regression model allows for more than only one predictor:  
@@ -539,7 +543,8 @@ Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\qu
 $${#eq-MultLinReg1}
 where 
 
-* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$ and 
+* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$ 
+* $E(\epsilon_i)=0$ for all $i=1,\dots,n$
 * $Var(\epsilon_i)=\sigma^2>0$ is constant for all $i=1,\dots,n$
 
 Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let
@@ -590,9 +595,9 @@ Since the estimator
 $$
 \hat\beta=\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)
 $$
-depends on the random sample, it is itself a $(p+1)$-dimensional **random variable**. 
+depends on the random sample, it is itself a $(p+1)$-dimensional **random variable**. For each realization of the random sample, we observe a realization of the estimator. 
 
-For each realization of the random sample, we observe a realization of the estimator. In an actual data analysis, we only have *one* realization of the estimators $\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p$ computed from the given dataset (i.e. the observed realization of the random sample).
+In an actual data analysis, however, we only have *one* realization of the estimators $\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p$ computed from the given dataset (i.e. the observed realization of the random sample).
 
 
 #### Interpretation of Multiple Linear Regressions and the Omitted Variable Bias {-}
@@ -601,7 +606,17 @@ Multiple linear regression is more than mere composition of single simple linear
 
 ![](images/Tab_3_3.png)
 
-Thus in separate simple linear regressions, the effects of `radio` and the effect of `newspaper` on `sales` are both (but separately) statistically significant. I.e., in each separate regression, we can reject the null hypotheses 
+Thus in separate simple linear regressions, the separate effects of 
+
+* `radio` on `sales` 
+
+and 
+
+* `newspaper` on `sales` 
+
+are both (but separately) statistically significant. 
+
+I.e., **in two separate regressions**, we can reject the null hypotheses 
 $$
 H_0:\beta_{radio}=0\quad\text{and}\quad H_0:\beta_{newspaper}=0
 $$
@@ -610,7 +625,13 @@ $$
 H_1:\beta_{radio}\neq 0\quad\text{and}\quad H_1:\beta_{newspaper}\neq 0.
 $$
 
-By contrast, when looking at the multiple linear regression when regressing `sales` onto `TV`, `radio` and `newspaper`, only the effect of `radio` remains statistically significant: 
+By contrast, when looking at the **multiple linear regression** when regressing `sales` onto 
+
+* `TV`, 
+* `radio`  
+* `newspaper`
+
+only the effect of `newspaper` becomes statistically **insignificant**: 
 
 ![](images/Tab_3_4.png)
 
@@ -619,16 +640,18 @@ By contrast, when looking at the multiple linear regression when regressing `sal
 
 The reason for this change from a statistically significant effect of `newspaper` in the simple linear regression, to an insignificant effect in the multiple linear regression  is the so-called **Omitted Variable Bias**.
 
-* `radio` has an effect on `sales`
-* `newspaper` has actually no effect on `sales`
-* But, `newspaper` is "strongly" correlated with `radio` (cor(`newspaper`,`radio`)=0.3541); see Table 3.5
+Explanation of the omitted variables bias: 
+
+* `radio` has a **positive effect** on `sales`
+* `newspaper` has actually **no effect** on `sales`
+* But, `newspaper` is correlated with `radio` (cor(`newspaper`,`radio`)=0.3541); see Table 3.5
 
 ![](images/Tab_3_5.png)
 
-* Thus, when **omitting** `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio`. 
+* When **omitting** `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio` and we see a spurious effect.  
 
 ::: {.callout-caution}
-Interpreting statistically significant results as true effects (changing $X_j$ by one unit causes a change in the mean of $Y$ by $\beta_{j}$) is a delectate thing. Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
+Interpreting statistically significant results as true effects ("a change of $X_j$ by one unit causes on average a change in $Y$ by $\beta_{j}$") is a delectate thing. Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
 :::
 
 
@@ -639,7 +662,7 @@ For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `ra
 
 ### Some Important Questions 
 
-**1. Is There a Relationship Between the Response and Predictors?**
+**1. Is There a Relationship Between the Response and Predictors at all?**
 
 $$
 \begin{align*}
@@ -664,13 +687,13 @@ E((\operatorname{TSS}-\operatorname{RSS})/p)&=\sigma^2\\
 $$
 
 
-* Thus, if $H_0$ is correct, we expect values of $F\approx 1$. 
-* But if $H_1$ is correct, we expect values of $F\gg 1$.
+* If $H_0$ is correct, we expect values of $F\approx 1.$ 
+* If $H_1$ is correct, we expect values of $F\gg 1.$
 
 $p$-value
 
 \begin{align*}
-p
+p_{obs}
 &=P_{H_0}\left( F \geq F_{obs} \right),
 \end{align*}
 where $F_{obs}$ denotes the observed value of the $F$-test statistic computed from the observed training data, and where $F$ is a random variable that has a $F_{q,n-p-1}$ distribution. $P_{H_0}$ means that the probability is computed for the scenario that $H_0$ is true. 
@@ -679,13 +702,13 @@ To do the statistical hypothesis test, we need to select a significance level $\
 
 * If the observed realization of the $p$-value is larger than or equal to the significance level 
 $$
-p\geq \alpha,
+p_{obs}\geq \alpha,
 $$
 then we cannot reject the null hypothesis. 
 
 * If, however, the observed realization of the $p$-value is strictly smaller than the significance level 
 $$
-p<\alpha,
+p_{obs}<\alpha,
 $$
 then we can reject the null hypothesis and adopt the alternative hypothesis. 
 
@@ -700,15 +723,14 @@ then we can reject the null hypothesis and adopt the alternative hypothesis.
 
 Often some predictors are *qualitative* variables (also known as a *factor* variables). For instance, the `Credit` dataset contains the following qualitative predictors: 
 
-* `own` (house ownership)
-* `student` (student status)
-* `status` (marital status) 
-* `region` (East, West or South)
-
+* `own` (house ownership: yes/no)
+* `student` (student status: yes/no)
+* `status` (marital status: yes/no) 
+* `region` (regions: east, west or south)
 
 #### Predictors with Only Two Levels {-}
 
-If a qualitative predictor (factor) only has two levels (i.e. possible values), then incorporating it into a regression model is very simple. We simply create an indicator or **dummy variable** that takes on two possible numerical values; for instance,
+If a **qualitative predictor (factor)**  only has two levels (i.e. possible values), then incorporating it into a regression model is very simple: We simply create an indicator or **dummy variable** that takes on two possible numerical values; for instance,
 $$
 x_{i} = \left\{
   \begin{array}{ll}
@@ -761,7 +783,11 @@ y_{i}
 
 #### Qualitative Predictors with More than Two Levels {-}
 
-When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the `region` $\in\{$`South`, `West`, `East`$\}$ variable we create **two** dummy variables. The first could be
+When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the 
+
+`region` $\in\{$`South`, `West`, `East`$\}$ 
+
+variable, we create **two** dummy variables. The first could be
 $$
 x_{i1} = \left\{
   \begin{array}{ll}
@@ -813,11 +839,9 @@ Previously, we used the following model
 `sales` $= \beta_0 + \beta_1$ `TV` $+ \beta_2$ `radio` $+ \beta_3$ `newspaper` $+\epsilon$
 </center>
 
-which states that the average increase in sales associated with a one-unit increase in `TV` is always $\beta_1,$ regardless of the amount spent on radio.
+which states, for instance, that the average increase in `sales` associated with a one-unit increase in `TV` is $\beta_1,$ regardless of the amount spent on `radio`.
 
-
-However, this simple model may be incorrect. Suppose that there is a synergy effect, such that spending money on radio advertising actually increases the effectiveness of TV advertising. 
-
+However, this simple model may be incorrect. Suppose that there is a synergy effect, such that spending money on `radio` advertising actually increases the effectiveness of `TV` advertising. 
 
 Figure 3.5 suggests that such an effect may be present in the advertising data: 
 
@@ -844,7 +868,7 @@ $$
 Y &= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 + \beta_2 X_2 + \epsilon,
 \end{align*}
 $$
-where the new slope parameter $\tilde{\beta}_2$ is a linear function of $X_2$
+where the new slope parameter $\tilde{\beta}_2$ is a linear function of $X_2,$ i.e.
 $$
 \tilde{\beta}_1\equiv\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
 $$
@@ -854,11 +878,11 @@ Thus, a change in the value of $X_2$ will change the association between $X_1$ a
 A similar argument shows that a change in the value of $X_1$ changes the association between $X_2$ and $Y.$
 
 
-Let us return to the `Advertising` example. A linear model that uses `radio`, `TV`, and an interaction, `radio`$\times$`radio`, between the two to predict `sales` takes the
-form 
+Let us return to the `Advertising` example:</br> 
+A linear model that predicts `sales` using `radio`, `TV`, and the interaction, `radio`$\times$`radio`, between the two takes the form 
 
 <center>
-`sales` $= \beta_0 + \beta_1\times$ `TV` $+ \beta_2\times$ `radio` $+ \beta_3\times($ `radio`$\times$ `TV`$)+\epsilon$
+`sales` $= \beta_0 + \beta_1\times$ `TV` $+ \beta_2\times$ `radio` $+ \beta_3\times($ `radio`$\times$ `TV`$)+\epsilon$</br>
 </center>
 
 which can be rewritten as
@@ -872,21 +896,23 @@ which can be rewritten as
 
 **Interpretation:** 
 
-* $\beta_3$ denotes the increase in the effectiveness of TV advertising associated with a one-unit increase in radio advertising (or vice-versa).
+* $\beta_3$ denotes the increase in the effectiveness of TV advertising associated with a one-unit increase in radio advertising. 
 
 ![](images/Tab_3_9.png)
 
 
 **Interpretation of Table 3.9:**
 
-* Both (separate) main effects, `TV` and `radio`, are statistically significant ($p$-values smaller than 0.01). 
+* Both separate main effects, `TV` and `radio`, are statistically significant ($p$-values smaller than 0.01). 
 * Additionally, the $p$-value for the interaction term, `TV`$\times$`radio`, is extremely low, indicating that there is strong evidence for $H_1: \beta_3\neq 0.$ In other words, it is clear that the true relationship is not additive. 
 
 
+::: {.callout-tip}
 
-**Hierarchical Principle:**
+# Hierarchical Principle
 
 If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
+:::
 
 
 **Interactions with Qualitative Variables:**
@@ -897,14 +923,23 @@ An interaction between a qualitative variable and a quantitative variable has a 
 Consider the `Credit` data set and suppose that we wish to predict `balance` using the predictors: 
 
 * `income` (quantitative) and 
-* `student` (qualitative) using a dummy variable with $x_{i2}=1$ if $i$th person is a student and $x_{i2}=0$ if not. 
+* `student` (qualitative) using a dummy variable with 
+$$
+x_{i2}=\left\{
+  \begin{array}{ll}
+  1&\text{if person $i$ is a student}\\
+  0&\text{if not}\\
+  \end{array}
+\right.
+$$
+
 
 In the absence of an interaction term, the model takes the form
 ![](images/Eq_3_34.png)
 
-Thus, the regression lines for students and non-students have different intercepts, $\beta_0+\beta_2$ versus $\beta_0$, but the same slope $\beta_1$.
+Thus, the regression lines for students and non-students have different intercepts, $\beta_0+\beta_2$ versus $\beta_0$, **but the same slope** $\beta_1$.
 
-This represents a potentially serious limitation of the model, since in fact a change in `income` may have a very different effect on the credit card balance of a student versus a non-student.
+This represents a potentially serious limitation of the model, since a change in `income` may have a very different effect on the credit card `balance` of a student versus a non-student.
 
 This limitation can be addressed by adding an interaction variable, created by multiplying `income` with the dummy variable for student. Our model now becomes
 ![](images/Eq_3_35.png)
@@ -924,22 +959,34 @@ For example, the points in Figure 3.8 seem to have a quadratic shape, suggesting
 <center>
 `mpg` $=\beta_0 + \beta_1\times$ `horsepower` $+ \beta_2\times($`horsepower`$)^2+\epsilon$
 </center>
+</br>
 
 
+This regression model involves predicting `mpg` using a non-linear function of `horsepower`. 
 
-This regression model involves predicting `mpg` using a non-linear function of `horsepower`. **But it is still a linear model!** It's simply a multiple linear regression model with $X_1=$`horsepower` and $X_2 =($`horsepower`$)^2.$ 
+::: {.callout-important}
+**But it is still a linear model!** It's simply a multiple linear regression model 
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+$$
+with 
 
-So we can use standard linear regression software to estimate $\beta_0$, $\beta_1$, and $\beta_2$ in order to produce a non-linear fit. 
+* $X_1=$`horsepower` and 
+* $X_2 =($`horsepower`$)^2$
+
+as the predictor variables. 
+:::
+
+Since this is nothing but a multiple linear regression model, we can use standard linear regression software to estimate $\beta_0$, $\beta_1$, and $\beta_2$ in order to fit the (quadratic) non-linear regression function. 
 
 ![](images/Tab_3_10.png)
 
 
 ### Potential Problems 
 
-
 **1. Non-linearity of the response-predictor relationships.**
 
-Diagnostic residual plots are most useful to detect possible non-linear response-predictor relationships. 
+**Diagnostic residual plots** are most useful to detect possible non-linear response-predictor relationships. 
 
 ```{r}
 library("ISLR2")
@@ -960,13 +1007,14 @@ plot(lmobj_1, which = 1)
 plot(lmobj_2, which = 1)
 ```
 
-*Residual plots* are a useful graphical tool for identifying non-linearity. Given a simple linear regression model, we can plot the residuals, 
+Plotting **residuals versus fitted values**, i.e. plotting the data pairs
 $$
-e_i = y_i - \hat{y}_i,
+(\underbrace{y_i - \hat{y}_i}_{=e_i}, \hat{y}_i),\quad\text{for all}\quad i=1,\dots,n
 $$ 
-versus the predictor $x_i.$ 
+is a useful graphical tool for identifying non-linearity which works for the  
 
-In the case of a multiple regression model, since there are multiple predictors, we instead plot the residuals versus the predicted (or fitted) values $\hat{y}_i.$ Ideally, the residual plot will show no fitted discernible pattern. The presence of a pattern may indicate a problem with some aspect of the linear model.
+* **simple linear regression model** with $\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_{i1}$ and the
+* **multiple linear regression model** with $\hat{y}_i=\hat{\beta}_0+\sum_{j=1}^p\hat{\beta}_jx_{ij}$
 
 
 If the residual plot indicates that there are non-linear associations in the
@@ -975,36 +1023,47 @@ predictors, such as
 $$
 \log(X),\; \sqrt{X},\; \text{or}\; X^2
 $$ 
-in the regression model. In the later chapters, we will discuss other more advanced non-linear approaches for addressing this issue.
+in the regression model. 
+
+<!-- In the later chapters, we will discuss other more advanced non-linear approaches for addressing this issue. -->
 
 
 **2. Correlation of Error Terms**
 
+An important assumption of the linear regression model is that the error terms, 
+$$
+\epsilon_1, \epsilon_2, \dots , \epsilon_n,
+$$ 
+are independent and thus uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  
 
-An important assumption of the linear regression model is that the error terms, $\epsilon_1, \epsilon_2, \dots , \epsilon_n$, are uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  The **standard errors** that are computed for the estimated regression coefficients or the fitted values are based on the **assumption of uncorrelated error terms**.  If in fact there is correlation among the error terms, then the estimated standard errors will tend to **underestimate** the true standard errors. 
-
+::: {.callout-caution}
+The standard formulas for standard errors, confidence intervals, and hypothesis tests in this chapter are based on the **assumption of uncorrelated error terms**.  If in fact there is correlation among the error terms, then the estimated standard errors will tend to **underestimate** the true standard errors. Thus, if the error terms are auto-correlated, we need to take this into account by using so-called auto-correlation robust standard errors. 
+:::
 
 Correlations among the error terms typically occur in time series data (see Fig. 3.10). 
 
 ![](images/Fig_3_10.png)
+
 
 **3. Non-Constant Variance of Error Terms**
 
 Another important assumption of the linear regression model is that the
 error terms have a constant variance, 
 $$
-Var(\epsilon_i) = \sigma^2.
+Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
 $$ 
-The standard formulas for standard errors, confidence intervals, and hypothesis tests associated with the linear model rely upon this assumption.
 
+::: {.callout-caution}
+The standard formulas for standard errors, confidence intervals, and hypothesis tests in this chapter are based on the **assumption of error terms with constant variance**. If the error terms are heteroskedastic, we need to take this into account by using so-called heteroskedasticity robust standard errors. 
+:::
 
-One can identify **non-constant variances "heteroscedasticity"** in the errors, using diagnostic residual plots. 
+One can identify **non-constant variances ("heteroskedasticity")** in the errors, using diagnostic residual plots. 
 
-Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values which indicates. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
+Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
 $$
 \log(Y)\;\text{ or }\; \sqrt{Y}.
 $$
-Such a transformation results in a greater amount of shrinkage of the larger responses, leading to a reduction in heteroscedasticity. 
+Such a transformation results in a greater amount of shrinkage of the larger responses. 
 
 ```{r}
 ## Quadratic regression 
@@ -1028,30 +1087,38 @@ of an observation during data collection.
 
 Outliers typically have a strong effect on the $R^2$ value since they add a **very large residual** to its computation. 
 
-Figure 3.12 in the textbook `ISLR` shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$. Such outliers have little effect on the regression fit.
+Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$. Such outliers have little effect on the regression fit.
 ![](images/Fig_3_12.png)
 
 
-Figure 3.13 in the textbook `ISLR` shows again a clear outlier (observation 41) which has a predictor value $x_i$ that is *very atypical*. Such outliers are said to have  large **leverage** giving them power to affect the regression fit considerably. 
+Figure 3.13 shows again a clear outlier (observation 41) which has a predictor value $x_i$ that is *very atypical*. Such outliers are said to have  large **leverage** giving them power to affect the regression fit considerably. 
 ![](images/Fig_3_13.png)
 
 
-Summary: Critical outliers have both, large residuals *and* large leverage.
+**Summary:** Critical outliers have both, **large residuals *and* large leverage**.
 
 
 **5. High Leverage Points**
 
-In order to quantify an observation's leverage, we compute the **leverage statistic** $h_i$ for each observation $i=1,\dots,n.$ A large value of this statistic indicates an observation with high leverage. For a simple linear regression,
+In order to quantify an observation's leverage, we compute the **leverage statistic** $h_i$ for each observation $i=1,\dots,n.$ A large value of this statistic indicates an observation with high leverage. 
+
+In the case of the **simple linear regression model**
 $$
-h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_j-\bar{x})^2}
+h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{i'=1}^n(x_{i'}-\bar{x})^2}.
 $$
-There is a simple extension of $h_i$ to the case of multiple predictors, though
-we do not provide the formula here. 
+
+In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal of the $(n\times n)$-dimensional "hat-matrix"
+$$
+H=X(X'X)^{-1}X'.
+$$ 
 
 
 * The leverage statistic $h_i$ is always between $1/n$ and $1$
-* The average leverage for all the observations is equal to $\bar{h}=\frac{1}{n}\sum_{i=1}^n h_i=(p + 1)/n.$ 
-* If a given observation has a leverage statistic $h_i$ that greatly exceeds $(p+1)/n,$ then we may suspect that the corresponding point has high leverage.
+* The average leverage for all the observations is equal to 
+$$
+\bar{h}=\frac{1}{n}\sum_{i=1}^n h_i=(p + 1)/n.
+$$ 
+* If a given observation has a leverage statistic $h_i$ that greatly exceeds the average leverage value, $(p+1)/n,$ then we may suspect that the corresponding point has high leverage.
 
 
 **6. Collinearity**
@@ -1098,8 +1165,7 @@ fit, since the presence of collinearity implies that the information that this v
 
 3. Use a different estimation procedure like ridge regression. 
 
-4. Live with it. Sometimes you're not allowed to drop or combine variables (e.g. important control variables) and also no other estimation procedure can be used. Then you have to live with large standard errors due to multicollinearity. But at least you know where the large stand errors are coming from. 
-
+4. Live with it. At least you know where the large stand errors are coming from. 
 
 
 ## Comparison of Linear Regression with K-Nearest Neighbors
@@ -1144,41 +1210,52 @@ $$
 ![](images/Fig_3_16.png)
 
 
-In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in Chapter 2. 
+In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in @sec-SL:
 
-* A small value for $K$ provides the most flexible fit, which will have low bias but high variance. This variance is due to the fact that the prediction in a given region is entirely dependent, e.g., on just one observation of $K=1$.
-* A large value of $K$ provide a smoother and less wiggly fit; the
+* A small value for $K$ provides the most flexible fit, which will have low bias but high variance. This variance is due to the fact that the prediction in a given region is entirely dependent, e.g., on just one observation if $K=1$.
+* A large value of $K$ provides a less flexible fit. The
 prediction in a region is an average of several points, and so changing one observation has a smaller effect. However, the smoothing may cause bias by masking some of the structure in $f(X).$
 
-
-In Chapter 5, we introduce several approaches for estimating test error rates. These methods can be used to identify the optimal value of $K$ in KNN regression.
+An optimal value of $K$ can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
 
 
 Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
 
 
-Figure 3.17 of our textbook `ISLR` provides an example with data generated from a one-dimensional linear regression model. The black solid lines represent the true $f(X)$, while the blue curves correspond to the KNN fits using $K = 1$ (left plot) and $K = 9$ (right plot). In this case, the $K = 1$ predictions are far too variable, while the smoother $K = 9$ fit is much closer to the true $f(X).$ However, since the true relationship is linear, it is hard for a non-parametric approach to compete with linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
+Figure 3.17 provides an example with data generated from a one-dimensional linear regression model: 
+
+* black solid lines: true $f(x)$
+* blue curves: KNN fits $\hat{f}(x)$ using $K = 1$ (left plot) and $K = 9$ (right plot). 
+
+Observations: 
+
+* The KNN fit $\hat{f}(x)$ using $K = 1$ is far too wiggly
+* The KNN fit $\hat{f}(x)$ using $K = 9$ is much closer to the true $f(X).$ 
+
+However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
 ![](images/Fig_3_17.png)
 
 
-The blue dashed line in the left-hand panel of Figure 3.18 represents the linear regression fit to the same data. It is almost perfect. The right-hand panel of Figure 3.18 reveals that linear regression outperforms KNN for this data. 
+The blue dashed line in the left-hand panel of Figure 3.18 represents the simple linear regression fit to the same data. It is almost perfect. The right-hand panel of Figure 3.18 reveals that linear regression outperforms KNN for this data. 
 ![](images/Fig_3_18.png)
 
 
-Figure 3.19 displays a non-linear situations in which KNN performs much better than linear regression. 
+Figure 3.19 displays a non-linear situations in which KNN performs much better than simple linear regression. 
 ![](images/Fig_3_19.png)
 
 
-**Curse of dimensionality:**
+#### Curse of Dimensionality {-}
 
-Unfortunately, in higher dimensions, KNN often performs worse than linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
 
-* When $p = 1$ or $p = 2$, KNN outperforms linear regression. 
+* When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
 * But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
 ![](images/Fig_3_20.png)
 
+Observations: 
 
-When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ However, when spreading the $50$ data points over a large number of, for instance, $p=20$ dimensions, even the $K$ nearest neighbors tend to become far away from $x_0.$ 
+* When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
+* However, when spreading the $50$ data points over a large number of, for instance, $p=20$ dimensions, even the $K$ nearest neighbors tend to become far away from $x_0.$ 
 
 
 ## `R`-Lab: Linear Regression
@@ -1186,7 +1263,9 @@ When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ a
 
 ### Libraries
 
-The `library()` function is used to load *libraries*, or groups of  functions and data sets that are not included in the base `R` distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution,  but more exotic functions require additional libraries. Here we load the `MASS` package, which is a very large collection of data sets and functions. We  also load the `ISLR2` package, which includes the data sets associated with this book.
+The `library()` function is used to load *libraries*, or groups of  functions and data sets that are not included in the base `R` distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution,  but more exotic functions require additional libraries. 
+
+Here we load the `MASS` package, which is a very large collection of data sets and functions. We  also load the `ISLR2` package, which includes the data sets associated with this book.
 
 ```{r chunk1}
 suppressPackageStartupMessages(library(MASS))
@@ -1194,7 +1273,12 @@ suppressPackageStartupMessages(library(ISLR2))
 ```
 
 
-If you receive an error message when loading any of these libraries, it likely indicates that the corresponding library has not yet been installed on your system. Some libraries, such as `MASS`, come with `R` and do not need to be separately installed on your computer. However, other packages, such as `ISLR2`, must be downloaded the first time they are used. This can be done directly from within `R`. For example, on a Windows system,  select the `Install package` option under the `Packages` tab.  After you select any mirror site, a list of available packages will appear. Simply select the package you wish to install and `R` will automatically download the package. Alternatively, this can be done at the `R` command line via `install.packages("ISLR2")`. This installation only needs to be done the first time you use a package. However, the `library()` function must be called within each `R` session.
+If you receive an error message when loading any of these libraries, it likely indicates that the corresponding library has not yet been installed on your system. Some libraries, such as `MASS`, come with `R` and do not need to be separately installed on your computer. However, other packages, such as `ISLR2`, must be downloaded the first time they are used. 
+<!-- 
+This can be done directly from within `R`. For example, on a Windows system,  select the `Install package` option under the `Packages` tab.  After you select any mirror site, a list of available packages will appear. Simply select the package you wish to install and `R` will automatically download the package. Alternatively,  -->
+
+This can be done, for instance, at the `R` command line via `install.packages("ISLR2")` function. This installation only needs to be done the first time you use a package. However, the `library()` function must be called within each `R` session.
+
 
 ### Simple Linear Regression
 
@@ -1234,7 +1318,11 @@ lm.fit
 summary(lm.fit)
 ```
 
-We can use the `names()` function in order to find out what other pieces of information  are stored in `lm.fit`. Although we can extract these quantities by name---e.g. `lm.fit$coefficients`---it is safer to use the extractor functions like `coef()` to access them.
+We can use the `names()` or the `str()` function in order to find out what other pieces of information are stored in `lm.fit`. 
+
+We can extract these quantities by name---e.g. `lm.fit$coefficients`. 
+
+For some objects, there are also specific extractor functions like `coef()` to access them.
 
 ```{r chunk6}
 names(lm.fit)
@@ -1257,7 +1345,15 @@ predict(lm.fit, data.frame(lstat = (c(5, 10, 15))),
         interval = "prediction")
 ```
 
-For instance, the 95\% confidence interval associated with a `lstat` value of 10 is $(24.47, 25.63)$, and the 95\% prediction interval is $(12.828, 37.28)$. As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $25.05$ for `medv` when `lstat` equals 10), but the latter are substantially wider.
+The 95\% confidence interval associated with a `lstat` value of 10 is $(24.47, 25.63).$ 
+
+The 95\% prediction interval associated with a `lstat` value of 10 is $(12.828, 37.28)$. 
+
+As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $\hat{y}_i=25.05$ for `medv` when $x_{i2}=$`lstat` equals 10), but the latter are substantially wider.
+
+::: {.callout-caution}
+The `predict()` function with the option `interval = "prediction"` assumes **Gaussian** error terms. If this assumption is not fulfilled, you should not use the prediction interval.
+:::
 
 We will now plot `medv` and `lstat` along with the least squares regression line using the `plot()` and `abline()` functions.
 
@@ -1280,16 +1376,7 @@ plot(1:20, 1:20, pch = 1:20)
 ```
 
 
-Next we examine some diagnostic plots, several of which were discussed
-in Section 3.3.3. Four diagnostic plots are automatically
-produced by applying the `plot()` function directly to the output
-from `lm()`. In general, this command will produce one plot at a
-time, and hitting *Enter* will generate the next plot. However,
-it is often convenient to view all four plots together. We can achieve
-this by using the `par()` and `mfrow()` functions, which tell `R` to split
-the display screen into separate panels so that multiple plots can be
-viewed simultaneously. For example,  `par(mfrow = c(2, 2))` divides the plotting
-region into a $2 \times 2$ grid of panels.
+Next we examine some diagnostic plots. Four diagnostic plots are automatically produced by applying the `plot()` function directly to the output from `lm()`. In general, this command will produce one plot at a time, and hitting *Enter* will generate the next plot. However, it is often convenient to view all four plots together. We can achieve this by using the `par()` and `mfrow()` functions, which tell `R` to split the display screen into separate panels so that multiple plots can be viewed simultaneously. For example,  `par(mfrow = c(2, 2))` divides the plotting region into a $2 \times 2$ grid of panels.
 
 ```{r chunk11}
 par(mfrow = c(2, 2))
@@ -1309,7 +1396,7 @@ plot(predict(lm.fit), rstudent(lm.fit))
 On the basis of the residual plots, there is some evidence of non-linearity.
 
 
-Leverage statistics can be computed for any number of predictors using the `hatvalues()` function.
+Leverage statistics can be computed using the `hatvalues()` function.
 
 ```{r chunk13}
 plot(hatvalues(lm.fit))
@@ -1399,20 +1486,22 @@ lm.fit <- lm(medv ~ lstat)
 anova(lm.fit, lm.fit2)
 ```
 
-Here Model 1 represents the linear submodel containing only one predictor, `lstat`, while Model 2 corresponds to the larger quadratic model that has two predictors, `lstat` and `lstat^2`.
-The `anova()` function performs a hypothesis test
-comparing the two models. The   null hypothesis is that the two models fit the data equally well,  and the alternative hypothesis is that the full model is superior. Here the $F$-statistic is $135$
- and the associated $p$-value is virtually zero. This provides very clear evidence that the model containing the predictors `lstat` and `lstat^2` is far superior to the model that only contains the predictor `lstat`.
- This is not surprising, since earlier we saw evidence for non-linearity in the relationship between `medv` and `lstat`. If we type
+Here Model 1 represents the linear submodel containing only one predictor, `lstat`, while Model 2 corresponds to the larger quadratic model that has two predictors, `lstat` and `lstat^2`. The `anova()` function performs a hypothesis test comparing the two models. The null hypothesis is that the two models fit the data equally well,  and the alternative hypothesis is that the full model is superior. 
+
+Here the $F$-statistic is $135$ and the associated $p$-value is virtually zero. This provides very clear evidence that the model containing the predictors `lstat` and `lstat^2` is far superior to the model that only contains the predictor `lstat`.
+
+This is not surprising, since earlier we saw evidence for non-linearity in the relationship between `medv` and `lstat`. 
+ 
+If we type
 
 ```{r chunk22}
 par(mfrow = c(2, 2))
 plot(lm.fit2)
 ```
 
- then we see that when the `lstat^2` term is included in the model, there is little discernible pattern in the residuals.
+then we see that when the `lstat^2` term is included in the model, there is little discernible pattern in the residuals.
 
-In order to create a cubic fit, we can include a predictor of the form `I(X^3)`. However, this approach can start to get cumbersome for higher-order polynomials. A better approach involves using the `poly()` function to create the polynomial within `lm()`. For example, the following command produces a
+In order to create a **cubic fit**, we can include a predictor of the form `I(X^3)`. However, this approach can start to get cumbersome for higher-order polynomials. A better approach involves using the `poly()` function to create the polynomial within `lm()`. For example, the following command produces a
 fifth-order polynomial fit:
 
 ```{r chunk23}
