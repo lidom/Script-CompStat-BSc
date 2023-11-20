@@ -774,27 +774,33 @@ For instance,
 Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
 \tag{2.3}\]</span></span> where</p>
 <ul>
-<li><span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_i\)</span> are independent from each other for all <span class="math inline">\(i=1,\dots,n\)</span></li>
+<li><span class="math inline">\(\epsilon_i\)</span> and the vector of predictors <span class="math inline">\((X_{i1},\dots,X_{ip})\)</span> are independent from each other for all <span class="math inline">\(i=1,\dots,n\)</span></li>
 <li><span class="math inline">\(E(\epsilon_i)=0\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span></li>
 <li><span class="math inline">\(Var(\epsilon_i)=\sigma^2&gt;0\)</span> is constant for all <span class="math inline">\(i=1,\dots,n\)</span></li>
 </ul>
-<p>Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let <span class="math display">\[\begin{equation*}
-X_i=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
+<p>Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let <span class="math display">\[\begin{align*}
+X_i&amp;=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
-\end{equation*}\]</span> with <span class="math inline">\(X_{i0}=1\)</span> for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
+\end{align*}\]</span> with <span class="math inline">\(X_{i0}=1\)</span> for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
 <p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> more compactly as <span class="math display">\[
 Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
 \]</span></p>
 <p>Next, we can stack all components. Let <span class="math display">\[\begin{equation*}
 Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
 \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
-\end{equation*}\]</span> denote the <span class="math inline">\((n\times 1)\)</span> vectors containing all response values <span class="math inline">\(Y_i\)</span> and all error terms <span class="math inline">\(\epsilon_i\)</span> of the random sample. Moreover, let <span class="math display">\[\begin{equation*}
-X=\left(\begin{matrix}
+\end{equation*}\]</span> denote the <span class="math inline">\((n\times 1)\)</span> vectors containing all response values <span class="math inline">\(Y_i\)</span> and all error terms <span class="math inline">\(\epsilon_i\)</span> of the random sample. Moreover, let <span class="math display">\[\begin{align*}
+X
+&amp;=\left(\begin{matrix}
 X_{10}&amp;X_{11}&amp;\dots&amp;X_{1p}\\
 \vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
 X_{n0}&amp;X_{n1}&amp;\dots&amp;X_{np}\\
+\end{matrix}\right)\\[2ex]
+&amp;=\left(\begin{matrix}
+\;\;1\;\;&amp;X_{11}&amp;\dots&amp;X_{1p}\\
+\;\;\vdots\;\;&amp;\vdots&amp;\ddots&amp;\vdots\\
+\;\;1\;\;&amp;X_{n1}&amp;\dots&amp;X_{np}\\
 \end{matrix}\right)
-\end{equation*}\]</span> denote the <span class="math inline">\((n\times (p+1))\)</span>-dimensional matrix containing all predictor values of the random sample, where the first column is a column full of ones <span class="math inline">\((X_{10}=1,\dots,X_{n0}=0).\)</span></p>
+\end{align*}\]</span> denote the <span class="math inline">\((n\times (p+1))\)</span>-dimensional matrix containing all predictor values of the random sample, where the first column is a column full of ones <span class="math inline">\((X_{10}=1,\dots,X_{n0}=0).\)</span></p>
 <p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> even more compactly as <span class="math display">\[
 Y=X\beta+\epsilon.
 \]</span></p>
@@ -880,15 +886,19 @@ H_1:&amp;\;\text{at least one $\beta_j\neq 0$; $j=1,\dots,p$}
 \]</span></p>
 <p><span class="math inline">\(F\)</span>-test statistic <span class="math display">\[
 F=\frac{(\operatorname{TSS}-\operatorname{RSS})/p}{\operatorname{
-  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{q,n-p-1}
-\]</span> Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if <span class="math inline">\(H_0\)</span> is true, the <span class="math inline">\(F\)</span>-test statistic has a <span class="math inline">\(F\)</span>-distribution with <span class="math inline">\(q\)</span> numerator and <span class="math inline">\((n-p-1)\)</span> denominator degrees of freedom.</p>
+  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{p,n-p-1}
+\]</span> Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if <span class="math inline">\(H_0\)</span> is true, the <span class="math inline">\(F\)</span>-test statistic has a <span class="math inline">\(F\)</span>-distribution with <span class="math inline">\(p\)</span> numerator and <span class="math inline">\((n-p-1)\)</span> denominator degrees of freedom.</p>
 <p>If <span class="math inline">\(H_0\)</span> is correct <span class="math display">\[
 \begin{align*}
-E(\operatorname{RSS}/(n-p-1))&amp;=\sigma^2\\
-E((\operatorname{TSS}-\operatorname{RSS})/p)&amp;=\sigma^2\\
+E((\operatorname{TSS}-\operatorname{RSS})/p)&amp;=\sigma^2\\[2ex]
+E(\operatorname{RSS}/(n-p-1))&amp;=\sigma^2
 \end{align*}
 \]</span></p>
-<p>Therefore: * if <span class="math inline">\(H_0\)</span> is correct, we expect values of <span class="math inline">\(F\approx 1.\)</span> * if <span class="math inline">\(H_1\)</span> is correct, we expect values of <span class="math inline">\(F\gg 1.\)</span></p>
+<p>Therefore:</p>
+<ul>
+<li>If <span class="math inline">\(H_0\)</span> is correct, we expect values of <span class="math inline">\(F\approx 1.\)</span></li>
+<li>If <span class="math inline">\(H_1\)</span> is correct, we expect values of <span class="math inline">\(F\gg 1.\)</span></li>
+</ul>
 <p><span class="math inline">\(p\)</span>-value</p>
 <p><span class="math display">\[\begin{align*}
 p_{obs}

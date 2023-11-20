@@ -551,15 +551,15 @@ Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\qu
 $${#eq-MultLinReg1}
 where 
 
-* $\epsilon_i$ and $X_i$ are independent from each other for all $i=1,\dots,n$ 
+* $\epsilon_i$ and the vector of predictors $(X_{i1},\dots,X_{ip})$ are independent from each other for all $i=1,\dots,n$ 
 * $E(\epsilon_i)=0$ for all $i=1,\dots,n$
 * $Var(\epsilon_i)=\sigma^2>0$ is constant for all $i=1,\dots,n$
 
 Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let
-\begin{equation*}
-X_i=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
+\begin{align*}
+X_i&=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
-\end{equation*}
+\end{align*}
 with $X_{i0}=1$ for all $i=1,\dots,n.$
 
 This allows us to write @eq-MultLinReg1 more compactly as
@@ -573,13 +573,19 @@ Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
 \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
 \end{equation*}
 denote the $(n\times 1)$ vectors containing all response values $Y_i$ and all error terms $\epsilon_i$ of the random sample. Moreover, let
-\begin{equation*}
-X=\left(\begin{matrix}
+\begin{align*}
+X
+&=\left(\begin{matrix}
 X_{10}&X_{11}&\dots&X_{1p}\\
 \vdots&\vdots&\ddots&\vdots\\ 
 X_{n0}&X_{n1}&\dots&X_{np}\\
+\end{matrix}\right)\\[2ex]
+&=\left(\begin{matrix}
+\;\;1\;\;&X_{11}&\dots&X_{1p}\\
+\;\;\vdots\;\;&\vdots&\ddots&\vdots\\ 
+\;\;1\;\;&X_{n1}&\dots&X_{np}\\
 \end{matrix}\right)
-\end{equation*}
+\end{align*}
 denote the $(n\times (p+1))$-dimensional matrix containing all predictor values of the random sample, where the first column is a column full of ones $(X_{10}=1,\dots,X_{n0}=0).$ 
 
 This allows us to write @eq-MultLinReg1 even more compactly as 
@@ -692,21 +698,22 @@ $$
 $F$-test statistic
 $$
 F=\frac{(\operatorname{TSS}-\operatorname{RSS})/p}{\operatorname{
-  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{q,n-p-1}
+  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{p,n-p-1}
 $$
-Under $H_0,$ i.e. if $H_0$ is true, the $F$-test statistic has a $F$-distribution with $q$ numerator and $(n-p-1)$ denominator degrees of freedom. 
+Under $H_0,$ i.e. if $H_0$ is true, the $F$-test statistic has a $F$-distribution with $p$ numerator and $(n-p-1)$ denominator degrees of freedom. 
 
 If $H_0$ is correct
 $$
 \begin{align*}
-E(\operatorname{RSS}/(n-p-1))&=\sigma^2\\ 
-E((\operatorname{TSS}-\operatorname{RSS})/p)&=\sigma^2\\ 
+E((\operatorname{TSS}-\operatorname{RSS})/p)&=\sigma^2\\[2ex] 
+E(\operatorname{RSS}/(n-p-1))&=\sigma^2
 \end{align*}
 $$
 
 Therefore: 
-* if $H_0$ is correct, we expect values of $F\approx 1.$ 
-* if $H_1$ is correct, we expect values of $F\gg 1.$
+
+* If $H_0$ is correct, we expect values of $F\approx 1.$ 
+* If $H_1$ is correct, we expect values of $F\gg 1.$
 
 $p$-value
 
