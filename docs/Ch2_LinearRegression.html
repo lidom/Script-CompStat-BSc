@@ -625,19 +625,19 @@ H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
 </section>
 <section id="test-statistics-for-statistical-hypothesis-testing" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="test-statistics-for-statistical-hypothesis-testing">Test Statistics for Statistical Hypothesis Testing</h4>
-<p>Standard errors can also be used to construct test-statistics for statistical hypothesis testing.</p>
+<p>Standard errors can also be used to construct test statistics for statistical hypothesis testing. In the following, we look at the <span class="math inline">\(t\)</span>-test statistic.</p>
 <p>Choose a significance level <span class="math inline">\(0&lt;\alpha&lt;1\)</span> such as, for instance,</p>
 <ul>
 <li><span class="math inline">\(\alpha=0.05\)</span></li>
 <li><span class="math inline">\(\alpha=0.01\)</span></li>
 </ul>
-<p>Let us (again) consider the following null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> versus the two-sided alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}:\)</span> <span class="math display">\[
+<p>Let us (again) consider the null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{1}\)</span> versus the two-sided alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_1\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{1}:\)</span> <span class="math display">\[
 \begin{align*}
 H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
 H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
 \end{align*}
 \]</span></p>
-<p>Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if the (unknown) true parameter value equals the null-hypothetical value <span class="math inline">\((\beta_1=\beta^{(H_0)}_{1}),\)</span> the <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\((n-1)\)</span> degrees of freedom, <span class="math display">\[
+<p>Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if the (unknown) true parameter <span class="math inline">\(\beta_1\)</span> equals the null-hypothetical value, i.e.&nbsp;if <span class="math inline">\(\beta_1=\beta^{(H_0)}_{1},\)</span> the <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\((n-2)\)</span> degrees of freedom, <span class="math display">\[
 t=\frac{\hat\beta_1 - \beta^{(H_0)}_{1}}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}.
 \]</span></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -650,7 +650,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg"><span>Section&nbsp;2.2</span></a>), the <span class="math inline">\(t\)</span>-test for the <span class="math inline">\(j\)</span>th predictor has the following null-distribution: <span class="math display">\[
+<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg"><span>Section&nbsp;2.2</span></a>), the <span class="math inline">\(t\)</span>-test statistic for the <span class="math inline">\(j\)</span>th predictor has the following null-distribution: <span class="math display">\[
 t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
 \]</span></p>
 </div>
@@ -659,9 +659,8 @@ t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset
 p_{obs}
 &amp;=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
 &amp;=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\}.
-\end{align*}\]</span> where, <span class="math inline">\(P_{H_0}\)</span> means that the probability is computed “under <span class="math inline">\(H_0\)</span>;” i.e.&nbsp;for the scenario that <span class="math inline">\(H_0\)</span> is true.</p>
-<p><strong>Testing-Procedure:</strong></p>
-<p>To do the statistical hypothesis test, we need to select a significance level <span class="math inline">\(\alpha\)</span> (e.g., <span class="math inline">\(\alpha=0.05\)</span> or <span class="math inline">\(\alpha=0.01\)</span>).</p>
+\end{align*}\]</span> where, <span class="math inline">\(P_{H_0}\)</span> means that the probability is computed “under <span class="math inline">\(H_0\)</span>;” i.e.&nbsp;for the scenario that <span class="math inline">\(H_0\)</span> is true <span class="math inline">\((\beta_1=\beta^{(H_0)}_{1}).\)</span></p>
+<p><strong>Testing-Procedure:</strong> <!-- To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$).  --></p>
 <ul>
 <li><p>If the observed realization of the <span class="math inline">\(p\)</span>-value is larger than or equal to the significance level <span class="math display">\[
 p_{obs}\geq \alpha,
@@ -698,9 +697,7 @@ Note
 </ul>
 <p><span class="math display">\[
 R^2=\frac{\operatorname{TSS}-\operatorname{RSS}}{\operatorname{TSS}}=1-\frac{\operatorname{RSS}}{\operatorname{TSS}},
-\]</span></p>
-<p>where <span class="math inline">\(0\leq R^2\leq 1\)</span> and</p>
-<p><span class="math display">\[
+\]</span> where <span class="math inline">\(0\leq R^2\leq 1\)</span> and <span class="math display">\[
 \begin{align*}
 \operatorname{TSS}&amp;=\sum_{i=1}^n\left(y_i-\bar{y}\right)^2\\
 \operatorname{RSS}&amp;=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2\\
@@ -724,18 +721,35 @@ Danger
 <li>very low <span class="math inline">\(\operatorname{RSE}\)</span> values, <span class="math inline">\(\operatorname{RSE}\approx 0\)</span>, and</li>
 <li>very high <span class="math inline">\(R^2\)</span> values, <span class="math inline">\(R^2\approx 1\)</span>,</li>
 </ul>
-<p>can be warning signals indicating overfitting. While overfitting typically does not happen with simple linear regression models, it can happen in multiple linear regression analysis (see below).</p>
-<p><strong>Cautionary Note Nr 2:</strong> The <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\operatorname{RSE}\)</span> are only based on training data. In <a href="Ch1_StatLearning.html"><span>Chapter&nbsp;1</span></a>, we have seen that one usually wants to assess the model accuracy using testing data.</p>
+<p>can be warning signals indicating overfitting. While overfitting typically does not happen with a simple linear regression model, it can happen with a multiple linear regression model.</p>
+<p><strong>Cautionary Note Nr 2:</strong> The <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\operatorname{RSE}\)</span> are only based on <em>training</em> data. In <a href="Ch1_StatLearning.html"><span>Chapter&nbsp;1</span></a>, we have seen that a proper assessment of the model accuracy needs to take into account <em>test</em> data.</p>
 </div>
 </div>
-<!-- A proper assessment of the model accuracy needs to take into account test data.  -->
+<!--   -->
 <section id="r2-and-correlation-coefficient" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="r2-and-correlation-coefficient"><span class="math inline">\(R^2\)</span> and correlation coefficient</h4>
 <p>In the case of the simple linear regression model, <span class="math inline">\(R^2\)</span> equals the squared sample correlation coefficient between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>, <span class="math display">\[
-R^2 = r^2,
+R^2 = r_{yx}^2,
 \]</span> where <span class="math display">\[
-r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
+r_{yx}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
 \]</span></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg"><span>Section&nbsp;2.2</span></a>), the <span class="math inline">\(R^2\)</span> equals the squared correlation between response and the fitted values: <span class="math display">\[
+R^2=r^2_{y\hat{y}}
+\]</span> with <span class="math display">\[
+r_{y\hat{y}}=\frac{\sum_{i=1}^n(y_i-\bar{y})(\hat{y}_i-\bar{\hat{y}})}{\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}\sqrt{\sum_{i=1}^n(\hat{y}_i-\bar{\hat{y}})^2}}.
+\]</span></p>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -765,21 +779,26 @@ Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\qu
 <li><span class="math inline">\(Var(\epsilon_i)=\sigma^2&gt;0\)</span> is constant for all <span class="math inline">\(i=1,\dots,n\)</span></li>
 </ul>
 <p>Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let <span class="math display">\[\begin{equation*}
-X_i=\left(\begin{matrix}X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
+X_i=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
-\end{equation*}\]</span> This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> more compactly <span class="math display">\[
+\end{equation*}\]</span> with <span class="math inline">\(X_{i0}=1\)</span> for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
+<p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> more compactly as <span class="math display">\[
 Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
 \]</span></p>
 <p>Next, we can stack all components. Let <span class="math display">\[\begin{equation*}
 Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
 \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
-\end{equation*}\]</span> denote the <span class="math inline">\((n\times 1)\)</span> vectors containing all response values and all error terms of the random sample. Moreover, let <span class="math display">\[\begin{equation*}
-X=\left(\begin{matrix}X_{11}&amp;\dots&amp;X_{1K}\\\vdots&amp;\ddots&amp;\vdots\\ X_{n1}&amp;\dots&amp;X_{nK}\\\end{matrix}\right)
-\end{equation*}\]</span> denote the <span class="math inline">\((n\times K)\)</span> matrix containing all predictor values of the random sample.</p>
+\end{equation*}\]</span> denote the <span class="math inline">\((n\times 1)\)</span> vectors containing all response values <span class="math inline">\(Y_i\)</span> and all error terms <span class="math inline">\(\epsilon_i\)</span> of the random sample. Moreover, let <span class="math display">\[\begin{equation*}
+X=\left(\begin{matrix}
+X_{10}&amp;X_{11}&amp;\dots&amp;X_{1p}\\
+\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
+X_{n0}&amp;X_{n1}&amp;\dots&amp;X_{np}\\
+\end{matrix}\right)
+\end{equation*}\]</span> denote the <span class="math inline">\((n\times (p+1))\)</span>-dimensional matrix containing all predictor values of the random sample, where the first column is a column full of ones <span class="math inline">\((X_{10}=1,\dots,X_{n0}=0).\)</span></p>
 <p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> even more compactly as <span class="math display">\[
 Y=X\beta+\epsilon.
 \]</span></p>
-<p>Using matrix algebra, it can be shown that the ordinary least squares estimator of <span class="math inline">\(\beta=(\beta_0,\beta_1,\dots,\beta_p)'\)</span> is given by the following <span class="math inline">\((K\times 1)\)</span> vector of parameter estimates <span class="math display">\[
+<p>Using matrix algebra, it can be shown that the ordinary least squares estimator of <span class="math inline">\(\beta=(\beta_0,\beta_1,\dots,\beta_p)'\)</span> is given by the following <span class="math inline">\(((p+1)\times 1)\)</span> vector: <span class="math display">\[
 \left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)=\hat{\beta}=(X'X)^{-1}X'Y.
 \]</span></p>
 <p>For a given observed realization of the training data random sample <span class="math display">\[
@@ -792,46 +811,45 @@ Y=X\beta+\epsilon.
 <p><img src="images/Fig_3_4.png" class="img-fluid"></p>
 <p>Since the estimator <span class="math display">\[
 \hat\beta=\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)
-\]</span> depends on the random sample, it is itself a <span class="math inline">\((p+1)\)</span>-dimensional <strong>random variable</strong>. For each realization of the random sample, we observe a realization of the estimator.</p>
-<p>In an actual data analysis, however, we only have <em>one</em> realization of the estimators <span class="math inline">\(\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p\)</span> computed from the given dataset (i.e.&nbsp;the observed realization of the random sample).</p>
+\]</span> depends on the random sample, it is itself a <span class="math inline">\((p+1)\)</span>-dimensional <strong>random variable</strong>. For each realization of the training data random sample, we observe a realization of the estimator.</p>
+<p>In an actual data analysis, however, we only have <em>one</em> realization of the estimators <span class="math inline">\(\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p\)</span> computed from the given training dataset (i.e.&nbsp;the observed realization of the training data random sample).</p>
 <section id="interpretation-of-multiple-linear-regressions-and-the-omitted-variable-bias" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="interpretation-of-multiple-linear-regressions-and-the-omitted-variable-bias">Interpretation of Multiple Linear Regressions and the Omitted Variable Bias</h4>
 <p>Multiple linear regression is more than mere composition of single simple linear regression models. Take a look at the following two simple linear regression results:</p>
 <p><img src="images/Tab_3_3.png" class="img-fluid"></p>
-<p>Thus in separate simple linear regressions, the separate effects of</p>
+<p>Observations:</p>
 <ul>
-<li><code>radio</code> on <code>sales</code></li>
-</ul>
-<p>and</p>
-<ul>
-<li><code>newspaper</code> on <code>sales</code></li>
-</ul>
-<p>are both (but separately) statistically significant.</p>
-<p>I.e., <strong>in two separate regressions</strong>, we can reject the null hypotheses <span class="math display">\[
-H_0:\beta_{radio}=0\quad\text{and}\quad H_0:\beta_{newspaper}=0
+<li><p>In the first simple linear regression, we see a statistical significant effect of <code>radio</code> on <code>sales</code>; i.e.&nbsp;we can reject the null hypotheses <span class="math display">\[
+H_0:\beta_{radio}=0
 \]</span> and adopt the alternative hypotheses <span class="math display">\[
-H_1:\beta_{radio}\neq 0\quad\text{and}\quad H_1:\beta_{newspaper}\neq 0.
-\]</span></p>
+H_1:\beta_{radio}\neq 0.
+\]</span></p></li>
+<li><p>In the second simple linear regression, we see a statistical significant effect of <code>newspaper</code> on <code>sales</code>; i.e.&nbsp;we can reject the null hypotheses <span class="math display">\[
+H_0:\beta_{newspaper}=0
+\]</span> and adopt the alternative hypotheses <span class="math display">\[
+H_1:\beta_{newspaper}\neq 0.
+\]</span></p></li>
+</ul>
 <p>By contrast, when looking at the <strong>multiple linear regression</strong> when regressing <code>sales</code> onto</p>
 <ul>
 <li><code>TV</code>,</li>
-<li><code>radio</code><br>
+<li><code>radio</code> and<br>
 </li>
-<li><code>newspaper</code></li>
+<li><code>newspaper</code>,</li>
 </ul>
-<p>only the effect of <code>newspaper</code> becomes statistically <strong>insignificant</strong>:</p>
+<p>then the effect of <code>newspaper</code> becomes statistically <strong>insignificant</strong>; see Table 3.4.</p>
 <p><img src="images/Tab_3_4.png" class="img-fluid"></p>
 <p><strong>Reason: Omitted Variable Bias</strong></p>
 <p>The reason for this change from a statistically significant effect of <code>newspaper</code> in the simple linear regression, to an insignificant effect in the multiple linear regression is the so-called <strong>Omitted Variable Bias</strong>.</p>
 <p>Explanation of the omitted variables bias:</p>
 <ul>
-<li><code>radio</code> has a <strong>positive effect</strong> on <code>sales</code></li>
+<li><code>radio</code> has a <strong>true positive effect</strong> on <code>sales</code></li>
 <li><code>newspaper</code> has actually <strong>no effect</strong> on <code>sales</code></li>
-<li>But, <code>newspaper</code> is correlated with <code>radio</code> (cor(<code>newspaper</code>,<code>radio</code>)=0.3541); see Table 3.5</li>
+<li>But, <code>newspaper</code> is correlated with <code>radio</code> <span class="math inline">\(r_{\texttt{newspaper},\texttt{radio}}=0.3541\)</span>; see Table 3.5</li>
 </ul>
 <p><img src="images/Tab_3_5.png" class="img-fluid"></p>
 <ul>
-<li>When <strong>omitting</strong> <code>radio</code> from the multiple regression model, <code>newspaper</code> becomes a surrogate for <code>radio</code> and we see a spurious effect.</li>
+<li>Thus, when <strong>omitting</strong> <code>radio</code> from the regression model, <code>newspaper</code> becomes a surrogate for <code>radio</code> and we see a spurious effect.</li>
 </ul>
 <div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -843,7 +861,8 @@ Danger
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Interpreting statistically significant results as true effects (“a change of <span class="math inline">\(X_j\)</span> by one unit causes on average a change in <span class="math inline">\(Y\)</span> by <span class="math inline">\(\beta_{j}\)</span>”) is a delectate thing. Even if the <span class="math inline">\(f(X)\)</span> is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables.</p>
+<p>Interpreting statistically significant results as true effects (“a change of <span class="math inline">\(X_j\)</span> by one unit causes on average a change in <span class="math inline">\(Y\)</span> by <span class="math inline">\(\beta_{j}\)</span>”) is a delectate thing.</p>
+<p>Even if the <span class="math inline">\(f(X)\)</span> is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables.</p>
 </div>
 </div>
 <p><strong>Interpretation of the Coefficients in Table 3.4</strong></p>
@@ -869,10 +888,7 @@ E(\operatorname{RSS}/(n-p-1))&amp;=\sigma^2\\
 E((\operatorname{TSS}-\operatorname{RSS})/p)&amp;=\sigma^2\\
 \end{align*}
 \]</span></p>
-<ul>
-<li>If <span class="math inline">\(H_0\)</span> is correct, we expect values of <span class="math inline">\(F\approx 1.\)</span></li>
-<li>If <span class="math inline">\(H_1\)</span> is correct, we expect values of <span class="math inline">\(F\gg 1.\)</span></li>
-</ul>
+<p>Therefore: * if <span class="math inline">\(H_0\)</span> is correct, we expect values of <span class="math inline">\(F\approx 1.\)</span> * if <span class="math inline">\(H_1\)</span> is correct, we expect values of <span class="math inline">\(F\gg 1.\)</span></p>
 <p><span class="math inline">\(p\)</span>-value</p>
 <p><span class="math display">\[\begin{align*}
 p_{obs}
@@ -999,23 +1015,29 @@ y_{i}&amp;=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i\\[2ex]
 <p><strong>Solution: Interaction Effects:</strong></p>
 <p>Consider the standard linear regression model with two variables, <span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon.
-\]</span> Here each predictor <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> has a given effect, <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span>, on <span class="math inline">\(Y\)</span> and this effect does not depend on the value of the other predictor. (Additive Assumption)</p>
+\]</span> Here each predictor <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> has a given effect, <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span>, on <span class="math inline">\(Y\)</span> and this effect does not depend on the value of the other predictor. <strong>(Additive Assumption)</strong></p>
 <p>One way of extending this model is to include a third predictor, called an <strong>interaction term</strong>, which is constructed by computing the product of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2.\)</span> This results in the model <span class="math display">\[
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1X_2 + \epsilon.
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 \overbrace{\color{red}X_1X_2}^{=X_3} + \epsilon.
 \]</span> This is a powerful extension relaxing the additive assumption. Notice that the model can now be written as <span class="math display">\[
 \begin{align*}
-Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 + \beta_2 X_2 + \epsilon,
+Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1(X_2)} X_1 + \beta_2 X_2 + \epsilon,
 \end{align*}
-\]</span> where the new slope parameter <span class="math inline">\(\tilde{\beta}_2\)</span> is a linear function of <span class="math inline">\(X_2,\)</span> i.e. <span class="math display">\[
-\tilde{\beta}_1\equiv\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
+\]</span> where the new slope parameter <span class="math inline">\(\tilde{\beta}_2(X_2)\)</span> is a linear function of <span class="math inline">\(X_2,\)</span> i.e. <span class="math display">\[
+\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
 \]</span></p>
 <p>Thus, a change in the value of <span class="math inline">\(X_2\)</span> will change the association between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y.\)</span></p>
 <p>A similar argument shows that a change in the value of <span class="math inline">\(X_1\)</span> changes the association between <span class="math inline">\(X_2\)</span> and <span class="math inline">\(Y.\)</span></p>
-<p>Let us return to the <code>Advertising</code> example:<br> A linear model that predicts <code>sales</code> using <code>radio</code>, <code>TV</code>, and the interaction, <code>radio</code><span class="math inline">\(\times\)</span><code>radio</code>, between the two takes the form</p>
+<p>Let us return to the <code>Advertising</code> example:<br> A linear model that predicts <code>sales</code> using</p>
+<ul>
+<li>the predictor <code>radio</code>,</li>
+<li>the predictor <code>TV</code>, and</li>
+<li>the interaction <code>radio</code><span class="math inline">\(\times\)</span><code>radio</code></li>
+</ul>
+<p>takes the form</p>
 <center>
 <code>sales</code> <span class="math inline">\(= \beta_0 + \beta_1\times\)</span> <code>TV</code> <span class="math inline">\(+ \beta_2\times\)</span> <code>radio</code> <span class="math inline">\(+ \beta_3\times(\)</span> <code>radio</code><span class="math inline">\(\times\)</span> <code>TV</code><span class="math inline">\()+\epsilon\)</span><br>
 </center>
-<p>which can be rewritten as</p>
+<p><br> which can be rewritten as</p>
 <center>
 <code>sales</code> <span class="math inline">\(=\beta_0 + (\beta_1+ \beta_3\times\)</span> <code>radio</code> <span class="math inline">\()\times\)</span> <code>TV</code> <span class="math inline">\(+ \beta_2\times\)</span> <code>radio</code> <span class="math inline">\(+\epsilon\)</span>
 </center>
@@ -1036,7 +1058,7 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 +
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Hierarchical Principle
+Hierarchical Principle of Interaction Terms
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1448,7 +1470,9 @@ Danger
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>predict()</code> function with the option <code>interval = "prediction"</code> assumes <strong>Gaussian</strong> error terms. If this assumption is not fulfilled, you should not use the prediction interval.</p>
+<p>The <code>predict()</code> function with the option <code>interval = "prediction"</code> assumes <strong>Gaussian</strong> error terms; i.e.&nbsp; <span class="math display">\[
+\epsilon_i\sim\mathcal{N}(0,\sigma^2),\quad\text{for all}\quad i=1,\dots,n.
+\]</span> If this distributional assumption is not fulfilled, you should not use the prediction interval.</p>
 </div>
 </div>
 <p>We will now plot <code>medv</code> and <code>lstat</code> along with the least squares regression line using the <code>plot()</code> and <code>abline()</code> functions.</p>

@@ -396,14 +396,14 @@ i.e. with a false null-hypothesis (since $\beta_1=5$ in `mySimpleRegrDataGenerat
 
 #### Test Statistics for Statistical Hypothesis Testing {-}
 
-Standard errors can also be used to construct test-statistics for statistical hypothesis testing. 
+Standard errors can also be used to construct test statistics for statistical hypothesis testing. In the following, we look at the $t$-test statistic. 
 
 Choose a significance level $0<\alpha<1$ such as, for instance,
 
 * $\alpha=0.05$
 * $\alpha=0.01$
 
-Let us (again) consider the following null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_1$ equals the **null-hypothetical value** $\beta^{(H_0)}_{1}$ versus the two-sided alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_1$ does not equal the null-hypothetical value $\beta^{(H_0)}_{1}:$
+Let us (again) consider the null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_1$ equals the **null-hypothetical value** $\beta^{(H_0)}_{1}$ versus the two-sided alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_1$ does not equal the null-hypothetical value $\beta^{(H_0)}_{1}:$
 $$
 \begin{align*}
 H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
@@ -411,13 +411,13 @@ H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
 \end{align*}
 $$
 
-Under $H_0,$ i.e. if the (unknown) true parameter value equals the null-hypothetical value $(\beta_1=\beta^{(H_0)}_{1}),$ the **random** $t$-test statistic has a $t$-distribution with $(n-1)$ degrees of freedom, 
+Under $H_0,$ i.e. if the (unknown) true parameter $\beta_1$ equals the null-hypothetical value, i.e. if $\beta_1=\beta^{(H_0)}_{1},$ the **random** $t$-test statistic has a $t$-distribution with $(n-2)$ degrees of freedom, 
 $$
 t=\frac{\hat\beta_1 - \beta^{(H_0)}_{1}}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}.
 $$
 
 ::: {.callout-tip}
-In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (@sec-MultLinReg), the $t$-test for the $j$th predictor has the following null-distribution: 
+In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (@sec-MultLinReg), the $t$-test statistic for the $j$th predictor has the following null-distribution: 
 $$
 t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
 $$
@@ -430,11 +430,10 @@ p_{obs}
 &=P_{H_0}\left(|t|\geq|t_{obs}|\right)\\[2ex]
 &=2\cdot\min\{P_{H_0}\left(t\geq t_{obs} \right),\; P_{H_0}\left(t\leq t_{obs} \right)\}.
 \end{align*}
-where, $P_{H_0}$ means that the probability is computed "under $H_0$;" i.e. for the scenario that $H_0$ is true. 
+where, $P_{H_0}$ means that the probability is computed "under $H_0$;" i.e. for the scenario that $H_0$ is true $(\beta_1=\beta^{(H_0)}_{1}).$ 
 
 **Testing-Procedure:**
-
-To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$). 
+<!-- To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$).  -->
 
 * If the observed realization of the $p$-value is larger than or equal to the significance level 
 $$
@@ -471,9 +470,7 @@ $$
 $$
 R^2=\frac{\operatorname{TSS}-\operatorname{RSS}}{\operatorname{TSS}}=1-\frac{\operatorname{RSS}}{\operatorname{TSS}},
 $$
-
 where $0\leq R^2\leq 1$ and 
-
 $$
 \begin{align*}
 \operatorname{TSS}&=\sum_{i=1}^n\left(y_i-\bar{y}\right)^2\\ 
@@ -492,24 +489,35 @@ RSS: "Residual Sum of Squares"
 * very low $\operatorname{RSE}$ values, $\operatorname{RSE}\approx 0$, and 
 * very high $R^2$ values, $R^2\approx 1$, 
 
-can be warning signals indicating overfitting. While overfitting typically does not happen with simple linear regression models, it can happen in multiple linear regression analysis (see below).
+can be warning signals indicating overfitting. While overfitting typically does not happen with a simple linear regression model, it can happen with a multiple linear regression model.
 
-**Cautionary Note Nr 2:** The $R^2$ and $\operatorname{RSE}$ are only based on training data. In @sec-SL, we have seen that one usually wants to assess the model accuracy using testing data.  
+**Cautionary Note Nr 2:** The $R^2$ and $\operatorname{RSE}$ are only based on *training* data. In @sec-SL, we have seen that a proper assessment of the model accuracy needs to take into account *test* data.
 :::
 
-<!-- A proper assessment of the model accuracy needs to take into account test data.  -->
+<!--   -->
 
 
 #### $R^2$ and correlation coefficient {-}
 
 In the case of the simple linear regression model, $R^2$ equals the squared sample correlation coefficient between $Y$ and $X$,
 $$
-R^2 = r^2,
+R^2 = r_{yx}^2,
 $$
 where 
 $$
-r=\widehat{cor}(Y,X)=\frac{\sqrt{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
+r_{yx}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
 $$
+
+::: {.callout-tip}
+In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i$ (@sec-MultLinReg), the $R^2$ equals the squared correlation between response and the fitted values: 
+$$
+R^2=r^2_{y\hat{y}}
+$$
+with 
+$$
+r_{y\hat{y}}=\frac{\sum_{i=1}^n(y_i-\bar{y})(\hat{y}_i-\bar{\hat{y}})}{\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}\sqrt{\sum_{i=1}^n(\hat{y}_i-\bar{\hat{y}})^2}}.
+$$
+:::
 
 
 ## Multiple Linear Regression {#sec-MultLinReg}
@@ -549,10 +557,12 @@ where
 
 Typically, it is more convenient to write the multiple linear regression model in vector and matrix notation. Let
 \begin{equation*}
-X_i=\left(\begin{matrix}X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
+X_i=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
 \end{equation*}
-This allows us to write @eq-MultLinReg1 more compactly
+with $X_{i0}=1$ for all $i=1,\dots,n.$
+
+This allows us to write @eq-MultLinReg1 more compactly as
 $$
 Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
 $$
@@ -562,18 +572,22 @@ Next, we can stack all components. Let
 Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right)\quad\text{and}\quad
 \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\\epsilon_n\end{matrix}\right)
 \end{equation*}
-denote the $(n\times 1)$ vectors containing all response values and all error terms of the random sample. Moreover, let
+denote the $(n\times 1)$ vectors containing all response values $Y_i$ and all error terms $\epsilon_i$ of the random sample. Moreover, let
 \begin{equation*}
-X=\left(\begin{matrix}X_{11}&\dots&X_{1K}\\\vdots&\ddots&\vdots\\ X_{n1}&\dots&X_{nK}\\\end{matrix}\right)
+X=\left(\begin{matrix}
+X_{10}&X_{11}&\dots&X_{1p}\\
+\vdots&\vdots&\ddots&\vdots\\ 
+X_{n0}&X_{n1}&\dots&X_{np}\\
+\end{matrix}\right)
 \end{equation*}
-denote the $(n\times K)$ matrix containing all predictor values of the random sample. 
+denote the $(n\times (p+1))$-dimensional matrix containing all predictor values of the random sample, where the first column is a column full of ones $(X_{10}=1,\dots,X_{n0}=0).$ 
 
 This allows us to write @eq-MultLinReg1 even more compactly as 
 $$
 Y=X\beta+\epsilon.
 $$
 
-Using matrix algebra, it can be shown that the ordinary least squares estimator of $\beta=(\beta_0,\beta_1,\dots,\beta_p)'$ is given by the following $(K\times 1)$ vector of parameter estimates
+Using matrix algebra, it can be shown that the ordinary least squares estimator of $\beta=(\beta_0,\beta_1,\dots,\beta_p)'$ is given by the following $((p+1)\times 1)$ vector: 
 $$
 \left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)=\hat{\beta}=(X'X)^{-1}X'Y.
 $$
@@ -595,9 +609,9 @@ Since the estimator
 $$
 \hat\beta=\left(\begin{matrix}\hat\beta_1\\ \vdots \\ \hat\beta_K\end{matrix}\right)
 $$
-depends on the random sample, it is itself a $(p+1)$-dimensional **random variable**. For each realization of the random sample, we observe a realization of the estimator. 
+depends on the random sample, it is itself a $(p+1)$-dimensional **random variable**. For each realization of the training data random sample, we observe a realization of the estimator. 
 
-In an actual data analysis, however, we only have *one* realization of the estimators $\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p$ computed from the given dataset (i.e. the observed realization of the random sample).
+In an actual data analysis, however, we only have *one* realization of the estimators $\hat\beta_0,\hat\beta_1,\dots,\hat\beta_p$ computed from the given training dataset (i.e. the observed realization of the training data random sample).
 
 
 #### Interpretation of Multiple Linear Regressions and the Omitted Variable Bias {-}
@@ -606,32 +620,34 @@ Multiple linear regression is more than mere composition of single simple linear
 
 ![](images/Tab_3_3.png)
 
-Thus in separate simple linear regressions, the separate effects of 
 
-* `radio` on `sales` 
+Observations: 
 
-and 
-
-* `newspaper` on `sales` 
-
-are both (but separately) statistically significant. 
-
-I.e., **in two separate regressions**, we can reject the null hypotheses 
+* In the first simple linear regression, we see a statistical significant effect of  `radio` on `sales`; i.e. we can reject the null hypotheses 
 $$
-H_0:\beta_{radio}=0\quad\text{and}\quad H_0:\beta_{newspaper}=0
+H_0:\beta_{radio}=0
 $$
 and adopt the alternative hypotheses 
 $$
-H_1:\beta_{radio}\neq 0\quad\text{and}\quad H_1:\beta_{newspaper}\neq 0.
+H_1:\beta_{radio}\neq 0.
+$$
+
+* In the second simple linear regression, we see a statistical significant effect of  `newspaper` on `sales`; i.e. we can reject the null hypotheses 
+$$
+H_0:\beta_{newspaper}=0
+$$
+and adopt the alternative hypotheses 
+$$
+H_1:\beta_{newspaper}\neq 0.
 $$
 
 By contrast, when looking at the **multiple linear regression** when regressing `sales` onto 
 
 * `TV`, 
-* `radio`  
-* `newspaper`
+* `radio` and  
+* `newspaper`,
 
-only the effect of `newspaper` becomes statistically **insignificant**: 
+then the effect of `newspaper` becomes statistically **insignificant**; see Table 3.4. 
 
 ![](images/Tab_3_4.png)
 
@@ -642,16 +658,18 @@ The reason for this change from a statistically significant effect of `newspaper
 
 Explanation of the omitted variables bias: 
 
-* `radio` has a **positive effect** on `sales`
+* `radio` has a **true positive effect** on `sales`
 * `newspaper` has actually **no effect** on `sales`
-* But, `newspaper` is correlated with `radio` (cor(`newspaper`,`radio`)=0.3541); see Table 3.5
+* But, `newspaper` is correlated with `radio` $r_{\texttt{newspaper},\texttt{radio}}=0.3541$; see Table 3.5
 
 ![](images/Tab_3_5.png)
 
-* When **omitting** `radio` from the multiple regression model, `newspaper` becomes a surrogate for `radio` and we see a spurious effect.  
+* Thus, when **omitting** `radio` from the regression model, `newspaper` becomes a surrogate for `radio` and we see a spurious effect.  
 
 ::: {.callout-caution}
-Interpreting statistically significant results as true effects ("a change of $X_j$ by one unit causes on average a change in $Y$ by $\beta_{j}$") is a delectate thing. Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
+Interpreting statistically significant results as true effects ("a change of $X_j$ by one unit causes on average a change in $Y$ by $\beta_{j}$") is a delectate thing. 
+
+Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
 :::
 
 
@@ -686,9 +704,9 @@ E((\operatorname{TSS}-\operatorname{RSS})/p)&=\sigma^2\\
 \end{align*}
 $$
 
-
-* If $H_0$ is correct, we expect values of $F\approx 1.$ 
-* If $H_1$ is correct, we expect values of $F\gg 1.$
+Therefore: 
+* if $H_0$ is correct, we expect values of $F\approx 1.$ 
+* if $H_1$ is correct, we expect values of $F\gg 1.$
 
 $p$-value
 
@@ -856,21 +874,21 @@ Consider the standard linear regression model with two variables,
 $$
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon.
 $$
-Here each predictor $X_1$ and $X_2$ has a given effect, $\beta_1$ and $\beta_2$, on $Y$ and this effect does not depend on the value of the other predictor. (Additive Assumption)
+Here each predictor $X_1$ and $X_2$ has a given effect, $\beta_1$ and $\beta_2$, on $Y$ and this effect does not depend on the value of the other predictor. **(Additive Assumption)**
 
 One way of extending this model is to include a third predictor, called an **interaction term**, which is constructed by computing the product of $X_1$ and $X_2.$ This results in the model
 $$
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1X_2 + \epsilon.
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 \overbrace{\color{red}X_1X_2}^{=X_3} + \epsilon.
 $$
 This is a powerful extension relaxing the additive assumption. Notice that the model can now be written as
 $$
 \begin{align*}
-Y &= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1} X_1 + \beta_2 X_2 + \epsilon,
+Y &= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1(X_2)} X_1 + \beta_2 X_2 + \epsilon,
 \end{align*}
 $$
-where the new slope parameter $\tilde{\beta}_2$ is a linear function of $X_2,$ i.e.
+where the new slope parameter $\tilde{\beta}_2(X_2)$ is a linear function of $X_2,$ i.e.
 $$
-\tilde{\beta}_1\equiv\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
+\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
 $$
 
 Thus, a change in the value of $X_2$ will change the association between $X_1$ and $Y.$ 
@@ -879,12 +897,19 @@ A similar argument shows that a change in the value of $X_1$ changes the associa
 
 
 Let us return to the `Advertising` example:</br> 
-A linear model that predicts `sales` using `radio`, `TV`, and the interaction, `radio`$\times$`radio`, between the two takes the form 
+A linear model that predicts `sales` using 
+
+* the predictor `radio`, 
+* the predictor `TV`, and 
+* the interaction `radio`$\times$`radio`
+
+takes the form 
 
 <center>
 `sales` $= \beta_0 + \beta_1\times$ `TV` $+ \beta_2\times$ `radio` $+ \beta_3\times($ `radio`$\times$ `TV`$)+\epsilon$</br>
 </center>
 
+</br>
 which can be rewritten as
 
 <center>
@@ -909,7 +934,7 @@ which can be rewritten as
 
 ::: {.callout-tip}
 
-# Hierarchical Principle
+# Hierarchical Principle of Interaction Terms
 
 If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
 :::
@@ -1352,7 +1377,11 @@ The 95\% prediction interval associated with a `lstat` value of 10 is $(12.828, 
 As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $\hat{y}_i=25.05$ for `medv` when $x_{i2}=$`lstat` equals 10), but the latter are substantially wider.
 
 ::: {.callout-caution}
-The `predict()` function with the option `interval = "prediction"` assumes **Gaussian** error terms. If this assumption is not fulfilled, you should not use the prediction interval.
+The `predict()` function with the option `interval = "prediction"` assumes **Gaussian** error terms; i.e. 
+$$
+\epsilon_i\sim\mathcal{N}(0,\sigma^2),\quad\text{for all}\quad i=1,\dots,n.
+$$
+If this distributional assumption is not fulfilled, you should not use the prediction interval.
 :::
 
 We will now plot `medv` and `lstat` along with the least squares regression line using the `plot()` and `abline()` functions.
@@ -1361,7 +1390,6 @@ We will now plot `medv` and `lstat` along with the least squares regression line
 plot(lstat, medv)
 abline(lm.fit)
 ```
-
 There is some evidence for non-linearity in the relationship between `lstat` and `medv`. We will explore this issue  later in this lab.
 
 The `abline()` function can be used to draw any line, not just the least squares regression line. To draw a line with intercept `a` and slope `b`, we  type `abline(a, b)`. Below we experiment with some additional settings for plotting lines and points. The `lwd = 3` command causes the width of the regression line to be increased by a factor of 3;  this works for the `plot()` and `lines()` functions also. We can also use the `pch` option to create different plotting symbols.
