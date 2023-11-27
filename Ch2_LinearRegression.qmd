@@ -543,14 +543,17 @@ $$
 $$
 denote a training data random sample. I.e.  
 $$
-(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X_{1},\dots,X_{p},Y),\quad\text{for all}\quad i=1,\dots,n.
+(X_{i1},\dots,X_{ip},Y_i)\overset{iid}{\sim}(X_{1},\dots,X_{p},Y)
 $$
+for all $i=1,\dots,n.$
+
 Moreover, let 
 $$
-Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
+Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i
 $${#eq-MultLinReg1}
-where 
+for all $i=1,\dots,n,$ where 
 
+* $(p+1)<n$
 * $\epsilon_i$ and the vector of predictors $(X_{i1},\dots,X_{ip})$ are independent from each other for all $i=1,\dots,n$ 
 * $E(\epsilon_i)=0$ for all $i=1,\dots,n$
 * $Var(\epsilon_i)=\sigma^2>0$ is constant for all $i=1,\dots,n$
@@ -684,14 +687,17 @@ Even if the $f(X)$ is really so simple that we can write it as a simple or multi
 For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
 
 
-### Some Important Questions 
+### Inference on $\beta_1,\dots,\beta_p$
 
-**1. Is There a Relationship Between the Response and Predictors at all?**
+The $t$-test statistic (equivalently the confidence interval for $\beta_j$) allows us to test a null-hypothesis about **one** parameter $\beta_j.$ 
 
+To test whether there is a relationship between the response $Y$ and total *vector* predictors $(X_1,\dots,X_p)$ we can use the $F$-test statistic.
+
+In this case, the $F$-test tests the null-hypothesis
 $$
 \begin{align*}
 H_0:&\;\beta_1=\beta_2=\dots=\beta_p=0\\ 
-H_1:&\;\text{at least one $\beta_j\neq 0$; $j=1,\dots,p$}
+\text{versus}\quad H_1:&\;\text{at least one $\beta_j\neq 0$; $j=1,\dots,p$}
 \end{align*}
 $$
 
@@ -1068,26 +1074,23 @@ $$
 $$ 
 are independent and thus uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  
 
-::: {.callout-caution}
-The standard formulas for standard errors, confidence intervals, and hypothesis tests in this chapter are based on the **assumption of uncorrelated error terms**.  If in fact there is correlation among the error terms, then the estimated standard errors will tend to **underestimate** the true standard errors. Thus, if the error terms are auto-correlated, we need to take this into account by using so-called auto-correlation robust standard errors. 
-:::
 
-Correlations among the error terms typically occur in time series data (see Fig. 3.10). 
+Auto-correlations among the error terms typically occur in time series data. Figure 3.10 shows time-series of residuals with 
+
+* no auto-correlation ($\rho=0$)
+* intermediate auto-correlation ($\rho=0.5$)
+* strong auto-correlation ($\rho=0.9$)
 
 ![](images/Fig_3_10.png)
 
 
-**3. Non-Constant Variance of Error Terms**
+**3. Non-Constant Variance of Error Terms (Heteroskedasticity)**
 
 Another important assumption of the linear regression model is that the
 error terms have a constant variance, 
 $$
 Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
 $$ 
-
-::: {.callout-caution}
-The standard formulas for standard errors, confidence intervals, and hypothesis tests in this chapter are based on the **assumption of error terms with constant variance**. If the error terms are heteroskedastic, we need to take this into account by using so-called heteroskedasticity robust standard errors. 
-:::
 
 One can identify **non-constant variances ("heteroskedasticity")** in the errors, using diagnostic residual plots. 
 
@@ -1111,24 +1114,52 @@ plot(lmobj_3, which = 1)
 ```
 
 
+::: {.callout-caution}
+The standard formulas for 
+
+* standard errors, 
+* confidence intervals, and 
+* hypothesis tests 
+
+in this chapter are based on the assumption of 
+
+* uncorrelated error terms $Cor(\epsilon_i,\epsilon_j)=0$ for all $i\neq j$  
+* with equal variances $Var(\epsilon_i)=\sigma^2$ for all $i=1,\dots,n.$  
+
+If in fact there is correlation and/or heteroskedasticity among the error terms, then the estimated standard errors will be wrong leading to invalid inferences. 
+
+Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to take this into account by using so-called auto-correlation and/or heteroskedasticity robust standard errors. 
+
+The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
+:::
+
+
 **4. Outliers**
 
-An outlier is a point for which $y_i$ is far from the value predicted by the outlier
-model. Outliers can arise for a variety of reasons, such as incorrect recording
+An outlier is a point $i$ for which $y_i$ is far from the value $\hat{y}_i$ predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording
 of an observation during data collection.
 
 Outliers typically have a strong effect on the $R^2$ value since they add a **very large residual** to its computation. 
 
-Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$. Such outliers have little effect on the regression fit.
+
+**Harmless Outlier:**
+Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$; i.e. the $x_i$-value is right in the center of all predicor values. Such outliers have little effect on the regression fit.
 ![](images/Fig_3_12.png)
 
 
-Figure 3.13 shows again a clear outlier (observation 41) which has a predictor value $x_i$ that is *very atypical*. Such outliers are said to have  large **leverage** giving them power to affect the regression fit considerably. 
+**Harmful Outlier:**
+Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value $x_i$ that is **very atypical**. Such outliers are said to have **large leverage** giving them power to affect the regression fit considerably. 
 ![](images/Fig_3_13.png)
 
+::: {.callout-tip}
+Critical outliers have both, 
 
-**Summary:** Critical outliers have both, **large residuals *and* large leverage**.
-
+* **large residuals**
+ 
+*and* 
+ 
+* **large leverage**.
+:::
 
 **5. High Leverage Points**
 
@@ -1139,11 +1170,10 @@ $$
 h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{i'=1}^n(x_{i'}-\bar{x})^2}.
 $$
 
-In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal of the $(n\times n)$-dimensional "hat-matrix"
+In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal value of the $(n\times n)$-dimensional "hat-matrix"
 $$
 H=X(X'X)^{-1}X'.
 $$ 
-
 
 * The leverage statistic $h_i$ is always between $1/n$ and $1$
 * The average leverage for all the observations is equal to 
@@ -1157,6 +1187,8 @@ $$
 
 Collinearity refers to the situation in which two or more predictor variables are closely related to one another. 
 
+In the following example, the variables `Age` and `Limit` are essentially unrelated, but the variables `Rating` and `Limit` are closely related to one another. 
+
 
 ```{r}
 library("ISLR2")
@@ -1168,7 +1200,17 @@ plot(y = Credit$Rating, x = Credit$Limit, main = "Strong Collinearity", ylab = "
 ```
 
 
+The left panel of Figure 3.15 shows that, in the case of unrelated predictors (`Age` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Age},\hat\beta_{Limit})$ that is well identified since the minimum is well defined. 
+
+The right panel of Figure 3.15 shows that, in the case of collinear predictors (`Rating` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Rating},\hat\beta_{Limit})$ that is not well identified: One can substitute values of $\hat\beta_{Limit}'$ for $\hat\beta_{Rating}'$ ending up in new pairs $(\hat\beta_{Rating}',\hat\beta_{Limit}')$ with basically the same RSS-value than the original value than it is achieved by the minimizer $(\hat\beta_{Rating},\hat\beta_{Limit})$.  
+
 ![](images/Fig_3_15.png)
+
+
+Table 3.11 demonstrates that this identification problem between the collinear predictors (`Rating` and `Limit`) causes a variance inflation in the variance (square of standard error) of the estimators $\hat\beta_{Rating}$ and $\hat\beta_{Limit}.$ 
+
+* In Model 1: $\hat\beta_{Limit} = 0.005^2=0.000025$
+* In Model 2: $\hat\beta_{Rating} = 0.064^2=0.004096$
 
 ![](images/Tab_3_11.png)
 
@@ -1185,7 +1227,13 @@ where $R^2_{X_j|X_-j}$ is the $R^2$ from a regression of $X_j$ onto all of the o
 * If $R^2_{X_j|X_-j}$ is close to one, then multicollinearity is present, and $\operatorname{VIF}(\hat{\beta}_j)$ will be large. 
 
 
-In the `Credit` data, a regression of balance on `age`, `rating`, and `limit` indicates that the predictors have VIF values of 1.01 (`age`), 160.67 (`rating`), and 160.59 (`limit`). Thus, as we suspected, there is considerable collinearity in the data!
+In the `Credit` data, one gets for the predictors `age`, `rating`, and `limit` the following VIF values: 
+
+* 1.01 (`age`)
+* 160.67 (`rating`)
+* 160.59 (`limit`)
+
+Thus, as we suspected, there is considerable collinearity in the data!
 
 
 Possible solutions:
@@ -1226,18 +1274,16 @@ Alternative: **Non-parametric methods** such as *K-nearest neighbors regression*
 #### K-nearest neighbors regression (KNN regression) {-}
 
 Given a value for $K$ and a prediction point $x_0,$ KNN regression
-regression ...
+regression computes $\hat{f}(x_0)$ in two steps: 
 
-1. identifies the $K$ training observations that are closest to
+1. identify the $K$ training observations that are closest to
 $x_0$, represented by the index set $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}.$ 
-2. estimates $f(x_0)$ using the average of all the training responses $y_i$ with $i\in\mathcal{N}_0.$ 
-
-In other words,
+2. estimate $f(x_0)$ using the average of all the training responses $y_i$ with $i\in\mathcal{N}_0,$ i.e. 
 $$
 \hat{f}(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
 $$
 
-
+The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
 
 ![](images/Fig_3_16.png)
 
@@ -1278,7 +1324,10 @@ Figure 3.19 displays a non-linear situations in which KNN performs much better t
 
 #### Curse of Dimensionality {-}
 
-Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
+
+
+Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
 
 * When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
 * But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
@@ -1286,8 +1335,8 @@ Unfortunately, in higher dimensions, KNN often performs worse than simple/multip
 
 Observations: 
 
-* When $p=1$, $50$ data points can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
-* However, when spreading the $50$ data points over a large number of, for instance, $p=20$ dimensions, even the $K$ nearest neighbors tend to become far away from $x_0.$ 
+* When $p=1$, a sample size of $n=50$ can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
+* However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0.$ 
 
 
 ## `R`-Lab: Linear Regression
@@ -1373,12 +1422,24 @@ The `predict()` function can be used to produce confidence intervals and predict
 ```{r chunk8}
 predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
         interval = "confidence")
-predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
-        interval = "prediction")
 ```
 
-The 95\% confidence interval associated with a `lstat` value of 10 is $(24.47, 25.63).$ 
+For instance, the observed value of the 95\% confidence interval associated with a `lstat` value of $10,$ i.e. associated with 
+$$
+\beta_0 + \beta_1 \cdot 10
+$$
+is 
+$$
+\operatorname{CI}_{\beta_0 + \beta_1 \cdot 10}=[24.47, 25.63]
+$$ 
+with observed prediction value
+$$
+25.05335 = \hat\beta_0 + \hat\beta_1 \cdot 10.
+$$
 
+
+<!-- predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
+        interval = "prediction")
 The 95\% prediction interval associated with a `lstat` value of 10 is $(12.828, 37.28)$. 
 
 As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $\hat{y}_i=25.05$ for `medv` when $x_{i2}=$`lstat` equals 10), but the latter are substantially wider.
@@ -1389,7 +1450,7 @@ $$
 \epsilon_i\sim\mathcal{N}(0,\sigma^2),\quad\text{for all}\quad i=1,\dots,n.
 $$
 If this distributional assumption is not fulfilled, you should not use the prediction interval.
-:::
+::: -->
 
 We will now plot `medv` and `lstat` along with the least squares regression line using the `plot()` and `abline()` functions.
 
@@ -1466,10 +1527,7 @@ summary(lm.fit)
 We can access the individual components of a summary object by name
 (type `?summary.lm` to see what is available). Hence
 `summary(lm.fit)$r.sq` gives us the $R^2$, and
-`summary(lm.fit)$sigma` gives us the RSE. The `vif()`
-function, part of the `car` package, can be used to compute variance
-inflation factors.   Most VIF's are
-low to moderate for this data. The `car` package is not part of the base `R` installation so it must be downloaded the first time you use it via the `install.packages()` function in `R`.
+`summary(lm.fit)$sigma` gives us the RSE. The `vif()` function, part of the `car` package, can be used to compute variance inflation factors.   Most VIF's are low to moderate for this data. The `car` package is not part of the base `R` installation so it must be downloaded the first time you use it via the `install.packages()` function in `R`.
 
 ```{r chunk16}
 suppressPackageStartupMessages(library(car)) # contains the vif() function
@@ -1635,4 +1693,4 @@ Prepare the following exercises of Chapter 3 in our course textbook `ISLR`:
 - Exercise 8
 - Exercise 9
 
-<!-- {{< include Ch2_Solutions.qmd >}} -->
+{{< include Ch2_Solutions.qmd >}}
