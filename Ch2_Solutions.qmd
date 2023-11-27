@@ -16,7 +16,8 @@
 **1 b)** On the one hand, the low p-values of `TV` and `radio` allow us to reject the "no effect" null hypotheses for `TV` and `radio`. Hence, we believe that `TV` (`radio`) ads have an effect on `sales` in the presence of `radio` (`TV`) and `newspaper` ads.<br>
 On the other hand, the high p-value of `newspaper` does *not* allow us to reject the "no effect" null-hypothesis. This constitutes an *inconclusive result* and only says that the possible effects of `newspaper` ads are not large enough to stand out from the estimation errors. 
 
-**Remember:** An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis.
+**Remember:** An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis, i.e. for Type-II-errors. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis, i.e. for Type-I-errors.
+
 
 ### Exercise 2  {-}
 
