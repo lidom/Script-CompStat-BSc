@@ -1998,14 +1998,33 @@ Medium    0      1</code></pre>
 <p><strong>1 b)</strong> Explain what conclusions you can draw based on these <span class="math inline">\(p\)</span>-values. Your explanation should be phrased in terms of <code>sales</code>, <code>TV</code>, <code>radio</code>, and <code>newspaper</code>, rather than in terms of the coefficients of the linear model.</p>
 <p><strong>Answers:</strong></p>
 <p><strong>1 a)</strong> In Table 3.4, the null hypothesis for <code>TV</code> is that in the presence of <code>radio</code> ads and <code>newspaper</code> ads, <code>TV</code> ads have no effect on sales. Similarly, the null hypothesis for <code>radio</code> is that in the presence of <code>TV</code> ads and <code>newspaper</code> ads, <code>radio</code> ads have no effect on sales.</p>
-<p><strong>1 b)</strong> On the one hand, the low p-values of <code>TV</code> and <code>radio</code> allow us to reject the “no effect” null hypotheses for <code>TV</code> and <code>radio</code>. Hence, we believe that <code>TV</code> (<code>radio</code>) ads have an effect on <code>sales</code> in the presence of <code>radio</code> (<code>TV</code>) and <code>newspaper</code> ads.<br> On the other hand, the high p-value of <code>newspaper</code> does <em>not</em> allow us to reject the “no effect” null-hypothesis. This constitutes an <em>inconclusive result</em> and only says that the possible effects of <code>newspaper</code> ads are not large enough to stand out from the estimation errors.</p>
-<p><strong>Remember:</strong> An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis, i.e.&nbsp;for Type-II-errors. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis, i.e.&nbsp;for Type-I-errors.</p>
+<p><strong>1 b)</strong> The low p-values of <code>TV</code> and <code>radio</code> allow us to reject the “no effect” null hypotheses for <code>TV</code> and <code>radio</code>. Hence, we believe that</p>
+<ul>
+<li><code>TV</code> ads have an effect on <code>sales</code> in the presence of <code>radio</code> and <code>newspaper</code> ads.</li>
+<li><code>radio</code> ads have an effect on <code>sales</code> in the presence of <code>TV</code> and <code>newspaper</code> ads.</li>
+</ul>
+<p>The high p-value of <code>newspaper</code> does <em>not</em> allow us to reject the “no effect” null-hypothesis. This constitutes an <strong>inconclusive result</strong> and only says that the possible effects of <code>newspaper</code> ads are not large enough to stand out from the estimation errors.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Remember
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An insignificant hypothesis test result is never informative about whether the tested null hypothesis is true. We do not have an error-control for falsely accepting the null-hypothesis, i.e.&nbsp;for type-II-errors. We only have an error-control (by the significance level) for falsely rejecting the null-hypothesis, i.e.&nbsp;for type-I-errors.</p>
+</div>
+</div>
 </section>
 <section id="exercise-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-2">Exercise 2</h3>
 <p>Carefully explain the main difference between the KNN classifier and KNN regression methods.</p>
 <p><strong>Answer:</strong></p>
-<p>KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for <span class="math inline">\(Y\)</span> (qualitative), given a certain predictor <span class="math inline">\(x_0\)</span>, where as the output for a KNN regression predicts the quantitative value for <span class="math inline">\(f(x_0)\)</span>, given a certain predictor <span class="math inline">\(x_0\)</span>.</p>
+<p>KNN classifier and KNN regression methods are closely related in formula. However, the final result of KNN classifier is the classification output for <span class="math inline">\(Y\)</span> (qualitative), given a certain predictor <span class="math inline">\(x_0\)</span>, where as the output for a KNN regression predicts the quantitative value for <span class="math inline">\(f(x_0)\)</span>, given a certain predictor <span class="math inline">\(x_0\)</span>. <!-- 
+Finally, KNN classifies the test observation $x_0$ to the class $j$ with the largest probability from @eq-DefKNN.  
+--></p>
 </section>
 <section id="exercise-3" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-3">Exercise 3</h3>
@@ -2159,7 +2178,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 -0.1578447 </code></pre>
 </div>
 </div>
-<p><strong>iv)</strong> What is the predicted <code>mpg</code> associated with a <code>horsepower</code> of <span class="math inline">\(98\)</span>? What are the associated <span class="math inline">\(95\%\)</span> confidence and prediction intervals?</p>
+<p><strong>iv)</strong> What is the predicted <code>mpg</code> associated with a <code>horsepower</code> of <span class="math inline">\(98\)</span>? What is the associated <span class="math inline">\(95\%\)</span> confidence interval? <!-- and prediction intervals? --></p>
 <p><strong>Answer:</strong></p>
 <p>The predicted value plus confidence interval:</p>
 <div class="cell">
@@ -2173,25 +2192,34 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 1 24.46708 23.97308 24.96108</code></pre>
 </div>
 </div>
-<p>The predicted value plus prediction interval: ::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower of 98</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>)</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction interval</span></span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object =</span> lmObj_1, <span class="at">newdata =</span> new_df, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       fit     lwr      upr
-1 24.46708 14.8094 34.12476</code></pre>
-</div>
-<p>:::</p>
+<!-- 
+The predicted value plus prediction interval:
+::: {.cell}
+
+```{.r .cell-code}
+# Horsepower of 98
+new_df <- data.frame(horsepower = 98)
+
+# prediction interval
+predict(object = lmObj_1, newdata = new_df, interval = "prediction")
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+       fit     lwr      upr
+1 24.46708 14.8094 34.12476
+```
+:::
+:::
+-->
 <p><strong>8 b)</strong> Plot the response and the predictor. Use the <code>abline()</code> function to display the least squares regression line.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Auto<span class="sc">$</span>horsepower, <span class="at">y =</span> Auto<span class="sc">$</span>mpg, <span class="at">ylab =</span> <span class="st">"MPG"</span>, <span class="at">xlab =</span> <span class="st">"Horsepower"</span>)</span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmObj_1, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
-<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">",x)"</span>))), </span>
-<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> Auto<span class="sc">$</span>horsepower, <span class="at">y =</span> Auto<span class="sc">$</span>mpg, <span class="at">ylab =</span> <span class="st">"MPG"</span>, <span class="at">xlab =</span> <span class="st">"Horsepower"</span>)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmObj_1, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"(y,x)"</span>, <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">hat</span>(y),<span class="st">",x)"</span>))), </span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2199,8 +2227,8 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>8 c)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmObj_1, <span class="at">col=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmObj_1, <span class="at">col=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2215,12 +2243,12 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>9 a)</strong> Produce a scatterplot matrix which includes all of the variables in the data set.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
-<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce scatterplot matrix</span></span>
-<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ISLR2"</span>)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Auto"</span>)</span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce scatterplot matrix</span></span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2228,7 +2256,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>9 b)</strong> Compute the matrix of correlations between the variables using the function <code>cor()</code>. You will need to exclude the <code>name</code> variable, which is qualitative.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(<span class="fu">subset</span>(Auto, <span class="at">select =</span> <span class="sc">-</span>name)), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(<span class="fu">subset</span>(Auto, <span class="at">select =</span> <span class="sc">-</span>name)), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              mpg cylinders displacement horsepower weight acceleration year
 mpg           1.0      -0.8         -0.8       -0.8   -0.8          0.4  0.6
@@ -2253,11 +2281,11 @@ origin          1.0</code></pre>
 <p><strong>9 c)</strong> Use the <code>lm()</code> function to perform a multiple linear regression with <code>mpg</code> as the response and all other variables except <code>name</code> as the predictors. Use the <code>summary()</code> function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-scrolled="true">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform multiplie linear regression</span></span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform multiplie linear regression</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2299,8 +2327,8 @@ F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>9 d)</strong> Use the <code>plot()</code> function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2315,9 +2343,9 @@ F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>Answer:</strong></p>
 <p>Violating the hierarchy principle:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, </span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
-<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>fit.lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">:</span>displacement, </span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2344,9 +2372,9 @@ F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>Following the hierarchical principle: ::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
-<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2380,10 +2408,10 @@ F-statistic: 384.1 on 6 and 385 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Try a few different transformations of the variables, such as <span class="math inline">\(\log(X)\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, <span class="math inline">\(X^2\)</span>. Comment on your findings.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span><span class="fu">log</span>(weight)<span class="sc">+</span><span class="fu">sqrt</span>(horsepower)<span class="sc">+</span></span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>                acceleration<span class="sc">+</span><span class="fu">I</span>(acceleration<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
-<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span><span class="fu">log</span>(weight)<span class="sc">+</span><span class="fu">sqrt</span>(horsepower)<span class="sc">+</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>                acceleration<span class="sc">+</span><span class="fu">I</span>(acceleration<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2408,9 +2436,9 @@ Residual standard error: 3.99 on 387 degrees of freedom
 Multiple R-squared:  0.7414,    Adjusted R-squared:  0.7387 
 F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2418,8 +2446,8 @@ F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>This try suffers basically from the same issues as the model considered in 9 d)</p>
 <p>Let’s consider again the model with all predictors (except <code>name</code>), but with transforming the outcome variable <code>mpg</code> by a <span class="math inline">\(\log\)</span>-transformation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>fit.lm3 <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(mpg)<span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
-<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>fit.lm3 <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(mpg)<span class="sc">~</span> . <span class="sc">-</span>name, <span class="at">data=</span>Auto)</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2446,9 +2474,9 @@ Residual standard error: 0.1191 on 384 degrees of freedom
 Multiple R-squared:  0.8795,    Adjusted R-squared:  0.8773 
 F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
