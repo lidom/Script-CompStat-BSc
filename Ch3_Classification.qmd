@@ -297,18 +297,16 @@ By contrast, the default probability for an individual with a `balance`-value of
 
 ![](images/Tab_4_2.png)
 
-$$
 \begin{align*}
-Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})
+&Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\
 &=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\ 
-&= 0.0431\\
-Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
+&= 0.0431\\[2ex]
+&Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\
 &=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\ 
 &= 0.0292\\
 \end{align*}
-$$
 
-This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. 
+This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. Thus, this result may be driven by an omitted-variable bias.  
 
 
 ### Multiple Logistic Regression 
@@ -318,30 +316,31 @@ By analogy with the extension from simple to multiple linear, we can generalize 
 $$
 \begin{align*}
 p(X)
-&=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\
+&=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\[2ex]
 \log\left(\frac{p(X)}{1-p(X)}\right) 
 &= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
 \end{align*}
 $$
-where $X=(X_1,\dots,X_p)$, and where the unknown parameters $\beta_0,\dots,\beta_p$ are estimated by maximum likelihood.
+where $X=(X_1,\dots,X_p)$, and where the unknown parameters $\beta_0,\dots,\beta_p$ are estimated by maximum likelihood.</br>
+
 ![](images/Tab_4_3.png)
 
 
-The negative coefficient for student in the multiple logistic regression indicates that for a fixed value of balance and income, a student is less likely to default than a non-student.
+Interestingly, the effect of the dummy variable `student[Yes]` is now *negative*, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was *positive*.
 
+The negative coefficient for student in the multiple logistic regression indicates that for a fixed value of balance and income, a student is less likely to default than a non-student.
 
 <!-- *  The variables `student` and `balance` are correlated. -->
 
-Interestingly, the effect of the dummy variable `student[Yes]` is now *negative*, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was *positive*.
 
-The left-hand panel of Figure 4.3 provides a graphical illustration of this apparent paradox:
+The left panel of Figure 4.3 provides a graphical illustration of this apparent paradox:
 
 * Without considering `balance`, the (overall) default rates of students are *higher* than those of non-students (horizontal broken lines). This overall effect was shown in Table 4.2.
 * However, for given `balance`-values, the default rate for students is *lower* than for non-students (solid lines). 
 
 ![](images/Fig_4_3.png)
 
-The right-hand panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.
+The right panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.
 
 
 **Summary:**

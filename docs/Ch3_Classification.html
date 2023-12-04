@@ -485,17 +485,15 @@ Danger
 <section id="qualitative-predictors" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="qualitative-predictors">Qualitative Predictors:</h4>
 <p><img src="images/Tab_4_2.png" class="img-fluid"></p>
-<p><span class="math display">\[
-\begin{align*}
-Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})
+<p><span class="math display">\[\begin{align*}
+&amp;Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\
 &amp;=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\
-&amp;= 0.0431\\
-Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
+&amp;= 0.0431\\[2ex]
+&amp;Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\
 &amp;=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\
 &amp;= 0.0292\\
-\end{align*}
-\]</span></p>
-<p>This may indicate that students tend to have higher default probabilities than non-students. But we may <strong>missed further factors</strong> here since we only use one predictor variable.</p>
+\end{align*}\]</span></p>
+<p>This may indicate that students tend to have higher default probabilities than non-students. But we may <strong>missed further factors</strong> here since we only use one predictor variable. Thus, this result may be driven by an omitted-variable bias.</p>
 </section>
 </section>
 <section id="multiple-logistic-regression" class="level3" data-number="3.3.4">
@@ -503,21 +501,22 @@ Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})
 <p>By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following <span class="math display">\[
 \begin{align*}
 p(X)
-&amp;=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\
+&amp;=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\[2ex]
 \log\left(\frac{p(X)}{1-p(X)}\right)
 &amp;= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
 \end{align*}
-\]</span> where <span class="math inline">\(X=(X_1,\dots,X_p)\)</span>, and where the unknown parameters <span class="math inline">\(\beta_0,\dots,\beta_p\)</span> are estimated by maximum likelihood. <img src="images/Tab_4_3.png" class="img-fluid"></p>
+\]</span> where <span class="math inline">\(X=(X_1,\dots,X_p)\)</span>, and where the unknown parameters <span class="math inline">\(\beta_0,\dots,\beta_p\)</span> are estimated by maximum likelihood.<br></p>
+<p><img src="images/Tab_4_3.png" class="img-fluid"></p>
+<p>Interestingly, the effect of the dummy variable <code>student[Yes]</code> is now <em>negative</em>, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was <em>positive</em>.</p>
 <p>The negative coefficient for student in the multiple logistic regression indicates that for a fixed value of balance and income, a student is less likely to default than a non-student.</p>
 <!-- *  The variables `student` and `balance` are correlated. -->
-<p>Interestingly, the effect of the dummy variable <code>student[Yes]</code> is now <em>negative</em>, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was <em>positive</em>.</p>
-<p>The left-hand panel of Figure 4.3 provides a graphical illustration of this apparent paradox:</p>
+<p>The left panel of Figure 4.3 provides a graphical illustration of this apparent paradox:</p>
 <ul>
 <li>Without considering <code>balance</code>, the (overall) default rates of students are <em>higher</em> than those of non-students (horizontal broken lines). This overall effect was shown in Table 4.2.</li>
 <li>However, for given <code>balance</code>-values, the default rate for students is <em>lower</em> than for non-students (solid lines).</li>
 </ul>
 <p><img src="images/Fig_4_3.png" class="img-fluid"></p>
-<p>The right-hand panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.</p>
+<p>The right panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.</p>
 <p><strong>Summary:</strong></p>
 <ul>
 <li>An individual student with a given credit card balance will tend to have a lower probability of default than a non-student with the same credit card balance</li>
