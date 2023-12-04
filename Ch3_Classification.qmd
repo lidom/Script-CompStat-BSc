@@ -2,7 +2,7 @@
 
 > Reading: Chapter 4 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
 
-## (Ch. 4.1) An Overview of Classification {-}
+## Overview 
 
 Classification problems occur often, perhaps even more so than regression problems. 
 
@@ -13,7 +13,7 @@ Some examples include:
 2. An online banking service must be able to determine whether or not a transaction being performed on the site is fraudulent, on the basis of the user's IP address, past transaction history, and so forth.
 3. On the basis of DNA sequence data for a number of patients with and without a given disease, a biologist would like to figure out which DNA mutations are deleterious (disease-causing) and which are not.
 
-One of the running example for this chapter: The (simulated) `Default` data set which is part of the [online resources](https://www.statlearning.com/resources-second-edition) of our textbook `ISLR`, but also contained in the `R` package `ISLR2`.
+One of the running example for this chapter: The (simulated) `Default` data set which is part of the [online resources](https://www.statlearning.com/resources-second-edition) of our textbook `ISLR`, and which is also contained in the `R` package `ISLR2`.
 ![](images/Fig_4_1.png)
 
 
@@ -24,15 +24,20 @@ Let's take a first look at the a priori default rate in this dataset:
 suppressPackageStartupMessages(library("ISLR2"))
 data(Default)
 
-n <- nrow(Default)       # sample size
+## sample size
+n <- nrow(Default)       
 
-table(Default$default)/n # Overall no-default and default-rate
+## "no-default"-rate and "default"-rate
+table(Default$default)/n 
 ```
 
-* Overall default rate: approx. $3\%.$ (Figure 4.1 shows only a small fraction of the individuals who did not default.)
+* Overall "no-default"-rate: approx. $97\%.$ 
+* Overall "default"-rate: approx. $3\%.$ 
+
+Note: Figure 4.1 shows only a small fraction of the individuals who did not default to avoid an overcrowded plot.
 
 
-## (Ch. 4.2) Why Not Linear Regression? {-}
+## Why Not Linear Regression?
 
 Linear regression is often not appropriate in the case of a qualitative response $Y.$ 
 
@@ -52,12 +57,12 @@ Y=\left\{
     \end{array}
 \right.
 $$
-Using this coding, least squares could be used to fit a linear regression model to predict $Y,$ but: 
+Using this coding, least squares could be used to fit a linear regression model to predict $Y,$ but 
 
-1. The results would then depend on the numeric ordering $1<2<3$, even though the ordering was completely arbitrary and could have been made differently.
-2. The results would then depend on the assumption the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure`. 
+1. the results would then depend on the numeric ordering $1<2<3,$ even though the ordering was completely arbitrary and could have been made differently.
+2. the results would then depend on the assumption that the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure` which would be a very unrealistic. 
 
-Generally, both points are quite a lot of nonsense for most applications.
+Generally, both points are quite problematic for most applications.
 
 Only if the response variable's values did take on a natural ordering, such as *"mild"*, *"moderate"*, and *"severe"*, and we felt the gap between *mild* and *moderate* was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
 
@@ -69,44 +74,88 @@ Y=\left\{
     1&\quad\text{if }\texttt{default}=\texttt{No}\\
 \end{array}
 \right.
-$$
+$${#eq-binaryY}
 We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
 
-
-For binary responses with a $0/1$ coding, linear regression is not completely unreasonable. It can be shown that 
+For a binary response, $Y\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that 
+\begin{align*}
+Y 
+&= f(X) + \epsilon \\[2ex]
+&= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon, 
+\end{align*}
+where, under the assumptions of @sec-linearRegCh, 
 $$
-Pr(\texttt{default}=\texttt{Yes}|X)\approx \hat{Y}=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+E(\epsilon|X)=0.
+$$
+Therefore, 
+$$
+\begin{align*}
+E(Y|X) 
+&=E\left(\beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon|X\right)\\[2ex]
+&=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+\end{align*}
+$${#eq-LinProb1}
+Moreover, since $(Y|X)\in\{0,1\}$ is a binary random variable, the conditional mean $E(Y|X)$ equals the conditional probability of $Y=1$ given $X$
+$$
+\begin{align*}
+E(Y|X)
+& =  Pr(Y=1|X)\cdot 1 + Pr(Y=0|X)\cdot 0\\[2ex]
+& =  Pr(Y=1|X).  
+\end{align*}
+$${#eq-LinProb2}
+Combining @eq-LinProb1 and @eq-LinProb2 yields
+\begin{align*}
+Pr(Y=1|X) &=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
+\end{align*}
+Thus the estimated model approximates the conditional probability of $Y=1$ (e.g. $\texttt{default}=\texttt{Yes}$) given $X:$
+$$
+Pr(Y=1|X) \approx \hat{Y}=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
 $$
 
-However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see Figure 4.2), which doesn't make sense when predicting probabilities. 
+
+
+However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see left panel in Figure 4.2), which doesn't make sense when predicting probabilities. 
 ![](images/Fig_4_2.png)
 
 **Summary:**
 
-(a) A classic regression method cannot accommodate a qualitative response with more than two classes
+(a) A classic regression method cannot well accommodate a qualitative response with more than two classes
 (b) A classic regression method may not provide meaningful estimates of $Pr(Y |X),$ even with just two classes. 
 
-Thus, it is often preferable to use a classification method that is truly suited for qualitative response values.
+Thus, it is often preferable to use a classification method that is truly suited for qualitative response values such as, for instance, logistic regression.
 
 
-## (Ch. 4.3) Logistic Regression {-}
+## Logistic Regression
 
-Logistic regression models the probability that $Y$ belongs to a particular category.
+Logistic regression models the probability that $Y$ belongs to a particular category. We begin with $K=2$ category problems, and consider $K>2$ category problems below in @sec-multinomialLogistic.
 
-For the `Default` data, logistic regression models the conditional probability of default given values for the predictor(s). For example, the probability of default given `balance`: 
+For the `Default` data, logistic regression models the conditional probability of `default`$\in\{\texttt{Yes},\texttt{No}\}$ given values for the predictor(s). For example, the probability of the even `default`$=$`Yes` given `balance`: 
 $$
 Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
 $$
 where $p(\texttt{balance})\in[0,1]$ is used as a short hand notation. 
 
+Then
+$$
+Pr(\texttt{default}=\texttt{No}|\texttt{balance}) = 1 - p(\texttt{balance}),
+$$
 
-One might predict `default`$=$`Yes` for any individual for whom $p(\texttt{balance}) > 0.5.$
 
+One might predict the event `default`$=$`Yes` for any individual with a `balance`-value such that  
+$$
+p(\texttt{balance}) > 0.5.
+$$
+
+::: {.callout-caution}
 However, $0.5$ this is not the only reasonable classification threshold! 
 
-For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as $p(\texttt{balance}) > 0.1.$
+For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as 
+$$
+Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})=p(\texttt{balance}) > 0.1.
+$$
+:::
 
-### (Ch. 4.3.1) The Logistic Model {-}
+### The Simple $(p=1)$ Logistic Model
 
 For a binary coded dependen variable $Y\in\{0,1\}$ we aim to model the relationship between
 $$
@@ -117,16 +166,16 @@ As discussed above, a linear regression model, e.g.,
 $$
 p(X)=\beta_0+\beta_1 X
 $$
-can produce nonsense predictions $p(X)<0$ or $p(X)>1$; see the left-hand panel of Figure 4.2.  
+can produce nonsense predictions $p(X)\not\in[0,1]0;$ see the left panel of Figure 4.2.  
 
 
-Logistic regression avoids this problem by using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
+Logistic regression avoids this problem **by assuming** that $p(X)$ can be modeled using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
 $$
 p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}.
 $$
 To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called **maximum likelihood**. 
 
-The right-hand panel of Figure 4.2 illustrates the fit of the logistic regression model to the `Default` data.
+The right panel of Figure 4.2 illustrates the fit of the logistic regression model to the `Default` data.
 
 
 Note that 
@@ -143,14 +192,14 @@ $$
 
 The quantity 
 $$
-\frac{p(X)}{1 − p(X)}
+0\leq \frac{p(X)}{1 − p(X)} \leq \infty
 $$ 
 is called the **odds**, and can take any value between 0 and plus infinity.
 
 * A small odds value (close to zero) indicates a low probability of default. 
 * A large odds value indicates a high probability of default. 
 
-For instance
+For instance: 
 
 * An odds value of $\frac{1}{4}$ means that $0.2=20\%$ of the people will default 
 $$
@@ -174,26 +223,41 @@ Thus increasing $X$ by one unit ...
   * ... changes the *log odds* by $\beta_1$ 
   * ... multiplies the odds by $e^{\beta_1}$ 
 
-**Caution:**  The amount that $p(X)$ changes due to a one-unit change in $X$ depends on the current value of $X.$ (The logistic regression model is a non-linear model.)
 
+::: {.callout-caution}
+The amount that $p(X)$ changes due to a one-unit change in $X$ depends on the current value of $X.$ That is, the simple logistic regression model is not linear in the parameters $\beta_0$ and $\beta_1.$
 
 But regardless of the value of $X$, if $\beta_1$ is positive then increasing $X$ will be associated with increasing $p(X)$, and if $\beta_1$ is negative then increasing $X$ will be associated with decreasing $p(X).$ 
+:::
 
-
-### (Ch. 4.3.2) Estimating the Regression Coefficients {-}
+### Estimating the Regression Coefficients
 
 
 In logistic regression analysis, the unknown model parameters are estimated using *maximum likelihood*. 
 
-Basic intuition: 
+**Basic intuition:** Find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ such that the predicted probability $\hat{p}(x_i)$ for each person $i$ corresponds as close as possible to its observed `default` status. Choose $\hat{\beta}_0$ and $\hat{\beta}_1$ such that 
 
-Find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ such that the predicted probability $\hat{p}(x_i)$ for each person $i$ corresponds as close as possible to its default status. (I.e. $\hat{p}(x_i)\approx 1$ if person $i$ defaulted and $\hat{p}(x_i)\approx 0$ if not.)
+* $\hat{p}(x_i)\approx 1$ if `default`$=$`Yes` for person $i$ 
+* $\hat{p}(x_i)\approx 0$ if `default`$=$`No` for person $i$
 
-This intuition can be formalized using a mathematical equation called a *likelihood function*:
+for all $i=1,\dots,n.$
+
+This intuition can be formalized using a mathematical equation called a **likelihood function**:
+\begin{align*}
+\ell(b_0,b_1)
+&=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))\\[2ex]
+&=
+\prod_{i:y_{i}=1} \frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}
+\prod_{i:y_{i}=0}\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)\\[2ex]
+&=
+\prod_{i=1}^n 
+\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
+\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\\[2ex]
+\end{align*}
+The estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* this likelihood function, i.e.
 $$
-\ell(\beta_0,\beta_1)=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))
+(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1)
 $$
-The estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* this likelihood function.
 
 Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).
 
@@ -211,7 +275,7 @@ result from fitting a logistic regression model on the `Default` data in order t
 
 
 
-### (Ch. 4.3.3) Making Predictions {-}
+### Making Predictions 
 
 Once the coefficients have been estimated, we can compute the probability of `default`$=1$ for any given credit card balance. 
 
@@ -247,7 +311,7 @@ $$
 This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. 
 
 
-### (Ch. 4.3.4) Multiple Logistic Regression {-}
+### Multiple Logistic Regression 
 
 
 By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following
@@ -290,7 +354,7 @@ non-students since, overall, they tend to have higher credit card balances.
 In other words: A student is riskier than a non-student if no information about the student's credit card balance is available. However, a student is less risky than a non-student if both have the same credit card balance.
 
 
-### (Ch. 4.3.5) Multinomial Logistic Regression {-}
+### Multinomial Logistic Regression {#sec-multinomialLogistic}
 
 It is possible to extend the two-class logistic regression approach to the setting of $K > 2$ classes. This extension is sometimes known as *multinomial logistic regression*. 
 
@@ -321,7 +385,7 @@ Note that:
 
 
 
-## (Ch. 4.4) Discriminant Analysis: Generative Models for Classification {-}
+## Discriminant Analysis: Generative Models for Classification
 
 We now consider an alternative and less direct approach to estimating the probabilities $Pr(Y=K|X=x).$
 
@@ -365,7 +429,7 @@ In the following sections, we discuss three classifiers that use different estim
 
 
 
-### (Ch. 4.4.1) Linear Discriminant Analysis for $p = 1$ {-}
+### Linear Discriminant Analysis for $p = 1$ 
 
 For the beginning, let us assume that we have only one predictor, i.e., $p=1.$ 
 
@@ -469,7 +533,7 @@ Assumptions made by the LDA method:
 * Observation for each class come from a normal distribution
 * The class-specific normal distributions have class-specific means, $\mu_k$, but **equal variances** $\sigma$
 
-### (Ch. 4.4.2) Linear Discriminant Analysis for $p > 1$ {-}
+### Linear Discriminant Analysis for $p > 1$
 
 In the case of multiple predictors 
 $$
@@ -788,7 +852,7 @@ print(AUC@y.values)
 
 
 
-### (Ch. 4.4.3) Quadratic Discriminant Analysis (QDA) {-}
+### Quadratic Discriminant Analysis (QDA) 
 
 
 Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form
@@ -842,7 +906,7 @@ Roughly:
 ![](images/Fig_4_9.png)
 
 
-### (Ch. 4.4.4) Naive Bayes {-}
+### Naive Bayes 
 
 Remember, that Bayes’ theorem states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
