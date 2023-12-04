@@ -1430,7 +1430,7 @@ $$
 $$
 is 
 $$
-\operatorname{CI}_{\beta_0 + \beta_1 \cdot 10}=[24.47, 25.63]
+\operatorname{CI}_{\beta_0 + \beta_1 \cdot 10,obs}=[24.47, 25.63]
 $$ 
 with observed prediction value
 $$
