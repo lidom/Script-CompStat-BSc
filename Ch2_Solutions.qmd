@@ -342,6 +342,7 @@ summary(fit.lm0)
 ```
 
 Following the hierarchical principle:
+
 ```{r}
 fit.lm1 <- lm(mpg~horsepower+cylinders+year+weight*displacement, 
               data=Auto)
