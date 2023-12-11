@@ -399,7 +399,10 @@ Note that:
 
 ## Discriminant Analysis: Generative Models for Classification
 
-We now consider an alternative and less direct approach to estimating the probabilities $Pr(Y=K|X=x).$
+We now consider an alternative and less direct approach to estimating the probabilities 
+$$
+Pr(Y=K|X=x).
+$$
 
 Suppose that we wish to classify an observation into one of $K\geq 2$ classes. 
 
@@ -412,13 +415,15 @@ $$
 \pi_1+\dots+\pi_K=1.
 $$  
 
-**Density function of $X$:** Let 
+**Conditional Density function of $X$ given $Y=k:$** Let 
 $$
 f_k(x)=Pr(X=x|Y=k)
 $$
-denote the (conditional) density of $X$ for an observation that comes from class $k.$[^1]
+denote the (conditional) density of $X$ for an observation that comes from class $k.$
 
-[^1]:  Technically, this definition is only correct if $X$ is a qualitative random variable. If $X$ is quantitative, then $f_k(x)dx$ corresponds to the probability of $X$ falling in a small region $dx$ around $x.$
+::: {.callout-caution}
+Technically, this definition is only correct if $X$ is a *qualitative* random variable. If $X$ is quantitative, then $f_k(x)dx$ corresponds to the probability of $X$ falling in a small region $dx$ around $x.$
+::: 
 
 
 **Posterior probability:** Then *Bayes' theorem* states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
@@ -429,9 +434,11 @@ $${#eq-postprob1}
 
 While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ *indirectly* simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
+
+We know from @sec-SL that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, @eq-postprob1 will lead to the best classifier. 
+
 However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.
 
-We know from Chapter 2 that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. 
 
 In the following sections, we discuss three classifiers that use different estimates of $f_k(x)$ to approximate the Bayes classifier: 
 
