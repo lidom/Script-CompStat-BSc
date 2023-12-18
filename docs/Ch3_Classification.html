@@ -213,10 +213,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#linear-discriminant-analysis-for-p-1" id="toc-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#linear-discriminant-analysis-for-p-1"><span class="toc-section-number">3.4.1</span>  Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></a></li>
   <li><a href="#linear-discriminant-analysis-for-p-1-1" id="toc-linear-discriminant-analysis-for-p-1-1" class="nav-link" data-scroll-target="#linear-discriminant-analysis-for-p-1-1"><span class="toc-section-number">3.4.2</span>  Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span></a></li>
-  <li><a href="#classification-errors-of-binary-classifiers" id="toc-classification-errors-of-binary-classifiers" class="nav-link" data-scroll-target="#classification-errors-of-binary-classifiers">Classification Errors of Binary Classifiers</a></li>
-  <li><a href="#the-roc-curve" id="toc-the-roc-curve" class="nav-link" data-scroll-target="#the-roc-curve">The ROC curve</a></li>
-  <li><a href="#quadratic-discriminant-analysis-qda" id="toc-quadratic-discriminant-analysis-qda" class="nav-link" data-scroll-target="#quadratic-discriminant-analysis-qda"><span class="toc-section-number">3.4.3</span>  Quadratic Discriminant Analysis (QDA)</a></li>
-  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"><span class="toc-section-number">3.4.4</span>  Naive Bayes</a></li>
+  <li><a href="#classification-errors-of-binary-classifiers" id="toc-classification-errors-of-binary-classifiers" class="nav-link" data-scroll-target="#classification-errors-of-binary-classifiers"><span class="toc-section-number">3.4.3</span>  Classification Errors of Binary Classifiers</a></li>
+  <li><a href="#the-roc-curve" id="toc-the-roc-curve" class="nav-link" data-scroll-target="#the-roc-curve"><span class="toc-section-number">3.4.4</span>  The ROC curve</a></li>
+  <li><a href="#quadratic-discriminant-analysis-qda" id="toc-quadratic-discriminant-analysis-qda" class="nav-link" data-scroll-target="#quadratic-discriminant-analysis-qda"><span class="toc-section-number">3.4.5</span>  Quadratic Discriminant Analysis (QDA)</a></li>
+  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"><span class="toc-section-number">3.4.6</span>  Naive Bayes</a></li>
   </ul></li>
   <li><a href="#r-lab-classification" id="toc-r-lab-classification" class="nav-link" data-scroll-target="#r-lab-classification"><span class="toc-section-number">3.5</span>  <code>R</code>-Lab: Classification</a>
   <ul class="collapse">
@@ -581,8 +581,20 @@ Danger
 </div>
 </div>
 <p><strong>Posterior probability:</strong> Then <em>Bayes’ theorem</em> states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span id="eq-postprob1"><span class="math display">\[
-p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
-\tag{3.4}\]</span></span></p>
+\begin{align*}
+p_k(x)
+&amp; = Pr(Y=k|X=x)\\
+&amp; = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\
+&amp; = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\
+&amp; =\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+\end{align*}
+\tag{3.4}\]</span></span> where <span class="math display">\[
+\begin{align*}
+Pr(X = x)
+&amp;= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\
+&amp;= \sum_{l=1}^K \pi_l f_l(x)
+\end{align*}
+\]</span></p>
 <p>While logistic regression aims at estimating the posterior probability <span class="math inline">\(p_k(x)\)</span> directly, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> <em>indirectly</em> simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
 <p>We know from <a href="Ch1_StatLearning.html"><span>Chapter&nbsp;1</span></a> that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers. Therefore, <a href="#eq-postprob1">Equation&nbsp;<span>3.4</span></a> will lead to the best classifier.</p>
 <p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.</p>
@@ -611,8 +623,32 @@ p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\
 <p>The Bayes classifier involves assigning an observation <span class="math inline">\(X = x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest. Taking the <span class="math inline">\(\log\)</span> of <a href="#eq-LDp1">Equation&nbsp;<span>3.5</span></a> (i.e.&nbsp;a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
 \delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
 \]</span> is largest. The function <span class="math inline">\(\delta_k(x)\)</span> is called the <strong>discriminant function</strong>.</p>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Derivation of the discriminant function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To see this, observe that the largest <span class="math inline">\(p_k(x)\)</span>-value across all <span class="math inline">\(k=1,\dots,K\)</span> is determined by the larges numerator in <a href="#eq-LDp1">Equation&nbsp;<span>3.5</span></a>, since the denominator does not change with <span class="math inline">\(k.\)</span></p>
+<p>If a certain value <span class="math inline">\(k=1,\dots,K\)</span> maximizes <span class="math inline">\(p_k(x),\)</span> then the same <span class="math inline">\(k\)</span> maximizes also <span class="math inline">\(\log(p_k(x))\)</span> since the <span class="math inline">\(\log\)</span> is a strictly positive monotonic transformation.</p>
+<p>We can transform the numerator uA <span class="math inline">\(log\)</span>-tran Thus, we only need to look at the numerator. <span class="math display">\[\begin{align*}
+\log(p_k(x))
+&amp;=\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
+&amp;=\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
+&amp;=\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
+&amp;=\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
+\end{align*}\]</span></p>
+<p>Removing all irrelevant terms that anyways do not depend on <span class="math inline">\(k\)</span> leads to the discriminant function <span class="math inline">\(\delta_k(x).\)</span></p>
+</div>
+</div>
 <p><strong>Example:</strong></p>
-<p>In the case of only two classes, <span class="math inline">\(K=2\)</span>, with equal a priori probabilities <span class="math inline">\(\pi_1=\pi_2\equiv \pi^*\)</span>, the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> to class <span class="math inline">\(1\)</span> if <span class="math display">\[
+<p>In the case of only two classes, <span class="math inline">\(K=2\)</span>, with equal a priori probabilities <span class="math display">\[
+\pi_1=\pi_2\equiv \pi^*,
+\]</span> the Bayes classifier assigns an observation <span class="math inline">\(X=x\)</span> to class <span class="math inline">\(1\)</span> if <span class="math display">\[
 \begin{align*}
 \delta_1(x) &amp; &gt; \delta_2(x)\\
 %%%
@@ -635,7 +671,7 @@ x\cdot\mu_2 - \frac{\mu_2^2}{2}\\
 x   
 &amp; &gt; \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
 \end{align*}
-\]</span> The Bayes <strong>decision boundary</strong> is the point for which <span class="math inline">\(\delta_1(x)=\delta_2(x)\)</span> <span class="math display">\[
+\]</span> The Bayes <strong>decision boundary</strong> is the point for which <span class="math inline">\(\delta_1(x)=\delta_2(x);\)</span> i.e., <span class="math display">\[
 \begin{align*}
 x   
 =\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
@@ -655,13 +691,15 @@ x
 </ul>
 <p><img src="images/Fig_4_4.png" class="img-fluid"></p>
 <p>In the above example (Figure 4.4) we know all parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. In practice, however, these parameters are usually unknown, and thus need to be estimated from the data.</p>
+<p><strong>Summary of LDA for <span class="math inline">\(p=1\)</span>:</strong></p>
 <p>The <strong>Linear Discriminant Analysis (LDA)</strong> method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>, and <span class="math inline">\(\sigma\)</span>. The following estimates are used: <span class="math display">\[
 \begin{align*}
 \hat\pi_k    &amp; = \frac{n_k}{n}\\
 \hat\mu_k    &amp; = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
-\hat\sigma   &amp; = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\
+\hat\sigma   &amp; = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2,
 \end{align*}
-\]</span> The LDA classifier assigns an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
+\]</span> where the variance estimate <span class="math inline">\(\hat\sigma\)</span> pools the predictor <span class="math inline">\(x_i\)</span> values across all groups <span class="math inline">\(k=1,\dots,K.\)</span></p>
+<p>The LDA classifier assigns an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
 \hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \log(\hat\pi_k)
 \]</span> is largest.</p>
 <p>LDA is named <strong>linear</strong> since the discriminant functions <span class="math inline">\(\hat\delta_k(x)\)</span>, <span class="math inline">\(k=1,\dots,K\)</span> are linear functions of <span class="math inline">\(x.\)</span></p>
@@ -728,8 +766,8 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\S
 <ul>
 <li>Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a <strong>new set of individuals</strong> will default.
 <ul>
-<li>The reason is that we specifically adjust the parameters of our model to do well on the training data. (We may “overfit” the training data.)</li>
-<li>Generally, the higher the ratio of parameters <span class="math inline">\(p\)</span> to number of samples <span class="math inline">\(n\)</span>, the more we expect <em>overfitting</em> to play a role. However, for these data we don’t expect this to be a problem, since <span class="math inline">\(p = 2\)</span> and <span class="math inline">\(n = 10,000.\)</span></li>
+<li>The reason is that we specifically adjust the parameters of our model to do well on the training data. Thus, we may <strong>overfit</strong> the training data.</li>
+<li>Generally, the higher the ratio of parameters <span class="math inline">\(p\)</span> to the number of samples <span class="math inline">\(n\)</span>, the more we expect <em>overfitting</em> to play a role. However, for these data we don’t expect this to be a problem, since <span class="math inline">\(p = 2\)</span> and <span class="math inline">\(n = 10,000.\)</span></li>
 </ul></li>
 <li>Since only <span class="math inline">\(3.33\%\)</span> of the individuals in the training sample defaulted, a simple naive classifier that always predicts “not default” for every person, regardless of his or her credit card balance and student status, will result in an error rate of <span class="math inline">\(3.33\%.\)</span> In other words, the trivial <strong>null classifier</strong> will achieve an error rate that is only a bit higher than the LDA training set error rate.</li>
 </ul>
@@ -742,14 +780,14 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\S
 </div>
 </section>
 </section>
-<section id="classification-errors-of-binary-classifiers" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="classification-errors-of-binary-classifiers">Classification Errors of Binary Classifiers</h3>
+<section id="classification-errors-of-binary-classifiers" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="classification-errors-of-binary-classifiers"><span class="header-section-number">3.4.3</span> Classification Errors of Binary Classifiers</h3>
 <p>Any binary classifier can make two types of errors:</p>
 <ul>
 <li>False Negatives (FN): Predicting “no default” for a person who actually defaults</li>
 <li>False Positives (FP): Predicing “default” for a person who actually does not default</li>
 </ul>
-<p>Depending on the context, both error can have different consequential damages.</p>
+<p>Depending on the context, both errors can have different application/context specific costs.</p>
 <p>A <strong>confusion matrix</strong> shows both types of errors. The upper off-diagonal entry shows the FNs; the lower off-diagonal entry shows the FPs. A perfect confusion matrix has zeros in the off-diagonal entries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Confusion matrix</span></span>
@@ -764,36 +802,36 @@ Predicted default status   No  Yes
 </div>
 </div>
 <p><img src="images/Tab_4_4.png" class="img-fluid"></p>
-<p>True/False Positive Predictions:</p>
+<p>Numbers of True/False Positive Predictions:</p>
 <ul>
-<li>LDA predicts that P<span class="math inline">\(^*=104\)</span> people default (<strong>Predicted Positives</strong>, P<span class="math inline">\(^*\)</span>).
+<li>LDA predicts that <span class="math inline">\(P^*=104\)</span> people default, where <span class="math inline">\(P^*\)</span> denotes the number of <strong>Predicted Positives</strong>.
 <ul>
-<li><span class="math inline">\(81\)</span> of these actually default (<strong>True Positives</strong>, TP).</li>
-<li><span class="math inline">\(23\)</span> of these actually do not default (<strong>False Positives</strong>, FP).</li>
+<li><span class="math inline">\(TP=81\)</span> of <span class="math inline">\(P^*=104\)</span> actually default<br>(<span class="math inline">\(TP=\)</span><strong>Number of True Positives</strong>).</li>
+<li><span class="math inline">\(FP=23\)</span> of <span class="math inline">\(P^*=104\)</span> actually do not default<br>(<span class="math inline">\(FP=\)</span><strong>Number of False Positives</strong>).</li>
 </ul></li>
 </ul>
-<p>True/False Negative Predictions:</p>
+<p>Numbers of True/False Negative Predictions:</p>
 <ul>
-<li>LDA predicts that N<span class="math inline">\(^*=9896\)</span> people do not default (<strong>Predicted Negatives</strong>, N<span class="math inline">\(^*\)</span>).
+<li>LDA predicts that <span class="math inline">\(N^*=9896\)</span> people do not default, where <span class="math inline">\(N^*\)</span> denotes the number of <strong>Predicted Negatives</strong>.
 <ul>
-<li><span class="math inline">\(9644\)</span> of these actually do not default (<strong>True Negatives</strong>, TN)</li>
-<li><span class="math inline">\(252\)</span> of these actually default (<strong>FALSE Negatives</strong>, FN)</li>
+<li><span class="math inline">\(TN=9644\)</span> of <span class="math inline">\(N^*=9896\)</span> actually do not default<br> (<span class="math inline">\(TN=\)</span><strong>Number of True Negatives</strong>)</li>
+<li><span class="math inline">\(FN=252\)</span> of <span class="math inline">\(N^*=9896\)</span> actually default<br> (<span class="math inline">\(FN=\)</span><strong>Number of FALSE Negatives</strong>)</li>
 </ul></li>
 </ul>
 <p>True Positive/Negative Rates:</p>
 <ul>
-<li>True Positive Rate (TP/P): <span class="math inline">\((81/333)\cdot 100\%\approx 24.3\%\)</span> <!-- True Positive Rate is also called *sensitivity* --> <!-- $81$ of the $333$ default individuals are correctly labeled by LDA.<br> --></li>
-<li>True Negative Rate (TN/N): <span class="math inline">\((9644/9667)\cdot 100\%\approx 99.8\%\)</span> <!-- $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br> --></li>
+<li>True Positive Rate: <span class="math inline">\(TP/P=(81/333)\cdot 100\%\approx 24.3\%\)</span> <!-- True Positive Rate is also called *sensitivity* --> <!-- $81$ of the $333$ default individuals are correctly labeled by LDA.<br> --></li>
+<li>True Negative Rate: <span class="math inline">\(TN/N=(9644/9667)\cdot 100\%\approx 99.8\%\)</span> <!-- $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br> --></li>
 </ul>
 <p>False Positive/Negative Rates:</p>
 <ul>
-<li>False Positive Rate (FP/N): <span class="math inline">\((23/9667)\cdot 100\%\approx 0.2\%\)</span><br>
+<li>False Positive Rate: <span class="math inline">\(FP/N=(23/9667)\cdot 100\%\approx 0.2\%\)</span><br>
 <!-- $23$ of the $9667$ no default individuals are incorrectly labeled.<br> --> <!-- False Positive Rage equals one minus *specificity* --></li>
-<li>False Negative Rate (FN/P): <span class="math inline">\((252/333)\cdot 100\%\approx 75.7\%\)</span><br>
+<li>False Negative Rate: <span class="math inline">\(FN/P=(252/333)\cdot 100\%\approx 75.7\%\)</span><br>
 <!-- $252$ of the $333$ default individuals are in correctly labeled.<br>  --></li>
 </ul>
 <p>The small False Positive Rate of <span class="math inline">\(0.2\%\)</span> is good since this means that trustworthy “no default” people are rarely labeled as non-trustworthy “default” people.</p>
-<p>However, the high False Negative Rate of <span class="math inline">\(75.7\%\)</span> is problematic for a bank since this means that the bank often does not detect the non-trustworthy “default” people.</p>
+<p>However, the high False Negative Rate of <span class="math inline">\(75.7\%\)</span> is very problematic for a bank since this means that the bank often does not detect the non-trustworthy “default” people.</p>
 <section id="choosing-the-classification-threshold" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="choosing-the-classification-threshold">Choosing the Classification Threshold</h4>
 <p>If a “False Negative Event” costs the bank more than a “False Positive Event” (or vice versa), then the bank will want to adjust the classifying threshold of the classifier.</p>
@@ -828,18 +866,18 @@ Predicted default status   No  Yes
 <p><img src="images/Tab_4_5.png" class="img-fluid"></p>
 <p>Changing the threshold from <span class="math inline">\(0.5\)</span> to <span class="math inline">\(0.2\)</span> …</p>
 <ul>
-<li>… <strong>lowered</strong> the False Negative Rate (FN/P) 😎
+<li>… <strong>lowered</strong> the False Negative Rate (<span class="math inline">\(FN/P\)</span>) 😎
 <ul>
 <li>from <span class="math inline">\(252/333\approx 75.7\%\)</span></li>
 <li>to <span class="math inline">\(138/333\approx 41.4\%\)</span><br>
 </li>
 </ul></li>
-<li>… <strong>increased</strong> the False Positive Rate (FP/N) 😕
+<li>… <strong>increased</strong> the False Positive Rate (<span class="math inline">\(FP/N\)</span>) 😕
 <ul>
 <li>from <span class="math inline">\(23/9667\approx 0.2\%\)</span></li>
 <li>to <span class="math inline">\(235/9667\approx 2.4\%\)</span></li>
 </ul></li>
-<li>… <strong>increased</strong> the Overall Error Rate ((FN+FP)/n) 😕
+<li>… <strong>increased</strong> the Overall Error Rate (<span class="math inline">\((FN+FP)/n\)</span>) 😕
 <ul>
 <li>from <span class="math inline">\((23 + 252)/10000\approx 2.75\%\)</span></li>
 <li>to <span class="math inline">\((235 + 138)/10000\approx 3.73\%\)</span></li>
@@ -854,13 +892,14 @@ Predicted default status   No  Yes
 <p><img src="images/Tab_4_6_and_4_7.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="the-roc-curve" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="the-roc-curve">The ROC curve</h3>
+<section id="the-roc-curve" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="the-roc-curve"><span class="header-section-number">3.4.4</span> The ROC curve</h3>
 <p>The (Receiver Operating Characteristics) <strong>ROC curve</strong> is a popular graphic for displaying the <span class="math display">\[
 \text{TP Rate}=\text{TP/P}\quad \text{(``sensitivity'' or ``power'')}
 \]</span> against the <span class="math display">\[
 \text{FP Rate}=\text{FP/N} \quad \text{(``}1-\text{specificity'' or ``type I error'')}
 \]</span> for all possible threshold values (from zero to one).</p>
+<p>The following <code>R</code>-codes provides a “by hand” implementation of a plot of the ROC curve for LDA applied to the <code>Default</code>-dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Considered thresholds (exclude the trivial 0/1 values)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>thresholds       <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">250</span>)</span>
@@ -964,8 +1003,8 @@ Predicted default status   No  Yes
 </div>
 </div>
 </section>
-<section id="quadratic-discriminant-analysis-qda" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="quadratic-discriminant-analysis-qda"><span class="header-section-number">3.4.3</span> Quadratic Discriminant Analysis (QDA)</h3>
+<section id="quadratic-discriminant-analysis-qda" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="quadratic-discriminant-analysis-qda"><span class="header-section-number">3.4.5</span> Quadratic Discriminant Analysis (QDA)</h3>
 <p>Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form <span class="math display">\[
 X|Y=k \sim N(\mu_k,\Sigma_k),
 \]</span> where <span class="math inline">\(\Sigma_k\)</span> is a <span class="math inline">\((p\times p)\)</span> covariance matrix for the <span class="math inline">\(k\)</span>th class.</p>
@@ -1014,8 +1053,8 @@ X|Y=k \sim N(\mu_k,\Sigma_k),
 </ul>
 <p><img src="images/Fig_4_9.png" class="img-fluid"></p>
 </section>
-<section id="naive-bayes" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="naive-bayes"><span class="header-section-number">3.4.4</span> Naive Bayes</h3>
+<section id="naive-bayes" class="level3" data-number="3.4.6">
+<h3 data-number="3.4.6" class="anchored" data-anchor-id="naive-bayes"><span class="header-section-number">3.4.6</span> Naive Bayes</h3>
 <p>Remember, that Bayes’ theorem states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span class="math display">\[
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
 \]</span></p>

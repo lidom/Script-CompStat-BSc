@@ -428,9 +428,22 @@ Technically, this definition is only correct if $X$ is a *qualitative* random va
 
 **Posterior probability:** Then *Bayes' theorem* states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
-p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)}.
+\begin{align*}
+p_k(x) 
+& = Pr(Y=k|X=x)\\
+& = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\
+& = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\
+& =\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+\end{align*}
 $${#eq-postprob1}
-
+where 
+$$
+\begin{align*}
+Pr(X = x) 
+&= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\
+&= \sum_{l=1}^K \pi_l f_l(x) 
+\end{align*}
+$$
 
 While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ *indirectly* simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
@@ -478,10 +491,32 @@ $$
 $$
 is largest. The function $\delta_k(x)$ is called the **discriminant function**.
 
+::: {.callout-tip icon="false"}
+# Derivation of the discriminant function
+To see this, observe that the largest $p_k(x)$-value across all $k=1,\dots,K$ is determined by the larges numerator in @eq-LDp1, since the denominator does not change with $k.$ 
+
+If a certain value $k=1,\dots,K$ maximizes $p_k(x),$ then the same $k$ maximizes also $\log(p_k(x))$ since the $\log$ is a strictly positive monotonic transformation. 
+
+We can transform the numerator uA $log$-tran Thus, we only need to look at the numerator.
+\begin{align*}
+\log(p_k(x))
+&=\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
+&=\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
+&=\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
+&=\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
+\end{align*} 
+
+Removing all irrelevant terms that anyways do not depend on $k$ leads to the discriminant function $\delta_k(x).$
+:::
+
 
 **Example:**
 
-In the case of only two classes, $K=2$, with equal a priori probabilities $\pi_1=\pi_2\equiv \pi^*$, the Bayes classifier assigns an observation $X=x$ to class $1$ if 
+In the case of only two classes, $K=2$, with equal a priori probabilities 
+$$
+\pi_1=\pi_2\equiv \pi^*,
+$$ 
+the Bayes classifier assigns an observation $X=x$ to class $1$ if 
 $$
 \begin{align*}
 \delta_1(x) & > \delta_2(x)\\
@@ -506,7 +541,7 @@ x
 & > \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
 \end{align*}
 $$
-The Bayes **decision boundary** is the point for which $\delta_1(x)=\delta_2(x)$
+The Bayes **decision boundary** is the point for which $\delta_1(x)=\delta_2(x);$ i.e.,
 $$
 \begin{align*}
 x   
@@ -530,14 +565,19 @@ The two densities $f_1$ and $f_2$ overlap such that for given $X=x$ there is som
 
 In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. In practice, however, these parameters are usually unknown, and thus need to be estimated from the data. 
 
+
+**Summary of LDA for $p=1$:**
+
 The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. The following estimates are used: 
 $$
 \begin{align*}
 \hat\pi_k    & = \frac{n_k}{n}\\
 \hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
-\hat\sigma   & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\
+\hat\sigma   & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2,
 \end{align*}
 $$
+where the variance estimate $\hat\sigma$ pools the predictor $x_i$ values across all groups $k=1,\dots,K.$
+
 The LDA classifier assigns an observation $X=x$ to the class $k$ for which 
 $$
 \hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \log(\hat\pi_k)
@@ -632,8 +672,8 @@ sum(Default$default != ldaPredict_obj$class)/n
 This sounds like a low error rate, but two caveats must be noted:
 
 * Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a **new set of individuals** will default. 
-   * The reason is that we specifically adjust the parameters of our model to do well on the training data. (We may "overfit" the training data.)
-   * Generally, the higher the ratio of parameters $p$ to number of samples $n$, the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
+   * The reason is that we specifically adjust the parameters of our model to do well on the training data. Thus, we may **overfit** the training data.
+   * Generally, the higher the ratio of parameters $p$ to the number of samples $n$, the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
 
 * Since only $3.33\%$ of the individuals in the training sample defaulted, a simple naive classifier that always predicts "not default" for every person, regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
 
@@ -643,15 +683,14 @@ sum(Default$default != rep("No", n))/n
 ```
 
 
-
-### Classification Errors of Binary Classifiers {-}
+### Classification Errors of Binary Classifiers 
 
 Any binary classifier can make two types of errors:
 
 * False Negatives (FN): Predicting "no default" for a person who actually defaults
 * False Positives (FP): Predicing "default" for a person who actually does not default
 
-Depending on the context, both error can have different consequential damages. 
+Depending on the context, both errors can have different application/context specific costs. 
 
 A **confusion matrix** shows both types of errors. The upper off-diagonal entry shows the FNs; the lower off-diagonal entry shows the FPs. A perfect confusion matrix has zeros in the off-diagonal entries.
 
@@ -665,38 +704,39 @@ table(ldaPredict_obj$class, Default$default,
 ![](images/Tab_4_4.png)
 
 
-True/False Positive Predictions:
+Numbers of True/False Positive Predictions:
 
-* LDA predicts that P$^*=104$ people default (**Predicted Positives**, P$^*$). 
-  * $81$ of these actually default (**True Positives**, TP).
-  * $23$ of these actually do not default (**False Positives**, FP).
+* LDA predicts that $P^*=104$ people default, where $P^*$ denotes the number of **Predicted Positives**. 
+  * $TP=81$ of $P^*=104$ actually default</br>($TP=$**Number of True Positives**).
+  * $FP=23$ of $P^*=104$ actually do not default</br>($FP=$**Number of False Positives**).
 
-True/False Negative Predictions:
+Numbers of True/False Negative Predictions:
 
-* LDA predicts that N$^*=9896$ people do not default (**Predicted Negatives**, N$^*$).
-  * $9644$ of these actually do not default (**True Negatives**, TN)
-  * $252$ of these actually default (**FALSE Negatives**, FN)
+* LDA predicts that $N^*=9896$ people do not default, where $N^*$ denotes the number of **Predicted Negatives**.
+  * $TN=9644$ of $N^*=9896$ actually do not default</br> 
+  ($TN=$**Number of True Negatives**)
+  * $FN=252$ of $N^*=9896$ actually default</br> 
+  ($FN=$**Number of FALSE Negatives**)
 
 True Positive/Negative Rates:
 
-*   True Positive Rate (TP/P): $(81/333)\cdot 100\%\approx 24.3\%$
+*   True Positive Rate: $TP/P=(81/333)\cdot 100\%\approx 24.3\%$
 <!-- True Positive Rate is also called *sensitivity* -->
 <!-- $81$ of the $333$ default individuals are correctly labeled by LDA.<br> -->
-* True Negative Rate (TN/N): $(9644/9667)\cdot 100\%\approx 99.8\%$
+* True Negative Rate: $TN/N=(9644/9667)\cdot 100\%\approx 99.8\%$
 <!-- $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br> -->
 
 False Positive/Negative Rates:
 
-* False Positive Rate (FP/N): $(23/9667)\cdot 100\%\approx 0.2\%$  
+* False Positive Rate: $FP/N=(23/9667)\cdot 100\%\approx 0.2\%$  
 <!-- $23$ of the $9667$ no default individuals are incorrectly labeled.<br> -->
 <!-- False Positive Rage equals one minus *specificity* -->
-* False Negative Rate (FN/P): $(252/333)\cdot 100\%\approx 75.7\%$  
+* False Negative Rate: $FN/P=(252/333)\cdot 100\%\approx 75.7\%$  
 <!-- $252$ of the $333$ default individuals are in correctly labeled.<br>  -->
   
 The small False Positive Rate of $0.2\%$ is good since this means that trustworthy "no default" people are rarely labeled as non-trustworthy "default" people. 
 
-However, the high False Negative Rate of $75.7\%$ is problematic for a bank since this means that the bank often does not detect the non-trustworthy "default" people. 
-
+However, the high False Negative Rate of $75.7\%$ is very problematic for a bank since this means that the bank often does not detect the non-trustworthy "default" people. 
 
 #### Choosing the Classification Threshold {-}
 
@@ -739,13 +779,13 @@ table(PredictedDefault, Default$default,
 
 Changing the threshold from $0.5$ to $0.2$ ...
 
-* ... **lowered** the False Negative Rate (FN/P) 😎
+* ... **lowered** the False Negative Rate ($FN/P$) 😎
    * from $252/333\approx 75.7\%$ 
    * to $138/333\approx 41.4\%$  
-* ... **increased** the False Positive Rate (FP/N) 😕
+* ... **increased** the False Positive Rate ($FP/N$) 😕
    * from $23/9667\approx 0.2\%$ 
    * to $235/9667\approx 2.4\%$
-* ... **increased** the Overall Error Rate ((FN+FP)/n) 😕
+* ... **increased** the Overall Error Rate ($(FN+FP)/n$) 😕
    * from $(23 + 252)/10000\approx 2.75\%$ 
    * to $(235 + 138)/10000\approx 3.73\%$
 
@@ -761,7 +801,7 @@ Table 4.6 and 4.7 summarize the different classification performance measures.
 ![](images/Tab_4_6_and_4_7.png)
 
 
-### The ROC curve {-}
+### The ROC curve 
 
 
 The (Receiver Operating Characteristics) **ROC curve** is a popular graphic for displaying the 
@@ -774,7 +814,7 @@ $$
 $$ 
 for all possible threshold values (from zero to one). 
 
-
+The following `R`-codes provides a "by hand" implementation of a plot of the ROC curve for LDA applied to the `Default`-dataset.
 ```{r}
 #| label: fig-ROC
 #| fig-cap: The ROC curve traces out two types of error as we vary the threshold value for the posterior probability of default. The actual thresholds are often not shown. Here, however, we show them using a color code from yellow [threshold = 1] to purple [threshold = 0]. The ideal ROC curve hugs the top left corner, indicating a high true positive rate and a low false positive rate. The dotted line represents the "no information" classifier; this is what we would expect if student status and credit card balance are not associated with probability of default.
