@@ -636,11 +636,10 @@ Derivation of the discriminant function
 <p>To see this, observe that the largest <span class="math inline">\(p_k(x)\)</span>-value across all <span class="math inline">\(k=1,\dots,K\)</span> is determined by the larges numerator in <a href="#eq-LDp1">Equation&nbsp;<span>3.5</span></a>, since the denominator does not change with <span class="math inline">\(k.\)</span> Thus, we only need to look at the numerator.</p>
 <p>Moreover, if a certain value <span class="math inline">\(k=1,\dots,K\)</span> maximizes <span class="math inline">\(p_k(x),\)</span> then the same <span class="math inline">\(k\)</span> maximizes also <span class="math inline">\(\log(p_k(x))\)</span> since the <span class="math inline">\(\log\)</span>-function is a strictly monotonic increasing formation.</p>
 <p>Thus we can simply look at the logarithm of the numerator: <span class="math display">\[\begin{align*}
-\log(p_k(x))
-&amp;=\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
-&amp;=\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
-&amp;=\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
-&amp;=\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
+&amp;\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
+=&amp;\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
+=&amp;\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
+=&amp;\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
 \end{align*}\]</span></p>
 <p>Removing all irrelevant terms that anyways do not depend on <span class="math inline">\(k\)</span> leads to the discriminant function <span class="math inline">\(\delta_k(x).\)</span></p>
 </div>
@@ -696,7 +695,7 @@ x
 \begin{align*}
 \hat\pi_k    &amp; = \frac{n_k}{n}\\
 \hat\mu_k    &amp; = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
-\hat\sigma   &amp; = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2,
+\hat{\sigma}^2 &amp; = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2,
 \end{align*}
 \]</span> where the variance estimate <span class="math inline">\(\hat\sigma\)</span> pools the predictor <span class="math inline">\(x_i\)</span> values across all groups <span class="math inline">\(k=1,\dots,K.\)</span></p>
 <p>The LDA classifier assigns an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
@@ -719,15 +718,44 @@ X=(X_1,\dots,X_p)\quad \text{with}\quad p&gt;1
 <li>Equal <span class="math inline">\((p\times p)\)</span> covariance matrix <span class="math inline">\(\Sigma\)</span> for all classes <span class="math inline">\(k=1,\dots,K\)</span></li>
 </ul>
 <p>That is, a <span class="math inline">\((p\times 1)\)</span> random vector <span class="math inline">\(X\)</span> of class <span class="math inline">\(k\)</span> is distributed as <span class="math display">\[
-X\sim N\left(\mu_k,\Sigma\right)
+\begin{align*}
+X
+&amp; \sim \mathcal{N}_p\left(\mu_k,\Sigma\right)%\\
+%&amp; \sim \mathcal{N}_p\left(
+%  \left(\begin{matrix}
+%  \mu_{k1}\\
+%  \mu_{k2}\\
+%  \vdots\\
+%  \mu_{kp}
+%  \end{matrix}\right),
+%  \left(\begin{matrix}
+%  Var(X_1)    &amp;Cov(X_1,X_2)&amp;\dots  &amp; Cov(X_1,X_p)\\
+%  Cov(X_2,X_1)&amp;Var(X_2)    &amp;\dots  &amp; Cov(X_2,X_p)\\
+%  \vdots      &amp;\ddots      &amp;\ddots &amp; \vdots      \\
+%  Cov(X_p,X_1)&amp;Cov(X_p,X_2)&amp;\dots  &amp; Var(X_p)
+%  \end{matrix}\right)
+%  \right)
+\end{align*}
 \]</span> with class-specific <span class="math inline">\((p\times 1)\)</span> mean vector <span class="math inline">\(\mu_k\)</span>, <span class="math display">\[
-E(X)=\mu_k,
-\]</span> and <span class="math inline">\((p\times p)\)</span> covariance matrix <span class="math display">\[
-Cov(X)=\Sigma
-\]</span> that is common for all classes <span class="math inline">\(k=1,\dots,K.\)</span></p>
-<p>The multivariate Gaussian density for class <span class="math inline">\(k=1,\dots,K\)</span> is defined as <span class="math display">\[
-f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\Sigma^{-1}(x-\mu_k)\right)
+E(X|Y=k)=\mu_k=\left(\begin{matrix}
+  \mu_{k1}\\
+  \mu_{k2}\\
+  \vdots\\
+  \mu_{kp}
+  \end{matrix}\right),
+\]</span> and <span class="math inline">\((p\times p)\)</span> covariance matrix that is common for all classes <span class="math inline">\(k=1,\dots,K,\)</span> i.e. <span class="math display">\[
+Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
+\]</span> where <span class="math display">\[
+Cov(X)=  \left(\begin{matrix}
+  Var(X_1)    &amp;Cov(X_1,X_2)&amp;\dots  &amp; Cov(X_1,X_p)\\
+  Cov(X_2,X_1)&amp;Var(X_2)    &amp;\dots  &amp; Cov(X_2,X_p)\\
+  \vdots      &amp;\vdots      &amp;\ddots &amp; \vdots      \\
+  Cov(X_p,X_1)&amp;Cov(X_p,X_2)&amp;\dots  &amp; Var(X_p)
+  \end{matrix}\right)
 \]</span></p>
+<p>The multivariate Gaussian density for class <span class="math inline">\(k=1,\dots,K\)</span> is defined as <span class="math display">\[
+f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\Sigma^{-1}(x-\mu_k)\right),
+\]</span> where <span class="math inline">\(|\Sigma|\)</span> denotes the determinant of the <span class="math inline">\((p\times p)\)</span> matrix <span class="math inline">\(\Sigma.\)</span></p>
 <p>Figure 4.5 shows the case of bivariate (<span class="math inline">\(p=2\)</span>) Gaussian distribution predictors.</p>
 <p><img src="images/Fig_4_5.png" class="img-fluid"></p>
 <p>Under the multivariate normality assumption (with common covariance matrix and group-specific mean vectors) the Bayes classifier assigns an multivariate observation <span class="math inline">\(X=x\)</span> to the class for which the discriminant function <span id="eq-LDA_mult"><span class="math display">\[
