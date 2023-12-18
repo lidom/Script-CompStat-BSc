@@ -889,7 +889,7 @@ The commonly reported summary statistic for the ROC curve is the "Area Under the
  * Ideal AUC-value is AUC$=1.$
  * A "no information" classifier has AUC$=0.5.$
 
-The R package `ROCR` contains function for computing and plotting the ROC curve and the AUC value. 
+The R package `ROCR` contains functions for computing and plotting the ROC curve and for computing the AUC value. 
 ```{r}
 ## install.packages("ROCR")
 library("ROCR")
@@ -936,9 +936,9 @@ $$
 $$
 is largest.
 
-This classifier is called *quadratic* discriminant analysis since the quantity $x$ appears as a quadratic function. 
+This classifier is called *quadratic* discriminant analysis since the predictor-value $x$ appears as a quadratic function. 
 
-QDA has much more parameters than LDA and is thus a much more flexible  classifier than LDA:
+QDA has **much** more parameters than LDA and is thus a much more flexible  classifier than LDA:
 
 * LDA requires 
    * $K$ a-priori probability estimates 

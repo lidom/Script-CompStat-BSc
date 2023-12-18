@@ -976,7 +976,7 @@ Predicted default status   No  Yes
 <li>Ideal AUC-value is AUC<span class="math inline">\(=1.\)</span></li>
 <li>A “no information” classifier has AUC<span class="math inline">\(=0.5.\)</span></li>
 </ul>
-<p>The R package <code>ROCR</code> contains function for computing and plotting the ROC curve and the AUC value.</p>
+<p>The R package <code>ROCR</code> contains functions for computing and plotting the ROC curve and for computing the AUC value.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages("ROCR")</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ROCR"</span>)</span>
@@ -1021,8 +1021,8 @@ X|Y=k \sim N(\mu_k,\Sigma_k),
    + \log(\pi_k)
 \end{align*}
 \]</span> is largest.</p>
-<p>This classifier is called <em>quadratic</em> discriminant analysis since the quantity <span class="math inline">\(x\)</span> appears as a quadratic function.</p>
-<p>QDA has much more parameters than LDA and is thus a much more flexible classifier than LDA:</p>
+<p>This classifier is called <em>quadratic</em> discriminant analysis since the predictor-value <span class="math inline">\(x\)</span> appears as a quadratic function.</p>
+<p>QDA has <strong>much</strong> more parameters than LDA and is thus a much more flexible classifier than LDA:</p>
 <ul>
 <li>LDA requires
 <ul>
