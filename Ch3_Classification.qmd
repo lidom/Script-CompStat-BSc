@@ -638,12 +638,15 @@ Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
 $$ 
 where 
 $$
-Cov(X)=  \left(\begin{matrix}
+Cov(X)=
+\left(
+  \begin{matrix}
   Var(X_1)    &Cov(X_1,X_2)&\dots  & Cov(X_1,X_p)\\
   Cov(X_2,X_1)&Var(X_2)    &\dots  & Cov(X_2,X_p)\\
   \vdots      &\vdots      &\ddots & \vdots      \\
   Cov(X_p,X_1)&Cov(X_p,X_2)&\dots  & Var(X_p)
-  \end{matrix}\right)
+  \end{matrix}
+\right)
 $$
 
 The multivariate Gaussian density for class $k=1,\dots,K$ is defined as
