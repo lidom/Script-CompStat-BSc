@@ -1039,11 +1039,21 @@ f_{kj}(x),\quad j=1,\dots,p\quad\text{and}\quad k=1,\dots,K
 $$
 we can use ...
 
-* a (univariate) normal distribution assumptions, i.e. $X_j|Y=k \sim N(\mu_{jk},\sigma_{jk})$
+* a univariate parametric distribution assumption. Examples: 
+   * A normal distribution $X_j|Y=k \sim N(\mu_{jk},\sigma_{jk}).$ 
+   * Alternative parametric distributions: Exponential, $\chi^2$-distribution, Gamma distribution, etc. 
 * non-parametric kernel density estimation (for quantitative predictors) using the `R`-function `density()`
-* simple relative frequency (for qualitative predictors),
+* simple relative frequency (for qualitative predictors)
+   * Example: Student status $x\in\{\texttt{Yes},\texttt{No}\}$
+   $$
+   \hat{f}_{kj}(x)=\left\{
+    \begin{matrix}
+    \frac{\#\text{students in group $k$}}{n_k}&\text{if }\; x=\texttt{Yes}\\
+    1-\frac{\#\text{students in group $k$}}{n_k}&\text{if }\; x=\texttt{No}
+    \end{matrix}\right.
+   $$
 
-where the different estimation approaches can differ for each $j=1,\dots,p.$
+The different estimation approaches can differ for each $j=1,\dots,p.$
 
 <!-- 
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
@@ -1319,15 +1329,17 @@ However, the confusion matrix shows that on days when logistic regression predic
 ## Test data positive predictive value TP/P*
 round( 106 / (106 + 76), 2) 
 ```
-This suggests a possible trading strategy of buying on days when the model predicts an increasing market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
+This suggests a possible trading strategy of buying on days when the logistic regression model predicts an *increasing* market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
 
 
 Suppose that we want to predict the returns associated with particular values of `Lag1` and `Lag2`. In particular, we want to predict `Direction` on a day when `Lag1` and `Lag2` equal $1.2$ and $1.1$, respectively, and  on a day when they equal $1.5$ and $-0.8.$ We do this using the `predict()` function.
 
 ```{r chunk13}
+## Caution: You need to use the same variables names 
+## here "Lag1" and "Lag2" as used when computing 'glm.fits'
 predict(glm.fits,
         newdata = data.frame(Lag1 = c(1.2,  1.5),  
-                         Lag2 = c(1.1, -0.8)),
+                             Lag2 = c(1.1, -0.8)),
         type    = "response")
 ```
 
@@ -1390,20 +1402,27 @@ sum(lda.pred$posterior[, 1] >= .5)
 sum(lda.pred$posterior[, 1] < .5)
 ```
 
-Notice that the posterior probability output by the model corresponds to the probability that the market will *decrease*:
+The first column in `lda.pred$posterior` contains the posterior probabilities that the market will *decrease* and the second column contains the posterior probabilities that the market will *increase*: 
 
 ```{r chunk18}
 lda.pred$posterior[1:20, 1]
+lda.pred$posterior[1:20, 2]
 lda.class[1:20]
 ```
 
-If we wanted to use a posterior probability threshold other than $50\%$ in order to make predictions, then we could easily do so. For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability for a decrease is at least $90\%.$
+If we wanted to use a posterior probability threshold other than $50\%$ in order to make predictions, then we could easily do so. 
+
+For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability for a decrease is at least $90\%.$
 
 ```{r chunk19}
 sum(lda.pred$posterior[, 1] > .9)
 ```
 
-No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was $52.02\%.$
+No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was $52.02\%:$
+
+```{r}
+max(lda.pred$posterior[, 1])
+```
 
 ### Quadratic Discriminant Analysis
 
@@ -1429,7 +1448,7 @@ This  suggests that the quadratic form assumed by QDA may capture the true relat
 
 ### Naive Bayes
 
-Next, we fit a naive Bayes model to the `Smarket` data. Naive Bayes is implemented in `R` using the `naiveBayes()` function, which is part of the `e1071` library. The syntax is identical to that of `lda()` and `qda()`. By default, this implementation of the naive Bayes classifier models each quantitative feature using a univariate Gaussian distribution. However, a kernel density method can also be used to estimate the distributions.
+Next, we fit a naive Bayes model to the `Smarket` data. Naive Bayes is implemented in `R` using the `naiveBayes()` function, which is part of the `e1071` library. The syntax is identical to that of `lda()` and `qda()`. This rather simple implementation of the naive Bayes classifier models uses a univariate Gaussian distribution for each quantitative predictor. 
 
 ```{r chunk22}
 ## install.packages("e1071") 
@@ -1509,7 +1528,9 @@ mean(knn.pred == Direction_2005)
 
 The results have improved slightly. But increasing $K$ further turns out to provide no further improvements. It appears that for this data, QDA provides the best results of the methods that we have examined so far.
 
-KNN does not perform well on the `Smarket` data, but generally, KNN does often provide impressive results. As an example we will apply the KNN approach to the `Insurance` data set, which is part of the `ISLR2` library. This data set includes $85$ predictors that measure demographic characteristics for $5822$ individuals. The response variable is `Purchase`, which indicates whether or not a given individual purchases a caravan insurance policy. In this data set, only $6\%$ of people purchased caravan  insurance.
+KNN does not perform well on the `Smarket` data, but generally, KNN does often provide impressive results. 
+
+As an example we will apply the KNN approach to the `Insurance` data set, which is part of the `ISLR2` library. This data set includes $85$ predictors that measure demographic characteristics for $5822$ individuals. The response variable is `Purchase`, which indicates whether or not a given individual purchases a caravan insurance policy. In this data set, only $6\%$ of people purchased a caravan  insurance.
 
 
 ```{r chunk29}
