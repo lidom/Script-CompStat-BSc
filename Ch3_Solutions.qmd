@@ -31,8 +31,8 @@ $$
 Suppose we collect data for a group of students in a statistics class with variables 
 
 * $X_1=$`hours studied`,
-* $X_2 =$ `undergrad GPA` (GPA: Grade Point Average), and 
-* $Y =$ `receive an A`. 
+* $X_2 =$`undergrad GPA` (GPA: Grade Point Average), and 
+* $Y =$`receive an A`. 
 
 We fit a logistic regression and produce estimated coefficients:
 
@@ -50,7 +50,7 @@ p(X) = \frac {\exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
 \\
 $$
 
-Thus, the probability of $Y=1$ given $X=[x_1,x_2]$ with $x_1 =40$ (hours) and $x_2=3.5$ (GPA) yields:
+Thus, the probability of $Y=1$ given $X=(x_1,x_2)$ with $x_1 =40$ (hours) and $x_2=3.5$ (GPA) yields:
 
 $$ 
 p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
@@ -66,15 +66,15 @@ Calculations in `R`:
 
 **Answer:**
 
-Finding $x_1$, where $X = [x_1, 3.5]$, such that $p(X) = 0.5$ yields:
+Finding $x_1$, where $X = (x_1, 3.5)$, such that $p(X) = 0.5$ yields:
 
 $$
 \begin{align*}
-0.50 &= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\
-\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow 0.50 &= 0.50 \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow \log(1) &= -2.5 + 0.05\,x_1 \\
+0.50 &= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\[2ex]
+\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow 0.50 &= 0.50 \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow \log(1) &= -2.5 + 0.05\,x_1 \\[2ex]
 \Leftrightarrow x_1 &= 2.5 / 0.05 = 50 
 \end{align*}
 $$

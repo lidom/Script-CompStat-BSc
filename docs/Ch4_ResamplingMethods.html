@@ -93,7 +93,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Ch5_LinModSelectRegul.html" rel="next">
 <link href="./Ch3_Classification.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -185,11 +184,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./Ch4_ResamplingMethods.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch5_LinModSelectRegul.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Model Selection and Regularization</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -199,25 +193,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ch.-5.1-cross-validation" id="toc-ch.-5.1-cross-validation" class="nav-link active" data-scroll-target="#ch.-5.1-cross-validation">(Ch. 5.1) Cross-Validation</a>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link active" data-scroll-target="#cross-validation"><span class="toc-section-number">4.1</span>  Cross-Validation</a>
   <ul class="collapse">
-  <li><a href="#ch.-5.1.1-validation-set-approach" id="toc-ch.-5.1.1-validation-set-approach" class="nav-link" data-scroll-target="#ch.-5.1.1-validation-set-approach">(Ch. 5.1.1) Validation Set Approach</a></li>
-  <li><a href="#ch.-5.1.2-leave-one-out-cross-validation-loocv" id="toc-ch.-5.1.2-leave-one-out-cross-validation-loocv" class="nav-link" data-scroll-target="#ch.-5.1.2-leave-one-out-cross-validation-loocv">(Ch. 5.1.2) Leave-One-Out Cross-Validation (LOOCV)</a></li>
+  <li><a href="#validation-set-approach" id="toc-validation-set-approach" class="nav-link" data-scroll-target="#validation-set-approach"><span class="toc-section-number">4.1.1</span>  Validation Set Approach</a></li>
+  <li><a href="#leave-one-out-cross-validation-loocv" id="toc-leave-one-out-cross-validation-loocv" class="nav-link" data-scroll-target="#leave-one-out-cross-validation-loocv"><span class="toc-section-number">4.1.2</span>  Leave-One-Out Cross-Validation (LOOCV)</a></li>
   </ul></li>
-  <li><a href="#ch.-5.1.3-k-fold-cross-validation" id="toc-ch.-5.1.3-k-fold-cross-validation" class="nav-link" data-scroll-target="#ch.-5.1.3-k-fold-cross-validation">(Ch. 5.1.3) <span class="math inline">\(k\)</span>-Fold Cross-Validation</a>
+  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="toc-section-number">4.2</span>  <span class="math inline">\(k\)</span>-Fold Cross-Validation</a>
   <ul class="collapse">
-  <li><a href="#ch.-5.1.4-bias-variance-trade-off-for-k-fold-cross-validation" id="toc-ch.-5.1.4-bias-variance-trade-off-for-k-fold-cross-validation" class="nav-link" data-scroll-target="#ch.-5.1.4-bias-variance-trade-off-for-k-fold-cross-validation">(Ch. 5.1.4) Bias-Variance Trade-Off for <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
-  <li><a href="#ch.-5.1.5-cross-validation-on-classification-problems" id="toc-ch.-5.1.5-cross-validation-on-classification-problems" class="nav-link" data-scroll-target="#ch.-5.1.5-cross-validation-on-classification-problems">(Ch. 5.1.5) Cross-Validation on Classification Problems</a></li>
+  <li><a href="#bias-variance-trade-off-for-k-fold-cross-validation" id="toc-bias-variance-trade-off-for-k-fold-cross-validation" class="nav-link" data-scroll-target="#bias-variance-trade-off-for-k-fold-cross-validation"><span class="toc-section-number">4.2.1</span>  Bias-Variance Trade-Off for <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+  <li><a href="#cross-validation-on-classification-problems" id="toc-cross-validation-on-classification-problems" class="nav-link" data-scroll-target="#cross-validation-on-classification-problems"><span class="toc-section-number">4.2.2</span>  Cross-Validation on Classification Problems</a></li>
   </ul></li>
-  <li><a href="#ch.-5.2-the-bootstrap" id="toc-ch.-5.2-the-bootstrap" class="nav-link" data-scroll-target="#ch.-5.2-the-bootstrap">(Ch. 5.2) The Bootstrap</a></li>
-  <li><a href="#r-lab-resampling-methods" id="toc-r-lab-resampling-methods" class="nav-link" data-scroll-target="#r-lab-resampling-methods"><span class="toc-section-number">4.1</span>  <code>R</code>-Lab: Resampling Methods</a>
+  <li><a href="#the-bootstrap" id="toc-the-bootstrap" class="nav-link" data-scroll-target="#the-bootstrap"><span class="toc-section-number">4.3</span>  The Bootstrap</a></li>
+  <li><a href="#r-lab-resampling-methods" id="toc-r-lab-resampling-methods" class="nav-link" data-scroll-target="#r-lab-resampling-methods"><span class="toc-section-number">4.4</span>  <code>R</code>-Lab: Resampling Methods</a>
   <ul class="collapse">
-  <li><a href="#the-validation-set-approach" id="toc-the-validation-set-approach" class="nav-link" data-scroll-target="#the-validation-set-approach"><span class="toc-section-number">4.1.1</span>  The Validation Set Approach</a></li>
-  <li><a href="#sec-RLabLOOCV" id="toc-sec-RLabLOOCV" class="nav-link" data-scroll-target="#sec-RLabLOOCV"><span class="toc-section-number">4.1.2</span>  Leave-One-Out Cross-Validation</a></li>
-  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="toc-section-number">4.1.3</span>  <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
-  <li><a href="#the-bootstrap" id="toc-the-bootstrap" class="nav-link" data-scroll-target="#the-bootstrap"><span class="toc-section-number">4.1.4</span>  The Bootstrap</a></li>
+  <li><a href="#the-validation-set-approach" id="toc-the-validation-set-approach" class="nav-link" data-scroll-target="#the-validation-set-approach"><span class="toc-section-number">4.4.1</span>  The Validation Set Approach</a></li>
+  <li><a href="#sec-RLabLOOCV" id="toc-sec-RLabLOOCV" class="nav-link" data-scroll-target="#sec-RLabLOOCV"><span class="toc-section-number">4.4.2</span>  Leave-One-Out Cross-Validation</a></li>
+  <li><a href="#k-fold-cross-validation-1" id="toc-k-fold-cross-validation-1" class="nav-link" data-scroll-target="#k-fold-cross-validation-1"><span class="toc-section-number">4.4.3</span>  <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+  <li><a href="#the-bootstrap-1" id="toc-the-bootstrap-1" class="nav-link" data-scroll-target="#the-bootstrap-1"><span class="toc-section-number">4.4.4</span>  The Bootstrap</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">4.2</span>  Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">4.5</span>  Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -249,11 +243,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Cross-Validation and</li>
 <li>Bootstrap</li>
 </ul>
-<section id="ch.-5.1-cross-validation" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="ch.-5.1-cross-validation">(Ch. 5.1) Cross-Validation</h2>
+<section id="cross-validation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">4.1</span> Cross-Validation</h2>
 <p>In this section, we consider a class of methods that estimate the test error rate by holding out a subset of the training observations from the fitting process, and then applying the statistical learning method to those held out observations.</p>
-<section id="ch.-5.1.1-validation-set-approach" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.1-validation-set-approach">(Ch. 5.1.1) Validation Set Approach</h3>
+<section id="validation-set-approach" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="validation-set-approach"><span class="header-section-number">4.1.1</span> Validation Set Approach</h3>
 <p>The validation set approach randomly divides the available set of observations into two parts:</p>
 <ul>
 <li>a <em>training set</em> and</li>
@@ -299,9 +293,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Train_polreg <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="at">degree =</span> p, <span class="at">raw=</span><span class="cn">TRUE</span>), </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> Auto_Train_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Step 3:</strong> Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set: <span class="math display">\[
-\operatorname{MSE}_{Test}^{ValidationSetApproach}=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2,
-\]</span> where <span class="math inline">\(\hat{f}\)</span> in <span class="math inline">\(\hat{y}_i=\hat{f}(x_i)\)</span> is computed from the training data, but evaluated at the test data <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test}.\)</span></p>
+<p><strong>Step 3:</strong> Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set: <span class="math display">\[\begin{align*}
+\operatorname{MSE}_{Test}^{ValidationSetApproach}
+&amp;=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2\\[2ex]
+&amp;=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}\left(y_i - \hat{f}(x_i)\right)^2
+\end{align*}\]</span> where <span class="math inline">\(\hat{f}\)</span> is computed from the training data, but evaluated at the test data <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test}.\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y_fit_Valid   <span class="ot">&lt;-</span> <span class="fu">predict</span>(Train_polreg, <span class="at">newdata =</span> Auto_Valid_df)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>RSS_Valid     <span class="ot">&lt;-</span> <span class="fu">sum</span>((Auto_Valid_df<span class="sc">$</span>mpg <span class="sc">-</span> y_fit_Valid)<span class="sc">^</span><span class="dv">2</span>)</span>
@@ -388,8 +384,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Leave-One-Out and <span class="math inline">\(k\)</span>-fold <em>Cross-validation</em> are refinements of the validation set approach that addresses these issues.</p>
 </section>
 </section>
-<section id="ch.-5.1.2-leave-one-out-cross-validation-loocv" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.2-leave-one-out-cross-validation-loocv">(Ch. 5.1.2) Leave-One-Out Cross-Validation (LOOCV)</h3>
+<section id="leave-one-out-cross-validation-loocv" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="leave-one-out-cross-validation-loocv"><span class="header-section-number">4.1.2</span> Leave-One-Out Cross-Validation (LOOCV)</h3>
 <p>Like the validation set approach, LOOCV involves splitting the set of validation observations into two parts.</p>
 <p>However, instead of creating two subsets of comparable size, a <strong>single</strong> observation is used for the validation set, and the remaining observations are used for the training set. , i.e.</p>
 <ul>
@@ -409,7 +405,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="images/Fig_5_3.png" class="img-fluid"></p>
 <p>Advantages of CV over the Validation Set approach:</p>
 <ol type="1">
-<li>Lower bias. Since the test MSE estimates are based on training sets with sample sizes <span class="math inline">\(n_{Train}=n-1 \approx n,\)</span>, LOOCV does not overestimate the test error rate as much the validation set approach does.</li>
+<li>Lower bias. Since the test MSE estimates are based on training sets with sample sizes <span class="math display">\[
+n_{Train}=n-1 \approx n
+\]</span> LOOCV does not overestimate the test error rate as much the validation set approach does.</li>
 <li>Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/validation set splits as seen for the validation set approach.</li>
 </ol>
 <p>Codes to implement the LOOCV approach for the <code>Auto</code> data example:</p>
@@ -458,11 +456,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes<br>
 
 <center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.83 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.808 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
-\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2,
+\begin{align*}
+\operatorname{LOOCV}
+&amp;=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2,
+%&amp;=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2
+\end{align*}
 \tag{4.2}\]</span></span> where</p>
 <ul>
 <li><span class="math inline">\(\hat{y}_i\)</span> is the <span class="math inline">\(i\)</span>th fitted value from the <em>original least squares fit,</em> based on the total sample size <span class="math inline">\(n,\)</span> and</li>
@@ -497,7 +499,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.019 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.018 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -511,8 +513,8 @@ However, the fast version takes only
 <p><strong>Caution:</strong> The fast LOOCV <a href="#eq-CVfast">Equation&nbsp;<span>4.2</span></a> does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.</p>
 </section>
 </section>
-<section id="ch.-5.1.3-k-fold-cross-validation" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="ch.-5.1.3-k-fold-cross-validation">(Ch. 5.1.3) <span class="math inline">\(k\)</span>-Fold Cross-Validation</h2>
+<section id="k-fold-cross-validation" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">4.2</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h2>
 <p>An alternative to LOOCV is <span class="math inline">\(k\)</span>-fold CV.</p>
 <p>This approach divides the total index set <span class="math inline">\(\mathcal{I}=\{1,2,\dots,n\}\)</span> of the original data data set into <span class="math inline">\(k\)</span> mutually exclusive subsets (folds) of roughly equal sizes <span class="math display">\[
 \mathcal{I}_1,\,\mathcal{I}_2,\dots,\mathcal{I}_k
@@ -523,8 +525,13 @@ However, the fast version takes only
 <li><strong>Test set:</strong> <span class="math inline">\(\{(x_i,y_i),\;i\in\mathcal{I}_j\}\)</span> with sample size of <span class="math inline">\(n_{Test}\approx n/k\)</span></li>
 </ul>
 <p>Each pair of training and test set allow to compute a estimate of the test error <span class="math display">\[
-\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k.
-\]</span> The <span class="math inline">\(k\)</span>-fold CV estimate is computed by averaging these values <span id="eq-kfoldCV"><span class="math display">\[
+\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k,
+\]</span> where <span class="math display">\[\begin{align*}
+\operatorname{MSE}_j
+&amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
+&amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
+\end{align*}\]</span> with <span class="math inline">\(\hat{f}\)</span> being computed from the training data, but evaluated at the test data.</p>
+<p>The <span class="math inline">\(k\)</span>-fold CV estimate is computed by averaging these values <span id="eq-kfoldCV"><span class="math display">\[
 \operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
 \tag{4.3}\]</span></span></p>
 <p>Figure 5.5 illustrates the data splitting for <span class="math inline">\(k\)</span>-fold CV.</p>
@@ -585,8 +592,8 @@ However, the fast version takes only
 <p><img src="Ch4_ResamplingMethods_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="ch.-5.1.4-bias-variance-trade-off-for-k-fold-cross-validation" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.4-bias-variance-trade-off-for-k-fold-cross-validation">(Ch. 5.1.4) Bias-Variance Trade-Off for <span class="math inline">\(k\)</span>-Fold Cross-Validation</h3>
+<section id="bias-variance-trade-off-for-k-fold-cross-validation" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="bias-variance-trade-off-for-k-fold-cross-validation"><span class="header-section-number">4.2.1</span> Bias-Variance Trade-Off for <span class="math inline">\(k\)</span>-Fold Cross-Validation</h3>
 <p>There is a bias-variance trade-off associated with the choice of <span class="math inline">\(k\)</span> in <span class="math inline">\(k\)</span>-fold CV.</p>
 <!-- A small $k$ leads to biased test MSE estimates (systematic overestimations). -->
 <p><strong>Bias:</strong></p>
@@ -613,11 +620,15 @@ However, the fast version takes only
 <li>For <span class="math inline">\(k=n\)</span> (LOOCV) approximately <span class="math inline">\((n-2)/n=98\%\)</span> of the training data points are equal in each pair of trainings sets.</li>
 </ul></li>
 </ul>
-<p>Thus, the larger <span class="math inline">\(k\)</span> the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates. Since the mean of highly correlated quantities has higher variance than does the mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k&lt;n.\)</span></p>
+<p>Thus, the larger <span class="math inline">\(k\)</span> the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates <span class="math display">\[
+\operatorname{MSE}_1,\dots,\operatorname{MSE}_k.
+\]</span> Since the (sample) mean of highly correlated quantities <span class="math display">\[
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+\]</span> has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k&lt;n.\)</span></p>
 <p><span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k=5\)</span> or <span class="math inline">\(k=10\)</span> is often considered a good compromise balancing these bias and variance issues.</p>
 </section>
-<section id="ch.-5.1.5-cross-validation-on-classification-problems" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="ch.-5.1.5-cross-validation-on-classification-problems">(Ch. 5.1.5) Cross-Validation on Classification Problems</h3>
+<section id="cross-validation-on-classification-problems" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="cross-validation-on-classification-problems"><span class="header-section-number">4.2.2</span> Cross-Validation on Classification Problems</h3>
 <p>Cross-validation can also be a very useful approach in the classification setting when <span class="math inline">\(Y\)</span> is qualitative.</p>
 <p>In the classification setting, the LOOCV error rate takes the form <span class="math display">\[
 \operatorname{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n\operatorname{Err}_i,
@@ -631,8 +642,8 @@ However, the fast version takes only
 <p>Likewise, one can select the tuning parameter <span class="math inline">\(K\)</span> in KNN classification by minimizing the CV error rate across different candidate values for <span class="math inline">\(K.\)</span></p>
 </section>
 </section>
-<section id="ch.-5.2-the-bootstrap" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="ch.-5.2-the-bootstrap">(Ch. 5.2) The Bootstrap</h2>
+<section id="the-bootstrap" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="the-bootstrap"><span class="header-section-number">4.3</span> The Bootstrap</h2>
 <p>The bootstrap is a widely applicable and powerful statistical tool to quantify the uncertainty associated with a given estimator or statistical learning method.</p>
 <section id="illustration-1" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="illustration-1">Illustration</h4>
@@ -787,11 +798,11 @@ The bootstrap estimate of the true standard error equals 0.2523776, i.e.&nbsp;
 </blockquote>
 </section>
 </section>
-<section id="r-lab-resampling-methods" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="r-lab-resampling-methods"><span class="header-section-number">4.1</span> <code>R</code>-Lab: Resampling Methods</h2>
+<section id="r-lab-resampling-methods" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="r-lab-resampling-methods"><span class="header-section-number">4.4</span> <code>R</code>-Lab: Resampling Methods</h2>
 <p>In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.</p>
-<section id="the-validation-set-approach" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="the-validation-set-approach"><span class="header-section-number">4.1.1</span> The Validation Set Approach</h3>
+<section id="the-validation-set-approach" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="the-validation-set-approach"><span class="header-section-number">4.4.1</span> The Validation Set Approach</h3>
 <p>We explore the use of the validation set approach in order to estimate the test error rates that result from fitting various linear models on the <code>Auto</code> data set.</p>
 <p>Before we begin, we use the <code>set.seed()</code> function in order to set a for <code>R</code>’s random number generator, so that the (pseudo) random data splits are reproducible.</p>
 <p>We begin by using the <code>sample()</code> function to split the set of observations into two halves, by selecting a random subset of <span class="math inline">\(196\)</span> observations out of the original <span class="math inline">\(392\)</span> observations. We refer to these observations as the training set.</p>
@@ -869,8 +880,8 @@ The bootstrap estimate of the true standard error equals 0.2523776, i.e.&nbsp;
 <p>Using this split of the observations into a training set and a validation set, we find that the validation set error rates for the models with linear, quadratic, and cubic terms are <span class="math inline">\(25.73\)</span>, <span class="math inline">\(20.43\)</span>, and <span class="math inline">\(20.39\)</span>, respectively.</p>
 <p>These results are consistent with our previous findings: a model that predicts <code>mpg</code> using a quadratic function of <code>horsepower</code> performs better than a model that involves only a linear function of <code>horsepower</code>, and there is little evidence that a model that uses a cubic function of <code>horsepower</code> performance substantially better.</p>
 </section>
-<section id="sec-RLabLOOCV" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="sec-RLabLOOCV"><span class="header-section-number">4.1.2</span> Leave-One-Out Cross-Validation</h3>
+<section id="sec-RLabLOOCV" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="sec-RLabLOOCV"><span class="header-section-number">4.4.2</span> Leave-One-Out Cross-Validation</h3>
 <p>The LOOCV estimate can be automatically computed for any generalized linear model using the <code>glm()</code> and <code>cv.glm()</code> functions. In the lab for Chapter 4, we used the <code>glm()</code> function to perform logistic regression by passing in the <code>family = "binomial"</code> argument. But if we use <code>glm()</code> to fit a model without passing in the <code>family</code> argument, then it performs linear regression, just like the <code>lm()</code> function. So for instance,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(mpg <span class="sc">~</span> horsepower, <span class="at">data =</span> Auto)</span>
@@ -918,8 +929,8 @@ The bootstrap estimate of the true standard error equals 0.2523776, i.e.&nbsp;
 </div>
 <p>We see a sharp drop in the estimated test MSE between the linear and quadratic fits, but then no clear improvement from using higher-order polynomials.</p>
 </section>
-<section id="k-fold-cross-validation" class="level3" data-number="4.1.3">
-<h3 data-number="4.1.3" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">4.1.3</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h3>
+<section id="k-fold-cross-validation-1" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="k-fold-cross-validation-1"><span class="header-section-number">4.4.3</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h3>
 <p>The <code>cv.glm()</code> function can also be used to implement <span class="math inline">\(k\)</span>-fold CV. Below we use <span class="math inline">\(k=10\)</span>, a common choice for <span class="math inline">\(k\)</span>, on the <code>Auto</code> data set. We once again set a random seed and initialize a vector in which we will store the CV errors corresponding to the polynomial fits of orders one to ten.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
@@ -939,13 +950,13 @@ The bootstrap estimate of the true standard error equals 0.2523776, i.e.&nbsp;
 <p>We still see little evidence that using cubic or higher-order polynomial terms leads to lower test error than simply using a quadratic fit.</p>
 <p>Notice that the computation time is shorter than that of LOOCV.</p>
 <p>(In principle, the computation time for LOOCV for a least squares linear model should be faster than for <span class="math inline">\(k\)</span>-fold CV, due to the availability of the formula <a href="#eq-CVfast">Equation&nbsp;<span>4.2</span></a> for LOOCV; however, unfortunately the <code>cv.glm()</code> function does not make use of this formula.)</p>
-<p>We saw in <a href="#sec-RLabLOOCV"><span>Section&nbsp;4.1.2</span></a> that the two numbers associated with <code>delta</code> are essentially the same when LOOCV is performed. When we instead perform <span class="math inline">\(k\)</span>-fold CV, then the two numbers associated with <code>delta</code> differ slightly. The first number is the standard <span class="math inline">\(k\)</span>-fold CV estimate, as in <a href="#eq-kfoldCV">Equation&nbsp;<span>4.3</span></a>. The second is a bias-corrected version. On this data set, however, the two estimates are very similar to each other.</p>
+<p>We saw in <a href="#sec-RLabLOOCV"><span>Section&nbsp;4.4.2</span></a> that the two numbers associated with <code>delta</code> are essentially the same when LOOCV is performed. When we instead perform <span class="math inline">\(k\)</span>-fold CV, then the two numbers associated with <code>delta</code> differ slightly. The first number is the standard <span class="math inline">\(k\)</span>-fold CV estimate, as in <a href="#eq-kfoldCV">Equation&nbsp;<span>4.3</span></a>. The second is a bias-corrected version. On this data set, however, the two estimates are very similar to each other.</p>
 </section>
-<section id="the-bootstrap" class="level3" data-number="4.1.4">
-<h3 data-number="4.1.4" class="anchored" data-anchor-id="the-bootstrap"><span class="header-section-number">4.1.4</span> The Bootstrap</h3>
+<section id="the-bootstrap-1" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="the-bootstrap-1"><span class="header-section-number">4.4.4</span> The Bootstrap</h3>
 <p>We illustrate the use of the bootstrap revisiting the portfolio choice example from above, as well as on an example involving estimating the accuracy of the linear regression model on the <code>Auto</code> data set.</p>
-<section id="estimating-the-accuracy-of-a-statistic-of-interest" class="level4" data-number="4.1.4.1">
-<h4 data-number="4.1.4.1" class="anchored" data-anchor-id="estimating-the-accuracy-of-a-statistic-of-interest"><span class="header-section-number">4.1.4.1</span> Estimating the Accuracy of a Statistic of Interest</h4>
+<section id="estimating-the-accuracy-of-a-statistic-of-interest" class="level4" data-number="4.4.4.1">
+<h4 data-number="4.4.4.1" class="anchored" data-anchor-id="estimating-the-accuracy-of-a-statistic-of-interest"><span class="header-section-number">4.4.4.1</span> Estimating the Accuracy of a Statistic of Interest</h4>
 <p>One of the great advantages of the bootstrap approach is that it can be applied in almost all situations. No complicated mathematical calculations are required. Performing a bootstrap analysis in <code>R</code> entails only two steps:</p>
 <ul>
 <li>First, we must create a function that computes the statistic of interest.</li>
@@ -1000,8 +1011,8 @@ t1* 0.5758321 0.0007959475  0.08969074</code></pre>
 </div>
 <p>The final output shows that using the original data, <span class="math inline">\(\hat{\alpha}=0.5758\)</span>, and that the bootstrap estimate for <span class="math inline">\(\operatorname{SE}(\hat{\alpha})\)</span> is <span class="math inline">\(0.0897\)</span>.</p>
 </section>
-<section id="estimating-the-accuracy-of-a-linear-regression-model" class="level4" data-number="4.1.4.2">
-<h4 data-number="4.1.4.2" class="anchored" data-anchor-id="estimating-the-accuracy-of-a-linear-regression-model"><span class="header-section-number">4.1.4.2</span> Estimating the Accuracy of a Linear Regression Model</h4>
+<section id="estimating-the-accuracy-of-a-linear-regression-model" class="level4" data-number="4.4.4.2">
+<h4 data-number="4.4.4.2" class="anchored" data-anchor-id="estimating-the-accuracy-of-a-linear-regression-model"><span class="header-section-number">4.4.4.2</span> Estimating the Accuracy of a Linear Regression Model</h4>
 <p>The bootstrap approach can be used to assess the variability of the coefficient estimates and predictions from a statistical learning method. Here we use the bootstrap approach in order to assess the variability of the estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the intercept and slope terms for the linear regression model that uses <code>horsepower</code> to predict <code>mpg</code> in the <code>Auto</code> data set. We will compare the estimates obtained using the bootstrap to those obtained using the formulas for <span class="math inline">\({\rm SE}(\hat{\beta}_0)\)</span> and <span class="math inline">\({\rm SE}(\hat{\beta}_1)\)</span> described in Chapter 3.1.2.</p>
 <p>We first create a simple function, <code>boot_fn()</code>, which takes in the <code>Auto</code> data set as well as a set of indices for the observations, and returns the intercept and slope estimates for the linear regression model. We then apply this function to the full set of <span class="math inline">\(392\)</span> observations in order to compute the estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> on the entire data set using the usual linear regression coefficient estimate formulas from Chapter 3.</p>
 <div class="cell">
@@ -1120,8 +1131,8 @@ I(horsepower^2)  0.001230536 0.0001220759  10.08009  2.196340e-21</code></pre>
 </section>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.2</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.5</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 5 in our course textbook:</p>
 <ul>
 <li>Exercise 3</li>
@@ -1241,9 +1252,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch5_LinModSelectRegul.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Model Selection and Regularization</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

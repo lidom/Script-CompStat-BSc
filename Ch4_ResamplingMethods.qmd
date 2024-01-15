@@ -12,13 +12,13 @@ In the following, we consider the resampling methods:
 * Bootstrap 
 
 
-## (Ch. 5.1) Cross-Validation {-}
+## Cross-Validation
 
 In this section, we consider a class of methods that estimate the
 test error rate by holding out a subset of the training observations from the fitting process, and then applying the statistical learning method to those held out observations.
 
 
-### (Ch. 5.1.1) Validation Set Approach {-}
+### Validation Set Approach
 
 The validation set approach randomly divides the available set of observations into two parts: 
 
@@ -79,10 +79,12 @@ Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE),
 ```
 
 **Step 3:** Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set:
-$$
-\operatorname{MSE}_{Test}^{ValidationSetApproach}=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2,
-$$
-where $\hat{f}$ in $\hat{y}_i=\hat{f}(x_i)$ is computed from the training data, but evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test}.$
+\begin{align*}
+\operatorname{MSE}_{Test}^{ValidationSetApproach}
+&=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2\\[2ex]
+&=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}\left(y_i - \hat{f}(x_i)\right)^2
+\end{align*}
+where $\hat{f}$ is computed from the training data, but evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test}.$
 
 ```{r}
 y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
@@ -166,7 +168,7 @@ A further serious problem with the validation set approach is that the evaluated
 
 Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation set approach that addresses these issues. 
 
-### (Ch. 5.1.2) Leave-One-Out Cross-Validation (LOOCV) {-}
+### Leave-One-Out Cross-Validation (LOOCV) 
 
 Like the validation set approach, LOOCV involves splitting the set of validation observations into two parts. 
 
@@ -198,7 +200,11 @@ Figure 5.3 shows schematically the leave-one-out data splitting approach.
 
 Advantages of CV over the Validation Set approach: 
 
-1. Lower bias. Since the test MSE estimates are based on training sets with sample sizes $n_{Train}=n-1 \approx n,$, LOOCV does not overestimate the test error rate as much the validation set approach does. 
+1. Lower bias. Since the test MSE estimates are based on training sets with sample sizes 
+$$
+n_{Train}=n-1 \approx n
+$$ 
+LOOCV does not overestimate the test error rate as much the validation set approach does. 
 2. Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/validation set splits as seen for the validation set approach.
 
 Codes to implement the LOOCV approach for the `Auto` data example: 
@@ -249,7 +255,11 @@ for the computations which is quite long.
 
 Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula
 $$
-\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2,
+\begin{align*}
+\operatorname{LOOCV}
+&=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2,
+%&=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\left(\frac{y_i - \hat{y}_i}{1-h_i}\right)^2
+\end{align*}
 $${#eq-CVfast} 
 where 
 
@@ -303,7 +313,7 @@ and any statistical prediction method discussed in the lecture or in our textboo
 
 **Caution:** The fast LOOCV @eq-CVfast does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.  
 
-## (Ch. 5.1.3) $k$-Fold Cross-Validation {-}
+## $k$-Fold Cross-Validation
 
 An alternative to LOOCV is $k$-fold CV. 
 
@@ -320,8 +330,16 @@ These $k$ index sets allow us construct different training and test sets for eac
 
 Each pair of training and test set allow to compute a estimate of the test error
 $$
-\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k.
+\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k,
 $$
+where
+\begin{align*}
+\operatorname{MSE}_j
+&=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
+&=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
+\end{align*}
+with $\hat{f}$ being computed from the training data, but evaluated at the test data.  
+
 The $k$-fold CV estimate is computed by averaging these values
 $$
 \operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
@@ -387,7 +405,7 @@ points(y = CV_kfold[which.min(CV_kfold)],
 ```
 
 
-### (Ch. 5.1.4) Bias-Variance Trade-Off for $k$-Fold Cross-Validation {-}
+### Bias-Variance Trade-Off for $k$-Fold Cross-Validation
 
 There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold CV.
 
@@ -417,11 +435,19 @@ There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold
   * For $k=5$ ($k$-fold CV) approximately $(k-2)/k=(3/5)=60\%$ of the training data points are equal in each pair of training sets.
   * For $k=n$ (LOOCV) approximately $(n-2)/n=98\%$ of the training data points are equal in each pair of trainings sets. 
 
-Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates. Since the mean of highly correlated quantities has higher variance than does the mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
+Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates
+$$
+\operatorname{MSE}_1,\dots,\operatorname{MSE}_k.
+$$
+Since the (sample) mean of highly correlated quantities 
+$$
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+$$
+has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
 
 $k$-fold CV with $k=5$ or $k=10$ is often considered a good compromise balancing these bias and variance issues. 
 
-### (Ch. 5.1.5) Cross-Validation on Classification Problems {-}
+### Cross-Validation on Classification Problems
 
 Cross-validation can also be a very useful approach in the classification setting when $Y$ is qualitative.
 
@@ -446,7 +472,7 @@ by selecting that polynomial degree $d$ that minimizes the CV error rate.
 Likewise, one can select the tuning parameter $K$ in KNN classification by minimizing the CV error rate across different candidate values for $K.$
 
 
-## (Ch. 5.2) The Bootstrap {-}
+## The Bootstrap
 
 The bootstrap is a widely applicable and powerful statistical tool to quantify the uncertainty associated with a given estimator or statistical learning method.
 
