@@ -26,13 +26,12 @@ The **validation set** approach is conceptually simple and easily implemented as
 
 **LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size $(n-1\approx n).$
 
+<!-- 
 ### Exercise 4 {-}
 
 Suppose that we use some statistical learning method to make a prediction for the response $Y$ for a *particular* value of the predictor $X$. Carefully describe how we might estimate the standard deviation of our prediction.
 
 **Answer:**
-
-<!-- If we suppose using some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$  -->
 
 We can estimate the standard deviation of our prediction by using the bootstrap approach. 
 
@@ -44,7 +43,8 @@ $$
 Using these bootstrap predictions we can compute the standard deviation of our prediction by computing 
 $$
 \sqrt{\frac{1}{B}\sum^B_{b=1}\left(\hat{f}^*_b(X)-\left(\frac{1}{B}\sum_{r=1}^B\hat{f}^*_r(X)\right)\right)^2}.
-$$
+$$ 
+-->
 
 
 ### Exercise 5 {-}
@@ -162,6 +162,7 @@ mean(glm.pred != Default[-train, ]$default)
 
 The test error rate is 2.6%. Thus adding the `student` dummy variable to our specification doesn't appear to reduce the test error rate.
 
+<!-- 
 
 ### Exercise 6 {-}
 
@@ -234,6 +235,7 @@ boot(data = Default, statistic = boot_fn, R = 100)
 * Estimated standard error (bootstrap version) of the parameter estimator `balance`: $2.226\cdot 10^{-04}$
   * The bootstrap approach and the standard formula yield essentially equal results. 
 
+-->
 
 ### Exercise 8 {-}
 

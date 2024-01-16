@@ -55,18 +55,18 @@ data("Auto")
 
 n        <- nrow(Auto)    # Sample size
 n_Train  <- 200           # Sample size of training set 
-n_Valid  <- n - n_Train   # Sample size of test/validation set 
+n_Test  <- n - n_Train   # Sample size of test/validation set 
 
 set.seed(1234) 
 
 ## Index-Sets for selecting the training and validation sets
 I_Train  <- sample(x = 1:n, size = n_Train, replace = FALSE)
-I_Valid  <- c(1:n)[-I_Train]
+I_Test  <- c(1:n)[-I_Train]
 
-## Trainingsdaten 
+## Training data
 Auto_Train_df <- Auto[I_Train, ]
-## Validierungsdaten 
-Auto_Valid_df <- Auto[I_Valid, ]
+## Testing (validation) data 
+Auto_Test_df <- Auto[I_Test, ]
 ```
 
 
@@ -87,16 +87,16 @@ Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE),
 where $\hat{f}$ is computed from the training data, but evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test}.$
 
 ```{r}
-y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
-RSS_Valid     <- sum((Auto_Valid_df$mpg - y_fit_Valid)^2)
-MSE           <- RSS_Valid / n_Valid
+y_fit_Test   <- predict(Train_polreg, newdata = Auto_Test_df)
+RSS_Test     <- sum((Auto_Test_df$mpg - y_fit_Test)^2)
+MSE           <- RSS_Test / n_Test
 ```
 
 Repeating Steps 1-3 for a series of polynomial degrees $p=1,\dots,10$ allows us to search for the polynomial degree with lowest test MSE. 
 
 ```{r}
 #| label: fig-VA1
-#| fig-cap: Validation error estimates for a single split into training and validation data sets. This result suggests that $p=9$ minimizes the test MSE; however, the test MSE values for polynomial degrees from $p=2$ to $p=10$ are all of comparable order of magnitude.
+#| fig-cap: Testing error estimates for a single split into training and testing datasets. This result suggests that $p=9$ minimizes the test MSE; however, the test MSE values for polynomial degrees from $p=2$ to $p=10$ are all of comparable order of magnitude.
 p_max         <- 10
 MSE           <- numeric(p_max)
 for(p in 1:p_max){
@@ -104,10 +104,10 @@ for(p in 1:p_max){
   Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE), 
                      data = Auto_Train_df)
   ## Step 2
-  y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+  y_fit_Test   <- predict(Train_polreg, newdata = Auto_Test_df)
   ## Step 3
-  RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
-  MSE[p]        <- RSS_Valid / n_Valid
+  RSS_Test     <- sum( (Auto_Test_df$mpg - y_fit_Test)^2 )
+  MSE[p]        <- RSS_Test / n_Test
 }
 
 plot(x = 1:p_max, y = MSE, type = "b", 
@@ -124,31 +124,31 @@ points(y = MSE[which.min(MSE)],
 The following code repeats the above computations for multiple random splits of the dataset into training and validation sets:
 ```{r}
 #| label: fig-VA2
-#| fig-cap: Validation error estimates for ten different random splits into training and validation data sets. The polynomial degrees that minimize the test MSE strongly vary across the different random splits.
+#| fig-cap: Test error estimates for ten different random splits into training and test data sets. The polynomial degrees that minimize the test MSE strongly vary across the different random splits.
 ## R = 10 random splits
 R        <- 10
 ## Container for the MSE results
 MSE      <- matrix(NA, R, p_max)
 
 for(r in 1:R){
-  ## Index sets for training and validation sets
+  ## Index sets for training and  sets
   I_Train  <- sample(x = 1:n, size = n_Train, replace = FALSE)
-  I_Valid  <- c(1:n)[-I_Train]
+  I_Test  <- c(1:n)[-I_Train]
 
   ## Training set 
   Auto_Train_df <- Auto[I_Train, ]
-  ## Validation set
-  Auto_Valid_df <- Auto[I_Valid, ]
+  ## Test set
+  Auto_Test_df <- Auto[I_Test, ]
 
   for(p in 1:p_max){
     ## Step 1
     Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
                        data = Auto_Train_df)
     ## Step 2
-    y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+    y_fit_Test   <- predict(Train_polreg, newdata = Auto_Test_df)
     ## Step 3
-    RSS_Valid     <- sum( (Auto_Valid_df$mpg - y_fit_Valid)^2 )
-    MSE[r,p]      <- RSS_Valid / n_Valid
+    RSS_Test     <- sum( (Auto_Test_df$mpg - y_fit_Test)^2 )
+    MSE[r,p]      <- RSS_Test / n_Test
   }
 }
 
@@ -162,7 +162,7 @@ for(r in 1:R){
 ```
 
 
-@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and validation sets. 
+@fig-VA2 shows that the validation set approach can be highly variable. The selected polynomial degrees (minimal test MSE) strongly varies across the different random splits and thus depend on the data included in the test and test sets. 
 
 A further serious problem with the validation set approach is that the evaluated predictions $\hat{y}_i=\hat{f}(x_i)$ are based on estimates $\hat{f}$ computed from the training set, where, however, the training set sample size $n_{Train}$ is typically substantially smaller than the actual sample size $n.$ This leads to **increased (i.e. biased) test MSE values** which do not reflect the actual test MSE values for the total sample size $n.$
 
@@ -170,18 +170,22 @@ Leave-One-Out and $k$-fold *Cross-validation* are refinements of the validation 
 
 ### Leave-One-Out Cross-Validation (LOOCV) 
 
-Like the validation set approach, LOOCV involves splitting the set of validation observations into two parts. 
+Like the validation set approach, LOOCV involves splitting the total dataset into a training and a test part. 
 
-However, instead of creating two subsets of comparable size, a **single** observation is used for the validation set, and the remaining observations are used for the training set. , i.e.
+However, instead of creating two subsets of comparable size, a **single** observation is used for the test  set, and the remaining observations are used for the training set. , i.e.
 
 * **Training set:** $\{(x_1,y_1),\dots,(x_{i-1},y_{i-1}),(x_{i+1},y_{i+1}),\dots,(x_{n},y_{n})\}$ with $n_{Train}=n-1$
 * **Test set:** $\{(x_i,y_i)\}$ with $n_{Test}=1$ 
 
 The $i$th estimate for the test MSE is thus
-$$
-\operatorname{MSE}_i = \left(y_i - \hat{y}_i\right)^2,
-$$
-which is an (approximately) unbiased estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.
+\begin{align*}
+\operatorname{MSE}_i 
+&= \left(y_i - \hat{y}_i\right)^2\\[2ex]
+&= \left(y_i - \hat{f}(x_i)\right)^2,
+\end{align*}
+where $\hat{f}$ is computed from the $n_{Train}=n-1$ training data points, but evaluated at the one (single) test data point $(x_i,y_i).$
+
+Since $\hat{f}$ is essentially based on the total dataset, $\operatorname{MSE}_i$ is an (approximately) unbiased estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.
 
 Repeating this leave-one-out splitting approach for each $i=1,\dots,n,$ produces $n$ many estimates of the test MSE:
 $$
@@ -205,7 +209,7 @@ $$
 n_{Train}=n-1 \approx n
 $$ 
 LOOCV does not overestimate the test error rate as much the validation set approach does. 
-2. Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/validation set splits as seen for the validation set approach.
+2. Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/testing set splits as seen for the validation set approach.
 
 Codes to implement the LOOCV approach for the `Auto` data example: 
 ```{r}
@@ -220,17 +224,17 @@ start_time <- Sys.time()
 for(r in 1:n){
   ## Training set 
   Auto_Train_df <- Auto[-r, ]
-  ## Validation set
-  Auto_Valid_df <- Auto[r, ]
+  ## Testing set
+  Auto_Test_df <- Auto[r, ]
 
   for(p in 1:p_max){
     ## Step 1
     Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
                        data = Auto_Train_df)
     ## Step 2
-    y_fit_Valid   <- predict(Train_polreg, newdata = Auto_Valid_df)
+    y_fit_Test   <- predict(Train_polreg, newdata = Auto_Test_df)
     ## Step 3
-    MSE_i[r,p]    <- (Auto_Valid_df$mpg - y_fit_Valid)^2  
+    MSE_i[r,p]    <- (Auto_Test_df$mpg - y_fit_Test)^2  
   }
 }
 ## Save end time of the loop
@@ -291,7 +295,7 @@ Indeed, both approaches yield the same LOOCV values
 ```{r}
 ## Minimal absolute difference between 
 ## the naive and the fast implementation: 
-round(max(abs(LOOCV - LOOCV_fast)), 3)
+round(max(abs(LOOCV - LOOCV_fast)), 5)
 ```
 However, the fast version takes only 
 <center>
@@ -378,17 +382,17 @@ start_time     <- Sys.time()
 for(j in 1:k){
   ## Training set 
   Auto_Train_df <- Auto[folds != j, ]
-  ## Validation set
-  Auto_Valid_df <- Auto[folds == j, ]
+  ## Testing set
+  Auto_Test_df <- Auto[folds == j, ]
 
   for(p in 1:p_max){
     ## Step 1
     Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw = TRUE), 
                        data = Auto_Train_df)
     ## Step 2
-    y_fit_Valid    <- predict(Train_polreg, newdata = Auto_Valid_df)
+    y_fit_Test    <- predict(Train_polreg, newdata = Auto_Test_df)
     ## Step 3
-    MSE_folds[j,p] <- mean((Auto_Valid_df$mpg - y_fit_Valid)^2)
+    MSE_folds[j,p] <- mean((Auto_Test_df$mpg - y_fit_Test)^2)
   }
 }
 ## Save end time of the loop
@@ -691,7 +695,7 @@ lm.fit <- lm(mpg ~ horsepower,
              subset = train)
 ```
 
-We now  use the `predict()` function to estimate the response for all $392$ observations, and we  use the `mean()` function to calculate the MSE of the $196$ observations in the validation set. Note that the `-train` index below selects  only the observations that are not in the training set.
+We now  use the `predict()` function to estimate the response for all $392$ observations, and we  use the `mean()` function to calculate the MSE of the $196$ observations in the test dataset. Note that the `-train` index below selects  only the observations that are not in the training set.
 
 ```{r chunk3}
 mean((mpg - predict(lm.fit, Auto))[-train]^2)
@@ -715,7 +719,7 @@ lm.fit3 <- lm(mpg ~ poly(horsepower, 3),
 mean((mpg - predict(lm.fit3, Auto))[-train]^2)
 ```
 
-These error rates are $18.72$ and $18.79$, respectively. If we choose a different training set instead, then we will obtain somewhat different errors on the validation set.
+These error rates are $18.72$ and $18.79$, respectively. If we choose a different training set instead, then we will obtain somewhat different errors on the testing set.
 
 ```{r chunk5}
 set.seed(2)
@@ -736,7 +740,7 @@ lm.fit3 <- lm(mpg ~ poly(horsepower, 3), data = Auto,
 mean((mpg - predict(lm.fit3, Auto))[-train]^2)
 ```
 
-Using this split of the observations into a training set and a validation set, we find that the validation set error rates for the models with linear, quadratic, and cubic terms are $25.73$, $20.43$, and $20.39$, respectively.
+Using this split of the observations into a training set and a testing set, we find that the validation set error rates for the models with linear, quadratic, and cubic terms are $25.73$, $20.43$, and $20.39$, respectively.
 
 These results are consistent with our previous findings: a model that predicts `mpg` using a quadratic function of `horsepower` performs better than a model that involves only a linear function of `horsepower`, and there is little evidence that a model that uses a cubic function of `horsepower` performance substantially better.
 
@@ -942,9 +946,9 @@ Since the quadratic model provides a good fit to the data (Figure 3.8 of our tex
 Prepare the following exercises of Chapter 5 in our course textbook: 
 
 - Exercise 3
-- Exercise 4
+<!-- - Exercise 4 -->
 - Exercise 5
-- Exercise 6
+<!-- - Exercise 6 -->
 - Exercise 8
 
-<!-- {{< include Ch4_Solutions.qmd >}} -->
+{{< include Ch4_Solutions.qmd >}}
