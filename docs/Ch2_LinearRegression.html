@@ -185,11 +185,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./Ch4_ResamplingMethods.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch5_LinModSelectRegul.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Model Selection and Regularization</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -822,7 +817,7 @@ Y=X\beta+\epsilon.
 \]</span> the estimator <span class="math inline">\(\hat\beta=(\beta_0,\beta_1,\dots,\beta_p)'\)</span> is selected by minimizing <span class="math display">\[\begin{align*}
 \operatorname{RSS}
 &amp;=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2\\[2ex]
-&amp;=\sum_{i=1}^n\left(y_i-\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}\right)^2.
+&amp;=\sum_{i=1}^n\left(y_i-\left(\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}\right)\right)^2.
 \end{align*}\]</span></p>
 <p><img src="images/Fig_3_4.png" class="img-fluid"></p>
 <p>Since the estimator <span class="math display">\[
@@ -2371,7 +2366,8 @@ Multiple R-squared:  0.7419,    Adjusted R-squared:  0.7393
 F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Following the hierarchical principle: ::: {.cell}</p>
+<p>Following the hierarchical principle:</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>fit.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg<span class="sc">~</span>horsepower<span class="sc">+</span>cylinders<span class="sc">+</span>year<span class="sc">+</span>weight<span class="sc">*</span>displacement, </span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data=</span>Auto)</span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2401,7 +2397,7 @@ Residual standard error: 2.976 on 385 degrees of freedom
 Multiple R-squared:  0.8568,    Adjusted R-squared:  0.8546 
 F-statistic: 384.1 on 6 and 385 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<p>:::</p>
+</div>
 <p>Note that there is a difference between using <code>A:B</code> and <code>A*B</code> when running a regression. While the first includes only the interaction term between the variable <code>A</code> and <code>B</code>, the second one also includes the stand-alone variables <code>A</code> and <code>B</code>.</p>
 <p>Generally, you should follow the hierarchical principle for interaction effects: If we include an interaction in a model, we should also include the main effects, even if the <span class="math inline">\(p\)</span>-values associated with their coefficients are not significant.</p>
 <p><strong>9 f)</strong></p>

@@ -609,7 +609,7 @@ the estimator $\hat\beta=(\beta_0,\beta_1,\dots,\beta_p)'$ is selected by minimi
 \begin{align*}
 \operatorname{RSS}
 &=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2\\[2ex]
-&=\sum_{i=1}^n\left(y_i-\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}\right)^2.
+&=\sum_{i=1}^n\left(y_i-\left(\hat\beta_0 + \hat\beta_1 x_{i1} \dots + \hat\beta_p x_{ip}\right)\right)^2.
 \end{align*}
 
 ![](images/Fig_3_4.png)
