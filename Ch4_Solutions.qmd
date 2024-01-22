@@ -287,14 +287,14 @@ iv. $Y = \beta_0 +\beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \beta_4 X^4 + \epsilon
 **Answers:** 
 
 ```{r}
-# call boot package
+# call boot package (contains the cv.glm() function)
 library(boot)
-
-# create data frame containing the simulated data for X and Y
-Sim_Data <- data.frame(x, y)
 
 #set seed
 set.seed(1)
+
+# create data frame containing the simulated data for X and Y
+Sim_Data <- data.frame(x, y)
 ```
 
 
