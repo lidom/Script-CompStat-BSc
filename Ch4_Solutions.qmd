@@ -308,7 +308,7 @@ Sim_Data <- data.frame(x, y)
 lm.fit_i <- glm(y ~ x, data = Sim_Data)
 
 # cv.glm calculates the estimated K-fold cross-validation prediction
-# error for generalized linear models (with K=n by default).
+# error for generalized linear models (with K=n).
 # '$delta' selects a vector of length two: 
 # The first component is the raw cross-validation estimate of the 
 # prediction error. 

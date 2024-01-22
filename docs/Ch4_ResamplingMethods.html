@@ -465,7 +465,7 @@ n_{Train}=n-1 \approx n
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes<br>
 
 <center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.664 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.566 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -1511,7 +1511,7 @@ t3*  5.647103e-03 -4.116657e-06 2.226242e-04
 <span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>lm.fit_i <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sim_Data)</span>
 <span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cv.glm calculates the estimated K-fold cross-validation prediction</span></span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="co"># error for generalized linear models (with K=n by default).</span></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="co"># error for generalized linear models (with K=n).</span></span>
 <span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="co"># '$delta' selects a vector of length two: </span></span>
 <span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="co"># The first component is the raw cross-validation estimate of the </span></span>
 <span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction error. </span></span>
