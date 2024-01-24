@@ -625,16 +625,16 @@ X
 $$
 with class-specific $(p\times 1)$ mean vector $\mu_k$,
 $$
-E(X|Y=k)=\mu_k=\left(\begin{matrix}
+\mu_k=E(X|Y=k)=\left(\begin{matrix}
   \mu_{k1}\\
   \mu_{k2}\\
   \vdots\\
   \mu_{kp}
   \end{matrix}\right),
 $$
-and $(p\times p)$ covariance matrix that is common for all classes $k=1,\dots,K,$ i.e.
+and $(p\times p)$ covariance matrix, $\Sigma,$ that is common for all classes $k=1,\dots,K,$ i.e.
 $$
-Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
+\Sigma=Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
 $$ 
 where 
 $$

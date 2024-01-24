@@ -38,6 +38,7 @@ The above links to the lecture materials can also be found at [eCampus](https://
 * You are allowed to use a non-programmable scientific calculator.
 * Please, do **not** use a pencil.
 * Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en)
+* First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/5z0c5obo7la59u7cj0pbv/Exam_Instructions.pdf?rlkey=krv0ulntp8wxt6pj2c5mnwqgc&dl=0)
 
 
 <!-- ### Communication {-}

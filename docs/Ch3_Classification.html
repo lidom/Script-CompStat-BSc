@@ -740,14 +740,14 @@ X
 %  \right)
 \end{align*}
 \]</span> with class-specific <span class="math inline">\((p\times 1)\)</span> mean vector <span class="math inline">\(\mu_k\)</span>, <span class="math display">\[
-E(X|Y=k)=\mu_k=\left(\begin{matrix}
+\mu_k=E(X|Y=k)=\left(\begin{matrix}
   \mu_{k1}\\
   \mu_{k2}\\
   \vdots\\
   \mu_{kp}
   \end{matrix}\right),
-\]</span> and <span class="math inline">\((p\times p)\)</span> covariance matrix that is common for all classes <span class="math inline">\(k=1,\dots,K,\)</span> i.e. <span class="math display">\[
-Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
+\]</span> and <span class="math inline">\((p\times p)\)</span> covariance matrix, <span class="math inline">\(\Sigma,\)</span> that is common for all classes <span class="math inline">\(k=1,\dots,K,\)</span> i.e. <span class="math display">\[
+\Sigma=Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
 \]</span> where <span class="math display">\[
 Cov(X)=
 \left(
@@ -2428,8 +2428,8 @@ In this section, we used the `glm()` function with the argument `family = poisso
 <p>Suppose we collect data for a group of students in a statistics class with variables</p>
 <ul>
 <li><span class="math inline">\(X_1=\)</span><code>hours studied</code>,</li>
-<li><span class="math inline">\(X_2 =\)</span> <code>undergrad GPA</code> (GPA: Grade Point Average), and</li>
-<li><span class="math inline">\(Y =\)</span> <code>receive an A</code>.</li>
+<li><span class="math inline">\(X_2 =\)</span><code>undergrad GPA</code> (GPA: Grade Point Average), and</li>
+<li><span class="math inline">\(Y =\)</span><code>receive an A</code>.</li>
 </ul>
 <p>We fit a logistic regression and produce estimated coefficients:</p>
 <p><span class="math display">\[\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.\]</span></p>
@@ -2441,7 +2441,7 @@ p(X) = \frac {\exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
              {1 + \exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
 \\
 \]</span></p>
-<p>Thus, the probability of <span class="math inline">\(Y=1\)</span> given <span class="math inline">\(X=[x_1,x_2]\)</span> with <span class="math inline">\(x_1 =40\)</span> (hours) and <span class="math inline">\(x_2=3.5\)</span> (GPA) yields:</p>
+<p>Thus, the probability of <span class="math inline">\(Y=1\)</span> given <span class="math inline">\(X=(x_1,x_2)\)</span> with <span class="math inline">\(x_1 =40\)</span> (hours) and <span class="math inline">\(x_2=3.5\)</span> (GPA) yields:</p>
 <p><span class="math display">\[
 p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
 \]</span></p>
@@ -2453,14 +2453,14 @@ p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)
 <p>:::</p>
 <p><strong>6 b)</strong> How many hours would the student in part (a) need to study to have a <span class="math inline">\(50\%\)</span> chance of getting an <code>A</code> in the class?</p>
 <p><strong>Answer:</strong></p>
-<p>Finding <span class="math inline">\(x_1\)</span>, where <span class="math inline">\(X = [x_1, 3.5]\)</span>, such that <span class="math inline">\(p(X) = 0.5\)</span> yields:</p>
+<p>Finding <span class="math inline">\(x_1\)</span>, where <span class="math inline">\(X = (x_1, 3.5)\)</span>, such that <span class="math inline">\(p(X) = 0.5\)</span> yields:</p>
 <p><span class="math display">\[
 \begin{align*}
-0.50 &amp;= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\
-\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &amp;= \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &amp;= \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow 0.50 &amp;= 0.50 \exp(-2.5 + 0.05\,x_1)\\
-\Leftrightarrow \log(1) &amp;= -2.5 + 0.05\,x_1 \\
+0.50 &amp;= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\[2ex]
+\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &amp;= \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &amp;= \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow 0.50 &amp;= 0.50 \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow \log(1) &amp;= -2.5 + 0.05\,x_1 \\[2ex]
 \Leftrightarrow x_1 &amp;= 2.5 / 0.05 = 50
 \end{align*}
 \]</span></p>
