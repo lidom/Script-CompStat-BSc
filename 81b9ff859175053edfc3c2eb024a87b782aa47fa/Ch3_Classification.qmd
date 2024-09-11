@@ -1771,4 +1771,4 @@ Prepare the following exercises of Chapter 4 in our course textbook `ISLR`:
 - Exercise 15
 - Exercise 16
 
-{{< include Ch3_Solutions.qmd >}}
+<!-- {{< include Ch3_Solutions.qmd >}} -->

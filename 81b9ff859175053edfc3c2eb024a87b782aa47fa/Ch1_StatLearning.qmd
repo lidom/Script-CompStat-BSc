@@ -1763,7 +1763,7 @@ Prepare the following exercises of Chapter 2 in our course textbook `ISLR`:
 - Exercise 9
 
 
-{{< include Ch1_Solutions.qmd >}}
+<!-- {{< include Ch1_Solutions.qmd >}} -->
 
 
 
