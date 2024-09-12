@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Computer-Aided Statistical Analysis (B.Sc.) - 2&nbsp; Linear Regression</title>
+<title>2&nbsp; Linear Regression – Computer-Aided Statistical Analysis (B.Sc.)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -32,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -132,11 +139,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Ch2_LinearRegression.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -144,85 +156,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./" class="sidebar-logo-link">
+      <a href="./index.html" class="sidebar-logo-link">
       <img src="./images/Uni_Bonn_Logo.jpeg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computer-Aided Statistical Analysis (B.Sc.)</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Organization of the Course</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Organization of the Course</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch1_StatLearning.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></a>
+  <a href="./Ch1_StatLearning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch2_LinearRegression.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></a>
+  <a href="./Ch2_LinearRegression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch3_Classification.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification</span></a>
+  <a href="./Ch3_Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch4_ResamplingMethods.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a>
+  <a href="./Ch4_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link active" data-scroll-target="#simple-linear-regression"><span class="toc-section-number">2.1</span>  Simple Linear Regression</a>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link active" data-scroll-target="#simple-linear-regression"><span class="header-section-number">2.1</span> Simple Linear Regression</a>
   <ul class="collapse">
-  <li><a href="#estimating-the-regression-coefficients" id="toc-estimating-the-regression-coefficients" class="nav-link" data-scroll-target="#estimating-the-regression-coefficients"><span class="toc-section-number">2.1.1</span>  Estimating the Regression Coefficients</a></li>
-  <li><a href="#assessing-the-accuracy-of-the-coefficient-estimates" id="toc-assessing-the-accuracy-of-the-coefficient-estimates" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-coefficient-estimates"><span class="toc-section-number">2.1.2</span>  Assessing the Accuracy of the Coefficient Estimates</a></li>
-  <li><a href="#assessing-the-accuracy-of-the-model" id="toc-assessing-the-accuracy-of-the-model" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-model"><span class="toc-section-number">2.1.3</span>  Assessing the Accuracy of the Model</a></li>
+  <li><a href="#estimating-the-regression-coefficients" id="toc-estimating-the-regression-coefficients" class="nav-link" data-scroll-target="#estimating-the-regression-coefficients"><span class="header-section-number">2.1.1</span> Estimating the Regression Coefficients</a></li>
+  <li><a href="#assessing-the-accuracy-of-the-coefficient-estimates" id="toc-assessing-the-accuracy-of-the-coefficient-estimates" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-coefficient-estimates"><span class="header-section-number">2.1.2</span> Assessing the Accuracy of the Coefficient Estimates</a></li>
+  <li><a href="#assessing-the-accuracy-of-the-model" id="toc-assessing-the-accuracy-of-the-model" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-model"><span class="header-section-number">2.1.3</span> Assessing the Accuracy of the Model</a></li>
   </ul></li>
-  <li><a href="#sec-MultLinReg" id="toc-sec-MultLinReg" class="nav-link" data-scroll-target="#sec-MultLinReg"><span class="toc-section-number">2.2</span>  Multiple Linear Regression</a>
+  <li><a href="#sec-MultLinReg" id="toc-sec-MultLinReg" class="nav-link" data-scroll-target="#sec-MultLinReg"><span class="header-section-number">2.2</span> Multiple Linear Regression</a>
   <ul class="collapse">
-  <li><a href="#estimating-the-regression-coefficients-1" id="toc-estimating-the-regression-coefficients-1" class="nav-link" data-scroll-target="#estimating-the-regression-coefficients-1"><span class="toc-section-number">2.2.1</span>  Estimating the Regression Coefficients</a></li>
-  <li><a href="#inference-on-beta_1dotsbeta_p" id="toc-inference-on-beta_1dotsbeta_p" class="nav-link" data-scroll-target="#inference-on-beta_1dotsbeta_p"><span class="toc-section-number">2.2.2</span>  Inference on <span class="math inline">\(\beta_1,\dots,\beta_p\)</span></a></li>
+  <li><a href="#estimating-the-regression-coefficients-1" id="toc-estimating-the-regression-coefficients-1" class="nav-link" data-scroll-target="#estimating-the-regression-coefficients-1"><span class="header-section-number">2.2.1</span> Estimating the Regression Coefficients</a></li>
+  <li><a href="#inference-on-beta_1dotsbeta_p" id="toc-inference-on-beta_1dotsbeta_p" class="nav-link" data-scroll-target="#inference-on-beta_1dotsbeta_p"><span class="header-section-number">2.2.2</span> Inference on <span class="math inline">\(\beta_1,\dots,\beta_p\)</span></a></li>
   </ul></li>
-  <li><a href="#other-considerations-in-the-regression-model" id="toc-other-considerations-in-the-regression-model" class="nav-link" data-scroll-target="#other-considerations-in-the-regression-model"><span class="toc-section-number">2.3</span>  Other Considerations in the Regression Model</a>
+  <li><a href="#other-considerations-in-the-regression-model" id="toc-other-considerations-in-the-regression-model" class="nav-link" data-scroll-target="#other-considerations-in-the-regression-model"><span class="header-section-number">2.3</span> Other Considerations in the Regression Model</a>
   <ul class="collapse">
-  <li><a href="#qualitative-predictors" id="toc-qualitative-predictors" class="nav-link" data-scroll-target="#qualitative-predictors"><span class="toc-section-number">2.3.1</span>  Qualitative Predictors</a></li>
-  <li><a href="#extensions-of-the-linear-model" id="toc-extensions-of-the-linear-model" class="nav-link" data-scroll-target="#extensions-of-the-linear-model"><span class="toc-section-number">2.3.2</span>  Extensions of the Linear Model</a></li>
-  <li><a href="#potential-problems" id="toc-potential-problems" class="nav-link" data-scroll-target="#potential-problems"><span class="toc-section-number">2.3.3</span>  Potential Problems</a></li>
+  <li><a href="#qualitative-predictors" id="toc-qualitative-predictors" class="nav-link" data-scroll-target="#qualitative-predictors"><span class="header-section-number">2.3.1</span> Qualitative Predictors</a></li>
+  <li><a href="#extensions-of-the-linear-model" id="toc-extensions-of-the-linear-model" class="nav-link" data-scroll-target="#extensions-of-the-linear-model"><span class="header-section-number">2.3.2</span> Extensions of the Linear Model</a></li>
+  <li><a href="#potential-problems" id="toc-potential-problems" class="nav-link" data-scroll-target="#potential-problems"><span class="header-section-number">2.3.3</span> Potential Problems</a></li>
   </ul></li>
-  <li><a href="#comparison-of-linear-regression-with-k-nearest-neighbors" id="toc-comparison-of-linear-regression-with-k-nearest-neighbors" class="nav-link" data-scroll-target="#comparison-of-linear-regression-with-k-nearest-neighbors"><span class="toc-section-number">2.4</span>  Comparison of Linear Regression with K-Nearest Neighbors</a></li>
-  <li><a href="#r-lab-linear-regression" id="toc-r-lab-linear-regression" class="nav-link" data-scroll-target="#r-lab-linear-regression"><span class="toc-section-number">2.5</span>  <code>R</code>-Lab: Linear Regression</a>
+  <li><a href="#comparison-of-linear-regression-with-k-nearest-neighbors" id="toc-comparison-of-linear-regression-with-k-nearest-neighbors" class="nav-link" data-scroll-target="#comparison-of-linear-regression-with-k-nearest-neighbors"><span class="header-section-number">2.4</span> Comparison of Linear Regression with K-Nearest Neighbors</a></li>
+  <li><a href="#r-lab-linear-regression" id="toc-r-lab-linear-regression" class="nav-link" data-scroll-target="#r-lab-linear-regression"><span class="header-section-number">2.5</span> <code>R</code>-Lab: Linear Regression</a>
   <ul class="collapse">
-  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries"><span class="toc-section-number">2.5.1</span>  Libraries</a></li>
-  <li><a href="#simple-linear-regression-1" id="toc-simple-linear-regression-1" class="nav-link" data-scroll-target="#simple-linear-regression-1"><span class="toc-section-number">2.5.2</span>  Simple Linear Regression</a></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="toc-section-number">2.5.3</span>  Multiple Linear Regression</a></li>
-  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="toc-section-number">2.5.4</span>  Interaction Terms</a></li>
-  <li><a href="#non-linear-transformations-of-the-predictors" id="toc-non-linear-transformations-of-the-predictors" class="nav-link" data-scroll-target="#non-linear-transformations-of-the-predictors"><span class="toc-section-number">2.5.5</span>  Non-linear Transformations of the Predictors</a></li>
-  <li><a href="#qualitative-predictors-1" id="toc-qualitative-predictors-1" class="nav-link" data-scroll-target="#qualitative-predictors-1"><span class="toc-section-number">2.5.6</span>  Qualitative Predictors</a></li>
-  <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="toc-section-number">2.5.7</span>  Writing Functions</a></li>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries"><span class="header-section-number">2.5.1</span> Libraries</a></li>
+  <li><a href="#simple-linear-regression-1" id="toc-simple-linear-regression-1" class="nav-link" data-scroll-target="#simple-linear-regression-1"><span class="header-section-number">2.5.2</span> Simple Linear Regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">2.5.3</span> Multiple Linear Regression</a></li>
+  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="header-section-number">2.5.4</span> Interaction Terms</a></li>
+  <li><a href="#non-linear-transformations-of-the-predictors" id="toc-non-linear-transformations-of-the-predictors" class="nav-link" data-scroll-target="#non-linear-transformations-of-the-predictors"><span class="header-section-number">2.5.5</span> Non-linear Transformations of the Predictors</a></li>
+  <li><a href="#qualitative-predictors-1" id="toc-qualitative-predictors-1" class="nav-link" data-scroll-target="#qualitative-predictors-1"><span class="header-section-number">2.5.6</span> Qualitative Predictors</a></li>
+  <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="header-section-number">2.5.7</span> Writing Functions</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">2.6</span>  Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.6</span> Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -231,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-linearRegCh" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1>
+<h1 class="title"><span id="sec-linearRegCh" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1>
 </div>
 
 
@@ -239,11 +257,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
+
 </header>
+
 
 <blockquote class="blockquote">
 <p>Reading: Chapter 3 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
@@ -281,12 +302,12 @@ Y_i=\beta_0 + \beta_1 X_i +\epsilon_i \quad\text{for all}\quad i=1,\dots,n,
 <li><span class="math inline">\(E(\epsilon_i)=0\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span></li>
 <li><span class="math inline">\(Var(\epsilon_i)=\sigma^2&gt;0\)</span> is constant for all <span class="math inline">\(i=1,\dots,n\)</span></li>
 </ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -313,7 +334,7 @@ Note
 </section>
 <section id="assessing-the-accuracy-of-the-coefficient-estimates" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="assessing-the-accuracy-of-the-coefficient-estimates"><span class="header-section-number">2.1.2</span> Assessing the Accuracy of the Coefficient Estimates</h3>
-<p>If the assumption of <a href="#eq-simpleLinMod">Equation&nbsp;<span>2.1</span></a> is correct, i.e., if the data is actually generated according to the model <span class="math display">\[
+<p>If the assumption of <a href="#eq-simpleLinMod" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> is correct, i.e., if the data is actually generated according to the model <span class="math display">\[
 Y_i=\beta_0 + \beta_1 X_i +\epsilon_i,
 \]</span> then ordinary least squares estimators <span class="math display">\[
 \hat\beta_0\quad\text{and}\quad\hat\beta_1
@@ -323,7 +344,7 @@ Y_i=\beta_0 + \beta_1 X_i +\epsilon_i,
 \operatorname{Bias}(\hat\beta_1)&amp;=E(\hat\beta_1)-\beta_1=0.
 \end{align*}
 \tag{2.2}\]</span></span> I.e., on average, the estimation results equal the true (unknown) parameters.</p>
-<p><strong>Note:</strong> In <a href="#eq-SimpleRegBias">Equation&nbsp;<span>2.2</span></a>, we consider <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> as <strong>random variables</strong> from which we can compute mean values. The estimators <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are indeed <strong>random variables</strong> since they depend on the random variables in the <strong>random sample</strong> <span class="math inline">\((X_i,Y_i)\overset{iid}{\sim}(X,Y)\)</span>:<br>
+<p><strong>Note:</strong> In <a href="#eq-SimpleRegBias" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, we consider <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> as <strong>random variables</strong> from which we can compute mean values. The estimators <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are indeed <strong>random variables</strong> since they depend on the random variables in the <strong>random sample</strong> <span class="math inline">\((X_i,Y_i)\overset{iid}{\sim}(X,Y)\)</span>:<br>
 <span class="math display">\[
 \hat\beta_1=\frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}
 \]</span> and <span class="math display">\[
@@ -399,16 +420,20 @@ $$ -->
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> beta_0, <span class="at">b =</span> beta_1, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm_obj, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <!-- *  Coding-Questions: Can you do this animated? https://gganimate.com/articles/gganimate.html -->
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Coding Challenge (Nr 1):
 </div>
 </div>
@@ -447,12 +472,12 @@ E(\hat\beta_1)&amp;\approx \frac{1}{B}\sum_{b=1}^B\hat\beta_{1,b}
 &amp;=\sqrt{\frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2}\\[2ex]
 &amp;=\sqrt{\frac{1}{n-2}\sum_{i=1}^n\left(y_i-\left(\hat{\beta}_0+\hat{\beta}_1x_i\right)\right)^2}
 \end{align*}\]</span> where <span class="math inline">\(\operatorname{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2\)</span> are the residual sum of squares.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -474,12 +499,12 @@ Note
         \hat{\beta}_1+2\operatorname{SE}(\hat\beta_1)\right] = \hat\beta_1\pm 2\operatorname{SE}(\hat\beta_1)
 \end{align*}
 \]</span></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Interpretation
 </div>
 </div>
@@ -491,13 +516,13 @@ Interpretation
 </ul>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Danger
+<div class="callout-title-container flex-fill">
+Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -520,12 +545,12 @@ H_0:&amp;\;\beta_1=\beta^{(H_0)}_{1}\\
 H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
 \end{align*}
 \]</span></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Classic No-Effect Null-Hypothesis
 </div>
 </div>
@@ -553,12 +578,12 @@ H_1:&amp;\;\text{There is a relationship between $Y$ and $X$; i.e. $\beta_1\neq 
 \end{align*}
 \]</span> then we <strong>can reject</strong> the null hypothesis and adopt the alternative that <span class="math inline">\(\beta_1\neq\beta^{(H_0)}_{1}.\)</span></p></li>
 </ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Probability of a Type I Error is Smaller than <span class="math inline">\(\alpha\)</span>
 </div>
 </div>
@@ -577,12 +602,12 @@ P(\beta^{(H_0)}_{1} \in \operatorname{CI}_{\beta_1}| H_0\text{ is true})&amp;\ge
 \]</span> Note: A type I error (rejecting <span class="math inline">\(H_0\)</span> even though <span class="math inline">\(H_0\)</span> is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level <span class="math inline">\(\alpha\)</span> such as <span class="math inline">\(\alpha=0.05\)</span> or <span class="math inline">\(\alpha=0.01.\)</span></p>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Coding Challenge (Nr 2):
 </div>
 </div>
@@ -635,17 +660,17 @@ H_1:&amp;\;\beta_1\neq \beta^{(H_0)}_{1}
 <p>Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if the (unknown) true parameter <span class="math inline">\(\beta_1\)</span> equals the null-hypothetical value, i.e.&nbsp;if <span class="math inline">\(\beta_1=\beta^{(H_0)}_{1},\)</span> the <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\((n-2)\)</span> degrees of freedom, <span class="math display">\[
 t=\frac{\hat\beta_1 - \beta^{(H_0)}_{1}}{\operatorname{SE}(\hat\beta_1)}\overset{H_0}{\sim}t_{(n-2)}.
 \]</span></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg"><span>Section&nbsp;2.2</span></a>), the <span class="math inline">\(t\)</span>-test statistic for the <span class="math inline">\(j\)</span>th predictor has the following null-distribution: <span class="math display">\[
+<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg" class="quarto-xref"><span>Section 2.2</span></a>), the <span class="math inline">\(t\)</span>-test statistic for the <span class="math inline">\(j\)</span>th predictor has the following null-distribution: <span class="math display">\[
 t=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\operatorname{SE}(\hat\beta_j)}\overset{H_0}{\sim}t_{(n-p-1)}.
 \]</span></p>
 </div>
@@ -664,12 +689,12 @@ p_{obs}\geq \alpha,
 p_{obs}&lt;\alpha,
 \]</span> then we can reject the null hypothesis and adopt the alternative hypothesis.</p></li>
 </ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -701,13 +726,13 @@ R^2=\frac{\operatorname{TSS}-\operatorname{RSS}}{\operatorname{TSS}}=1-\frac{\op
 \]</span></p>
 <p>TSS: “Total Sum of Squares”</p>
 <p>RSS: “Residual Sum of Squares”</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Danger
+<div class="callout-title-container flex-fill">
+Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -728,17 +753,17 @@ R^2 = r_{yx}^2,
 \]</span> where <span class="math display">\[
 r_{yx}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
 \]</span></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg"><span>Section&nbsp;2.2</span></a>), the <span class="math inline">\(R^2\)</span> equals the squared correlation between response and the fitted values: <span class="math display">\[
+<p>In the multiple linear regression model <span class="math inline">\(Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i\)</span> (<a href="#sec-MultLinReg" class="quarto-xref"><span>Section 2.2</span></a>), the <span class="math inline">\(R^2\)</span> equals the squared correlation between response and the fitted values: <span class="math display">\[
 R^2=r^2_{y\hat{y}}
 \]</span> with <span class="math display">\[
 r_{y\hat{y}}=\frac{\sum_{i=1}^n(y_i-\bar{y})(\hat{y}_i-\bar{\hat{y}})}{\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}\sqrt{\sum_{i=1}^n(\hat{y}_i-\bar{\hat{y}})^2}}.
@@ -779,7 +804,7 @@ Y_i=\beta_0+\beta_1X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i
 X_i&amp;=\left(\begin{matrix}X_{i0}\\X_{i1}\\ \vdots\\X_{ip}\end{matrix}\right)\quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_{0}\\\beta_1\\ \vdots\\\beta_{p}\end{matrix}\right)
 \end{align*}\]</span> with <span class="math inline">\(X_{i0}=1\)</span> for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
-<p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> more compactly as <span class="math display">\[
+<p>This allows us to write <a href="#eq-MultLinReg1" class="quarto-xref">Equation&nbsp;<span>2.3</span></a> more compactly as <span class="math display">\[
 Y_i=X_i'\beta+\epsilon_i \quad\text{for all}\quad i=1,\dots,n.
 \]</span></p>
 <p>Next, we can stack all components. Let <span class="math display">\[\begin{equation*}
@@ -798,7 +823,7 @@ X_{n0}&amp;X_{n1}&amp;\dots&amp;X_{np}\\
 \;\;1\;\;&amp;X_{n1}&amp;\dots&amp;X_{np}\\
 \end{matrix}\right)
 \end{align*}\]</span> denote the <span class="math inline">\((n\times (p+1))\)</span>-dimensional matrix containing all predictor values of the random sample, where the first column is a column full of ones <span class="math inline">\((X_{10}=1,\dots,X_{n0}=0).\)</span></p>
-<p>This allows us to write <a href="#eq-MultLinReg1">Equation&nbsp;<span>2.3</span></a> even more compactly as <span class="math display">\[
+<p>This allows us to write <a href="#eq-MultLinReg1" class="quarto-xref">Equation&nbsp;<span>2.3</span></a> even more compactly as <span class="math display">\[
 Y=X\beta+\epsilon.
 \]</span></p>
 <p>Using matrix algebra, it can be shown that the ordinary least squares estimator of <span class="math inline">\(\beta=(\beta_0,\beta_1,\dots,\beta_p)'\)</span> is given by the following <span class="math inline">\(((p+1)\times 1)\)</span> vector: <span class="math display">\[
@@ -854,13 +879,13 @@ H_1:\beta_{newspaper}\neq 0.
 <ul>
 <li>Thus, when <strong>omitting</strong> <code>radio</code> from the regression model, <code>newspaper</code> becomes a surrogate for <code>radio</code> and we see a spurious effect.</li>
 </ul>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Danger
+<div class="callout-title-container flex-fill">
+Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1060,12 +1085,12 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1(X_2)} 
 <li>Both separate main effects, <code>TV</code> and <code>radio</code>, are statistically significant (<span class="math inline">\(p\)</span>-values smaller than 0.01).</li>
 <li>Additionally, the <span class="math inline">\(p\)</span>-value for the interaction term, <code>TV</code><span class="math inline">\(\times\)</span><code>radio</code>, is extremely low, indicating that there is strong evidence for <span class="math inline">\(H_1: \beta_3\neq 0.\)</span> In other words, it is clear that the true relationship is not additive.</li>
 </ul>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Hierarchical Principle of Interaction Terms
 </div>
 </div>
@@ -1102,12 +1127,12 @@ x_{i2}=\left\{
 </center>
 <p><br></p>
 <p>This regression model involves predicting <code>mpg</code> using a non-linear function of <code>horsepower</code>.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Important
 </div>
 </div>
@@ -1148,7 +1173,11 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmobj_1, <span class="at">which =</span> <span class="dv">1</span>)</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmobj_2, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Plotting <strong>residuals versus fitted values</strong>, i.e.&nbsp;plotting the data pairs <span class="math display">\[
@@ -1193,16 +1222,20 @@ Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmobj_2, <span class="at">which =</span> <span class="dv">1</span>)</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmobj_3, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Danger
+<div class="callout-title-container flex-fill">
+Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1228,12 +1261,12 @@ Danger
 <p>Outliers typically have a strong effect on the <span class="math inline">\(R^2\)</span> value since they add a <strong>very large residual</strong> to its computation.</p>
 <p><strong>Harmless Outlier:</strong> Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value <span class="math inline">\(x_i\)</span>; i.e.&nbsp;the <span class="math inline">\(x_i\)</span>-value is right in the center of all predicor values. Such outliers have little effect on the regression fit. <img src="images/Fig_3_12.png" class="img-fluid"></p>
 <p><strong>Harmful Outlier:</strong> Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value <span class="math inline">\(x_i\)</span> that is <strong>very atypical</strong>. Such outliers are said to have <strong>large leverage</strong> giving them power to affect the regression fit considerably. <img src="images/Fig_3_13.png" class="img-fluid"></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -1274,7 +1307,11 @@ H=X(X'X)^{-1}X'.
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y =</span> Credit<span class="sc">$</span>Age,    <span class="at">x =</span> Credit<span class="sc">$</span>Limit, <span class="at">main =</span> <span class="st">"No Collinearity"</span>, <span class="at">ylab =</span> <span class="st">"Age"</span>, <span class="at">xlab =</span> <span class="st">"Limit"</span>)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y =</span> Credit<span class="sc">$</span>Rating, <span class="at">x =</span> Credit<span class="sc">$</span>Limit, <span class="at">main =</span> <span class="st">"Strong Collinearity"</span>, <span class="at">ylab =</span> <span class="st">"Rating"</span>, <span class="at">xlab =</span> <span class="st">"Limit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The left panel of Figure 3.15 shows that, in the case of unrelated predictors (<code>Age</code> and <code>Limit</code>), the least squares problem has a minimum <span class="math inline">\((\hat\beta_{Age},\hat\beta_{Limit})\)</span> that is well identified since the minimum is well defined.</p>
@@ -1522,7 +1559,11 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>There is some evidence for non-linearity in the relationship between <code>lstat</code> and <code>medv</code>. We will explore this issue later in this lab.</p>
@@ -1531,23 +1572,43 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">pch =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv, <span class="at">pch =</span> <span class="st">"+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-4.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-5.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk10-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Next we examine some diagnostic plots. Four diagnostic plots are automatically produced by applying the <code>plot()</code> function directly to the output from <code>lm()</code>. In general, this command will produce one plot at a time, and hitting <em>Enter</em> will generate the next plot. However, it is often convenient to view all four plots together. We can achieve this by using the <code>par()</code> and <code>mfrow()</code> functions, which tell <code>R</code> to split the display screen into separate panels so that multiple plots can be viewed simultaneously. For example, <code>par(mfrow = c(2, 2))</code> divides the plotting region into a <span class="math inline">\(2 \times 2\)</span> grid of panels.</p>
@@ -1555,18 +1616,30 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Alternatively, we can compute the residuals from a linear regression fit using the <code>residuals()</code> function. The function <code>rstudent()</code> will return the studentized residuals, and we can use this function to plot the residuals against the fitted values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(lm.fit), <span class="fu">residuals</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(lm.fit), <span class="fu">rstudent</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk12-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk12-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On the basis of the residual plots, there is some evidence of non-linearity.</p>
@@ -1574,7 +1647,11 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(<span class="fu">hatvalues</span>(lm.fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1790,7 +1867,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Ch2_LinearRegression_files/figure-html/chunk22-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Ch2_LinearRegression_files/figure-html/chunk22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>then we see that when the <code>lstat^2</code> term is included in the model, there is little discernible pattern in the residuals.</p>
@@ -2008,12 +2089,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2022,17 +2106,73 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2042,8 +2182,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2055,43 +2204,298 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Ch1_StatLearning.html" class="pagination-link">
+      <a href="./Ch1_StatLearning.html" class="pagination-link" aria-label="Statistical Learning">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch3_Classification.html" class="pagination-link">
+      <a href="./Ch3_Classification.html" class="pagination-link" aria-label="Classification">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

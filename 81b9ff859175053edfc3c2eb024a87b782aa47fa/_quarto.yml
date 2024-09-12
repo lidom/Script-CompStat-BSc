@@ -7,11 +7,10 @@ book:
   author: Prof. Dr. Dominik Liebl 
   date: last-modified
   date-format: "[Last Updated on] MMMM DD, YYYY"
+  sidebar: 
+    logo: images/Uni_Bonn_Logo.jpeg
+    number-depth: 3
   search: true
-  logo: images/Uni_Bonn_Logo.jpeg
-  number-sections: TRUE
-  crossref:
-    chapters: true
   chapters:
     - index.qmd
     - Ch1_StatLearning.qmd      # Reads in Ch1_Solutions.qmd
@@ -24,4 +23,19 @@ book:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: [flatly, theme.scss]
+      dark: [flatly, darkly, theme.scss]
+    html-math-method:
+      method: mathjax
+      url: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML"
+    monofont: Fira Mono
+    mathfont: Leto
+    number-sections: true
+    code-link: true
+    reference-links: true
+    reference-location: margin
+    knitr:
+      opts_chunk:
+        fig.align: center
+        fig-align: center

@@ -1075,7 +1075,7 @@ myFirst.Dataframe <- data.frame("Credit_Default"   = c( 0, 0, 1, 0, 1, 1),
 
 
 
-
+<!-- 
 ### Simple Regression Analysis using R 
 
 Alright, let's do some statistics with real data. You can download the data [HERE](https://github.com/lidom/Teaching_Repo). Save it on your computer, at a place where you can find it, and give the path (e.g. `"C:\textbackslash path\textbackslash auto.data.csv"`, which references to the data, to the *file*-argument of the function `read.csv()`:
@@ -1155,12 +1155,14 @@ plot(y=gasolin.consumption, x=car.weight,
      main="Buy light-weight Cars!")
 abline(a=alpha, 
        b=beta, col="red")
-```
+``` -->
 
 
 
 
 ### Programming in `R`
+
+#### Simulating Data
 
 Let's write, i.e., program our own `R`-function for estimating linear regression models. In order to be able to validate our function, we start with **simulating data** for which we then *know* all true parameters. 
 
@@ -1168,12 +1170,12 @@ Simulating data is like being the "Data-God": For instance, we generate realizat
 
 Let us consider the following multiple regression model:
 
-$$y_i=\beta_1 +\beta_2 x_{2i}+\beta_3 x_{3i}+\varepsilon_{i},\quad i=1,\dots,n,$$
-where $\varepsilon_{i}$ is a heteroscedastic error term
-$$\varepsilon_{i}\sim N(0,\sigma_i^2),\quad \sigma_i=|x_{3i}|,$$
+$$
+y_i=\beta_1 +\beta_2 x_{2i}+\beta_3 x_{3i}+\varepsilon_{i},\quad i=1,\dots,n,
+$$
+where for all $i=1,\dots,n=50$:
 
-and where for all $i=1,\dots,n=50$:
-
+* $\varepsilon_{i}\sim N(0,2^2)$ is the error term
 * $x_{2i}\sim N(10,1.5^2)$
 * $x_{3i}$ comes from a t-distribution with 5 degrees of freedom and non-centrality parameter 2
 
@@ -1198,28 +1200,24 @@ beta.vec  <- c(1,-5,5)
 ```
 
 
-
-We still need to simulate realizations of the dependent variable $y_i$. Remember that $y_i=\beta_1 x_{1i}+\beta_1 x_{2i}+\beta_3 x_{3i}+\varepsilon_{i}$. That is, we only need realizations from the error terms $\varepsilon_i$ in order to compute the realizations from $y_i$. This is how you can simulate realizations from the heteroscedastic error terms $\varepsilon_i$:
+We still need to simulate realizations of the dependent variable $y_i$. Remember that $y_i=\beta_1 x_{1i}+\beta_1 x_{2i}+\beta_3 x_{3i}+\varepsilon_{i}$. That is, we only need realizations from the error terms $\varepsilon_i$ in order to compute the realizations from $y_i$. 
 
 ```{r}
-## Generate realizations from the heteroscadastic error term
-eps       <- rnorm(n, mean=0, sd=abs(X.3))
+## Generate realizations of the error term
+eps       <- rnorm(n, mean=0, sd=2)
 ```
-
-Take a look at the heteroscedasticity in the error term:
-
-```{r, fig.margin = TRUE, fig.width=4.5, fig.height=3.5, fig.cap="Scatterplot of error term realizations (usually unknown) versus the predictor values of X.3."}
-plot(y=eps, x=X.3, 
-     main="Realizations of the \nHeteroscedastic Error Term")
-```
-
 
 With the (pseudo-random) realizations from $\varepsilon_i$, we can finally generate realizations from the dependent variable $y_i$:
 ```{r}
-## Dependent variable:
-y   <- X %*% beta.vec + eps
-```
+## Generate realizations of the dependent variable:
 
+y   <- beta.vec[1] * X.1 + 
+       beta.vec[2] * X.2 + 
+       beta.vec[3] * X.3 + eps
+
+## More compact version:
+# y   <- X %*% beta.vec + eps
+```
 
 Let's take a look at the data:
 ```{r}
@@ -1228,18 +1226,16 @@ pairs(mydata[,-2]) # The '-2' removes the intercept variable "X.1"
 ```
 
 
-
-
 Once we have data, we can compute the OLS estimate of the true $\beta$ vector. Remember the formula:
-$$\hat{\beta}=(X^\top X)^{-1}X^\top y$$
+$$
+\hat{\beta}=(X^\top X)^{-1}X^\top y
+$$
 In R-Code this is: $(X^\top X)^{-1}=$`solve(t(X) %*% X)`, i.e.:
 ```{r}
 ## Computation of the beta-Vector:
 beta.hat <- solve(t(X) %*% X) %*% t(X) %*% y
 beta.hat
 ```
-
-
 
 
 Well done. Using the above lines of code we can easily program our own `myOLSFun()` function!
@@ -1267,10 +1263,7 @@ myOLSFun(y=y, x=X)
 ```
 
 
-
-
-Can you extend the function for the computation of the covariance matrix of the slope-estimates, several measures of fits (R$^2$, adj.-R$^2$, etc.), t-tests, ...?
-
+You extend the function `myOLSFun()` for the computation of the covariance matrix of the slope-estimates, several measures of fits (e.g. R$^2$ and adj.-R$^2$), t-tests, etc.
 
 
 

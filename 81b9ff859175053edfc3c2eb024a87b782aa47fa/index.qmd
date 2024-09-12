@@ -2,8 +2,6 @@
 
 ### Timetable {-}
 
-Monday afternoon is computational-statistics-afternoon. We'll have both theory and practice sessions and a couple of breaks in between. 
-
 ```{r, echo=FALSE}
 suppressPackageStartupMessages(library("kableExtra"))
 suppressPackageStartupMessages(library("tidyverse"))
@@ -18,16 +16,19 @@ timetable %>% kbl() %>%  kable_styling()
 
 ### Lecture Material and Literature {-}
 
-
+* This online script
 * Main Course Textbook (`ISLR`): 
   * [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
   * The PDF-version and further resources (datasets, etc.) of the textbook can be downloaded **for free** from [https://www.statlearning.com/](https://www.statlearning.com/)
 
-<!-- * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes. -->
-* [This online script](https://www.dliebl.com/Script-CompStat-BSc/)
-* **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0)
+* Further/additional reading (for the motivated): 
+  * [The Elements of
+Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 
-The above links to the lecture materials can also be found at [eCampus](https://ecampus.uni-bonn.de/goto_ecampus_crs_2700628.html)
+
+<!-- * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes. -->
+
+<!-- * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0) -->
 
 
 ### Information on the Exam {-}
@@ -38,7 +39,7 @@ The above links to the lecture materials can also be found at [eCampus](https://
 * You are allowed to use a non-programmable scientific calculator.
 * Please, do **not** use a pencil.
 * Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en)
-* First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0)
+<!-- * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0) -->
 
 
 <!-- ### Communication {-}
