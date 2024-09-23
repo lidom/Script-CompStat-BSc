@@ -1,0 +1,869 @@
+# Statistical Learning {#sec-SL}
+
+> Reading: Chapter 2 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+
+
+<!-- 
+#### `R`-Codes for this Chapter {-}
+
+* Introduction to `R`: [Ch1_0_Rcodes.R](https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&dl=0)
+* `R`-codes for Coding Challenge Nr 1 (replicating Fig. 2.9): [Ch1_1_Rcodes.R](https://www.dropbox.com/scl/fi/8dtu5kje5am70l2dh6w9b/Ch1_1_Rcodes.R?rlkey=o6ucjdql0f88d9wcopj0q0esa&dl=0)
+* `R`-codes for Coding Challenge Nr 2 (KNN-classification): [Ch1_2_Rcodes.R](https://www.dropbox.com/scl/fi/p7rm2ziytfl68s2h6i4gf/Ch1_2_Rcodes.R?rlkey=5rgl4y9xbxejafi32oe1baoza&dl=0)  
+-->
+
+## What is Statistical Learning? 
+
+Suppose that we observe a quantitative response $Y$ and $p$
+different predictors, $X_1, X_2, \dots, X_p.$ 
+
+We assume that there is some relationship between $Y$ and 
+$$
+X = (X_1, X_2, \dots, X_p),
+$$ 
+which can be written in the very general form 
+$$
+Y = f(X) + \epsilon. 
+$$
+
+* $f$ is some fixed but unknown function of $X = (X_1, X_2, \dots, X_p):$
+* $\epsilon$ a random error term fulfilling the following two assumptions:  
+  * $\epsilon$ and $X$ are independent of each other 
+  * $\epsilon$ has mean zero $E(\epsilon)=0.$ 
+
+In this formulation, $f$ represents the *systematic* information that $X$ provides about $Y.$
+
+In essence, **statistical learning** refers to a set of approaches for estimating $f.$ In this chapter we outline some of the key theoretical concepts that arise in estimating $f,$ as well as tools for evaluating the estimates obtained.
+
+### Why Estimate $f$?
+
+There are **two main reasons** that we may wish to estimate $f$: 
+
+* prediction and 
+* inference. 
+
+We discuss each in turn.
+
+
+## Prediction {-}
+
+In many situations, a set of inputs $X$ are readily available, but the output $Y$ cannot be easily obtained. In this setting, since the error term averages to zero, we can predict $Y$ using
+$$
+\hat{Y} = \hat{f}(X),
+$$
+
+* $\hat{f}$  represents our estimate for $f$ 
+* $\hat{Y}$  represents the resulting prediction for $Y$ 
+
+In this setting, $\hat{f}$ is often treated as a **black box**, in the sense that one is not typically concerned with the exact form of $\hat{f},$ provided that it yields accurate predictions for $Y.$
+
+
+**Example:** As an example, suppose that $(X_1, X_2, \dots, X_p)$ are characteristics of a patient's blood sample that can be easily measured in a lab, and $Y$ is a variable encoding the patient's risk for a severe adverse reaction to a particular drug. It is natural to seek to predict $Y$ using $X,$ since we can then avoid giving the drug in question to patients who are at high risk of an adverse reaction--that is, patients for whom the estimate of $Y$ is high.
+
+
+### Accuracy of a Prediction {-}
+
+The accuracy of $\hat{Y}$ as a prediction for $Y$ depends on two quantities: 
+
+* the **reducible error** and 
+* the **irreducible error.** 
+
+In general, $\hat{f}$ will not be a perfect estimate for $f,$ and this inaccuracy will introduce some error. This error is **reducible**, because we can potentially improve the accuracy of $\hat{f}$ by using the most appropriate statistical learning technique to estimate $f.$ 
+
+However, even if it were possible to form a perfect estimate for
+$f,$ so that our estimated response took the form 
+$$
+\hat{Y} = f (X), 
+$$
+our prediction would still have some error in it! This is because $Y$ is also a function of $\epsilon$ which, by definition, cannot be predicted using $X.$ Therefore, variability associated with $\epsilon$ also affects the accuracy of our predictions. This is known as the **irreducible error**, because no matter how well we estimate $f,$ we cannot reduce the error introduced by $\epsilon.$
+
+
+
+Consider a **given** estimate $\hat{f}$ and a **given** set of predictors $X,$ which yields the prediction $\hat{Y} = \hat{f}(X).$ That is, assume for a moment that both $\hat{f}$ and $X$ are **fixed**, so that the only variability comes from $\epsilon.$ Then, it is easy to show that
+$$
+\begin{align*}
+\overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
+=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}, 
+\end{align*}
+$$
+where 
+
+* $E\left[(Y - \hat{Y})^2\right]$ represents the expected value, of the squared difference between the predicted $\hat{Y}=\hat{f}(X)$ and actual value of $Y,$ 
+* and $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
+
+
+Derivation (for a *given* $\hat{f}$ and a *given* $X;$ i.e. only $\epsilon$ is random): 
+
+\begin{align*}
+&E\left[(Y - \hat{Y})^2\right]\\ 
+&=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\ 
+% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\ 
+&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\ 
+&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
+&=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
+\end{align*}
+
+It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for $Y,$ i.e. 
+$$
+E\left[(Y - \hat{Y})^2\right] \geq Var\left(\epsilon\right)
+$$
+This bound is almost always unknown in practice.
+
+
+::: {.callout-tip}
+The focus of this course is on techniques for estimating $f$ with the aim of **minimizing the reducible error**. 
+::: 
+
+
+## (Parameter) Inference {-}
+
+We are often interested in *understanding* the association between $Y$ and $X_1,\dots,X_p.$ In this situation we wish to estimate $f,$ but our goal is not necessarily to make predictions for $Y.$ Now $\hat{f}$ cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:
+
+* Which predictors are associated with the response? 
+* What is the relationship between the response and each predictor?
+* Can the relationship between $Y$ and each predictor be adequately summarized using a *linear equation*, or is the relationship more complicated? 
+
+::: {.callout-tip}
+In this course, we will see a number of examples that fall into the **prediction setting**, the **inference setting**, or a **combination** of the two.
+:::
+
+
+## How Do We Estimate $f$?
+
+
+**Setup:** Consider the general regression model
+$$
+Y=f(X)+\epsilon,
+$${#eq-GRegMod}
+where 
+$$
+X=(X_{1}, \dots,X_{p})
+$$
+is a multivariate ($p$-dimensional) predictor. 
+
+Let 
+$$
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
+$${#eq-randomsample}
+be a **random sample** from @eq-GRegMod, i.e.
+
+1. The multivariate, $p+1$ dimensional, random vectors 
+$$
+(X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
+$$
+are independent of each other for all $i=1,\dots,n$ and $j=1,\dots,n$ with $i\neq j.$<br><br>
+2. The multivariate, $p+1$ dimensional, random vectors $(X_i,Y_i),$ $i=1,\dots,n,$ have all the same distribution as $(X,Y),$ i.e.
+$$
+(X_i,Y_i)\sim(X,Y)
+$$
+for all $i=1,\dots,n.$ <br><br>
+
+
+The random sample @eq-randomsample is thus a set of $n$ many **independent and identically distributed (iid)** multivariate random variables
+$$
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}
+$$
+with 
+$$
+(X_i,Y_i)\overset{\text{iid}}{\sim} (X,Y),\quad i=1,\dots,n.
+$$
+
+
+An observed **realization** of the random sample will be denoted using lowercase letters 
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}.
+$$
+These $n$ observations are called **training data** because we will use these  observations to train/learn $\hat{f}$, i.e., to compute the estimate $\hat{f}$ of the unknown $f.$ 
+
+::: {.callout-note}
+
+## Goal of Statistical Learning
+
+Our goal is to find (i.e. learn from training data) a function $\hat{f}$ such that 
+$$
+Y \approx \hat{f}(X) 
+$$
+for ***any*** observed realization of $(X, Y).$ 
+
+That is, the estimate $\hat{f}$ needs to provide a good approximation 
+$$
+y_{i} \approx \hat{f}(x_{i})
+$$
+**not only** for the observed training data points 
+$$
+(x_i,y_i),\quad i=1,\dots,n,
+$$ 
+**but also** for any possible *new* realization $(x_{new},y_{new})$ of $(X,Y)$
+$$
+y_{new} \approx \hat{f}(x_{new}).
+$$
+
+Fitting the noise (irreducible component) in the training data will typically lead to bad approximations of new observations of a test data set. 
+
+![](images/Traintest.png)
+<br>
+<center>
+![](images/test_vs_train.jpeg)
+</center>
+:::
+
+Broadly speaking, most statistical learning methods for this task can be characterized as either 
+
+* **parametric** or 
+* **non-parametric**. 
+
+We discuss each in turn.
+
+### Parametric Methods {-}
+
+
+Parametric methods involve a **two-step model-based estimation approach:**
+
+1. First, we make an assumption about the functional form, or shape,
+of $f.$ For example, a very simple, but often used assumption is that $f$ is a linear function, i.e.
+$$
+f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p.
+$${#eq-linmodeq}
+
+2. After a model has been selected, we need a procedure that uses the
+training data to fit or train the model. For example, in the case of the linear model @eq-linmodeq, we need to estimate the parameters $\beta_0,\beta_1,\dots,\beta_p$ such that 
+$$
+Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+$$
+
+Most common estimation technique: **(Ordinary) Least Squares (OLS)**
+
+
+The parametric model-based approach reduces the problem of estimating $f$ down to one of estimating a *finite* set of parameters $\beta_0,\beta_1,\dots,\beta_p.$ 
+
+* **Pro:** Simple to estimate
+* **Con:** Possible model misspecification (Why should we know the true shape/form of $f$?)
+
+We can try to address the problem of model misspecification by choosing flexible models that can fit many different possible functional forms for $f.$ 
+
+**But:** Fitting a more flexible model requires estimating a greater number of parameters (large $p$). These more complex models can lead to a phenomenon known as **overfitting** the data, which essentially means they follow the errors/noise too closely. 
+
+::: {.callout-tip}
+These issues (model-flexibility and overfitting) are discussed through-out this course.
+::: 
+
+
+### Non-Parametric Methods {-}
+
+Non-parametric methods (e.g. $K$ nearest neighbor regression) do not make explicit assumptions about the functional form of $f.$ Instead, they make qualitative assumptions on $f$ such as, for instance, requiring that $f$ is a *smooth* (e.g. two times continuously differentiable) function. 
+
+* **Pro:** By avoiding the assumption of a particular parametric functional form for $f,$ non-parametric methods have the potential to accurately fit a wider range of possible shapes for $f.$
+
+* **Con:** Non-parametric methods require a large number of observations to obtain an accurate estimate for $f;$ far more observations than is typically needed for a parametric approach if the parametric model assumption is correct. (Non-parametric methods are "data-hungry".)
+
+
+### The Trade-Off Between Prediction Accuracy and Model Interpretability
+
+One might reasonably ask the following question: 
+
+>  Why would we ever choose to use a more restrictive method instead of a very flexible approach?
+
+If we are mainly **interested in inference**, then **restrictive models** are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between $Y$ and $X_1,\dots,X_p.$ <br>
+By contrast, very flexible approaches, such as purely non-parametric methods, can lead to such complicated estimates of $f$ that it is difficult to understand how any individual predictor $X_j$ is associated with the response $Y.$
+
+In some settings, we are only **interested in prediction**, and the interpretability of the predictive model is simply not of interest. For instance, if we seek to develop an algorithm to predict the price of a stock, our sole requirement for the algorithm is that it predict accurately. In such settings, we might expect that it will be best to use the most flexible model available. Right?<br> 
+Surprisingly, this is not always the case! We will often obtain more accurate predictions using a less flexible method. This phenomenon, which may seem counterintuitive at first glance, has to do with the potential for **overfitting** in highly flexible methods. 
+
+
+### Supervised versus Unsupervised Learning
+
+Most statistical learning problems fall into one of two categories: 
+
+* supervised 
+* unsupervised 
+
+In supervised learning problems, we observe for each predictor $x_i,$ $i=1,\dots,n,$ also a response $y_i.$
+
+In unsupervised learning problems, we only observe the predictor  $x_i,$ $i=1,\dots,n,$ but not the associated responses $y_i.$
+
+
+Supervised learning methods: 
+
+* regression analysis
+* logistic regression
+* lasso
+* ridge regression 
+
+Unsupervised learning methods: 
+
+* cluster analysis (clustering)
+* $K$-means 
+
+
+### Regression Versus Classification Problems
+
+
+Variables can be characterized as either *quantitative* or *qualitative* (also known as categorical).
+
+**Quantitative:** Quantitative variables take on numerical values. Examples include a person’s age, height, or income, the value of a house, and categorical the price of a stock. 
+
+**Qualitative/Categorial:** Examples of qualitative variables include a person's marital status (married or not), the brand of product purchased (brand A, B, or C), whether a person defaults on a debt (yes or no), or a cancer diagnosis (Acute Myelogenous Leukemia, Acute Lymphoblastic Leukemia, or No Leukemia).
+
+
+We tend to refer to problems with a *quantitative response* as **regression problems**, while those involving a *qualitative response* are often referred to as **classification problems**. 
+
+
+However, the distinction (regression vs. classification) is not always that crisp. Least squares linear regression is used with a quantitative response, whereas logistic regression is typically used with a qualitative (two-class, or binary). Thus, despite its name, logistic regression is a classification method. But since it estimates class probabilities, it can be thought of as a regression method as well. Some statistical methods, such as K-nearest neighbors can be used in the case of either quantitative or qualitative responses.
+
+
+## Assessing Model Accuracy
+
+It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
+
+Let 
+$$
+\{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0m},Y_{0m})\},
+$${#eq-trainingsample}
+denote the **test data random sample**, where 
+$$
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
+$$ 
+with $(X,Y)$ being defined by the general regression model $Y=f(X)+\epsilon$ in @eq-GRegMod. 
+
+That is, the new test data random sample @eq-trainingsample 
+
+1. is independent of the training data random sample @eq-randomsample
+2. has the same distribution as the training data random sample @eq-randomsample
+
+The observed realization 
+$$
+\{(x_{01},y_{01}),(x_{02},y_{02}),\dots,(x_{0m},y_{0m})\},
+$$
+of the test data random sample is used to check the accuracy of the estimate $\hat{f}.$ 
+
+
+
+### Measuring the Quality of Fit
+
+In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE). 
+
+The global training (data) MSE is given by
+\begin{align*}
+\operatorname{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
+\end{align*}
+where 
+
+* $\hat{f}$ is computed from the training data
+* $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
+
+In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
+
+<!-- In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$ -->
+
+
+<!-- **Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
+or next month's price.  -->
+
+<!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
+
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
+
+
+### Local (i.e. Point-Wise) Test MSE {-}
+
+Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.$ And let 
+$$
+\{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
+$$
+denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. 
+
+This type of $x_0$-specific test data is a realization of a **conditional random sample** given $X=x_0,$
+$$
+(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+$$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+
+Then, the **point-wise test MSE** at $X=x_0$ is given by,
+\begin{align*}
+\operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
+\end{align*}
+
+
+### Global Test MSE {-}
+
+Typically, however, we want that a method has **globally**, i.e. for all predictor values in the range of $X$, a low test MSE (not only at a certain given value $x_0$). Let 
+$$
+\{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}
+$$
+denote the set of $m$ test data points with different predictor values $x_{01},\dots,x_{0m}$ in the range of $X$. This type of test data is a realization of a random sample 
+$$
+(X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
+$$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+
+
+
+Then, the **global test MSE** is given by,
+\begin{align*}
+\operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
+\end{align*}
+
+Note that if $\hat{f}$ is a really good estimate of $f,$ i.e. if $\hat{f}\approx f,$ then 
+$$
+\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
+$$
+estimates the variance of the error term $Var(\epsilon)$, i.e., the **irreducible error component**. 
+
+
+<br>
+
+Figure 2.9 shows training and test MSEs for smoothing spline (`R` command `smooth.spline()`) estimates $\hat{f}$ in the case of 
+
+* a moderately complex $f$ 
+* a moderate signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
+
+![](images/Fig_2_9.png)
+
+<br>
+
+Figure 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a very simple $f$ 
+* a moderate signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
+
+![](images/Fig_2_10.png)
+
+<br>
+
+Figure 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a moderately complex $f$
+* a very large signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
+
+![](images/Fig_2_11.png)
+
+<br>
+
+::: {.callout-caution}
+
+## Coding Challenge (Nr 1):
+
+Generate MSE-results similar to those shown in Figure 2.9.   
+
+:::
+
+
+In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available. 
+
+As the three examples in Figures 2.9, 2.10, and 2.11 of our textbook illustrate, the flexibility level corresponding to the model with the minimal test MSE can vary considerably. 
+
+Throughout this book, we discuss a variety of approaches that can be used in practice to estimate the minimum point of the test MSE. 
+
+One important method is **cross-validation**, which is a method for estimating the test MSE using the training data.
+
+
+
+### The Bias-Variance Trade-Off
+
+The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.
+
+* Let $\hat{f}$ be estimated from the training data random sample
+$$
+\{(X_1,Y_1),\dots,(X_n,Y_n)\},
+$$
+$$
+(X_i,Y_i)\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n.
+$$
+I.e., since $\hat{f}$ is based on the random variables in the random sample, $\hat{f}$ is it self a random variable. (A realized observation of the training data random sample yields a realized observation of $\hat{f}$.)  
+
+* Let $x_0$ denote a given value of the predictor $X$
+
+* Let 
+$$
+\{(x_{0},Y_{01}),\dots,(x_0,Y_{0m})\}
+$$
+$$
+(x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
+$$
+be the conditional **test data** random sample given $X=x_0.$
+
+<!-- * Let 
+$$
+Y_0=f(x_0)+\epsilon
+$$ 
+be the response random variable defined for the given predictor value $x_0.$ 
+* Let $Y_{01},\dots,Y_{0m}$ be all independently and identically distributed as $Y_0;$ shortly
+$$
+Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
+$$  
+* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ -->
+
+One can show that the expected test MSE at a given predictor value $x_0$ can be decomposed as following: 
+\begin{align*}
+E\left[\operatorname{MSE}_{test}(x_0)\right] 
+& =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
+& =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
+& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =E\left[\left(f(x_0) + \epsilon_0 - \hat{f}(x_0)\right)^2\right]\quad(Y_0=f(x_0)+\epsilon_0)\\[2ex]
+& =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_0 + \epsilon_0^2 \right]\\[2ex]
+& =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex] 
+&+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_0\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex] 
+&+ E\left[\epsilon_0^2 \right]\\[2ex]
+& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_0)\\[2ex] 
+%& =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
+%& =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
+%&\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon_0)\\[2ex]
+%& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
+%& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
+%&\quad\text{(steps skipped since beyond scope)}\\[2ex]
+& = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon_0\right)
+\end{align*}
+
+
+The **expected MSE** at $x_0,$ $E\left[\operatorname{MSE}_{test}(x_0)\right],$ refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$ 
+
+
+::: {.callout-note}
+A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding challenge) is not able to consistently approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$
+
+However, to get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$ This will be (among others) the topic of  @sec-resamplingmethods.
+:::
+
+To minimize the expected test MSE, we need to select a statistical learning method that *simultaneously* achieves **low variance** and **low bias**. 
+
+
+Note that 
+$$
+Var\left(\hat{f}(x_0)\right)\geq 0
+$$ 
+and that 
+$$
+\left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2\geq 0.
+$$
+Thus, the expected test MSE can never lie below of $Var(\epsilon),$ i.e.
+$$
+\begin{align*}
+E\left[\operatorname{MSE}_{test}(x_0)\right] 
+& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
+\geq Var\left(\epsilon\right).
+\end{align*}
+$$
+
+
+➡️ The overall, i.e., **global** expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set.
+<!-- $$
+E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
+$$ -->
+
+#### Variance of $\hat{f}$ at $x_0$ {-}
+$$
+Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
+$$
+**Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ But ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
+
+➡️ The overall, i.e., **global** variance can be computed by averaging $Var(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
+
+#### Bias of $\hat{f}$ at $x_0$ {-}
+$$
+\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
+$$
+**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
+
+➡️ The overall, i.e., *global* bias can be computed by averaging $\operatorname{Bias}(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
+
+
+![](images/Fig_2_12.png)
+
+
+
+### The Classification Setting
+
+
+Setup: 
+
+* Observed **training data** 
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
+$$
+* Qualitative response $y_i$ with categorical class labels. E.g. 
+   * $y_i\in\{\text{red},\text{blue}\}$
+   * $y_i\in\{\text{positive returns},\text{negative returns}\}$
+* The **classifier** $\hat{f}$ is computed from the training data.
+* Predicted training data class labels: 
+$$
+\hat{y}_i = \hat{f}(x_i)
+$$
+
+The alternative to the training MSE is here the **training error rate**
+$$
+\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
+$$
+which gives the relative frequency of false categorical predictions. 
+
+Here, 
+$$
+I(\cdot)
+$$
+is an indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
+
+
+Let 
+$$
+\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
+$$
+denote $m$ **test data** observations. 
+
+The alternative to the test MSE is here the **test error rate**
+$$
+\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
+$$
+where $\hat{y}_{0i}$ is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation with predictor value $x_{i0}.$ 
+
+A good classifier is one for which the test error rate is smallest.
+
+### The Bayes Classifier {-}
+
+It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value $x_{0}.$ This classifier is called the **Bayes classifier**. 
+
+In other words, the Bayes classifier assigns a test observation with predictor vector $x_{0}$ to the class $j$ for which
+$$
+P(Y = j | X = x_{0})
+$$
+is largest among all possible class labels $j$ (e.g. $j\in\{1,2\}$). 
+
+
+In a **two-class problem** where there are only two possible response values, say class $1$ or class $2,$ the Bayes classifier corresponds to predicting class $1$ if 
+$$
+P(Y = 1| X = x_0 ) \geq 0.5,
+$$ 
+and class $2$ if 
+\begin{align*}
+& P(Y = 1| X = x_0 ) < 0.5 \\[2ex]
+\Leftrightarrow\; & P(Y = 2| X = x_0 ) > 0.5  
+\end{align*}
+
+::: {.callout-note}
+## Classification threshold $0.5$?
+
+If no further information is given, one uses usually a threshold of $0.5$ in a two-class classification problem; or, more generally, a threshold of $\frac{1}{G}$ in a $G$-classes classification problem. 
+
+However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.
+
+Example: 
+$$
+y\in\{\text{Person pays back}, \text{Person does not pay back}\}
+$$
+The classification error 
+$$
+\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
+$$
+can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value $x_0$ to the "Person pays back"-class only if, for instance, 
+$$
+\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
+$$
+and otherwise classify this person to the "Person does not pay back"-class. This will reduce the frequency of miss-classifications when classifying into the "Person pays back"-class, and thus reduce the costs. 
+:::
+
+Those values of $x_0$ for which 
+\begin{align*}
+P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
+\end{align*}
+are called the **Bayes decision boundary**. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.
+
+![](images/Fig_2_13.png)
+
+* Note to Fig. 2.13: Here, a *perfect* classification (i.e. zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups. 
+
+
+The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The point-wise Bayes error rate at $x_0$ is given by
+$$
+1 - \max_{j}P(Y = j| X = x_0 ),
+$$
+where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$).
+
+The *global* overall Bayes error rate is given by
+$$
+1 - E\left(\max_{j}P(Y = 1| X )\right),
+$$
+where the expectation averages the probability over all possible values of $X.$ 
+
+
+### $K$-Nearest Neighbors Classification {-}
+
+In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of $Y$ given $X,$ and so computing the Bayes classifier is impossible. 
+
+
+Many approaches attempt to estimate the conditional distribution of $Y$ given $X,$ and then classify a given observation to the class with highest estimated probability. One such method is the **$K$-nearest neighbors** (KNN) classifier. 
+
+Given a positive integer $K$ and a test observation $x_0,$ the KNN classifier first identifies the $K$ points in the training data
+$$
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+$$
+that are closest to $x_0.$ 
+
+This set of $K$ nearest points (near to $x_0$) can be represented by the $x_0$-specfic index set 
+$$
+\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+$$
+I.e. $\mathcal{N}_0$ is an index set that allows to select the $K$ nearest neighbors in the training data. 
+
+From the definition of $\mathcal{N}_0$ is follows that:
+
+* $\mathcal{N}_0\subset\{1,2,\dots,n\}$
+* $|\mathcal{N}_0|=K$
+
+KNN estimates the conditional probability for class $j$ as the fraction of the $K$ points $(x_i,y_i)$ selected by the index-set $\mathcal{N}_0$ whose response value $y_i$ equals $j:$
+$$
+\begin{align}
+P(Y = j | X = x_{0}) 
+&\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
+&= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
+\end{align}
+$${#eq-DefKNN}
+where $I(\texttt{TRUE})=1$ and $I(\texttt{FALSE})=0.$
+
+Finally, KNN classifies the test observation $x_0$ to the class $j$ with the largest probability from @eq-DefKNN. 
+
+
+Figure 2.14 provides an illustrative example of the KNN approach. 
+
+* Two-dimensional predictor $X=(X_1,X_2),$ where $X_1$ is shown on the x-axis and $X_2$ on the y-axis. 
+* Two class labels $Y\in\{\text{yellow}, \text{blue}\}.$
+* Training data consists of six data points
+$$
+\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
+$$ 
+(See the left panel of Figure 2.14.)
+* Class-label prediction ("classification") are computed for a regular grid of predictor values $x_{0}=(x_{01},x_{02}).$ (See the regular grid of points in the right panel of Figure 2.14.)
+* $K=3$ nearest neighbors are used to compute the class-label predictions. 
+
+
+<br>
+
+![](images/Fig_2_14.png)
+
+* In the **left-hand panel** of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. 
+* In the **right-hand panel** of Figure 2.14, we have applied the KNN approach with $K = 3$ at all of the possible values for $X_1$ and $X_2,$ and have drawn in the corresponding KNN decision boundary.
+
+
+<br>
+
+![](images/Fig_2_15.png)
+
+<br>
+
+![](images/Fig_2_16.png)
+
+<br>
+
+![](images/Fig_2_17.png)
+
+
+
+::: {.callout-caution}
+
+## Coding Challenge (Nr 2):
+
+The following `R`-code generates training data for the two-class classification problem with 
+
+* Class 1: Circle with center $(x_1,x_2)=(0.5,0.5)$ and radius $r=0.2,$ i.e.
+$$
+\text{Cl1} = \{(x_1,x_2)\in[0,1]^2:(x_1-0.5)^2+(x_2-0.5)^2\leq 0.2^2\}
+$$
+* Class 2: All data points in the square $[0,1]^2$ that do not belong to Class 1, i.e.
+$$
+\text{Cl2} = \{(x_1,x_2)\in[0,1]^2: (x_1,x_2)\not\in\text{Cl1}\}
+$$
+
+
+```{r}
+# install.packages("plotrix") # Install plotrix package
+library("plotrix")   # Load plotrix package (draw.circle())
+
+## Class 1: Circle  
+radius <- 0.2
+center <- c(0.5,0.5)
+## Class 2: [0,1] x [0,1] \ Class 1
+
+## function to map data points to class labels "Cl1" and "Cl2"
+my_class_fun <- function(x1, x2, cent = center, rad = radius, error = 0){
+  tmp    <- (x1 - cent[1])^2 + (x2 - cent[2])^2
+  rad    <- rad + sample(c(-1,1), 1) * error
+  ifelse(tmp <= rad^2, "Cl1", "Cl2")
+}
+my_class_fun <- Vectorize(my_class_fun, c("x1", "x2"))
+
+## ##################################
+## Generate training data (with error)
+## ##################################
+set.seed(321)
+
+## number of training data points
+n_train    <- 500
+
+## error
+error  <- 0.05
+
+train_X1 <- runif(n_train, min = 0, max = 1)
+train_X2 <- runif(n_train, min = 0, max = 1)
+train_Cl <- my_class_fun(x1 = train_X1, 
+                         x2 = train_X2, error = error)
+train_Cl <- as.factor(train_Cl)
+summary(train_Cl)
+
+data_train <- data.frame(
+  "Cl" = train_Cl,
+  "X1" = train_X1, 
+  "X2" = train_X2
+)
+
+head(data_train)
+
+par(mfrow = c(1,2))
+plot(x = 0, y = 0, 
+     type = "n", 
+     xlim = c(0,1),
+     ylim = c(0,1), 
+     xlab = expression(X[1]),
+     ylab = expression(X[2]), asp=1)
+abline(h = c(0,1))
+draw.circle(x = center[1], y = center[2], radius = radius)
+text(x = 0.5, y = 0.5, label = "Class 1")
+text(x = 0.1, y = 0.9, label = "Class 2")
+
+plot(x = 0, y = 0, 
+     type = "n", 
+     xlim = c(0,1),
+     ylim = c(0,1), 
+     xlab = expression(X[1]),
+     ylab = expression(X[2]), asp=1,
+     main = "Training data with errors")
+abline(h = c(0,1))
+draw.circle(x = center[1], y = center[2], radius = radius)
+
+points(x   = data_train$X1, 
+       y   = data_train$X2, 
+       col = data_train$Cl,  pch = 19)
+```
+
+**Challenge:** 
+
+* Write an KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
+:::
+
+
+
+
+
+## Exercises
+
+Prepare the following exercises of Chapter 2 in our course textbook `ISLR`: 
+
+- Exercise 7
+- Exercise 8
+- Exercise 9
+
+
+<!-- {{< include Ch2_StatLearning_Solutions.qmd >}} -->
+
+
+
+

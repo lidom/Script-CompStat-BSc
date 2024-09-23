@@ -1,0 +1,1774 @@
+# Classification
+
+> Reading: Chapter 4 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+
+## Overview 
+
+Classification problems occur often, perhaps even more so than regression problems. 
+
+
+Some examples include:
+
+1. A person arrives at the emergency room with a set of symptoms that could possibly be attributed to one of three medical conditions. Which of the three conditions does the individual have?
+2. An online banking service must be able to determine whether or not a transaction being performed on the site is fraudulent, on the basis of the user's IP address, past transaction history, and so forth.
+3. On the basis of DNA sequence data for a number of patients with and without a given disease, a biologist would like to figure out which DNA mutations are deleterious (disease-causing) and which are not.
+
+One of the running example for this chapter: The (simulated) `Default` data set which is part of the [online resources](https://www.statlearning.com/resources-second-edition) of our textbook `ISLR`, and which is also contained in the `R` package `ISLR2`.
+![](images/Fig_4_1.png)
+
+
+
+Let's take a first look at the a priori default rate in this dataset:
+
+```{r}
+suppressPackageStartupMessages(library("ISLR2"))
+data(Default)
+
+## sample size
+n <- nrow(Default)       
+
+## "no-default"-rate and "default"-rate
+table(Default$default)/n 
+```
+
+* Overall "no-default"-rate: approx. $97\%.$ 
+* Overall "default"-rate: approx. $3\%.$ 
+
+Note: Figure 4.1 shows only a small fraction of the individuals who did not default to avoid an overcrowded plot.
+
+
+## Why Not Linear Regression?
+
+Linear regression is often not appropriate in the case of a qualitative response $Y.$ 
+
+Suppose that we are trying to predict the medical condition of a patient in the emergency room on the basis of her symptoms. In this simplified example, there are three possible diagnoses: 
+
+* `stroke`
+* `drug overdose`, and
+* `epileptic seizure`
+
+We can encoding these values as a quantitative response variable,
+$$
+Y=\left\{
+    \begin{array}{ll}
+    1&\quad\text{if }\texttt{stroke}\\
+    2&\quad\text{if }\texttt{drug overdose}\\
+    3&\quad\text{if }\texttt{epileptic seizure}\\
+    \end{array}
+\right.
+$$
+Using this coding, least squares could be used to fit a linear regression model to predict $Y,$ but 
+
+1. the results would then depend on the numeric ordering $1<2<3,$ even though the ordering was completely arbitrary and could have been made differently.
+2. the results would then depend on the assumption that the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure` which would be a very unrealistic. 
+
+Generally, both points are quite problematic for most applications.
+
+Only if the response variable's values did take on a natural ordering, such as *"mild"*, *"moderate"*, and *"severe"*, and we felt the gap between *mild* and *moderate* was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
+
+For a **binary (two level) qualitative response**, the situation is better. For instance, if there are only two conditions that we need to predict (e.g. either `default`$=$`Yes` or `default`$=$`No`), we can use a dummy variable coding
+$$
+Y=\left\{
+\begin{array}{ll}
+    1&\quad\text{if }\texttt{default}=\texttt{Yes}\\
+    0&\quad\text{if }\texttt{default}=\texttt{No}\\
+\end{array}
+\right.
+$${#eq-binaryY}
+We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
+
+For a binary response, $Y\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that 
+\begin{align*}
+Y 
+&= f(X) + \epsilon \\[2ex]
+&= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon, 
+\end{align*}
+where, under the assumptions of @sec-linearRegCh, 
+$$
+E(\epsilon|X)=0.
+$$
+Therefore, 
+$$
+\begin{align*}
+E(Y|X) 
+&=E\left(\beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon|X\right)\\[2ex]
+&=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+\end{align*}
+$${#eq-LinProb1}
+Moreover, since $Y\in\{0,1\}$ is a binary random variable, the conditional mean $E(Y|X)$ equals the conditional probability of $Y=1$ given $X$
+$$
+\begin{align*}
+E(Y|X)
+& =  Pr(Y=1|X)\cdot 1 + Pr(Y=0|X)\cdot 0\\[2ex]
+& =  Pr(Y=1|X).  
+\end{align*}
+$${#eq-LinProb2}
+Combining @eq-LinProb1 and @eq-LinProb2 yields
+\begin{align*}
+Pr(Y=1|X) &=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
+\end{align*}
+Thus the estimated model approximates the conditional probability of $Y=1$ (e.g. $\texttt{default}=\texttt{Yes}$) given $X:$
+$$
+Pr(Y=1|X) \approx \hat{Y}=\hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+$$
+
+
+
+However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see left panel in Figure 4.2), which doesn't make sense when predicting probabilities. 
+![](images/Fig_4_2.png)
+
+**Summary:**
+
+(a) A classic regression method cannot well accommodate a qualitative response with more than two classes
+(b) A classic regression method may not provide meaningful estimates of $Pr(Y |X),$ even with just two classes. 
+
+Thus, it is often preferable to use a classification method that is truly suited for qualitative response values such as, for instance, logistic regression.
+
+
+## Logistic Regression
+
+Logistic regression models the probability that $Y$ belongs to a particular category. We begin with $K=2$ category problems, and consider $K>2$ category problems below in @sec-multinomialLogistic.
+
+For the `Default` data, logistic regression models the conditional probability of `default`$\in\{\texttt{Yes},\texttt{No}\}$ given values for the predictor(s). For example, the probability of the even `default`$=$`Yes` given `balance`: 
+$$
+Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
+$$
+where $p(\texttt{balance})\in[0,1]$ is used as a short hand notation. 
+
+Then
+$$
+Pr(\texttt{default}=\texttt{No}|\texttt{balance}) = 1 - p(\texttt{balance}),
+$$
+
+
+One might predict the event `default`$=$`Yes` for any individual with a `balance`-value such that  
+$$
+p(\texttt{balance}) > 0.5.
+$$
+
+::: {.callout-caution}
+However, $0.5$ this is not the only reasonable classification threshold! 
+
+For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as 
+$$
+Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})=p(\texttt{balance}) > 0.1.
+$$
+:::
+
+### The Simple $(p=1)$ Logistic Model
+
+For a binary coded dependen variable $Y\in\{0,1\}$ we aim to model the relationship between
+$$
+p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
+$$
+
+As discussed above, a linear regression model, e.g.,
+$$
+p(X)=\beta_0+\beta_1 X
+$$
+can produce nonsense predictions $p(X)\not\in[0,1]0;$ see the left panel of Figure 4.2.  
+
+
+Logistic regression avoids this problem **by assuming** that $p(X)$ can be modeled using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
+$$
+p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}.
+$$
+To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called **maximum likelihood**. 
+
+The right panel of Figure 4.2 illustrates the fit of the logistic regression model to the `Default` data.
+
+
+Note that 
+$$
+\begin{align*}
+p(X) & = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} 
+%\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
+%\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
+%\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
+\quad \Leftrightarrow\quad  \frac{p(X)}{1-p(X)} = e^{\beta_0+\beta_1 X}
+\end{align*}
+$$
+
+
+The quantity 
+$$
+0\leq \frac{p(X)}{1 − p(X)} \leq \infty
+$$ 
+is called the **odds**, and can take any value between 0 and plus infinity.
+
+* A small odds value (close to zero) indicates a low probability of default. 
+* A large odds value indicates a high probability of default. 
+
+For instance: 
+
+* An odds value of $\frac{1}{4}$ means that $0.2=20\%$ of the people will default 
+$$
+\frac{0.2}{1-0.2}=\frac{1}{4}
+$$
+
+* An odds value of $9$ means that $0.9=90\%$ of the people will default
+$$
+\frac{0.9}{1-0.9}=9
+$$
+
+
+By taking the logarithm, we arrive at **log odds** or **logit**
+$$
+\log\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
+$$
+
+
+Thus increasing $X$ by one unit ... 
+
+  * ... changes the *log odds* by $\beta_1$ 
+  * ... multiplies the odds by $e^{\beta_1}$ 
+
+
+::: {.callout-caution}
+The amount that $p(X)$ changes due to a one-unit change in $X$ depends on the current value of $X.$ That is, the simple logistic regression model is not linear in the parameters $\beta_0$ and $\beta_1.$
+
+But regardless of the value of $X$, if $\beta_1$ is positive then increasing $X$ will be associated with increasing $p(X)$, and if $\beta_1$ is negative then increasing $X$ will be associated with decreasing $p(X).$ 
+:::
+
+### Estimating the Regression Coefficients
+
+
+In logistic regression analysis, the unknown model parameters are estimated using *maximum likelihood*. 
+
+**Basic intuition:** Find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ such that the predicted probability $\hat{p}(x_i)$ for each person $i$ corresponds as close as possible to its observed `default` status. I.e., choose $\hat{\beta}_0$ and $\hat{\beta}_1$ such that 
+
+* $\hat{p}(x_i)\approx 1$ if `default`$=$`Yes` for person $i$ 
+* $\hat{p}(x_i)\approx 0$ if `default`$=$`No` for person $i$
+
+simultaneously for all $i=1,\dots,n.$
+
+This intuition can be formalized using the so-called **likelihood function**:
+\begin{align*}
+\ell(b_0,b_1)
+&=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))\\[2ex]
+&=
+\prod_{i:y_{i}=1} \frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}
+\prod_{i:y_{i}=0}\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)\\[2ex]
+&=
+\prod_{i=1}^n 
+\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
+\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\\[2ex]
+\end{align*}
+The estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* this likelihood function, i.e.
+$$
+(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1)
+$$
+
+Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).
+
+
+Table 4.1 shows the coefficient estimates and related information that
+result from fitting a logistic regression model on the `Default` data in order to predict the probability of `default`$=$`Yes` using `balance` as the only predictor.
+![](images/Tab_4_1.png)
+
+
+**Interpretation:**
+
+* We see that $\hat\beta_1=0.0055$; this indicates that an increase in `balance` is associated with an increase in the probability of default. 
+  * To be precise, a one-unit increase in `balance` is associated with an increase in the log odds of default by 0.0055 units.
+* The $z$-statistic in Table 4.1 plays the same role as the $t$-statistic in the linear regression output: a large (absolute) value of the $z$-statistic indicates evidence against the null hypothesis $H_0: \beta_1= 0.$
+
+
+
+### Making Predictions 
+
+Once the coefficients have been estimated, we can compute the probability of `default`$=1$ for any given value of `balance`. 
+
+
+For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a `balance`-value of 1,000 [USD] is
+$$
+\begin{align*}
+\hat{p}(\texttt{balance}=1000)
+&=Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
+%&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
+&=\frac{e^{-10.6513+ 0.0055\times 1000}}{1+e^{-10.6513+ 0.0055\times 1000}}\\[2ex] 
+&= 0.00576 < 1\%
+\end{align*}
+$$
+
+By contrast, the default probability for an individual with a `balance`-value of 2,000 [USD] is
+$$
+\begin{align*}
+\hat{p}(\texttt{balance}=2000)
+&=Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
+%&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
+&=\frac{e^{-10.6513+ 0.0055\times 2000}}{1+e^{-10.6513+ 0.0055\times 2000}}\\[2ex] 
+& = 0.586
+\end{align*}
+$$
+and is thus much higher. 
+
+
+#### Qualitative Predictors: {-}
+
+![](images/Tab_4_2.png)
+
+\begin{align*}
+&Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
+&=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\[2ex] 
+&= 0.0431\\[4ex]
+&Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
+&=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\[2ex] 
+&= 0.0292\\
+\end{align*}
+
+This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. Thus, this result may be driven by an **omitted-variable bias**.
+
+To control for other confounding predictors, we need to use multiple logistic regression. 
+
+
+### Multiple Logistic Regression 
+
+
+By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following
+$$
+\begin{align*}
+p(X)
+&=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\[2ex]
+\log\left(\frac{p(X)}{1-p(X)}\right) 
+&= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
+\end{align*}
+$$
+where $X=(X_1,\dots,X_p)$, and where the unknown parameters $\beta_0,\dots,\beta_p$ are estimated by maximum likelihood.</br>
+
+![](images/Tab_4_3.png)
+
+
+Interestingly, the effect of the dummy variable `student[Yes]` is now *negative*, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was *positive*.
+
+The negative coefficient for student in the multiple logistic regression indicates that for fixed values of balance and income, a student is less likely to default than a non-student.
+
+<!-- *  The variables `student` and `balance` are correlated. -->
+
+
+The left panel of Figure 4.3 provides a graphical illustration of this apparent paradox:
+
+* Without considering `balance`, the (overall) default rates of students are *higher* than those of non-students (horizontal broken lines). This overall effect was shown in Table 4.2.
+* However, for given `balance`-values, the default rate for students is *lower* than for non-students (solid lines). 
+
+![](images/Fig_4_3.png)
+
+The right panel of Figure 4.3 provides an explanation for this discrepancy: Students tend to hold higher levels of debt, which is in turn associated with higher probability of default.
+
+
+**Summary:**
+
+* An individual student with a given credit card balance will tend to have a lower probability of default than a non-student with the same credit card balance
+* However, overall, students tend to default at a higher rate than
+non-students since, overall, they tend to have higher credit card balances.
+
+
+In other words: A student is riskier than a non-student if no information about the student's credit card balance is available. However, a student is less risky than a non-student if both have the same credit card balance.
+
+
+### Multinomial Logistic Regression {#sec-multinomialLogistic}
+
+It is possible to extend the two-class logistic regression approach to the setting of $K > 2$ classes. This extension is sometimes known as *multinomial logistic regression*. 
+
+
+To do this, we first select a single class to serve as the baseline; without loss of generality, we select the $K$th class for this role. 
+
+We model the probabilities that $Y=k$, for $k=1,\dots,K$, using $k$-specific parameters $\beta_{k0},\dots,\beta_{kp}$ with
+$$
+p_k(x)=Pr(Y=k|X=x)=\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+$$
+for $k=1,\dots,K-1$, and
+$$
+p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+$$
+
+For $k=1,\dots,K-1$ it holds that 
+$$
+\log\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+$$
+which is the counterpart to the log odds equation for $K=2.$
+
+Note that:
+
+* The predictions $\hat{p}_k(x)$, for $k=1,\dots,K$ do not depend on the choice of the baseline class. 
+
+* However, interpretation of the coefficients in a multinomial logistic regression model must be done with care, since it is tied to the choice of baseline.
+
+
+
+
+## Discriminant Analysis: Generative Models for Classification
+
+We now consider an alternative and less direct approach to estimating the probabilities 
+$$
+Pr(Y=K|X=x).
+$$
+
+Suppose that we wish to classify an observation into one of $K\geq 2$ classes. 
+
+**Prior probability:** Let 
+$$
+\pi_k=Pr(Y=k)
+$$ 
+represent the overall *prior probability* that a randomly chosen observation comes from class $k.$ We have that 
+$$
+\pi_1+\dots+\pi_K=1.
+$$  
+
+**Conditional Density function of $X$ given $Y=k:$** Let 
+$$
+f_k(x)=Pr(X=x|Y=k)
+$$
+denote the (conditional) density of $X$ for an observation that comes from class $k.$
+
+::: {.callout-caution}
+Technically, this definition is only correct if $X$ is a *qualitative* random variable. If $X$ is quantitative, then $f_k(x)dx$ corresponds to the probability of $X$ falling in a small region $dx$ around $x.$
+::: 
+
+
+**Posterior probability:** Then *Bayes' theorem* states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
+$$
+\begin{align*}
+p_k(x) 
+& = Pr(Y=k|X=x)\\
+& = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\
+& = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\
+& =\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+\end{align*}
+$${#eq-postprob1}
+where 
+$$
+\begin{align*}
+Pr(X = x) 
+&= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\
+&= \sum_{l=1}^K \pi_l f_l(x) 
+\end{align*}
+$$
+
+While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ *indirectly* simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
+
+
+We know from @sec-SL that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, @eq-postprob1 will lead to the best classifier. 
+
+However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.
+
+
+In the following sections, we discuss three classifiers that use different estimates of $f_k(x)$ to approximate the Bayes classifier: 
+
+* linear discriminant analysis
+* quadratic discriminant analysis
+* Naive Bayes
+
+
+
+### Linear Discriminant Analysis for $p = 1$ 
+
+For the beginning, let us assume that we have only one predictor, i.e., $p=1.$ 
+
+To estimate $f_k(x)$, we will assume that $f_k$ is *normal* (or *Gaussian*). In the simple $p=1$ dimensional setting, the normal distribution is
+$$
+f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{1}{2\sigma_k^2}(x-\mu_k)^2\right),
+$$
+where
+
+* $\mu_k$ is the mean of the $k$th class and 
+* $\sigma_k^2$ is the variance of the $k$th class
+* $\pi\approx 3.14159$ is the mathematical constant $\pi$. (Do not confuse it with the prior probabilities $\pi_k.$)
+
+For now, let us further assume the simplifying case of equal variances across all classes, i.e. 
+$$
+\sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2.
+$$
+Plugging this assumed version of $f_k$ into @eq-postprob1, leads to
+$$
+p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
+$${#eq-LDp1}
+
+The Bayes classifier involves assigning an observation
+$X = x$ to the class $k$ for which $p_k(x)$ is largest. Taking the $\log$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
+$$
+\delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
+$$
+is largest. The function $\delta_k(x)$ is called the **discriminant function**.
+
+::: {.callout-tip icon="false"}
+# Derivation of the discriminant function
+To see this, observe that the largest $p_k(x)$-value across all $k=1,\dots,K$ is determined by the larges numerator in @eq-LDp1, since the denominator does not change with $k.$ Thus, we only need to look at the numerator.
+
+Moreover, if a certain value $k=1,\dots,K$ maximizes $p_k(x),$ then the same $k$ maximizes also $\log(p_k(x))$ since the $\log$-function is a strictly monotonic increasing formation. 
+
+Thus we can simply look at the logarithm of the numerator: 
+\begin{align*}
+&\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
+=&\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
+=&\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
+=&\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
+\end{align*} 
+
+Removing all irrelevant terms that anyways do not depend on $k$ leads to the discriminant function $\delta_k(x).$
+:::
+
+
+**Example:**
+
+In the case of only two classes, $K=2$, with equal a priori probabilities 
+$$
+\pi_1=\pi_2\equiv \pi^*,
+$$ 
+the Bayes classifier assigns an observation $X=x$ to class $1$ if 
+$$
+\begin{align*}
+\delta_1(x) & > \delta_2(x)\\
+%%%
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2} + \log(\pi^*) 
+& > 
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2} + \log(\pi^*)\\
+%%%
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2}  
+& > 
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2}\\
+%%%
+x\cdot\mu_1 - \frac{\mu_1^2}{2}  
+& > 
+x\cdot\mu_2 - \frac{\mu_2^2}{2}\\
+%%%
+2x\cdot(\mu_1-\mu_2)   
+& > 
+\mu_1^2 - \mu_2^2\\
+%%%
+x   
+& > \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+\end{align*}
+$$
+The Bayes **decision boundary** is the point for which $\delta_1(x)=\delta_2(x);$ i.e.,
+$$
+\begin{align*}
+x   
+=\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+&=\frac{(\mu_1 - \mu_2)(\mu_1 + \mu_2)}{2(\mu_1-\mu_2)}\\ 
+&=\frac{(\mu_1 + \mu_2)}{2}
+\end{align*}
+$$
+Figure 4.4 shows a specific example with 
+
+* $\pi_1=\pi_2$
+* $\mu_1=-1.25$ and $\mu_2=1.25$ and 
+* $\sigma_1=\sigma_2\equiv\sigma =1.$
+
+The two densities $f_1$ and $f_2$ overlap such that for given $X=x$ there is some uncertainty about the class to which the observation belongs to. In this example, the Bayes classifier assigns an observation $X=x$ ...
+
+* ... to class 1 if $x<0$
+* ... to class 2 if $x>0$
+
+![](images/Fig_4_4.png)
+
+In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. In practice, however, these parameters are usually unknown, and thus need to be estimated from the data. 
+
+
+**Summary of LDA for $p=1$:**
+
+The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. The following estimates are used: 
+$$
+\begin{align*}
+\hat\pi_k    & = \frac{n_k}{n}\\
+\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
+\hat{\sigma}^2 & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2,
+\end{align*}
+$$
+where the variance estimate $\hat\sigma$ pools the predictor $x_i$ values across all groups $k=1,\dots,K.$
+
+The LDA classifier assigns an observation $X=x$ to the class $k$ for which 
+$$
+\hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \log(\hat\pi_k)
+$$
+is largest. 
+
+LDA is named **linear** since the discriminant functions $\hat\delta_k(x)$, $k=1,\dots,K$ are linear functions of $x.$
+
+
+Assumptions made by the LDA method:
+
+* Observation for each class come from a normal distribution
+* The class-specific normal distributions have class-specific means, $\mu_k$, but **equal variances** $\sigma$
+
+### Linear Discriminant Analysis for $p > 1$
+
+In the case of multiple predictors 
+$$
+X=(X_1,\dots,X_p)\quad \text{with}\quad p>1
+$$
+we need to assume that the observations for each class $k$ come from a **multivariate Gaussian distribution** with 
+
+* Class-specific $(p\times 1)$ mean vectors $\mu_k$
+* Equal $(p\times p)$ covariance matrix $\Sigma$ for all classes $k=1,\dots,K$
+
+That is, a $(p\times 1)$ random vector $X$ of class $k$ is distributed as 
+$$
+\begin{align*}
+X 
+& \sim \mathcal{N}_p\left(\mu_k,\Sigma\right)%\\
+%& \sim \mathcal{N}_p\left(
+%  \left(\begin{matrix}
+%  \mu_{k1}\\
+%  \mu_{k2}\\
+%  \vdots\\
+%  \mu_{kp}
+%  \end{matrix}\right),
+%  \left(\begin{matrix}
+%  Var(X_1)    &Cov(X_1,X_2)&\dots  & Cov(X_1,X_p)\\
+%  Cov(X_2,X_1)&Var(X_2)    &\dots  & Cov(X_2,X_p)\\
+%  \vdots      &\ddots      &\ddots & \vdots      \\
+%  Cov(X_p,X_1)&Cov(X_p,X_2)&\dots  & Var(X_p)
+%  \end{matrix}\right)
+%  \right)
+\end{align*}
+$$
+with class-specific $(p\times 1)$ mean vector $\mu_k$,
+$$
+\mu_k=E(X|Y=k)=\left(\begin{matrix}
+  \mu_{k1}\\
+  \mu_{k2}\\
+  \vdots\\
+  \mu_{kp}
+  \end{matrix}\right),
+$$
+and $(p\times p)$ covariance matrix, $\Sigma,$ that is common for all classes $k=1,\dots,K,$ i.e.
+$$
+\Sigma=Cov(X|Y=1)=\dots=Cov(X|Y=K)=Cov(X),
+$$ 
+where 
+$$
+Cov(X)=
+\left(
+  \begin{matrix}
+  Var(X_1)    &Cov(X_1,X_2)&\dots  & Cov(X_1,X_p)\\
+  Cov(X_2,X_1)&Var(X_2)    &\dots  & Cov(X_2,X_p)\\
+  \vdots      &\vdots      &\ddots & \vdots      \\
+  Cov(X_p,X_1)&Cov(X_p,X_2)&\dots  & Var(X_p)
+  \end{matrix}
+\right)
+$$
+
+The multivariate Gaussian density for class $k=1,\dots,K$ is defined as
+$$
+f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\Sigma^{-1}(x-\mu_k)\right),
+$$
+where $|\Sigma|$ denotes the determinant of the $(p\times p)$ matrix $\Sigma.$
+
+Figure 4.5 shows the case of bivariate ($p=2$) Gaussian distribution  predictors.  
+
+![](images/Fig_4_5.png)
+
+Under the multivariate normality assumption (with common covariance matrix and group-specific mean vectors) the Bayes classifier assigns an multivariate observation $X=x$ to the class for which the discriminant function 
+$$
+\delta_k(x)=x^T \Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \log(\pi_k)
+$${#eq-LDA_mult}
+is largest.
+
+
+An example for $p=2$ and $K=3$ with three equally sized (i.e. $\pi_1=\pi_2=\pi_3$) Gaussian classes is shown in the left-hand panel of Figure 4.6. The three ellipses represent regions that contain $95\%$ of the probability for each of the three classes. The dashed lines are the Bayes decision boundaries. In other words, they represent the set of values x for which $\delta_k(x) = \delta_l(x)$, $k\neq l$. 
+
+![](images/Fig_4_6.png)
+
+Again, the unknown parameters $\mu_k$, $\pi_k$, and $\Sigma$ must be estimated from the data with formulas similar to those for the $p=1$ case. 
+
+
+#### The `Default` data example {-}
+
+We can perform LDA on the `Default` data in order to predict whether or not an individual will default on the basis of 
+
+* credit card balance (real variable) and 
+* student status (qualitative variable).
+
+**Note:** Student status is qualitative, and thus the normality assumption made by LDA is clearly violated in this example! However, LDA is often remarkably robust to model violations, as this example (apparently) shows. 
+
+
+The LDA model fit to the $10,000$ training samples results in an overall training error rate of $2.75\%:$ 
+
+```{r}
+# MASS package contains the lda() function
+suppressPackageStartupMessages(library(MASS)) 
+
+## Sample size 
+n              <- nrow(Default)
+
+lda_obj        <- lda(default ~ balance + student, 
+                      data = Default)
+ldaPredict_obj <- predict(lda_obj)
+
+## Training error rate:
+sum(Default$default != ldaPredict_obj$class)/n 
+```
+
+
+This sounds like a low error rate, but two caveats must be noted:
+
+* Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a **new set of individuals** will default. 
+   * The reason is that we specifically adjust the parameters of our model to do well on the training data. Thus, we may **overfit** the training data.
+   * Generally, the higher the ratio of parameters $p$ to the number of samples $n$, the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
+
+* Since only $3.33\%$ of the individuals in the training sample defaulted, a simple naive classifier that always predicts "not default" for every person, regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
+
+```{r}
+## Training error rate of the "null classifier":
+sum(Default$default != rep("No", n))/n 
+```
+
+
+### Classification Errors of Binary Classifiers 
+
+Any binary classifier can make two types of errors:
+
+* False Negatives (FN): Predicting "no default" for a person who actually defaults
+* False Positives (FP): Predicing "default" for a person who actually does not default
+
+Depending on the context, both errors can have different application/context specific costs. 
+
+A **confusion matrix** shows both types of errors. The upper off-diagonal entry shows the FNs; the lower off-diagonal entry shows the FPs. A perfect confusion matrix has zeros in the off-diagonal entries.
+
+```{r}
+## Confusion matrix
+table(ldaPredict_obj$class, Default$default, 
+      dnn = c("Predicted default status", 
+              "True default status"))
+```
+
+![](images/Tab_4_4.png)
+
+
+Numbers of True/False Positive Predictions:
+
+* LDA predicts that $P^*=104$ people default, where $P^*$ denotes the number of **Predicted Positives**. 
+  * $TP=81$ of $P^*=104$ actually default</br>($TP=$**Number of True Positives**).
+  * $FP=23$ of $P^*=104$ actually do not default</br>($FP=$**Number of False Positives**).
+
+Numbers of True/False Negative Predictions:
+
+* LDA predicts that $N^*=9896$ people do not default, where $N^*$ denotes the number of **Predicted Negatives**.
+  * $TN=9644$ of $N^*=9896$ actually do not default</br> 
+  ($TN=$**Number of True Negatives**)
+  * $FN=252$ of $N^*=9896$ actually default</br> 
+  ($FN=$**Number of FALSE Negatives**)
+
+True Positive/Negative Rates:
+
+*   True Positive Rate: $TP/P=(81/333)\cdot 100\%\approx 24.3\%$
+<!-- True Positive Rate is also called *sensitivity* -->
+<!-- $81$ of the $333$ default individuals are correctly labeled by LDA.<br> -->
+* True Negative Rate: $TN/N=(9644/9667)\cdot 100\%\approx 99.8\%$
+<!-- $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br> -->
+
+False Positive/Negative Rates:
+
+* False Positive Rate: $FP/N=(23/9667)\cdot 100\%\approx 0.2\%$  
+<!-- $23$ of the $9667$ no default individuals are incorrectly labeled.<br> -->
+<!-- False Positive Rage equals one minus *specificity* -->
+* False Negative Rate: $FN/P=(252/333)\cdot 100\%\approx 75.7\%$  
+<!-- $252$ of the $333$ default individuals are in correctly labeled.<br>  -->
+  
+The small False Positive Rate of $0.2\%$ is good since this means that trustworthy "no default" people are rarely labeled as non-trustworthy "default" people. 
+
+However, the high False Negative Rate of $75.7\%$ is very problematic for a bank since this means that the bank often does not detect the non-trustworthy "default" people. 
+
+#### Choosing the Classification Threshold {-}
+
+If a "False Negative Event" costs the bank more than a "False Positive Event" (or vice versa), then the bank will want to adjust the classifying threshold of the classifier. 
+
+<!-- In the two class cases, e.g. $\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},$  -->
+
+The Bayes classifier, and thus also all classifiers which try to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a person $i$ with predictor value $X=x_i$ is assigned to the `default`$=$`Yes` class if
+$$
+Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5.
+$$
+
+However, if the costs of False Negatives (FN) are higher than the costs of False Positives (FP), one can consider lowering the classifying threshold. This decreases the predicted negatives (N$^*$) and thus also decreases the False Negatives (FN) since N$^*=$TN$+$FN.
+
+
+For instance, we might classify any person $i$ with a posterior probability of default above $20\%,$
+$$
+Pr(\texttt{default}=\texttt{Yes}|X=x_i)>0.2,
+$$ 
+into the `default`$=$`Yes` class. 
+
+```{r}
+## Predicted posterior probabilities 
+## head(ldaPredict_obj$posterior)
+
+## Container for the predicted classes
+PredictedDefault <- rep("No", n)
+## Fill in the "Yes" classifications 
+PredictedDefault[ldaPredict_obj$posterior[,2] > 0.2] <- "Yes"
+
+## Confusion matrix for 0.2 threshold:
+table(PredictedDefault, Default$default, 
+      dnn = c("Predicted default status", 
+              "True default status"))
+```
+
+
+
+![](images/Tab_4_5.png)
+
+Changing the threshold from $0.5$ to $0.2$ ...
+
+* ... **lowered** the False Negative Rate ($FN/P$) 😎
+   * from $252/333\approx 75.7\%$ 
+   * to $138/333\approx 41.4\%$  
+* ... **increased** the False Positive Rate ($FP/N$) 😕
+   * from $23/9667\approx 0.2\%$ 
+   * to $235/9667\approx 2.4\%$
+* ... **increased** the Overall Error Rate ($(FN+FP)/n$) 😕
+   * from $(23 + 252)/10000\approx 2.75\%$ 
+   * to $(235 + 138)/10000\approx 3.73\%$
+
+For a credit card company, this slight increase in the overall error rate can be a small price to pay for a more accurate identification of people who indeed default. 
+
+<!-- Such an adjustment of the threshold increases the overall error rate, and changes the False Positives and False Negatives. The latter can be advantageous in a cost-benefit analysis - even though the overall error rate is increased.   -->
+
+
+#### Classification Performance Measures {-}
+
+Table 4.6 and 4.7 summarize the different classification performance measures.
+
+![](images/Tab_4_6_and_4_7.png)
+
+
+### The ROC curve 
+
+
+The (Receiver Operating Characteristics) **ROC curve** is a popular graphic for displaying the 
+$$
+\text{TP Rate}=\text{TP/P}\quad \text{(``sensitivity'' or ``power'')}
+$$ 
+against the 
+$$
+\text{FP Rate}=\text{FP/N} \quad \text{(``}1-\text{specificity'' or ``type I error'')}
+$$ 
+for all possible threshold values (from zero to one). 
+
+The following `R`-codes provides a "by hand" implementation of a plot of the ROC curve for LDA applied to the `Default`-dataset.
+```{r}
+#| label: fig-ROC
+#| fig-cap: The ROC curve traces out two types of error as we vary the threshold value for the posterior probability of default. The actual thresholds are often not shown. Here, however, we show them using a color code from yellow [threshold = 1] to purple [threshold = 0]. The ideal ROC curve hugs the top left corner, indicating a high true positive rate and a low false positive rate. The dotted line represents the "no information" classifier; this is what we would expect if student status and credit card balance are not associated with probability of default.
+
+## Considered thresholds (exclude the trivial 0/1 values)
+thresholds       <- seq(from = 0, to = 1, length.out = 250)
+n_thresholds     <- length(thresholds)
+
+## Container for the predicted classes
+PredictedDefault_mat <- matrix("No", n, n_thresholds)
+
+## Fill in the "Yes" classifications 
+for(j in 1:n_thresholds){
+  PredicedYes  <- ldaPredict_obj$posterior[,2] > thresholds[j]
+  PredictedDefault_mat[PredicedYes, j] <- "Yes"
+}
+
+## Number of actual positives
+P <- length(Default$default[Default$default == "Yes"])
+## Number of actual negatives
+N <- length(Default$default[Default$default == "No"])
+
+TP_Rate <- numeric(n_thresholds)
+FP_Rate <- numeric(n_thresholds)
+
+for(j in 1:n_thresholds){
+  ## Classification results among the actually positives
+  Classifications_among_trueYes <- PredictedDefault_mat[,j][Default$default == "Yes"]
+  ## Classification results among the actually negatives
+  Classifications_among_trueNo <- PredictedDefault_mat[,j][Default$default == "No"]
+  ## Number of True Positives
+  TP <- length(Classifications_among_trueYes[Classifications_among_trueYes == "Yes"])
+  ## Number of False Positives
+  FP <- length(Classifications_among_trueNo[Classifications_among_trueNo == "Yes"])
+
+  ## TP error rate:
+  TP_Rate[j] <- TP/P
+  ## FP error rate:
+  FP_Rate[j] <- FP/N 
+}
+
+## Layout for the plotting region (two plots side-by-side)
+layout(matrix(1:2, ncol=2), width = c(2,1),height = c(1,1))
+
+col_range <- hcl.colors(n       = n_thresholds, 
+                       palette = "viridis")
+
+## Plot the ROC curve 
+plot(x    = FP_Rate, 
+     y    = TP_Rate, 
+     col  = col_range, 
+     xlab = "False Positive Rate",
+     ylab = "True Positive Rate",
+     main = "ROC Curve", 
+     type = "o", lwd=1.5, pch = 19)
+abline(a = 0, b = 1, lty = 3, col = "gray")
+
+## Color-Legend for threshold values
+legend_image <- as.raster(matrix(rev(col_range), ncol=1))
+plot(c(0,2),c(0,1), type = "n", axes = FALSE, xlab = "", ylab = "", main = 'Threshold-Value')
+text(x      = 1.5, 
+     y      = seq(from = 0, to = 1, l = 5), 
+     labels = seq(from = 0, to = 1, l=5))
+rasterImage(legend_image, xleft = 0, ybottom = 0, xright = 1, ytop = 1)
+```
+
+
+<!-- ![](images/Fig_4_8.png) -->
+
+The commonly reported summary statistic for the ROC curve is the "Area Under the (ROC) Curve" **AUC**
+
+ * Ideal AUC-value is AUC$=1.$
+ * A "no information" classifier has AUC$=0.5.$
+
+The R package `ROCR` contains functions for computing and plotting the ROC curve and for computing the AUC value. 
+```{r}
+## install.packages("ROCR")
+library("ROCR")
+
+## Caution: Choose the posterior probability column carefully, 
+## it may be lda.pred$posterior[,1] or lda.pred$posterior[,2], 
+## depending on your factor levels
+
+## Predicted and actual classes:
+predict <- prediction(ldaPredict_obj$posterior[,2], Default$default) 
+## compute TP-Ratios and FP-Ratios:
+perform <- performance(predict, "tpr", "fpr")
+## ROC curve
+plot(perform, colorize = TRUE)
+## AUC
+AUC     <- performance(predict, measure = "auc")
+print(AUC@y.values)
+```
+
+
+
+### Quadratic Discriminant Analysis (QDA) 
+
+
+Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form
+$$
+X|Y=k \sim N(\mu_k,\Sigma_k),
+$$
+where $\Sigma_k$ is a $(p\times p)$ covariance matrix for the $k$th class. 
+
+Under this assumption, the Bayes classifier assigns an observation $X=x$ to the class for which 
+$$
+\begin{align*}
+&\delta_k(x)=\\
+&= - \frac{1}{2}\left(x-\mu_k\right)^T\Sigma_k^{-1}\left(x-\mu_k\right) 
+   - \frac{1}{2}\log\left(|\Sigma_k|\right)
+   + \log(\pi_k)\\
+&= - \frac{1}{2}x^T    \Sigma_k^{-1}x
+   + \frac{1}{2}x^T    \Sigma_k^{-1}\mu_k
+   - \frac{1}{2}\mu_k^T\Sigma_k^{-1}\mu_k 
+   - \frac{1}{2}\log\left(|\Sigma_k|\right)
+   + \log(\pi_k)
+\end{align*}
+$$
+is largest.
+
+This classifier is called *quadratic* discriminant analysis since the predictor-value $x$ appears as a quadratic function. 
+
+QDA has **much** more parameters than LDA and is thus a much more flexible  classifier than LDA:
+
+* LDA requires 
+   * $K$ a-priori probability estimates 
+   * $K\cdot p$ mean estimations 
+   * $(p+1)/2$ covariance estimates
+
+* QDA requires 
+   * $K$ a-priori probability estimates 
+   * $K\cdot p$ mean estimations 
+   * ${\color{red}K}\cdot(p+1)/2$ covariance estimates
+
+The difference in flexibility needs to be considered under the **bias variance trade-off**: 
+
+* Low flexibility generally means low variance, but large bias
+* High flexibility generally means high variance, but low bias
+
+Roughly: 
+
+* LDA tends to be better than QDA if there are relatively few training observations (small $n_{Train}$) and so reducing variance is crucial.
+* QDA is recommended 
+   * if the training set $n_{Train}$ is large, so that the variance of the classifier is not a major concern, or 
+   * if the assumption of a common covariance matrix for the $K$ classes is clearly unrealistic.
+
+![](images/Fig_4_9.png)
+
+
+### Naive Bayes 
+
+Remember, that Bayes’ theorem states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
+$$
+p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+$$
+where 
+
+* $\pi_k=Pr(Y=k)$ denote the prior probabilities and
+* $f_k(x)$ denotes the $p$-dimensional, conditional density of $X,$ given $Y=k.$
+
+We have seen above, that estimating the prior probabilities $\pi_1,\dots,\pi_K$ is typically straight forward using the relative frequencies
+$$
+\hat\pi_k=\frac{n_k}{n},\quad k=1,\dots,K.
+$$ 
+However, estimating the $p$ dimensional density functions 
+$$
+f_1(x),\dots,f_K(x)
+$$ 
+was and is substantially more difficult. 
+
+To make estimation tractable and useful, LDA and QDA assume parametric families for these density functions; namely, multivariate normals with and without common covariances.  
+
+By contrast, **Naive Bayes** only makes the assumption that the $p$ dimensional components of the predictor are *independent* from each other. I.e. that the joint, $p$-dimensional density $f_k(x)$ can be written as the product of the $p$ marginal densities 
+<!-- $f_{kj}(x_j)$, $j=1,\dots,p$,  -->
+$$
+f_k(x) = f_{k1}(x_1)\cdot f_{k2}(x_2)\cdot\;\dots\;\cdot f_{kp}(x_p)
+$$ 
+
+This simplifying assumption may not be completely correct, but it often leads to very good classification results - particularly, in classification problems with smallish sample sizes.
+
+Under the naive Bayes assumption, we have that
+$$
+Pr(Y=k|X=x)=\frac{\pi_k f_{k1}(x_1)\cdot\;\dots\;\cdot f_{kp}(x_p)}{\sum_{l=1}^K\pi_l f_{l1}(x_1)\cdot\;\dots\;\cdot f_{lp}(x_p)}.
+$$
+
+For estimating the single, one dimensional marginal density functions 
+$$
+f_{kj}(x),\quad j=1,\dots,p\quad\text{and}\quad k=1,\dots,K
+$$
+we can use ...
+
+* a univariate parametric distribution assumption. Examples: 
+   * A normal distribution $X_j|Y=k \sim N(\mu_{jk},\sigma_{jk}).$ 
+   * Alternative parametric distributions: Exponential, $\chi^2$-distribution, Gamma distribution, etc. 
+* non-parametric kernel density estimation (for quantitative predictors) using the `R`-function `density()`
+* simple relative frequency (for qualitative predictors)
+   * Example: Student status $x\in\{\texttt{Yes},\texttt{No}\}$
+   $$
+   \hat{f}_{kj}(x)=\left\{
+    \begin{matrix}
+    \frac{\#\text{students in group $k$}}{n_k}&\text{if }\; x=\texttt{Yes}\\
+    1-\frac{\#\text{students in group $k$}}{n_k}&\text{if }\; x=\texttt{No}
+    \end{matrix}\right.
+   $$
+
+The different estimation approaches can differ for each $j=1,\dots,p.$
+
+<!-- 
+OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? 
+Why do we need another method, when we have logistic regression?
+There are several reasons:
+
+* When there is substantial separation between the two classes, the
+parameter estimates for the logistic regression model are surprisingly
+unstable. The methods that we consider in this section do not suffer
+from this problem.
+
+* If the distribution of the predictors $X$ is approximately normal in
+each of the classes and the sample size is small, then the approaches
+in this section may be more accurate than logistic regression.
+OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?  
+-->
+
+
+## `R`-Lab: Classification
+
+
+### The Stock Market Data
+
+We will begin by examining some numerical and graphical summaries of
+the `Smarket` data, which is part of the `ISLR2` library. This
+data set consists of percentage returns for the S&P 500 stock index
+over $1,250$ days, from the beginning of 2001 until the end of
+2005. For each date, we have recorded 
+
+* the percentage returns for each of the five previous trading days: `Lag1`, `Lag2`, ... `Lag5`
+* `Volume` (the number of shares traded on the previous day, in billions)
+* `Today` (the percentage return on the date in question)
+* `Direction` (whether the market was `Up` or `Down` on this date). 
+
+Our goal is to predict the qualitative response
+<center>
+`Direction` $\in\{$ `Up`, `Down` $\}$
+</center>
+using the other predictors/features.
+
+```{r chunk1}
+library(ISLR2)   # package contains the data
+attach(Smarket)  # attach(Smarket) allows to use the variables 
+                 # contained Smarket directly 
+                 # (i.e. 'Direction' instead of 'Smarket$Direction')
+names(Smarket)   # names of the variables in the Smarket data
+dim(Smarket)     # total sample size n, number of variables
+summary(Smarket) # descriptive statistics (mean, median, ...)
+pairs(Smarket)   # pairwise scatter plots
+```
+
+The `cor()` function produces a matrix that contains all of the pairwise correlations among the predictors in a data set. The first command below gives an error message because the `Direction` variable is qualitative (`Up` and `Down`).
+
+```{r chunk2, error=TRUE}
+cor(Smarket)
+round(cor(Smarket[, names(Smarket) != "Direction"]), 2)
+```
+
+As one would expect, the correlations between the lag variables and today's returns are close to zero. In other words, there appears to be little correlation between today's returns and previous days' returns. The only substantial correlation is between `Year` and `Volume`. 
+
+
+**Note:** The variable `Direction` contains simply the sign-information extracted from the variable `Today` 
+
+```{r}
+Direction[1:4]
+Today[1:4]
+```
+
+<!-- By plotting the data, which is ordered chronologically, we see that `Volume` is increasing over time. In other words, the average number of shares traded daily increased from 2001 to 2005.
+
+```{r chunk3}
+attach(Smarket)
+plot(Volume)
+```
+ -->
+
+### Logistic Regression
+
+Next, we will fit a logistic regression model in order to predict `Direction` using `Lag1` through `Lag5` and `Volume`. 
+
+The `glm()` function  can be used to fit many types of generalized linear models, including logistic regression. 
+
+The syntax of the `glm()` function is similar to that of  `lm()`,  except that we must pass in the argument `family = binomial` in order to tell `R` to run a logistic regression rather than some other type of generalized linear model.
+
+
+```{r chunk4}
+glm.fits <- glm(
+    Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+    data = Smarket, family = binomial
+  )
+summary(glm.fits)
+```
+
+The smallest $p$-value here is associated with `Lag1`. The negative coefficient for this predictor suggests that if the market had a positive return yesterday, then it is less likely to go up today. However, at a value of $0.145$, the $p$-value is still relatively large, and so there is no clear evidence of a real association between `Lag1` and `Direction`. 
+
+We use the `coef()` function in order to access just the coefficients for this fitted model. We can also use the `summary()` function to access  particular aspects of the fitted model, such as the $p$-values for the coefficients.
+
+```{r chunk5}
+coef(glm.fits)
+summary(glm.fits)$coef
+summary(glm.fits)$coef[, 4]
+```
+
+
+
+The `predict()` function can be used to predict the probability that the market will go up, given values of the predictors. The `type = "response"` option tells `R` to output probabilities of the form $P(Y=1|X)$, as opposed to other information such as the logit. If no data set is supplied to the `predict()` function, then  the probabilities are computed for the training data that was used to fit the logistic regression model. Here we have printed only the first ten probabilities. 
+
+
+```{r chunk6}
+## Posterior probabilities
+glm.probs <- predict(glm.fits, type = "response")
+glm.probs[1:4]
+```
+
+
+We know that these values correspond to the probability of the market going up, rather than down, because the `contrasts()` function indicates that `R` has created a dummy variable with a 1 for `Up`.
+
+
+```{r}
+contrasts(Direction)
+```
+I.e. 
+\begin{align*}
+Y = 0 &\Leftrightarrow \texttt{Direction} = \texttt{Down}\\[2ex]
+Y = 1 &\Leftrightarrow \texttt{Direction} = \texttt{Up}
+\end{align*}
+Such that, 
+$$
+p(X) = P(Y=1|X) = P(\texttt{Direction} = \texttt{Up} |X).
+$$
+
+
+
+In order to actually make a prediction as to whether the market will go up or down on a particular day, we must convert these predicted probabilities 
+$$
+0\leq p(X)\leq 1
+$$ 
+into class labels, `Up` or `Down`. The following two commands create a vector of class predictions based on whether the predicted probability of a market increase is greater than or less than $0.5$.
+
+```{r chunk7}
+glm.pred                 <- rep("Down", 1250) # sample size: 1250
+glm.pred[glm.probs > .5] <- "Up"
+```
+
+The first command creates a vector of 1,250  `Down` elements. The second line transforms to `Up` all of the elements for which the predicted probability of a market increase exceeds $0.5$. 
+
+Given these predictions, the `table()` function can be used to produce a **confusion matrix** in order to determine how many observations were correctly or incorrectly classified. 
+<!-- %By inputting two qualitative vectors R will create a two by two table with counts of the number of times each combination occurred e.g. predicted `Up` and market increased, predicted `Up` and the market decreased etc. -->
+
+```{r chunk8}
+table(glm.pred, Direction)
+```
+
+The **diagonal elements** of the confusion matrix indicate **correct predictions**, while the **off-diagonals** represent **incorrect predictions**. 
+
+Hence our model correctly predicted that the market would go up on $507$ days and that it would go down on $145$ days, for a total of $507+145 = 652$ correct predictions. 
+
+
+The **overall training error rate** is
+```{r}
+## Overall training error rate 
+(141 + 457) / 1250 # Equivalently: 1 - (507+145)/1250
+```
+
+Alternatively, the `mean()` function can be used to compute the overall training error rate; i.e., the fraction of days for which the prediction was correct (within the training data). In this case, logistic regression correctly predicted the movement of the market $52.2\%$ of the time.
+
+```{r}
+## Alternative way to compute the 
+## overall training error rate 
+mean(glm.pred != Direction)
+```
+
+
+At first glance, it appears that the logistic regression model is working a little better than random guessing, since the training error rate is smaller than $0.5.$ 
+
+
+However, this result is misleading because we trained and tested the  model on the same set of $1,250$ observations. In other words, $47.8\%$ is the *training* error rate. 
+
+The training error rate is often overly optimistic. It tends to *underestimate* the true (unknown) test error rate.  In order to better assess the accuracy of the logistic regression model in this setting, we can fit the model using part of the data, and then examine how well it predicts the *held out* data.
+
+This will yield a more realistic error rate, in the sense that in practice we will be interested in our model's performance not on the data that we used to fit the model, but rather on days in the future for which the market's movements are unknown.
+
+To implement this strategy, we will first create a boolean `train` vector allowing us to select the daily observations from 2001 through 2004. We will then use this vector to create 
+
+* a training subset (days from 2001 through 2004) and 
+* a testing subset (days in 2005)
+
+from the total `Smarket` dataset. 
+
+```{r chunk9}
+train          <- (Year < 2005)
+## Test data 
+Smarket_2005   <- Smarket[!train, ] 
+## Test sample size 
+dim(Smarket_2005)[1] 
+## Dependent variable of the test data 
+Direction_2005 <- Direction[!train]
+```
+
+The object `train` is a vector of $1250$ elements, corresponding to the observations in our data set. The elements of the vector that correspond to observations that occurred before 2005 are set to `TRUE`, whereas those that correspond to observations in 2005 are set to `FALSE`.
+
+The object `train` is a  *Boolean*  vector, since its elements are `TRUE` and `FALSE`. Boolean vectors can be used to obtain a subset of the rows or columns of a matrix. For instance, the command `Smarket[train, ]` would pick out a submatrix of the stock market data set, corresponding only to the dates before 2005, since those are the ones for which the elements of `train` are `TRUE`.
+
+The `!` symbol can be used to reverse all of the elements of  a Boolean vector. That is, `!train` is a vector similar to `train`, except that  the elements that are `TRUE` in `train` get swapped to `FALSE` in `!train`, and the elements that are `FALSE` in `train` get swapped to `TRUE` in `!train`. Therefore, `Smarket[!train, ]` yields a submatrix of the stock market data containing only the observations for which `train` is `FALSE`---that is, the observations with dates in 2005. The output above indicates that there are 252 such observations.
+
+We now fit a logistic regression model using only the subset of the observations that correspond to dates before 2005, using the `subset` argument. We then obtain predicted probabilities of the stock market going up for each of the days in our test set---that is, for the days in 2005.
+
+```{r chunk10}
+glm.fits <- glm(
+    Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+    data   = Smarket, 
+    family = binomial, 
+    subset = train
+  )
+## Using the trained model to predict the held out test data  
+glm.probs <- predict(glm.fits, 
+                     newdata = Smarket_2005,
+                     type    = "response")
+```
+
+Notice that we have trained and tested our model on two completely separate data sets: 
+
+* training (estimation) was performed using only the **dates before 2005**
+* testing was performed using only the **dates in 2005**. 
+
+Finally, we compute the `Down`/`Up`-predictions for 2005 and compare them to the actual movements of the market over that time period.
+
+```{r chunk11}
+glm.pred                 <- rep("Down", 252)
+glm.pred[glm.probs > .5] <- "Up"
+## Test data confusion matrix 
+table(glm.pred, Direction_2005)
+## Rate of prediction errors in the test data 
+mean(glm.pred != Direction_2005)
+## Rate of correct predictions in the test data 
+mean(glm.pred == Direction_2005)
+```
+
+This result is rather disappointing: the test error rate is $52\%$, which is worse than random guessing! 
+
+Of course this result is not all that surprising, given that one would not generally expect to be able to  use previous days' returns to predict future market performance. (After all, if it were possible to do so, then we should start trading rather than learning statistics.)
+
+We recall that the logistic regression model had very underwhelming $p$-values associated with all of the predictors, and that the smallest $p$-value, though not very small, corresponded to `Lag1`. Perhaps by removing the variables that appear not to be helpful in predicting `Direction`, we can obtain a more effective model. After all, using predictors that have no relationship with the response tends to cause a deterioration in the test error rate (since such predictors cause an increase in variance without a corresponding decrease in bias), and so removing such predictors may in turn yield an improvement. Below we have refit the logistic regression using just `Lag1` and `Lag2`, which seemed to have the highest predictive power in the original logistic regression model.
+
+```{r chunk12}
+## Train model using the training data
+glm.fits  <- glm(Direction ~ Lag1 + Lag2, 
+                 family = binomial, 
+                 data   = Smarket, 
+                 subset = train)
+## Predict the test data                  
+glm.probs <- predict(glm.fits, Smarket_2005, type = "response")
+##
+glm.pred                 <- rep("Down", 252)
+glm.pred[glm.probs > .5] <- "Up"
+## Test data confusion matrix
+table(glm.pred, Direction_2005)
+## Test data rate of correct predictions
+mean(glm.pred == Direction_2005)
+```
+
+Now the results appear to be a little better: $56\%$ of the daily movements have been correctly predicted. 
+
+However, you should compare this with the naive prediction that the market will **increase every day**:
+```{r}
+round( mean("Up" == Direction_2005), 2)
+```
+This naive prediction strategy will be correct $56\%$ of the time in the test data! Hence, in terms of overall error rate, the logistic regression method is no better than this naive approach. 
+
+
+However, the confusion matrix shows that on days when logistic regression predicts an increase in the market, it has a $58\%$ accuracy rate (Positive predictive value TP/P*):
+```{r}
+## Test data positive predictive value TP/P*
+round( 106 / (106 + 76), 2) 
+```
+This suggests a possible trading strategy of buying on days when the logistic regression model predicts an *increasing* market, and avoiding trades on days when a decrease is predicted. Of course one would need to investigate more carefully whether this small improvement was real or just due to random chance.
+
+
+Suppose that we want to predict the returns associated with particular values of `Lag1` and `Lag2`. In particular, we want to predict `Direction` on a day when `Lag1` and `Lag2` equal $1.2$ and $1.1$, respectively, and  on a day when they equal $1.5$ and $-0.8.$ We do this using the `predict()` function.
+
+```{r chunk13}
+## Caution: You need to use the same variables names 
+## here "Lag1" and "Lag2" as used when computing 'glm.fits'
+predict(glm.fits,
+        newdata = data.frame(Lag1 = c(1.2,  1.5),  
+                             Lag2 = c(1.1, -0.8)),
+        type    = "response")
+```
+
+
+
+### Linear Discriminant Analysis
+
+Now we will perform LDA on the `Smarket` data. 
+
+In `R`, we fit an LDA model using the  `lda()` function, which is part of the `MASS` library. 
+
+The syntax for the `lda()` function is identical to that of `lm()`, and to that of `glm()` except for the absence of the `family` option. 
+
+
+We fit the model using only the training observations before 2005.
+
+```{r chunk14}
+library(MASS)
+lda.fit <- lda(Direction ~ Lag1 + Lag2, 
+               data   = Smarket,
+               subset = train)
+lda.fit
+```
+
+The LDA output indicates that 
+
+* $\hat\pi_1=0.492$ and 
+* $\hat\pi_2=0.508$
+
+That is, $49.2\%$ of the training observations correspond to days during which the market went down. 
+
+The output also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of $\mu_k$. These suggest that there is a tendency for the previous 2 days' returns to be negative on days when the market increases, and a tendency for the previous days' returns to be positive on days when the market declines. 
+
+The "coefficients of linear discriminants" output provides the linear combination of `Lag1` and `Lag2` that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of $X=x$ in @eq-LDA_mult. If $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.
+
+The `plot()` function produces plots of the *linear discriminants*, obtained by computing $-0.642\times$`Lag1`$- 0.514 \times$ `Lag2` for each of the training observations. The `Up` and `Down` observations are displayed separately.
+```{r}
+plot(lda.fit)
+```
+
+The `predict()` function returns a list with three elements. The first element,  `class`,  contains LDA's predictions about the movement of the market. The second element, `posterior`, is a matrix whose $k$th column contains the posterior probability that the corresponding observation belongs to the $k$th class, computed from (4.15). Finally, `x` contains the linear discriminants, described earlier.
+
+```{r chunk15}
+lda.pred <- predict(lda.fit, Smarket_2005)
+names(lda.pred)
+```
+
+The LDA and logistic regression predictions are almost identical. This observation holds true also general since LDA and logistic regression are effectively very similar classifiers; see Section 4.5 in our textbook `ISLR2`.
+
+```{r chunk16}
+lda.class <- lda.pred$class
+table(lda.class, Direction_2005)
+mean(lda.class == Direction_2005)
+```
+
+Applying a $50\%$ threshold to the posterior probabilities allows us to recreate the predictions contained in `lda.pred$class`.
+
+```{r chunk17}
+sum(lda.pred$posterior[, 1] >= .5)
+sum(lda.pred$posterior[, 1] < .5)
+```
+
+The first column in `lda.pred$posterior` contains the posterior probabilities that the market will *decrease* and the second column contains the posterior probabilities that the market will *increase*: 
+
+```{r chunk18}
+lda.pred$posterior[1:20, 1]
+lda.pred$posterior[1:20, 2]
+lda.class[1:20]
+```
+
+If we wanted to use a posterior probability threshold other than $50\%$ in order to make predictions, then we could easily do so. 
+
+For instance, suppose that we wish to predict a market decrease only if we are very certain that the market will indeed decrease on that day---say, if the posterior probability for a decrease is at least $90\%.$
+
+```{r chunk19}
+sum(lda.pred$posterior[, 1] > .9)
+```
+
+No days in 2005 meet that threshold! In fact, the greatest posterior probability of decrease in all of 2005 was $52.02\%:$
+
+```{r}
+max(lda.pred$posterior[, 1])
+```
+
+### Quadratic Discriminant Analysis
+
+We will now fit a QDA model to the `Smarket` data. QDA is  implemented in `R` using the `qda()` function, which is also part of the `MASS` library. The syntax is identical to that of `lda()`.
+
+```{r chunk20}
+qda.fit <- qda(Direction ~ Lag1 + Lag2, data = Smarket,
+    subset = train)
+qda.fit
+```
+
+The output  contains the group means. But it does not contain the coefficients of the linear discriminants, because the QDA classifier involves  a quadratic, rather than a linear, function of the predictors. The `predict()` function works in exactly the same fashion as for LDA.
+
+```{r chunk21}
+qda.class <- predict(qda.fit, Smarket_2005)$class
+table(qda.class, Direction_2005)
+mean(qda.class == Direction_2005)
+```
+
+Interestingly, the QDA predictions are accurate almost $60\%$ of the time, even though the 2005 data was not used  to fit the model. This level of accuracy is quite impressive for stock market data, which is known to be quite hard to model accurately.
+This  suggests that the quadratic form assumed by QDA may capture the true relationship more accurately than the linear forms assumed by LDA and logistic regression.
+ However, we recommend evaluating this method's performance on a larger test set  before betting  that this approach will consistently beat the market!
+
+### Naive Bayes
+
+Next, we fit a naive Bayes model to the `Smarket` data. Naive Bayes is implemented in `R` using the `naiveBayes()` function, which is part of the `e1071` library. The syntax is identical to that of `lda()` and `qda()`. This rather simple implementation of the naive Bayes classifier models uses a univariate Gaussian distribution for each quantitative predictor. 
+
+```{r chunk22}
+## install.packages("e1071") 
+library("e1071")
+nb_fit <- naiveBayes(Direction ~ Lag1 + Lag2, 
+                     data   = Smarket,
+                     subset = train)
+nb_fit
+```
+
+The output contains the estimated mean and standard deviation for each variable in each class. For example, the mean for `Lag1` is $0.0428$ for `Direction=Down`, and the standard deviation is $1.23$. We can easily verify this:
+
+```{r chunk23}
+mean(Lag1[train][Direction[train] == "Down"])
+sd(Lag1[train][Direction[train] == "Down"])
+```
+
+The `predict()` function is straightforward to use:
+
+```{r chunk24}
+nb.class <- predict(nb_fit, Smarket_2005)
+## Test data confusion matrix
+table(nb.class, Direction_2005)
+## Test data overall rate of correct classifications
+mean(nb.class == Direction_2005)
+```
+
+Naive Bayes performs very well on this data, with accurate predictions over $59\%$ of the time. This is slightly worse than QDA, but much better than LDA.
+
+The `predict()` function can also generate estimates of the probability that each observation belongs to a particular class. 
+
+```{r chunk25}
+nb.preds <- predict(nb_fit, Smarket_2005, type = "raw")
+nb.preds[1:5, ]
+```
+
+
+### $K$-Nearest Neighbors
+
+We will now perform KNN using the `knn()` function, which is part of the `class` library. This function works rather differently from the other model-fitting functions that we have encountered thus far. Rather than a two-step approach  in which we first fit the model and then we use the model to make predictions, `knn()` forms predictions using a single command. The function requires four inputs.
+
+* A matrix containing the predictors associated with the training data, labeled `train.X` below.
+* A matrix containing the predictors associated with the data for which we wish to make predictions, labeled `test.X` below.
+* A vector containing the class labels for the training observations, labeled `train.Direction` below.
+* A value for $K$, the number of nearest neighbors to be used by the classifier.
+
+We use the `cbind()` function, short for *column bind*, to bind the `Lag1` and `Lag2` variables together into two matrices, one for the training set and the other for the test set.
+
+```{r chunk26}
+## install.packages("class")
+library("class")
+train.X         <- cbind(Lag1, Lag2)[train, ]
+test.X          <- cbind(Lag1, Lag2)[!train, ]
+train.Direction <- Direction[train]
+```
+
+Now the `knn()` function can be used to predict the market's movement for the dates in 2005. We set a random seed before we apply `knn()` because if several observations are tied as nearest neighbors, then `R` will randomly break the tie. Therefore, a seed must be set in order to ensure reproducibility of results.
+
+```{r chunk27}
+set.seed(1)
+knn.pred <- knn(train.X, test.X, train.Direction, k = 1)
+## Test data confusion matrix
+table(knn.pred, Direction_2005)
+## Test data overall rate of correct classifications
+mean(knn.pred == Direction_2005)
+```
+
+The results using $K=1$ are not very good,  since only $50\%$ of the observations are correctly predicted. Of course, it may be that $K=1$ results in  an overly flexible fit to the data. Below, we repeat the analysis using $K=3$.
+
+```{r chunk28}
+knn.pred <- knn(train.X, test.X, train.Direction, k = 3)
+## Test data confusion matrix
+table(knn.pred, Direction_2005)
+## Test data overall rate of correct classifications
+mean(knn.pred == Direction_2005)
+```
+
+The results have improved slightly. But increasing $K$ further turns out to provide no further improvements. It appears that for this data, QDA provides the best results of the methods that we have examined so far.
+
+KNN does not perform well on the `Smarket` data, but generally, KNN does often provide impressive results. 
+
+As an example we will apply the KNN approach to the `Insurance` data set, which is part of the `ISLR2` library. This data set includes $85$ predictors that measure demographic characteristics for $5822$ individuals. The response variable is `Purchase`, which indicates whether or not a given individual purchases a caravan insurance policy. In this data set, only $6\%$ of people purchased a caravan  insurance.
+
+
+```{r chunk29}
+dim(Caravan)     # sample size and number of variables in the Caravan dataset 
+attach(Caravan)  # makes the variables in Caravan (e.g. Purchase) directly usable
+
+summary(Purchase)
+
+## Empirical prior probability of 'Purchase = Yes' 
+348 / 5822
+```
+
+Because the KNN classifier predicts the class of a given test observation by identifying the observations that are nearest to it, the scale of the variables matters. Variables that are on a large scale will have a much larger effect on the *distance* between the observations, and hence on the KNN classifier, than variables that are on a small scale. For instance, imagine a data set that contains two variables, `salary` and `age` (measured in dollars and years, respectively). As far as KNN is concerned, a difference of $1000$ in salary is enormous compared to a difference of $50$ years in age. Consequently, `salary` will drive the KNN classification results, and `age` will have almost no effect. This is contrary to our intuition  that a salary difference of $1000$ is quite small compared to an age difference of $50$ years. Furthermore, the importance of scale to the KNN classifier leads to another issue: if we measured `salary` in Japanese yen, or if we measured `age` in minutes, then we'd get quite different classification results from what we get if these two variables are measured in dollars and years.
+
+
+A good way to handle this problem is to  the data so that all variables are given a mean of  zero and  a standard deviation of one. Then all variables will be on a comparable scale. The `scale()` function does just this. In standardizing the data, we exclude column $86$, because that is the qualitative `Purchase` variable.
+
+```{r chunk30}
+standardized.X <- scale(Caravan[, -86])
+var(Caravan[, 1])
+var(Caravan[, 2])
+var(standardized.X[, 1]) 
+var(standardized.X[, 2])
+```
+
+Now every column of `standardized.X` has a standard deviation of one and a mean of zero.
+
+We now split the observations into a test set, containing the first $1000$ observations, and a training set, containing the remaining observations.
+We fit a KNN model on the training data using $K=1$, and evaluate its performance on the test data. 
+
+```{r chunk31}
+test     <- 1:1000
+## Training data 
+train.X  <- standardized.X[-test, ]
+train.Y  <- Purchase[-test]
+## Testing data 
+test.X   <- standardized.X[test, ]
+test.Y   <- Purchase[test]
+
+set.seed(1)
+## KNN (K=1)
+knn.pred <- knn(train.X, test.X, train.Y, k = 1)
+## Test data overall classification error 
+mean(test.Y != knn.pred)
+## Test data overall classification error 
+## of the no information classifier ("always No")
+mean(test.Y != "No")
+```
+
+The vector `test` is numeric, with values from  $1$ through $1000$. Typing `standardized.X[test, ]` yields the submatrix of the data containing the observations whose indices range from $1$ to $1000$, whereas typing `standardized.X[-test, ]` yields the submatrix containing the observations whose indices do *not* range from $1$ to $1,000$.
+
+The KNN overall test error rate on the $1000$ test observations is just under $12\%.$ At first glance, this may appear to be fairly good. However, since only $6\%$ of customers purchased insurance, we could get the error rate down to $6\%$ by always predicting `No` regardless of the values of the predictors!
+
+Suppose that there is some non-trivial cost to trying to sell insurance to a given individual. For instance, perhaps a salesperson must  visit each potential customer. 
+
+If the company tries to sell insurance to a random selection of customers, then the success rate will be only $6\%$ (the empirical prior probability of `Purchase = Yes`), which may be far too low given the costs involved. Instead, the company would like to try to sell insurance only to customers who are likely to buy it. So the overall error rate is not of interest. Instead, the fraction of individuals that are correctly predicted to buy insurance is of interest.
+
+It turns out that KNN with $K=1$ does far better than random guessing among the customers that are predicted to buy insurance. Among the P* $=77$ `Purchase=Yes` predictions, $9$ (TP), or $11.7\%$ (TP/P*), actually do purchase the insurance. This is double the rate that one would obtain from random guessing.
+
+```{r chunk32}
+## Test data confusion matrix (KNN, K=1)
+table(knn.pred, test.Y)
+## Test data positive predictive value TP/P*
+9 / (68 + 9)
+```
+
+Using $K=3$, the success rate increases to $19\%,$ and with $K=5$ the rate is $26.7\%.$ This is  over four times the rate that results from random guessing. It appears that KNN is finding some real patterns in a difficult data set!
+
+```{r chunk33}
+## K = 3
+knn.pred <- knn(train.X, test.X, train.Y, k = 3)
+
+## Test data confusion matrix (KNN, K=3)
+table(knn.pred, test.Y)
+## Test data positive predictive value TP/P*
+5 / 26
+
+## K = 5
+knn.pred <- knn(train.X, test.X, train.Y, k = 5)
+
+## Test data confusion matrix (KNN, K=5)
+table(knn.pred, test.Y)
+## Test data positive predictive value TP/P*
+4 / 15
+```
+
+However, while this strategy is cost-effective, it is worth noting that only 15 customers are predicted to purchase insurance using KNN with $K=5$. In practice, the insurance company may wish to expend resources on convincing more than just 15 potential customers to buy insurance.
+
+As a comparison, we can also fit a logistic regression model to the data. If we use $0.5$ as the predicted probability cut-off for the classifier, then we have a problem: only seven of the test observations are predicted to purchase insurance. Even worse, we are wrong about all of these! However, we are not required to use a cut-off of  $0.5$. If we instead predict a purchase any time the predicted probability of purchase exceeds  $0.25$, we get much better results: we predict that 33 people will purchase insurance, and
+ we are correct for about $33\%$ of these people. This is  over five times better than random guessing!
+
+```{r chunk34}
+glm.fits  <- glm(Purchase ~ ., data = Caravan,
+                 family = binomial, 
+                 subset = -test)
+glm.probs <- predict(glm.fits, Caravan[test, ], type = "response")
+
+## Classifications (Bayes threshold)
+glm.pred                 <- rep("No", 1000)
+glm.pred[glm.probs > .5] <- "Yes"
+
+## confusion matrix (test set)
+table(glm.pred, test.Y)
+
+## Classifications (adjusted threshold)
+glm.pred                  <- rep("No", 1000)
+glm.pred[glm.probs > .25] <- "Yes"
+
+## confusion matrix (test set)
+table(glm.pred, test.Y)
+11 / (22 + 11)
+```
+
+
+
+<!-- ### Poisson Regression
+
+Finally, we fit a  Poisson regression model to the `Bikeshare` data set, which measures the number of bike rentals (`bikers`) per hour in Washington, DC. The data can be found in the `ISLR2` library.
+
+
+```{r chunk35}
+attach(Bikeshare)
+dim(Bikeshare)
+names(Bikeshare)
+```
+
+
+We begin by fitting a least squares linear regression model to the data.
+
+```{r chunk36}
+mod.lm <- lm(
+    bikers ~ mnth + hr + workingday + temp + weathersit,
+    data = Bikeshare
+  )
+summary(mod.lm)
+```
+
+Due to space constraints, we truncate the output of `summary(mod.lm)`.
+In `mod.lm`, the first level of `hr` (0) and `mnth` (Jan) are treated as the baseline values, and so no coefficient estimates are provided for them: implicitly, their coefficient estimates are zero, and all other levels are measured relative to these baselines. For example, the Feb coefficient of $6.845$ signifies that, holding all other variables constant, there are on average about 7 more riders in February than in January. Similarly there are about 16.5 more riders in March than in January.
+
+The results seen in Section 4.6.1 used a slightly different coding of the variables `hr` and `mnth`, as follows:
+
+```{r chunk37}
+contrasts(Bikeshare$hr) = contr.sum(24)
+contrasts(Bikeshare$mnth) = contr.sum(12)
+mod.lm2 <- lm(
+    bikers ~ mnth + hr + workingday + temp + weathersit,
+    data = Bikeshare
+  )
+summary(mod.lm2)
+```
+
+What is the difference between the two codings?  In `mod.lm2`,  a coefficient estimate is reported for all but the last level of `hr` and `mnth`. Importantly, in `mod.lm2`, the coefficient estimate for the last level of `mnth` is not zero: instead, it equals the *negative of the sum of the coefficient estimates for all of the other levels*. Similarly, in `mod.lm2`, the coefficient estimate for the last level of `hr` is the negative of the sum of the coefficient estimates for all of the other levels. This means that the coefficients of `hr` and `mnth` in `mod.lm2` will always sum to zero, and can be interpreted as the difference from the mean level. For example, the coefficient for January of $-46.087$ indicates that, holding all other variables constant, there are typically 46 fewer riders in January relative to the yearly average.
+
+It is important to realize that the choice of coding really does not matter, provided that we interpret the model output correctly in light of the coding used. For example, we see   that the predictions from the linear model are the same regardless of coding:
+
+```{r chunk38}
+sum((predict(mod.lm) - predict(mod.lm2))^2)
+```
+
+The sum of squared differences is zero. We can also see this using the `all.equal()` function:
+
+```{r chunk39}
+all.equal(predict(mod.lm), predict(mod.lm2))
+```
+
+
+To reproduce the left-hand side of Figure 4.13, we must first obtain the coefficient estimates associated with `mnth`. The coefficients for January through November can be obtained directly from the `mod.lm2` object. The coefficient for December must be explicitly computed as the negative sum of all the other months.
+
+```{r chunk40}
+coef.months <- c(coef(mod.lm2)[2:12],
+    -sum(coef(mod.lm2)[2:12]))
+```
+
+To make the plot, we manually label the $x$-axis with the names of the months.
+
+```{r chunk41}
+plot(coef.months, xlab = "Month", ylab = "Coefficient",
+    xaxt = "n", col = "blue", pch = 19, type = "o")
+axis(side = 1, at = 1:12, labels = c("J", "F", "M", "A",
+    "M", "J", "J", "A", "S", "O", "N", "D"))
+```
+
+Reproducing the right-hand side of Figure 4.13 follows a similar process.
+
+```{r chunk42}
+coef.hours <- c(coef(mod.lm2)[13:35],
+    -sum(coef(mod.lm2)[13:35]))
+plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
+    col = "blue", pch = 19, type = "o")
+```
+
+
+
+Now, we consider instead fitting a Poisson regression model to the `Bikeshare` data. Very little changes, except that we now use the function `glm()` with the argument `family = poisson` to specify that we wish to  fit a Poisson regression model:
+
+```{r chunk43}
+mod.pois <- glm(
+    bikers ~ mnth + hr + workingday + temp + weathersit,
+    data = Bikeshare, family = poisson
+  )
+summary(mod.pois)
+```
+
+We can plot the coefficients associated with `mnth` and `hr`, in order to reproduce Figure 4.15:
+
+```{r chunk44}
+coef.mnth <- c(coef(mod.pois)[2:12],
+    -sum(coef(mod.pois)[2:12]))
+plot(coef.mnth, xlab = "Month", ylab = "Coefficient",
+     xaxt = "n", col = "blue", pch = 19, type = "o")
+axis(side = 1, at = 1:12, labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"))
+coef.hours <- c(coef(mod.pois)[13:35],
+     -sum(coef(mod.pois)[13:35]))
+plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
+    col = "blue", pch = 19, type = "o")
+```
+
+We can once again use the `predict()` function to obtain the fitted values (predictions) from this Poisson regression model. However, we must use the argument `type = "response"` to specify that we want `R` to output $\exp(\hat\beta_0 + \hat\beta_1 X_1 + \ldots +\hat\beta_p X_p)$ rather than $\hat\beta_0 + \hat\beta_1 X_1 + \ldots + \hat\beta_p X_p$, which it will output by default.
+
+```{r chunk45}
+plot(predict(mod.lm2), predict(mod.pois, type = "response"))
+abline(0, 1, col = 2, lwd = 3)
+```
+
+The predictions from the Poisson regression model are correlated with those from the linear model; however, the former are non-negative. As a result the Poisson regression predictions tend to be larger than those from the linear model for either very low or very high levels of ridership.
+
+In this section, we used the `glm()` function with the argument `family = poisson` in order to perform Poisson regression. Earlier in this lab we used the `glm()` function with `family = binomial` to perform logistic regression. Other choices for the `family` argument can be used to fit other types of GLMs. For instance, `family = Gamma` fits a gamma regression model. -->
+
+
+## Exercises
+
+Prepare the following exercises of Chapter 4 in our course textbook `ISLR`: 
+
+- Exercise 1
+- Exercise 6
+- Exercise 13
+- Exercise 15
+- Exercise 16
+
+<!-- {{< include Ch5_Classification_Solutions.qmd >}} -->

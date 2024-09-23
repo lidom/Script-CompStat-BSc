@@ -14,14 +14,19 @@ timetable %>% kbl() %>%  kable_styling()
 ```
 
 
-### Lecture Material and Literature {-}
+### Lecture Material {-}
 
 * This online script
+* [`R`-Script used during the lectures](https://www.dropbox.com/scl/fi/8foafpmricmtexnevvh2q/R_Script_CASA_2024.R?rlkey=q53jjq2x2hlcyzwbxqo7h63ez&dl=0)
+
+### Literature {-}
+
+
 * Main Course Textbook (`ISLR`): 
   * [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
   * The PDF-version and further resources (datasets, etc.) of the textbook can be downloaded **for free** from [https://www.statlearning.com/](https://www.statlearning.com/)
 
-* Further/additional reading (for the motivated): 
+* Further/additional reading: 
   * [The Elements of
 Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 
@@ -35,8 +40,8 @@ Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 
 <!-- * Mock Exam with 5 multiple-choice problems and 1 free-text problem: [Download](https://www.dropbox.com/scl/fi/ib7z8bp2d5q775u2hoty0/Mock_Exam1.pdf?rlkey=m5yus4dkxnekpzaoydf6eqok5&dl=0) 
    * Note: The actual exam will contain 10 multiple-choice problems and 2 free-text problems--> 
-* You are allowed to use a handwritten cheat-sheet (**one side** of a DIN A4 page). 
-* You are allowed to use a non-programmable scientific calculator.
+* You are allowed to use a **handwritten cheat-sheet** (**one side** of a DIN A4 page). 
+* You are allowed to use a **non-programmable scientific calculator**.
 * Please, do **not** use a pencil.
 * Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en)
 <!-- * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0) -->

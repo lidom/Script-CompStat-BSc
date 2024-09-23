@@ -27,7 +27,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Ch1_StatLearning.html" rel="next">
+<link href="./Ch1_Intro2R.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -107,26 +107,38 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch1_StatLearning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
+  <a href="./Ch1_Intro2R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code>-Lab: Introduction to <code>R</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch2_LinearRegression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  <a href="./Ch2_StatLearning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch3_Classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  <a href="./Ch3_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Matrix Algebra</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch4_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+  <a href="./Ch4_LinearRegression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch5_Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch6_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
   </div>
 </li>
     </ul>
@@ -141,7 +153,8 @@ ul.task-list li input[type="checkbox"] {
 <a href="#organization-of-the-course" id="toc-organization-of-the-course" class="nav-link active" data-scroll-target="#organization-of-the-course">Organization of the Course</a>
   <ul class="collapse">
 <li><a href="#timetable" id="toc-timetable" class="nav-link" data-scroll-target="#timetable">Timetable</a></li>
-  <li><a href="#lecture-material-and-literature" id="toc-lecture-material-and-literature" class="nav-link" data-scroll-target="#lecture-material-and-literature">Lecture Material and Literature</a></li>
+  <li><a href="#lecture-material" id="toc-lecture-material" class="nav-link" data-scroll-target="#lecture-material">Lecture Material</a></li>
+  <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
   <li><a href="#information-on-the-exam" id="toc-information-on-the-exam" class="nav-link" data-scroll-target="#information-on-the-exam">Information on the Exam</a></li>
   </ul>
 </li>
@@ -166,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last Updated on September 12, 2024</p>
+      <p class="date">Last Updated on September 23, 2024</p>
     </div>
   </div>
   
@@ -210,9 +223,12 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-</section><section id="lecture-material-and-literature" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="lecture-material-and-literature">Lecture Material and Literature</h3>
+</section><section id="lecture-material" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="lecture-material">Lecture Material</h3>
 <ul>
 <li>This online script</li>
+<li><a href="https://www.dropbox.com/scl/fi/8foafpmricmtexnevvh2q/R_Script_CASA_2024.R?rlkey=q53jjq2x2hlcyzwbxqo7h63ez&amp;dl=0"><code>R</code>-Script used during the lectures</a></li>
+</ul></section><section id="literature" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="literature">Literature</h3>
+<ul>
 <li>Main Course Textbook (<code>ISLR</code>):
 <ul>
 <li>
@@ -221,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
 </ul>
 </li>
-<li>Further/additional reading (for the motivated):
+<li>Further/additional reading:
 <ul>
 <li><a href="https://hastie.su.domains/ElemStatLearn/">The Elements of Statistical Learning</a></li>
 </ul>
@@ -231,8 +247,8 @@ ul.task-list li input[type="checkbox"] {
 <!-- * Mock Exam with 5 multiple-choice problems and 1 free-text problem: [Download](https://www.dropbox.com/scl/fi/ib7z8bp2d5q775u2hoty0/Mock_Exam1.pdf?rlkey=m5yus4dkxnekpzaoydf6eqok5&dl=0) 
    * Note: The actual exam will contain 10 multiple-choice problems and 2 free-text problems-->
 <ul>
-<li>You are allowed to use a handwritten cheat-sheet (<strong>one side</strong> of a DIN A4 page).</li>
-<li>You are allowed to use a non-programmable scientific calculator.</li>
+<li>You are allowed to use a <strong>handwritten cheat-sheet</strong> (<strong>one side</strong> of a DIN A4 page).</li>
+<li>You are allowed to use a <strong>non-programmable scientific calculator</strong>.</li>
 <li>Please, do <strong>not</strong> use a pencil.</li>
 <li>Exam dates and times are published by the <a href="https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en">examinations office</a> <!-- * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0) -->
 </li>
@@ -816,8 +832,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch1_StatLearning.html" class="pagination-link" aria-label="Statistical Learning">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Ch1_Intro2R.html" class="pagination-link" aria-label="`R`-Lab: Introduction to `R`">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code>-Lab: Introduction to <code>R</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

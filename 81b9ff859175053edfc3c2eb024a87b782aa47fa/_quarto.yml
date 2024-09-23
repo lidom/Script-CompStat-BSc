@@ -13,11 +13,13 @@ book:
   search: true
   chapters:
     - index.qmd
-    - Ch1_StatLearning.qmd      # Reads in Ch1_Solutions.qmd
-    - Ch2_LinearRegression.qmd  # Reads in Ch2_Solutions.qmd
-    - Ch3_Classification.qmd    # Reads in Ch3_Solutions.qmd
-    - Ch4_ResamplingMethods.qmd # Reads in Ch4_Solutions.qmd
-    #- Ch5_LinModSelectRegul.qmd # Reads in Ch5_Solutions.qmd
+    - Ch1_Intro2R.qmd
+    - Ch2_StatLearning.qmd      # Reads in Ch2_StatLearning_Solutions.qmd
+    - Ch3_MatrixAlgebra.qmd
+    - Ch4_LinearRegression.qmd  # Reads in Ch2_Solutions.qmd
+    - Ch5_Classification.qmd    # Reads in Ch3_Solutions.qmd
+    - Ch6_ResamplingMethods.qmd # Reads in Ch4_Solutions.qmd
+    #- Ch7_LinModSelectRegul.qmd # Reads in Ch5_Solutions.qmd
 
 #bibliography: references.bib
 
@@ -29,8 +31,6 @@ format:
     html-math-method:
       method: mathjax
       url: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML"
-    monofont: Fira Mono
-    mathfont: Leto
     number-sections: true
     code-link: true
     reference-links: true
