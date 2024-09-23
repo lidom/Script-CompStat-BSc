@@ -265,18 +265,14 @@ window.Quarto = {
 </header><blockquote class="blockquote">
 <p>Reading: Chapter 2 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
 </blockquote>
-<section id="r-codes-for-this-chapter" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="r-codes-for-this-chapter">
-<code>R</code>-Codes for this Chapter</h4>
-<ul>
-<li>Introduction to <code>R</code>: <a href="https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&amp;dl=0">Ch1_0_Rcodes.R</a>
-</li>
-<li>
-<code>R</code>-codes for Coding Challenge Nr 1 (replicating Fig. 2.9): <a href="https://www.dropbox.com/scl/fi/8dtu5kje5am70l2dh6w9b/Ch1_1_Rcodes.R?rlkey=o6ucjdql0f88d9wcopj0q0esa&amp;dl=0">Ch1_1_Rcodes.R</a>
-</li>
-<li>
-<code>R</code>-codes for Coding Challenge Nr 2 (KNN-classification): <a href="https://www.dropbox.com/scl/fi/p7rm2ziytfl68s2h6i4gf/Ch1_2_Rcodes.R?rlkey=5rgl4y9xbxejafi32oe1baoza&amp;dl=0">Ch1_2_Rcodes.R</a>
-</li>
-</ul></section><section id="what-is-statistical-learning" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="what-is-statistical-learning">
+<!-- 
+#### `R`-Codes for this Chapter {-}
+
+* Introduction to `R`: [Ch1_0_Rcodes.R](https://www.dropbox.com/scl/fi/blo6pct6sxbb70jv5iss0/Ch1_0_Rcodes.R?rlkey=ipkll1fy8tyuubhb646mmy6r5&dl=0)
+* `R`-codes for Coding Challenge Nr 1 (replicating Fig. 2.9): [Ch1_1_Rcodes.R](https://www.dropbox.com/scl/fi/8dtu5kje5am70l2dh6w9b/Ch1_1_Rcodes.R?rlkey=o6ucjdql0f88d9wcopj0q0esa&dl=0)
+* `R`-codes for Coding Challenge Nr 2 (KNN-classification): [Ch1_2_Rcodes.R](https://www.dropbox.com/scl/fi/p7rm2ziytfl68s2h6i4gf/Ch1_2_Rcodes.R?rlkey=5rgl4y9xbxejafi32oe1baoza&dl=0)  
+-->
+<section id="what-is-statistical-learning" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="what-is-statistical-learning">
 <span class="header-section-number">2.1</span> What is Statistical Learning?</h2>
 <p>Suppose that we observe a quantitative response <span class="math inline">\(Y\)</span> and <span class="math inline">\(p\)</span> different predictors, <span class="math inline">\(X_1, X_2, \dots, X_p.\)</span></p>
 <p>We assume that there is some relationship between <span class="math inline">\(Y\)</span> and <span class="math display">\[
@@ -334,10 +330,12 @@ Y = f(X) + \epsilon.
 <p>However, even if it were possible to form a perfect estimate for <span class="math inline">\(f,\)</span> so that our estimated response took the form <span class="math display">\[
 \hat{Y} = f (X),
 \]</span> our prediction would still have some error in it! This is because <span class="math inline">\(Y\)</span> is also a function of <span class="math inline">\(\epsilon\)</span> which, by definition, cannot be predicted using <span class="math inline">\(X.\)</span> Therefore, variability associated with <span class="math inline">\(\epsilon\)</span> also affects the accuracy of our predictions. This is known as the <strong>irreducible error</strong>, because no matter how well we estimate <span class="math inline">\(f,\)</span> we cannot reduce the error introduced by <span class="math inline">\(\epsilon.\)</span></p>
-<p>Consider a <em>given</em> estimate <span class="math inline">\(\hat{f}\)</span> and a <em>given</em> set of predictors <span class="math inline">\(X,\)</span> which yields the prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> Assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are fixed, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span class="math display">\[\begin{align*}
+<p>Consider a <strong>given</strong> estimate <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> set of predictors <span class="math inline">\(X,\)</span> which yields the prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> That is, assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are <strong>fixed</strong>, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span class="math display">\[
+\begin{align*}
 \overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
 =\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}},
-\end{align*}\]</span> where</p>
+\end{align*}
+\]</span> where</p>
 <ul>
 <li>
 <span class="math inline">\(E\left[(Y - \hat{Y})^2\right]\)</span> represents the expected value, of the squared difference between the predicted <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> and actual value of <span class="math inline">\(Y,\)</span>
@@ -966,7 +964,7 @@ Coding Challenge (Nr 2):
 <li>Exercise 8</li>
 <li>Exercise 9</li>
 </ul>
-<!-- {{< include Ch1_Solutions.qmd >}} -->
+<!-- {{< include Ch2_StatLearning_Solutions.qmd >}} -->
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

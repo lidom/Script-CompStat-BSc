@@ -951,4 +951,6 @@ Prepare the following exercises of Chapter 5 in our course textbook:
 <!-- - Exercise 6 -->
 - Exercise 8
 
-<!-- {{< include Ch6_ResamplingMethods_Solutions.qmd >}} -->
+<!-- 
+{{< include Ch6_ResamplingMethods_Solutions.qmd >}} 
+-->
