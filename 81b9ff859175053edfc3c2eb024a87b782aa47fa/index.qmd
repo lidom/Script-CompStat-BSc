@@ -38,7 +38,7 @@ Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 
 ### Assignments {-}
 
-For each chapter there is an home assignment. You can use the `Open Coding Space` for asking questions and for working on your assignments. 
+For each chapter there is a home assignment. You can use the `Open Coding Space` for asking questions and for working on your assignments. You can help each other, but everyone has to submit an own home assignment.  
 
 **Grading:** 
 
