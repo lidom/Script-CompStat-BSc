@@ -17,40 +17,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -220,13 +186,13 @@ window.Quarto = {
 <li><a href="#accuracy-of-a-prediction" id="toc-accuracy-of-a-prediction" class="nav-link" data-scroll-target="#accuracy-of-a-prediction">Accuracy of a Prediction</a></li>
   </ul>
 </li>
-  <li><a href="#parameter-inference" id="toc-parameter-inference" class="nav-link" data-scroll-target="#parameter-inference">(Parameter) Inference</a></li>
+  <li><a href="#inference-about-model-parameters" id="toc-inference-about-model-parameters" class="nav-link" data-scroll-target="#inference-about-model-parameters">Inference about Model Parameters</a></li>
   <li>
 <a href="#how-do-we-estimate-f" id="toc-how-do-we-estimate-f" class="nav-link" data-scroll-target="#how-do-we-estimate-f"><span class="header-section-number">2.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</a>
   <ul class="collapse">
 <li><a href="#parametric-methods" id="toc-parametric-methods" class="nav-link" data-scroll-target="#parametric-methods">Parametric Methods</a></li>
   <li><a href="#non-parametric-methods" id="toc-non-parametric-methods" class="nav-link" data-scroll-target="#non-parametric-methods">Non-Parametric Methods</a></li>
-  <li><a href="#the-trade-off-between-prediction-accuracy-and-model-interpretability" id="toc-the-trade-off-between-prediction-accuracy-and-model-interpretability" class="nav-link" data-scroll-target="#the-trade-off-between-prediction-accuracy-and-model-interpretability"><span class="header-section-number">2.2.1</span> The Trade-Off Between Prediction Accuracy and Model Interpretability</a></li>
+  <li><a href="#trade-off-between-prediction-accuracy-and-model-interpretability" id="toc-trade-off-between-prediction-accuracy-and-model-interpretability" class="nav-link" data-scroll-target="#trade-off-between-prediction-accuracy-and-model-interpretability"><span class="header-section-number">2.2.1</span> Trade-Off Between Prediction Accuracy and Model Interpretability</a></li>
   <li><a href="#supervised-versus-unsupervised-learning" id="toc-supervised-versus-unsupervised-learning" class="nav-link" data-scroll-target="#supervised-versus-unsupervised-learning"><span class="header-section-number">2.2.2</span> Supervised versus Unsupervised Learning</a></li>
   <li><a href="#regression-versus-classification-problems" id="toc-regression-versus-classification-problems" class="nav-link" data-scroll-target="#regression-versus-classification-problems"><span class="header-section-number">2.2.3</span> Regression Versus Classification Problems</a></li>
   </ul>
@@ -234,13 +200,11 @@ window.Quarto = {
   <li>
 <a href="#assessing-model-accuracy" id="toc-assessing-model-accuracy" class="nav-link" data-scroll-target="#assessing-model-accuracy"><span class="header-section-number">2.3</span> Assessing Model Accuracy</a>
   <ul class="collapse">
-<li><a href="#measuring-the-quality-of-fit" id="toc-measuring-the-quality-of-fit" class="nav-link" data-scroll-target="#measuring-the-quality-of-fit"><span class="header-section-number">2.3.1</span> Measuring the Quality of Fit</a></li>
-  <li><a href="#local-i.e.-point-wise-test-mse" id="toc-local-i.e.-point-wise-test-mse" class="nav-link" data-scroll-target="#local-i.e.-point-wise-test-mse">Local (i.e.&nbsp;Point-Wise) Test MSE</a></li>
+<li><a href="#sec-mqfit" id="toc-sec-mqfit" class="nav-link" data-scroll-target="#sec-mqfit"><span class="header-section-number">2.3.1</span> Measuring the Quality of Fit</a></li>
+  <li><a href="#local-test-mse" id="toc-local-test-mse" class="nav-link" data-scroll-target="#local-test-mse">Local Test MSE</a></li>
   <li><a href="#global-test-mse" id="toc-global-test-mse" class="nav-link" data-scroll-target="#global-test-mse">Global Test MSE</a></li>
+  <li><a href="#global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" id="toc-global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" class="nav-link" data-scroll-target="#global-training-and-test-mse-in-nonparametric-smoothing-spline-regression">Global Training and Test MSE in Nonparametric Smoothing Spline Regression</a></li>
   <li><a href="#the-bias-variance-trade-off" id="toc-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-bias-variance-trade-off"><span class="header-section-number">2.3.2</span> The Bias-Variance Trade-Off</a></li>
-  <li><a href="#the-classification-setting" id="toc-the-classification-setting" class="nav-link" data-scroll-target="#the-classification-setting"><span class="header-section-number">2.3.3</span> The Classification Setting</a></li>
-  <li><a href="#the-bayes-classifier" id="toc-the-bayes-classifier" class="nav-link" data-scroll-target="#the-bayes-classifier">The Bayes Classifier</a></li>
-  <li><a href="#k-nearest-neighbors-classification" id="toc-k-nearest-neighbors-classification" class="nav-link" data-scroll-target="#k-nearest-neighbors-classification"><span class="math inline">\(K\)</span>-Nearest Neighbors Classification</a></li>
   </ul>
 </li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.4</span> Exercises</a></li>
@@ -274,7 +238,7 @@ window.Quarto = {
 -->
 <section id="what-is-statistical-learning" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="what-is-statistical-learning">
 <span class="header-section-number">2.1</span> What is Statistical Learning?</h2>
-<p>Suppose that we observe a quantitative response <span class="math inline">\(Y\)</span> and <span class="math inline">\(p\)</span> different predictors, <span class="math inline">\(X_1, X_2, \dots, X_p.\)</span></p>
+<p>Suppose that we observe a quantitative response <span class="math inline">\(Y\in\mathbb{R}\)</span> and <span class="math inline">\(p\)</span> different predictors, <span class="math inline">\(X_1\in\mathbb{R}, X_2\in\mathbb{R}, \dots, X_p\in\mathbb{R}.\)</span></p>
 <p>We assume that there is some relationship between <span class="math inline">\(Y\)</span> and <span class="math display">\[
 X = (X_1, X_2, \dots, X_p),
 \]</span> which can be written in the very general form <span class="math display">\[
@@ -290,13 +254,14 @@ Y = f(X) + \epsilon.
 <li>
 <span class="math inline">\(\epsilon\)</span> and <span class="math inline">\(X\)</span> are independent of each other</li>
 <li>
-<span class="math inline">\(\epsilon\)</span> has mean zero <span class="math inline">\(E(\epsilon)=0.\)</span>
+<span class="math inline">\(\epsilon\)</span> has mean zero <span class="math inline">\(E(\epsilon)=0\)</span> and variance <span class="math inline">\(Var(\epsilon)=\sigma^2&gt;0.\)</span>
 </li>
 </ul>
 </li>
 </ul>
 <p>In this formulation, <span class="math inline">\(f\)</span> represents the <em>systematic</em> information that <span class="math inline">\(X\)</span> provides about <span class="math inline">\(Y.\)</span></p>
-<p>In essence, <strong>statistical learning</strong> refers to a set of approaches for estimating <span class="math inline">\(f.\)</span> In this chapter we outline some of the key theoretical concepts that arise in estimating <span class="math inline">\(f,\)</span> as well as tools for evaluating the estimates obtained.</p>
+<p>In essence, <strong>statistical learning</strong> refers to a set of approaches for estimating the unknown function <span class="math inline">\(f.\)</span></p>
+<p>In this chapter we outline some of the key theoretical concepts that arise in estimating <span class="math inline">\(f,\)</span> as well as tools for evaluating the estimates obtained.</p>
 <section id="why-estimate-f" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="why-estimate-f">
 <span class="header-section-number">2.1.1</span> Why Estimate <span class="math inline">\(f\)</span>?</h3>
 <p>There are <strong>two main reasons</strong> that we may wish to estimate <span class="math inline">\(f\)</span>:</p>
@@ -304,7 +269,7 @@ Y = f(X) + \epsilon.
 <li>prediction and</li>
 <li>inference.</li>
 </ul>
-<p>We discuss each in turn.</p>
+<p>In the following, we discuss each in turn.</p>
 </section></section><section id="prediction" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="prediction">Prediction</h2>
 <p>In many situations, a set of inputs <span class="math inline">\(X\)</span> are readily available, but the output <span class="math inline">\(Y\)</span> cannot be easily obtained. In this setting, since the error term averages to zero, we can predict <span class="math inline">\(Y\)</span> using <span class="math display">\[
 \hat{Y} = \hat{f}(X),
@@ -322,8 +287,8 @@ Y = f(X) + \epsilon.
 <section id="accuracy-of-a-prediction" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="accuracy-of-a-prediction">Accuracy of a Prediction</h3>
 <p>The accuracy of <span class="math inline">\(\hat{Y}\)</span> as a prediction for <span class="math inline">\(Y\)</span> depends on two quantities:</p>
 <ul>
-<li>the <strong>reducible error</strong> and</li>
-<li>the <strong>irreducible error.</strong>
+<li>the <strong>reducible error</strong>, i.e.&nbsp;the difference between <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(f\)</span> and</li>
+<li>the <strong>irreducible error</strong>, i.e.&nbsp;the error term <span class="math inline">\(\epsilon.\)</span>
 </li>
 </ul>
 <p>In general, <span class="math inline">\(\hat{f}\)</span> will not be a perfect estimate for <span class="math inline">\(f,\)</span> and this inaccuracy will introduce some error. This error is <strong>reducible</strong>, because we can potentially improve the accuracy of <span class="math inline">\(\hat{f}\)</span> by using the most appropriate statistical learning technique to estimate <span class="math inline">\(f.\)</span></p>
@@ -369,7 +334,7 @@ Tip
 <p>The focus of this course is on techniques for estimating <span class="math inline">\(f\)</span> with the aim of <strong>minimizing the reducible error</strong>.</p>
 </div>
 </div>
-</section></section><section id="parameter-inference" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="parameter-inference">(Parameter) Inference</h2>
+</section></section><section id="inference-about-model-parameters" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="inference-about-model-parameters">Inference about Model Parameters</h2>
 <p>We are often interested in <em>understanding</em> the association between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1,\dots,X_p.\)</span> In this situation we wish to estimate <span class="math inline">\(f,\)</span> but our goal is not necessarily to make predictions for <span class="math inline">\(Y.\)</span> Now <span class="math inline">\(\hat{f}\)</span> cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:</p>
 <ul>
 <li>Which predictors are associated with the response?</li>
@@ -399,16 +364,29 @@ X=(X_{1}, \dots,X_{p})
 <p>Let <span id="eq-randomsample"><span class="math display">\[
 \{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
 \qquad(2.2)\]</span></span> be a <strong>random sample</strong> from <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>, i.e.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Random Sample:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><br></p>
 <ol type="1">
 <li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math display">\[
-(X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
-\]</span> are independent of each other for all <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(j=1,\dots,n\)</span> with <span class="math inline">\(i\neq j.\)</span><br><br>
+(X_i,Y_i)\in\mathbb{R}^{p+1}\quad\text{and}\quad (X_j,Y_j)\in\mathbb{R}^{p+1}
+\]</span> are <strong>independent</strong> of each other for all <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(j=1,\dots,n\)</span> with <span class="math inline">\(i\neq j.\)</span><br><br>
 </li>
-<li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math inline">\((X_i,Y_i),\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> have all the same distribution as <span class="math inline">\((X,Y),\)</span> i.e. <span class="math display">\[
+<li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math inline">\((X_i,Y_i)\in\mathbb{R}^{p+1},\)</span> <span class="math inline">\(i=1,\dots,n,\)</span> have all the <strong>same distribution</strong> as <span class="math inline">\((X,Y),\)</span> i.e. <span class="math display">\[
 (X_i,Y_i)\sim(X,Y)
-\]</span> for all <span class="math inline">\(i=1,\dots,n.\)</span> <br><br>
+\]</span> for all <span class="math inline">\(i=1,\dots,n.\)</span> <br>
 </li>
 </ol>
+</div>
+</div>
 <p>The random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> is thus a set of <span class="math inline">\(n\)</span> many <strong>independent and identically distributed (iid)</strong> multivariate random variables <span class="math display">\[
 \{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}
 \]</span> with <span class="math display">\[
@@ -430,7 +408,7 @@ Goal of Statistical Learning
 <p>Our goal is to find (i.e.&nbsp;learn from training data) a function <span class="math inline">\(\hat{f}\)</span> such that <span class="math display">\[
 Y \approx \hat{f}(X)
 \]</span> for <strong><em>any</em></strong> observed realization of <span class="math inline">\((X, Y).\)</span></p>
-<p>That is, the estimate <span class="math inline">\(\hat{f}\)</span> needs to provide a good approximation <span class="math display">\[
+<p>That is, the estimate <span class="math inline">\(\hat{f}\)</span> needs to provide good approximations <span class="math display">\[
 y_{i} \approx \hat{f}(x_{i})
 \]</span> <strong>not only</strong> for the observed training data points <span class="math display">\[
 (x_i,y_i),\quad i=1,\dots,n,
@@ -450,7 +428,7 @@ y_{new} \approx \hat{f}(x_{new}).
 <li>
 <strong>non-parametric</strong>.</li>
 </ul>
-<p>We discuss each in turn.</p>
+<p>In the following, we discuss each in turn.</p>
 <section id="parametric-methods" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="parametric-methods">Parametric Methods</h3>
 <p>Parametric methods involve a <strong>two-step model-based estimation approach:</strong></p>
 <ol type="1">
@@ -484,13 +462,23 @@ Tip
 <p>These issues (model-flexibility and overfitting) are discussed through-out this course.</p>
 </div>
 </div>
-</section><section id="non-parametric-methods" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h3>
+<p>Examples:</p>
+<ul>
+<li>Simple linear regression model</li>
+<li>Multiple linear regression model</li>
+</ul></section><section id="non-parametric-methods" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h3>
 <p>Non-parametric methods (e.g.&nbsp;<span class="math inline">\(K\)</span> nearest neighbor regression) do not make explicit assumptions about the functional form of <span class="math inline">\(f.\)</span> Instead, they make qualitative assumptions on <span class="math inline">\(f\)</span> such as, for instance, requiring that <span class="math inline">\(f\)</span> is a <em>smooth</em> (e.g.&nbsp;two times continuously differentiable) function.</p>
 <ul>
 <li><p><strong>Pro:</strong> By avoiding the assumption of a particular parametric functional form for <span class="math inline">\(f,\)</span> non-parametric methods have the potential to accurately fit a wider range of possible shapes for <span class="math inline">\(f.\)</span></p></li>
 <li><p><strong>Con:</strong> Non-parametric methods require a large number of observations to obtain an accurate estimate for <span class="math inline">\(f;\)</span> far more observations than is typically needed for a parametric approach if the parametric model assumption is correct. (Non-parametric methods are “data-hungry”.)</p></li>
-</ul></section><section id="the-trade-off-between-prediction-accuracy-and-model-interpretability" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="the-trade-off-between-prediction-accuracy-and-model-interpretability">
-<span class="header-section-number">2.2.1</span> The Trade-Off Between Prediction Accuracy and Model Interpretability</h3>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>Spline regression methods (smoothing splines or regression splines)</li>
+<li>
+<span class="math inline">\(K\)</span> nearest neighbor regression</li>
+</ul></section><section id="trade-off-between-prediction-accuracy-and-model-interpretability" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="trade-off-between-prediction-accuracy-and-model-interpretability">
+<span class="header-section-number">2.2.1</span> Trade-Off Between Prediction Accuracy and Model Interpretability</h3>
 <p>One might reasonably ask the following question:</p>
 <blockquote class="blockquote">
 <p>Why would we ever choose to use a more restrictive method instead of a very flexible approach?</p>
@@ -515,9 +503,7 @@ Tip
 </ul>
 <p>Unsupervised learning methods:</p>
 <ul>
-<li>cluster analysis (clustering)</li>
-<li>
-<span class="math inline">\(K\)</span>-means</li>
+<li>cluster analysis (clustering); for instance, using the <span class="math inline">\(K\)</span>-means algorithm</li>
 </ul></section><section id="regression-versus-classification-problems" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="regression-versus-classification-problems">
 <span class="header-section-number">2.2.3</span> Regression Versus Classification Problems</h3>
 <p>Variables can be characterized as either <em>quantitative</em> or <em>qualitative</em> (also known as categorical).</p>
@@ -543,7 +529,7 @@ Tip
 <p>The observed realization <span class="math display">\[
 \{(x_{01},y_{01}),(x_{02},y_{02}),\dots,(x_{0m},y_{0m})\},
 \]</span> of the test data random sample is used to check the accuracy of the estimate <span class="math inline">\(\hat{f}.\)</span></p>
-<section id="measuring-the-quality-of-fit" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="measuring-the-quality-of-fit">
+<section id="sec-mqfit" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-mqfit">
 <span class="header-section-number">2.3.1</span> Measuring the Quality of Fit</h3>
 <p>In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE).</p>
 <p>The global training (data) MSE is given by <span class="math display">\[\begin{align*}
@@ -561,10 +547,10 @@ Tip
 or next month's price.  -->
 <!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
 <p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest <em>training</em> MSE.</p>
-</section><section id="local-i.e.-point-wise-test-mse" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="local-i.e.-point-wise-test-mse">Local (i.e.&nbsp;Point-Wise) Test MSE</h3>
+</section><section id="local-test-mse" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="local-test-mse">Local Test MSE</h3>
 <p>Let <span class="math inline">\(\hat{f}\)</span> be computed from the training data <span class="math inline">\(\{(x_1,y_1),\dots,(x_n,y_n)\}.\)</span> And let <span class="math display">\[
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
-\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for one given predictor value <span class="math inline">\(x_0\)</span>.</p>
+\]</span> denote the set of <span class="math inline">\(m\)</span> <strong>test data points</strong> <span class="math inline">\(y_{01},\dots,y_{0m}\)</span> for <strong>one given predictor value</strong> <span class="math inline">\(x_0.\)</span></p>
 <p>This type of <span class="math inline">\(x_0\)</span>-specific test data is a realization of a <strong>conditional random sample</strong> given <span class="math inline">\(X=x_0,\)</span> <span class="math display">\[
 (x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
@@ -577,13 +563,23 @@ or next month's price.  -->
 \]</span> denote the set of <span class="math inline">\(m\)</span> test data points with different predictor values <span class="math inline">\(x_{01},\dots,x_{0m}\)</span> in the range of <span class="math inline">\(X\)</span>. This type of test data is a realization of a random sample <span class="math display">\[
 (X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
-<p>Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[\begin{align*}
+<p>Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[
+\begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
-\end{align*}\]</span></p>
+\end{align*}
+\]</span></p>
 <p>Note that if <span class="math inline">\(\hat{f}\)</span> is a really good estimate of <span class="math inline">\(f,\)</span> i.e.&nbsp;if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
-\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
-\]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)\)</span>, i.e., the <strong>irreducible error component</strong>.</p>
+\begin{align*}
+\operatorname{MSE}_{\text{test}}
+&amp;=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2\\
+&amp;\approx\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - f(x_{0i})\right)^2\\
+&amp;=\frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2\\
+&amp;=\hat{\sigma}^2
+&amp;\approx \sigma^2
+\end{align*}
+\]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)=\sigma^2,\)</span> i.e., the <strong>irreducible error component</strong>.</p>
 <p><br></p>
+</section><section id="global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="global-training-and-test-mse-in-nonparametric-smoothing-spline-regression">Global Training and Test MSE in Nonparametric Smoothing Spline Regression</h3>
 <p>Figure 2.9 shows training and test MSEs for smoothing spline (<code>R</code> command <code><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline()</a></code>) estimates <span class="math inline">\(\hat{f}\)</span> in the case of</p>
 <ul>
 <li>a moderately complex <span class="math inline">\(f\)</span>
@@ -611,26 +607,13 @@ or next month's price.  -->
 </ul>
 <p><img src="images/Fig_2_11.png" class="img-fluid"></p>
 <p><br></p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Coding Challenge (Nr 1):
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Generate MSE-results similar to those shown in Figure 2.9.</p>
-</div>
-</div>
 <p>In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available.</p>
 <p>As the three examples in Figures 2.9, 2.10, and 2.11 of our textbook illustrate, the flexibility level corresponding to the model with the minimal test MSE can vary considerably.</p>
 <p>Throughout this book, we discuss a variety of approaches that can be used in practice to estimate the minimum point of the test MSE.</p>
 <p>One important method is <strong>cross-validation</strong>, which is a method for estimating the test MSE using the training data.</p>
 </section><section id="the-bias-variance-trade-off" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="the-bias-variance-trade-off">
 <span class="header-section-number">2.3.2</span> The Bias-Variance Trade-Off</h3>
-<p>The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.</p>
+<p>The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods: <strong>bias</strong> and <strong>variance</strong>.</p>
 <ul>
 <li><p>Let <span class="math inline">\(\hat{f}\)</span> be estimated from the training data random sample <span class="math display">\[
 \{(X_1,Y_1),\dots,(X_n,Y_n)\},
@@ -653,7 +636,8 @@ be the response random variable defined for the given predictor value $x_0.$
 $$
 Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
 $$  
-* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ --><p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following: <span class="math display">\[\begin{align*}
+* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ --><p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following: <span class="math display">\[
+\begin{align*}
 E\left[\operatorname{MSE}_{test}(x_0)\right]
 &amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
@@ -673,23 +657,19 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 %&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&amp; =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&amp;\quad\text{(steps skipped since beyond scope)}\\[2ex]
-&amp; = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon_0\right)
-\end{align*}\]</span></p>
-<p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right],\)</span> refers to the average test MSE that we would obtain if we repeatedly estimated <span class="math inline">\(f\)</span> using training data set, and evaluated each at <span class="math inline">\(x_0.\)</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A computed value of <span class="math inline">\(\operatorname{MSE}_{test}(x_0)\)</span> (as done in the coding challenge) is not able to consistently approximate <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span></p>
-<p>However, to get information about Bias and Variance of a method, we need to approximate <span class="math inline">\(E\left[\operatorname{MSE}_{test}(x_0)\right].\)</span> This will be (among others) the topic of <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
-</div>
-</div>
+&amp; = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \underbrace{Var\left(\epsilon_0\right)}_{\text{irreducible}}
+\end{align*}
+\]</span></p>
+<p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math display">\[
+E\left[\operatorname{MSE}_{test}(x_0)\right],
+\]</span> refers to the average test MSE that we would obtain if we repeatedly estimated <span class="math inline">\(f\)</span> using training data set, and evaluated each at <span class="math inline">\(x_0.\)</span></p>
+<!-- 
+::: {.callout-note}
+A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding challenge) is not able to consistently approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$
+
+However, to get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$ This will be (among others) the topic of  @sec-resamplingmethods.
+::: 
+-->
 <p>To minimize the expected test MSE, we need to select a statistical learning method that <em>simultaneously</em> achieves <strong>low variance</strong> and <strong>low bias</strong>.</p>
 <p>Note that <span class="math display">\[
 Var\left(\hat{f}(x_0)\right)\geq 0
@@ -702,269 +682,671 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 \geq Var\left(\epsilon\right).
 \end{align*}
 \]</span></p>
-<p>➡️ The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set. <!-- $$
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+</div>
+</div>
+</div>
+<!-- $$
 E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
-$$ --></p>
+$$ -->
 <section id="variance-of-hatf-at-x_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span>
 </h4>
 <p><span class="math display">\[
 Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
 \]</span> <strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> But ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
-<p>➡️ The overall, i.e., <strong>global</strong> variance can be computed by averaging <span class="math inline">\(Var(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The overall, i.e., <strong>global</strong> variance can be computed by averaging <span class="math inline">\(Var(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+</div>
+</div>
+</div>
 </section><section id="bias-of-hatf-at-x_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0">Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span>
 </h4>
 <p><span class="math display">\[
 \operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
 \]</span> <strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
-<p>➡️ The overall, i.e., <em>global</em> bias can be computed by averaging <span class="math inline">\(\operatorname{Bias}(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The overall, i.e., <em>global</em> bias can be computed by averaging <span class="math inline">\(\operatorname{Bias}(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+</div>
+</div>
+</div>
 <p><img src="images/Fig_2_12.png" class="img-fluid"></p>
-</section></section><section id="the-classification-setting" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="the-classification-setting">
-<span class="header-section-number">2.3.3</span> The Classification Setting</h3>
-<p>Setup:</p>
-<ul>
-<li>Observed <strong>training data</strong> <span class="math display">\[
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
-\]</span>
-</li>
-<li>Qualitative response <span class="math inline">\(y_i\)</span> with categorical class labels. E.g.
-<ul>
-<li><span class="math inline">\(y_i\in\{\text{red},\text{blue}\}\)</span></li>
-<li><span class="math inline">\(y_i\in\{\text{positive returns},\text{negative returns}\}\)</span></li>
-</ul>
-</li>
-<li>The <strong>classifier</strong> <span class="math inline">\(\hat{f}\)</span> is computed from the training data.</li>
-<li>Predicted training data class labels: <span class="math display">\[
-\hat{y}_i = \hat{f}(x_i)
-\]</span>
-</li>
-</ul>
-<p>The alternative to the training MSE is here the <strong>training error rate</strong> <span class="math display">\[
-\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
-\]</span> which gives the relative frequency of false categorical predictions.</p>
-<p>Here, <span class="math display">\[
-I(\cdot)
-\]</span> is an indicator function with <span class="math inline">\(I(\text{true})=1\)</span> and <span class="math inline">\(I(\text{false})=0.\)</span></p>
-<p>Let <span class="math display">\[
-\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
-\]</span> denote <span class="math inline">\(m\)</span> <strong>test data</strong> observations.</p>
-<p>The alternative to the test MSE is here the <strong>test error rate</strong> <span class="math display">\[
-\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
-\]</span> where <span class="math inline">\(\hat{y}_{0i}\)</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation with predictor value <span class="math inline">\(x_{i0}.\)</span></p>
-<p>A good classifier is one for which the test error rate is smallest.</p>
-</section><section id="the-bayes-classifier" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="the-bayes-classifier">The Bayes Classifier</h3>
-<p>It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value <span class="math inline">\(x_{0}.\)</span> This classifier is called the <strong>Bayes classifier</strong>.</p>
-<p>In other words, the Bayes classifier assigns a test observation with predictor vector <span class="math inline">\(x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
-P(Y = j | X = x_{0})
-\]</span> is largest among all possible class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
-<p>In a <strong>two-class problem</strong> where there are only two possible response values, say class <span class="math inline">\(1\)</span> or class <span class="math inline">\(2,\)</span> the Bayes classifier corresponds to predicting class <span class="math inline">\(1\)</span> if <span class="math display">\[
-P(Y = 1| X = x_0 ) \geq 0.5,
-\]</span> and class <span class="math inline">\(2\)</span> if <span class="math display">\[\begin{align*}
-&amp; P(Y = 1| X = x_0 ) &lt; 0.5 \\[2ex]
-\Leftrightarrow\; &amp; P(Y = 2| X = x_0 ) &gt; 0.5  
-\end{align*}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Classification threshold <span class="math inline">\(0.5\)</span>?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If no further information is given, one uses usually a threshold of <span class="math inline">\(0.5\)</span> in a two-class classification problem; or, more generally, a threshold of <span class="math inline">\(\frac{1}{G}\)</span> in a <span class="math inline">\(G\)</span>-classes classification problem.</p>
-<p>However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.</p>
-<p>Example: <span class="math display">\[
-y\in\{\text{Person pays back}, \text{Person does not pay back}\}
-\]</span> The classification error <span class="math display">\[
-\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
-\]</span> can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value <span class="math inline">\(x_0\)</span> to the “Person pays back”-class only if, for instance, <span class="math display">\[
-\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
-\]</span> and otherwise classify this person to the “Person does not pay back”-class. This will reduce the frequency of miss-classifications when classifying into the “Person pays back”-class, and thus reduce the costs.</p>
-</div>
-</div>
-<p>Those values of <span class="math inline">\(x_0\)</span> for which <span class="math display">\[\begin{align*}
-P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
-\end{align*}\]</span> are called the <strong>Bayes decision boundary</strong>. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.</p>
-<p><img src="images/Fig_2_13.png" class="img-fluid"></p>
-<ul>
-<li>Note to Fig. 2.13: Here, a <em>perfect</em> classification (i.e.&nbsp;zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups.</li>
-</ul>
-<p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The point-wise Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
-1 - \max_{j}P(Y = j| X = x_0 ),
-\]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
-<p>The <em>global</em> overall Bayes error rate is given by <span class="math display">\[
-1 - E\left(\max_{j}P(Y = 1| X )\right),
-\]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X.\)</span></p>
-</section><section id="k-nearest-neighbors-classification" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="k-nearest-neighbors-classification">
-<span class="math inline">\(K\)</span>-Nearest Neighbors Classification</h3>
-<p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and so computing the Bayes classifier is impossible.</p>
-<p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-nearest neighbors</strong> (KNN) classifier.</p>
-<p>Given a positive integer <span class="math inline">\(K\)</span> and a test observation <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> points in the training data <span class="math display">\[
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
-\]</span> that are closest to <span class="math inline">\(x_0.\)</span></p>
-<p>This set of <span class="math inline">\(K\)</span> nearest points (near to <span class="math inline">\(x_0\)</span>) can be represented by the <span class="math inline">\(x_0\)</span>-specfic index set <span class="math display">\[
-\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
-\]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is an index set that allows to select the <span class="math inline">\(K\)</span> nearest neighbors in the training data.</p>
-<p>From the definition of <span class="math inline">\(\mathcal{N}_0\)</span> is follows that:</p>
-<ul>
-<li><span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n\}\)</span></li>
-<li><span class="math inline">\(|\mathcal{N}_0|=K\)</span></li>
-</ul>
-<p>KNN estimates the conditional probability for class <span class="math inline">\(j\)</span> as the fraction of the <span class="math inline">\(K\)</span> points <span class="math inline">\((x_i,y_i)\)</span> selected by the index-set <span class="math inline">\(\mathcal{N}_0\)</span> whose response value <span class="math inline">\(y_i\)</span> equals <span class="math inline">\(j:\)</span> <span id="eq-DefKNN"><span class="math display">\[
-\begin{align}
-P(Y = j | X = x_{0})
-&amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
-&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
-\end{align}
-\qquad(2.5)\]</span></span> where <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
-<p>Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN" class="quarto-xref">Equation&nbsp;<span>2.5</span></a>.</p>
-<p>Figure 2.14 provides an illustrative example of the KNN approach.</p>
-<ul>
-<li>Two-dimensional predictor <span class="math inline">\(X=(X_1,X_2),\)</span> where <span class="math inline">\(X_1\)</span> is shown on the x-axis and <span class="math inline">\(X_2\)</span> on the y-axis.</li>
-<li>Two class labels <span class="math inline">\(Y\in\{\text{yellow}, \text{blue}\}.\)</span>
-</li>
-<li>Training data consists of six data points <span class="math display">\[
-\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
-\]</span> (See the left panel of Figure 2.14.)</li>
-<li>Class-label prediction (“classification”) are computed for a regular grid of predictor values <span class="math inline">\(x_{0}=(x_{01},x_{02}).\)</span> (See the regular grid of points in the right panel of Figure 2.14.)</li>
-<li>
-<span class="math inline">\(K=3\)</span> nearest neighbors are used to compute the class-label predictions.</li>
-</ul>
-<p><br></p>
-<p><img src="images/Fig_2_14.png" class="img-fluid"></p>
-<ul>
-<li>In the <strong>left-hand panel</strong> of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross.</li>
-<li>In the <strong>right-hand panel</strong> of Figure 2.14, we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</li>
-</ul>
-<p><br></p>
-<p><img src="images/Fig_2_15.png" class="img-fluid"></p>
-<p><br></p>
-<p><img src="images/Fig_2_16.png" class="img-fluid"></p>
-<p><br></p>
-<p><img src="images/Fig_2_17.png" class="img-fluid"></p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Coding Challenge (Nr 2):
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The following <code>R</code>-code generates training data for the two-class classification problem with</p>
-<ul>
-<li>Class 1: Circle with center <span class="math inline">\((x_1,x_2)=(0.5,0.5)\)</span> and radius <span class="math inline">\(r=0.2,\)</span> i.e. <span class="math display">\[
-\text{Cl1} = \{(x_1,x_2)\in[0,1]^2:(x_1-0.5)^2+(x_2-0.5)^2\leq 0.2^2\}
-\]</span>
-</li>
-<li>Class 2: All data points in the square <span class="math inline">\([0,1]^2\)</span> that do not belong to Class 1, i.e. <span class="math display">\[
-\text{Cl2} = \{(x_1,x_2)\in[0,1]^2: (x_1,x_2)\not\in\text{Cl1}\}
-\]</span>
-</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("plotrix") # Install plotrix package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/dmurdoch/plotrix">"plotrix"</a></span><span class="op">)</span>   <span class="co"># Load plotrix package (draw.circle())</span></span>
-<span></span>
-<span><span class="co">## Class 1: Circle  </span></span>
-<span><span class="va">radius</span> <span class="op">&lt;-</span> <span class="fl">0.2</span></span>
-<span><span class="va">center</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">0.5</span><span class="op">)</span></span>
-<span><span class="co">## Class 2: [0,1] x [0,1] \ Class 1</span></span>
-<span></span>
-<span><span class="co">## function to map data points to class labels "Cl1" and "Cl2"</span></span>
-<span><span class="va">my_class_fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">cent</span> <span class="op">=</span> <span class="va">center</span>, <span class="va">rad</span> <span class="op">=</span> <span class="va">radius</span>, <span class="va">error</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">tmp</span>    <span class="op">&lt;-</span> <span class="op">(</span><span class="va">x1</span> <span class="op">-</span> <span class="va">cent</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="va">x2</span> <span class="op">-</span> <span class="va">cent</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span>  <span class="va">rad</span>    <span class="op">&lt;-</span> <span class="va">rad</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">error</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">tmp</span> <span class="op">&lt;=</span> <span class="va">rad</span><span class="op">^</span><span class="fl">2</span>, <span class="st">"Cl1"</span>, <span class="st">"Cl2"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">my_class_fun</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">my_class_fun</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## ##################################</span></span>
-<span><span class="co">## Generate training data (with error)</span></span>
-<span><span class="co">## ##################################</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">321</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## number of training data points</span></span>
-<span><span class="va">n_train</span>    <span class="op">&lt;-</span> <span class="fl">500</span></span>
-<span></span>
-<span><span class="co">## error</span></span>
-<span><span class="va">error</span>  <span class="op">&lt;-</span> <span class="fl">0.05</span></span>
-<span></span>
-<span><span class="va">train_X1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n_train</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">train_X2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n_train</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">train_Cl</span> <span class="op">&lt;-</span> <span class="fu">my_class_fun</span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">train_X1</span>, </span>
-<span>                         x2 <span class="op">=</span> <span class="va">train_X2</span>, error <span class="op">=</span> <span class="va">error</span><span class="op">)</span></span>
-<span><span class="va">train_Cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">train_Cl</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_Cl</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Cl1 Cl2 
- 46 454 </code></pre>
-</div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Cl"</span> <span class="op">=</span> <span class="va">train_Cl</span>,</span>
-<span>  <span class="st">"X1"</span> <span class="op">=</span> <span class="va">train_X1</span>, </span>
-<span>  <span class="st">"X2"</span> <span class="op">=</span> <span class="va">train_X2</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_train</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Cl        X1        X2
-1 Cl2 0.9558938 0.5858416
-2 Cl2 0.9372855 0.3106846
-3 Cl2 0.2382205 0.7639562
-4 Cl2 0.2550736 0.1329140
-5 Cl2 0.3905120 0.2018027
-6 Cl1 0.3411799 0.6347841</code></pre>
-</div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, </span>
-<span>     type <span class="op">=</span> <span class="st">"n"</span>, </span>
-<span>     xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>     ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, </span>
-<span>     xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>     ylab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/plotrix/man/draw.circle.html">draw.circle</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">center</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">center</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, radius <span class="op">=</span> <span class="va">radius</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, label <span class="op">=</span> <span class="st">"Class 1"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.1</span>, y <span class="op">=</span> <span class="fl">0.9</span>, label <span class="op">=</span> <span class="st">"Class 2"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, </span>
-<span>     type <span class="op">=</span> <span class="st">"n"</span>, </span>
-<span>     xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>     ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, </span>
-<span>     xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>     ylab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>,</span>
-<span>     main <span class="op">=</span> <span class="st">"Training data with errors"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/plotrix/man/draw.circle.html">draw.circle</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">center</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">center</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, radius <span class="op">=</span> <span class="va">radius</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span>x   <span class="op">=</span> <span class="va">data_train</span><span class="op">$</span><span class="va">X1</span>, </span>
-<span>       y   <span class="op">=</span> <span class="va">data_train</span><span class="op">$</span><span class="va">X2</span>, </span>
-<span>       col <span class="op">=</span> <span class="va">data_train</span><span class="op">$</span><span class="va">Cl</span>,  pch <span class="op">=</span> <span class="fl">19</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch2_StatLearning_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Challenge:</strong></p>
-<ul>
-<li>Write an KNN-function that uses the training data to classify a grid of test data in <span class="math inline">\([0,1]^2\)</span> into the two classes.</li>
-</ul>
-</div>
-</div>
-</section></section><section id="exercises" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="exercises">
+</section></section></section><section id="exercises" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">2.4</span> Exercises</h2>
-<p>Prepare the following exercises of Chapter 2 in our course textbook <code>ISLR</code>:</p>
+<p>Prepare the following exercises of <strong>Chapter 2</strong> in our course textbook <code>ISLR</code>:</p>
 <ul>
-<li>Exercise 7</li>
 <li>Exercise 8</li>
 <li>Exercise 9</li>
 </ul>
-<!-- {{< include Ch2_StatLearning_Solutions.qmd >}} -->
+<!--
+### Solutions
+
+#### Exercise 8: {-}
+
+This exercise relates to the College data set, which can be found in the file `College.csv` ([LINK-TO-DATA](https://www.statlearning.com/s/College.csv)). It contains a number of variables for $777$ different universities and colleges in the US. The variables are:
+
+-   **Private** : Public/private indicator
+-   **Apps** : Number of applications received
+-   **Accept** : Number of applicants accepted
+-   **Enroll** : Number of new students enrolled
+-   **Top10perc** : New students from top 10% of high school class
+-   **Top25perc** : New students from top 25% of high school class
+-   **F.Undergrad** : Number of full-time undergraduates
+-   **P.Undergrad** : Number of part-time undergraduates
+-   **Outstate** : Out-of-state tuition
+-   **Room.Board** : Room and board costs
+-   **Books** : Estimated book costs
+-   **Personal** : Estimated personal spending
+-   **PhD** : Percent of faculty with Ph.D.'s
+-   **Terminal** : Percent of faculty with terminal degree
+-   **S.F.Ratio** : Student/faculty ratio
+-   **perc.alumni** : Percent of alumni who donate
+-   **Expend** : Instructional expenditure per student
+-   **Grad.Rate** : Graduation rate
+
+**8. a)** Use the `read.csv()` function to read the data into `R`. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Store data into dataframe college
+college <- read.csv("DATA/College.csv")
+
+# Print first 10 rows and first 5 collumns of the data
+college[c(1:10),c(1:5)]
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+                              X Private Apps Accept Enroll
+1  Abilene Christian University     Yes 1660   1232    721
+2            Adelphi University     Yes 2186   1924    512
+3                Adrian College     Yes 1428   1097    336
+4           Agnes Scott College     Yes  417    349    137
+5     Alaska Pacific University     Yes  193    146     55
+6             Albertson College     Yes  587    479    158
+7       Albertus Magnus College     Yes  353    340    103
+8                Albion College     Yes 1899   1720    489
+9              Albright College     Yes 1038    839    227
+10    Alderson-Broaddus College     Yes  582    498    172
+```
+
+
+:::
+:::
+
+
+
+
+**8. b)** Look at the data using the `fix()` function.
+
+**Answer:**
+
+The `fix()` command allows you to look at the data and change values in the data in a spread-sheet like format. 
+
+
+We can do some additional data-wrangling:<br>
+You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Store row names
+rownames(college) <- college[,1]
+
+# pops up a window for data visualization
+# fix(college)
+
+# Alteratively you can use: 
+# View(college)
+```
+:::
+
+
+
+
+You should see that there is now a row.names column with the name of each university recorded. This means that `R` has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Eliminates first column (containing the row names)
+college <- college[,-1]
+# fix(college)
+```
+:::
+
+
+
+
+Now you should see that the first data column is `Private`. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.
+
+**8. c. i)** Use the `summary()` function to produce a numerical summary of the variables in the data set.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+summary(college[, 1:5])
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+   Private               Apps           Accept          Enroll    
+ Length:777         Min.   :   81   Min.   :   72   Min.   :  35  
+ Class :character   1st Qu.:  776   1st Qu.:  604   1st Qu.: 242  
+ Mode  :character   Median : 1558   Median : 1110   Median : 434  
+                    Mean   : 3002   Mean   : 2019   Mean   : 780  
+                    3rd Qu.: 3624   3rd Qu.: 2424   3rd Qu.: 902  
+                    Max.   :48094   Max.   :26330   Max.   :6392  
+   Top10perc    
+ Min.   : 1.00  
+ 1st Qu.:15.00  
+ Median :23.00  
+ Mean   :27.56  
+ 3rd Qu.:35.00  
+ Max.   :96.00  
+```
+
+
+:::
+:::
+
+
+
+
+
+**8. c. ii)** Use the `pairs()` function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix `A` using `A[,2:10]`.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+pairs(x = college[,2:10])
+```
+
+::: {.cell-output-display}
+![](Ch2_StatLearning_files/figure-html/unnamed-chunk-5-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+**8. c. iii)** Use the `boxplot()` function to produce side-by-side boxplots of `Outstate` versus `Private`.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+boxplot(Outstate~Private, 
+        data = college, 
+        xlab = "Private", 
+        ylab = "Outstate")
+```
+
+::: {.cell-output-display}
+![](Ch2_StatLearning_files/figure-html/unnamed-chunk-6-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+
+> `Outstate`-Variable explained: The `Outstate`-variable is the tuition fee charged from non-resident students. (Many US colleges charge high tuition fees from non-resident students.) 
+
+
+**8. c. iv)** Create a new qualitative variable, called `Elite`, by binning the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Creating a vector called ELite with only "No" entrances amounting the number of college rows
+Elite <- rep("No",nrow(college))
+
+# Replacing "No" with "Yes" if the proportion of students coming from the top 10% of their HS classes exceeds 50%.
+Elite[college$Top10perc > 50] <- "Yes"
+
+# Encode a vector as a factor
+Elite <- as.factor(Elite)
+
+# Add Elite variable to our current dataset "college"
+college <- data.frame(college, Elite)
+```
+:::
+
+
+
+
+Use the `summary()` function to see how many elite universities there are. Now use the `boxplot()` function to produce side-by-side boxplots of Outstate versus Elite.
+
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+summary(college$Elite)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+ No Yes 
+699  78 
+```
+
+
+:::
+:::
+
+
+
+
+There are $78$ elite Universities. The boxplots of `Outstate` versus Elite-Status are generated as following:
+
+
+
+
+::: {.cell layout-align="center" scrolled='false'}
+
+```{.r .cell-code}
+boxplot(Outstate ~ Elite, 
+        data = college, xlab="Elite", ylab="Outstate")
+```
+
+::: {.cell-output-display}
+![](Ch2_StatLearning_files/figure-html/unnamed-chunk-9-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+**8. c. v)** Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+par(mfrow=c(2,2))
+hist(college$Apps,     breaks=50, xlim=c(0,25000), 
+     xlab = "", main="Apps")
+hist(college$Enroll,   breaks=25, xlab = "", main="Enroll")
+hist(college$Expend,   breaks=25, xlab = "", main="Expend")
+hist(college$Outstate,            xlab = "", main="Outstate")
+```
+
+::: {.cell-output-display}
+![](Ch2_StatLearning_files/figure-html/unnamed-chunk-10-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+Remember: 
+
+* **Enroll:** Number of new students enrolled
+* **Expend:** Instructional expenditure per student
+* **Outstate:** Out-of-state tuition
+
+
+#### Exercise 9: {-}
+
+This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Store data into dataframe college
+Auto <- read.csv("DATA/Auto.csv", header=T, na.strings="?")
+
+# Remove missing values from the data
+Auto <- na.omit(Auto)
+
+# Print first 10 rows of the data
+print(Auto[c(1:10),])
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+   mpg cylinders displacement horsepower weight acceleration year origin
+1   18         8          307        130   3504         12.0   70      1
+2   15         8          350        165   3693         11.5   70      1
+3   18         8          318        150   3436         11.0   70      1
+4   16         8          304        150   3433         12.0   70      1
+5   17         8          302        140   3449         10.5   70      1
+6   15         8          429        198   4341         10.0   70      1
+7   14         8          454        220   4354          9.0   70      1
+8   14         8          440        215   4312          8.5   70      1
+9   14         8          455        225   4425         10.0   70      1
+10  15         8          390        190   3850          8.5   70      1
+                        name
+1  chevrolet chevelle malibu
+2          buick skylark 320
+3         plymouth satellite
+4              amc rebel sst
+5                ford torino
+6           ford galaxie 500
+7           chevrolet impala
+8          plymouth fury iii
+9           pontiac catalina
+10        amc ambassador dpl
+```
+
+
+:::
+
+```{.r .cell-code}
+# Find more info on the variables here:
+# library(ISLR2)
+# ?Auto
+```
+:::
+
+
+
+
+
+* **mpg:** miles per gallon
+* **cylinders:** Number of cylinders between 4 and 8
+* **displacement:** Engine displacement (cu. inches)
+* **horsepower:** Engine horsepower
+* **weight:** Vehicle weight (lbs.)
+* **acceleration:** Time to accelerate from 0 to 60 mph (sec.)
+* **year:** Model year (modulo 100)
+* **origin:** Origin of car (1. American, 2. European, 3. Japanese)
+* **name:** Vehicle name
+
+
+**9. a)** Which of the predictors are quantitative, and which are qualitative?
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Summarize dataset
+summary(Auto)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+      mpg          cylinders      displacement     horsepower        weight    
+ Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
+ 1st Qu.:17.00   1st Qu.:4.000   1st Qu.:105.0   1st Qu.: 75.0   1st Qu.:2225  
+ Median :22.75   Median :4.000   Median :151.0   Median : 93.5   Median :2804  
+ Mean   :23.45   Mean   :5.472   Mean   :194.4   Mean   :104.5   Mean   :2978  
+ 3rd Qu.:29.00   3rd Qu.:8.000   3rd Qu.:275.8   3rd Qu.:126.0   3rd Qu.:3615  
+ Max.   :46.60   Max.   :8.000   Max.   :455.0   Max.   :230.0   Max.   :5140  
+  acceleration        year           origin          name          
+ Min.   : 8.00   Min.   :70.00   Min.   :1.000   Length:392        
+ 1st Qu.:13.78   1st Qu.:73.00   1st Qu.:1.000   Class :character  
+ Median :15.50   Median :76.00   Median :1.000   Mode  :character  
+ Mean   :15.54   Mean   :75.98   Mean   :1.577                     
+ 3rd Qu.:17.02   3rd Qu.:79.00   3rd Qu.:2.000                     
+ Max.   :24.80   Max.   :82.00   Max.   :3.000                     
+```
+
+
+:::
+:::
+
+
+
+
+- **Quantitative predictors:** `mpg`, `cylinders`, `displacement`, `horsepower`, `weight`, `acceleration`, `year` 
+- **Qualitative predictors:** `name`, `origin`
+
+**9. b)** What is the range of each quantitative predictor? You can answer this using the `range()` function.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# apply the range function to the first seven columns of Auto
+ranges <- sapply(Auto[, 1:7], range)
+# print to console
+ranges
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+      mpg cylinders displacement horsepower weight acceleration year
+[1,]  9.0         3           68         46   1613          8.0   70
+[2,] 46.6         8          455        230   5140         24.8   82
+```
+
+
+:::
+
+```{.r .cell-code}
+# adding row names:
+row.names(ranges) <- c("min", "max")
+ranges
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+     mpg cylinders displacement horsepower weight acceleration year
+min  9.0         3           68         46   1613          8.0   70
+max 46.6         8          455        230   5140         24.8   82
+```
+
+
+:::
+:::
+
+
+
+
+**9. c)** What is the mean and standard deviation of each quantitative predictor?
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# compute the means and round to 2 decimal places 
+mean <- sapply(Auto[,1:7], mean)
+mean <- sapply(mean, round, 2)
+
+# compute the standard deviations (sd) and round to 2 decimal places 
+sd <- sapply(Auto[, 1:7], sd)
+sd <- sapply(sd,round,2)
+
+# print mean values 
+mean
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+         mpg    cylinders displacement   horsepower       weight acceleration 
+       23.45         5.47       194.41       104.47      2977.58        15.54 
+        year 
+       75.98 
+```
+
+
+:::
+
+```{.r .cell-code}
+# print sd values 
+sd
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+         mpg    cylinders displacement   horsepower       weight acceleration 
+        7.81         1.71       104.64        38.49       849.40         2.76 
+        year 
+        3.68 
+```
+
+
+:::
+:::
+
+
+
+
+**9.d)** Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# remove observations and store them 
+newAuto = Auto[-(10:85),]
+
+# Re-do exercises 9. b) and 9.c)
+# This time, create an empty Matrix "Results" to store the results
+Results <- matrix(NA, nrow = 4, ncol = 7, 
+                  dimnames = list(c("Mean", "SD", "Min", "Max"),# row names 
+                                  c(colnames(newAuto[,1:7])))) # column names
+
+# Compute and store the results
+Results[1,] <- sapply(newAuto[, 1:7], mean)
+Results[2,] <- sapply(newAuto[, 1:7], sd)  
+Results[3,] <- sapply(newAuto[, 1:7], min)
+Results[4,] <- sapply(newAuto[, 1:7], max)
+
+# Round to 0 decimal and print
+round(Results, digits = 0)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+     mpg cylinders displacement horsepower weight acceleration year
+Mean  24         5          187        101   2936           16   77
+SD     8         2          100         36    811            3    3
+Min   11         3           68         46   1649            8   70
+Max   47         8          455        230   4997           25   82
+```
+
+
+:::
+:::
+
+
+
+
+**9. e)** Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
+
+**Answer:**
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+pairs(Auto[, -9]) # remove the character-variable 'name'
+```
+
+::: {.cell-output-display}
+![](Ch2_StatLearning_files/figure-html/unnamed-chunk-16-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+Findings: 
+
+- higher `weight` is related with lower `mpg` 
+- higher `weight` is related with higher `displacement` 
+- higher `weight` is related with higher `horsepower`
+- higher `horsepower` is related with lower `acceleration`
+- higher model `years` are related with higher `mpg`
+
+**9. f)** Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
+
+**Answer:**
+
+Yes, there are multiple potentially useful predictor variables. 
+
+All of the *quantitative* variables show some sort of relation (either linear or non-linear) with `mpg` and hence, they might be useful in predicting `mpg`. 
+
+Moreover, the qualitative variable `origin` might also be useful in predicting `mpg`: cars originated from region 1, 2, and 3 are  associated with lower, intermediate, higher `mpg` values. 
+
+-->
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

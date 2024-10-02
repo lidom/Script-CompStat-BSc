@@ -210,39 +210,42 @@ window.Quarto = {
   <ul>
 <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">5.1</span> Overview</a></li>
   <li><a href="#why-not-linear-regression" id="toc-why-not-linear-regression" class="nav-link" data-scroll-target="#why-not-linear-regression"><span class="header-section-number">5.2</span> Why Not Linear Regression?</a></li>
+  <li><a href="#assessing-model-accuracy-the-classification-setting" id="toc-assessing-model-accuracy-the-classification-setting" class="nav-link" data-scroll-target="#assessing-model-accuracy-the-classification-setting"><span class="header-section-number">5.3</span> Assessing Model Accuracy: The Classification Setting</a></li>
+  <li><a href="#the-bayes-classifier" id="toc-the-bayes-classifier" class="nav-link" data-scroll-target="#the-bayes-classifier"><span class="header-section-number">5.4</span> The Bayes Classifier</a></li>
+  <li><a href="#k-nearest-neighbors-classification" id="toc-k-nearest-neighbors-classification" class="nav-link" data-scroll-target="#k-nearest-neighbors-classification"><span class="header-section-number">5.5</span> <span class="math inline">\(K\)</span>-Nearest Neighbors Classification</a></li>
   <li>
-<a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">5.3</span> Logistic Regression</a>
+<a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">5.6</span> Logistic Regression</a>
   <ul class="collapse">
-<li><a href="#the-simple-p1-logistic-model" id="toc-the-simple-p1-logistic-model" class="nav-link" data-scroll-target="#the-simple-p1-logistic-model"><span class="header-section-number">5.3.1</span> The Simple <span class="math inline">\((p=1)\)</span> Logistic Model</a></li>
-  <li><a href="#estimating-the-regression-coefficients" id="toc-estimating-the-regression-coefficients" class="nav-link" data-scroll-target="#estimating-the-regression-coefficients"><span class="header-section-number">5.3.2</span> Estimating the Regression Coefficients</a></li>
-  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions"><span class="header-section-number">5.3.3</span> Making Predictions</a></li>
-  <li><a href="#multiple-logistic-regression" id="toc-multiple-logistic-regression" class="nav-link" data-scroll-target="#multiple-logistic-regression"><span class="header-section-number">5.3.4</span> Multiple Logistic Regression</a></li>
-  <li><a href="#sec-multinomialLogistic" id="toc-sec-multinomialLogistic" class="nav-link" data-scroll-target="#sec-multinomialLogistic"><span class="header-section-number">5.3.5</span> Multinomial Logistic Regression</a></li>
+<li><a href="#the-simple-p1-logistic-model" id="toc-the-simple-p1-logistic-model" class="nav-link" data-scroll-target="#the-simple-p1-logistic-model"><span class="header-section-number">5.6.1</span> The Simple <span class="math inline">\((p=1)\)</span> Logistic Model</a></li>
+  <li><a href="#estimating-the-regression-coefficients" id="toc-estimating-the-regression-coefficients" class="nav-link" data-scroll-target="#estimating-the-regression-coefficients"><span class="header-section-number">5.6.2</span> Estimating the Regression Coefficients</a></li>
+  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions"><span class="header-section-number">5.6.3</span> Making Predictions</a></li>
+  <li><a href="#multiple-logistic-regression" id="toc-multiple-logistic-regression" class="nav-link" data-scroll-target="#multiple-logistic-regression"><span class="header-section-number">5.6.4</span> Multiple Logistic Regression</a></li>
+  <li><a href="#sec-multinomialLogistic" id="toc-sec-multinomialLogistic" class="nav-link" data-scroll-target="#sec-multinomialLogistic"><span class="header-section-number">5.6.5</span> Multinomial Logistic Regression</a></li>
   </ul>
 </li>
   <li>
-<a href="#discriminant-analysis-generative-models-for-classification" id="toc-discriminant-analysis-generative-models-for-classification" class="nav-link" data-scroll-target="#discriminant-analysis-generative-models-for-classification"><span class="header-section-number">5.4</span> Discriminant Analysis: Generative Models for Classification</a>
+<a href="#discriminant-analysis-generative-models-for-classification" id="toc-discriminant-analysis-generative-models-for-classification" class="nav-link" data-scroll-target="#discriminant-analysis-generative-models-for-classification"><span class="header-section-number">5.7</span> Discriminant Analysis: Generative Models for Classification</a>
   <ul class="collapse">
-<li><a href="#linear-discriminant-analysis-for-p-1" id="toc-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#linear-discriminant-analysis-for-p-1"><span class="header-section-number">5.4.1</span> Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></a></li>
-  <li><a href="#linear-discriminant-analysis-for-p-1-1" id="toc-linear-discriminant-analysis-for-p-1-1" class="nav-link" data-scroll-target="#linear-discriminant-analysis-for-p-1-1"><span class="header-section-number">5.4.2</span> Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span></a></li>
-  <li><a href="#classification-errors-of-binary-classifiers" id="toc-classification-errors-of-binary-classifiers" class="nav-link" data-scroll-target="#classification-errors-of-binary-classifiers"><span class="header-section-number">5.4.3</span> Classification Errors of Binary Classifiers</a></li>
-  <li><a href="#the-roc-curve" id="toc-the-roc-curve" class="nav-link" data-scroll-target="#the-roc-curve"><span class="header-section-number">5.4.4</span> The ROC curve</a></li>
-  <li><a href="#quadratic-discriminant-analysis-qda" id="toc-quadratic-discriminant-analysis-qda" class="nav-link" data-scroll-target="#quadratic-discriminant-analysis-qda"><span class="header-section-number">5.4.5</span> Quadratic Discriminant Analysis (QDA)</a></li>
-  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"><span class="header-section-number">5.4.6</span> Naive Bayes</a></li>
+<li><a href="#linear-discriminant-analysis-for-p-1" id="toc-linear-discriminant-analysis-for-p-1" class="nav-link" data-scroll-target="#linear-discriminant-analysis-for-p-1"><span class="header-section-number">5.7.1</span> Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span></a></li>
+  <li><a href="#linear-discriminant-analysis-for-p-1-1" id="toc-linear-discriminant-analysis-for-p-1-1" class="nav-link" data-scroll-target="#linear-discriminant-analysis-for-p-1-1"><span class="header-section-number">5.7.2</span> Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span></a></li>
+  <li><a href="#classification-errors-of-binary-classifiers" id="toc-classification-errors-of-binary-classifiers" class="nav-link" data-scroll-target="#classification-errors-of-binary-classifiers"><span class="header-section-number">5.7.3</span> Classification Errors of Binary Classifiers</a></li>
+  <li><a href="#the-roc-curve" id="toc-the-roc-curve" class="nav-link" data-scroll-target="#the-roc-curve"><span class="header-section-number">5.7.4</span> The ROC curve</a></li>
+  <li><a href="#quadratic-discriminant-analysis-qda" id="toc-quadratic-discriminant-analysis-qda" class="nav-link" data-scroll-target="#quadratic-discriminant-analysis-qda"><span class="header-section-number">5.7.5</span> Quadratic Discriminant Analysis (QDA)</a></li>
+  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"><span class="header-section-number">5.7.6</span> Naive Bayes</a></li>
   </ul>
 </li>
   <li>
-<a href="#r-lab-classification" id="toc-r-lab-classification" class="nav-link" data-scroll-target="#r-lab-classification"><span class="header-section-number">5.5</span> <code>R</code>-Lab: Classification</a>
+<a href="#self-study-r-lab-classification" id="toc-self-study-r-lab-classification" class="nav-link" data-scroll-target="#self-study-r-lab-classification"><span class="header-section-number">5.8</span> Self-Study <code>R</code>-Lab: Classification</a>
   <ul class="collapse">
-<li><a href="#the-stock-market-data" id="toc-the-stock-market-data" class="nav-link" data-scroll-target="#the-stock-market-data"><span class="header-section-number">5.5.1</span> The Stock Market Data</a></li>
-  <li><a href="#logistic-regression-1" id="toc-logistic-regression-1" class="nav-link" data-scroll-target="#logistic-regression-1"><span class="header-section-number">5.5.2</span> Logistic Regression</a></li>
-  <li><a href="#linear-discriminant-analysis" id="toc-linear-discriminant-analysis" class="nav-link" data-scroll-target="#linear-discriminant-analysis"><span class="header-section-number">5.5.3</span> Linear Discriminant Analysis</a></li>
-  <li><a href="#quadratic-discriminant-analysis" id="toc-quadratic-discriminant-analysis" class="nav-link" data-scroll-target="#quadratic-discriminant-analysis"><span class="header-section-number">5.5.4</span> Quadratic Discriminant Analysis</a></li>
-  <li><a href="#naive-bayes-1" id="toc-naive-bayes-1" class="nav-link" data-scroll-target="#naive-bayes-1"><span class="header-section-number">5.5.5</span> Naive Bayes</a></li>
-  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="header-section-number">5.5.6</span> <span class="math inline">\(K\)</span>-Nearest Neighbors</a></li>
+<li><a href="#the-stock-market-data" id="toc-the-stock-market-data" class="nav-link" data-scroll-target="#the-stock-market-data"><span class="header-section-number">5.8.1</span> The Stock Market Data</a></li>
+  <li><a href="#logistic-regression-1" id="toc-logistic-regression-1" class="nav-link" data-scroll-target="#logistic-regression-1"><span class="header-section-number">5.8.2</span> Logistic Regression</a></li>
+  <li><a href="#linear-discriminant-analysis" id="toc-linear-discriminant-analysis" class="nav-link" data-scroll-target="#linear-discriminant-analysis"><span class="header-section-number">5.8.3</span> Linear Discriminant Analysis</a></li>
+  <li><a href="#quadratic-discriminant-analysis" id="toc-quadratic-discriminant-analysis" class="nav-link" data-scroll-target="#quadratic-discriminant-analysis"><span class="header-section-number">5.8.4</span> Quadratic Discriminant Analysis</a></li>
+  <li><a href="#naive-bayes-1" id="toc-naive-bayes-1" class="nav-link" data-scroll-target="#naive-bayes-1"><span class="header-section-number">5.8.5</span> Naive Bayes</a></li>
+  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="header-section-number">5.8.6</span> <span class="math inline">\(K\)</span>-Nearest Neighbors</a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.6</span> Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.9</span> Exercises</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -264,8 +267,14 @@ window.Quarto = {
 
 
 </header><blockquote class="blockquote">
-<p>Reading: Chapter 4 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
+<p>Reading:</p>
 </blockquote>
+<ul>
+<li>Chapter 2 (the classification parts) of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a>
+</li>
+<li>Chapter 4 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a>
+</li>
+</ul>
 <section id="overview" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">5.1</span> Overview</h2>
 <p>Classification problems occur often, perhaps even more so than regression problems.</p>
@@ -362,9 +371,137 @@ Pr(Y=1|X) \approx \hat{Y}=\hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
 <li>A classic regression method may not provide meaningful estimates of <span class="math inline">\(Pr(Y |X),\)</span> even with just two classes.</li>
 </ol>
 <p>Thus, it is often preferable to use a classification method that is truly suited for qualitative response values such as, for instance, logistic regression.</p>
-</section><section id="logistic-regression" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="logistic-regression">
-<span class="header-section-number">5.3</span> Logistic Regression</h2>
-<p>Logistic regression models the probability that <span class="math inline">\(Y\)</span> belongs to a particular category. We begin with <span class="math inline">\(K=2\)</span> category problems, and consider <span class="math inline">\(K&gt;2\)</span> category problems below in <a href="#sec-multinomialLogistic" class="quarto-xref"><span>Section 5.3.5</span></a>.</p>
+</section><section id="assessing-model-accuracy-the-classification-setting" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="assessing-model-accuracy-the-classification-setting">
+<span class="header-section-number">5.3</span> Assessing Model Accuracy: The Classification Setting</h2>
+<p>Setup:</p>
+<ul>
+<li>Observed <strong>training data</strong> <span class="math display">\[
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
+\]</span>
+</li>
+<li>Qualitative response <span class="math inline">\(y_i\)</span> with categorical class labels. E.g.
+<ul>
+<li><span class="math inline">\(y_i\in\{\text{red},\text{blue}\}\)</span></li>
+<li><span class="math inline">\(y_i\in\{\text{positive returns},\text{negative returns}\}\)</span></li>
+</ul>
+</li>
+<li>The <strong>classifier</strong> <span class="math inline">\(\hat{f}\)</span> is computed from the training data.</li>
+<li>Predicted training data class labels: <span class="math display">\[
+\hat{y}_i = \hat{f}(x_i)
+\]</span>
+</li>
+</ul>
+<p>The alternative to the training MSE (introduced in <a href="Ch2_StatLearning.html#sec-mqfit" class="quarto-xref"><span>Section 2.3.1</span></a>) is here the <strong>training error rate</strong> <span class="math display">\[
+\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
+\]</span> which gives the relative frequency of false categorical predictions.</p>
+<p>Here, <span class="math display">\[
+I(\cdot)
+\]</span> is an indicator function with <span class="math inline">\(I(\text{true})=1\)</span> and <span class="math inline">\(I(\text{false})=0.\)</span></p>
+<p>Let <span class="math display">\[
+\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
+\]</span> denote <span class="math inline">\(m\)</span> <strong>test data</strong> observations.</p>
+<p>The alternative to the test MSE is here the <strong>test error rate</strong> <span class="math display">\[
+\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
+\]</span> where <span class="math inline">\(\hat{y}_{0i}\)</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation with predictor value <span class="math inline">\(x_{i0}.\)</span></p>
+<p>A good classifier is one for which the test error rate is smallest.</p>
+</section><section id="the-bayes-classifier" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="the-bayes-classifier">
+<span class="header-section-number">5.4</span> The Bayes Classifier</h2>
+<p>It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value <span class="math inline">\(x_{0}.\)</span> This classifier is called the <strong>Bayes classifier</strong>.</p>
+<p>In other words, the Bayes classifier assigns a test observation with predictor vector <span class="math inline">\(x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
+P(Y = j | X = x_{0})
+\]</span> is largest among all possible class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
+<p>In a <strong>two-class problem</strong> where there are only two possible response values, say class <span class="math inline">\(1\)</span> or class <span class="math inline">\(2,\)</span> the Bayes classifier corresponds to predicting class <span class="math inline">\(1\)</span> if <span class="math display">\[
+P(Y = 1| X = x_0 ) \geq 0.5,
+\]</span> and class <span class="math inline">\(2\)</span> if <span class="math display">\[
+\begin{align*}
+&amp; P(Y = 1| X = x_0 ) &lt; 0.5 \\[2ex]
+\Leftrightarrow\; &amp; P(Y = 2| X = x_0 ) &gt; 0.5  
+\end{align*}
+\]</span></p>
+<p>Those values of <span class="math inline">\(x_0\)</span> for which <span class="math display">\[
+\begin{align*}
+P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
+\end{align*}
+\]</span> are called the <strong>Bayes decision boundary</strong>. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.</p>
+<p><img src="images/Fig_2_13.png" class="img-fluid"></p>
+<p><strong>Note to Fig. 2.13:</strong> Here, a <em>perfect</em> classification (i.e.&nbsp;zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups.</p>
+<p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The point-wise Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
+1 - \max_{j}P(Y = j| X = x_0 ),
+\]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
+<p>The <em>global</em> overall Bayes error rate is given by <span class="math display">\[
+1 - E\left(\max_{j}P(Y = 1| X )\right),
+\]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X.\)</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Classification threshold <span class="math inline">\(0.5\)</span>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If no further information is given, one uses usually a threshold of <span class="math inline">\(0.5\)</span> in a two-class classification problem; or, more generally, a threshold of <span class="math inline">\(\frac{1}{G}\)</span> in a <span class="math inline">\(G\)</span>-classes classification problem.</p>
+<p>However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.</p>
+<p>Example: <span class="math display">\[
+y\in\{\text{Person pays back}, \text{Person does not pay back}\}
+\]</span> The classification error <span class="math display">\[
+\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
+\]</span> can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value <span class="math inline">\(x_0\)</span> to the “Person pays back”-class only if, for instance, <span class="math display">\[
+\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
+\]</span> and otherwise classify this person to the “Person does not pay back”-class. This will reduce the frequency of miss-classifications when classifying into the “Person pays back”-class, and thus reduce the costs.</p>
+</div>
+</div>
+</section><section id="k-nearest-neighbors-classification" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="k-nearest-neighbors-classification">
+<span class="header-section-number">5.5</span> <span class="math inline">\(K\)</span>-Nearest Neighbors Classification</h2>
+<p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and so computing the Bayes classifier is impossible.</p>
+<p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-nearest neighbors</strong> (KNN) classifier.</p>
+<p>Given a positive integer <span class="math inline">\(K\)</span> and a test observation <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> points in the training data <span class="math display">\[
+\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+\]</span> that are closest to <span class="math inline">\(x_0.\)</span></p>
+<p>This set of <span class="math inline">\(K\)</span> nearest points (near to <span class="math inline">\(x_0\)</span>) can be represented by the <span class="math inline">\(x_0\)</span>-specfic index set <span class="math display">\[
+\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+\]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is an index set that allows to select the <span class="math inline">\(K\)</span> nearest neighbors in the training data.</p>
+<p>From the definition of <span class="math inline">\(\mathcal{N}_0\)</span> is follows that:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n\}\)</span></li>
+<li><span class="math inline">\(|\mathcal{N}_0|=K\)</span></li>
+</ul>
+<p>KNN estimates the conditional probability for class <span class="math inline">\(j\)</span> as the fraction of the <span class="math inline">\(K\)</span> points <span class="math inline">\((x_i,y_i)\)</span> selected by the index-set <span class="math inline">\(\mathcal{N}_0\)</span> whose response value <span class="math inline">\(y_i\)</span> equals <span class="math inline">\(j:\)</span> <span id="eq-DefKNN"><span class="math display">\[
+\begin{align}
+P(Y = j | X = x_{0})
+&amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
+&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
+\end{align}
+\qquad(5.4)\]</span></span> where <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
+<p>Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>.</p>
+<p>Figure 2.14 provides an illustrative example of the KNN approach.</p>
+<ul>
+<li>Two-dimensional predictor <span class="math inline">\(X=(X_1,X_2),\)</span> where <span class="math inline">\(X_1\)</span> is shown on the x-axis and <span class="math inline">\(X_2\)</span> on the y-axis.</li>
+<li>Two class labels <span class="math inline">\(Y\in\{\text{yellow}, \text{blue}\}.\)</span>
+</li>
+<li>Training data consists of six data points <span class="math display">\[
+\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
+\]</span> (See the left panel of Figure 2.14.)</li>
+<li>Class-label prediction (“classification”) are computed for a regular grid of predictor values <span class="math inline">\(x_{0}=(x_{01},x_{02}).\)</span> (See the regular grid of points in the right panel of Figure 2.14.)</li>
+<li>
+<span class="math inline">\(K=3\)</span> nearest neighbors are used to compute the class-label predictions.</li>
+</ul>
+<p><br></p>
+<p><img src="images/Fig_2_14.png" class="img-fluid"></p>
+<ul>
+<li>In the <strong>left-hand panel</strong> of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross.</li>
+<li>In the <strong>right-hand panel</strong> of Figure 2.14, we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</li>
+</ul>
+<p><br></p>
+<p><img src="images/Fig_2_15.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_16.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/Fig_2_17.png" class="img-fluid"></p>
+</section><section id="logistic-regression" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="logistic-regression">
+<span class="header-section-number">5.6</span> Logistic Regression</h2>
+<p>Logistic regression models the probability that <span class="math inline">\(Y\)</span> belongs to a particular category. We begin with <span class="math inline">\(K=2\)</span> category problems, and consider <span class="math inline">\(K&gt;2\)</span> category problems below in <a href="#sec-multinomialLogistic" class="quarto-xref"><span>Section 5.6.5</span></a>.</p>
 <p>For the <code>Default</code> data, logistic regression models the conditional probability of <code>default</code><span class="math inline">\(\in\{\texttt{Yes},\texttt{No}\}\)</span> given values for the predictor(s). For example, the probability of the even <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> given <code>balance</code>: <span class="math display">\[
 Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
 \]</span> where <span class="math inline">\(p(\texttt{balance})\in[0,1]\)</span> is used as a short hand notation.</p>
@@ -390,8 +527,8 @@ Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})=p(\texttt{balance}) &gt; 0.1.
 \]</span></p>
 </div>
 </div>
-<section id="the-simple-p1-logistic-model" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="the-simple-p1-logistic-model">
-<span class="header-section-number">5.3.1</span> The Simple <span class="math inline">\((p=1)\)</span> Logistic Model</h3>
+<section id="the-simple-p1-logistic-model" class="level3" data-number="5.6.1"><h3 data-number="5.6.1" class="anchored" data-anchor-id="the-simple-p1-logistic-model">
+<span class="header-section-number">5.6.1</span> The Simple <span class="math inline">\((p=1)\)</span> Logistic Model</h3>
 <p>For a binary coded dependen variable <span class="math inline">\(Y\in\{0,1\}\)</span> we aim to model the relationship between <span class="math display">\[
 p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
 \]</span></p>
@@ -451,8 +588,8 @@ Caution
 <p>But regardless of the value of <span class="math inline">\(X\)</span>, if <span class="math inline">\(\beta_1\)</span> is positive then increasing <span class="math inline">\(X\)</span> will be associated with increasing <span class="math inline">\(p(X)\)</span>, and if <span class="math inline">\(\beta_1\)</span> is negative then increasing <span class="math inline">\(X\)</span> will be associated with decreasing <span class="math inline">\(p(X).\)</span></p>
 </div>
 </div>
-</section><section id="estimating-the-regression-coefficients" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="estimating-the-regression-coefficients">
-<span class="header-section-number">5.3.2</span> Estimating the Regression Coefficients</h3>
+</section><section id="estimating-the-regression-coefficients" class="level3" data-number="5.6.2"><h3 data-number="5.6.2" class="anchored" data-anchor-id="estimating-the-regression-coefficients">
+<span class="header-section-number">5.6.2</span> Estimating the Regression Coefficients</h3>
 <p>In logistic regression analysis, the unknown model parameters are estimated using <em>maximum likelihood</em>.</p>
 <p><strong>Basic intuition:</strong> Find estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that the predicted probability <span class="math inline">\(\hat{p}(x_i)\)</span> for each person <span class="math inline">\(i\)</span> corresponds as close as possible to its observed <code>default</code> status. I.e., choose <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that</p>
 <ul>
@@ -488,8 +625,8 @@ Caution
 </li>
 <li>The <span class="math inline">\(z\)</span>-statistic in Table 4.1 plays the same role as the <span class="math inline">\(t\)</span>-statistic in the linear regression output: a large (absolute) value of the <span class="math inline">\(z\)</span>-statistic indicates evidence against the null hypothesis <span class="math inline">\(H_0: \beta_1= 0.\)</span>
 </li>
-</ul></section><section id="making-predictions" class="level3" data-number="5.3.3"><h3 data-number="5.3.3" class="anchored" data-anchor-id="making-predictions">
-<span class="header-section-number">5.3.3</span> Making Predictions</h3>
+</ul></section><section id="making-predictions" class="level3" data-number="5.6.3"><h3 data-number="5.6.3" class="anchored" data-anchor-id="making-predictions">
+<span class="header-section-number">5.6.3</span> Making Predictions</h3>
 <p>Once the coefficients have been estimated, we can compute the probability of <code>default</code><span class="math inline">\(=1\)</span> for any given value of <code>balance</code>.</p>
 <p>For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a <code>balance</code>-value of 1,000 [USD] is <span class="math display">\[
 \begin{align*}
@@ -521,8 +658,8 @@ Caution
 \end{align*}\]</span></p>
 <p>This may indicate that students tend to have higher default probabilities than non-students. But we may <strong>missed further factors</strong> here since we only use one predictor variable. Thus, this result may be driven by an <strong>omitted-variable bias</strong>.</p>
 <p>To control for other confounding predictors, we need to use multiple logistic regression.</p>
-</section></section><section id="multiple-logistic-regression" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="multiple-logistic-regression">
-<span class="header-section-number">5.3.4</span> Multiple Logistic Regression</h3>
+</section></section><section id="multiple-logistic-regression" class="level3" data-number="5.6.4"><h3 data-number="5.6.4" class="anchored" data-anchor-id="multiple-logistic-regression">
+<span class="header-section-number">5.6.4</span> Multiple Logistic Regression</h3>
 <p>By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following <span class="math display">\[
 \begin{align*}
 p(X)
@@ -548,8 +685,8 @@ p(X)
 <li>However, overall, students tend to default at a higher rate than non-students since, overall, they tend to have higher credit card balances.</li>
 </ul>
 <p>In other words: A student is riskier than a non-student if no information about the student’s credit card balance is available. However, a student is less risky than a non-student if both have the same credit card balance.</p>
-</section><section id="sec-multinomialLogistic" class="level3" data-number="5.3.5"><h3 data-number="5.3.5" class="anchored" data-anchor-id="sec-multinomialLogistic">
-<span class="header-section-number">5.3.5</span> Multinomial Logistic Regression</h3>
+</section><section id="sec-multinomialLogistic" class="level3" data-number="5.6.5"><h3 data-number="5.6.5" class="anchored" data-anchor-id="sec-multinomialLogistic">
+<span class="header-section-number">5.6.5</span> Multinomial Logistic Regression</h3>
 <p>It is possible to extend the two-class logistic regression approach to the setting of <span class="math inline">\(K &gt; 2\)</span> classes. This extension is sometimes known as <em>multinomial logistic regression</em>.</p>
 <p>To do this, we first select a single class to serve as the baseline; without loss of generality, we select the <span class="math inline">\(K\)</span>th class for this role.</p>
 <p>We model the probabilities that <span class="math inline">\(Y=k\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span>, using <span class="math inline">\(k\)</span>-specific parameters <span class="math inline">\(\beta_{k0},\dots,\beta_{kp}\)</span> with <span class="math display">\[
@@ -564,8 +701,8 @@ p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \
 <ul>
 <li><p>The predictions <span class="math inline">\(\hat{p}_k(x)\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span> do not depend on the choice of the baseline class.</p></li>
 <li><p>However, interpretation of the coefficients in a multinomial logistic regression model must be done with care, since it is tied to the choice of baseline.</p></li>
-</ul></section></section><section id="discriminant-analysis-generative-models-for-classification" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="discriminant-analysis-generative-models-for-classification">
-<span class="header-section-number">5.4</span> Discriminant Analysis: Generative Models for Classification</h2>
+</ul></section></section><section id="discriminant-analysis-generative-models-for-classification" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="discriminant-analysis-generative-models-for-classification">
+<span class="header-section-number">5.7</span> Discriminant Analysis: Generative Models for Classification</h2>
 <p>We now consider an alternative and less direct approach to estimating the probabilities <span class="math display">\[
 Pr(Y=K|X=x).
 \]</span></p>
@@ -599,7 +736,7 @@ p_k(x)
 &amp; = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\
 &amp; =\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
 \end{align*}
-\qquad(5.4)\]</span></span> where <span class="math display">\[
+\qquad(5.5)\]</span></span> where <span class="math display">\[
 \begin{align*}
 Pr(X = x)
 &amp;= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\
@@ -607,7 +744,7 @@ Pr(X = x)
 \end{align*}
 \]</span></p>
 <p>While logistic regression aims at estimating the posterior probability <span class="math inline">\(p_k(x)\)</span> directly, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> <em>indirectly</em> simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
-<p>We know from <a href="Ch2_StatLearning.html" class="quarto-xref"><span>Chapter 2</span></a> that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers. Therefore, <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> will lead to the best classifier.</p>
+<p>We know from <a href="Ch2_StatLearning.html" class="quarto-xref"><span>Chapter 2</span></a> that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers. Therefore, <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a> will lead to the best classifier.</p>
 <p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.</p>
 <p>In the following sections, we discuss three classifiers that use different estimates of <span class="math inline">\(f_k(x)\)</span> to approximate the Bayes classifier:</p>
 <ul>
@@ -615,8 +752,8 @@ Pr(X = x)
 <li>quadratic discriminant analysis</li>
 <li>Naive Bayes</li>
 </ul>
-<section id="linear-discriminant-analysis-for-p-1" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="linear-discriminant-analysis-for-p-1">
-<span class="header-section-number">5.4.1</span> Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span>
+<section id="linear-discriminant-analysis-for-p-1" class="level3" data-number="5.7.1"><h3 data-number="5.7.1" class="anchored" data-anchor-id="linear-discriminant-analysis-for-p-1">
+<span class="header-section-number">5.7.1</span> Linear Discriminant Analysis for <span class="math inline">\(p = 1\)</span>
 </h3>
 <p>For the beginning, let us assume that we have only one predictor, i.e., <span class="math inline">\(p=1.\)</span></p>
 <p>To estimate <span class="math inline">\(f_k(x)\)</span>, we will assume that <span class="math inline">\(f_k\)</span> is <em>normal</em> (or <em>Gaussian</em>). In the simple <span class="math inline">\(p=1\)</span> dimensional setting, the normal distribution is <span class="math display">\[
@@ -632,10 +769,10 @@ f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{1}{2\sigma_k^2}(x-\mu_k)^
 </ul>
 <p>For now, let us further assume the simplifying case of equal variances across all classes, i.e.&nbsp; <span class="math display">\[
 \sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2.
-\]</span> Plugging this assumed version of <span class="math inline">\(f_k\)</span> into <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>, leads to <span id="eq-LDp1"><span class="math display">\[
+\]</span> Plugging this assumed version of <span class="math inline">\(f_k\)</span> into <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a>, leads to <span id="eq-LDp1"><span class="math display">\[
 p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
-\qquad(5.5)\]</span></span></p>
-<p>The Bayes classifier involves assigning an observation <span class="math inline">\(X = x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest. Taking the <span class="math inline">\(\log\)</span> of <a href="#eq-LDp1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a> (i.e.&nbsp;a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
+\qquad(5.6)\]</span></span></p>
+<p>The Bayes classifier involves assigning an observation <span class="math inline">\(X = x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest. Taking the <span class="math inline">\(\log\)</span> of <a href="#eq-LDp1" class="quarto-xref">Equation&nbsp;<span>5.6</span></a> (i.e.&nbsp;a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
 \delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
 \]</span> is largest. The function <span class="math inline">\(\delta_k(x)\)</span> is called the <strong>discriminant function</strong>.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -648,7 +785,7 @@ Derivation of the discriminant function
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To see this, observe that the largest <span class="math inline">\(p_k(x)\)</span>-value across all <span class="math inline">\(k=1,\dots,K\)</span> is determined by the larges numerator in <a href="#eq-LDp1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a>, since the denominator does not change with <span class="math inline">\(k.\)</span> Thus, we only need to look at the numerator.</p>
+<p>To see this, observe that the largest <span class="math inline">\(p_k(x)\)</span>-value across all <span class="math inline">\(k=1,\dots,K\)</span> is determined by the larges numerator in <a href="#eq-LDp1" class="quarto-xref">Equation&nbsp;<span>5.6</span></a>, since the denominator does not change with <span class="math inline">\(k.\)</span> Thus, we only need to look at the numerator.</p>
 <p>Moreover, if a certain value <span class="math inline">\(k=1,\dots,K\)</span> maximizes <span class="math inline">\(p_k(x),\)</span> then the same <span class="math inline">\(k\)</span> maximizes also <span class="math inline">\(\log(p_k(x))\)</span> since the <span class="math inline">\(\log\)</span>-function is a strictly monotonic increasing formation.</p>
 <p>Thus we can simply look at the logarithm of the numerator: <span class="math display">\[\begin{align*}
 &amp;\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
@@ -725,8 +862,8 @@ x
 <li>Observation for each class come from a normal distribution</li>
 <li>The class-specific normal distributions have class-specific means, <span class="math inline">\(\mu_k\)</span>, but <strong>equal variances</strong> <span class="math inline">\(\sigma\)</span>
 </li>
-</ul></section><section id="linear-discriminant-analysis-for-p-1-1" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="linear-discriminant-analysis-for-p-1-1">
-<span class="header-section-number">5.4.2</span> Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span>
+</ul></section><section id="linear-discriminant-analysis-for-p-1-1" class="level3" data-number="5.7.2"><h3 data-number="5.7.2" class="anchored" data-anchor-id="linear-discriminant-analysis-for-p-1-1">
+<span class="header-section-number">5.7.2</span> Linear Discriminant Analysis for <span class="math inline">\(p &gt; 1\)</span>
 </h3>
 <p>In the case of multiple predictors <span class="math display">\[
 X=(X_1,\dots,X_p)\quad \text{with}\quad p&gt;1
@@ -783,7 +920,7 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\S
 <p><img src="images/Fig_4_5.png" class="img-fluid"></p>
 <p>Under the multivariate normality assumption (with common covariance matrix and group-specific mean vectors) the Bayes classifier assigns an multivariate observation <span class="math inline">\(X=x\)</span> to the class for which the discriminant function <span id="eq-LDA_mult"><span class="math display">\[
 \delta_k(x)=x^T \Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \log(\pi_k)
-\qquad(5.6)\]</span></span> is largest.</p>
+\qquad(5.7)\]</span></span> is largest.</p>
 <p>An example for <span class="math inline">\(p=2\)</span> and <span class="math inline">\(K=3\)</span> with three equally sized (i.e.&nbsp;<span class="math inline">\(\pi_1=\pi_2=\pi_3\)</span>) Gaussian classes is shown in the left-hand panel of Figure 4.6. The three ellipses represent regions that contain <span class="math inline">\(95\%\)</span> of the probability for each of the three classes. The dashed lines are the Bayes decision boundaries. In other words, they represent the set of values x for which <span class="math inline">\(\delta_k(x) = \delta_l(x)\)</span>, <span class="math inline">\(k\neq l\)</span>.</p>
 <p><img src="images/Fig_4_6.png" class="img-fluid"></p>
 <p>Again, the unknown parameters <span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(\pi_k\)</span>, and <span class="math inline">\(\Sigma\)</span> must be estimated from the data with formulas similar to those for the <span class="math inline">\(p=1\)</span> case.</p>
@@ -830,8 +967,8 @@ f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_k)^T\S
 <pre><code>[1] 0.0333</code></pre>
 </div>
 </div>
-</section></section><section id="classification-errors-of-binary-classifiers" class="level3" data-number="5.4.3"><h3 data-number="5.4.3" class="anchored" data-anchor-id="classification-errors-of-binary-classifiers">
-<span class="header-section-number">5.4.3</span> Classification Errors of Binary Classifiers</h3>
+</section></section><section id="classification-errors-of-binary-classifiers" class="level3" data-number="5.7.3"><h3 data-number="5.7.3" class="anchored" data-anchor-id="classification-errors-of-binary-classifiers">
+<span class="header-section-number">5.7.3</span> Classification Errors of Binary Classifiers</h3>
 <p>Any binary classifier can make two types of errors:</p>
 <ul>
 <li>False Negatives (FN): Predicting “no default” for a person who actually defaults</li>
@@ -953,8 +1090,8 @@ Predicted default status   No  Yes
 </section><section id="classification-performance-measures" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="classification-performance-measures">Classification Performance Measures</h4>
 <p>Table 4.6 and 4.7 summarize the different classification performance measures.</p>
 <p><img src="images/Tab_4_6_and_4_7.png" class="img-fluid"></p>
-</section></section><section id="the-roc-curve" class="level3" data-number="5.4.4"><h3 data-number="5.4.4" class="anchored" data-anchor-id="the-roc-curve">
-<span class="header-section-number">5.4.4</span> The ROC curve</h3>
+</section></section><section id="the-roc-curve" class="level3" data-number="5.7.4"><h3 data-number="5.7.4" class="anchored" data-anchor-id="the-roc-curve">
+<span class="header-section-number">5.7.4</span> The ROC curve</h3>
 <p>The (Receiver Operating Characteristics) <strong>ROC curve</strong> is a popular graphic for displaying the <span class="math display">\[
 \text{TP Rate}=\text{TP/P}\quad \text{(``sensitivity'' or ``power'')}
 \]</span> against the <span class="math display">\[
@@ -1070,8 +1207,8 @@ Figure&nbsp;5.1: The ROC curve traces out two types of error as we vary the thre
 [1] 0.9495584</code></pre>
 </div>
 </div>
-</section><section id="quadratic-discriminant-analysis-qda" class="level3" data-number="5.4.5"><h3 data-number="5.4.5" class="anchored" data-anchor-id="quadratic-discriminant-analysis-qda">
-<span class="header-section-number">5.4.5</span> Quadratic Discriminant Analysis (QDA)</h3>
+</section><section id="quadratic-discriminant-analysis-qda" class="level3" data-number="5.7.5"><h3 data-number="5.7.5" class="anchored" data-anchor-id="quadratic-discriminant-analysis-qda">
+<span class="header-section-number">5.7.5</span> Quadratic Discriminant Analysis (QDA)</h3>
 <p>Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form <span class="math display">\[
 X|Y=k \sim N(\mu_k,\Sigma_k),
 \]</span> where <span class="math inline">\(\Sigma_k\)</span> is a <span class="math inline">\((p\times p)\)</span> covariance matrix for the <span class="math inline">\(k\)</span>th class.</p>
@@ -1128,8 +1265,8 @@ X|Y=k \sim N(\mu_k,\Sigma_k),
 </li>
 </ul>
 <p><img src="images/Fig_4_9.png" class="img-fluid"></p>
-</section><section id="naive-bayes" class="level3" data-number="5.4.6"><h3 data-number="5.4.6" class="anchored" data-anchor-id="naive-bayes">
-<span class="header-section-number">5.4.6</span> Naive Bayes</h3>
+</section><section id="naive-bayes" class="level3" data-number="5.7.6"><h3 data-number="5.7.6" class="anchored" data-anchor-id="naive-bayes">
+<span class="header-section-number">5.7.6</span> Naive Bayes</h3>
 <p>Remember, that Bayes’ theorem states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span class="math display">\[
 p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
 \]</span> where</p>
@@ -1195,10 +1332,10 @@ each of the classes and the sample size is small, then the approaches
 in this section may be more accurate than logistic regression.
 OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?  
 -->
-</section></section><section id="r-lab-classification" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="r-lab-classification">
-<span class="header-section-number">5.5</span> <code>R</code>-Lab: Classification</h2>
-<section id="the-stock-market-data" class="level3" data-number="5.5.1"><h3 data-number="5.5.1" class="anchored" data-anchor-id="the-stock-market-data">
-<span class="header-section-number">5.5.1</span> The Stock Market Data</h3>
+</section></section><section id="self-study-r-lab-classification" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="self-study-r-lab-classification">
+<span class="header-section-number">5.8</span> Self-Study <code>R</code>-Lab: Classification</h2>
+<section id="the-stock-market-data" class="level3" data-number="5.8.1"><h3 data-number="5.8.1" class="anchored" data-anchor-id="the-stock-market-data">
+<span class="header-section-number">5.8.1</span> The Stock Market Data</h3>
 <p>We will begin by examining some numerical and graphical summaries of the <code>Smarket</code> data, which is part of the <code>ISLR2</code> library. This data set consists of percentage returns for the S&amp;P 500 stock index over <span class="math inline">\(1,250\)</span> days, from the beginning of 2001 until the end of 2005. For each date, we have recorded</p>
 <ul>
 <li>the percentage returns for each of the five previous trading days: <code>Lag1</code>, <code>Lag2</code>, … <code>Lag5</code>
@@ -1329,8 +1466,8 @@ plot(Volume)
 
 
  -->
-</section><section id="logistic-regression-1" class="level3" data-number="5.5.2"><h3 data-number="5.5.2" class="anchored" data-anchor-id="logistic-regression-1">
-<span class="header-section-number">5.5.2</span> Logistic Regression</h3>
+</section><section id="logistic-regression-1" class="level3" data-number="5.8.2"><h3 data-number="5.8.2" class="anchored" data-anchor-id="logistic-regression-1">
+<span class="header-section-number">5.8.2</span> Logistic Regression</h3>
 <p>Next, we will fit a logistic regression model in order to predict <code>Direction</code> using <code>Lag1</code> through <code>Lag5</code> and <code>Volume</code>.</p>
 <p>The <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> function can be used to fit many types of generalized linear models, including logistic regression.</p>
 <p>The syntax of the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> function is similar to that of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>, except that we must pass in the argument <code>family = binomial</code> in order to tell <code>R</code> to run a logistic regression rather than some other type of generalized linear model.</p>
@@ -1582,8 +1719,8 @@ glm.pred Down  Up
 0.4791462 0.4960939 </code></pre>
 </div>
 </div>
-</section><section id="linear-discriminant-analysis" class="level3" data-number="5.5.3"><h3 data-number="5.5.3" class="anchored" data-anchor-id="linear-discriminant-analysis">
-<span class="header-section-number">5.5.3</span> Linear Discriminant Analysis</h3>
+</section><section id="linear-discriminant-analysis" class="level3" data-number="5.8.3"><h3 data-number="5.8.3" class="anchored" data-anchor-id="linear-discriminant-analysis">
+<span class="header-section-number">5.8.3</span> Linear Discriminant Analysis</h3>
 <p>Now we will perform LDA on the <code>Smarket</code> data.</p>
 <p>In <code>R</code>, we fit an LDA model using the <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda()</a></code> function, which is part of the <code>MASS</code> library.</p>
 <p>The syntax for the <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda()</a></code> function is identical to that of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>, and to that of <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> except for the absence of the <code>family</code> option.</p>
@@ -1621,7 +1758,7 @@ Lag2 -0.5135293</code></pre>
 </ul>
 <p>That is, <span class="math inline">\(49.2\%\)</span> of the training observations correspond to days during which the market went down.</p>
 <p>The output also provides the group means; these are the average of each predictor within each class, and are used by LDA as estimates of <span class="math inline">\(\mu_k\)</span>. These suggest that there is a tendency for the previous 2 days’ returns to be negative on days when the market increases, and a tendency for the previous days’ returns to be positive on days when the market declines.</p>
-<p>The “coefficients of linear discriminants” output provides the linear combination of <code>Lag1</code> and <code>Lag2</code> that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of <span class="math inline">\(X=x\)</span> in <a href="#eq-LDA_mult" class="quarto-xref">Equation&nbsp;<span>5.6</span></a>. If <span class="math inline">\(-0.642\times\)</span><code>Lag1</code><span class="math inline">\(- 0.514 \times\)</span> <code>Lag2</code> is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.</p>
+<p>The “coefficients of linear discriminants” output provides the linear combination of <code>Lag1</code> and <code>Lag2</code> that are used to form the LDA decision rule. In other words, these are the multipliers of the elements of <span class="math inline">\(X=x\)</span> in <a href="#eq-LDA_mult" class="quarto-xref">Equation&nbsp;<span>5.7</span></a>. If <span class="math inline">\(-0.642\times\)</span><code>Lag1</code><span class="math inline">\(- 0.514 \times\)</span> <code>Lag2</code> is large, then the LDA classifier will predict a market increase, and if it is small, then the LDA classifier will predict a market decline.</p>
 <p>The <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function produces plots of the <em>linear discriminants</em>, obtained by computing <span class="math inline">\(-0.642\times\)</span><code>Lag1</code><span class="math inline">\(- 0.514 \times\)</span> <code>Lag2</code> for each of the training observations. The <code>Up</code> and <code>Down</code> observations are displayed separately.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lda.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1708,8 +1845,8 @@ Levels: Down Up</code></pre>
 <pre><code>[1] 0.520235</code></pre>
 </div>
 </div>
-</section><section id="quadratic-discriminant-analysis" class="level3" data-number="5.5.4"><h3 data-number="5.5.4" class="anchored" data-anchor-id="quadratic-discriminant-analysis">
-<span class="header-section-number">5.5.4</span> Quadratic Discriminant Analysis</h3>
+</section><section id="quadratic-discriminant-analysis" class="level3" data-number="5.8.4"><h3 data-number="5.8.4" class="anchored" data-anchor-id="quadratic-discriminant-analysis">
+<span class="header-section-number">5.8.4</span> Quadratic Discriminant Analysis</h3>
 <p>We will now fit a QDA model to the <code>Smarket</code> data. QDA is implemented in <code>R</code> using the <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">qda()</a></code> function, which is also part of the <code>MASS</code> library. The syntax is identical to that of <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda()</a></code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">qda.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/qda.html">qda</a></span><span class="op">(</span><span class="va">Direction</span> <span class="op">~</span> <span class="va">Lag1</span> <span class="op">+</span> <span class="va">Lag2</span>, data <span class="op">=</span> <span class="va">Smarket</span>,</span>
@@ -1745,8 +1882,8 @@ qda.class Down  Up
 </div>
 </div>
 <p>Interestingly, the QDA predictions are accurate almost <span class="math inline">\(60\%\)</span> of the time, even though the 2005 data was not used to fit the model. This level of accuracy is quite impressive for stock market data, which is known to be quite hard to model accurately. This suggests that the quadratic form assumed by QDA may capture the true relationship more accurately than the linear forms assumed by LDA and logistic regression. However, we recommend evaluating this method’s performance on a larger test set before betting that this approach will consistently beat the market!</p>
-</section><section id="naive-bayes-1" class="level3" data-number="5.5.5"><h3 data-number="5.5.5" class="anchored" data-anchor-id="naive-bayes-1">
-<span class="header-section-number">5.5.5</span> Naive Bayes</h3>
+</section><section id="naive-bayes-1" class="level3" data-number="5.8.5"><h3 data-number="5.8.5" class="anchored" data-anchor-id="naive-bayes-1">
+<span class="header-section-number">5.8.5</span> Naive Bayes</h3>
 <p>Next, we fit a naive Bayes model to the <code>Smarket</code> data. Naive Bayes is implemented in <code>R</code> using the <code><a href="https://rdrr.io/pkg/e1071/man/naiveBayes.html">naiveBayes()</a></code> function, which is part of the <code>e1071</code> library. The syntax is identical to that of <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda()</a></code> and <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">qda()</a></code>. This rather simple implementation of the naive Bayes classifier models uses a univariate Gaussian distribution for each quantitative predictor.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## install.packages("e1071") </span></span>
@@ -1821,8 +1958,8 @@ nb.class Down  Up
 [5,] 0.4901890 0.5098110</code></pre>
 </div>
 </div>
-</section><section id="k-nearest-neighbors" class="level3" data-number="5.5.6"><h3 data-number="5.5.6" class="anchored" data-anchor-id="k-nearest-neighbors">
-<span class="header-section-number">5.5.6</span> <span class="math inline">\(K\)</span>-Nearest Neighbors</h3>
+</section><section id="k-nearest-neighbors" class="level3" data-number="5.8.6"><h3 data-number="5.8.6" class="anchored" data-anchor-id="k-nearest-neighbors">
+<span class="header-section-number">5.8.6</span> <span class="math inline">\(K\)</span>-Nearest Neighbors</h3>
 <p>We will now perform KNN using the <code><a href="https://rdrr.io/pkg/class/man/knn.html">knn()</a></code> function, which is part of the <code>class</code> library. This function works rather differently from the other model-fitting functions that we have encountered thus far. Rather than a two-step approach in which we first fit the model and then we use the model to make predictions, <code><a href="https://rdrr.io/pkg/class/man/knn.html">knn()</a></code> forms predictions using a single command. The function requires four inputs.</p>
 <ul>
 <li>A matrix containing the predictors associated with the training data, labeled <code>train.X</code> below.</li>
@@ -2529,17 +2666,1562 @@ abline(0, 1, col = 2, lwd = 3)
 The predictions from the Poisson regression model are correlated with those from the linear model; however, the former are non-negative. As a result the Poisson regression predictions tend to be larger than those from the linear model for either very low or very high levels of ridership.
 
 In this section, we used the `glm()` function with the argument `family = poisson` in order to perform Poisson regression. Earlier in this lab we used the `glm()` function with `family = binomial` to perform logistic regression. Other choices for the `family` argument can be used to fit other types of GLMs. For instance, `family = Gamma` fits a gamma regression model. -->
-</section></section><section id="exercises" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">5.6</span> Exercises</h2>
-<p>Prepare the following exercises of Chapter 4 in our course textbook <code>ISLR</code>:</p>
+</section></section><section id="exercises" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">5.9</span> Exercises</h2>
+<p>Prepare the following exercises of <strong>Chapter 2 and 4</strong> in our course textbook <code>ISLR</code>:</p>
 <ul>
-<li>Exercise 1</li>
-<li>Exercise 6</li>
-<li>Exercise 13</li>
-<li>Exercise 15</li>
-<li>Exercise 16</li>
+<li>Exercise 7 (Chapter 2)</li>
+<li>Exercise 1 (Chapter 4)</li>
+<li>Exercise 6 (Chapter 4)</li>
+<li>Exercise 13 (Chapter 4)</li>
+<li>Exercise 15 (Chapter 4)</li>
+<li>Exercise 16 (Chapter 4)</li>
 </ul>
-<!-- {{< include Ch5_Classification_Solutions.qmd >}} -->
+<!--
+### Solutions
+
+#### Exercise 7 (Chapter 2) {-} 
+
+The table below provides a training data set containing six observations, three predictors, and one qualitative response variable. Suppose we wish to use this data set to make a prediction for $Y$ when $X_1 = X_2 = X_3 = 0$ using K-nearest neighbors.
+
+| Obs. |$X_1$|$X_2$|$X_3$| $Y$   |
+|:----:|:---:|:---:|:---:|:-----:|
+|  1   |  0  |  3  |  0  |  Red  |
+|  2   |  2  |  0  |  0  |  Red  |
+|  3   |  0  |  1  |  3  |  Red  |
+|  4   |  0  |  1  |  2  | Green |
+|  5   | −1  |  0  |  1  | Green |
+|  6   |  1  |  1  |  1  |  Red  |
+
+
+**7. a)** Compute the Euclidean distance between each observation and the test point, $X_1 = X_2 = X_3 = 0$.
+
+
+**Answer:**
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Outcome
+Y    <- c("red", "red", "red", "green", "green", "red")
+# Predictor values
+obs1 <- c( 0, 3, 0)
+obs2 <- c( 2, 0, 0)
+obs3 <- c( 0, 1, 3)
+obs4 <- c( 0, 1, 2)
+obs5 <- c(-1, 0, 1)
+obs6 <- c( 1, 1, 1)
+
+# Test Point
+obs0 <- c(0, 0, 0)
+
+# Create a Vector Dist_vec to store the results
+Dist <- numeric(length = 6)
+
+# Compute and store the Euclidean distances
+Dist[1] <- sqrt(sum((obs1-obs0)^2)) 
+Dist[2] <- sqrt(sum((obs2-obs0)^2)) 
+Dist[3] <- sqrt(sum((obs3-obs0)^2)) 
+Dist[4] <- sqrt(sum((obs4-obs0)^2)) 
+Dist[5] <- sqrt(sum((obs5-obs0)^2)) 
+Dist[6] <- sqrt(sum((obs6-obs0)^2))  
+
+# Print the results
+Dist
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 3.000000 2.000000 3.162278 2.236068 1.414214 1.732051
+```
+
+
+:::
+:::
+
+
+
+
+
+**7. b)** What is your prediction with $K = 1$? Why?
+
+**Answer:**
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+which.min(Dist)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 5
+```
+
+
+:::
+
+```{.r .cell-code}
+Y[which.min(Dist)]
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "green"
+```
+
+
+:::
+:::
+
+
+
+
+
+Closest $K=1$ neighbor is `obs5` and thus, our prediction is `Green` because `Green` is the $Y$ value associated to `obs5`.
+
+**7. c)** What is your prediction with $K = 3$? Why?
+
+**Answer:**
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+order(Dist)[1:3]
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 5 6 2
+```
+
+
+:::
+
+```{.r .cell-code}
+Y[order(Dist)[1:3]]
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "green" "red"   "red"  
+```
+
+
+:::
+:::
+
+
+
+
+
+Closest $K=3$ neighbors are:
+
+*  `obs5` with $Y=$`green`
+*  `obs6` with $Y=$`red`
+*  `obs2` with $Y=$`red`
+
+This leads to the following local (at $X_1=X_2=X_3=0)$ relative frequencies: 
+
+* for `green`: $1/K=1/3$
+* for `red`: $2/K=2/3$
+
+Thus, our prediction for $X_1=X_2=X_3=0$ is `Red`.
+
+**7. d)** If the Bayes decision boundary in this problem is highly nonlinear, then would we expect the best value for $K$ to be large or small? Why?
+
+**Answer:**
+
+In the case of a highly nonlinear decision boundary, the neighborhoods of similar $Y$-values close to the boundary become generally small. Therefore, also $K$ must be chosen relatively small so that we can capture more of the non-linear decision boundary. 
+
+
+
+
+### Exercise 1  (Chapter 4) {-}
+
+Using a little bit of algebra, use (4.2) to achieve (4.3). In other words, the logistic function representation and logit representation for the logistic regression model are equivalent.
+
+**Answer:** 
+
+Equations (4.2) and (4.3) are the following:
+
+$$ 
+(4.2) \quad p(X) = \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}\qquad\qquad
+(4.3)  \quad  \frac {p(X)} {1 - p(X)} =e^{\beta_0 + \beta_1 X}
+$$
+
+
+Derivations:
+
+$$
+\begin{align*}
+\frac {p(X)} {1 - p(X)} 
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex] 
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1 + e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}} - \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}\\[2ex]  
+&= \frac {\frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}}{\frac {1} {1 + e^{\beta_0 + \beta_1 X}}} 
+= e^{\beta_0 + \beta_1 X}
+\end{align*}
+$$
+
+### Exercise 6  (Chapter 4) {-}
+
+Suppose we collect data for a group of students in a statistics class with variables 
+
+* $X_1=$`hours studied`,
+* $X_2 =$`undergrad GPA` (GPA: Grade Point Average), and 
+* $Y =$`receive an A`. 
+
+We fit a logistic regression and produce estimated coefficients:
+
+$$\hat{\beta}_0 = -6, \quad \hat{\beta}_1 = 0.05, \quad \hat{\beta}_2 = 1.$$
+
+**6 a)** Estimate the probability that a student who studies for $40$ h and has an `undergrad GPA` of $3.5$ gets an `A` in the class.
+
+**Answer:**
+
+Remember from the previous exercise that:
+
+$$ 
+p(X) = \frac {\exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
+             {1 + \exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2)}
+\\
+$$
+
+Thus, the probability of $Y=1$ given $X=(x_1,x_2)$ with $x_1 =40$ (hours) and $x_2=3.5$ (GPA) yields:
+
+$$ 
+p(X) =  \frac {\exp(-6 + 0.05\cdot 40 + 3.5)} {1 + \exp(-6 + 0.05\cdot 40 + 3.5)} = \frac {\exp(-0.5)} {1 + \exp(-0.5)} = 37.75\%
+$$
+
+Calculations in `R`:
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+( exp(-0.5) )/( 1 + exp(-0.5) )
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.3775407
+```
+
+
+:::
+:::
+
+
+
+
+
+
+**6 b)** How many hours would the student in part (a) need to study to have a $50\%$ chance of getting an `A` in the class?
+
+**Answer:**
+
+Finding $x_1$, where $X = (x_1, 3.5)$, such that $p(X) = 0.5$ yields:
+
+$$
+\begin{align*}
+0.50 &= \frac {\exp(-6 + 0.05 x_1 + 3.5)} {1 + \exp(-6 + 0.05 x_1 + 3.5)} \\[2ex]
+\Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow 0.50 &= 0.50 \exp(-2.5 + 0.05\,x_1)\\[2ex]
+\Leftrightarrow \log(1) &= -2.5 + 0.05\,x_1 \\[2ex]
+\Leftrightarrow x_1 &= 2.5 / 0.05 = 50 
+\end{align*}
+$$
+
+Thus, on average, a student with an `undergrad GPA` of $3.5$ needs to study $50$ hours to have a $50\%$ chance of getting an `A`.
+
+### Exercise 13 (Chapter 4) {-}
+
+This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the `Smarket` data from this chapter’s lab, except that it contains $1,089$ weekly returns for $21$ years, from the beginning of $1990$ to the end of $2010$.
+
+**13 a)** Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
+
+**Answer:**
+
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# You may need to install first the following R-packages:
+# install.packages("ISLR2")
+# install.packages("MASS")
+# install.packages("class")
+# install.packages("e1071") # naiveBayes()
+
+# Load the packages you need
+library("ISLR2")
+
+# Eliminates the need of referring to a variable 
+# like 'Weekly$Year', and thus allows direct use of 'Year'
+attach(Weekly) 
+```
+
+::: {.cell-output .cell-output-stderr}
+
+```
+The following objects are masked from Smarket (pos = 7):
+
+    Direction, Lag1, Lag2, Lag3, Lag4, Lag5, Today, Volume, Year
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+The following objects are masked from Smarket (pos = 8):
+
+    Direction, Lag1, Lag2, Lag3, Lag4, Lag5, Today, Volume, Year
+```
+
+
+:::
+
+```{.r .cell-code}
+# Use summary function to produce a numerical summary for each variable
+summary(Weekly)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+      Year           Lag1               Lag2               Lag3         
+ Min.   :1990   Min.   :-18.1950   Min.   :-18.1950   Min.   :-18.1950  
+ 1st Qu.:1995   1st Qu.: -1.1540   1st Qu.: -1.1540   1st Qu.: -1.1580  
+ Median :2000   Median :  0.2410   Median :  0.2410   Median :  0.2410  
+ Mean   :2000   Mean   :  0.1506   Mean   :  0.1511   Mean   :  0.1472  
+ 3rd Qu.:2005   3rd Qu.:  1.4050   3rd Qu.:  1.4090   3rd Qu.:  1.4090  
+ Max.   :2010   Max.   : 12.0260   Max.   : 12.0260   Max.   : 12.0260  
+      Lag4               Lag5              Volume            Today         
+ Min.   :-18.1950   Min.   :-18.1950   Min.   :0.08747   Min.   :-18.1950  
+ 1st Qu.: -1.1580   1st Qu.: -1.1660   1st Qu.:0.33202   1st Qu.: -1.1540  
+ Median :  0.2380   Median :  0.2340   Median :1.00268   Median :  0.2410  
+ Mean   :  0.1458   Mean   :  0.1399   Mean   :1.57462   Mean   :  0.1499  
+ 3rd Qu.:  1.4090   3rd Qu.:  1.4050   3rd Qu.:2.05373   3rd Qu.:  1.4050  
+ Max.   : 12.0260   Max.   : 12.0260   Max.   :9.32821   Max.   : 12.0260  
+ Direction 
+ Down:484  
+ Up  :605  
+           
+           
+           
+           
+```
+
+
+:::
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Use cor function to produce a table of correlations for all variables 
+# (excluding the non-numerical variable 'Direction')
+round(cor(Weekly[,-9]), 2)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Year  Lag1  Lag2  Lag3  Lag4  Lag5 Volume Today
+Year    1.00 -0.03 -0.03 -0.03 -0.03 -0.03   0.84 -0.03
+Lag1   -0.03  1.00 -0.07  0.06 -0.07 -0.01  -0.06 -0.08
+Lag2   -0.03 -0.07  1.00 -0.08  0.06 -0.07  -0.09  0.06
+Lag3   -0.03  0.06 -0.08  1.00 -0.08  0.06  -0.07 -0.07
+Lag4   -0.03 -0.07  0.06 -0.08  1.00 -0.08  -0.06 -0.01
+Lag5   -0.03 -0.01 -0.07  0.06 -0.08  1.00  -0.06  0.01
+Volume  0.84 -0.06 -0.09 -0.07 -0.06 -0.06   1.00 -0.03
+Today  -0.03 -0.08  0.06 -0.07 -0.01  0.01  -0.03  1.00
+```
+
+
+:::
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Use pairs function to produce pairwise scatter plots
+pairs(Weekly)
+```
+
+::: {.cell-output-display}
+![](Ch5_Classification_files/figure-html/unnamed-chunk-22-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+
+Yes, it appears that `Year` and `Volume` have a strong positive, but non-linear relationship.
+
+**13 b)** Use the full data set to perform a logistic regression with `Direction` as the response and the five `Lag` variables plus `Volume` as predictors. Use the `summary()` function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Estimate a generalized linear regression model where the third input family is a description of the error distribution 
+# and link function to be used in the model, supplied as the result of a call to a family function - here use binomial.
+# Why binomial? Because our independent variable Direction takes two values.
+
+glm_fit <- glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
+              data   = Weekly,
+              family = binomial)
+
+# Use summary function to print the results
+summary(glm_fit)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+
+Call:
+glm(formula = Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + 
+    Volume, family = binomial, data = Weekly)
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept)  0.26686    0.08593   3.106   0.0019 **
+Lag1        -0.04127    0.02641  -1.563   0.1181   
+Lag2         0.05844    0.02686   2.175   0.0296 * 
+Lag3        -0.01606    0.02666  -0.602   0.5469   
+Lag4        -0.02779    0.02646  -1.050   0.2937   
+Lag5        -0.01447    0.02638  -0.549   0.5833   
+Volume      -0.02274    0.03690  -0.616   0.5377   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1496.2  on 1088  degrees of freedom
+Residual deviance: 1486.4  on 1082  degrees of freedom
+AIC: 1500.4
+
+Number of Fisher Scoring iterations: 4
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** The predictor `Lag2` appears to have some statistical significance with a $p$-value smaller than $3\%$. (Ignoring issues due to multiple testing.)
+
+**13 c)** Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Use predict function on results of previous regression in 10 b)
+glm_probs <-  predict(glm_fit, type="response")
+
+# Create a vector containing the string "Down" 
+glm_pred <- rep("Down", times = length(glm_probs))
+
+# Substitute "Down" for "Up", whenever the estimated probability is above 0.5
+glm_pred[glm_probs > 0.5] <- "Up"
+
+# Construct a summary table with the predictions against 
+# the actual 'Direction'-values
+table(glm_pred, Direction)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Direction
+glm_pred Down  Up
+    Down   54  48
+    Up    430 557
+```
+
+
+:::
+
+```{.r .cell-code}
+contrasts(Weekly$Direction)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+     Up
+Down  0
+Up    1
+```
+
+
+:::
+:::
+
+
+
+
+
+Counts of the classification errors are found at the off-diagonal entries of the confusion matrix 
+
+* Upper off-diagonal entry: Number of False Negatives 
+* Lower off-diagonal entry: Number of False Positives
+
+Counts of the correct classifications are found at the diagonal entries of the confusion matrix 
+
+* Upper diagonal entry: Number of True Negatives
+* Lower diagonal entry: Number of True Positives
+
+
+**Possible Conclusions:**
+
+- Percentage of correct predictions (TP+TN)/n: $(54+557)/(54+557+48+430) = 56.1\%$ 
+
+- Percentage of false predictions (FP+FN)/n: $(48+430)/(54+557+48+430) = 43.9\%$ 
+
+- During weeks when the market goes `Up`, the logistic regression is right about (True Pos. Rate TP/P) $557/(557+48) = 92.1\%$ of the time.
+
+- During weeks when the market goes `Down`, the logistic regression is right about (True Neg. Rate TN/N) $54/(430+54) = 11.2\%$ of the time.
+
+
+**Caution:** All these answers are with respect to the training errors - not the test errors. 
+
+**13 d)** Now fit the logistic regression model using a training data period from $1990$ to $2008$, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from $2009$ and $2010$).
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# generate condition for our training data
+train = (Year < 2009)
+
+# create data frame for the Weekly data from 2009 and 2010 
+# (usage of ! to define the "opposite")
+Weekly_0910 <- Weekly[!train,]
+
+# run regression on the training data subset
+glm_fit <- glm(Direction ~ Lag2,
+               data   = Weekly,
+               family = binomial,
+               subset = train)
+
+# create data frame
+glm_probs <- predict(glm_fit, Weekly_0910, type="response")
+
+# fill with our predictions
+glm_pred                  <- rep("Down", length(glm_probs))
+glm_pred[glm_probs > 0.5] <- "Up"
+
+# construct confusion table using only the test data
+Direction_0910 <- Direction[!train]
+table(glm_pred, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Direction_0910
+glm_pred Down Up
+    Down    9  5
+    Up     34 56
+```
+
+
+:::
+
+```{.r .cell-code}
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(glm_pred == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.625
+```
+
+
+:::
+:::
+
+
+
+
+
+**13 e)** Repeat (d) using LDA.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+#call the packages you need
+suppressPackageStartupMessages(library("MASS"))
+
+# same approach as before but now using LDA method
+lda_fit  <- lda(Direction ~ Lag2, data=Weekly, subset=train)
+lda_pred <- predict(lda_fit, Weekly_0910)
+
+# confusion table using only the test data
+table(lda_pred$class, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+      Direction_0910
+       Down Up
+  Down    9  5
+  Up     34 56
+```
+
+
+:::
+
+```{.r .cell-code}
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(lda_pred$class == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.625
+```
+
+
+:::
+:::
+
+
+
+
+
+**13 f)** Repeat (d) using QDA.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# same approach as before but now using QDA method
+qda_fit   <- qda(Direction~Lag2, data=Weekly, subset=train)
+qda_class <- predict(qda_fit, Weekly_0910)$class
+
+# confusion table using only the test data
+table(qda_class, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+         Direction_0910
+qda_class Down Up
+     Down    0  0
+     Up     43 61
+```
+
+
+:::
+
+```{.r .cell-code}
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(qda_class == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5865385
+```
+
+
+:::
+:::
+
+
+
+
+
+**13 g)** Repeat (d) using KNN with $K = 1.$
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# call the package you need
+library("class")
+
+# same approach as before but now using KNN method with K=1
+train_X         <- as.matrix(Lag2[train])
+test_X          <- as.matrix(Lag2[!train])
+train_Direction <- Direction[train]
+
+# Note: If several observations are tied as nearest neighbors, 
+# then R will randomly break the tie. 
+# Setting a common seed guarantees that we get the same results 
+set.seed(1)
+
+# Caution: KNN prediction uses a different function
+knn_pred <- knn(train_X, test_X, train_Direction, k=1)
+
+# confusion table using only the test data
+table(knn_pred, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Direction_0910
+knn_pred Down Up
+    Down   21 30
+    Up     22 31
+```
+
+
+:::
+
+```{.r .cell-code}
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(knn_pred == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5
+```
+
+
+:::
+:::
+
+
+
+
+
+
+**13 h)** Repeat (d) using naive Bayes. 
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+library("e1071")
+nb_fit  <- naiveBayes(Direction ~ Lag2, 
+                      data   = Weekly, 
+                      subset = train)
+nb_pred <- predict(nb_fit, Weekly_0910)
+
+# confusion table using only the test data
+table(nb_pred, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+       Direction_0910
+nb_pred Down Up
+   Down    0  0
+   Up     43 61
+```
+
+
+:::
+
+```{.r .cell-code}
+# compute the overall rate of correct predictions 
+# in the test set 
+mean(nb_pred == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5865385
+```
+
+
+:::
+:::
+
+
+
+
+
+
+**13 i)** Which of these methods appears to provide the best results on this data?
+
+**Answer:** 
+
+Logistic regression and LDA have the largest rates of (overall) correct predictions on the held out test set.
+
+**13 j)** Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# Logistic regression with Lag2:Lag1
+glm_fit   <- glm(Direction~Lag2:Lag1, data=Weekly, family=binomial, subset=train)
+glm_probs <- predict(glm_fit, Weekly_0910, type="response")
+glm_pred  <- rep("Down", length(glm_probs))
+glm_pred[glm_probs>.5] <- "Up"
+Direction_0910 <- Direction[!train]
+table(glm_pred, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Direction_0910
+glm_pred Down Up
+    Down    1  1
+    Up     42 60
+```
+
+
+:::
+
+```{.r .cell-code}
+mean(glm_pred == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5865385
+```
+
+
+:::
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# LDA with Lag2 interaction with Lag1
+lda_fit  <- lda(Direction ~ Lag2:Lag1, data=Weekly, subset=train)
+lda_pred <- predict(lda_fit, Weekly_0910)
+mean(lda_pred$class == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5769231
+```
+
+
+:::
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# QDA with sqrt(abs(Lag2))
+qda_fit   <- qda(Direction~Lag2+sqrt(abs(Lag2)), data=Weekly, subset=train)
+qda_class <- predict(qda_fit, Weekly_0910)$class
+table(qda_class, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+         Direction_0910
+qda_class Down Up
+     Down   12 13
+     Up     31 48
+```
+
+
+:::
+
+```{.r .cell-code}
+mean(qda_class == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5769231
+```
+
+
+:::
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# KNN k =10, as before KNN uses a different command
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train_Direction, k=10)
+table(knn_pred, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Direction_0910
+knn_pred Down Up
+    Down   17 21
+    Up     26 40
+```
+
+
+:::
+
+```{.r .cell-code}
+mean(knn_pred == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5480769
+```
+
+
+:::
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# KNN k = 100
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train_Direction, k=100)
+table(knn_pred, Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        Direction_0910
+knn_pred Down Up
+    Down   10 11
+    Up     33 50
+```
+
+
+:::
+
+```{.r .cell-code}
+mean(knn_pred == Direction_0910)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.5769231
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** Out of these experiments, the original LDA and logistic regression have better performances in terms of overall correct prediction rates on the held out test set.
+
+
+### Exercise 15 (Chapter 4) {-}
+
+This problem involves writing functions.
+
+**15 a)** Write a function, `Power()`, that prints out the result of raising 2 to the 3rd power. In other words, your function should compute $2^3$ and print out the results. Hint: Recall that `x^a` raises `x` to the power `a`. Use the `print()` function to output the result.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+Power <- function() {
+  2^3
+}
+Power()
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 8
+```
+
+
+:::
+:::
+
+
+
+
+
+**15 b)** Create a new function, `Power2()`, that allows you to pass any two numbers, `x` and `a`, and prints out the value of `x^a`. You can do this by beginning your function with the line `Power2 <- function (x,a){`. You should be able to call your function by entering, for instance, `Power2 (3,8)` on the command line. This should output the value of $38$, namely, $6,561$.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+Power2 <- function(x, a) {
+  x^a
+}
+Power2(3, 8)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 6561
+```
+
+
+:::
+:::
+
+
+
+
+
+**15 c)** Using the `Power2()` function that you just wrote, compute $10^3$, $8^{17}$, and $131^3$.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+Power2(10, 3)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 1000
+```
+
+
+:::
+
+```{.r .cell-code}
+Power2(8, 17)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 2.2518e+15
+```
+
+
+:::
+
+```{.r .cell-code}
+Power2(131, 3)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 2248091
+```
+
+
+:::
+:::
+
+
+
+
+
+**15 d)** Now create a new function, `Power3()`, that actually returns the result `x^a` as an R object, rather than simply printing it to the screen. That is, if you store the value `x^a` in an object called result within your function, then you can simply `return()` this result, using the following line: `return(result)`. This should be the last line in your function, before the `}` symbol.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+Power3 <- function(x, a) {
+  result <- x^a
+  return(result)
+}
+```
+:::
+
+
+
+
+
+**15 e)** Now using the `Power3()` function, create a plot of f(x) = $x^2$. The x-axis should display a range of integers from 1 to 10, and the y-axis should display $x^2$. Label the axes appropriately, and use an appropriate title for the figure. Consider displaying either the x-axis, the y-axis, or both on the log-scale. You can do this by using `log="x"`, `log="y"`, or `log="xy"` as arguments to the `plot()` function.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+x <- 1:10
+par(mfrow=c(1,3))# graph parameters (three plots in one column)
+plot(x = x, y = Power3(x, 2), type="b", log="x", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\nx-axis")
+plot(x = x, y = Power3(x, 2), type="b", log="y", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\ny-axis")
+plot(x = x, y = Power3(x, 2), type="b", log="xy", 
+     ylab = expression(x^2), 
+     xlab = expression(x),
+     main = "log-transformed\nx and y-axis")
+```
+
+::: {.cell-output-display}
+![](Ch5_Classification_files/figure-html/unnamed-chunk-39-1.png){fig-align='center' width=672}
+:::
+
+```{.r .cell-code}
+par(mfrow=c(1,1))# reset graphic parameters
+```
+:::
+
+
+
+
+
+**15 f)** Create a function, `PlotPower()`, that allows you to create a plot of `x` against `x^a` for a fixed `a` and for a range of values of `x`. For instance, if you call `PlotPower (1:10 ,3)` then a plot should be created with an x-axis taking on values $1, 2, \dots , 10$, and a y-axis taking on values $1^3$, $2^3$, . . . , $10^3$.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+PlotPower = function(x, a) {
+  ylab_text <- bquote('x'^.(a)) # write y-axis label
+  plot(x = x, y = Power3(x, a), type = "b",
+       ylab = ylab_text)
+}
+PlotPower(1:10, 3)
+```
+
+::: {.cell-output-display}
+![](Ch5_Classification_files/figure-html/unnamed-chunk-40-1.png){fig-align='center' width=672}
+:::
+:::
+
+
+
+
+
+### Exercise 16 (Chapter 4) {-}
+
+Using the `Boston` data set, fit classification models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, and KNN models using various subsets of the predictors. Describe your findings.
+
+**Answer:** 
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+attach(Boston)
+
+crime01                      <- rep(0, length(crim))
+crime01[crim > median(crim)] <- 1
+
+Boston <- data.frame(Boston, crime01)
+
+train <- 1:(dim(Boston)[1]/2)
+test  <- (dim(Boston)[1]/2+1):dim(Boston)[1]
+
+Boston.train <- Boston[train,]
+Boston.test  <- Boston[test,]
+crime01.test <- crime01[test]
+```
+:::
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# logistic regression of crime01 on all predictors 
+# except 'crime01' and 'crim'
+glm_fit <- glm(crime01 ~ . -crime01 - crim, 
+              data   = Boston, 
+              family = binomial, 
+              subset = train)
+```
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+
+:::
+
+```{.r .cell-code}
+glm_probs <- predict(glm_fit, Boston.test, type="response")
+
+glm_pred                  <- rep(0, length(glm_probs))
+glm_pred[glm_probs > 0.5] <- 1
+
+mean(glm_pred != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.1818182
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This logistic regression has a test error rate of $18.2\%$.
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+glm_fit   <- glm(crime01 ~ . -crime01 -crim -chas -tax, 
+              data=Boston, family=binomial, subset=train)
+```
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+
+:::
+
+```{.r .cell-code}
+glm_probs <- predict(glm_fit, Boston.test, type="response")
+##
+glm_pred                  <- rep(0, length(glm_probs))
+glm_pred[glm_probs > 0.5] <- 1
+mean(glm_pred != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.1857708
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This logistic regression has a test error rate of $18.6\%$.
+
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# LDA
+lda_fit  <- lda(crime01~.-crime01-crim, data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.1343874
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This LDA has a test error rate of $13.4\%$.
+
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+lda_fit  <- lda(crime01~.-crime01-crim-chas-tax, data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.1225296
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This LDA has a test error rate of $12.3\%$.
+
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+lda_fit  <- lda(crime01~.-crime01-crim-chas-tax-lstat-indus-age,
+              data=Boston, subset=train)
+lda_pred <- predict(lda_fit, Boston.test)
+mean(lda_pred$class != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.1185771
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This LDA has a test error rate of $11.9\%$.
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# KNN
+library(class)
+train_X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
+                lstat, medv)[train,]
+test_X  <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black,
+                lstat, medv)[test,]
+
+train.crime01 <- crime01[train]
+
+set.seed(1)
+# KNN(k=1)
+knn_pred  <- knn(train_X, test_X, train.crime01, k=1)
+##
+mean(knn_pred != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.458498
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This KNN prediction has a test error rate of $45.8\%$.
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# KNN(k=10)
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train.crime01, k=10)
+mean(knn_pred != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.1106719
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This KNN prediction has a test error rate of $11.1\%$.
+
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+# KNN(k=100)
+set.seed(1)
+knn_pred = knn(train_X, test_X, train.crime01, k=100)
+mean(knn_pred != crime01.test)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.486166
+```
+
+
+:::
+:::
+
+
+
+
+
+**Conclusion:** This KNN prediction has a test error rate of $48.6\%$.
+
+
+**Overall conclusion:** The best models are the ones with the smaller test error rates. In our case, this means that the smallest (fewest predictors) LDA-model and the KNN prediction with `K=10` are the best prediction models.
+
+
+-->
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

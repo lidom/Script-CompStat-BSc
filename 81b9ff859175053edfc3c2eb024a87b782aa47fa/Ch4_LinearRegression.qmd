@@ -108,10 +108,12 @@ $$
 \hat\beta_0=\bar{Y} - \hat\beta_1\bar{X}.
 $$
 
-<!-- For each observed realization of the random sample, we get one observed realization of the random variables 
+<!-- 
+For each observed realization of the random sample, we get one observed realization of the random variables 
 $$
 \hat\beta_0\quad\text{and}\quad \hat\beta_1.
-$$ -->
+$$ 
+-->
 
 In an actual data analysis, we only have *one* realization of the estimators $\hat\beta_0$ and $\hat\beta_1$ computed from the given dataset (i.e. the observed realization of the random sample). Each single estimation result will have estimation errors, i.e., 
 $$
@@ -176,11 +178,9 @@ abline(a = beta_0, b = beta_1, col = "red", lwd = 2)
 abline(lm_obj, col = "blue", lwd = 2)
 ```
 
-<!-- *  Coding-Questions: Can you do this animated? https://gganimate.com/articles/gganimate.html -->
 
 
-
-
+<!-- 
 ::: {.callout-caution}
 
 ## Coding Challenge (Nr 1):
@@ -211,6 +211,7 @@ The approximations become arbitrarily precise as $B\to\infty$ due to the Law of 
 **Question:** Are the estimators $\hat\beta_0$ and $\hat\beta_1$ unbiased for the artificial data generating process defined by our `mySimpleRegrDataGenerator()` function? 
 :::
 
+-->
 
 
 The magnitude of the estimation errors 
@@ -357,43 +358,7 @@ $$
 Note: A type I error (rejecting $H_0$ even though $H_0$ is true) is also called a false positive event. We want that false positives happen only (very) rarely and therefore choose a small significance level $\alpha$ such as $\alpha=0.05$ or $\alpha=0.01.$
 ::: 
 
-::: {.callout-caution}
 
-## Coding Challenge (Nr 2):
-
-1. Use the above `mySimpleRegrDataGenerator()` function to generate one data set. Use this data set to compute the observed realization of the confidence interval, $\operatorname{CI}_{\beta_1,obs}$ for the (in principle unknown) parameter $\beta_1.$ Use this observed realization of the confidence interval to test
-$$
-\begin{align*}
-H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
-\text{versus}\quad 
-H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
-\end{align*}
-$$
-with $\beta^{(H_0)}_{1}=5;$ i.e. with a correct null-hypothesis, since $\beta_1=5$ in `mySimpleRegrDataGenerator()`.
-   * Can you reject $H_0$? Is the test-decision in line with your expectation? 
-
-2. Now, use the above `mySimpleRegrDataGenerator()` function to generate $B=10,000$ many data sets. Compute for each of these data sets the observed realizations of the confidence interval, 
-$$
-\operatorname{CI}_{\beta_1,obs,b}\quad\text{for}\quad b=1,\dots,B.
-$$  
-Use each of the observed confidence interval realizations to test
-$$
-\begin{align*}
-H_0:&\;\beta_1=\beta^{(H_0)}_{1}\\ 
-\text{versus}\quad 
-H_1:&\;\beta_1\neq \beta^{(H_0)}_{1}
-\end{align*}
-$$
-with $\beta^{(H_0)}_{1}=5;$ i.e. with a correct null-hypothesis, since $\beta_1=5$ in `mySimpleRegrDataGenerator()`.
-   * What is the relative frequency of $H_0$-rejections? Is this relative frequency in line with your expectation? 
-
-3. Repeat 1. and 2., but with 
-$$
-\beta^{(H_0)}_{1}=0;
-$$ 
-i.e. with a false null-hypothesis (since $\beta_1=5$ in `mySimpleRegrDataGenerator()`).    
-
-:::
 
 #### Test Statistics for Statistical Hypothesis Testing {-}
 
@@ -1249,7 +1214,7 @@ fit, since the presence of collinearity implies that the information that this v
 4. Live with it. At least you know where the large stand errors are coming from. 
 
 
-## Comparison of Linear Regression with K-Nearest Neighbors
+## Comparison: Linear Regression vs. K-NN Regression
 
 
 Linear regression is an example of a parametric approach because it assumes a linear model form for $f(X).$
@@ -1272,7 +1237,7 @@ $$
 Alternative: **Non-parametric methods** such as *K-nearest neighbors regression* since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
 
 
-#### K-nearest neighbors regression (KNN regression) {-}
+#### K-Nearest Neighbors (K-NN) Regression {-}
 
 Given a value for $K$ and a prediction point $x_0,$ KNN regression
 regression computes $\hat{f}(x_0)$ in two steps: 
@@ -1340,7 +1305,7 @@ Observations:
 * However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0.$ 
 
 
-## `R`-Lab: Linear Regression
+## Self-Study `R`-Lab: Linear Regression
 
 
 ### Libraries

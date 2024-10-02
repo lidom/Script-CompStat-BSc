@@ -13,8 +13,8 @@
 
 ## What is Statistical Learning? 
 
-Suppose that we observe a quantitative response $Y$ and $p$
-different predictors, $X_1, X_2, \dots, X_p.$ 
+Suppose that we observe a quantitative response $Y\in\mathbb{R}$ and $p$
+different predictors, $X_1\in\mathbb{R}, X_2\in\mathbb{R}, \dots, X_p\in\mathbb{R}.$ 
 
 We assume that there is some relationship between $Y$ and 
 $$
@@ -28,11 +28,13 @@ $$
 * $f$ is some fixed but unknown function of $X = (X_1, X_2, \dots, X_p):$
 * $\epsilon$ a random error term fulfilling the following two assumptions:  
   * $\epsilon$ and $X$ are independent of each other 
-  * $\epsilon$ has mean zero $E(\epsilon)=0.$ 
+  * $\epsilon$ has mean zero $E(\epsilon)=0$ and variance $Var(\epsilon)=\sigma^2>0.$ 
 
 In this formulation, $f$ represents the *systematic* information that $X$ provides about $Y.$
 
-In essence, **statistical learning** refers to a set of approaches for estimating $f.$ In this chapter we outline some of the key theoretical concepts that arise in estimating $f,$ as well as tools for evaluating the estimates obtained.
+In essence, **statistical learning** refers to a set of approaches for estimating the unknown function $f.$ 
+
+In this chapter we outline some of the key theoretical concepts that arise in estimating $f,$ as well as tools for evaluating the estimates obtained.
 
 ### Why Estimate $f$?
 
@@ -41,7 +43,8 @@ There are **two main reasons** that we may wish to estimate $f$:
 * prediction and 
 * inference. 
 
-We discuss each in turn.
+
+In the following, we discuss each in turn.
 
 
 ## Prediction {-}
@@ -64,8 +67,8 @@ In this setting, $\hat{f}$ is often treated as a **black box**, in the sense tha
 
 The accuracy of $\hat{Y}$ as a prediction for $Y$ depends on two quantities: 
 
-* the **reducible error** and 
-* the **irreducible error.** 
+* the **reducible error**, i.e. the difference between $\hat{f}$ and $f$ and 
+* the **irreducible error**, i.e. the error term $\epsilon.$ 
 
 In general, $\hat{f}$ will not be a perfect estimate for $f,$ and this inaccuracy will introduce some error. This error is **reducible**, because we can potentially improve the accuracy of $\hat{f}$ by using the most appropriate statistical learning technique to estimate $f.$ 
 
@@ -115,7 +118,7 @@ The focus of this course is on techniques for estimating $f$ with the aim of **m
 ::: 
 
 
-## (Parameter) Inference {-}
+## Inference about Model Parameters {-}
 
 We are often interested in *understanding* the association between $Y$ and $X_1,\dots,X_p.$ In this situation we wish to estimate $f,$ but our goal is not necessarily to make predictions for $Y.$ Now $\hat{f}$ cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:
 
@@ -147,17 +150,24 @@ $$
 $${#eq-randomsample}
 be a **random sample** from @eq-GRegMod, i.e.
 
+
+::: {.callout}
+
+# Random Sample: 
+
+<br>
+
 1. The multivariate, $p+1$ dimensional, random vectors 
 $$
-(X_i,Y_i)\quad\text{and}\quad (X_j,Y_j)
+(X_i,Y_i)\in\mathbb{R}^{p+1}\quad\text{and}\quad (X_j,Y_j)\in\mathbb{R}^{p+1}
 $$
-are independent of each other for all $i=1,\dots,n$ and $j=1,\dots,n$ with $i\neq j.$<br><br>
-2. The multivariate, $p+1$ dimensional, random vectors $(X_i,Y_i),$ $i=1,\dots,n,$ have all the same distribution as $(X,Y),$ i.e.
+are **independent** of each other for all $i=1,\dots,n$ and $j=1,\dots,n$ with $i\neq j.$<br><br>
+2. The multivariate, $p+1$ dimensional, random vectors $(X_i,Y_i)\in\mathbb{R}^{p+1},$ $i=1,\dots,n,$ have all the **same distribution** as $(X,Y),$ i.e.
 $$
 (X_i,Y_i)\sim(X,Y)
 $$
-for all $i=1,\dots,n.$ <br><br>
-
+for all $i=1,\dots,n.$ <br>
+:::
 
 The random sample @eq-randomsample is thus a set of $n$ many **independent and identically distributed (iid)** multivariate random variables
 $$
@@ -185,7 +195,7 @@ Y \approx \hat{f}(X)
 $$
 for ***any*** observed realization of $(X, Y).$ 
 
-That is, the estimate $\hat{f}$ needs to provide a good approximation 
+That is, the estimate $\hat{f}$ needs to provide good approximations 
 $$
 y_{i} \approx \hat{f}(x_{i})
 $$
@@ -212,7 +222,9 @@ Broadly speaking, most statistical learning methods for this task can be charact
 * **parametric** or 
 * **non-parametric**. 
 
-We discuss each in turn.
+In the following, we discuss each in turn.
+
+
 
 ### Parametric Methods {-}
 
@@ -248,6 +260,12 @@ These issues (model-flexibility and overfitting) are discussed through-out this 
 ::: 
 
 
+Examples: 
+
+* Simple linear regression model 
+* Multiple linear regression model 
+
+
 ### Non-Parametric Methods {-}
 
 Non-parametric methods (e.g. $K$ nearest neighbor regression) do not make explicit assumptions about the functional form of $f.$ Instead, they make qualitative assumptions on $f$ such as, for instance, requiring that $f$ is a *smooth* (e.g. two times continuously differentiable) function. 
@@ -256,8 +274,13 @@ Non-parametric methods (e.g. $K$ nearest neighbor regression) do not make explic
 
 * **Con:** Non-parametric methods require a large number of observations to obtain an accurate estimate for $f;$ far more observations than is typically needed for a parametric approach if the parametric model assumption is correct. (Non-parametric methods are "data-hungry".)
 
+Examples: 
 
-### The Trade-Off Between Prediction Accuracy and Model Interpretability
+* Spline regression methods (smoothing splines or regression splines)
+* $K$ nearest neighbor regression
+
+
+### Trade-Off Between Prediction Accuracy and Model Interpretability
 
 One might reasonably ask the following question: 
 
@@ -291,8 +314,7 @@ Supervised learning methods:
 
 Unsupervised learning methods: 
 
-* cluster analysis (clustering)
-* $K$-means 
+* cluster analysis (clustering); for instance, using the $K$-means algorithm
 
 
 ### Regression Versus Classification Problems
@@ -338,7 +360,7 @@ of the test data random sample is used to check the accuracy of the estimate $\h
 
 
 
-### Measuring the Quality of Fit
+### Measuring the Quality of Fit {#sec-mqfit}
 
 In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE). 
 
@@ -364,13 +386,13 @@ or next month's price.  -->
 Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
 
 
-### Local (i.e. Point-Wise) Test MSE {-}
+### Local Test MSE {-}
 
 Let $\hat{f}$ be computed from the training data $\{(x_1,y_1),\dots,(x_n,y_n)\}.$ And let 
 $$
 \{(x_{0},y_{01}),(x_{0},y_{02})\dots,(x_{0},y_{0m})\}
 $$
-denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for one given predictor value $x_0$. 
+denote the set of $m$ **test data points** $y_{01},\dots,y_{0m}$ for **one given predictor value** $x_0.$ 
 
 This type of $x_0$-specific test data is a realization of a **conditional random sample** given $X=x_0,$
 $$
@@ -399,18 +421,29 @@ This test data random sample is independent of the training data random sample w
 
 
 Then, the **global test MSE** is given by,
+$$
 \begin{align*}
 \operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
+$$
 
 Note that if $\hat{f}$ is a really good estimate of $f,$ i.e. if $\hat{f}\approx f,$ then 
 $$
-\operatorname{MSE}_{\text{test}}\approx \frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2
+\begin{align*}
+\operatorname{MSE}_{\text{test}}
+&=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2\\
+&\approx\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - f(x_{0i})\right)^2\\
+&=\frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2\\
+&=\hat{\sigma}^2 
+&\approx \sigma^2 
+\end{align*}
 $$
-estimates the variance of the error term $Var(\epsilon)$, i.e., the **irreducible error component**. 
+estimates the variance of the error term $Var(\epsilon)=\sigma^2,$ i.e., the **irreducible error component**. 
 
 
 <br>
+
+### Global Training and Test MSE in Nonparametric Smoothing Spline Regression {-}
 
 Figure 2.9 shows training and test MSEs for smoothing spline (`R` command `smooth.spline()`) estimates $\hat{f}$ in the case of 
 
@@ -439,13 +472,7 @@ Figure 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}
 
 <br>
 
-::: {.callout-caution}
 
-## Coding Challenge (Nr 1):
-
-Generate MSE-results similar to those shown in Figure 2.9.   
-
-:::
 
 
 In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available. 
@@ -460,7 +487,7 @@ One important method is **cross-validation**, which is a method for estimating t
 
 ### The Bias-Variance Trade-Off
 
-The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods.
+The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods: **bias** and **variance**.
 
 * Let $\hat{f}$ be estimated from the training data random sample
 $$
@@ -494,6 +521,7 @@ $$
 * Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ -->
 
 One can show that the expected test MSE at a given predictor value $x_0$ can be decomposed as following: 
+$$
 \begin{align*}
 E\left[\operatorname{MSE}_{test}(x_0)\right] 
 & =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
@@ -514,18 +542,24 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 %& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&\quad\text{(steps skipped since beyond scope)}\\[2ex]
-& = Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2 + Var\left(\epsilon_0\right)
+& = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \underbrace{Var\left(\epsilon_0\right)}_{\text{irreducible}}
 \end{align*}
+$$
 
 
-The **expected MSE** at $x_0,$ $E\left[\operatorname{MSE}_{test}(x_0)\right],$ refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$ 
+The **expected MSE** at $x_0,$ 
+$$
+E\left[\operatorname{MSE}_{test}(x_0)\right],
+$$ 
+refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$ 
 
-
+<!-- 
 ::: {.callout-note}
 A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding challenge) is not able to consistently approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$
 
 However, to get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$ This will be (among others) the topic of  @sec-resamplingmethods.
-:::
+::: 
+-->
 
 To minimize the expected test MSE, we need to select a statistical learning method that *simultaneously* achieves **low variance** and **low bias**. 
 
@@ -548,7 +582,10 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 $$
 
 
-➡️ The overall, i.e., **global** expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set.
+::: {.callout}
+The overall, i.e., **global** expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set.
+:::
+
 <!-- $$
 E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
 $$ -->
@@ -559,7 +596,10 @@ Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^
 $$
 **Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ But ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
 
-➡️ The overall, i.e., **global** variance can be computed by averaging $Var(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
+::: {.callout}
+The overall, i.e., **global** variance can be computed by averaging $Var(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
+:::
+
 
 #### Bias of $\hat{f}$ at $x_0$ {-}
 $$
@@ -567,302 +607,304 @@ $$
 $$
 **Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
 
-➡️ The overall, i.e., *global* bias can be computed by averaging $\operatorname{Bias}(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
-
+::: {.callout}
+The overall, i.e., *global* bias can be computed by averaging $\operatorname{Bias}(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
+:::
 
 ![](images/Fig_2_12.png)
 
 
 
-### The Classification Setting
-
-
-Setup: 
-
-* Observed **training data** 
-$$
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
-$$
-* Qualitative response $y_i$ with categorical class labels. E.g. 
-   * $y_i\in\{\text{red},\text{blue}\}$
-   * $y_i\in\{\text{positive returns},\text{negative returns}\}$
-* The **classifier** $\hat{f}$ is computed from the training data.
-* Predicted training data class labels: 
-$$
-\hat{y}_i = \hat{f}(x_i)
-$$
-
-The alternative to the training MSE is here the **training error rate**
-$$
-\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
-$$
-which gives the relative frequency of false categorical predictions. 
-
-Here, 
-$$
-I(\cdot)
-$$
-is an indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
-
-
-Let 
-$$
-\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
-$$
-denote $m$ **test data** observations. 
-
-The alternative to the test MSE is here the **test error rate**
-$$
-\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
-$$
-where $\hat{y}_{0i}$ is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation with predictor value $x_{i0}.$ 
-
-A good classifier is one for which the test error rate is smallest.
-
-### The Bayes Classifier {-}
-
-It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value $x_{0}.$ This classifier is called the **Bayes classifier**. 
-
-In other words, the Bayes classifier assigns a test observation with predictor vector $x_{0}$ to the class $j$ for which
-$$
-P(Y = j | X = x_{0})
-$$
-is largest among all possible class labels $j$ (e.g. $j\in\{1,2\}$). 
-
-
-In a **two-class problem** where there are only two possible response values, say class $1$ or class $2,$ the Bayes classifier corresponds to predicting class $1$ if 
-$$
-P(Y = 1| X = x_0 ) \geq 0.5,
-$$ 
-and class $2$ if 
-\begin{align*}
-& P(Y = 1| X = x_0 ) < 0.5 \\[2ex]
-\Leftrightarrow\; & P(Y = 2| X = x_0 ) > 0.5  
-\end{align*}
-
-::: {.callout-note}
-## Classification threshold $0.5$?
-
-If no further information is given, one uses usually a threshold of $0.5$ in a two-class classification problem; or, more generally, a threshold of $\frac{1}{G}$ in a $G$-classes classification problem. 
-
-However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.
-
-Example: 
-$$
-y\in\{\text{Person pays back}, \text{Person does not pay back}\}
-$$
-The classification error 
-$$
-\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
-$$
-can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value $x_0$ to the "Person pays back"-class only if, for instance, 
-$$
-\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
-$$
-and otherwise classify this person to the "Person does not pay back"-class. This will reduce the frequency of miss-classifications when classifying into the "Person pays back"-class, and thus reduce the costs. 
-:::
-
-Those values of $x_0$ for which 
-\begin{align*}
-P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
-\end{align*}
-are called the **Bayes decision boundary**. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.
-
-![](images/Fig_2_13.png)
-
-* Note to Fig. 2.13: Here, a *perfect* classification (i.e. zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups. 
-
-
-The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The point-wise Bayes error rate at $x_0$ is given by
-$$
-1 - \max_{j}P(Y = j| X = x_0 ),
-$$
-where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$).
-
-The *global* overall Bayes error rate is given by
-$$
-1 - E\left(\max_{j}P(Y = 1| X )\right),
-$$
-where the expectation averages the probability over all possible values of $X.$ 
-
-
-### $K$-Nearest Neighbors Classification {-}
-
-In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of $Y$ given $X,$ and so computing the Bayes classifier is impossible. 
-
-
-Many approaches attempt to estimate the conditional distribution of $Y$ given $X,$ and then classify a given observation to the class with highest estimated probability. One such method is the **$K$-nearest neighbors** (KNN) classifier. 
-
-Given a positive integer $K$ and a test observation $x_0,$ the KNN classifier first identifies the $K$ points in the training data
-$$
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
-$$
-that are closest to $x_0.$ 
-
-This set of $K$ nearest points (near to $x_0$) can be represented by the $x_0$-specfic index set 
-$$
-\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
-$$
-I.e. $\mathcal{N}_0$ is an index set that allows to select the $K$ nearest neighbors in the training data. 
-
-From the definition of $\mathcal{N}_0$ is follows that:
-
-* $\mathcal{N}_0\subset\{1,2,\dots,n\}$
-* $|\mathcal{N}_0|=K$
-
-KNN estimates the conditional probability for class $j$ as the fraction of the $K$ points $(x_i,y_i)$ selected by the index-set $\mathcal{N}_0$ whose response value $y_i$ equals $j:$
-$$
-\begin{align}
-P(Y = j | X = x_{0}) 
-&\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
-&= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
-\end{align}
-$${#eq-DefKNN}
-where $I(\texttt{TRUE})=1$ and $I(\texttt{FALSE})=0.$
-
-Finally, KNN classifies the test observation $x_0$ to the class $j$ with the largest probability from @eq-DefKNN. 
-
-
-Figure 2.14 provides an illustrative example of the KNN approach. 
-
-* Two-dimensional predictor $X=(X_1,X_2),$ where $X_1$ is shown on the x-axis and $X_2$ on the y-axis. 
-* Two class labels $Y\in\{\text{yellow}, \text{blue}\}.$
-* Training data consists of six data points
-$$
-\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
-$$ 
-(See the left panel of Figure 2.14.)
-* Class-label prediction ("classification") are computed for a regular grid of predictor values $x_{0}=(x_{01},x_{02}).$ (See the regular grid of points in the right panel of Figure 2.14.)
-* $K=3$ nearest neighbors are used to compute the class-label predictions. 
-
-
-<br>
-
-![](images/Fig_2_14.png)
-
-* In the **left-hand panel** of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. 
-* In the **right-hand panel** of Figure 2.14, we have applied the KNN approach with $K = 3$ at all of the possible values for $X_1$ and $X_2,$ and have drawn in the corresponding KNN decision boundary.
-
-
-<br>
-
-![](images/Fig_2_15.png)
-
-<br>
-
-![](images/Fig_2_16.png)
-
-<br>
-
-![](images/Fig_2_17.png)
-
-
-
-::: {.callout-caution}
-
-## Coding Challenge (Nr 2):
-
-The following `R`-code generates training data for the two-class classification problem with 
-
-* Class 1: Circle with center $(x_1,x_2)=(0.5,0.5)$ and radius $r=0.2,$ i.e.
-$$
-\text{Cl1} = \{(x_1,x_2)\in[0,1]^2:(x_1-0.5)^2+(x_2-0.5)^2\leq 0.2^2\}
-$$
-* Class 2: All data points in the square $[0,1]^2$ that do not belong to Class 1, i.e.
-$$
-\text{Cl2} = \{(x_1,x_2)\in[0,1]^2: (x_1,x_2)\not\in\text{Cl1}\}
-$$
-
-
-```{r}
-# install.packages("plotrix") # Install plotrix package
-library("plotrix")   # Load plotrix package (draw.circle())
-
-## Class 1: Circle  
-radius <- 0.2
-center <- c(0.5,0.5)
-## Class 2: [0,1] x [0,1] \ Class 1
-
-## function to map data points to class labels "Cl1" and "Cl2"
-my_class_fun <- function(x1, x2, cent = center, rad = radius, error = 0){
-  tmp    <- (x1 - cent[1])^2 + (x2 - cent[2])^2
-  rad    <- rad + sample(c(-1,1), 1) * error
-  ifelse(tmp <= rad^2, "Cl1", "Cl2")
-}
-my_class_fun <- Vectorize(my_class_fun, c("x1", "x2"))
-
-## ##################################
-## Generate training data (with error)
-## ##################################
-set.seed(321)
-
-## number of training data points
-n_train    <- 500
-
-## error
-error  <- 0.05
-
-train_X1 <- runif(n_train, min = 0, max = 1)
-train_X2 <- runif(n_train, min = 0, max = 1)
-train_Cl <- my_class_fun(x1 = train_X1, 
-                         x2 = train_X2, error = error)
-train_Cl <- as.factor(train_Cl)
-summary(train_Cl)
-
-data_train <- data.frame(
-  "Cl" = train_Cl,
-  "X1" = train_X1, 
-  "X2" = train_X2
-)
-
-head(data_train)
-
-par(mfrow = c(1,2))
-plot(x = 0, y = 0, 
-     type = "n", 
-     xlim = c(0,1),
-     ylim = c(0,1), 
-     xlab = expression(X[1]),
-     ylab = expression(X[2]), asp=1)
-abline(h = c(0,1))
-draw.circle(x = center[1], y = center[2], radius = radius)
-text(x = 0.5, y = 0.5, label = "Class 1")
-text(x = 0.1, y = 0.9, label = "Class 2")
-
-plot(x = 0, y = 0, 
-     type = "n", 
-     xlim = c(0,1),
-     ylim = c(0,1), 
-     xlab = expression(X[1]),
-     ylab = expression(X[2]), asp=1,
-     main = "Training data with errors")
-abline(h = c(0,1))
-draw.circle(x = center[1], y = center[2], radius = radius)
-
-points(x   = data_train$X1, 
-       y   = data_train$X2, 
-       col = data_train$Cl,  pch = 19)
-```
-
-**Challenge:** 
-
-* Write an KNN-function that uses the training data to classify a grid of test data in $[0,1]^2$ into the two classes. 
-:::
-
-
-
-
-
 ## Exercises
 
-Prepare the following exercises of Chapter 2 in our course textbook `ISLR`: 
+Prepare the following exercises of **Chapter 2** in our course textbook `ISLR`: 
 
-- Exercise 7
 - Exercise 8
 - Exercise 9
 
+<!--
+### Solutions
 
-<!-- {{< include Ch2_StatLearning_Solutions.qmd >}} -->
+#### Exercise 8: {-}
+
+This exercise relates to the College data set, which can be found in the file `College.csv` ([LINK-TO-DATA](https://www.statlearning.com/s/College.csv)). It contains a number of variables for $777$ different universities and colleges in the US. The variables are:
+
+-   **Private** : Public/private indicator
+-   **Apps** : Number of applications received
+-   **Accept** : Number of applicants accepted
+-   **Enroll** : Number of new students enrolled
+-   **Top10perc** : New students from top 10% of high school class
+-   **Top25perc** : New students from top 25% of high school class
+-   **F.Undergrad** : Number of full-time undergraduates
+-   **P.Undergrad** : Number of part-time undergraduates
+-   **Outstate** : Out-of-state tuition
+-   **Room.Board** : Room and board costs
+-   **Books** : Estimated book costs
+-   **Personal** : Estimated personal spending
+-   **PhD** : Percent of faculty with Ph.D.'s
+-   **Terminal** : Percent of faculty with terminal degree
+-   **S.F.Ratio** : Student/faculty ratio
+-   **perc.alumni** : Percent of alumni who donate
+-   **Expend** : Instructional expenditure per student
+-   **Grad.Rate** : Graduation rate
+
+**8. a)** Use the `read.csv()` function to read the data into `R`. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.
+
+**Answer:**
+
+```{r}
+# Store data into dataframe college
+college <- read.csv("DATA/College.csv")
+
+# Print first 10 rows and first 5 collumns of the data
+college[c(1:10),c(1:5)]
+```
+
+**8. b)** Look at the data using the `fix()` function.
+
+**Answer:**
+
+The `fix()` command allows you to look at the data and change values in the data in a spread-sheet like format. 
+
+
+We can do some additional data-wrangling:<br>
+You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
+
+```{r}
+# Store row names
+rownames(college) <- college[,1]
+
+# pops up a window for data visualization
+# fix(college)
+
+# Alteratively you can use: 
+# View(college)
+```
+
+You should see that there is now a row.names column with the name of each university recorded. This means that `R` has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
+
+```{r}
+# Eliminates first column (containing the row names)
+college <- college[,-1]
+# fix(college)
+```
+
+Now you should see that the first data column is `Private`. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.
+
+**8. c. i)** Use the `summary()` function to produce a numerical summary of the variables in the data set.
+
+**Answer:**
+
+```{r}
+summary(college[, 1:5])
+```
+
+
+**8. c. ii)** Use the `pairs()` function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix `A` using `A[,2:10]`.
+
+**Answer:**
+
+```{r}
+pairs(x = college[,2:10])
+```
+
+**8. c. iii)** Use the `boxplot()` function to produce side-by-side boxplots of `Outstate` versus `Private`.
+
+**Answer:**
+
+```{r}
+boxplot(Outstate~Private, 
+        data = college, 
+        xlab = "Private", 
+        ylab = "Outstate")
+```
+
+
+> `Outstate`-Variable explained: The `Outstate`-variable is the tuition fee charged from non-resident students. (Many US colleges charge high tuition fees from non-resident students.) 
+
+
+**8. c. iv)** Create a new qualitative variable, called `Elite`, by binning the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
+
+```{r}
+# Creating a vector called ELite with only "No" entrances amounting the number of college rows
+Elite <- rep("No",nrow(college))
+
+# Replacing "No" with "Yes" if the proportion of students coming from the top 10% of their HS classes exceeds 50%.
+Elite[college$Top10perc > 50] <- "Yes"
+
+# Encode a vector as a factor
+Elite <- as.factor(Elite)
+
+# Add Elite variable to our current dataset "college"
+college <- data.frame(college, Elite)
+```
+
+Use the `summary()` function to see how many elite universities there are. Now use the `boxplot()` function to produce side-by-side boxplots of Outstate versus Elite.
+
+
+**Answer:**
+
+```{r}
+summary(college$Elite)
+```
+
+There are $78$ elite Universities. The boxplots of `Outstate` versus Elite-Status are generated as following:
+
+```{r}
+#| scrolled: false
+boxplot(Outstate ~ Elite, 
+        data = college, xlab="Elite", ylab="Outstate")
+```
+
+**8. c. v)** Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
+
+**Answer:**
+
+```{r}
+par(mfrow=c(2,2))
+hist(college$Apps,     breaks=50, xlim=c(0,25000), 
+     xlab = "", main="Apps")
+hist(college$Enroll,   breaks=25, xlab = "", main="Enroll")
+hist(college$Expend,   breaks=25, xlab = "", main="Expend")
+hist(college$Outstate,            xlab = "", main="Outstate")
+```
+
+Remember: 
+
+* **Enroll:** Number of new students enrolled
+* **Expend:** Instructional expenditure per student
+* **Outstate:** Out-of-state tuition
+
+
+#### Exercise 9: {-}
+
+This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.
+
+```{r}
+# Store data into dataframe college
+Auto <- read.csv("DATA/Auto.csv", header=T, na.strings="?")
+
+# Remove missing values from the data
+Auto <- na.omit(Auto)
+
+# Print first 10 rows of the data
+print(Auto[c(1:10),])
+
+# Find more info on the variables here:
+# library(ISLR2)
+# ?Auto
+```
+
+
+* **mpg:** miles per gallon
+* **cylinders:** Number of cylinders between 4 and 8
+* **displacement:** Engine displacement (cu. inches)
+* **horsepower:** Engine horsepower
+* **weight:** Vehicle weight (lbs.)
+* **acceleration:** Time to accelerate from 0 to 60 mph (sec.)
+* **year:** Model year (modulo 100)
+* **origin:** Origin of car (1. American, 2. European, 3. Japanese)
+* **name:** Vehicle name
+
+
+**9. a)** Which of the predictors are quantitative, and which are qualitative?
+
+**Answer:**
+
+```{r}
+# Summarize dataset
+summary(Auto)
+```
+
+- **Quantitative predictors:** `mpg`, `cylinders`, `displacement`, `horsepower`, `weight`, `acceleration`, `year` 
+- **Qualitative predictors:** `name`, `origin`
+
+**9. b)** What is the range of each quantitative predictor? You can answer this using the `range()` function.
+
+**Answer:**
+
+```{r}
+# apply the range function to the first seven columns of Auto
+ranges <- sapply(Auto[, 1:7], range)
+# print to console
+ranges
+
+# adding row names:
+row.names(ranges) <- c("min", "max")
+ranges
+```
+
+**9. c)** What is the mean and standard deviation of each quantitative predictor?
+
+**Answer:**
+
+```{r}
+# compute the means and round to 2 decimal places 
+mean <- sapply(Auto[,1:7], mean)
+mean <- sapply(mean, round, 2)
+
+# compute the standard deviations (sd) and round to 2 decimal places 
+sd <- sapply(Auto[, 1:7], sd)
+sd <- sapply(sd,round,2)
+
+# print mean values 
+mean
+# print sd values 
+sd
+```
+
+**9.d)** Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
+
+**Answer:**
+
+```{r}
+# remove observations and store them 
+newAuto = Auto[-(10:85),]
+
+# Re-do exercises 9. b) and 9.c)
+# This time, create an empty Matrix "Results" to store the results
+Results <- matrix(NA, nrow = 4, ncol = 7, 
+                  dimnames = list(c("Mean", "SD", "Min", "Max"),# row names 
+                                  c(colnames(newAuto[,1:7])))) # column names
+
+# Compute and store the results
+Results[1,] <- sapply(newAuto[, 1:7], mean)
+Results[2,] <- sapply(newAuto[, 1:7], sd)  
+Results[3,] <- sapply(newAuto[, 1:7], min)
+Results[4,] <- sapply(newAuto[, 1:7], max)
+
+# Round to 0 decimal and print
+round(Results, digits = 0)
+```
+
+**9. e)** Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
+
+**Answer:**
+
+```{r}
+pairs(Auto[, -9]) # remove the character-variable 'name'
+```
+
+Findings: 
+
+- higher `weight` is related with lower `mpg` 
+- higher `weight` is related with higher `displacement` 
+- higher `weight` is related with higher `horsepower`
+- higher `horsepower` is related with lower `acceleration`
+- higher model `years` are related with higher `mpg`
+
+**9. f)** Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
+
+**Answer:**
+
+Yes, there are multiple potentially useful predictor variables. 
+
+All of the *quantitative* variables show some sort of relation (either linear or non-linear) with `mpg` and hence, they might be useful in predicting `mpg`. 
+
+Moreover, the qualitative variable `origin` might also be useful in predicting `mpg`: cars originated from region 1, 2, and 3 are  associated with lower, intermediate, higher `mpg` values. 
+
+-->
+
 
 
 

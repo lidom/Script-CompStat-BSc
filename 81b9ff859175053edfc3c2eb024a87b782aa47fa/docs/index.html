@@ -65,6 +65,32 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 </head>
 <body class="nav-sidebar floating">
 
@@ -155,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="#timetable" id="toc-timetable" class="nav-link" data-scroll-target="#timetable">Timetable</a></li>
   <li><a href="#lecture-material" id="toc-lecture-material" class="nav-link" data-scroll-target="#lecture-material">Lecture Material</a></li>
   <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
-  <li><a href="#information-on-the-exam" id="toc-information-on-the-exam" class="nav-link" data-scroll-target="#information-on-the-exam">Information on the Exam</a></li>
+  <li><a href="#assignments" id="toc-assignments" class="nav-link" data-scroll-target="#assignments">Assignments</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -179,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last Updated on September 23, 2024</p>
+      <p class="date">Last Updated on October 02, 2024</p>
     </div>
   </div>
   
@@ -215,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">Jur / Hörsaal K</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Coding Space</td>
+<td style="text-align: left;">Open Coding Space</td>
 <td style="text-align: left;">16:45-17:45</td>
 <td style="text-align: left;">Jur / Hörsaal K</td>
 </tr>
@@ -243,28 +269,33 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </li>
 </ul>
-<!-- * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes. --><!-- * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0) --></section><section id="information-on-the-exam" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="information-on-the-exam">Information on the Exam</h3>
-<!-- * Mock Exam with 5 multiple-choice problems and 1 free-text problem: [Download](https://www.dropbox.com/scl/fi/ib7z8bp2d5q775u2hoty0/Mock_Exam1.pdf?rlkey=m5yus4dkxnekpzaoydf6eqok5&dl=0) 
-   * Note: The actual exam will contain 10 multiple-choice problems and 2 free-text problems-->
+<!-- * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes. --><!-- * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0) --></section><section id="assignments" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="assignments">Assignments</h3>
+<p>For each chapter there is an home assignment. You can use the <code>Open Coding Space</code> for asking questions and for working on your assignments.</p>
+<p><strong>Grading:</strong></p>
 <ul>
-<li>You are allowed to use a <strong>handwritten cheat-sheet</strong> (<strong>one side</strong> of a DIN A4 page).</li>
-<li>You are allowed to use a <strong>non-programmable scientific calculator</strong>.</li>
-<li>Please, do <strong>not</strong> use a pencil.</li>
-<li>Exam dates and times are published by the <a href="https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en">examinations office</a> <!-- * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0) -->
-</li>
+<li>
+<span class="math inline">\(1\)</span> Point per correct assignment</li>
+<li>
+<span class="math inline">\(0.5\)</span> Point if at least <span class="math inline">\(50\%\)</span> of the assignment is correct.</li>
+<li>
+<span class="math inline">\(0\)</span> Point otherwise</li>
 </ul>
-<!-- ### Communication {-}
+<p><strong>Bonus for the exam grade:</strong></p>
+<ul>
+<li>Upgrade of two grade steps if at least <span class="math inline">\(80\%\)</span> of the maximal possible assignment points were collected.<br>
+</li>
+<li>Upgrade of one grade step if less than <span class="math inline">\(80\%,\)</span> but at least <span class="math inline">\(60\%\)</span> of the maximal possible points were collected.</li>
+</ul>
+<!-- ### Information on the Exam {-}
 
-* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/bfmraxkf5rosbd5h3lrfa2jo/) to post questions, share codes, etc. Happy sharing and discussing!  --><!-- ### Further Material
+* You are allowed to use a **handwritten cheat-sheet** (**one side** of a DIN A4 page). 
+* You are allowed to use a **non-programmable scientific calculator**.
+* Please, do **not** use a pencil.
+* Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en) 
+--><!-- * Mock Exam with 5 multiple-choice problems and 1 free-text problem: [Download](https://www.dropbox.com/scl/fi/ib7z8bp2d5q775u2hoty0/Mock_Exam1.pdf?rlkey=m5yus4dkxnekpzaoydf6eqok5&dl=0) 
+   * Note: The actual exam will contain 10 multiple-choice problems and 2 free-text problems--><!-- * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0) --><!-- ### Communication {-}
 
-The following resources are not directly used in our course, but you may find them useful nevertheless:
-
-* [`R` Labs using `Tidymodels`](https://emilhvitfeldt.github.io/ISLR-tidymodels-labs/index.html)
-
-* [Slides, Datasets, R-Scripts, etc](https://www.statlearning.com/resources-second-edition)
-
-* [Slides and Videos (1st edition of the course textbook)](https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/)
- -->
+* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/bfmraxkf5rosbd5h3lrfa2jo/) to post questions, share codes, etc. Happy sharing and discussing!  -->
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

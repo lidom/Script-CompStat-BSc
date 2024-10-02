@@ -9,7 +9,7 @@ book:
   date-format: "[Last Updated on] MMMM DD, YYYY"
   sidebar: 
     logo: images/Uni_Bonn_Logo.jpeg
-    number-depth: 3
+    number-depth: 2
   search: true
   chapters:
     - index.qmd

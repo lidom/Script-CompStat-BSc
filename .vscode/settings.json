@@ -6,11 +6,15 @@
         "markdown",
         "latex",
         "plaintext",
-        "quarto"
+        "quarto",
+        "log"
     ],
     "spellright.parserByClass": {
         "quarto": {
             "parser": "markdown"
+        },
+        "log": {
+            "parser": "plain"
         }
     }
 }

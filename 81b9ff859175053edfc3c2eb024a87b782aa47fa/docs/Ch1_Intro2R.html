@@ -208,13 +208,25 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#short-glossary" id="toc-short-glossary" class="nav-link active" data-scroll-target="#short-glossary"><span class="header-section-number">1.0.1</span> Short Glossary</a></li>
-  <li><a href="#first-steps" id="toc-first-steps" class="nav-link" data-scroll-target="#first-steps"><span class="header-section-number">1.0.2</span> First Steps</a></li>
-  <li><a href="#further-data-objects" id="toc-further-data-objects" class="nav-link" data-scroll-target="#further-data-objects"><span class="header-section-number">1.0.3</span> Further Data Objects</a></li>
-  <li><a href="#programming-in-r" id="toc-programming-in-r" class="nav-link" data-scroll-target="#programming-in-r"><span class="header-section-number">1.0.4</span> Programming in <code>R</code></a></li>
-  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">1.0.5</span> R-packages</a></li>
-  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="header-section-number">1.0.6</span> Tidyverse</a></li>
-  <li><a href="#further-links" id="toc-further-links" class="nav-link" data-scroll-target="#further-links"><span class="header-section-number">1.0.7</span> Further Links</a></li>
+<li><a href="#short-glossary" id="toc-short-glossary" class="nav-link active" data-scroll-target="#short-glossary"><span class="header-section-number">1.1</span> Short Glossary</a></li>
+  <li><a href="#first-steps" id="toc-first-steps" class="nav-link" data-scroll-target="#first-steps"><span class="header-section-number">1.2</span> First Steps</a></li>
+  <li><a href="#further-data-objects" id="toc-further-data-objects" class="nav-link" data-scroll-target="#further-data-objects"><span class="header-section-number">1.3</span> Further Data Objects</a></li>
+  <li>
+<a href="#programming-in-r" id="toc-programming-in-r" class="nav-link" data-scroll-target="#programming-in-r"><span class="header-section-number">1.4</span> Programming in <code>R</code></a>
+  <ul class="collapse">
+<li><a href="#simulating-data" id="toc-simulating-data" class="nav-link" data-scroll-target="#simulating-data"><span class="header-section-number">1.4.1</span> Simulating Data</a></li>
+  </ul>
+</li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">1.5</span> <code>R</code>-Packages</a></li>
+  <li>
+<a href="#self-study-tidyverse" id="toc-self-study-tidyverse" class="nav-link" data-scroll-target="#self-study-tidyverse"><span class="header-section-number">1.6</span> Self-Study: Tidyverse</a>
+  <ul class="collapse">
+<li><a href="#tidyverse-plotting-basics" id="toc-tidyverse-plotting-basics" class="nav-link" data-scroll-target="#tidyverse-plotting-basics"><span class="header-section-number">1.6.1</span> Tidyverse: Plotting Basics</a></li>
+  <li><a href="#tidyverse-data-wrangling-basics" id="toc-tidyverse-data-wrangling-basics" class="nav-link" data-scroll-target="#tidyverse-data-wrangling-basics"><span class="header-section-number">1.6.2</span> Tidyverse: Data Wrangling Basics</a></li>
+  <li><a href="#the-group_by-function" id="toc-the-group_by-function" class="nav-link" data-scroll-target="#the-group_by-function"><span class="header-section-number">1.6.3</span> The <code>group_by()</code> function</a></li>
+  </ul>
+</li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">1.7</span> Assignment</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -270,8 +282,8 @@ window.Quarto = {
 </li>
 <li>Today, R is the de-facto standard for statistical science.</li>
 </ul>
-<section id="short-glossary" class="level3" data-number="1.0.1"><h3 data-number="1.0.1" class="anchored" data-anchor-id="short-glossary">
-<span class="header-section-number">1.0.1</span> Short Glossary</h3>
+<section id="short-glossary" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="short-glossary">
+<span class="header-section-number">1.1</span> Short Glossary</h2>
 <p>Lets start the tutorial with a (very) short glossary:</p>
 <ul>
 <li>
@@ -282,8 +294,8 @@ window.Quarto = {
 <strong>Working directory</strong>: The file-directory you are working in. Useful commands: with <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> you get the location of your current working directory and <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> allows you to set a new location for it.</li>
 <li>
 <strong>Workspace</strong>: This is a hidden file (stored in the working directory), where all objects you use (e.g., data, matrices, vectors, variables, functions, etc.) are stored. Useful commands: <code><a href="https://rdrr.io/r/base/ls.html">ls()</a></code> shows all elements in our current workspace and <code>rm(list=ls())</code> deletes all elements in our current workspace.</li>
-</ul></section><section id="first-steps" class="level3" data-number="1.0.2"><h3 data-number="1.0.2" class="anchored" data-anchor-id="first-steps">
-<span class="header-section-number">1.0.2</span> First Steps</h3>
+</ul></section><section id="first-steps" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="first-steps">
+<span class="header-section-number">1.2</span> First Steps</h2>
 <p>A good idea is to use a script file such as <code>yourFavoritFileName.R</code> in order to store your <code>R</code> commands. You can send single lines or marked regions of your R-code to the console by pressing the keys <strong>STRG+ENTER</strong>.</p>
 <p>To begin with baby steps, do some simple computations:</p>
 <div class="cell" data-layout-align="center">
@@ -462,8 +474,8 @@ window.Quarto = {
 </div>
 </div>
 <p>Note: Logical operations return so-called <strong>boolean</strong> objects, i.e., either a <code>TRUE</code> or a <code>FALSE</code>. For instance, if we ask R whether <code>1&gt;2</code> we get the answer <code>FALSE</code>.</p>
-</section><section id="further-data-objects" class="level3" data-number="1.0.3"><h3 data-number="1.0.3" class="anchored" data-anchor-id="further-data-objects">
-<span class="header-section-number">1.0.3</span> Further Data Objects</h3>
+</section><section id="further-data-objects" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="further-data-objects">
+<span class="header-section-number">1.3</span> Further Data Objects</h2>
 <p>Besides classical data objects such as scalars, vectors, and matrices there are three further data objects in R:</p>
 <ol type="1">
 <li>The <strong>array</strong>: As a matrix but with more dimensions. Here is an example of a <span class="math inline">\(2\times 2\times 2\)</span>-dimensional <code>array</code>:</li>
@@ -499,9 +511,10 @@ window.Quarto = {
 <span><span class="co"># Take a look at it!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- 
-### Simple Regression Analysis using R 
+## Simple Regression Analysis using R 
 
 Alright, let's do some statistics with real data. You can download the data [HERE](https://github.com/lidom/Teaching_Repo). Save it on your computer, at a place where you can find it, and give the path (e.g. `"C:\textbackslash path\textbackslash auto.data.csv"`, which references to the data, to the *file*-argument of the function `read.csv()`:
+
 
 
 
@@ -520,7 +533,9 @@ head(auto.data)
 
 
 
+
 If you have problems to read the data into R, go on with these commands. (For this you need a working internet connection!):
+
 
 
 
@@ -540,7 +555,9 @@ auto.data <- suppressMessages(read_csv(file = "https://cdn.rawgit.com/lidom/Teac
 
 
 
+
 You can select specific variables of the `auto.data` using the `$`-operator:
+
 
 
 
@@ -549,7 +566,7 @@ You can select specific variables of the `auto.data` using the `$`-operator:
 ```{.r .cell-code}
 gasolin.consumption      <- auto.data$MPG.city
 car.weight               <- auto.data$Weight
-## Take a look at the first elements of these vectors:
+# Take a look at the first elements of these vectors:
 head(cbind(gasolin.consumption,car.weight))
 ```
 
@@ -576,7 +593,9 @@ head(cbind(gasolin.consumption,car.weight))
 
 
 
+
 This is how you can produce your first plot:
+
 
 
 
@@ -584,7 +603,7 @@ This is how you can produce your first plot:
 ::: {.cell layout-align="center" fig.margin='true'}
 
 ```{.r .cell-code}
-## Plot the data:
+# Plot the data:
 plot(y=gasolin.consumption, x=car.weight, 
      xlab="Car-Weight (US-Pounds)", 
      ylab="Consumption (Miles/Gallon)", 
@@ -602,6 +621,7 @@ plot(y=gasolin.consumption, x=car.weight,
 
 
 
+
 As a first step, we might assume a simple kind of linear relationship between the variables `gasolin.consumption` and `car.weight`. Let us assume that the data was generated by the following simple regression model: 
 $$
 y_i=\alpha+\beta_1 x_i+\varepsilon_i,\quad i=1,\dots,n
@@ -609,6 +629,7 @@ $$
 where $y_i$ denotes the gasoline-consumption, $x_i$ the weight of car $i$, and $\varepsilon_i$ is a mean zero constant variance noise term. (This is clearly a non-sense model!) 
 
 The command `lm()` computes the estimates of this linear regression model. The command (in fact it's a *method*) `summary()` computes further quantities of general interest from the *object* that was returned from the `lm()` function.
+
 
 
 
@@ -653,15 +674,17 @@ F-statistic: 223.8 on 1 and 91 DF,  p-value: < 2.2e-16
 
 
 
+
 Of course, we want to have a possibility to access all the quantities computed so far, e.g., in order to plot the results. This can be done as following: 
+
 
 
 
 ::: {.cell layout-align="center" fig.margin='true'}
 
 ```{.r .cell-code}
-## Accessing the computed quantities
-names(lm.summary) ## Alternatively: str(lm.summary)
+# Accessing the computed quantities
+names(lm.summary) # Alternatively: str(lm.summary)
 ```
 
 ::: {.cell-output .cell-output-stdout}
@@ -679,7 +702,7 @@ names(lm.summary) ## Alternatively: str(lm.summary)
 alpha <- lm.summary$coefficients[1]
 beta  <- lm.summary$coefficients[2]
 
-## Plot all:
+# Plot all:
 plot(y=gasolin.consumption, x=car.weight, 
      xlab="Car-Weight (US-Pounds)", 
      ylab="Consumption (Miles/Gallon)", 
@@ -696,118 +719,80 @@ abline(a=alpha,
 
 
 
+
 -->
-</section><section id="programming-in-r" class="level3" data-number="1.0.4"><h3 data-number="1.0.4" class="anchored" data-anchor-id="programming-in-r">
-<span class="header-section-number">1.0.4</span> Programming in <code>R</code>
-</h3>
-<section id="simulating-data" class="level4" data-number="1.0.4.1"><h4 data-number="1.0.4.1" class="anchored" data-anchor-id="simulating-data">
-<span class="header-section-number">1.0.4.1</span> Simulating Data</h4>
-<p>Let’s write, i.e., program our own <code>R</code>-function for estimating linear regression models. In order to be able to validate our function, we start with <strong>simulating data</strong> for which we then <em>know</em> all true parameters.</p>
-<p>Simulating data is like being the “Data-God”: For instance, we generate realizations of the error term <span class="math inline">\(\varepsilon_i\)</span>, i.e., something which we <em>never</em> observe in real data.</p>
-<p>Let us consider the following multiple regression model:</p>
-<p><span class="math display">\[
-y_i=\beta_1 +\beta_2 x_{2i}+\beta_3 x_{3i}+\varepsilon_{i},\quad i=1,\dots,n,
-\]</span> where for all <span class="math inline">\(i=1,\dots,n=50\)</span>:</p>
+</section><section id="programming-in-r" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="programming-in-r">
+<span class="header-section-number">1.4</span> Programming in <code>R</code>
+</h2>
+<section id="simulating-data" class="level3" data-number="1.4.1"><h3 data-number="1.4.1" class="anchored" data-anchor-id="simulating-data">
+<span class="header-section-number">1.4.1</span> Simulating Data</h3>
+<p>Let’s write (i.e., program) our own <code>R</code>-function <code>myMean()</code> for computing the sample mean. In order to be able to validate our function, we start with <strong>simulating data</strong> for which we then know all the usually unknown true population parameters.</p>
+<p>Simulating data is like being the “Data-God”: We can generate realizations of, for instance, a normal distributed random variable with a certain population mean <span class="math inline">\(\mu\)</span> and a certain population variance <span class="math inline">\(\sigma^2.\)</span></p>
+<p>Let us consider the following setup:</p>
 <ul>
+<li><span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span></li>
+<li><span class="math inline">\(\mu = 5\)</span></li>
+<li><span class="math inline">\(\sigma^2=3\)</span></li>
 <li>
-<span class="math inline">\(\varepsilon_{i}\sim N(0,2^2)\)</span> is the error term</li>
-<li><span class="math inline">\(x_{2i}\sim N(10,1.5^2)\)</span></li>
-<li>
-<span class="math inline">\(x_{3i}\)</span> comes from a t-distribution with 5 degrees of freedom and non-centrality parameter 2</li>
+<span class="math inline">\(X_1,\dots,X_n\)</span> being independent (of each other) and identically distributed as <span class="math inline">\(X;\)</span> in short <span class="math display">\[
+X_1,\dots,X_n\overset{\text{iid}}{\sim} X
+\]</span>
+</li>
+<li>Sample size <span class="math inline">\(n=100\)</span>
+</li>
 </ul>
+<p>We can generate realizations of the random sample <span class="math display">\[
+X_1,\dots,X_n
+\]</span> using the following <code>R</code>-code:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">109</span><span class="op">)</span> <span class="co"># Sets the "seed" of the random number generators:</span></span>
-<span><span class="va">n</span>   <span class="op">&lt;-</span> <span class="fl">50</span>     <span class="co"># Number of observations</span></span>
+<span><span class="va">n</span>   <span class="op">&lt;-</span> <span class="fl">100</span>    <span class="co"># Sample size</span></span>
 <span></span>
-<span><span class="co">## Generate two explanatory variables plus an intercept-variable:</span></span>
-<span><span class="va">X.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span>                 <span class="co"># Intercept</span></span>
-<span><span class="va">X.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean<span class="op">=</span><span class="fl">10</span>, sd<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span> <span class="co"># Draw realizations form a normal distr.</span></span>
-<span><span class="va">X.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="va">n</span>, df<span class="op">=</span><span class="fl">5</span>, ncp<span class="op">=</span><span class="fl">2</span><span class="op">)</span>        <span class="co"># Draw realizations form a t-distr.</span></span>
-<span><span class="va">X</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">X.1</span>, <span class="va">X.2</span>, <span class="va">X.3</span><span class="op">)</span>      <span class="co"># Save as a Nx3-dimensional data matrix.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>OK, we have regressors, i.e., data that we also have in real data sets.</p>
-<p>Now we define the elements of the <span class="math inline">\(\beta\)</span>-vector. Be aware of the difference: In real data sets we do not know the true <span class="math inline">\(\beta\)</span>-vector, but try to estimate it. However, when simulating data, we determine (as “Data-Gods”) the true <span class="math inline">\(\beta\)</span>-vector and can compare our estimate <span class="math inline">\(\hat{\beta}\)</span> with the true <span class="math inline">\(\beta\)</span>:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Define the slope-coefficients</span></span>
-<span><span class="va">beta.vec</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We still need to simulate realizations of the dependent variable <span class="math inline">\(y_i\)</span>. Remember that <span class="math inline">\(y_i=\beta_1 x_{1i}+\beta_1 x_{2i}+\beta_3 x_{3i}+\varepsilon_{i}\)</span>. That is, we only need realizations from the error terms <span class="math inline">\(\varepsilon_i\)</span> in order to compute the realizations from <span class="math inline">\(y_i\)</span>.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Generate realizations of the error term</span></span>
-<span><span class="va">eps</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean<span class="op">=</span><span class="fl">0</span>, sd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>With the (pseudo-random) realizations from <span class="math inline">\(\varepsilon_i\)</span>, we can finally generate realizations from the dependent variable <span class="math inline">\(y_i\)</span>:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Generate realizations of the dependent variable:</span></span>
+<span><span class="co"># Drawing n iid realizations form a normal distr.</span></span>
+<span><span class="va">x_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n    <span class="op">=</span> <span class="va">n</span>, </span>
+<span>               mean <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>               sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>  </span>
 <span></span>
-<span><span class="va">y</span>   <span class="op">&lt;-</span> <span class="va">beta.vec</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="va">X.1</span> <span class="op">+</span> </span>
-<span>       <span class="va">beta.vec</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">X.2</span> <span class="op">+</span> </span>
-<span>       <span class="va">beta.vec</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">*</span> <span class="va">X.3</span> <span class="op">+</span> <span class="va">eps</span></span>
-<span></span>
-<span><span class="co">## More compact version:</span></span>
-<span><span class="co"># y   &lt;- X %*% beta.vec + eps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Let’s take a look at the data:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"Y"</span><span class="op">=</span><span class="va">y</span>, <span class="st">"X.1"</span><span class="op">=</span><span class="va">X.1</span>, <span class="st">"X.2"</span><span class="op">=</span><span class="va">X.2</span>, <span class="st">"X.3"</span><span class="op">=</span><span class="va">X.3</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">[</span>,<span class="op">-</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># The '-2' removes the intercept variable "X.1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch1_Intro2R_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Once we have data, we can compute the OLS estimate of the true <span class="math inline">\(\beta\)</span> vector. Remember the formula: <span class="math display">\[
-\hat{\beta}=(X^\top X)^{-1}X^\top y
-\]</span> In R-Code this is: <span class="math inline">\((X^\top X)^{-1}=\)</span><code>solve(t(X) %*% X)</code>, i.e.:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Computation of the beta-Vector:</span></span>
-<span><span class="va">beta.hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">y</span></span>
-<span><span class="va">beta.hat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co"># First three values</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">x_vec</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]
-X.1 -0.2521756
-X.2 -4.8690074
-X.3  4.9204254</code></pre>
+<pre><code>[1] 1.61 7.15 5.43</code></pre>
 </div>
 </div>
-<p>Well done. Using the above lines of code we can easily program our own <code>myOLSFun()</code> function!</p>
+<p>OK, we have now one possible realization of the random sample <span class="math display">\[
+X_1,\dots,X_n
+\]</span> namely <span class="math display">\[
+x_1=1.61,
+x_2=7.15,
+x_3=5.43,
+\text{etc.}
+\]</span></p>
+<p>Using this sample, we estimate the usually unknown mean <span class="math inline">\(\mu=5\)</span> using the sample mean <span class="math display">\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\]</span></p>
+<p>To do so, we program our own <code>myMean()</code>-function:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">myOLSFun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span>, <span class="va">add.intercept</span><span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span></span>
-<span>  </span>
-<span>  <span class="co">## Number of Observations:</span></span>
-<span>  <span class="va">n</span>         <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="co">## Add an intercept to x:</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="va">add.intercept</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="va">Intercept</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span></span>
-<span>    <span class="va">x</span>         <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">Intercept</span>, <span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span>  </span>
-<span>  <span class="co">## Estimation of the slope-parameters:</span></span>
-<span>  <span class="va">beta.hat.vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">y</span></span>
-<span>  </span>
-<span>  <span class="co">## Return the result:</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">beta.hat.vec</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">myMean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">n</span>           <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">sample_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">/</span><span class="va">n</span></span>
 <span></span>
-<span><span class="co">## Run the function:</span></span>
-<span><span class="fu">myOLSFun</span><span class="op">(</span>y<span class="op">=</span><span class="va">y</span>, x<span class="op">=</span><span class="va">X</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">sample_mean</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Applying the <code>myMean()</code>-function:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">myMean</span><span class="op">(</span><span class="va">x_vec</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]
-X.1 -0.2521756
-X.2 -4.8690074
-X.3  4.9204254</code></pre>
+<pre><code>[1] 5.338722</code></pre>
 </div>
 </div>
-<p>You extend the function <code>myOLSFun()</code> for the computation of the covariance matrix of the slope-estimates, several measures of fits (e.g.&nbsp;R<span class="math inline">\(^2\)</span> and adj.-R<span class="math inline">\(^2\)</span>), t-tests, etc.</p>
-</section></section><section id="r-packages" class="level3" data-number="1.0.5"><h3 data-number="1.0.5" class="anchored" data-anchor-id="r-packages">
-<span class="header-section-number">1.0.5</span> R-packages</h3>
+<p>The sample mean <span class="math inline">\(\bar{x}=5.34\)</span> is close to the true (usually unknown) population mean <span class="math inline">\(\mu=5.\)</span></p>
+</section></section><section id="r-packages" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="r-packages">
+<span class="header-section-number">1.5</span> <code>R</code>-Packages</h2>
 <p>One of the best features in R are its contributed packages. The list of all packages on CRAN is impressive! Take a look at it <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">HERE</a></p>
 <p>For instance, nice plots can be produced using the R-package is <code>ggplot2</code>. You can find an intro do this package <a href="http://ggplot2.tidyverse.org/">HERE</a>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("ggplot2")</span></span>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("ggplot2")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -816,22 +801,22 @@ X.3  4.9204254</code></pre>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch1_Intro2R_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figure class="figure"><p><img src="Ch1_Intro2R_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Of course, <code>ggplot2</code> concerns “only” plotting, but you’ll find <code>R</code>-packages for almost any statistical method out there.</p>
-</section><section id="tidyverse" class="level3" data-number="1.0.6"><h3 data-number="1.0.6" class="anchored" data-anchor-id="tidyverse">
-<span class="header-section-number">1.0.6</span> Tidyverse</h3>
+</section><section id="self-study-tidyverse" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="self-study-tidyverse">
+<span class="header-section-number">1.6</span> Self-Study: Tidyverse</h2>
 <p>The <code>tidyverse</code> package is a collection of packages that lets you import, manipulate, explore, visualize and model data in a harmonized and consistent way which helps you to be more productive.</p>
 <p>Installing the <code>tidyverse</code> package:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To use the <code>tidyverse</code> package load it using the <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> function:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ stringr   1.5.1
@@ -851,7 +836,7 @@ X.3  4.9204254</code></pre>
 </blockquote>
 <p>You can get more information, including references by typing:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span><span class="op">(</span><span class="st">"ChickWeight"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span><span class="op">(</span><span class="st">"ChickWeight"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>The Data: </strong> There are 578 observations (rows) and 4 variables:</p>
 <ul>
@@ -867,14 +852,14 @@ X.3  4.9204254</code></pre>
 <p>Note: <code>weight</code> has a lower case <code>w</code> (recall R is case sensitive).</p>
 <p>Store the data locally:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ChickWeight</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ChickWeight</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Chick</span>, <span class="va">Diet</span>, <span class="va">Time</span>, <span class="va">weight</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">Chick</span>, <span class="va">Diet</span>, <span class="va">Time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="st">"DATA/ChickWeight.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First we will import the data from a file called <code>ChickWeight.csv</code> using the <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> function from the <code>readr</code> package (part of the <code>tidyverse</code>). The first thing to do, outside of R, is to open the file <code>ChickWeight.csv</code> to check what it contains and that it makes sense. Now we can import the data as follows:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"DATA/ChickWeight.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"DATA/ChickWeight.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 578 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
@@ -892,7 +877,7 @@ dbl (4): Chick, Diet, Time, weight
 <p><strong>Changing the working directory:</strong> In RStudio you can use the menu bar (“Session - Set Working Directory - Choose Directory…”). Alternatively, you can use the function <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>. Last but not least, to avoid issues with brocken paths to files and data sets, use RStudios’ “Project” tools.</p>
 <p><strong>Looking at the Dataset:</strong> To look at the data type just type the object (dataset) name:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 578 × 4
    Chick  Diet  Time weight
@@ -912,7 +897,7 @@ dbl (4): Chick, Diet, Time, weight
 </div>
 <p>If there are too many variables then not all them may be printed. To overcome this issue we can use the <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> function which makes it possible to see every column in your dataset (called a “data frame” in R speak).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">CW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">CW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 578
 Columns: 4
@@ -924,14 +909,14 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p>The function <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> allows for a spread-sheet type of view on the data:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">CW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">CW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="tidyverse-plotting-basics" class="level4" data-number="1.0.6.1"><h4 data-number="1.0.6.1" class="anchored" data-anchor-id="tidyverse-plotting-basics">
-<span class="header-section-number">1.0.6.1</span> Tidyverse: Plotting Basics</h4>
+<section id="tidyverse-plotting-basics" class="level3" data-number="1.6.1"><h3 data-number="1.6.1" class="anchored" data-anchor-id="tidyverse-plotting-basics">
+<span class="header-section-number">1.6.1</span> Tidyverse: Plotting Basics</h3>
 <p>To <strong>visualize</strong> the chick weight data, we will use the <code>ggplot2</code> package (part of the <code>tidyverse</code>). Our interest is in seeing how the <em>weight changes over time for the chicks by diet</em>. For the moment don’t worry too much about the details just try to build your own understanding and logic. To learn more try different things even if you get an error messages.</p>
 <p>Let’s plot the weight data (vertical axis) over time (horizontal axis). Generally, <code>ggplot2</code> works in layers. The following codes generates an empty plot:</p>
 <div class="cell" data-layout-align="center" data-fig.margin="true">
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># An empty plot</span></span>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># An empty plot</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span><span class="op">)</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -942,7 +927,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p>To the empty plot, one can add fuhrer layers:</p>
 <div class="cell" data-layout-align="center" data-fig.margin="true">
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding a scatter plot </span></span>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding a scatter plot </span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -953,7 +938,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p>Add color for <code>Diet</code>. The graph above does not differentiate between the diets. Let’s use a different color for each diet.</p>
 <div class="cell" data-layout-align="center" data-fig.margin="true">
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding colour for diet</span></span>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding colour for diet</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>,<span class="va">weight</span>,colour<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -967,7 +952,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p>To improve the plot, it will be handy to store <code>Diet</code> and <code>Time</code> as a <code>factor</code> variables.</p>
 <p><strong>Factor Variables:</strong> Before we continue, we have to make an important change to the <code>CW</code> dataset by making <code>Diet</code> and <code>Time</code> <em>factor variables</em>. This means that R will treat them as categorical variables (see the <code>&lt;fct&gt;</code> variables below) instead of continuous variables. It will simplify our coding. The next section will explain the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">CW</span>, Diet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">CW</span>, Diet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">CW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">CW</span>, Time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">CW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -981,7 +966,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code> function: To plot each diet separately in a grid using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding jitter to the points</span></span>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding jitter to the points</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, colour<span class="op">=</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Diet</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1006,7 +991,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>Interpretation:</strong> Diet 4 has the least variability but we can’t really say anything about the mean effect of each diet although diet 3 seems to have the highest.</p>
 <p>Next we will plot the <strong>mean changes</strong> over time for each diet using the <code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary()</a></code> function:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, </span>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, </span>
 <span>               group<span class="op">=</span><span class="va">Diet</span>, colour<span class="op">=</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>fun<span class="op">=</span><span class="st">"mean"</span>, geom<span class="op">=</span><span class="st">"line"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1019,7 +1004,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>Interpretation:</strong> We can see that diet 3 has the highest mean weight gains by the end of the experiment. However, we don’t have any information about the variation (uncertainty) in the data.</p>
 <p>To see variation between the different diets we use <code>geom_boxplot</code> to plot a box-whisker plot. A note of caution is that the number of chicks per diet is relatively low to produce this plot.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, colour<span class="op">=</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, colour<span class="op">=</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Diet</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1034,7 +1019,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p><strong>Interpretation:</strong> Diet 3 seems to have the highest “average” weight gain but it has more variation than diet 4 which is consistent with our findings so far.</p>
 <p>Let’s finish with a plot that you might include in a publication.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, group<span class="op">=</span><span class="va">Diet</span>, </span>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">weight</span>, group<span class="op">=</span><span class="va">Diet</span>, </span>
 <span>                             colour<span class="op">=</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Diet</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1052,12 +1037,12 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 </div>
 </div>
-</section><section id="tidyverse-data-wrangling-basics" class="level4" data-number="1.0.6.2"><h4 data-number="1.0.6.2" class="anchored" data-anchor-id="tidyverse-data-wrangling-basics">
-<span class="header-section-number">1.0.6.2</span> Tidyverse: Data Wrangling Basics</h4>
+</section><section id="tidyverse-data-wrangling-basics" class="level3" data-number="1.6.2"><h3 data-number="1.6.2" class="anchored" data-anchor-id="tidyverse-data-wrangling-basics">
+<span class="header-section-number">1.6.2</span> Tidyverse: Data Wrangling Basics</h3>
 <p>In this section we will learn how to wrangle (manipulate) datasets using the <code>tidyverse</code> package. Let’s start with the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> functions.</p>
 <p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>: Adds a new variable (column) or modifies an existing one. We already used this above to create factor variables.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Added a column</span></span>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Added a column</span></span>
 <span><span class="va">CWm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">CW</span>, weightKg <span class="op">=</span> <span class="va">weight</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="va">CWm1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1069,7 +1054,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 3    16 1     0         41    0.041
 # ℹ 575 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modify an existing column</span></span>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modify an existing column</span></span>
 <span><span class="va">CWm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">CW</span>, Diet <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"Diet "</span>, <span class="va">Diet</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">CWm2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1084,7 +1069,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>: Keeps, drops or reorders variables.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Drop the weight variable from CWm1 using minus</span></span>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Drop the weight variable from CWm1 using minus</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CWm1</span>, <span class="op">-</span><span class="va">weight</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 578 × 4
@@ -1095,7 +1080,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 3    16 1     0        0.041
 # ℹ 575 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Keep variables Time, Diet and weightKg</span></span>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Keep variables Time, Diet and weightKg</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CWm1</span>, <span class="va">Chick</span>, <span class="va">Time</span>, <span class="va">Diet</span>, <span class="va">weightKg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 578 × 4
@@ -1109,7 +1094,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code>: Renames variables whilst keeping all variables.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">CW</span>, Group <span class="op">=</span> <span class="va">Diet</span>, Weight <span class="op">=</span> <span class="va">weight</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">CW</span>, Group <span class="op">=</span> <span class="va">Diet</span>, Weight <span class="op">=</span> <span class="va">weight</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 578 × 4
   Chick Group Time  Weight
@@ -1122,7 +1107,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>: Keeps or drops observations (rows).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">CW</span>, <span class="va">Time</span><span class="op">==</span><span class="fl">21</span> <span class="op">&amp;</span> <span class="va">weight</span><span class="op">&gt;</span><span class="fl">300</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">CW</span>, <span class="va">Time</span><span class="op">==</span><span class="fl">21</span> <span class="op">&amp;</span> <span class="va">weight</span><span class="op">&gt;</span><span class="fl">300</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 4
   Chick Diet  Time  weight
@@ -1136,7 +1121,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p>For comparing values in vectors use: <code>&lt;</code> (less than), <code>&gt;</code> (greater than), <code>&lt;=</code> (less than and equal to), <code>&gt;=</code> (greater than and equal to), <code>==</code> (equal to) and <code>!=</code> (not equal to). These can be combined logically using <code>&amp;</code> (and) and <code>|</code> (or).</p>
 <p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>: Changes the order of the observations.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">CW</span>, <span class="va">Chick</span>, <span class="va">Time</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">CW</span>, <span class="va">Chick</span>, <span class="va">Time</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 578 × 4
   Chick Diet  Time  weight
@@ -1146,7 +1131,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 3     1 1     4         59
 # ℹ 575 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">CW</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 578 × 4
   Chick Diet  Time  weight
@@ -1158,12 +1143,11 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 </div>
 <p>What does the <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> do? Try using <code>desc(Time)</code>.</p>
-</section><section id="the-pipe-operator" class="level4" data-number="1.0.6.3"><h4 data-number="1.0.6.3" class="anchored" data-anchor-id="the-pipe-operator">
-<span class="header-section-number">1.0.6.3</span> The pipe operator <code>%&gt;%</code>
+<section id="the-pipe-operator" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="the-pipe-operator">The pipe operator <code>%&gt;%</code>
 </h4>
 <p>In reality you will end up doing multiple data wrangling steps that you want to save. The pipe operator <code>%&gt;%</code> makes your code nice and readable:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW21</span> <span class="op">&lt;-</span> <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW21</span> <span class="op">&lt;-</span> <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">21</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Weight <span class="op">=</span> <span class="va">weight</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"Diet "</span>, <span class="va">Diet</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1186,7 +1170,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </blockquote>
 <p>This is the same code:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW21</span> <span class="op">&lt;-</span> <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">CW21</span> <span class="op">&lt;-</span> <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">21</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>, Weight <span class="op">=</span> <span class="va">weight</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, Group<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"Diet "</span>,<span class="va">Diet</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1194,11 +1178,11 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">Chick</span>, <span class="va">Time</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The pipe operator, <code>%&gt;%</code>, replaces the dots (<code>.</code>) with whatever is returned from code preceding it. For example, the dot in <code>filter(., Time %in% c(0, 21))</code> is replaced by <code>CW</code>. The output of the <code>filter(...)</code> then replaces the dot in <code>rename(., Weight = weight)</code> and so on. Think of it as a data assembly line with each function doing its thing and passing it to the next.</p>
-</section><section id="the-group_by-function" class="level4" data-number="1.0.6.4"><h4 data-number="1.0.6.4" class="anchored" data-anchor-id="the-group_by-function">
-<span class="header-section-number">1.0.6.4</span> The <code>group_by()</code> function</h4>
+</section></section><section id="the-group_by-function" class="level3" data-number="1.6.3"><h3 data-number="1.6.3" class="anchored" data-anchor-id="the-group_by-function">
+<span class="header-section-number">1.6.3</span> The <code>group_by()</code> function</h3>
 <p>From the data visualizations above we concluded that the diet 3 has the highest mean and diet 4 the least variation. In this section, we will quantify the effects of the diets using <strong>summmary statistics</strong>. We start by looking at the number of observations and the mean by <strong>diet</strong> and <strong>time</strong>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mnsdCW</span> <span class="op">&lt;-</span> <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mnsdCW</span> <span class="op">&lt;-</span> <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Diet</span>, <span class="va">Time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, Mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">Diet</span>, <span class="va">Time</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1206,7 +1190,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <pre><code>`summarise()` has grouped output by 'Diet'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mnsdCW</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mnsdCW</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 4
 # Groups:   Diet [4]
@@ -1221,7 +1205,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <p>For each distinct combination of <code>Diet</code> and <code>Time</code>, the chick weight data is summarized into the number of observations (<code>N</code>) and the mean (<code>Mean</code>) of <code>weight</code>.</p>
 <p><strong>Further summaries:</strong> Let’s also calculate the standard deviation, median, minimum and maximum values but only at days 0 and 21.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sumCW</span> <span class="op">&lt;-</span>  <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sumCW</span> <span class="op">&lt;-</span>  <span class="va">CW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">21</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Diet</span>, <span class="va">Time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -1235,7 +1219,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <pre><code>`summarise()` has grouped output by 'Diet'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sumCW</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sumCW</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 8
 # Groups:   Diet [4]
@@ -1249,7 +1233,7 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 </div>
 <p>Let’s make the summaries “prettier”, say, for a report or publication.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span> <span class="co"># to use the kable() function</span></span>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span> <span class="co"># to use the kable() function</span></span>
 <span><span class="va">prettySumCW</span> <span class="op">&lt;-</span> <span class="va">sumCW</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`Mean (SD)` <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">Mean</span>, digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>           <span class="st">" ("</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">SD</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1352,26 +1336,51 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <!--   # collapse_rows(columns = 1, latex_hline = "none", valign = "top") -->
 <!-- ``` -->
 <p><strong>Interpretation:</strong> This summary table offers the same interpretation as before, namely that diet 3 has the highest mean and median weights at day 21 but a higher variation than group 4. However it should be noted that at day 21, diet 1 lost 4 chicks from 20 that started and diet 4 lost 1 from 10. This could be a sign of some health related issues.</p>
-</section></section><section id="further-links" class="level3" data-number="1.0.7"><h3 data-number="1.0.7" class="anchored" data-anchor-id="further-links">
-<span class="header-section-number">1.0.7</span> Further Links</h3>
-<section id="further-r-intros" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="further-r-intros">Further R-Intros</h4>
+<!-- 
+## Links 
+
+
+### `R`-Intros {-}
+
+* https://eddelbuettel.github.io/gsir-te/Getting-Started-in-R.pdf
+
+* https://www.datacamp.com/courses/free-introduction-to-r
+
+* https://swcarpentry.github.io/r-novice-gapminder/
+
+* https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects
+
+
+
+### Version Control (Git/GitHub)  {-}
+
+* https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN
+
+* http://happygitwithr.com/
+
+* https://www.gitkraken.com/
+
+
+
+### `R`-Communities  {-}
+
+* https://rladies.org/
+-->
+</section></section><section id="assignment" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="assignment">
+<span class="header-section-number">1.7</span> Assignment</h2>
+<ol type="1">
+<li><p>Generate a GitHub-Account and write your name and the name of your GitHub-Account into the following spreadsheet: <a href="https://docs.google.com/spreadsheets/d/15NhYz8sYSogZ23FAtZkxmVMc9b4WVtvm_typ-L2xOeQ/edit?usp=sharing">Spreadsheet</a></p></li>
+<li><p>Link to your personal assignment repository: <a href="https://classroom.github.com/a/5HB8NuPW">https://classroom.github.com/a/5HB8NuPW</a></p></li>
+</ol>
+<p><strong>Note:</strong> For this course, it is not required and not necessary to learn git. The GitHub assignment repository can be used simply in the browser. However, if you are interested in learning git, you can do so.</p>
+<p>Links to good git introductions:</p>
 <ul>
-<li><p>https://eddelbuettel.github.io/gsir-te/Getting-Started-in-R.pdf</p></li>
-<li><p>https://www.datacamp.com/courses/free-introduction-to-r</p></li>
-<li><p>https://swcarpentry.github.io/r-novice-gapminder/</p></li>
-<li><p>https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects</p></li>
-</ul></section><section id="version-control-gitgithub" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="version-control-gitgithub">Version Control (Git/GitHub)</h4>
-<ul>
-<li><p>https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN</p></li>
-<li><p>http://happygitwithr.com/</p></li>
-<li><p>https://www.gitkraken.com/</p></li>
-</ul></section><section id="r-ladies" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="r-ladies">R-Ladies</h4>
-<ul>
-<li>https://rladies.org/</li>
+<li><a href="https://effective-programming-practices.vercel.app/git/index.html">Course Effective Programming Practices (Uni Bonn)</a></li>
+<li><a href="http://happygitwithr.com/">http://happygitwithr.com/</a></li>
 </ul>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
