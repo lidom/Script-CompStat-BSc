@@ -27,7 +27,7 @@ $$
 
 * $f$ is some fixed but unknown function of $X = (X_1, X_2, \dots, X_p):$
 * $\epsilon$ a random error term fulfilling the following two assumptions:  
-  * $\epsilon$ and $X$ are independent of each other 
+  * $\epsilon$ and $X$ are independent of each other (this can be relaxed for linear models; see Chapter 4)
   * $\epsilon$ has mean zero $E(\epsilon)=0$ and variance $Var(\epsilon)=\sigma^2>0.$ 
 
 In this formulation, $f$ represents the *systematic* information that $X$ provides about $Y.$

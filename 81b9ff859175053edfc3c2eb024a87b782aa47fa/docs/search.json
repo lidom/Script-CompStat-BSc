@@ -237,7 +237,7 @@
     "href": "Ch2_StatLearning.html#what-is-statistical-learning",
     "title": "2  Statistical Learning",
     "section": "",
-    "text": "\\(f\\) is some fixed but unknown function of \\(X = (X_1, X_2, \\dots, X_p):\\)\n\n\n\\(\\epsilon\\) a random error term fulfilling the following two assumptions:\n\n\n\\(\\epsilon\\) and \\(X\\) are independent of each other\n\n\\(\\epsilon\\) has mean zero \\(E(\\epsilon)=0\\) and variance \\(Var(\\epsilon)=\\sigma^2&gt;0.\\)\n\n\n\n\n\n\n\n\n2.1.1 Why Estimate \\(f\\)?\nThere are two main reasons that we may wish to estimate \\(f\\):\n\nprediction and\ninference.\n\nIn the following, we discuss each in turn.",
+    "text": "\\(f\\) is some fixed but unknown function of \\(X = (X_1, X_2, \\dots, X_p):\\)\n\n\n\\(\\epsilon\\) a random error term fulfilling the following two assumptions:\n\n\n\\(\\epsilon\\) and \\(X\\) are independent of each other (this can be relaxed for linear models; see Chapter 4)\n\n\\(\\epsilon\\) has mean zero \\(E(\\epsilon)=0\\) and variance \\(Var(\\epsilon)=\\sigma^2&gt;0.\\)\n\n\n\n\n\n\n\n\n2.1.1 Why Estimate \\(f\\)?\nThere are two main reasons that we may wish to estimate \\(f\\):\n\nprediction and\ninference.\n\nIn the following, we discuss each in turn.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical Learning</span>"
     ]
