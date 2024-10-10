@@ -871,10 +871,7 @@ options(tibble.print_min=10, tibble.print_max=20)
 
 ## Assignment 
 
-1. Generate a GitHub-Account and write your name and the name of your GitHub-Account into the following spreadsheet:</br>
-[Spreadsheet](https://docs.google.com/spreadsheets/d/15NhYz8sYSogZ23FAtZkxmVMc9b4WVtvm_typ-L2xOeQ/edit?usp=sharing)
-
-2. Link to your personal assignment repository:</br>
+Link to your personal assignment repository:</br>
 [https://classroom.github.com/a/5HB8NuPW](https://classroom.github.com/a/5HB8NuPW) 
 
 

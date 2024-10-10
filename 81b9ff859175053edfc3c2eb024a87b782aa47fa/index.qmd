@@ -40,6 +40,10 @@ Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 
 For each chapter there is a home assignment. You can use the `Open Coding Space` for asking questions and for working on your assignments. You can help each other, but everyone has to submit an own home assignment.  
 
+To participate in the assignments, you need a GitHub-Account and write your name and the name of your GitHub-Account into the following spreadsheet:</br>
+[Spreadsheet](https://docs.google.com/spreadsheets/d/15NhYz8sYSogZ23FAtZkxmVMc9b4WVtvm_typ-L2xOeQ/edit?usp=sharing)
+
+
 **Grading:** 
 
 * $1$ Point per correct assignment
