@@ -137,7 +137,7 @@ We are often interested in *understanding* the association between $Y$ and $X_1,
 :::
 
 ::: {.callout-tip}
-In this course, we will see a number of examples that fall into the **prediction setting**, the **inference setting**, or a **combination** of the two.
+In this course, we will see a number of examples that fall into the **prediction setting** (Classification), the **inference setting** (Linear Regression), or a **combination** of the two.
 :::
 
 
@@ -166,6 +166,12 @@ be a **random sample** from @eq-GRegMod, i.e.
 # Random Sample: 
 
 <br>
+
+The set of random variables 
+$$
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
+$$
+is called a **random sample** if
 
 1. The multivariate, $p+1$ dimensional, random vectors 
 $$

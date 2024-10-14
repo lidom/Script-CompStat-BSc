@@ -368,7 +368,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In this course, we will see a number of examples that fall into the <strong>prediction setting</strong>, the <strong>inference setting</strong>, or a <strong>combination</strong> of the two.</p>
+<p>In this course, we will see a number of examples that fall into the <strong>prediction setting</strong> (Classification), the <strong>inference setting</strong> (Linear Regression), or a <strong>combination</strong> of the two.</p>
 </div>
 </div>
 </section><section id="how-do-we-estimate-f" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="how-do-we-estimate-f">
@@ -392,6 +392,9 @@ Random Sample:
 </div>
 <div class="callout-body-container callout-body">
 <p><br></p>
+<p>The set of random variables <span class="math display">\[
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
+\]</span> is called a <strong>random sample</strong> if</p>
 <ol type="1">
 <li>The multivariate, <span class="math inline">\(p+1\)</span> dimensional, random vectors <span class="math display">\[
 (X_i,Y_i)\in\mathbb{R}^{p+1}\quad\text{and}\quad (X_j,Y_j)\in\mathbb{R}^{p+1}
@@ -784,7 +787,6 @@ This exercise relates to the College data set, which can be found in the file `C
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -819,7 +821,6 @@ college[c(1:10),c(1:5)]
 
 
 
-
 **8. b)** Look at the data using the `fix()` function.
 
 **Answer:**
@@ -829,7 +830,6 @@ The `fix()` command allows you to look at the data and change values in the data
 
 We can do some additional data-wrangling:<br>
 You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
-
 
 
 
@@ -853,9 +853,7 @@ rownames(college) <- college[,1]
 
 
 
-
 You should see that there is now a row.names column with the name of each university recorded. This means that `R` has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
-
 
 
 
@@ -874,13 +872,11 @@ college <- college[,-1]
 
 
 
-
 Now you should see that the first data column is `Private`. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.
 
 **8. c. i)** Use the `summary()` function to produce a numerical summary of the variables in the data set.
 
 **Answer:**
-
 
 
 
@@ -920,11 +916,9 @@ summary(college[, 1:5])
 
 
 
-
 **8. c. ii)** Use the `pairs()` function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix `A` using `A[,2:10]`.
 
 **Answer:**
-
 
 
 
@@ -945,11 +939,9 @@ pairs(x = college[,2:10])
 
 
 
-
 **8. c. iii)** Use the `boxplot()` function to produce side-by-side boxplots of `Outstate` versus `Private`.
 
 **Answer:**
-
 
 
 
@@ -974,12 +966,10 @@ boxplot(Outstate~Private,
 
 
 
-
 > `Outstate`-Variable explained: The `Outstate`-variable is the tuition fee charged from non-resident students. (Many US colleges charge high tuition fees from non-resident students.) 
 
 
 **8. c. iv)** Create a new qualitative variable, called `Elite`, by binning the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
-
 
 
 
@@ -1006,12 +996,10 @@ college <- data.frame(college, Elite)
 
 
 
-
 Use the `summary()` function to see how many elite universities there are. Now use the `boxplot()` function to produce side-by-side boxplots of Outstate versus Elite.
 
 
 **Answer:**
-
 
 
 
@@ -1038,9 +1026,7 @@ summary(college$Elite)
 
 
 
-
 There are $78$ elite Universities. The boxplots of `Outstate` versus Elite-Status are generated as following:
-
 
 
 
@@ -1062,11 +1048,9 @@ boxplot(Outstate ~ Elite,
 
 
 
-
 **8. c. v)** Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
 
 **Answer:**
-
 
 
 
@@ -1092,7 +1076,6 @@ hist(college$Outstate,            xlab = "", main="Outstate")
 
 
 
-
 Remember: 
 
 * **Enroll:** Number of new students enrolled
@@ -1103,7 +1086,6 @@ Remember:
 #### Exercise 9: {-}
 
 This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.
-
 
 
 
@@ -1164,7 +1146,6 @@ print(Auto[c(1:10),])
 
 
 
-
 * **mpg:** miles per gallon
 * **cylinders:** Number of cylinders between 4 and 8
 * **displacement:** Engine displacement (cu. inches)
@@ -1179,7 +1160,6 @@ print(Auto[c(1:10),])
 **9. a)** Which of the predictors are quantitative, and which are qualitative?
 
 **Answer:**
-
 
 
 
@@ -1219,14 +1199,12 @@ summary(Auto)
 
 
 
-
 - **Quantitative predictors:** `mpg`, `cylinders`, `displacement`, `horsepower`, `weight`, `acceleration`, `year` 
 - **Qualitative predictors:** `name`, `origin`
 
 **9. b)** What is the range of each quantitative predictor? You can answer this using the `range()` function.
 
 **Answer:**
-
 
 
 
@@ -1274,11 +1252,9 @@ max 46.6         8          455        230   5140         24.8   82
 
 
 
-
 **9. c)** What is the mean and standard deviation of each quantitative predictor?
 
 **Answer:**
-
 
 
 
@@ -1333,11 +1309,9 @@ sd
 
 
 
-
 **9.d)** Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
 
 **Answer:**
-
 
 
 
@@ -1383,11 +1357,9 @@ Max   47         8          455        230   4997           25   82
 
 
 
-
 **9. e)** Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
 
 **Answer:**
-
 
 
 
@@ -1403,7 +1375,6 @@ pairs(Auto[, -9]) # remove the character-variable 'name'
 ![](Ch2_StatLearning_files/figure-html/unnamed-chunk-16-1.png){fig-align='center' width=672}
 :::
 :::
-
 
 
 
