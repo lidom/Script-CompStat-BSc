@@ -87,22 +87,26 @@ $$
 \overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
 =\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}, 
 \end{align*}
-$$
+$${#eq-MSEDecompFixed}
 where 
 
 * $E\left[(Y - \hat{Y})^2\right]$ represents the expected value, of the squared difference between the predicted $\hat{Y}=\hat{f}(X)$ and actual value of $Y,$ 
 * and $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
 
 
-Derivation (for a *given* $\hat{f}$ and a *given* $X;$ i.e. only $\epsilon$ is random): 
+Derivation of @eq-MSEDecompFixed for a **given** $\hat{f}$ and a **given** $X;$ i.e. only $\epsilon$ is random: 
 
 \begin{align*}
-&E\left[(Y - \hat{Y})^2\right]\\ 
-&=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
-&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\ 
-% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\ 
-&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\ 
-&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
+&E\left[(Y - \hat{Y})^2\right]\\[2ex] 
+&\text{[using $Y=f(X)+\epsilon$]}\\[2ex]
+&=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right]\\[2ex]
+&\text{[binomial formula]}\\[2ex]
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex] 
+&\text{[using that $X$ and $\hat{f}$ are fixed]}\\[2ex]
+% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&\text{[using that $E(\epsilon)=0$ and $E(\epsilon^2)=Var(\epsilon)=\sigma^2$]}\\[2ex]
+&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
 &=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
 \end{align*}
 
@@ -118,13 +122,19 @@ The focus of this course is on techniques for estimating $f$ with the aim of **m
 ::: 
 
 
-## Inference about Model Parameters {-}
+## Inference {-}
+
 
 We are often interested in *understanding* the association between $Y$ and $X_1,\dots,X_p.$ In this situation we wish to estimate $f,$ but our goal is not necessarily to make predictions for $Y.$ Now $\hat{f}$ cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:
 
 * Which predictors are associated with the response? 
 * What is the relationship between the response and each predictor?
 * Can the relationship between $Y$ and each predictor be adequately summarized using a *linear equation*, or is the relationship more complicated? 
+
+
+::: {.callout-tip}
+*Inference* typically means inference about **model parameters**. 
+:::
 
 ::: {.callout-tip}
 In this course, we will see a number of examples that fall into the **prediction setting**, the **inference setting**, or a **combination** of the two.

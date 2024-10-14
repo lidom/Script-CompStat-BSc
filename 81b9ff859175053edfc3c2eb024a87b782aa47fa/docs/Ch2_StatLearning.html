@@ -186,7 +186,7 @@ window.Quarto = {
 <li><a href="#accuracy-of-a-prediction" id="toc-accuracy-of-a-prediction" class="nav-link" data-scroll-target="#accuracy-of-a-prediction">Accuracy of a Prediction</a></li>
   </ul>
 </li>
-  <li><a href="#inference-about-model-parameters" id="toc-inference-about-model-parameters" class="nav-link" data-scroll-target="#inference-about-model-parameters">Inference about Model Parameters</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   <li>
 <a href="#how-do-we-estimate-f" id="toc-how-do-we-estimate-f" class="nav-link" data-scroll-target="#how-do-we-estimate-f"><span class="header-section-number">2.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</a>
   <ul class="collapse">
@@ -295,12 +295,12 @@ Y = f(X) + \epsilon.
 <p>However, even if it were possible to form a perfect estimate for <span class="math inline">\(f,\)</span> so that our estimated response took the form <span class="math display">\[
 \hat{Y} = f (X),
 \]</span> our prediction would still have some error in it! This is because <span class="math inline">\(Y\)</span> is also a function of <span class="math inline">\(\epsilon\)</span> which, by definition, cannot be predicted using <span class="math inline">\(X.\)</span> Therefore, variability associated with <span class="math inline">\(\epsilon\)</span> also affects the accuracy of our predictions. This is known as the <strong>irreducible error</strong>, because no matter how well we estimate <span class="math inline">\(f,\)</span> we cannot reduce the error introduced by <span class="math inline">\(\epsilon.\)</span></p>
-<p>Consider a <strong>given</strong> estimate <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> set of predictors <span class="math inline">\(X,\)</span> which yields the prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> That is, assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are <strong>fixed</strong>, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span class="math display">\[
+<p>Consider a <strong>given</strong> estimate <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> set of predictors <span class="math inline">\(X,\)</span> which yields the prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> That is, assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are <strong>fixed</strong>, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span id="eq-MSEDecompFixed"><span class="math display">\[
 \begin{align*}
 \overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
 =\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}},
 \end{align*}
-\]</span> where</p>
+\qquad(2.1)\]</span></span> where</p>
 <ul>
 <li>
 <span class="math inline">\(E\left[(Y - \hat{Y})^2\right]\)</span> represents the expected value, of the squared difference between the predicted <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> and actual value of <span class="math inline">\(Y,\)</span>
@@ -308,14 +308,18 @@ Y = f(X) + \epsilon.
 <li>and <span class="math inline">\(Var(\epsilon)\)</span> represents the variance associated with the error term <span class="math inline">\(\epsilon.\)</span>
 </li>
 </ul>
-<p>Derivation (for a <em>given</em> <span class="math inline">\(\hat{f}\)</span> and a <em>given</em> <span class="math inline">\(X;\)</span> i.e.&nbsp;only <span class="math inline">\(\epsilon\)</span> is random):</p>
+<p>Derivation of <a href="#eq-MSEDecompFixed" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> for a <strong>given</strong> <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> <span class="math inline">\(X;\)</span> i.e.&nbsp;only <span class="math inline">\(\epsilon\)</span> is random:</p>
 <p><span class="math display">\[\begin{align*}
-&amp;E\left[(Y - \hat{Y})^2\right]\\
-&amp;=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right] \\
-&amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right] \\
-% &amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\
-&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\
-&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\
+&amp;E\left[(Y - \hat{Y})^2\right]\\[2ex]
+&amp;\text{[using $Y=f(X)+\epsilon$]}\\[2ex]
+&amp;=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right]\\[2ex]
+&amp;\text{[binomial formula]}\\[2ex]
+&amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex]
+&amp;\text{[using that $X$ and $\hat{f}$ are fixed]}\\[2ex]
+% &amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\[2ex]
+&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex]
+&amp;\text{[using that $E(\epsilon)=0$ and $E(\epsilon^2)=Var(\epsilon)=\sigma^2$]}\\[2ex]
+&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
 &amp;=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
 \end{align*}\]</span></p>
 <p>It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for <span class="math inline">\(Y,\)</span> i.e.&nbsp; <span class="math display">\[
@@ -334,13 +338,26 @@ Tip
 <p>The focus of this course is on techniques for estimating <span class="math inline">\(f\)</span> with the aim of <strong>minimizing the reducible error</strong>.</p>
 </div>
 </div>
-</section></section><section id="inference-about-model-parameters" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="inference-about-model-parameters">Inference about Model Parameters</h2>
+</section></section><section id="inference" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="inference">Inference</h2>
 <p>We are often interested in <em>understanding</em> the association between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1,\dots,X_p.\)</span> In this situation we wish to estimate <span class="math inline">\(f,\)</span> but our goal is not necessarily to make predictions for <span class="math inline">\(Y.\)</span> Now <span class="math inline">\(\hat{f}\)</span> cannot be treated as a black box, because we need to know its exact form. In this setting, one may be interested in answering the following questions:</p>
 <ul>
 <li>Which predictors are associated with the response?</li>
 <li>What is the relationship between the response and each predictor?</li>
 <li>Can the relationship between <span class="math inline">\(Y\)</span> and each predictor be adequately summarized using a <em>linear equation</em>, or is the relationship more complicated?</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Inference</em> typically means inference about <strong>model parameters</strong>.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -358,12 +375,12 @@ Tip
 <span class="header-section-number">2.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</h2>
 <p><strong>Setup:</strong> Consider the general regression model <span id="eq-GRegMod"><span class="math display">\[
 Y=f(X)+\epsilon,
-\qquad(2.1)\]</span></span> where <span class="math display">\[
+\qquad(2.2)\]</span></span> where <span class="math display">\[
 X=(X_{1}, \dots,X_{p})
 \]</span> is a multivariate (<span class="math inline">\(p\)</span>-dimensional) predictor.</p>
 <p>Let <span id="eq-randomsample"><span class="math display">\[
 \{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\},
-\qquad(2.2)\]</span></span> be a <strong>random sample</strong> from <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>, i.e.</p>
+\qquad(2.3)\]</span></span> be a <strong>random sample</strong> from <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, i.e.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -387,7 +404,7 @@ Random Sample:
 </ol>
 </div>
 </div>
-<p>The random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> is thus a set of <span class="math inline">\(n\)</span> many <strong>independent and identically distributed (iid)</strong> multivariate random variables <span class="math display">\[
+<p>The random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.3</span></a> is thus a set of <span class="math inline">\(n\)</span> many <strong>independent and identically distributed (iid)</strong> multivariate random variables <span class="math display">\[
 \{(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\}
 \]</span> with <span class="math display">\[
 (X_i,Y_i)\overset{\text{iid}}{\sim} (X,Y),\quad i=1,\dots,n.
@@ -434,8 +451,8 @@ y_{new} \approx \hat{f}(x_{new}).
 <ol type="1">
 <li><p>First, we make an assumption about the functional form, or shape, of <span class="math inline">\(f.\)</span> For example, a very simple, but often used assumption is that <span class="math inline">\(f\)</span> is a linear function, i.e. <span id="eq-linmodeq"><span class="math display">\[
 f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p.
-\qquad(2.3)\]</span></span></p></li>
-<li><p>After a model has been selected, we need a procedure that uses the training data to fit or train the model. For example, in the case of the linear model <a href="#eq-linmodeq" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>, we need to estimate the parameters <span class="math inline">\(\beta_0,\beta_1,\dots,\beta_p\)</span> such that <span class="math display">\[
+\qquad(2.4)\]</span></span></p></li>
+<li><p>After a model has been selected, we need a procedure that uses the training data to fit or train the model. For example, in the case of the linear model <a href="#eq-linmodeq" class="quarto-xref">Equation&nbsp;<span>2.4</span></a>, we need to estimate the parameters <span class="math inline">\(\beta_0,\beta_1,\dots,\beta_p\)</span> such that <span class="math display">\[
 Y \approx \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
 \]</span></p></li>
 </ol>
@@ -516,14 +533,14 @@ Tip
 <p>It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.</p>
 <p>Let <span id="eq-trainingsample"><span class="math display">\[
 \{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0m},Y_{0m})\},
-\qquad(2.4)\]</span></span> denote the <strong>test data random sample</strong>, where <span class="math display">\[
+\qquad(2.5)\]</span></span> denote the <strong>test data random sample</strong>, where <span class="math display">\[
 (X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
-\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math inline">\(Y=f(X)+\epsilon\)</span> in <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>.</p>
-<p>That is, the new test data random sample <a href="#eq-trainingsample" class="quarto-xref">Equation&nbsp;<span>2.4</span></a></p>
+\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math inline">\(Y=f(X)+\epsilon\)</span> in <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</p>
+<p>That is, the new test data random sample <a href="#eq-trainingsample" class="quarto-xref">Equation&nbsp;<span>2.5</span></a></p>
 <ol type="1">
-<li>is independent of the training data random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>
+<li>is independent of the training data random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>
 </li>
-<li>has the same distribution as the training data random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>
+<li>has the same distribution as the training data random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>
 </li>
 </ol>
 <p>The observed realization <span class="math display">\[
@@ -767,6 +784,7 @@ This exercise relates to the College data set, which can be found in the file `C
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -801,6 +819,7 @@ college[c(1:10),c(1:5)]
 
 
 
+
 **8. b)** Look at the data using the `fix()` function.
 
 **Answer:**
@@ -810,6 +829,7 @@ The `fix()` command allows you to look at the data and change values in the data
 
 We can do some additional data-wrangling:<br>
 You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
+
 
 
 
@@ -833,7 +853,9 @@ rownames(college) <- college[,1]
 
 
 
+
 You should see that there is now a row.names column with the name of each university recorded. This means that `R` has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
+
 
 
 
@@ -852,11 +874,13 @@ college <- college[,-1]
 
 
 
+
 Now you should see that the first data column is `Private`. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.
 
 **8. c. i)** Use the `summary()` function to produce a numerical summary of the variables in the data set.
 
 **Answer:**
+
 
 
 
@@ -896,9 +920,11 @@ summary(college[, 1:5])
 
 
 
+
 **8. c. ii)** Use the `pairs()` function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix `A` using `A[,2:10]`.
 
 **Answer:**
+
 
 
 
@@ -919,9 +945,11 @@ pairs(x = college[,2:10])
 
 
 
+
 **8. c. iii)** Use the `boxplot()` function to produce side-by-side boxplots of `Outstate` versus `Private`.
 
 **Answer:**
+
 
 
 
@@ -946,10 +974,12 @@ boxplot(Outstate~Private,
 
 
 
+
 > `Outstate`-Variable explained: The `Outstate`-variable is the tuition fee charged from non-resident students. (Many US colleges charge high tuition fees from non-resident students.) 
 
 
 **8. c. iv)** Create a new qualitative variable, called `Elite`, by binning the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
+
 
 
 
@@ -976,10 +1006,12 @@ college <- data.frame(college, Elite)
 
 
 
+
 Use the `summary()` function to see how many elite universities there are. Now use the `boxplot()` function to produce side-by-side boxplots of Outstate versus Elite.
 
 
 **Answer:**
+
 
 
 
@@ -1006,7 +1038,9 @@ summary(college$Elite)
 
 
 
+
 There are $78$ elite Universities. The boxplots of `Outstate` versus Elite-Status are generated as following:
+
 
 
 
@@ -1028,9 +1062,11 @@ boxplot(Outstate ~ Elite,
 
 
 
+
 **8. c. v)** Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
 
 **Answer:**
+
 
 
 
@@ -1056,6 +1092,7 @@ hist(college$Outstate,            xlab = "", main="Outstate")
 
 
 
+
 Remember: 
 
 * **Enroll:** Number of new students enrolled
@@ -1066,6 +1103,7 @@ Remember:
 #### Exercise 9: {-}
 
 This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.
+
 
 
 
@@ -1126,6 +1164,7 @@ print(Auto[c(1:10),])
 
 
 
+
 * **mpg:** miles per gallon
 * **cylinders:** Number of cylinders between 4 and 8
 * **displacement:** Engine displacement (cu. inches)
@@ -1140,6 +1179,7 @@ print(Auto[c(1:10),])
 **9. a)** Which of the predictors are quantitative, and which are qualitative?
 
 **Answer:**
+
 
 
 
@@ -1179,12 +1219,14 @@ summary(Auto)
 
 
 
+
 - **Quantitative predictors:** `mpg`, `cylinders`, `displacement`, `horsepower`, `weight`, `acceleration`, `year` 
 - **Qualitative predictors:** `name`, `origin`
 
 **9. b)** What is the range of each quantitative predictor? You can answer this using the `range()` function.
 
 **Answer:**
+
 
 
 
@@ -1232,9 +1274,11 @@ max 46.6         8          455        230   5140         24.8   82
 
 
 
+
 **9. c)** What is the mean and standard deviation of each quantitative predictor?
 
 **Answer:**
+
 
 
 
@@ -1289,9 +1333,11 @@ sd
 
 
 
+
 **9.d)** Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
 
 **Answer:**
+
 
 
 
@@ -1337,9 +1383,11 @@ Max   47         8          455        230   4997           25   82
 
 
 
+
 **9. e)** Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
 
 **Answer:**
+
 
 
 
@@ -1355,6 +1403,7 @@ pairs(Auto[, -9]) # remove the character-variable 'name'
 ![](Ch2_StatLearning_files/figure-html/unnamed-chunk-16-1.png){fig-align='center' width=672}
 :::
 :::
+
 
 
 
