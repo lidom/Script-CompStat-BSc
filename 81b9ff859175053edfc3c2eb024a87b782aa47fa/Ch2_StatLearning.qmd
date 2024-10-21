@@ -462,7 +462,7 @@ $$
 &=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2\\
 &\approx\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - f(x_{0i})\right)^2\\
 &=\frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2\\
-&=\hat{\sigma}^2 
+&=\hat{\sigma}^2\\ 
 &\approx \sigma^2 
 \end{align*}
 $$
@@ -554,14 +554,16 @@ $$
 E\left[\operatorname{MSE}_{test}(x_0)\right] 
 & =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 & =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
-& =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
-& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
-& =E\left[\left(f(x_0) + \epsilon_0 - \hat{f}(x_0)\right)^2\right]\quad(Y_0=f(x_0)+\epsilon_0)\\[2ex]
-& =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_0 + \epsilon_0^2 \right]\\[2ex]
+& =\frac{1}{m}\,\sum_{i=1}^m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ and $\hat{f}$ are iid})\\[2ex]
+& =\frac{1}{m}\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\,\sum_{i=1}^m 1\\[2ex]
+& =\frac{1}{m}\,m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =E\left[\left(f(x_0) + \epsilon_{01} - \hat{f}(x_0)\right)^2\right]\quad(\text{using }\;Y_{01}=f(x_0)+\epsilon_{01})\\[2ex]
+& =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_{01} + \epsilon_{01}^2 \right]\\[2ex]
 & =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex] 
-&+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_0\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex] 
+&+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_{01}\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex] 
 &+ E\left[\epsilon_0^2 \right]\\[2ex]
-& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_0)\\[2ex] 
+& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_{01})\\[2ex] 
 %& =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
 %& =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
 %& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
@@ -570,7 +572,7 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 %& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&\quad\text{(steps skipped since beyond scope)}\\[2ex]
-& = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \underbrace{Var\left(\epsilon_0\right)}_{\text{irreducible}}
+& = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \overbrace{\underbrace{Var\left(\epsilon_{01}\right)}_{\text{irreducible}}}^{=\sigma^2}
 \end{align*}
 $$
 

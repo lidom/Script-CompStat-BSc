@@ -602,7 +602,7 @@ or next month's price.  -->
 &amp;=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2\\
 &amp;\approx\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - f(x_{0i})\right)^2\\
 &amp;=\frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2\\
-&amp;=\hat{\sigma}^2
+&amp;=\hat{\sigma}^2\\
 &amp;\approx \sigma^2
 \end{align*}
 \]</span> estimates the variance of the error term <span class="math inline">\(Var(\epsilon)=\sigma^2,\)</span> i.e., the <strong>irreducible error component</strong>.</p>
@@ -669,14 +669,16 @@ $$
 E\left[\operatorname{MSE}_{test}(x_0)\right]
 &amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
-&amp; =\frac{1}{m}\,m\,E\left[\left(Y_{0}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ are iid})\\[2ex]
-&amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]\\[2ex]
-&amp; =E\left[\left(f(x_0) + \epsilon_0 - \hat{f}(x_0)\right)^2\right]\quad(Y_0=f(x_0)+\epsilon_0)\\[2ex]
-&amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_0 + \epsilon_0^2 \right]\\[2ex]
+&amp; =\frac{1}{m}\,\sum_{i=1}^m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ and $\hat{f}$ are iid})\\[2ex]
+&amp; =\frac{1}{m}\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\,\sum_{i=1}^m 1\\[2ex]
+&amp; =\frac{1}{m}\,m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =E\left[\left(f(x_0) + \epsilon_{01} - \hat{f}(x_0)\right)^2\right]\quad(\text{using }\;Y_{01}=f(x_0)+\epsilon_{01})\\[2ex]
+&amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_{01} + \epsilon_{01}^2 \right]\\[2ex]
 &amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex]
-&amp;+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_0\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex]
+&amp;+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_{01}\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex]
 &amp;+ E\left[\epsilon_0^2 \right]\\[2ex]
-&amp; =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_0)\\[2ex]
+&amp; =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_{01})\\[2ex]
 %&amp; =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
 %&amp; =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
 %&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
@@ -685,7 +687,7 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 %&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&amp; =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
 %&amp;\quad\text{(steps skipped since beyond scope)}\\[2ex]
-&amp; = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \underbrace{Var\left(\epsilon_0\right)}_{\text{irreducible}}
+&amp; = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \overbrace{\underbrace{Var\left(\epsilon_{01}\right)}_{\text{irreducible}}}^{=\sigma^2}
 \end{align*}
 \]</span></p>
 <p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math display">\[
