@@ -607,7 +607,7 @@ $$
 \begin{align*}
 E\left[\operatorname{MSE}_{test}(x_0)\right] 
 & =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
-\geq Var\left(\epsilon\right).
+\geq Var\left(\epsilon\right)=\sigma^2.
 \end{align*}
 $$
 
