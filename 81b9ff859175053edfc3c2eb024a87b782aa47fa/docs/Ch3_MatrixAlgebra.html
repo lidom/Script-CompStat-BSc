@@ -185,7 +185,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch4_LinearRegression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression (NEW)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -220,11 +220,11 @@ window.Quarto = {
   <li>
 <a href="#sums-and-products" id="toc-sums-and-products" class="nav-link" data-scroll-target="#sums-and-products"><span class="header-section-number">3.2</span> Sums and Products</a>
   <ul class="collapse">
-<li><a href="#matrix-summation" id="toc-matrix-summation" class="nav-link" data-scroll-target="#matrix-summation"><span class="header-section-number">3.2.1</span> Matrix summation</a></li>
-  <li><a href="#scalar-matrix-multiplication" id="toc-scalar-matrix-multiplication" class="nav-link" data-scroll-target="#scalar-matrix-multiplication"><span class="header-section-number">3.2.2</span> Scalar-matrix multiplication</a></li>
-  <li><a href="#element-by-element-operations-in-r" id="toc-element-by-element-operations-in-r" class="nav-link" data-scroll-target="#element-by-element-operations-in-r"><span class="header-section-number">3.2.3</span> Element-by-element operations in R</a></li>
-  <li><a href="#vector-vector-multiplication" id="toc-vector-vector-multiplication" class="nav-link" data-scroll-target="#vector-vector-multiplication"><span class="header-section-number">3.2.4</span> Vector-vector multiplication</a></li>
-  <li><a href="#matrix-matrix-multiplication" id="toc-matrix-matrix-multiplication" class="nav-link" data-scroll-target="#matrix-matrix-multiplication"><span class="header-section-number">3.2.5</span> Matrix-matrix multiplication</a></li>
+<li><a href="#matrix-summation" id="toc-matrix-summation" class="nav-link" data-scroll-target="#matrix-summation"><span class="header-section-number">3.2.1</span> Matrix Summation</a></li>
+  <li><a href="#scalar-matrix-multiplication" id="toc-scalar-matrix-multiplication" class="nav-link" data-scroll-target="#scalar-matrix-multiplication"><span class="header-section-number">3.2.2</span> Scalar-Matrix Multiplication</a></li>
+  <li><a href="#element-by-element-operations-in-r" id="toc-element-by-element-operations-in-r" class="nav-link" data-scroll-target="#element-by-element-operations-in-r"><span class="header-section-number">3.2.3</span> Element-by-Element Operations in R</a></li>
+  <li><a href="#vector-vector-multiplication" id="toc-vector-vector-multiplication" class="nav-link" data-scroll-target="#vector-vector-multiplication"><span class="header-section-number">3.2.4</span> Vector-Vector Multiplication</a></li>
+  <li><a href="#matrix-matrix-multiplication" id="toc-matrix-matrix-multiplication" class="nav-link" data-scroll-target="#matrix-matrix-multiplication"><span class="header-section-number">3.2.5</span> Matrix-Matrix Multiplication</a></li>
   </ul>
 </li>
   <li>
@@ -293,7 +293,10 @@ window.Quarto = {
 <p>A <strong>scalar</strong> <span class="math inline">\(a\)</span> is a single real number. We write <span class="math inline">\(a \in \mathbb R\)</span>.</p>
 <p>A <strong>vector</strong> <span class="math inline">\(a\)</span> of length <span class="math inline">\(k\)</span> is a <span class="math inline">\(k \times 1\)</span> list of real numbers <span class="math display">\[
 a = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_k \end{pmatrix}.
-\]</span> By default, when we refer to a vector, we always mean a column vector. We write <span class="math inline">\(a \in \mathbb R^k\)</span>. The value <span class="math inline">\(a_i\)</span> is called <span class="math inline">\(i\)</span>-th entry or <span class="math inline">\(i\)</span>-th component of <span class="math inline">\(a\)</span>. A scalar is a vector of length 1. A row vector of length <span class="math inline">\(k\)</span> is written as <span class="math inline">\(b = (b_1, \ldots, b_k)\)</span>.</p>
+\]</span> By default, when we refer to a vector, we always mean a column vector. We write <span class="math inline">\(a \in \mathbb R^k\)</span>. The value <span class="math inline">\(a_i\)</span> is called <span class="math inline">\(i\)</span>-th entry or <span class="math inline">\(i\)</span>-th component of <span class="math inline">\(a\)</span>. A scalar is a vector of length 1.</p>
+<p>A row vector of length <span class="math inline">\(k\)</span> is written as <span class="math display">\[
+b = (b_1, \ldots, b_k).
+\]</span></p>
 <p>A <strong>matrix</strong> <span class="math inline">\(A\)</span> of order (or dimension) <span class="math inline">\(k \times m\)</span> is a rectangular array of real numbers <span class="math display">\[
 A =\begin{pmatrix}
              a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m}\\
@@ -307,18 +310,23 @@ A = \begin{pmatrix} a_1 &amp; a_2 &amp; \ldots &amp; a_m \end{pmatrix}
 = \begin{pmatrix} \alpha_1 \\ \vdots \\ \alpha_k \end{pmatrix},
 \]</span> where <span class="math display">\[
 a_i = \begin{pmatrix} a_{1i} \\ \vdots \\ a_{ki} \end{pmatrix}
-\]</span> is the <span class="math inline">\(i\)</span>-th column of <span class="math inline">\(A\)</span> and <span class="math inline">\(\alpha_i = (a_{i1}, \ldots, a_{im})\)</span> is the <span class="math inline">\(i\)</span>-th row.</p>
+\]</span> is the <span class="math inline">\(i\)</span>-th column of <span class="math inline">\(A\)</span> and <span class="math display">\[
+\alpha_i = (a_{i1}, \ldots, a_{im})
+\]</span> is the <span class="math inline">\(i\)</span>-th row.</p>
 </section><section id="some-specific-matrices" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="some-specific-matrices">
 <span class="header-section-number">3.1.2</span> Some Specific Matrices</h3>
-<p>A matrix is called <strong>square matrix</strong> if the numbers of rows and columns coincide (i.e., <span class="math inline">\(k=m\)</span>). <span class="math display">\[
+<p>A matrix is called <strong>square matrix</strong> if the numbers of rows and columns coincide, i.e., <span class="math inline">\(k=m.\)</span> For instance, <span class="math display">\[
 {B} = \begin{pmatrix}1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix}
-\]</span> is a square matrix. A square matrix is called <strong>diagonal matrix</strong> if all off-diagonal elements are zero. <span class="math display">\[
+\]</span> is a <span class="math inline">\((2\times 2)\)</span> square matrix. A square matrix is called <strong>diagonal matrix</strong> if all off-diagonal elements are zero. <span class="math display">\[
 {C} = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; 4 \end{pmatrix}
-\]</span> is a diagonal matrix. We also write <span class="math inline">\(C = \mathop{\mathrm{diag}}(1,4)\)</span>. A square matrix is called <strong>upper triangular</strong> if all elements below the main diagonal are zero, and <strong>lower triangular</strong> if all elements above the main diagonal are zero. Examples of an upper triangular matrix <span class="math inline">\(D\)</span> and a lower triangular matrix <span class="math inline">\(E\)</span> are <span class="math display">\[
-{D} = \begin{pmatrix}1 &amp; 2 \\ 0 &amp; 4 \end{pmatrix},
-\quad
+\]</span> is a diagonal matrix. We also write <span class="math display">\[
+C = \mathop{\mathrm{diag}}(1,4).
+\]</span> A square matrix is called <strong>upper triangular</strong> if all elements below the main diagonal are zero, and <strong>lower triangular</strong> if all elements above the main diagonal are zero. Examples of an upper triangular matrix <span class="math inline">\(D\)</span> and a lower triangular matrix <span class="math inline">\(E\)</span> are <span class="math display">\[
+{D} = \begin{pmatrix}1 &amp; 2 \\ 0 &amp; 4 \end{pmatrix}
+\quad \text{and}\quad
 {E} = \begin{pmatrix}1 &amp; 0 \\ 3 &amp; 4 \end{pmatrix}.
-\]</span> The <span class="math inline">\(k \times k\)</span> diagonal matrix <span class="math display">\[{I}_k=
+\]</span> The <span class="math inline">\(k \times k\)</span> diagonal matrix <span class="math display">\[
+{I}_k=
       \begin{pmatrix}
       1      &amp; 0      &amp; \cdots &amp; 0\\
       0      &amp; 1      &amp; \cdots &amp; 0\\
@@ -326,14 +334,14 @@ a_i = \begin{pmatrix} a_{1i} \\ \vdots \\ a_{ki} \end{pmatrix}
       0      &amp; 0      &amp; \cdots &amp; 1
       \end{pmatrix} = \mathop{\mathrm{diag}}(1, \ldots, 1)
 \]</span> is called <strong>identity matrix</strong> of order <span class="math inline">\(k\)</span>. The <span class="math inline">\(k \times m\)</span> matrix <span class="math display">\[
-{0}_{k\times m}
-       =\begin{pmatrix}
+\underset{(k\times m)}{0}\;=0=\begin{pmatrix}
              0      &amp; \cdots &amp; 0\\
             \vdots &amp;  \ddots      &amp; \vdots\\
             0      &amp; \cdots &amp; 0
        \end{pmatrix}
-\]</span> is called <strong>zero matrix</strong>. The <strong>zero vector</strong> of length <span class="math inline">\(k\)</span> is <span class="math display">\[
-{0}_{k}
+\]</span> is called <strong>zero matrix</strong>.</p>
+<p>The <strong>zero (column) vector</strong> of length <span class="math inline">\(k\)</span> is <span class="math display">\[
+\underset{(k\times 1)}{0}\; 0
        =\begin{pmatrix}
              0   \\
             \vdots \\
@@ -343,6 +351,13 @@ a_i = \begin{pmatrix} a_{1i} \\ \vdots \\ a_{ki} \end{pmatrix}
 </section><section id="transposition" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="transposition">
 <span class="header-section-number">3.1.3</span> Transposition</h3>
 <p>The <strong>transpose</strong> <span class="math inline">\(A'\)</span> of the matrix <span class="math inline">\(A\)</span> is obtained by flipping rows and columns on the main diagonal: <span class="math display">\[
+A =\begin{pmatrix}
+             a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m}\\
+             a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2m}\\
+             \vdots &amp; \vdots &amp;       &amp; \vdots\\
+             a_{k1} &amp; a_{k2} &amp; \cdots &amp; a_{km}
+\end{pmatrix}
+\]</span> <span class="math display">\[
 {A}'=\begin{pmatrix}
     a_{11} &amp; a_{21} &amp; \cdots &amp; a_{k1}\\
     a_{12} &amp; a_{22} &amp; \cdots &amp; a_{k2}\\
@@ -370,7 +385,6 @@ A = \begin{aligned}         \left(\begin{matrix}1 &amp; 2 \\ 2 &amp; 4 \end{matr
 </section><section id="matrices-in-r" class="level3" data-number="3.1.4"><h3 data-number="3.1.4" class="anchored" data-anchor-id="matrices-in-r">
 <span class="header-section-number">3.1.4</span> Matrices in <code>R</code>
 </h3>
-<p>Let’s define some matrices in <code>R</code>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">7</span>,<span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">8</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -422,7 +436,7 @@ A = \begin{aligned}         \left(\begin{matrix}1 &amp; 2 \\ 2 &amp; 4 \end{matr
 </section></section><section id="sums-and-products" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="sums-and-products">
 <span class="header-section-number">3.2</span> Sums and Products</h2>
 <section id="matrix-summation" class="level3" data-number="3.2.1"><h3 data-number="3.2.1" class="anchored" data-anchor-id="matrix-summation">
-<span class="header-section-number">3.2.1</span> Matrix summation</h3>
+<span class="header-section-number">3.2.1</span> Matrix Summation</h3>
 <p>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> both be matrices of order <span class="math inline">\(k \times m\)</span>. Their sum is defined componentwise: <span class="math display">\[
 {A} + {B}
 =\begin{pmatrix}
@@ -431,22 +445,22 @@ a_{21}+ b_{21} &amp; a_{22}+ b_{22} &amp; \cdots &amp; a_{2m}+ b_{2m} \\
 \vdots        &amp; \vdots        &amp;       &amp; \vdots        \\
 a_{k1}+ b_{k1} &amp; a_{k2}+ b_{k2} &amp; \cdots &amp; a_{km}+ b_{km}
 \end{pmatrix}.
-\]</span> Only two matrices of the same order can be added. <em>Example:</em> <span class="math display">\[
+\]</span> Only two matrices of the same order can be added.</p>
+<p>Example: <span class="math display">\[
 {A}=\begin{pmatrix}2&amp;0\\1&amp;5\\3&amp;2\end{pmatrix}\,,\quad
 {B}=\begin{pmatrix}-1&amp;1\\7&amp;1\\-5&amp;2\end{pmatrix}\,,\quad
 {A}+{B}=\begin{pmatrix}1&amp;1\\8&amp;6\\-2&amp;4\end{pmatrix}\,.
 \]</span></p>
 <p>The matrix summation satisfies the following rules: <span class="math display">\[
 \begin{array}{@{}rr@{\ }c@{\ }l@{}r@{}}
-\text{(i)}    &amp; {A}+{B}         &amp;=&amp; {B}+{A}\,               &amp;  \text{(commutativity)} \\
-\text{(ii)}   &amp; ({A}+{B})+{C}  &amp;=&amp; {A}+({B}+{C})\,        &amp;  \text{(associativity)} \\
-\text{(iii)}    &amp; A + 0 &amp;=&amp; A &amp;   {\text{(identity element)}}     \\
-\text{(iv)}   &amp; (A + B)' &amp;=&amp; A' + B'     &amp;
-{\text{(transposition)}}          
+\text{(i)}   &amp; {A}+{B}       &amp;=&amp; {B}+{A}\,       &amp; \text{(commutativity)}   \\
+\text{(ii)}  &amp; ({A}+{B})+{C} &amp;=&amp; {A}+({B}+{C})\, &amp; \text{(associativity)}   \\
+\text{(iii)} &amp; A + 0         &amp;=&amp; A               &amp; \text{(identity element)}\\
+\text{(iv)}  &amp; (A + B)'      &amp;=&amp; A' + B'         &amp; \text{(transposition)}          
 \end{array}
 \]</span></p>
 </section><section id="scalar-matrix-multiplication" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="scalar-matrix-multiplication">
-<span class="header-section-number">3.2.2</span> Scalar-matrix multiplication</h3>
+<span class="header-section-number">3.2.2</span> Scalar-Matrix Multiplication</h3>
 <p>The product of a <span class="math inline">\(k \times m\)</span> matrix <span class="math inline">\({A}\)</span> with a scalar <span class="math inline">\(\lambda\in\mathbb{R}\)</span> is defined componentwise: <span class="math display">\[
 \lambda {A} =
 \begin{pmatrix}
@@ -464,7 +478,7 @@ a_{k1}+ b_{k1} &amp; a_{k2}+ b_{k2} &amp; \cdots &amp; a_{km}+ b_{km}
 \end{array}
 \]</span></p>
 </section><section id="element-by-element-operations-in-r" class="level3" data-number="3.2.3"><h3 data-number="3.2.3" class="anchored" data-anchor-id="element-by-element-operations-in-r">
-<span class="header-section-number">3.2.3</span> Element-by-element operations in R</h3>
+<span class="header-section-number">3.2.3</span> Element-by-Element Operations in R</h3>
 <p>Basic arithmetic operations work on an element-by-element basis in <code>R</code>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">0</span>,<span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span>, ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
@@ -506,9 +520,9 @@ a_{k1}+ b_{k1} &amp; a_{k2}+ b_{k2} &amp; \cdots &amp; a_{km}+ b_{km}
 </div>
 </div>
 </section><section id="vector-vector-multiplication" class="level3" data-number="3.2.4"><h3 data-number="3.2.4" class="anchored" data-anchor-id="vector-vector-multiplication">
-<span class="header-section-number">3.2.4</span> Vector-vector multiplication</h3>
+<span class="header-section-number">3.2.4</span> Vector-Vector Multiplication</h3>
 <section id="inner-product" class="level4" data-number="3.2.4.1"><h4 data-number="3.2.4.1" class="anchored" data-anchor-id="inner-product">
-<span class="header-section-number">3.2.4.1</span> Inner product</h4>
+<span class="header-section-number">3.2.4.1</span> Inner Product</h4>
 <p>The <strong>inner product</strong> (also known as dot product) of two vectors <span class="math inline">\({a},{b}\in\mathbb{R}^k\)</span> is <span class="math display">\[
 {a}'{b} = a_1 b_1+a_2b_2+\ldots+a_kb_k=\sum_{i=1}^k a_ib_i\in\mathbb{R}.
 \]</span></p>
@@ -521,9 +535,14 @@ a_{k1}+ b_{k1} &amp; a_{k2}+ b_{k2} &amp; \cdots &amp; a_{km}+ b_{km}
 \begin{align*}
   a' b = b' a.
 \end{align*}
-\]</span> Two vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthogonal</strong> if <span class="math inline">\(a' b = 0\)</span>. The vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthonormal</strong> if, in addition to <span class="math inline">\(a'b\)</span>, we have <span class="math inline">\(a' a = 1\)</span> and <span class="math inline">\(b' b=1\)</span>.</p>
+\]</span> Two vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthogonal</strong> if <span class="math display">\[
+a' b = 0.
+\]</span></p>
+<p>The vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthonormal</strong> if, in addition to <span class="math inline">\(a'b\)</span>, we have <span class="math display">\[
+a' a = 1\quad\text{and}\quad b' b=1.
+\]</span></p>
 </section><section id="outer-product" class="level4" data-number="3.2.4.2"><h4 data-number="3.2.4.2" class="anchored" data-anchor-id="outer-product">
-<span class="header-section-number">3.2.4.2</span> Outer product</h4>
+<span class="header-section-number">3.2.4.2</span> Outer Product</h4>
 <p>The outer product (also known as dyadic product) of two vectors <span class="math inline">\({x} \in \mathbb R^k\)</span> and <span class="math inline">\({y}\in\mathbb{R}^m\)</span> is <span class="math display">\[
 {x}{y}' =
 \left(\begin{matrix}
@@ -541,7 +560,7 @@ x_k y_1 &amp; x_k y_2 &amp; \ldots &amp; x_k y_m
 \end{matrix}\right).
 \]</span></p>
 </section><section id="vector-multiplication-in-r" class="level4" data-number="3.2.4.3"><h4 data-number="3.2.4.3" class="anchored" data-anchor-id="vector-multiplication-in-r">
-<span class="header-section-number">3.2.4.3</span> Vector multiplication in <code>R</code>
+<span class="header-section-number">3.2.4.3</span> Vector Multiplication in <code>R</code>
 </h4>
 <p>For vector multiplication in <code>R</code>, we use the operator <code>%*%</code> (recall that <code>*</code> is already reserved for element-wise multiplication). Let’s implement some multiplications.</p>
 <div class="cell" data-layout-align="center">
@@ -567,7 +586,7 @@ x_k y_1 &amp; x_k y_2 &amp; \ldots &amp; x_k y_m
 </div>
 </div>
 </section></section><section id="matrix-matrix-multiplication" class="level3" data-number="3.2.5"><h3 data-number="3.2.5" class="anchored" data-anchor-id="matrix-matrix-multiplication">
-<span class="header-section-number">3.2.5</span> Matrix-matrix multiplication</h3>
+<span class="header-section-number">3.2.5</span> Matrix-Matrix Multiplication</h3>
 <p>The <strong>matrix product</strong> of a <span class="math inline">\(k \times m\)</span> matrix <span class="math inline">\({A}\)</span> and a <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\({B}\)</span> is the <span class="math inline">\(k\times n\)</span> matrix <span class="math inline">\(C = {A}{B}\)</span> with the components <span class="math display">\[
 c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\ldots+a_{im}b_{mj}=\sum_{l=1}^m a_{il}b_{lj} = a_i' b_j,
 \]</span> where <span class="math inline">\(a_i = (a_{i1}, \ldots, a_{im})'\)</span> is the <span class="math inline">\(i\)</span>-th row of <span class="math inline">\(A\)</span> written as a column vector, and <span class="math inline">\(b_j = (b_{1j}, \ldots, b_{mj})'\)</span> is the <span class="math inline">\(j\)</span>-th column of <span class="math inline">\(B\)</span>. The full matrix product can be written as <span class="math display">\[
@@ -629,15 +648,15 @@ A B = \begin{pmatrix} a_1' \\ \vdots \\ a_k' \end{pmatrix}
 \]</span></p>
 <p>The following rules of calculation apply (provided the matrices are conformable): <span class="math display">\[
 \begin{array}{rrcl@{}r@{}}
-\text{(i)}   &amp; {A}({B}{C})       &amp; = &amp; ({A}{B}){C}\,     &amp;\text{(associativity)} \\
+\text{(i)}   &amp; {A}({B}{C})       &amp; = &amp; ({A}{B}){C}\,    &amp;\text{(associativity)} \\
 \text{(ii)}  &amp;   {A}({B}+{D})    &amp; = &amp; {A}{B}+{A}{D}\,  &amp; \text{(distributivity)} \\
-\text{(iii)}   &amp;   ({B}+{D}){C}    &amp; = &amp; {B}{C}+{D}{C}\,  &amp; \text{(distributivity)} \\
-\text{(iv)}  &amp;   {A}(\lambda {B}) &amp; = &amp; \lambda({A}{B})\,  &amp; \text{(scalar commutativity)}\\
-\text{(v)}  &amp; {A}{I}_{n} &amp; = &amp; {A}\,,              &amp; \text{(identity element)}\\
-\text{(vi)} &amp; {I}_{m}{A} &amp; = &amp; {A}\,               &amp;
+\text{(iii)} &amp;   ({B}+{D}){C}    &amp; = &amp; {B}{C}+{D}{C}\,  &amp; \text{(distributivity)} \\
+\text{(iv)}  &amp;   {A}(\lambda {B})&amp; = &amp; \lambda({A}{B})\,&amp; \text{(scalar commutativity)}\\
+\text{(v)}   &amp; {A}{I}_{n}        &amp; = &amp; {A}\,            &amp; \text{(identity element)}\\
+\text{(vi)}  &amp; {I}_{m}{A}        &amp; = &amp; {A}\,            &amp;
 \text{(identity element)}     \\
 \text{(vii)} &amp;   ({A}{B})'  &amp; = &amp; {B}'{A}'\,         &amp; \text{(product transposition)} \\
-\text{(viii)} &amp;   ({A}{B} C)'  &amp; = &amp; C' {B}'{A}'\,  &amp; \text{(product transposition)}
+\text{(viii)}&amp;   ({A}{B} C)'  &amp; = &amp; C' {B}'{A}'\,  &amp; \text{(product transposition)}
 \end{array}
 \]</span></p>
 </section></section><section id="rank-and-inverse" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="rank-and-inverse">
@@ -653,15 +672,22 @@ X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n = 0.
 \]</span> The vectors <span class="math inline">\(x_1, \ldots, x_n\)</span> are called <strong>linearly independent</strong> if <span class="math display">\[
 X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n \neq 0
 \]</span> for all nonzero vectors <span class="math inline">\(\lambda\)</span>.</p>
-<p>To check whether the vectors are linearly independent, we can solve the system of equations <span class="math inline">\(X \lambda = 0\)</span> by Gaussian elimination. If <span class="math inline">\(\lambda = 0\)</span> is the only solution, then the columns of <span class="math inline">\(X\)</span> are linearly independent. If there is a solution <span class="math inline">\(\lambda\)</span> with <span class="math inline">\(\lambda \neq 0\)</span>, then the columns of <span class="math inline">\(X\)</span> are linearly dependent.</p>
+<p>To check whether the vectors are linearly independent, we can solve the system of equations <span class="math display">\[
+X \lambda = 0
+\]</span> by <a href="https://math.libretexts.org/Bookshelves/Algebra/Algebra_and_Trigonometry_1e_(OpenStax)/11%3A_Systems_of_Equations_and_Inequalities/11.06%3A_Solving_Systems_with_Gaussian_Elimination">Gaussian elimination</a>. If <span class="math inline">\(\lambda = 0\)</span> is the only solution, then the columns of <span class="math inline">\(X\)</span> are linearly independent. If there is a solution <span class="math inline">\(\lambda\)</span> with <span class="math inline">\(\lambda \neq 0\)</span>, then the columns of <span class="math inline">\(X\)</span> are linearly dependent.</p>
 </section><section id="column-rank" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="column-rank">
 <span class="header-section-number">3.3.2</span> Column Rank</h3>
 <p>The <strong>rank</strong> of a <span class="math inline">\(k \times m\)</span> matrix <span class="math inline">\(A = \begin{pmatrix} a_1 &amp; \ldots &amp; a_m \end{pmatrix}\)</span>, written as <span class="math inline">\(\mathop{\mathrm{rank}}(A)\)</span>, is the number of linearly independent columns <span class="math inline">\(a_i\)</span>. We say that <span class="math inline">\(A\)</span> has <strong>full column rank</strong> if <span class="math inline">\(\mathop{\mathrm{rank}}(X) = m\)</span>.</p>
 <p>The identity matrix <span class="math inline">\(I_k\)</span> has full column rank (i.e., <span class="math inline">\(\mathop{\mathrm{rank}}(I_n) = k\)</span>). As another example, consider <span class="math display">\[
 X = \begin{pmatrix} 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 2 \end{pmatrix},
 \]</span> which has linearly dependent columns since the third column is a linear combination of the first two columns: <span class="math display">\[
-\begin{pmatrix} 4 \\ 2 \end{pmatrix} = 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix}.
-\]</span> The first two columns are linearly independent since <span class="math inline">\(\lambda_1 = 0\)</span> and <span class="math inline">\(\lambda_2 = 0\)</span> are the only solutions to the equation <span class="math display">\[
+\begin{align*}
+&amp;\qquad\qquad\begin{pmatrix} 4 \\ 2 \end{pmatrix} = 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix}\\
+&amp;\Leftrightarrow\quad - 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} - 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
+&amp;\Leftrightarrow\quad\begin{pmatrix} 2&amp;1&amp;4 \\ 0&amp;1&amp;2 \end{pmatrix} \begin{pmatrix} -1 \\ -2\\1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
+\end{align*}
+\]</span></p>
+<p>However, the first two columns are linearly independent since <span class="math inline">\(\lambda_1 = 0\)</span> and <span class="math inline">\(\lambda_2 = 0\)</span> are the only solutions to the equation <span class="math display">\[
 \lambda_1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}.
 \]</span> Therefore, we have <span class="math inline">\(\mathop{\mathrm{rank}}(X) = 2\)</span>, i.e., <span class="math inline">\(X\)</span> does not have a full column rank.</p>
 <p>Some useful properties are</p>
@@ -696,14 +722,18 @@ A = \begin{pmatrix}
 </div>
 </section><section id="nonsingular-matrix" class="level3" data-number="3.3.3"><h3 data-number="3.3.3" class="anchored" data-anchor-id="nonsingular-matrix">
 <span class="header-section-number">3.3.3</span> Nonsingular Matrix</h3>
-<p>A square <span class="math inline">\(k \times k\)</span> matrix <span class="math inline">\(A\)</span> is called <strong>nonsingular</strong> if it has full rank, i.e., <span class="math inline">\(\mathop{\mathrm{rank}}(A) = k\)</span>. Conversely, <span class="math inline">\(A\)</span> is called <strong>singular</strong> if it does not have full rank, i.e., <span class="math inline">\(\mathop{\mathrm{rank}}(A) &lt; k\)</span>.</p>
+<p>A square <span class="math inline">\(k \times k\)</span> matrix <span class="math inline">\(A\)</span> is called <strong>nonsingular</strong> if it has full rank, i.e., <span class="math display">\[
+\mathop{\mathrm{rank}}(A) = k.
+\]</span> Conversely, <span class="math inline">\(A\)</span> is called <strong>singular</strong> if it does not have full rank, i.e., <span class="math display">\[
+\mathop{\mathrm{rank}}(A) &lt; k.
+\]</span></p>
 </section><section id="determinant" class="level3" data-number="3.3.4"><h3 data-number="3.3.4" class="anchored" data-anchor-id="determinant">
 <span class="header-section-number">3.3.4</span> Determinant</h3>
 <p>Consider a square <span class="math inline">\(k \times k\)</span> matrix <span class="math inline">\(A\)</span>. The determinant <span class="math inline">\(\det(A)\)</span> is a measure of the volume of the geometric object formed by the columns of <span class="math inline">\(A\)</span> (a parallelogram for <span class="math inline">\(k=2\)</span>, a parallelepiped for <span class="math inline">\(k=3\)</span>, a hyper-parallelepiped for <span class="math inline">\(k&gt;3\)</span>). For <span class="math inline">\(2 \times 2\)</span> matrices, the determinant is easy to calculate: <span class="math display">\[
 A = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}, \quad
 \det(A) = ad - bc.
 \]</span></p>
-<p>If <span class="math inline">\(A\)</span> is triangular (upper or lower), the determinant is the product of the diagonal entries, i.e., <span class="math inline">\(\det(A) = \prod_{i=1}^k a_{ii}\)</span>. Hence, Gaussian elimination can be used to compute the determinant by transforming the matrix to a triangular one. The exact definition of the determinant is technical and of little importance to us. A useful relation is the following: <span class="math display">\[
+<p>If <span class="math inline">\(A\)</span> is triangular (upper or lower), the determinant is the product of the diagonal entries, i.e., <span class="math inline">\(\det(A) = \prod_{i=1}^k a_{ii}\)</span>. Hence, <a href="https://math.libretexts.org/Bookshelves/Algebra/Algebra_and_Trigonometry_1e_(OpenStax)/11%3A_Systems_of_Equations_and_Inequalities/11.06%3A_Solving_Systems_with_Gaussian_Elimination">Gaussian elimination</a> can be used to compute the determinant by transforming the matrix to a triangular one. The exact definition of the determinant is technical and of little importance to us. A useful relation is the following: <span class="math display">\[
 \begin{align*}
   \det(A) = 0 \quad &amp;\Leftrightarrow \quad A \ \text{is singular} \\
    \det(A) \neq 0 \quad &amp;\Leftrightarrow \quad A \ \text{is nonsingular}.
@@ -852,7 +882,7 @@ A A
 </ol></section><section id="eigenvectors" class="level4" data-number="3.5.1.2"><h4 data-number="3.5.1.2" class="anchored" data-anchor-id="eigenvectors">
 <span class="header-section-number">3.5.1.2</span> Eigenvectors</h4>
 <p>If <span class="math inline">\(\lambda_i\)</span> is an eigenvalue of <span class="math inline">\(A\)</span>, then <span class="math inline">\(\lambda_i I_k - A\)</span> is singular, which implies that there exists a linear combination vector <span class="math inline">\(v_i\)</span> with <span class="math inline">\((\lambda_i I_k - A) v_i = 0\)</span>. Equivalently, <span class="math display">\[
-  A v_i = \lambda_i v_i,
+A v_i = \lambda_i v_i,
 \]</span></p>
 <p>which can be solved by Gaussian elimination. It is convenient to normalize any solution such that <span class="math inline">\(v_i'v_i = 1\)</span>. The solutions <span class="math inline">\(v_1, \ldots, v_k\)</span> are called eigenvectors of <span class="math inline">\(A\)</span> to corresponding eigenvalues <span class="math inline">\(\lambda_1, \ldots, \lambda_k\)</span>.</p>
 </section><section id="spectral-decomposition" class="level4" data-number="3.5.1.3"><h4 data-number="3.5.1.3" class="anchored" data-anchor-id="spectral-decomposition">
@@ -1618,8 +1648,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch4_LinearRegression.html" class="pagination-link" aria-label="Linear Regression">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Ch4_LinearRegression.html" class="pagination-link" aria-label="Linear Regression (NEW)">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression (NEW)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

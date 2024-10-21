@@ -201,6 +201,14 @@ $$
 $$
 These $n$ observations are called **training data** because we will use these  observations to train/learn $\hat{f}$, i.e., to compute the estimate $\hat{f}$ of the unknown $f.$ 
 
+
+<!-- Besides the training data, we may also have access to **testing data**
+$$
+\{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}.
+$$
+-->
+
+
 ::: {.callout-note}
 
 ## Goal of Statistical Learning
@@ -361,9 +369,13 @@ denote the **test data random sample**, where
 $$
 (X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
 $$ 
-with $(X,Y)$ being defined by the general regression model $Y=f(X)+\epsilon$ in @eq-GRegMod. 
+with $(X,Y)$ being defined by the general regression model 
+$$
+Y=f(X)+\epsilon
+$$ 
+as in @eq-GRegMod. 
 
-That is, the new test data random sample @eq-trainingsample 
+That is, the new test data is **random sample**, which ...
 
 1. is independent of the training data random sample @eq-randomsample
 2. has the same distribution as the training data random sample @eq-randomsample
@@ -629,6 +641,13 @@ The overall, i.e., *global* bias can be computed by averaging $\operatorname{Bia
 
 ![](images/Fig_2_12.png)
 
+
+
+## Assignment
+
+
+Link to your personal assignment repository:</br>
+[https://classroom.github.com/a/Oc5oS4l-](https://classroom.github.com/a/Oc5oS4l-)
 
 
 ## Exercises

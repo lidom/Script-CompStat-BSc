@@ -151,7 +151,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch4_LinearRegression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression (NEW)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -207,7 +207,8 @@ window.Quarto = {
   <li><a href="#the-bias-variance-trade-off" id="toc-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-bias-variance-trade-off"><span class="header-section-number">2.3.2</span> The Bias-Variance Trade-Off</a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.4</span> Exercises</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">2.4</span> Assignment</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.5</span> Exercises</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -415,6 +416,11 @@ Random Sample:
 <p>An observed <strong>realization</strong> of the random sample will be denoted using lowercase letters <span class="math display">\[
 \{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}.
 \]</span> These <span class="math inline">\(n\)</span> observations are called <strong>training data</strong> because we will use these observations to train/learn <span class="math inline">\(\hat{f}\)</span>, i.e., to compute the estimate <span class="math inline">\(\hat{f}\)</span> of the unknown <span class="math inline">\(f.\)</span></p>
+<!-- Besides the training data, we may also have access to **testing data**
+$$
+\{(x_{01},y_{01}),(x_{02},y_{02})\dots,(x_{0m},y_{0m})\}.
+$$
+-->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -538,8 +544,10 @@ Tip
 \{(X_{01},Y_{01}),(X_{02},Y_{02}),\dots,(X_{0m},Y_{0m})\},
 \qquad(2.5)\]</span></span> denote the <strong>test data random sample</strong>, where <span class="math display">\[
 (X_{0i},Y_{0i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,m.
-\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math inline">\(Y=f(X)+\epsilon\)</span> in <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</p>
-<p>That is, the new test data random sample <a href="#eq-trainingsample" class="quarto-xref">Equation&nbsp;<span>2.5</span></a></p>
+\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math display">\[
+Y=f(X)+\epsilon
+\]</span> as in <a href="#eq-GRegMod" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</p>
+<p>That is, the new test data is <strong>random sample</strong>, which …</p>
 <ol type="1">
 <li>is independent of the training data random sample <a href="#eq-randomsample" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>
 </li>
@@ -746,8 +754,11 @@ Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^
 </div>
 </div>
 <p><img src="images/Fig_2_12.png" class="img-fluid"></p>
-</section></section></section><section id="exercises" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">2.4</span> Exercises</h2>
+</section></section></section><section id="assignment" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="assignment">
+<span class="header-section-number">2.4</span> Assignment</h2>
+<p>Link to your personal assignment repository: <a href="https://classroom.github.com/a/Oc5oS4l-">https://classroom.github.com/a/Oc5oS4l-</a></p>
+</section><section id="exercises" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">2.5</span> Exercises</h2>
 <p>Prepare the following exercises of <strong>Chapter 2</strong> in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 8</li>
