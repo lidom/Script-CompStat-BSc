@@ -560,8 +560,8 @@ Y=f(X)+\epsilon
 <section id="sec-mqfit" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-mqfit">
 <span class="header-section-number">2.3.1</span> Measuring the Quality of Fit</h3>
 <p>In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE).</p>
-<p>The global training (data) MSE is given by <span class="math display">\[\begin{align*}
-\operatorname{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
+<p>The global training data MSE is given by <span class="math display">\[\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
 \end{align*}\]</span> where</p>
 <ul>
 <li>
@@ -583,7 +583,7 @@ or next month's price.  -->
 (x_{0},Y_{0i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,m.
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
 <p>Then, the <strong>point-wise test MSE</strong> at <span class="math inline">\(X=x_0\)</span> is given by, <span class="math display">\[\begin{align*}
-\operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
+\widehat{\operatorname{MSE}}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
 \end{align*}\]</span></p>
 </section><section id="global-test-mse" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="global-test-mse">Global Test MSE</h3>
 <p>Typically, however, we want that a method has <strong>globally</strong>, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, a low test MSE (not only at a certain given value <span class="math inline">\(x_0\)</span>). Let <span class="math display">\[
@@ -593,12 +593,12 @@ or next month's price.  -->
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
 <p>Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[
 \begin{align*}
-\operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
+\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
 \]</span></p>
 <p>Note that if <span class="math inline">\(\hat{f}\)</span> is a really good estimate of <span class="math inline">\(f,\)</span> i.e.&nbsp;if <span class="math inline">\(\hat{f}\approx f,\)</span> then <span class="math display">\[
 \begin{align*}
-\operatorname{MSE}_{\text{test}}
+\widehat{\operatorname{MSE}}_{\text{test}}
 &amp;=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2\\
 &amp;\approx\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - f(x_{0i})\right)^2\\
 &amp;=\frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2\\
@@ -641,7 +641,7 @@ or next month's price.  -->
 <p>One important method is <strong>cross-validation</strong>, which is a method for estimating the test MSE using the training data.</p>
 </section><section id="the-bias-variance-trade-off" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="the-bias-variance-trade-off">
 <span class="header-section-number">2.3.2</span> The Bias-Variance Trade-Off</h3>
-<p>The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods: <strong>bias</strong> and <strong>variance</strong>.</p>
+<p>The U-shape observed in the test MSE curves (Figures 2.9-2.11) turns out to be the result of two competing properties of statistical learning methods: <strong>bias</strong> and <strong>variance</strong>.</p>
 <ul>
 <li><p>Let <span class="math inline">\(\hat{f}\)</span> be estimated from the training data random sample <span class="math display">\[
 \{(X_1,Y_1),\dots,(X_n,Y_n)\},
@@ -664,35 +664,51 @@ be the response random variable defined for the given predictor value $x_0.$
 $$
 Y_{01},\dots,Y_{0m}\overset{\text{iid}}{\sim}Y_0.
 $$  
-* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ --><p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following: <span class="math display">\[
+* Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ --><p>One can show that the expected test MSE at a given predictor value <span class="math inline">\(x_0\)</span> can be decomposed as following:</p>
+<p>One can show that <span class="math inline">\(\widehat{\operatorname{MSE}}_{test}(x_0)\)</span> is an <strong>unbiased estimator</strong> of the true (unknown) Mean Squared (Prediction) Error of <span class="math inline">\(\hat{f}(x_0)\)</span> <span class="math display">\[
+\operatorname{MSE}(x_0)=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{\text{Mean Squared Prediction Error of $\hat{f}(x_0)$}},
+\]</span> i.e., that <span id="eq-MSEUnbiased"><span class="math display">\[
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}
+\qquad(2.6)\]</span></span></p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of <a href="#eq-MSEUnbiased" class="quarto-xref">Equation&nbsp;<span>2.6</span></a>:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
 \begin{align*}
-E\left[\operatorname{MSE}_{test}(x_0)\right]
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]
 &amp; =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
-&amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
-&amp; =\frac{1}{m}\,\sum_{i=1}^m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ and $\hat{f}$ are iid})\\[2ex]
+&amp; \text{By the linearity of $E()$:}\\[2ex]
+&amp; =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; =\frac{1}{m}\,\sum_{i=1}^m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; \text{Using that $Y_{0i}$ and $\hat{f}$ are iid across $i=1,\dots,m$:}\\[2ex]
 &amp; =\frac{1}{m}\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\,\sum_{i=1}^m 1\\[2ex]
 &amp; =\frac{1}{m}\,m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp; =E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
-&amp; =E\left[\left(f(x_0) + \epsilon_{01} - \hat{f}(x_0)\right)^2\right]\quad(\text{using }\;Y_{01}=f(x_0)+\epsilon_{01})\\[2ex]
+&amp; \text{Using that}\;Y_{01}=f(x_0)+\epsilon_{01}\\[2ex]
+&amp; =E\left[\left(f(x_0) + \epsilon_{01} - \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_{01} + \epsilon_{01}^2 \right]\\[2ex]
 &amp; =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex]
 &amp;+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_{01}\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex]
-&amp;+ E\left[\epsilon_0^2 \right]\\[2ex]
-&amp; =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_{01})\\[2ex]
-%&amp; =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
-%&amp; =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
-%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
-%&amp;\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
-%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon_0)\\[2ex]
-%&amp; =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
-%&amp; =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
-%&amp;\quad\text{(steps skipped since beyond scope)}\\[2ex]
-&amp; = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \overbrace{\underbrace{Var\left(\epsilon_{01}\right)}_{\text{irreducible}}}^{=\sigma^2}
+&amp;+ \underbrace{E\left[\epsilon_{01}^2 \right]}_{=Var(\epsilon_{01})}\\[2ex]
+&amp; =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{Mean Squared Estimation Error of $\hat{f}(x_0)$}}+0+Var(\epsilon_{01})\\[2ex]
+&amp; =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{reducable}}+\overbrace{\underbrace{Var(\epsilon_{01})}_{\text{irreducable}}}^{=\sigma^2}\\[2ex]
 \end{align*}
 \]</span></p>
-<p>The <strong>expected MSE</strong> at <span class="math inline">\(x_0,\)</span> <span class="math display">\[
+</div>
+</div>
+<!-- The **expected MSE** at $x_0,$ 
+$$
 E\left[\operatorname{MSE}_{test}(x_0)\right],
-\]</span> refers to the average test MSE that we would obtain if we repeatedly estimated <span class="math inline">\(f\)</span> using training data set, and evaluated each at <span class="math inline">\(x_0.\)</span></p>
+$$ 
+refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$  
+-->
 <!-- 
 ::: {.callout-note}
 A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding challenge) is not able to consistently approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$
@@ -700,15 +716,64 @@ A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding chal
 However, to get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$ This will be (among others) the topic of  @sec-resamplingmethods.
 ::: 
 -->
-<p>To minimize the expected test MSE, we need to select a statistical learning method that <em>simultaneously</em> achieves <strong>low variance</strong> and <strong>low bias</strong>.</p>
+<p>The mean squared estimation error of <span class="math inline">\(\hat{f}(x_0)\)</span> can be further decomposed into a variance component and a squared bias component, i.e. <span id="eq-MSEBiasVar"><span class="math display">\[
+E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right] =
+Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2
+\qquad(2.7)\]</span></span></p>
+<section id="variance-of-hatf-at-x_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span>
+</h4>
+<p><span class="math display">\[
+Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
+\]</span> <strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> Ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
+</section><section id="bias-of-hatf-at-x_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0">Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span>
+</h4>
+<p><span class="math display">\[
+\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
+\]</span> <strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of <a href="#eq-MSEBiasVar" class="quarto-xref">Equation&nbsp;<span>2.7</span></a>:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><br></p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;   E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right]\\[2ex]
+&amp; = E\left[\left(\hat{f}(x_0) - f(x_0)\right)^2\right]\\[2ex]
+&amp;\text{Adding $0=E[\hat{f}(x_0)] - E[\hat{f}(x_0)]$ yields}\\[2ex]
+&amp; = E\left[\left(\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\} - \left\{ f(x_0)- E[\hat{f}(x_0)]\right\}\right)^2\right]\\[2ex]
+&amp; = \overbrace{E\left[\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\}^2\right]}^{=Var\left(\hat{f}(x_0)\right)} + \overbrace{E\left[\left\{ f(x_0)- E[\hat{f}(x_0)]\right\}^2\right]}^{=\left\{E[\hat{f}(x_0)] - f(x_0) \right\}^2}\\[2ex]
+&amp; \;\; -2\;\; \underbrace{E\left[\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\} \cdot
+                 \left\{ f(x_0)- E[\hat{f}(x_0)]\right\}\right]}_{=E\left[\hat{f}(x_0)f(x_0)
+                                                                         -\hat{f}(x_0)E\left[\hat{f}(x_0)\right]
+                                                                         -     f(x_0) E\left[\hat{f}(x_0)\right]
+                                                                         +\left(E\left[\hat{f}(x_0)\right]\right)^2\right]}\\[2ex]
+&amp; = Var\left(\hat{f}(x_0)\right) + \Big\{\;\overbrace{E[\hat{f}(x_0)] - f(x_0)}^{=\operatorname{Bias}\left(\hat{f}(x_0)\right)}\; \Big\}^2\\[2ex]
+&amp; \;\; -2\;\; \underbrace{E\left[\hat{f}(x_0)f(x_0) -\hat{f}(x_0)E\left[\hat{f}(x_0)\right]
+                                                                         -     f(x_0) E\left[\hat{f}(x_0)\right]
+                                                                         +\left(E\left[\hat{f}(x_0)\right]\right)^2\right]}_{= 0
+                                                                         }\\[2ex]                  
+% = E\left[\hat{f}(x_0)\right]f(x_0) - \left(E\left[\hat{f}(x_0)\right]\right)^2 - f(x_0) E\left[\hat{f}(x_0)\right]+\left(E\left[\hat{f}(x_0)\right]\right)^2                                                                          
+&amp; = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}}
+\end{align*}
+\]</span></p>
+</div>
+</div>
+<p>Thus, to minimize the expected test MSE, we need to select a statistical learning method that <em>simultaneously</em> achieves <strong>low variance</strong> and <strong>low bias</strong>.</p>
 <p>Note that <span class="math display">\[
 Var\left(\hat{f}(x_0)\right)\geq 0
 \]</span> and that <span class="math display">\[
 \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2\geq 0.
 \]</span> Thus, the expected test MSE can never lie below of <span class="math inline">\(Var(\epsilon),\)</span> i.e. <span class="math display">\[
 \begin{align*}
-E\left[\operatorname{MSE}_{test}(x_0)\right]
-&amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]
+=\operatorname{MSE}(x_0)
+%&amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
 \geq Var\left(\epsilon\right)=\sigma^2.
 \end{align*}
 \]</span></p>
@@ -718,43 +783,15 @@ E\left[\operatorname{MSE}_{test}(x_0)\right]
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(E[(Y_0- \hat{f}(x_0))^2]\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
+<p>The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(\operatorname{MSE}(x_0)\)</span> over all possible values of <span class="math inline">\(x_0,\)</span> i.e. <span class="math display">\[
+E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
+\]</span></p>
 </div>
 </div>
 </div>
 <!-- $$
 E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
 $$ -->
-<section id="variance-of-hatf-at-x_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span>
-</h4>
-<p><span class="math display">\[
-Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
-\]</span> <strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> But ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The overall, i.e., <strong>global</strong> variance can be computed by averaging <span class="math inline">\(Var(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
-</div>
-</div>
-</div>
-</section><section id="bias-of-hatf-at-x_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0">Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span>
-</h4>
-<p><span class="math display">\[
-\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
-\]</span> <strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The overall, i.e., <em>global</em> bias can be computed by averaging <span class="math inline">\(\operatorname{Bias}(\hat{f}(x_0))\)</span> over all possible values of <span class="math inline">\(x_0\)</span> in the test set.</p>
-</div>
-</div>
-</div>
 <p><img src="images/Fig_2_12.png" class="img-fluid"></p>
 </section></section></section><section id="assignment" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="assignment">
 <span class="header-section-number">2.4</span> Assignment</h2>

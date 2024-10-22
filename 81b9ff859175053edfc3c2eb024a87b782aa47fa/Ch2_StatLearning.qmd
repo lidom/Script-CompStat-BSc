@@ -392,9 +392,9 @@ of the test data random sample is used to check the accuracy of the estimate $\h
 
 In the regression setting, the most commonly-used measure is the mean squared (prediction) error (MSE). 
 
-The global training (data) MSE is given by
+The global training data MSE is given by
 \begin{align*}
-\operatorname{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
+\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n\left(y_i - \hat{f}(x_i)\right)^2,
 \end{align*}
 where 
 
@@ -430,7 +430,7 @@ This test data random sample is independent of the training data random sample w
 
 Then, the **point-wise test MSE** at $X=x_0$ is given by,
 \begin{align*}
-\operatorname{MSE}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
+\widehat{\operatorname{MSE}}_{\text{test}}(x_0)= \frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0})\right)^2.
 \end{align*}
 
 
@@ -451,14 +451,14 @@ This test data random sample is independent of the training data random sample w
 Then, the **global test MSE** is given by,
 $$
 \begin{align*}
-\operatorname{MSE}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
+\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2.
 \end{align*}
 $$
 
 Note that if $\hat{f}$ is a really good estimate of $f,$ i.e. if $\hat{f}\approx f,$ then 
 $$
 \begin{align*}
-\operatorname{MSE}_{\text{test}}
+\widehat{\operatorname{MSE}}_{\text{test}}
 &=\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - \hat{f}(x_{0i})\right)^2\\
 &\approx\frac{1}{m}\sum_{i=1}^m\left(y_{0i} - f(x_{0i})\right)^2\\
 &=\frac{1}{m}\sum_{i=1}^m\epsilon_{0i}^2\\
@@ -515,7 +515,7 @@ One important method is **cross-validation**, which is a method for estimating t
 
 ### The Bias-Variance Trade-Off
 
-The U-shape observed in the test MSE curves (Figures 2.9–2.11) turns out to be the result of two competing properties of statistical learning methods: **bias** and **variance**.
+The U-shape observed in the test MSE curves (Figures 2.9-2.11) turns out to be the result of two competing properties of statistical learning methods: **bias** and **variance**.
 
 * Let $\hat{f}$ be estimated from the training data random sample
 $$
@@ -549,39 +549,50 @@ $$
 * Realizations of $Y_{01},\dots,Y_{0m}$ generate the test data at the predictor value $x_0.$ -->
 
 One can show that the expected test MSE at a given predictor value $x_0$ can be decomposed as following: 
+
+One can show that $\widehat{\operatorname{MSE}}_{test}(x_0)$ is an **unbiased estimator** of the true (unknown) Mean Squared (Prediction) Error of $\hat{f}(x_0)$
+$$
+\operatorname{MSE}(x_0)=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{\text{Mean Squared Prediction Error of $\hat{f}(x_0)$}},
+$$ 
+i.e., that
+$$
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}
+$${#eq-MSEUnbiased}
+
+
+::: {.callout}
+
+# Proof of @eq-MSEUnbiased:
 $$
 \begin{align*}
-E\left[\operatorname{MSE}_{test}(x_0)\right] 
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right] 
 & =E\left[\frac{1}{m}\sum_{i=1}^m\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
-& =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\quad(\text{linearity of $E$})\\[2ex]
-& =\frac{1}{m}\,\sum_{i=1}^m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\quad(\text{since $Y_{0i}$ and $\hat{f}$ are iid})\\[2ex]
+& \text{By the linearity of $E()$:}\\[2ex]
+& =\frac{1}{m}\sum_{i=1}^mE\left[\left(Y_{0i}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =\frac{1}{m}\,\sum_{i=1}^m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& \text{Using that $Y_{0i}$ and $\hat{f}$ are iid across $i=1,\dots,m$:}\\[2ex]
 & =\frac{1}{m}\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\,\sum_{i=1}^m 1\\[2ex]
 & =\frac{1}{m}\,m\,E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
 & =E\left[\left(Y_{01}- \hat{f}(x_0)\right)^2\right]\\[2ex]
-& =E\left[\left(f(x_0) + \epsilon_{01} - \hat{f}(x_0)\right)^2\right]\quad(\text{using }\;Y_{01}=f(x_0)+\epsilon_{01})\\[2ex]
+& \text{Using that}\;Y_{01}=f(x_0)+\epsilon_{01}\\[2ex]
+& =E\left[\left(f(x_0) + \epsilon_{01} - \hat{f}(x_0)\right)^2\right]\\[2ex]
 & =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon_{01} + \epsilon_{01}^2 \right]\\[2ex]
 & =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex] 
 &+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon_{01}\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex] 
-&+ E\left[\epsilon_0^2 \right]\\[2ex]
-& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{MSE of $\hat{f}(x_0)$}}+0+Var(\epsilon_{01})\\[2ex] 
-%& =E\left[\left(Y_0- \hat{f}(x_0) \underbrace{+f(x_0)-f(x_0)}_{=0}\right)^2\right]\\[2ex]
-%& =E\left[\left(\left(f(x_0)-\hat{f}(x_0)\right)+\epsilon\right)^2\right]\\[2ex]
-%& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2+2\left(f(x_0)-\hat{f}(x_0)\right)\epsilon+\epsilon^2\right]\\[2ex]
-%&\quad \text{Since $\epsilon$ (train) and $\hat{f}$ (test) are independent:}\\[2ex]
-%& =E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+0+Var(\epsilon_0)\\[2ex]
-%& =E\left[\left(f(x_0)-\hat{f}(x_0)\underbrace{+E(\hat{f}(x_0))-E(\hat{f}(x_0))}_{=0}\right)^2\right]+Var(\epsilon_0)\\[2ex]
-%& =E\left[\left(-\left\{E(\hat{f}(x_0)) - f(x_0)\right\} - \left\{\hat{f}(x_0)-E(\hat{f}(x_0))\right\}\right)^2\right]+Var(\epsilon_0)\\[2ex]
-%&\quad\text{(steps skipped since beyond scope)}\\[2ex]
-& = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} + \overbrace{\underbrace{Var\left(\epsilon_{01}\right)}_{\text{irreducible}}}^{=\sigma^2}
+&+ \underbrace{E\left[\epsilon_{01}^2 \right]}_{=Var(\epsilon_{01})}\\[2ex]
+& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{Mean Squared Estimation Error of $\hat{f}(x_0)$}}+0+Var(\epsilon_{01})\\[2ex] 
+& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{reducable}}+\overbrace{\underbrace{Var(\epsilon_{01})}_{\text{irreducable}}}^{=\sigma^2}\\[2ex] 
 \end{align*}
 $$
+:::
 
 
-The **expected MSE** at $x_0,$ 
+<!-- The **expected MSE** at $x_0,$ 
 $$
 E\left[\operatorname{MSE}_{test}(x_0)\right],
 $$ 
-refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$ 
+refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$  
+-->
 
 <!-- 
 ::: {.callout-note}
@@ -591,7 +602,63 @@ However, to get information about Bias and Variance of a method, we need to appr
 ::: 
 -->
 
-To minimize the expected test MSE, we need to select a statistical learning method that *simultaneously* achieves **low variance** and **low bias**. 
+
+The mean squared estimation error of $\hat{f}(x_0)$ can be further decomposed into a variance component and a squared bias component, i.e.
+$$
+E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right] = 
+Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2
+$${#eq-MSEBiasVar}
+
+
+
+#### Variance of $\hat{f}$ at $x_0$ {-}
+$$
+Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
+$$
+**Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ Ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
+
+
+
+
+#### Bias of $\hat{f}$ at $x_0$ {-}
+$$
+\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
+$$
+**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
+
+
+
+
+::: {.callout}
+
+# Proof of @eq-MSEBiasVar:
+
+<br>
+
+$$
+\begin{align*}
+&   E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right]\\[2ex]
+& = E\left[\left(\hat{f}(x_0) - f(x_0)\right)^2\right]\\[2ex]
+&\text{Adding $0=E[\hat{f}(x_0)] - E[\hat{f}(x_0)]$ yields}\\[2ex]
+& = E\left[\left(\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\} - \left\{ f(x_0)- E[\hat{f}(x_0)]\right\}\right)^2\right]\\[2ex]
+& = \overbrace{E\left[\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\}^2\right]}^{=Var\left(\hat{f}(x_0)\right)} + \overbrace{E\left[\left\{ f(x_0)- E[\hat{f}(x_0)]\right\}^2\right]}^{=\left\{E[\hat{f}(x_0)] - f(x_0) \right\}^2}\\[2ex]
+& \;\; -2\;\; \underbrace{E\left[\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\} \cdot 
+                 \left\{ f(x_0)- E[\hat{f}(x_0)]\right\}\right]}_{=E\left[\hat{f}(x_0)f(x_0)
+                                                                         -\hat{f}(x_0)E\left[\hat{f}(x_0)\right]
+                                                                         -     f(x_0) E\left[\hat{f}(x_0)\right]
+                                                                         +\left(E\left[\hat{f}(x_0)\right]\right)^2\right]}\\[2ex]
+& = Var\left(\hat{f}(x_0)\right) + \Big\{\;\overbrace{E[\hat{f}(x_0)] - f(x_0)}^{=\operatorname{Bias}\left(\hat{f}(x_0)\right)}\; \Big\}^2\\[2ex]
+& \;\; -2\;\; \underbrace{E\left[\hat{f}(x_0)f(x_0) -\hat{f}(x_0)E\left[\hat{f}(x_0)\right]
+                                                                         -     f(x_0) E\left[\hat{f}(x_0)\right]
+                                                                         +\left(E\left[\hat{f}(x_0)\right]\right)^2\right]}_{= 0
+                                                                         }\\[2ex]                  
+% = E\left[\hat{f}(x_0)\right]f(x_0) - \left(E\left[\hat{f}(x_0)\right]\right)^2 - f(x_0) E\left[\hat{f}(x_0)\right]+\left(E\left[\hat{f}(x_0)\right]\right)^2                                                                          
+& = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} 
+\end{align*}
+$$
+:::
+
+Thus, to minimize the expected test MSE, we need to select a statistical learning method that *simultaneously* achieves **low variance** and **low bias**. 
 
 
 Note that 
@@ -605,41 +672,30 @@ $$
 Thus, the expected test MSE can never lie below of $Var(\epsilon),$ i.e.
 $$
 \begin{align*}
-E\left[\operatorname{MSE}_{test}(x_0)\right] 
-& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right] 
+=\operatorname{MSE}(x_0)
+%& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
 \geq Var\left(\epsilon\right)=\sigma^2.
 \end{align*}
 $$
 
 
+
+
 ::: {.callout}
-The overall, i.e., **global** expected test MSE can be computed by averaging $E[(Y_0- \hat{f}(x_0))^2]$ over all possible values of $x_0$ in the test set.
+The overall, i.e., **global** expected test MSE can be computed by averaging $\operatorname{MSE}(x_0)$ over all possible values of $x_0,$ i.e.
+$$
+E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
+$$
 :::
 
 <!-- $$
 E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
 $$ -->
 
-#### Variance of $\hat{f}$ at $x_0$ {-}
-$$
-Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
-$$
-**Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ But ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
-
-::: {.callout}
-The overall, i.e., **global** variance can be computed by averaging $Var(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
-:::
 
 
-#### Bias of $\hat{f}$ at $x_0$ {-}
-$$
-\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
-$$
-**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
 
-::: {.callout}
-The overall, i.e., *global* bias can be computed by averaging $\operatorname{Bias}(\hat{f}(x_0))$ over all possible values of $x_0$ in the test set. 
-:::
 
 ![](images/Fig_2_12.png)
 
