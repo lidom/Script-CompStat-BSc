@@ -783,8 +783,11 @@ E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The overall, i.e., <strong>global</strong> expected test MSE can be computed by averaging <span class="math inline">\(\operatorname{MSE}(x_0)\)</span> over all possible values of <span class="math inline">\(x_0,\)</span> i.e. <span class="math display">\[
+<p>The overall, i.e., <strong>global</strong> MSE can be computed by averaging the local <span class="math inline">\(\operatorname{MSE}(x_0)\)</span> over all possible values of <span class="math inline">\(x_0,\)</span> i.e. <span class="math display">\[
 E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
+\]</span></p>
+<p>We can estimate the global MSE using <span class="math display">\[
+\widehat{\operatorname{MSE}}_test = \frac{1}{m}\sum_{i=1}^m\left(y_{0i}-\hat{f}(x_{0i})\right)^2.
 \]</span></p>
 </div>
 </div>

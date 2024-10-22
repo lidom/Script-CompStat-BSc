@@ -683,9 +683,15 @@ $$
 
 
 ::: {.callout}
-The overall, i.e., **global** expected test MSE can be computed by averaging $\operatorname{MSE}(x_0)$ over all possible values of $x_0,$ i.e.
+
+The overall, i.e., **global** MSE can be computed by averaging the local $\operatorname{MSE}(x_0)$ over all possible values of $x_0,$ i.e.
 $$
 E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
+$$
+
+We can estimate the global MSE using 
+$$
+\widehat{\operatorname{MSE}}_{test} = \frac{1}{m}\sum_{i=1}^m\left(y_{0i}-\hat{f}(x_{0i})\right)^2.
 $$
 :::
 
