@@ -256,20 +256,17 @@ X_{i0}=1
 \]</span> for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
 <ul>
 <li>
-<span class="math inline">\(Y_i\)</span> is called “dependent variable” or “outcome variable” or “regressand” or</li>
-<li>
-<span class="math inline">\(X_{ik}\)</span> is called the <span class="math inline">\(k\)</span>th “predictor variable” or “regressor” or “explanatory variable” or “control variable.” Each of these names emphasizes a slightly different perspective on <span class="math inline">\(X_{ik}.\)</span>
-</li>
+<span class="math inline">\(Y_i\)</span> is called “dependent variable” or “outcome variable” or “regressand” * <span class="math inline">\(X_{ik}\)</span> is called the <span class="math inline">\(k\)</span>th “predictor variable” or “regressor” or “explanatory variable” or “control variable.”</li>
 </ul>
 <p>It is convenient to write <a href="#eq-LinMod" class="quarto-xref">Equation&nbsp;<span>4.1</span></a> using matrix notation <span class="math display">\[
 \begin{eqnarray*}
   Y_i&amp;=&amp;\underset{(1\times (p+1))}{X_i'}\underset{((p+1)\times 1)}{\beta} +\epsilon_i, \quad i=1,\dots,n,
 \end{eqnarray*}
 \]</span> where <span class="math display">\[
-  X_i=\left(\begin{matrix}X_{i0}\\ \vdots\\  X_{ip}\end{matrix}\right)
+X_i=\left(\begin{matrix}X_{i0}\\ \vdots\\  X_{ip}\end{matrix}\right)
   \quad\text{and}\quad
 \beta=\left(\begin{matrix}\beta_0\\ \vdots\\ \beta_p\end{matrix}\right).
-\]</span> Stacking all individual rows <span class="math inline">\(i=1,\dots,n\)</span> leads to <span class="math display">\[
+\]</span> Stacking all individual rows, <span class="math inline">\(X_i',\)</span> <span class="math inline">\(i=1,\dots,n\)</span> leads to <span class="math display">\[
 \begin{eqnarray*}\label{LM}
   \underset{(n\times 1)}{Y}&amp;=&amp;\underset{(n\times (p+1))}{X}\underset{((p+1)\times 1)}{\beta} + \underset{(n\times 1)}{\epsilon},
 \end{eqnarray*}
@@ -313,7 +310,7 @@ Note
 </div>
 </div>
 <p><strong>Part (b): Random Sample</strong></p>
-<p>We assume that the observed data points <span class="math display">\[
+<p>We assume that the <span class="math inline">\(n\)</span> observed data points <span class="math display">\[
 ((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{n(p+1)}))
 \]</span> are a realization of the <strong>training data random sample</strong> <span class="math display">\[
 ((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{n(p+1)})).
@@ -469,16 +466,29 @@ Tip
 <p><strong>Assumption 4: Error distribution</strong></p>
 <p>There are different more or less restrictive assumptions. Some of the most common ones are the following:</p>
 <ul>
-<li><p><strong>Conditional distribution with sufficiently many moments:</strong> <span class="math display">\[
-\epsilon_i|X_i \sim f_{\epsilon|X}
-\]</span> for all <span class="math inline">\(i=1,\dots,n\)</span> and for any distribution <span class="math inline">\(f_{\epsilon|X}\)</span> with two (or more) finite moments.</p></li>
-<li><p><strong>Conditional normal distribution:</strong> <span class="math display">\[
-\epsilon_i|X_i \sim \mathcal{N}(0,\sigma^2(X_i))
-\]</span> for all <span class="math inline">\(i=1,\dots,n\)</span>.</p></li>
-<li><p><strong>Independence between error and predictors:</strong> <span class="math inline">\(\epsilon_i\sim f_\epsilon\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span> such that <span class="math inline">\(f_\epsilon=f_{\epsilon|X}\)</span> and such that <span class="math inline">\(f_\epsilon\)</span> has two (or more) finite moments.</p></li>
-<li><p><strong>Independence between error and predictors and normality:</strong> As above, but with <span class="math inline">\(f_\epsilon=\mathcal{N}(0,\sigma^2)\)</span>.</p></li>
 <li>
-<p><strong>Spherical errors:</strong> The conditional distributions of <span class="math inline">\(\epsilon_i|X_i\)</span> may generally depend on <span class="math inline">\(X_i\)</span> for all <span class="math inline">\(i=1,\dots,n,\)</span> but only such that <span class="math display">\[
+<strong>Conditional distribution with sufficiently many moments:</strong> <span class="math display">\[
+\epsilon_i|X_i \sim f_{\epsilon|X}
+\]</span> for all <span class="math inline">\(i=1,\dots,n\)</span> and for any distribution <span class="math inline">\(f_{\epsilon|X}\)</span> with two (or more) finite moments.
+<ul>
+<li>
+<strong>Example: Conditional normal distribution</strong> <span class="math display">\[
+\epsilon_i|X_i \sim \mathcal{N}(0,\sigma^2(X_i))
+\]</span> for all <span class="math inline">\(i=1,\dots,n\)</span>.</li>
+</ul>
+</li>
+<li>
+<strong>Independence between error and predictors:</strong> <span class="math inline">\(\epsilon_i\sim f_\epsilon\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span> such that <span class="math inline">\(f_\epsilon=f_{\epsilon|X}\)</span> and such that <span class="math inline">\(f_\epsilon\)</span> has two (or more) finite moments.
+<ul>
+<li>
+<strong>Example: Independence between a Gaussian error and the predictors</strong> <span class="math display">\[
+f_\epsilon=\mathcal{N}(0,\sigma^2),
+\]</span> where <span class="math inline">\(\sigma^2\)</span> does not depend on <span class="math inline">\(X.\)</span>
+</li>
+</ul>
+</li>
+<li>
+<strong>Spherical errors:</strong> The conditional distributions of <span class="math inline">\(\epsilon_i|X_i\)</span> may generally depend on <span class="math inline">\(X_i\)</span> for all <span class="math inline">\(i=1,\dots,n,\)</span> but only such that <span class="math display">\[
 E(\epsilon|X)=\underset{(n\times 1)}{0}
 \]</span> and <span class="math display">\[
 \begin{align*}
@@ -497,7 +507,7 @@ Cov(\epsilon_n,\epsilon_1|X)&amp;Cov(\epsilon_n,\epsilon_2|X)&amp;\dots&amp;Var(
 \end{matrix}\right)
 = \sigma^2 I_n,
 \end{align*}
-\]</span> where <span class="math inline">\(I_n\)</span> denotes the <span class="math inline">\((n\times n)\)</span> identity matrix with ones on the diagonal and zeros else. Thus, under the spherical errors assumption, one has, for all possible realizations of <span class="math inline">\(X\)</span>, that:</p>
+\]</span> where <span class="math inline">\(I_n\)</span> denotes the <span class="math inline">\((n\times n)\)</span> identity matrix with ones on the diagonal and zeros else. Thus, under the spherical errors assumption, one has, for all possible realizations of <span class="math inline">\(X\)</span>, that:
 <ul>
 <li>
 <strong>uncorrelated:</strong> <span class="math inline">\(Cov(\epsilon_i,\epsilon_j|X)=0\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span> and all <span class="math inline">\(j=1,\dots,n\)</span> such that <span class="math inline">\(i\neq j\)</span>

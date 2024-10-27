@@ -24,8 +24,7 @@ X_{i0}=1
 $$ 
 for all $i=1,\dots,n.$ 
 
-* $Y_i$ is called "dependent variable" or "outcome variable" or "regressand" or 
-* $X_{ik}$ is called the $k$th "predictor variable" or "regressor" or "explanatory variable" or "control variable." Each of these names emphasizes a slightly different perspective on $X_{ik}.$
+* $Y_i$ is called "dependent variable" or "outcome variable" or "regressand" * $X_{ik}$ is called the $k$th "predictor variable" or "regressor" or "explanatory variable" or "control variable." 
 
 It is convenient to write @eq-LinMod using matrix notation
 $$
@@ -35,11 +34,11 @@ $$
 $$
 where 
 $$
-  X_i=\left(\begin{matrix}X_{i0}\\ \vdots\\  X_{ip}\end{matrix}\right)
+ X_i=\left(\begin{matrix}X_{i0}\\ \vdots\\  X_{ip}\end{matrix}\right)
   \quad\text{and}\quad 
 \beta=\left(\begin{matrix}\beta_0\\ \vdots\\ \beta_p\end{matrix}\right).
 $$ 
-Stacking all individual rows $i=1,\dots,n$ leads to
+Stacking all individual rows, $X_i',$ $i=1,\dots,n$ leads to
 $$
 \begin{eqnarray*}\label{LM}
   \underset{(n\times 1)}{Y}&=&\underset{(n\times (p+1))}{X}\underset{((p+1)\times 1)}{\beta} + \underset{(n\times 1)}{\epsilon},
@@ -83,7 +82,7 @@ The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, desp
 
 **Part (b): Random Sample**
 
-We assume that the observed data points 
+We assume that the $n$ observed data points 
 $$
 ((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{n(p+1)}))
 $$ 
@@ -236,16 +235,18 @@ $$
 \epsilon_i|X_i \sim f_{\epsilon|X}
 $$ 
 for all $i=1,\dots,n$ and for any distribution $f_{\epsilon|X}$ with two (or more) finite moments.
-
-- **Conditional normal distribution:** 
-$$
-\epsilon_i|X_i \sim \mathcal{N}(0,\sigma^2(X_i))
-$$ 
-for all $i=1,\dots,n$.
+  - **Example: Conditional normal distribution** 
+  $$
+  \epsilon_i|X_i \sim \mathcal{N}(0,\sigma^2(X_i))
+  $$ 
+  for all $i=1,\dots,n$.
 
 - **Independence between error and predictors:** $\epsilon_i\sim f_\epsilon$ for all $i=1,\dots,n$ such that $f_\epsilon=f_{\epsilon|X}$ and such that $f_\epsilon$ has two (or more) finite moments.  
-
-- **Independence between error and predictors and normality:** As above, but with $f_\epsilon=\mathcal{N}(0,\sigma^2)$. 
+   - **Example: Independence between a Gaussian error and the predictors** 
+   $$
+   f_\epsilon=\mathcal{N}(0,\sigma^2),
+   $$ 
+   where $\sigma^2$ does not depend on $X.$
 
 - **Spherical errors:** The conditional distributions of  $\epsilon_i|X_i$ may generally depend on $X_i$ for all $i=1,\dots,n,$ but only such that
 $$
