@@ -24,7 +24,8 @@ X_{i0}=1
 $$ 
 for all $i=1,\dots,n.$ 
 
-* $Y_i$ is called "dependent variable" or "outcome variable" or "regressand" * $X_{ik}$ is called the $k$th "predictor variable" or "regressor" or "explanatory variable" or "control variable." 
+* $Y_i$ is called "dependent variable" or "outcome variable" or "regressand"
+* $X_{ik}$ is called the $k$th "predictor variable" or "regressor" or "explanatory variable" or "control variable." 
 
 It is convenient to write @eq-LinMod using matrix notation
 $$
