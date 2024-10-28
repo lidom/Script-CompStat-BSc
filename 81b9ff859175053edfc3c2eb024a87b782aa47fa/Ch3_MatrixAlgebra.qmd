@@ -3,7 +3,7 @@
 Relevance for the exam: 
 
 * Chapters 3.1 to 3.4 
-* For Chapter 3.5 there will be a exercise question, however, for the exam "only" a general/basic understanding is sufficient
+* For Chapter 3.5 there will be an exercise question; however, for the exam "only" a general/basic understanding of the concepts in Chapter 3.5 is sufficient.
 * Chapter 3.6 is not relevant for the exam of this course, but may/will be useful in more advanced courses.
 
 
