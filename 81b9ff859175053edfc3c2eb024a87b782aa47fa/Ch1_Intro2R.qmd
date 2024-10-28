@@ -869,15 +869,39 @@ options(tibble.print_min=10, tibble.print_max=20)
 
 
 
-## Assignment 
+## Git/GitHub 
 
-Link to your personal assignment repository:</br>
-[https://classroom.github.com/a/5HB8NuPW](https://classroom.github.com/a/5HB8NuPW) 
-
-
-**Note:** For this course, it is not required and not necessary to learn git. The GitHub assignment repository can be used simply in the browser. However, if you are interested in learning git, you can do so. 
+For this course, it is not required and not necessary to learn git. The GitHub assignment repository (see below) can be used simply in the browser. However, if you are interested in learning git, you can, of course, do so. 
 
 Links to good git introductions: 
 
 * [Course Effective Programming Practices (Uni Bonn)](https://effective-programming-practices.vercel.app/git/index.html)
 * [http://happygitwithr.com/](http://happygitwithr.com/)
+
+
+
+## Assignment 
+
+
+Code functions to compute the following three summary statistics: 
+
+* `myMean()` to compute the sample mean
+* `myVariance()` to compute the sample variance
+* `myRange()` to compute the range of values in a given sample
+
+Do **not** use pre-implemented functions such as the `mean()`-function in `R`.
+
+Apply each function using simulated data sets and compare the population (true) parameters with their sample versions. 
+
+Provide also the mathematical formulas for each implemented summary statistic.
+
+
+Link to your personal assignment repository:</br>
+[https://classroom.github.com/a/5HB8NuPW](https://classroom.github.com/a/5HB8NuPW) 
+
+
+Write up everything in **one** PDF document, e.g. using quarto and the provided `Template.qmd` file. 
+
+Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account.
+
+
