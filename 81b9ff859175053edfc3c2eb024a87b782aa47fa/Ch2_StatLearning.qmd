@@ -722,7 +722,7 @@ Hints:
 
 `e_vec  <- rnorm(n) # sample size n`
 
-3. Use a uniform predictor $X\sim\mathcal{U}[0,100]$
+3. Use a uniform predictor $X\sim\mathcal{U}[0,100]$:
 
 `x_vec  <- runif(n, min = 0, max = 100) # sample size n`
 

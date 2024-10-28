@@ -798,7 +798,36 @@ $$ -->
 <p><img src="images/Fig_2_12.png" class="img-fluid"></p>
 </section></section></section><section id="assignment" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="assignment">
 <span class="header-section-number">2.4</span> Assignment</h2>
+<p>Task: Generate artificial training and test data to <strong>compute</strong> <em>and</em> <strong>visualize</strong> global training/test MSE results similar to those shown in Figure 2.9. (i.e.&nbsp;moderately complex <span class="math inline">\(f\)</span> and moderate signal-to-noise ratio).</p>
+<p>Hints:</p>
+<ol type="1">
+<li>Use the following true function <span class="math inline">\(f\)</span>:</li>
+</ol>
+<p><code>true_f &lt;- function(x){4 + 0.025 * x + 2* sin(10 + x * 2 * pi / 110)}</code></p>
+<ol start="2" type="1">
+<li>Use a Gaussian error term <span class="math inline">\(\epsilon\sim\mathcal{N}(0,1)\)</span>:</li>
+</ol>
+<p><code>e_vec  &lt;- rnorm(n) # sample size n</code></p>
+<ol start="3" type="1">
+<li>Use a uniform predictor <span class="math inline">\(X\sim\mathcal{U}[0,100]\)</span>:</li>
+</ol>
+<p><code>x_vec  &lt;- runif(n, min = 0, max = 100) # sample size n</code></p>
+<ol start="4" type="1">
+<li>
+<p>For fitting <span class="math inline">\(f\)</span> use:</p>
+<ol type="1">
+<li>Simple linear regression (two parameters, i.e.&nbsp;<code>df=2</code>)</li>
+<li>Nonparametric spline regression (<code><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline()</a></code>) with a small degree of freedom parameter around <code>df = 5</code>
+</li>
+<li>Nonparametric spline regression (<code><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline()</a></code>) with a large degree of freedom parameter around <code>df = 20</code>
+</li>
+</ol>
+</li>
+<li><p>To produce a plot similar to the right plot in Figure 2.9. it is sufficient to visualize the values corresponding to the six square-shaped points and the value corresponding to the dashed line.</p></li>
+</ol>
 <p>Link to your personal assignment repository: <a href="https://classroom.github.com/a/Oc5oS4l-">https://classroom.github.com/a/Oc5oS4l-</a></p>
+<p>Write up everything in <strong>one</strong> PDF document, e.g.&nbsp;using quarto and the provided <code>Template.qmd</code> file.</p>
+<p>Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account.</p>
 </section><section id="exercises" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">2.5</span> Exercises</h2>
 <p>Prepare the following exercises of <strong>Chapter 2</strong> in our course textbook <code>ISLR</code>:</p>
@@ -840,9 +869,6 @@ This exercise relates to the College data set, which can be found in the file `C
 
 
 
-
-
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -877,9 +903,6 @@ college[c(1:10),c(1:5)]
 
 
 
-
-
-
 **8. b)** Look at the data using the `fix()` function.
 
 **Answer:**
@@ -889,9 +912,6 @@ The `fix()` command allows you to look at the data and change values in the data
 
 We can do some additional data-wrangling:<br>
 You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
-
-
-
 
 
 
@@ -915,13 +935,7 @@ rownames(college) <- college[,1]
 
 
 
-
-
-
 You should see that there is now a row.names column with the name of each university recorded. This means that `R` has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
-
-
-
 
 
 
@@ -940,17 +954,11 @@ college <- college[,-1]
 
 
 
-
-
-
 Now you should see that the first data column is `Private`. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.
 
 **8. c. i)** Use the `summary()` function to produce a numerical summary of the variables in the data set.
 
 **Answer:**
-
-
-
 
 
 
@@ -990,15 +998,9 @@ summary(college[, 1:5])
 
 
 
-
-
-
 **8. c. ii)** Use the `pairs()` function to produce a scatterplot matrix of the 2nd to 10th column or variables of the data. Recall that you can reference the 2nd to 10th column of a matrix `A` using `A[,2:10]`.
 
 **Answer:**
-
-
-
 
 
 
@@ -1019,15 +1021,9 @@ pairs(x = college[,2:10])
 
 
 
-
-
-
 **8. c. iii)** Use the `boxplot()` function to produce side-by-side boxplots of `Outstate` versus `Private`.
 
 **Answer:**
-
-
-
 
 
 
@@ -1052,16 +1048,10 @@ boxplot(Outstate~Private,
 
 
 
-
-
-
 > `Outstate`-Variable explained: The `Outstate`-variable is the tuition fee charged from non-resident students. (Many US colleges charge high tuition fees from non-resident students.) 
 
 
 **8. c. iv)** Create a new qualitative variable, called `Elite`, by binning the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
-
-
-
 
 
 
@@ -1088,16 +1078,10 @@ college <- data.frame(college, Elite)
 
 
 
-
-
-
 Use the `summary()` function to see how many elite universities there are. Now use the `boxplot()` function to produce side-by-side boxplots of Outstate versus Elite.
 
 
 **Answer:**
-
-
-
 
 
 
@@ -1124,13 +1108,7 @@ summary(college$Elite)
 
 
 
-
-
-
 There are $78$ elite Universities. The boxplots of `Outstate` versus Elite-Status are generated as following:
-
-
-
 
 
 
@@ -1152,15 +1130,9 @@ boxplot(Outstate ~ Elite,
 
 
 
-
-
-
 **8. c. v)** Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
 
 **Answer:**
-
-
-
 
 
 
@@ -1186,9 +1158,6 @@ hist(college$Outstate,            xlab = "", main="Outstate")
 
 
 
-
-
-
 Remember: 
 
 * **Enroll:** Number of new students enrolled
@@ -1199,9 +1168,6 @@ Remember:
 #### Exercise 9: {-}
 
 This exercise involves the Auto data set. Make sure that the missing values have been removed from the data.
-
-
-
 
 
 
@@ -1262,9 +1228,6 @@ print(Auto[c(1:10),])
 
 
 
-
-
-
 * **mpg:** miles per gallon
 * **cylinders:** Number of cylinders between 4 and 8
 * **displacement:** Engine displacement (cu. inches)
@@ -1279,9 +1242,6 @@ print(Auto[c(1:10),])
 **9. a)** Which of the predictors are quantitative, and which are qualitative?
 
 **Answer:**
-
-
-
 
 
 
@@ -1321,18 +1281,12 @@ summary(Auto)
 
 
 
-
-
-
 - **Quantitative predictors:** `mpg`, `cylinders`, `displacement`, `horsepower`, `weight`, `acceleration`, `year` 
 - **Qualitative predictors:** `name`, `origin`
 
 **9. b)** What is the range of each quantitative predictor? You can answer this using the `range()` function.
 
 **Answer:**
-
-
-
 
 
 
@@ -1380,15 +1334,9 @@ max 46.6         8          455        230   5140         24.8   82
 
 
 
-
-
-
 **9. c)** What is the mean and standard deviation of each quantitative predictor?
 
 **Answer:**
-
-
-
 
 
 
@@ -1443,15 +1391,9 @@ sd
 
 
 
-
-
-
 **9.d)** Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
 
 **Answer:**
-
-
-
 
 
 
@@ -1497,15 +1439,9 @@ Max   47         8          455        230   4997           25   82
 
 
 
-
-
-
 **9. e)** Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
 
 **Answer:**
-
-
-
 
 
 
@@ -1521,9 +1457,6 @@ pairs(Auto[, -9]) # remove the character-variable 'name'
 ![](Ch2_StatLearning_files/figure-html/unnamed-chunk-16-1.png){fig-align='center' width=672}
 :::
 :::
-
-
-
 
 
 
