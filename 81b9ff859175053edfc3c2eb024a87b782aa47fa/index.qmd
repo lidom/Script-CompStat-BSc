@@ -56,6 +56,9 @@ To participate in the assignments, you need a GitHub-Account and write your name
 * Upgrade of one grade step if less than $80\%,$ but at least $60\%$ of the maximal possible points were collected.  
 
 
+**Results:** [List of Results](https://docs.google.com/spreadsheets/d/1zBNcoepnBX3vMz6E2klOtroi0QfvwbmYFcoMdmNrx-8/edit?usp=sharing)
+
+
 <!-- ### Information on the Exam {-}
 
 * You are allowed to use a **handwritten cheat-sheet** (**one side** of a DIN A4 page). 
