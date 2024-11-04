@@ -288,7 +288,7 @@ window.Quarto = {
 </header><p>Relevance for the exam:</p>
 <ul>
 <li>Chapters 3.1 to 3.4</li>
-<li>For Chapter 3.5 there will be an exercise question; however, for the exam “only” a general/basic understanding of the concepts in Chapter 3.5 is sufficient.</li>
+<li>For Chapter 3.5 there will be a exercise question, however, for the exam “only” a general/basic understanding is sufficient</li>
 <li>Chapter 3.6 is not relevant for the exam of this course, but may/will be useful in more advanced courses.</li>
 </ul>
 <section id="basic-definitions" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="basic-definitions">
@@ -658,7 +658,7 @@ A B = \begin{pmatrix} a_1' \\ \vdots \\ a_k' \end{pmatrix}
 \text{(i)}   &amp; {A}({B}{C})       &amp; = &amp; ({A}{B}){C}\,    &amp;\text{(associativity)} \\
 \text{(ii)}  &amp;   {A}({B}+{D})    &amp; = &amp; {A}{B}+{A}{D}\,  &amp; \text{(distributivity)} \\
 \text{(iii)} &amp;   ({B}+{D}){C}    &amp; = &amp; {B}{C}+{D}{C}\,  &amp; \text{(distributivity)} \\
-\text{(iv)}  &amp;   {A}(\lambda {B})&amp; = &amp; \lambda({A}{B})\,&amp; \text{(scalar commutativity)}\\
+\text{(iv)}  &amp;   {A}(\lambda {B})&amp; = &amp; \lambda({A}{B})\,&amp; \text{(scalar ($\lambda\in\mathbb{R}$) commutativity)}\\
 \text{(v)}   &amp; {A}{I}_{n}        &amp; = &amp; {A}\,            &amp; \text{(identity element)}\\
 \text{(vi)}  &amp; {I}_{m}{A}        &amp; = &amp; {A}\,            &amp;
 \text{(identity element)}     \\
@@ -689,13 +689,17 @@ X \lambda = 0
 X = \begin{pmatrix} 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 2 \end{pmatrix},
 \]</span> which has linearly dependent columns since the third column is a linear combination of the first two columns: <span class="math display">\[
 \begin{align*}
-&amp;\qquad\qquad\begin{pmatrix} 4 \\ 2 \end{pmatrix} = 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix}\\
-&amp;\Leftrightarrow\quad - 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} - 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
-&amp;\Leftrightarrow\quad\begin{pmatrix} 2&amp;1&amp;4 \\ 0&amp;1&amp;2 \end{pmatrix} \begin{pmatrix} -1 \\ -2\\1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
+&amp;\qquad\qquad\begin{pmatrix} 4 \\ 2 \end{pmatrix} = 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix}\\[2ex]
+&amp;\Leftrightarrow\quad - 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} - 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\[2ex]
+&amp;\Leftrightarrow\quad\underbrace{\begin{pmatrix} 2&amp;1&amp;4 \\ 0&amp;1&amp;2 \end{pmatrix}}_{=X} \underbrace{\begin{pmatrix} -1 \\ -2\\1 \end{pmatrix}}_{=\lambda} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
 \end{align*}
 \]</span></p>
 <p>However, the first two columns are linearly independent since <span class="math inline">\(\lambda_1 = 0\)</span> and <span class="math inline">\(\lambda_2 = 0\)</span> are the only solutions to the equation <span class="math display">\[
-\lambda_1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}.
+\begin{align*}
+&amp;\qquad\qquad
+\lambda_1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\[2ex]
+&amp;\Leftrightarrow\quad \begin{pmatrix} 2&amp;1 \\ 0&amp;1 \end{pmatrix} \begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
+\end{align*}
 \]</span> Therefore, we have <span class="math inline">\(\mathop{\mathrm{rank}}(X) = 2\)</span>, i.e., <span class="math inline">\(X\)</span> does not have a full column rank.</p>
 <p>Some useful properties are</p>
 <ol type="i">
@@ -782,7 +786,13 @@ A = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}, \quad
 <span class="header-section-number">3.3.5</span> Inverse Matrix</h3>
 <p>The <strong>inverse</strong> <span class="math inline">\({A}^{-1}\)</span> of a square <span class="math inline">\(k \times k\)</span> matrix <span class="math inline">\(A\)</span> is defined by the property <span class="math display">\[{A} {A}^{-1} = {A}^{-1} {A} ={I}_k.\]</span> When multiplied from the left or the right, the inverse matrix produces the identity matrix.</p>
 <p>The <strong>inverse exists</strong> if and only if <span class="math inline">\({A}\)</span> is <strong>nonsingular</strong>, i.e., <span class="math inline">\(\det(A) \neq 0\)</span>. Therefore, a nonsingular matrix is also called <strong>invertible matrix</strong>. Note that only square matrices can be inverted.</p>
-<p>For <span class="math inline">\(2 \times 2\)</span> matrices, there exists a simple formula: <span class="math display">\[
+<p>For <span class="math inline">\(2 \times 2\)</span> matrices <span class="math display">\[
+{A} =
+\begin{pmatrix}
+a &amp; b \\
+c &amp; d
+\end{pmatrix}\,,
+\]</span> there exists a simple formula: <span class="math display">\[
 {A}^{-1} = \frac{1}{\det({A})} \begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}\,,
 \]</span> where <span class="math inline">\(\det({A}) = ad - bc\)</span>. I.e., we swap the main diagonal elements, reverse the sign of the off-diagonal elements, and divide all entries by the determinant.</p>
 <p><strong>Example:</strong> <span class="math display">\[
@@ -858,7 +868,7 @@ A A^{-1} = I
 <li><span class="math inline">\(({A}^{-1})^{-1} = {A}\)</span></li>
 <li><span class="math inline">\(({A}')^{-1} = ({A}^{-1})'\)</span></li>
 <li>
-<span class="math inline">\((\lambda{A})^{-1} = \frac{1}{\lambda}{A}^{-1}\)</span> for any <span class="math inline">\(\lambda \neq 0\)</span>
+<span class="math inline">\((\lambda{A})^{-1} = \frac{1}{\lambda}{A}^{-1}\)</span> for any scalar <span class="math inline">\(\lambda \neq 0\)</span>
 </li>
 <li><span class="math inline">\(\det(A^{-1}) = \frac{1}{\det(A)}\)</span></li>
 <li><span class="math inline">\(({A} {B})^{-1} = {B}^{-1} {A}^{-1}\)</span></li>
@@ -941,9 +951,14 @@ A A
 \frac{\partial f(\beta)}{\partial{\beta}}  = \begin{pmatrix}\frac{\partial f(\beta)}{\partial \beta_1} \\ \vdots \\ \frac{\partial f(\beta)}{\partial \beta_k} \end{pmatrix}
 \]</span> If the gradient is evaluated at some particular value <span class="math inline">\(\beta = b\)</span>, we write <span class="math display">\[
 \frac{\partial f}{\partial{\beta}}(b)
-\]</span> Useful properties for inner product and sandwich forms are <span class="math display">\[
+\]</span></p>
+<p>Note that an inner product can be viewed as a linear function in <span class="math inline">\(\beta\in\mathbb{R}^k\)</span> <span class="math display">\[
+f(\beta) = a' \beta
+\]</span> and a sandwich from as a quadratic function in <span class="math inline">\(\beta\in\mathbb{R}^k\)</span> <span class="math display">\[
+f(\beta) = \beta' A\beta.
+\]</span> Useful properties for inner products and sandwich forms are <span class="math display">\[
 \begin{align*}
-(i)&amp; \quad &amp;&amp;\frac{\partial (a' \beta)}{\partial \beta}  = a \\
+(i)&amp; \quad &amp;&amp;\frac{\partial (a' \beta)}{\partial \beta}  = a \\[2ex]
 (ii)&amp; \quad &amp;&amp;\frac{\partial ( \beta' A \beta)}{\partial \beta}   = (A + A') \beta.
 \end{align*}
 \]</span></p>
@@ -1144,11 +1159,10 @@ A \otimes B = \begin{pmatrix} a_{11}B &amp; \ldots &amp; a_{1m}B \\ \vdots &amp;
 </ol></section></section><section id="exercises" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">3.7</span> Exercises</h2>
 <ul>
-<li><a href="https://www.dropbox.com/scl/fi/sjw21fv8ezcc4jouval88/Ch3_Exercises1.pdf?rlkey=wym3kvepow3ugex0p82scjkkq&amp;dl=0">Exercises for Chapter 3</a></li>
+<li><p><a href="https://www.dropbox.com/scl/fi/ek72zs19dgw2d3pvmm5hj/Ch3_Exercises1.pdf?rlkey=340htq6s4z5vd0p1cz93tnrq1&amp;dl=0">Exercises for Chapter 3</a></p></li>
+<li><p><a href="https://www.dropbox.com/scl/fi/ectho31ocqag19izefvi8/Ch3_Exercises_with_Solutions1.pdf?rlkey=9q9g90bx3jle1f4y61vhoormc&amp;dl=0">Exercises for Chapter 3 with Solutions</a></p></li>
 </ul>
-<!--
-* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/lp0zkaftdi14gzz5n69al/Ch3_Exercises_with_Solutions1.pdf?rlkey=h08gnhua651rm6oyknpmcs4yg&dl=0) 
--->
+
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

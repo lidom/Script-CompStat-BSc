@@ -710,6 +710,8 @@ $$ -->
 ## Assignment
 
 
+<!-- Task: Generate artificial training and test data to replicate both plots of Figure 2.9.    -->
+
 Task: Generate artificial training and test data to **compute**  *and*  **visualize** global training/test MSE results similar to those shown in Figure 2.9. (i.e. moderately complex $f$ and moderate signal-to-noise ratio).   
 
 Hints: 

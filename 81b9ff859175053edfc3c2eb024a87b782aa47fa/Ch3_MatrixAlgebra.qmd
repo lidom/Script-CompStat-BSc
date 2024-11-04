@@ -3,7 +3,7 @@
 Relevance for the exam: 
 
 * Chapters 3.1 to 3.4 
-* For Chapter 3.5 there will be an exercise question; however, for the exam "only" a general/basic understanding of the concepts in Chapter 3.5 is sufficient.
+* For Chapter 3.5 there will be a exercise question, however, for the exam "only" a general/basic understanding is sufficient
 * Chapter 3.6 is not relevant for the exam of this course, but may/will be useful in more advanced courses.
 
 
@@ -427,7 +427,7 @@ $$
 \text{(i)}   & {A}({B}{C})       & = & ({A}{B}){C}\,    &\text{(associativity)} \\
 \text{(ii)}  &   {A}({B}+{D})    & = & {A}{B}+{A}{D}\,  & \text{(distributivity)} \\
 \text{(iii)} &   ({B}+{D}){C}    & = & {B}{C}+{D}{C}\,  & \text{(distributivity)} \\
-\text{(iv)}  &   {A}(\lambda {B})& = & \lambda({A}{B})\,& \text{(scalar commutativity)}\\
+\text{(iv)}  &   {A}(\lambda {B})& = & \lambda({A}{B})\,& \text{(scalar ($\lambda\in\mathbb{R}$) commutativity)}\\
 \text{(v)}   & {A}{I}_{n}        & = & {A}\,            & \text{(identity element)}\\
 \text{(vi)}  & {I}_{m}{A}        & = & {A}\,            &
 \text{(identity element)}     \\
@@ -498,16 +498,20 @@ which has linearly dependent columns since the third column is a
 linear combination of the first two columns: 
 $$
 \begin{align*}
-&\qquad\qquad\begin{pmatrix} 4 \\ 2 \end{pmatrix} = 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix}\\
-&\Leftrightarrow\quad - 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} - 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
-&\Leftrightarrow\quad\begin{pmatrix} 2&1&4 \\ 0&1&2 \end{pmatrix} \begin{pmatrix} -1 \\ -2\\1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
+&\qquad\qquad\begin{pmatrix} 4 \\ 2 \end{pmatrix} = 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix}\\[2ex]
+&\Leftrightarrow\quad - 1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} - 2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\[2ex]
+&\Leftrightarrow\quad\underbrace{\begin{pmatrix} 2&1&4 \\ 0&1&2 \end{pmatrix}}_{=X} \underbrace{\begin{pmatrix} -1 \\ -2\\1 \end{pmatrix}}_{=\lambda} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
 \end{align*}
 $$
 
 However, the first two columns are linearly independent since $\lambda_1 = 0$
 and $\lambda_2 = 0$ are the only solutions to the equation 
 $$
-\lambda_1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}.
+\begin{align*}
+&\qquad\qquad
+\lambda_1 \begin{pmatrix} 2 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\[2ex]
+&\Leftrightarrow\quad \begin{pmatrix} 2&1 \\ 0&1 \end{pmatrix} \begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\
+\end{align*}
 $$ 
 Therefore, we have $\mathop{\mathrm{rank}}(X) = 2$, i.e.,
 $X$ does not have a full column rank.
@@ -611,6 +615,7 @@ conclude that
 
 ### Inverse Matrix
 
+
 The **inverse** ${A}^{-1}$ of a square $k \times k$ matrix
 $A$ is defined by the property
 $${A} {A}^{-1} = {A}^{-1} {A} ={I}_k.$$
@@ -622,7 +627,15 @@ The **inverse exists** if and only if ${A}$ is **nonsingular**, i.e., $\det(A) \
 nonsingular matrix is also called **invertible matrix**. Note that only
 square matrices can be inverted.
 
-For $2 \times 2$ matrices, there exists a simple formula:
+For $2 \times 2$ matrices
+$$
+{A} = 
+\begin{pmatrix}
+a & b \\ 
+c & d
+\end{pmatrix}\,,
+$$
+there exists a simple formula:
 $$
 {A}^{-1} = \frac{1}{\det({A})} \begin{pmatrix}d&-b\\-c&a\end{pmatrix}\,,
 $$
@@ -712,7 +725,7 @@ Important properties for **nonsingular** matrices:
 i)  $({A}^{-1})^{-1} = {A}$
 ii) $({A}')^{-1} = ({A}^{-1})'$
 iii) $(\lambda{A})^{-1} = \frac{1}{\lambda}{A}^{-1}$
-     for any $\lambda \neq 0$
+     for any scalar $\lambda \neq 0$
 iv) $\det(A^{-1}) = \frac{1}{\det(A)}$
 v)  $({A} {B})^{-1} = {B}^{-1} {A}^{-1}$
 vi) $(A B C)^{-1} = C^{-1} B^{-1} A^{-1}$
@@ -847,10 +860,19 @@ $\beta = b$, we write
 $$
 \frac{\partial f}{\partial{\beta}}(b)
 $$ 
-Useful properties for inner product and sandwich forms are
+
+Note that an inner product can be viewed as a linear function in $\beta\in\mathbb{R}^k$
+$$
+f(\beta) = a' \beta
+$$
+and a sandwich from as a quadratic function in $\beta\in\mathbb{R}^k$
+$$
+f(\beta) = \beta' A\beta.
+$$
+Useful properties for inner products and sandwich forms are
 $$
 \begin{align*}
-(i)& \quad &&\frac{\partial (a' \beta)}{\partial \beta}  = a \\
+(i)& \quad &&\frac{\partial (a' \beta)}{\partial \beta}  = a \\[2ex]
 (ii)& \quad &&\frac{\partial ( \beta' A \beta)}{\partial \beta}   = (A + A') \beta.
 \end{align*}
 $$
@@ -1119,9 +1141,9 @@ iii) $\|A\| = 0$ implies $A = 0$
 
 ## Exercises
 
-* [Exercises for Chapter 3](https://www.dropbox.com/scl/fi/sjw21fv8ezcc4jouval88/Ch3_Exercises1.pdf?rlkey=wym3kvepow3ugex0p82scjkkq&dl=0)
+* [Exercises for Chapter 3](https://www.dropbox.com/scl/fi/ek72zs19dgw2d3pvmm5hj/Ch3_Exercises1.pdf?rlkey=340htq6s4z5vd0p1cz93tnrq1&dl=0)
 
-<!--
-* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/lp0zkaftdi14gzz5n69al/Ch3_Exercises_with_Solutions1.pdf?rlkey=h08gnhua651rm6oyknpmcs4yg&dl=0) 
--->
+
+* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/ectho31ocqag19izefvi8/Ch3_Exercises_with_Solutions1.pdf?rlkey=9q9g90bx3jle1f4y61vhoormc&dl=0) 
+
 
