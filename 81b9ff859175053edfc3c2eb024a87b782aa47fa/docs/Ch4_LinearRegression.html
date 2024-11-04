@@ -239,9 +239,12 @@ window.Quarto = {
   
 
 
-</header><blockquote class="blockquote">
-<p>Additional Reading: Chapter 3 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a></p>
-</blockquote>
+</header><p>This chapter is based on the following references:</p>
+<ul>
+<li>Chapter 3 of <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a>
+</li>
+<li>Chapter 1 of Econometrics by Fumio Hayashi</li>
+</ul>
 <section id="sec-LinModAssumptions" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-LinModAssumptions">
 <span class="header-section-number">4.1</span> Assumptions</h2>
 <p>The (multiple) linear regression model is defined by the following assumptions which together describe the relevant theoretical aspects of the underlying data generating process:</p>
@@ -330,22 +333,15 @@ Note
 <span class="math inline">\((Y_{i},X_{i0},\dots,X_{i(p+1)})\)</span> is independent of <span class="math inline">\((Y_{j},X_{j0},\dots,X_{j(p+1)})\)</span> for all <span class="math inline">\(i\neq j=1,\dots,n.\)</span>
 </li>
 </ol>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Due to <a href="#eq-LinMod" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, this i.i.d. assumption is equivalent to assuming that the multivariate random variables <span class="math display">\[
+<!-- 
+::: {.callout-note}
+Due to @eq-LinMod, this i.i.d. assumption is equivalent to assuming that the multivariate random variables 
+$$
 (\epsilon_i,X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2}
-\]</span> are i.i.d. across <span class="math inline">\(i=1,\dots,n\)</span>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
+$$ 
+are i.i.d. across $i=1,\dots,n$. 
+::: 
+--><div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -629,16 +625,17 @@ X^{\prime} X\hat{\beta}
 </div>
 </div>
 <section id="special-case-simple-linear-regression-model" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="special-case-simple-linear-regression-model">Special Case: Simple Linear Regression Model</h4>
-<p>For a given observed realization of the training data random sample <span class="math display">\[
+<p>Let’s consider the simple linear regression model <span class="math inline">\((p=1)\)</span> <span class="math display">\[
+Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\qquad i=1,\dots,n.
+\]</span> For this case, the expression of the OLS-estimators simplifies. For a given observed realization of the training data random sample <span class="math display">\[
 (x_1,y_1),\dots,(x_n,y_n)
-\]</span> we choose <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> such that the <strong>R</strong>esidual <strong>S</strong>um of <strong>S</strong>quares criterion is minimized: <span class="math display">\[
-\begin{align*}
-\operatorname{RSS}\equiv \operatorname{RSS}(\hat{\beta}_0,\hat{\beta_1})
-&amp; = e_1^2 + \dots + e_n^2\\[2ex]
-&amp;=\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2\\[2ex]
-&amp;=\sum_{i=1}^n\left(y_i - \hat{y}_i\right)^2
-\end{align*}
-\]</span> The minimizers are <span class="math display">\[
+\]</span> the values of the OLS estimator <span class="math display">\[
+\hat\beta =
+\begin{pmatrix}
+\hat\beta_0\\
+\hat\beta_1
+\end{pmatrix}
+\]</span> are given by <span class="math display">\[
 \hat\beta_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}
 \]</span> and <span class="math display">\[
 \hat\beta_0=\bar{y} - \hat\beta_1\bar{x},

@@ -1,7 +1,10 @@
 # Linear Regression 
 
 
-> Additional Reading: Chapter 3 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+This chapter is based on the following references: 
+
+* Chapter 3 of [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+* Chapter 1 of Econometrics by Fumio Hayashi
 
 
 
@@ -106,13 +109,15 @@ where
 2. $(Y_{i},X_{i0},\dots,X_{i(p+1)})$ is independent of 
 $(Y_{j},X_{j0},\dots,X_{j(p+1)})$ for all $i\neq j=1,\dots,n.$
 
+<!-- 
 ::: {.callout-note}
 Due to @eq-LinMod, this i.i.d. assumption is equivalent to assuming that the multivariate random variables 
 $$
 (\epsilon_i,X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2}
 $$ 
 are i.i.d. across $i=1,\dots,n$. 
-:::
+::: 
+-->
 
 ::: {.callout-caution}
 **Remark:** Often, we do not use a different notation for observed realizations 
@@ -432,20 +437,23 @@ plot3d$plane3d(lmobj, lty.box = "solid", col=gray(.5), draw_polygon=TRUE)
 
 #### Special Case: Simple Linear Regression Model {-}
 
-For a given observed realization of the training data random sample 
+Let's consider the simple linear regression model $(p=1)$
+$$
+Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\qquad i=1,\dots,n.
+$$
+For this case, the expression of the OLS-estimators simplifies. For a given observed realization of the training data random sample 
 $$
 (x_1,y_1),\dots,(x_n,y_n)
 $$
-we choose $\hat\beta_0$ and $\hat\beta_1$ such that the **R**esidual **S**um of **S**quares criterion is minimized:
+the values of the OLS estimator
 $$
-\begin{align*}
-\operatorname{RSS}\equiv \operatorname{RSS}(\hat{\beta}_0,\hat{\beta_1})
-& = e_1^2 + \dots + e_n^2\\[2ex]
-&=\sum_{i=1}^n\left(y_i - \left(\hat\beta_0 + \hat\beta_1x_i\right)\right)^2\\[2ex]
-&=\sum_{i=1}^n\left(y_i - \hat{y}_i\right)^2
-\end{align*}
+\hat\beta = 
+\begin{pmatrix}
+\hat\beta_0\\
+\hat\beta_1
+\end{pmatrix}
 $$
-The minimizers are 
+are given by 
 $$
 \hat\beta_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}
 $$
