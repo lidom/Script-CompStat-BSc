@@ -599,7 +599,7 @@ Var(\epsilon_i|X_i)=Var(\epsilon_i)=\sigma^2
 \hat\beta=(\hat\beta_0,\dots,\hat\beta_p)'\in\mathbb{R}^{p+1}
 \]</span> as the vector-valued minimizing argument of the sum of squared residuals, <span class="math display">\[
 \operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i'b}_{\text{$i$th residual}}\big)^2
-\]</span> with <span class="math inline">\(b\in\mathbb{R}^K\)</span>, for a given sample <span class="math display">\[
+\]</span> with <span class="math inline">\(b\in\mathbb{R}^(p+1)\)</span>, for a given sample <span class="math display">\[
 ((Y_1,X_1),\dots,(Y_n,X_n)).
 \]</span></p>
 <p>Using matrix/vector notation we can write <span class="math inline">\(S_n(b)\)</span> as <span class="math display">\[
@@ -1064,23 +1064,23 @@ Var(\epsilon|X)
 <tbody>
 <tr class="odd">
 <td>HC0</td>
-<td><span class="math inline">\(\sum_{i=1}^n\hat\varepsilon_i^2X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^ne_i^2X_iX_i'\)</span></td>
 </tr>
 <tr class="even">
 <td>HC1</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{n}{n-K}\hat\varepsilon_i^2X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{n}{n-K}e_i^2X_iX_i'\)</span></td>
 </tr>
 <tr class="odd">
 <td>HC2</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{1-h_{i}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i'\)</span></td>
 </tr>
 <tr class="even">
 <td>HC3</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'\)</span></td>
 </tr>
 <tr class="odd">
 <td>HC4</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1105,8 +1105,8 @@ h_i=[P_X]_{ii}
 <span class="math inline">\(\bar{h}=n^{-1}\sum_{i=1}^nh_i=(p+1)/n\)</span>.</li>
 </ul>
 <p>Observations <span class="math inline">\(X_i\)</span> with leverage statistics <span class="math inline">\(h_i\)</span> that greatly exceed the average leverage value <span class="math inline">\((p+1)/n\)</span> are referred to as “high leverage” observations. High leverage observations <span class="math inline">\(X_i\)</span> are observations that are far away from the predictor values of all other subjects.</p>
-<p>High leverage observations <span class="math inline">\(X_i\)</span> have the potential to distort the estimation results, <span class="math inline">\(\hat\beta_n\)</span>. Indeed, a high leverage observation <span class="math inline">\(X_i\)</span> will have an distorting effect on the estimation results if the absolute value of the corresponding residual <span class="math inline">\(|\hat{\varepsilon}_i|\)</span> is unusually large—such observations are called <strong>influential outliers</strong>. Such observations increase the estimation uncertainty.</p>
-<p>General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals <span class="math inline">\(\hat\varepsilon_i\)</span> belonging to <span class="math inline">\(X_i\)</span> values that have a large leverage <span class="math inline">\(h_i\)</span> receive a higher weight and thus increase the value of <span class="math inline">\(\widehat{E}(\varepsilon^2_iX_iX_i').\)</span> This strategy takes into account increased estimation uncertainties due to single influential outliers.</p>
+<p>High leverage observations <span class="math inline">\(X_i\)</span> have the potential to distort the estimation results, <span class="math inline">\(\hat\beta_n\)</span>. Indeed, a high leverage observation <span class="math inline">\(X_i\)</span> will have an distorting effect on the estimation results if the absolute value of the corresponding residual <span class="math inline">\(|e_i|\)</span> is unusually large—such observations are called <strong>influential outliers</strong>. Such observations increase the estimation uncertainty.</p>
+<p>General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals <span class="math inline">\(e_i\)</span> belonging to <span class="math inline">\(X_i\)</span> values that have a large leverage <span class="math inline">\(h_i\)</span> receive a higher weight and thus increase the value of <span class="math inline">\(\widehat{E}(\epsilon^2_iX_iX_i').\)</span> This strategy takes into account increased estimation uncertainties due to single influential outliers.</p>
 </div>
 </div>
 <!-- The estimator HC0 was suggested in the econometrics literature by @White1980 and is justified by asymptotic ($n\to\infty$) arguments. The estimators HC1, HC2 and HC3 were suggested by @MacKinnon_White_1985 to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, @Long_Ervin_2000 concludes that HC3 provides the best overall performance in finite samples. @Cribari_2004 suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large $h_i$ values). 

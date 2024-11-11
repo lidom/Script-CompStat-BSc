@@ -390,7 +390,7 @@ as the vector-valued minimizing argument of the sum of squared residuals,
 $$
 \operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i'b}_{\text{$i$th residual}}\big)^2
 $$ 
-with $b\in\mathbb{R}^K$, for a given sample 
+with $b\in\mathbb{R}^(p+1)$, for a given sample 
 $$
 ((Y_1,X_1),\dots,(Y_n,X_n)).
 $$  
@@ -940,11 +940,11 @@ $$
 
 HC-Type  | Formular
 ------|------------
-HC0   | $\sum_{i=1}^n\hat\varepsilon_i^2X_iX_i'$
-HC1   | $\sum_{i=1}^n\frac{n}{n-K}\hat\varepsilon_i^2X_iX_i'$
-HC2   | $\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{1-h_{i}}X_iX_i'$
-HC3   | $\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'$
-HC4   | $\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'$
+HC0   | $\sum_{i=1}^ne_i^2X_iX_i'$
+HC1   | $\sum_{i=1}^n\frac{n}{n-K}e_i^2X_iX_i'$
+HC2   | $\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i'$
+HC3   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'$
+HC4   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'$
 
 HC3 is the most often used HC-estimator. 
 
@@ -961,9 +961,9 @@ and is called the $i$th **leverage statistic**, where
 
 Observations $X_i$ with leverage statistics $h_i$ that greatly exceed the average leverage value $(p+1)/n$ are referred to as "high leverage" observations. High leverage observations $X_i$ are observations that are far away from the predictor values of all other subjects. 
 
-High leverage observations $X_i$ have the potential to distort the estimation results, $\hat\beta_n$. Indeed, a high leverage observation $X_i$ will have an distorting effect on the estimation results if the absolute value of the corresponding residual $|\hat{\varepsilon}_i|$ is unusually large---such observations are called **influential outliers**. Such observations increase the estimation uncertainty. 
+High leverage observations $X_i$ have the potential to distort the estimation results, $\hat\beta_n$. Indeed, a high leverage observation $X_i$ will have an distorting effect on the estimation results if the absolute value of the corresponding residual $|e_i|$ is unusually large---such observations are called **influential outliers**. Such observations increase the estimation uncertainty. 
 
-General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals $\hat\varepsilon_i$ belonging to $X_i$ values that have a large leverage $h_i$ receive a higher weight and thus increase the value of $\widehat{E}(\varepsilon^2_iX_iX_i').$ This strategy takes into account increased estimation uncertainties due to single influential outliers. 
+General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals $e_i$ belonging to $X_i$ values that have a large leverage $h_i$ receive a higher weight and thus increase the value of $\widehat{E}(\epsilon^2_iX_iX_i').$ This strategy takes into account increased estimation uncertainties due to single influential outliers. 
 :::
 
 
