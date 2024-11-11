@@ -28,7 +28,8 @@ $$
 for all $i=1,\dots,n.$ 
 
 * $Y_i$ is called "dependent variable" or "outcome variable" or "regressand"
-* $X_{ik}$ is called the $k$th "predictor variable" or "regressor" or "explanatory variable" or "control variable." 
+* $X_{ik}$ is called the $k$th "independent variable" or "predictor variable" or "regressor" or "explanatory variable" or "control variable." 
+* $\epsilon_i$ is the error term.
 
 It is convenient to write @eq-LinMod using matrix notation
 $$
@@ -51,7 +52,24 @@ $$
 where 
 $$
 \begin{equation*}
-Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right),\quad X=\left(\begin{matrix}X_{10}&\dots&X_{1(p+1)}\\\vdots&\ddots&\vdots\\ X_{n0}&\dots&X_{n(p+1)}\\\end{matrix}\right),\quad\text{and}\quad \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\ \epsilon_n\end{matrix}\right).
+Y=\left(\begin{matrix}Y_1
+\\ \vdots\\
+Y_n
+\end{matrix}\right),
+\quad 
+X=\left(\begin{matrix}
+X_{10}&\dots&X_{1p}\\
+\vdots&\ddots&\vdots\\ 
+X_{n0}&\dots&X_{np}\\
+\end{matrix}\right),
+\quad
+\text{and}
+\quad 
+\epsilon=
+\left(\begin{matrix}
+\epsilon_1\\ \vdots\\ 
+\epsilon_n
+\end{matrix}\right).
 \end{equation*}
 $$
 
@@ -88,32 +106,32 @@ The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, desp
 
 We assume that the $n$ observed data points 
 $$
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{n(p+1)}))
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
 $$ 
 are a realization of the **training data random sample** 
 $$
-((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{n(p+1)})).
+((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
 $$ 
 
 That is, the $i$th observed $p+2$ dimensional data point 
 $$
-(y_{i},x_{i0},\dots,x_{i(p+1)})\in\mathbb{R}^{p+2}
+(y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}
 $$ 
 is a realization of a $p+2$ dimensional random variable 
 $$
-(Y_{i},X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2},
+(Y_{i},X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2},
 $$ 
 where 
 
-1. $(Y_{i},X_{i0},\dots,X_{i(p+1)})$ has the identical $p+2$ dimensional distribution for all $i=1,\dots,n.$ 
-2. $(Y_{i},X_{i0},\dots,X_{i(p+1)})$ is independent of 
+1. $(Y_{i},X_{i0},\dots,X_{ip})$ has the identical $p+2$ dimensional distribution for all $i=1,\dots,n.$ 
+2. $(Y_{i},X_{i0},\dots,X_{ip})$ is independent of 
 $(Y_{j},X_{j0},\dots,X_{j(p+1)})$ for all $i\neq j=1,\dots,n.$
 
 <!-- 
 ::: {.callout-note}
 Due to @eq-LinMod, this i.i.d. assumption is equivalent to assuming that the multivariate random variables 
 $$
-(\epsilon_i,X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2}
+(\epsilon_i,X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2}
 $$ 
 are i.i.d. across $i=1,\dots,n$. 
 ::: 
@@ -121,9 +139,9 @@ are i.i.d. across $i=1,\dots,n$.
 
 ::: {.callout-caution}
 **Remark:** Often, we do not use a different notation for observed realizations 
-$(y_{i},x_{i0},\dots,x_{i(p+1)})\in\mathbb{R}^{p+2}$ 
+$(y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}$ 
 and for the corresponding random variable 
-$(Y_{i},X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2}$ 
+$(Y_{i},X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2}$ 
 since often both interpretations (random variable and its realizations) can make sense 
 in the same statement and then it depends on the considered context whether the random variables point if view or the realization point of view applies.
 :::
@@ -173,7 +191,7 @@ Note: The assumption $E(\epsilon_i)=0$ is not critical (i.e. not restrictive) du
 
 ::: {.callout icon="false"}
 
-# Example: Heteroskedastic Error
+# Examples: Heteroskedastic Error
 
 Let
 
@@ -197,7 +215,7 @@ $$
 
 $$
 \begin{align*}
-\operatorname{rank}(X)&=(p+1)\quad\text{a.s.}\\
+\operatorname{rank}(X)&=(p+1)\quad\text{a.s.}\\[2ex]
 \Leftrightarrow P\big(\operatorname{rank}(X)&=(p+1)\big)=1
 \end{align*}
 $$
@@ -293,10 +311,10 @@ All four Assumptions 1-4 must hold for doing inference using the (multiple) line
 #### Homoskedastic versus Heteroskedastic Error Terms {-}
 
 
-The i.i.d. assumption is not as restrictive as it may seem on first sight. It allows for dependence between $\epsilon_i$ and $(X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+1}$. That is, the error term $\epsilon_i$ can have a conditional distribution which depends on $(X_{i0},\dots,X_{i(p+1)}).$ 
+The i.i.d. assumption is not as restrictive as it may seem on first sight. It allows for dependence between $\epsilon_i$ and $(X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+1}$. That is, the error term $\epsilon_i$ can have a conditional distribution which depends on $(X_{i0},\dots,X_{ip}).$ 
 
 
-The exogeneity assumption (Assumption 2: Exogeneity) requires that the conditional mean of $\epsilon_i$ is independent of $X_i$. Besides this, dependencies between $\epsilon_i$ and $X_{i0},\dots,X_{i(p+1)}$ are allowed. For instance, the variance of $\epsilon_i$ can be a function of $X_{i0},\dots,X_{i(p+1)}.$ If this is the case, $\epsilon_i$ is said to be **"heteroskedastic."** 
+The exogeneity assumption (Assumption 2: Exogeneity) requires that the conditional mean of $\epsilon_i$ is independent of $X_i$. Besides this, dependencies between $\epsilon_i$ and $X_{i0},\dots,X_{ip}$ are allowed. For instance, the variance of $\epsilon_i$ can be a function of $X_{i0},\dots,X_{ip}.$ If this is the case, $\epsilon_i$ is said to be **"heteroskedastic."** 
 
 - **Heteroskedastic error terms:** The conditional variances 
 $$
@@ -530,8 +548,7 @@ is the associated $(n\times n)$ **orthogonal projection matrix** that projects a
 
 
 
-## Assessing the Accuracy of the Model fit $\hat{f}$
-
+## Assessing the Accuracy of the Model Fit $\hat{f}$
 
 The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{f}$ to the training data. This motivates the definition of the so-called $R^2$ coefficient of determination:
 $$
@@ -583,14 +600,20 @@ where $0\leq R^2\leq 1.$
 
 
 ::: {.callout-caution}
-**Cautionary Note Nr 1:** Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
+
+**Cautionary Note Nr 1:** 
+
+Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
 
 * very low $\operatorname{RSE}$ values $(\operatorname{RSE}\approx 0)$ and 
 * very high $R^2$ values $(R^2\approx 1)$ 
 
-can be warning signals indicating overfitting. While overfitting typically does not happen with a simple linear regression model, it can happen with a multiple linear regression model.
+can be warning signals indicating overfitting. While overfitting typically does not happen with a simple linear regression model, it can happen with multiple linear regression models containing a lot of parameters (large $p$).
 
-**Cautionary Note Nr 2:** The $R^2$ and $\operatorname{RSE}$ are only based on **training data**. In @sec-SL, we have seen that a proper assessment of the model accuracy needs to take into account **test data**.
+
+**Cautionary Note Nr 2:** 
+
+The $R^2$ and $\operatorname{RSE}$ are only based on **training data**. In @sec-SL, we have seen that a proper assessment of the model accuracy needs to take into account **test data**.
 :::
 
 
@@ -664,44 +687,68 @@ round(lm2$adj.r.squared, digits = 3) # model with X_ir
 ### Bias of $\hat{\beta}$
 
 
-Under the Assumptions 1-4, once can show that the OLS estimator 
+Under the Assumptions 1-4, one can show that the OLS estimator 
 $$
 \hat\beta = (X'X)^{-1}X'Y
 $$
 is unbiased, i.e.
 $$
-\operatorname{Bias}(\hat\beta) = E(\hat\beta) - \beta = \underset{((p+1)\times 1)}{0}.
-$$
-That is, on average $\hat\beta$ equals $\beta.$
+\begin{align*}
+\operatorname{Bias}(\hat\beta) 
+& = E(\hat\beta) - \beta \\[2ex]
+& = \beta  - \beta \\[2ex]
+& = \underset{(p+1)\times 1}{0}.
+\end{align*}
+$${#eq-OLSUnbiased}
+That is, in the mean $\hat\beta$ equals $\beta.$
 
 
-This can be shown as following: 
+@eq-OLSUnbiased can be shown as following: 
 
 Observe that 
 $$
 \hat\beta=(X'X)^{-1}X'Y
 $$ 
-consists of two multivariate random variables $X\in\mathbb{R}^{n\times(p+1)}$ and $Y\in\mathbb{R}^n.$ Thus one needs to show first the conditional unbiasedness of $\hat\beta$ given $X$ which effectively allows us to focus on randomness due to $\epsilon,$  
+consists of two multivariate random variables; namely 
+
+* $X\in\mathbb{R}^{n\times(p+1)}$ and 
+* $Y\in\mathbb{R}^n.$ 
+
+Thus we firstly need to derive the **conditional mean** $E(\hat\beta|X),$ which effectively allows us to focus on randomness due to $\epsilon,$  
+$$
+\begin{align*}
+E(\hat\beta|X) 
+&= E((X'X)^{-1}X'Y|X) \\[2ex]
+&\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
+&= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
+&= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
+&= E(\underbrace{(X'X)^{-1}X'X}_{=I_K}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
+&= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex] 
+&= \underset{(p+1)\times 1}{\beta}  
+\end{align*}
+$$
+Thus $\hat\beta$ is **conditionally unbiased:** 
 $$
 \begin{align*}
 \operatorname{Bias}(\hat\beta|X) 
-&= E(\hat\beta|X)                                        - \beta \\[2ex]
-&= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) - \beta \\[2ex]
-&= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 - \beta \\[2ex]
-&= E(\underbrace{(X'X)^{-1}X'X}_{=I_K}\beta|X) + E((X'X)^{-1}X'\epsilon|X) - \beta \\[2ex]
-&= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)} - \beta \\[2ex]
-&=  (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0} =\underset{(K\times 1)}{0}  
+& = E(\hat\beta|X) - \beta\\[2ex]
+& = \beta - \beta \\[2ex]
+& = \underset{(p+1)\times 1}{0}   
 \end{align*}
 $$
-Thus $\hat\beta$ is unbiased conditionally on $X$ 
-$$
-\operatorname{Bias}(\hat\beta|X) = 0.
-$$
 
 
-From this if follows, by the iterated law of expectations, that the OLS estimator is also unconditionally unbiased, i.e.  
+From this if follows, by the iterated law of expectations, that the OLS estimator is also **unconditionally unbiased:**  
 $$
-\operatorname{Bias}(\hat\beta) = E\left(\operatorname{Bias}(\hat\beta|X)\right) = E(0) = 0.
+\begin{align*}
+\operatorname{Bias}(\hat\beta) 
+& = E(\operatorname{Bias}(\hat\beta|X))\\[2ex] 
+& = E\left(E(\hat\beta|X) - \beta\right)\\[2ex] 
+& = E\left(E(\hat\beta|X)\right) - E\left(\beta\right)\\[2ex] 
+& = E\left(\beta\right) - E\left(\beta\right)\\[2ex] 
+& = \beta - \beta = 0.
+\end{align*}
 $$
 
 
@@ -728,7 +775,7 @@ Cov(\hat\beta_p,\hat\beta_0|X)&Cov(\hat\beta_p,\hat\beta_1|X)&\cdots&Var(\hat\be
 \end{align*}
 $$
 
-Thus, to compute a useful explicit expression for 
+Thus, to compute a useful, explicit expression for 
 $$
 \operatorname{SE}(\hat\beta_j|X)=?,
 $$ 
@@ -742,12 +789,12 @@ $$
 \begin{align*}
 \hat{\beta}
 &=(X'X)^{-1}X'Y\\[2ex]
-&\text{Using that $Y=X\beta + \epsilon$:}\\[2ex]
+&\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
 &=(X'X)^{-1}X'(X\beta + \epsilon)\\[2ex]
 &=\underbrace{(X'X)^{-1}X'X\beta}_{=\beta} + (X'X)^{-1}X'\epsilon
 \end{align*}
 $$
-This leads to the so-called sampling error expression 
+This leads to the so-called **sampling error expression** 
 $$
 \hat{\beta} - \beta = (X'X)^{-1}X'\epsilon.
 $$
@@ -755,6 +802,7 @@ With this, we can derive the general explicit expression for $Var(\hat\beta|X).$
 $$
 \begin{align*}
 &Var(\hat\beta|X)=\\[2ex]
+&\text{Adding/subtracting constants does not change variance:}\\[2ex]
 &=Var(\hat\beta - \beta|X)\\[2ex]
 &\text{Using the sampling error expression:}\\[2ex]
 &=Var((X'X)^{-1}X'\epsilon|X)\\[2ex]
@@ -780,7 +828,12 @@ $$
 
 The explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ depends on our (hopefully correct) assumption on the error-term distribution (Assumption 4). 
 
-#### Case of Spherical (Homoskedastic, Uncorrelated) Errors 
+In the following, we consider the two most prominent types of assumptions for the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$:
+
+* Spherical, i.e., homoskedastic and uncorrelated errors
+* Heteroskedastic and uncorrelated errors
+
+#### Case of Spherical (Homoskedastic and Uncorrelated) Errors 
 
 If 
 $$
@@ -793,7 +846,7 @@ Var(\epsilon|X)
 \vdots   & \vdots   & \ddots & 0\\
 0        & 0        & \cdots & \sigma^2\\
 \end{pmatrix}
-&=\sigma^2 I_n,
+=\sigma^2 I_n,
 \end{align*}
 $$
 then 
@@ -822,11 +875,11 @@ $$
 
 In the case of spherical (homoskedastic and uncorrelated) error terms the standard error of $\beta_j$ is
 $$
-\operatorname{SE}(\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
 $$
-The above expression is the infeasible (since $\sigma^2$ is typically unknown) population version of the standard error. We can estimate this population version using the empirical standard error
+The above expression is infeasible since $\sigma^2$ is typically unknown. We can estimate this infeasible population version using the empirical standard error
 $$
-\widehat{\operatorname{SE}}(\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
 $$
 
 
@@ -846,7 +899,7 @@ summary(lm_obj)
 ```
 
 
-#### Case of Heteroskedastic, but Uncorrelated Errors 
+#### Case of Heteroskedastic and Uncorrelated Errors 
 
 
 If 
@@ -891,18 +944,22 @@ HC0   | $\sum_{i=1}^n\hat\varepsilon_i^2X_iX_i'$
 HC1   | $\sum_{i=1}^n\frac{n}{n-K}\hat\varepsilon_i^2X_iX_i'$
 HC2   | $\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{1-h_{i}}X_iX_i'$
 HC3   | $\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'$
-HC4    | $\frac{1}{n}\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'$
+HC4   | $\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'$
 
 HC3 is the most often used HC-estimator. 
 
 
 ::: {.callout-tip}
-The statistic $h_i:=[P_X]_{ii}$ is called the **leverage statistic** of $X_i,$ where 
+The statistic $h_i$ is simply the $i$th diagonal element of the projection matrix $P_X$
+$$
+h_i=[P_X]_{ii}
+$$ 
+and is called the $i$th **leverage statistic**, where 
 
 * $1/n\leq h_i\leq 1$ and 
-* $\bar{h}=n^{-1}\sum_{i=1}^nh_i=K/n$. 
+* $\bar{h}=n^{-1}\sum_{i=1}^nh_i=(p+1)/n$. 
 
-Observations $X_i$ with leverage statistics $h_i$ that greatly exceed the average leverage value $K/n$ are referred to as "high leverage" observations. High leverage observations $X_i$ are observations that are far away from all other observations $X_j$, $i\neq j=1,\dots,n.$ 
+Observations $X_i$ with leverage statistics $h_i$ that greatly exceed the average leverage value $(p+1)/n$ are referred to as "high leverage" observations. High leverage observations $X_i$ are observations that are far away from the predictor values of all other subjects. 
 
 High leverage observations $X_i$ have the potential to distort the estimation results, $\hat\beta_n$. Indeed, a high leverage observation $X_i$ will have an distorting effect on the estimation results if the absolute value of the corresponding residual $|\hat{\varepsilon}_i|$ is unusually large---such observations are called **influential outliers**. Such observations increase the estimation uncertainty. 
 
@@ -913,6 +970,20 @@ General idea of the HC2-HC4 estimators is to increase the estimated variance in 
 <!-- The estimator HC0 was suggested in the econometrics literature by @White1980 and is justified by asymptotic ($n\to\infty$) arguments. The estimators HC1, HC2 and HC3 were suggested by @MacKinnon_White_1985 to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, @Long_Ervin_2000 concludes that HC3 provides the best overall performance in finite samples. @Cribari_2004 suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large $h_i$ values). 
 -->
 
+
+**Summing up:** 
+
+In the case of heteroskedastic and uncorrelated error terms the standard error of $\beta_j$ is
+$$
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\right]_{(j,j)}}.
+$$
+The above expression is the infeasible (since $\sigma^2$ is typically unknown) population version of the standard error. We can estimate this population version using the empirical standard error
+$$
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\textsf{HC}\right) (X'X)^{-1}\right]_{(j,j)}},
+$$
+where $\textsf{HC}$ is a placeholder for one the **H**eteroskedasticity **C**onsistent estimators HC1-HC4 given above.
+
+The `sandwich`-package allows to compute these standard errors in `R` 
 
 ```{r}
 set.seed(123)
@@ -939,6 +1010,289 @@ lmtest::coeftest(lm_obj, vcov = vcovHC3_mat)
 ## Note: The HC3-Robust SE estimates are: 
 round(sqrt(diag(vcovHC3_mat)), digits = 5)
 ```
+
+## Inference 
+
+### Confidence Intervals for $\beta_j$
+
+Given the estimate $\hat\beta_j$ and the estimate of the standard error 
+$$
+\widehat{\operatorname{SE}}(\hat\beta_j|X),
+$$
+we can construct the $(1-\alpha)\cdot 100\%$ confidence interval for the true (unknown) $\beta_j$-parameter: 
+$$
+\begin{align*}
+&\operatorname{CI}^{1-\alpha}_{\beta_j}=\\[2ex]
+=&\left[\hat\beta_j - q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X),\;
+\hat\beta_j + q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right]\\[2ex]
+&\text{More compact notation:}\\[2ex]
+=&\left[\hat\beta_j\; {\color{red}\pm} \; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right],
+\end{align*}
+$$
+where 
+$$
+q^{t,n-(p+1)}_{1-\alpha/2}
+$$
+denotes the $(1-\alpha/2)$-quantile of the $t$-distribution with $\operatorname{df}=n-(p+1)$ degrees of freedom, and where $\alpha$ denotes the **significance level** with typical choices: 
+
+* $\alpha = 0.05$ or
+* $\alpha = 0.01$
+
+
+::: {.callout-tip}
+# Interpretation 
+
+
+The confidence interval 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_j}
+$$ 
+is a **random confidence interval**. 
+
+For a given realization of the training data random sample
+$$
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+$$
+we **obs**serve a specific realization 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_j,obs}.
+$$ 
+
+
+There is a $(1-\alpha)\cdot 100\%$ change (in resamplings from the training data random sample) that the **random confidence interval** 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_j}
+$$ 
+contains the true (fix) parameter value $\beta_j.$ 
+
+To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:
+
+* [Interactive visualization for interpreting confidence intervals](https://rpsychologist.com/d3/ci/)
+:::
+
+::: {.callout-caution}
+Only the above frequentist point of view can be nicely interpreted.  
+
+
+A given, observed confidence interval 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_j,obs},
+$$
+either contains the true parameter value or not and usually we do not know it, since we do not know the value of $\beta_j.$  
+
+![](images/CI_meme.jpg)
+
+::: 
+
+
+### Confidence Intervals for Statistical Hypothesis Testing 
+
+We can use the $(1-\alpha)\cdot 100\%$ confidence interval to do statistical hypothesis testing at the significance level $0<\alpha<1.$ Typical significance levels: 
+
+* $\alpha=0.05$
+* $\alpha=0.01$
+
+Let us consider the following null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_j$ equals the **null-hypothetical value** $\beta^{(H_0)}_{j}$ versus the two-sided alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_j$ does **not equal** the null-hypothetical value $\beta^{(H_0)}_{j}:$
+$$
+\begin{align*}
+H_0:&\;\beta_j=\beta^{(H_0)}_{j}\\ 
+H_1:&\;\beta_j\neq \beta^{(H_0)}_{j}
+\end{align*}
+$$
+
+::: {.callout-tip}
+# Classic No-Effect Null-Hypothesis
+For the special case, where the null-hypothetical value equals zero 
+$$
+\beta^{(H_0)}_{j}=0
+$$ 
+we test the classic **no-effect null-hypothesis**.
+:::
+
+
+**Testing-Procedure:**
+
+* If the observed (obs) realization of the confidence interval, $\operatorname{CI}^{1-\alpha}_{\beta_j,obs},$ **contains** the null-hypothetical value $\beta^{(H_0)}_{j},$ i.e.
+$$
+\begin{align*}
+\beta^{(H_0)}_{j}&\in\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\\[2ex]
+\Leftrightarrow\beta^{(H_0)}_{j}&\in
+\left[
+  \hat{\beta}_{j,obs} \;\pm\; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
+  \right],
+\end{align*}
+$$
+then we **cannot reject the null hypothesis**  $\beta_j=\beta^{(H_0)}_{j}.$
+
+* If, however, the observed (obs) realization of the confidence interval, $\operatorname{CI}^{1-\alpha}_{\beta_j,obs},$ does **not contain** the null-hypothetical value $\beta^{(H_0)}_{j},$ i.e.
+$$
+\begin{align*}
+\beta^{(H_0)}_{j}&\not\in\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\\[2ex]
+\Leftrightarrow\beta^{(H_0)}_{j}&\not\in
+\left[
+  \hat{\beta}_{j,obs} \;\pm\; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
+  \right],
+\end{align*}
+$$
+then we **reject the null hypothesis** and adopt the alternative  $\beta_j\neq\beta^{(H_0)}_{j}.$
+
+
+
+### Test Statistics for Statistical Hypothesis Testing 
+
+Standard errors can also be used to construct test statistics for statistical hypothesis testing. In the following, we look at the $t$-test statistic. 
+
+Choose a significance level $0<\alpha<1$ such as, for instance,
+
+* $\alpha=0.05$ 
+* $\alpha=0.01$
+
+Let us (again) consider the null-hypothesis $(H_0)$ that the true (usually unknown) value $\beta_j$ equals the **null-hypothetical value** $\beta^{(H_0)}_{j}$ versus the two-sided alternative hypothesis $(H_1)$ that the true (usually unknown) value $\beta_j$ does not equal the null-hypothetical value $\beta^{(H_0)}_{j}:$
+$$
+\begin{align*}
+H_0:&\;\beta_j=\beta^{(H_0)}_{j}\\[2ex] 
+H_1:&\;\beta_j\neq \beta^{(H_0)}_{j}
+\end{align*}
+$$
+
+
+The **random** $t$-test statistic is given by 
+$$
+T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}
+$$
+
+Under the null-hypothesis, $\beta_j=\beta^{(H_0)}_{j},$ the $t$-test statistic is $t$-distributed with $\operatorname{df}=n-(p+1)$ degrees of freedom.
+$$
+T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}\overset{H_0}{\sim} t_{n-(p+1)},
+$$
+where $t_{n-(p+1)}$ denotes the $t$-distribution with $\operatorname{df}=n-(p+1)$ degrees of freedom. 
+
+For a given realization of the training data random sample
+$$
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+$$
+we **obs**serve a specific realization of the $t$-test statistic
+$$
+T_{obs}=\frac{\hat\beta_{j,obs} - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}}
+$$ 
+
+#### **$p$-value:** {-}
+
+The $p$-value is the probability of seeing a realization of the **random** $t$-test statistic, $T,$ which is more extreme than the observed value of the test-statistic, $T_{obs},$ given the null-hypothesis is true
+$$
+\begin{align*}
+p_{obs}
+& = P\left(|T|\geq|T_{obs}|\;\;|\;\; \text{$H_0$ is true}\right)\\[2ex]
+& = 2\cdot\min\{P\left(T\geq T_{obs} \;\;|\;\; \text{$H_0$ is true}\right),\;\\ 
+& \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; P\left(T\leq T_{obs} \;\;|\;\; \text{$H_0$ is true}\right)\}.
+\end{align*}
+$$
+
+
+**Testing-Procedure:**
+<!-- To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$).  -->
+
+* If the observed realization of the $p$-value is larger than or equal to the significance level 
+$$
+p_{obs}\geq \alpha,
+$$
+then we **cannot reject the null hypothesis** $\beta_j=\beta^{(H_0)}_{j}.$ 
+
+* If, however, the observed realization of the $p$-value is strictly smaller than the significance level 
+$$
+p_{obs}<\alpha,
+$$
+then we **reject the null hypothesis** and adopt the alternative hypothesis $\beta_j\neq \beta^{(H_0)}_{j}.$ 
+
+::: {.callout-note}
+
+# Equivalence of Confidence Intervals and Test-Statistics
+
+It can be shown that a statistical hypothesis test based on the above confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_j,obs}$ leads to exactly the same test decisions as a statistical hypothesis test based on the above $t$-test statistic $T_{obs}.$
+::: 
+
+
+
+
+
+### Probability of a Type I Error, Power and Consistency
+
+
+Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the decision of 
+
+* not rejecting $H_0$ 
+
+versus 
+
+* rejecting $H_0$
+
+In applied research, we "aim" for rejecting $H_0.$ For instance, when we are able to reject the no-effect null-hypothesis 
+$$
+H_0: \beta_j = 0
+$$
+and thus able to adopt the alternative 
+$$
+H_1: \beta_j \neq 0,
+$$
+then we can state in a publication that variable $X_j$ has an effect.  
+
+<!-- Cautions: 
+
+1. If we cannot reject the null-hypothesis, A too strong desire for rejecting $H_0$ is the reason of a lot of scientific misconduct.  -->
+
+
+If we reject the null-hypothesis even though the null-hypothesis is true, we conduct a **Type I Error** and thus may falsely claim that variable $X_j$ has an effect. Such a false claim can be fatal.  
+
+Therefore, a statistical hypothesis test is only valid if it is able control the probability of conducting a type I error from above by the chosen significance level; i.e. if
+$$
+\underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
+$$
+where $\alpha$ is some small value like $\alpha = 0.05$ or $\alpha = 0.01.$ I.e., in $100$ resamples we expect to see at most $\alpha\cdot 100$ false rejections of $H_0.$
+
+
+By choosing a small significance level like $\alpha = 0.05$ or $\alpha = 0.01,$ we make sure that we can be quite "sure" that we do not falsely reject $H_0.$
+
+
+::: {.callout-caution}
+A statistical testing procedure only controls the probability of a type I error (falsely rejecting $H_0,$ when $H_0$ is true), 
+$$
+\underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
+$$
+but not the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true)
+$$
+\underbrace{P(\text{not reject }H_0 \;|\; H_1\text{ is true})}_{\text{Probability of a type II error}}\leq \;\; {\color{red}?}
+$$  
+
+Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, since we do not know wether the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true) is small. 
+
+Indeed, even very large $p$-values $p_{obs}\approx 1 \gg \alpha$ can occur simply because a violation of a null-hypothesis is smaller than the involved estimation errors.  
+
+The $p$-value is **not** the probability that the null-hypothesis is true❗
+
+![](images/terminator.jpeg)
+:::
+
+
+
+Under the alternative, i.e., if for instance  
+$$
+H_1: \beta_j \neq 0
+$$
+is true, we want to be able to reject $H_0$ with a large as possible probability. The probability of rejecting a false null-hypothesis is called **Power**
+$$
+\underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}}
+$$
+We want that
+$$
+\underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}} \to 1\quad\text{as}\quad |\beta_j - 0| \to \infty
+$$
+for each given sample size $n,$ and that 
+$$
+\underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}} \to 1\quad\text{as}\quad n \to \infty
+$$
+for each given violation of the null-hypothesis $|\beta_j - 0|>0.$
+
+A testing procedures that fulfills the latter property is is called **consistent.**
 
 
 

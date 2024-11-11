@@ -210,7 +210,7 @@ window.Quarto = {
   <ul>
 <li><a href="#sec-LinModAssumptions" id="toc-sec-LinModAssumptions" class="nav-link active" data-scroll-target="#sec-LinModAssumptions"><span class="header-section-number">4.1</span> Assumptions</a></li>
   <li><a href="#deriving-the-expression-of-the-ols-estimator" id="toc-deriving-the-expression-of-the-ols-estimator" class="nav-link" data-scroll-target="#deriving-the-expression-of-the-ols-estimator"><span class="header-section-number">4.2</span> Deriving the Expression of the OLS Estimator</a></li>
-  <li><a href="#assessing-the-accuracy-of-the-model-fit-hatf" id="toc-assessing-the-accuracy-of-the-model-fit-hatf" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-model-fit-hatf"><span class="header-section-number">4.3</span> Assessing the Accuracy of the Model fit <span class="math inline">\(\hat{f}\)</span></a></li>
+  <li><a href="#assessing-the-accuracy-of-the-model-fit-hatf" id="toc-assessing-the-accuracy-of-the-model-fit-hatf" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-model-fit-hatf"><span class="header-section-number">4.3</span> Assessing the Accuracy of the Model Fit <span class="math inline">\(\hat{f}\)</span></a></li>
   <li>
 <a href="#assessing-the-accuracy-of-the-coefficient-estimators-hatbeta" id="toc-assessing-the-accuracy-of-the-coefficient-estimators-hatbeta" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-coefficient-estimators-hatbeta"><span class="header-section-number">4.4</span> Assessing the Accuracy of the Coefficient Estimators <span class="math inline">\(\hat{\beta}\)</span></a>
   <ul class="collapse">
@@ -218,7 +218,16 @@ window.Quarto = {
   <li><a href="#standard-error-of-hatbeta_j" id="toc-standard-error-of-hatbeta_j" class="nav-link" data-scroll-target="#standard-error-of-hatbeta_j"><span class="header-section-number">4.4.2</span> Standard Error of <span class="math inline">\(\hat{\beta}_j\)</span></a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.5</span> Exercises</a></li>
+  <li>
+<a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference"><span class="header-section-number">4.5</span> Inference</a>
+  <ul class="collapse">
+<li><a href="#confidence-intervals-for-beta_j" id="toc-confidence-intervals-for-beta_j" class="nav-link" data-scroll-target="#confidence-intervals-for-beta_j"><span class="header-section-number">4.5.1</span> Confidence Intervals for <span class="math inline">\(\beta_j\)</span></a></li>
+  <li><a href="#confidence-intervals-for-statistical-hypothesis-testing" id="toc-confidence-intervals-for-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#confidence-intervals-for-statistical-hypothesis-testing"><span class="header-section-number">4.5.2</span> Confidence Intervals for Statistical Hypothesis Testing</a></li>
+  <li><a href="#test-statistics-for-statistical-hypothesis-testing" id="toc-test-statistics-for-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#test-statistics-for-statistical-hypothesis-testing"><span class="header-section-number">4.5.3</span> Test Statistics for Statistical Hypothesis Testing</a></li>
+  <li><a href="#probability-of-a-type-i-error-power-and-consistency" id="toc-probability-of-a-type-i-error-power-and-consistency" class="nav-link" data-scroll-target="#probability-of-a-type-i-error-power-and-consistency"><span class="header-section-number">4.5.4</span> Probability of a Type I Error, Power and Consistency</a></li>
+  </ul>
+</li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.6</span> Exercises</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -261,7 +270,9 @@ X_{i0}=1
 <li>
 <span class="math inline">\(Y_i\)</span> is called “dependent variable” or “outcome variable” or “regressand”</li>
 <li>
-<span class="math inline">\(X_{ik}\)</span> is called the <span class="math inline">\(k\)</span>th “predictor variable” or “regressor” or “explanatory variable” or “control variable.”</li>
+<span class="math inline">\(X_{ik}\)</span> is called the <span class="math inline">\(k\)</span>th “independent variable” or “predictor variable” or “regressor” or “explanatory variable” or “control variable.”</li>
+<li>
+<span class="math inline">\(\epsilon_i\)</span> is the error term.</li>
 </ul>
 <p>It is convenient to write <a href="#eq-LinMod" class="quarto-xref">Equation&nbsp;<span>4.1</span></a> using matrix notation <span class="math display">\[
 \begin{eqnarray*}
@@ -277,7 +288,24 @@ X_i=\left(\begin{matrix}X_{i0}\\ \vdots\\  X_{ip}\end{matrix}\right)
 \end{eqnarray*}
 \]</span> where <span class="math display">\[
 \begin{equation*}
-Y=\left(\begin{matrix}Y_1\\ \vdots\\Y_n\end{matrix}\right),\quad X=\left(\begin{matrix}X_{10}&amp;\dots&amp;X_{1(p+1)}\\\vdots&amp;\ddots&amp;\vdots\\ X_{n0}&amp;\dots&amp;X_{n(p+1)}\\\end{matrix}\right),\quad\text{and}\quad \epsilon=\left(\begin{matrix}\epsilon_1\\ \vdots\\ \epsilon_n\end{matrix}\right).
+Y=\left(\begin{matrix}Y_1
+\\ \vdots\\
+Y_n
+\end{matrix}\right),
+\quad
+X=\left(\begin{matrix}
+X_{10}&amp;\dots&amp;X_{1p}\\
+\vdots&amp;\ddots&amp;\vdots\\
+X_{n0}&amp;\dots&amp;X_{np}\\
+\end{matrix}\right),
+\quad
+\text{and}
+\quad
+\epsilon=
+\left(\begin{matrix}
+\epsilon_1\\ \vdots\\
+\epsilon_n
+\end{matrix}\right).
 \end{equation*}
 \]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -316,28 +344,28 @@ Note
 </div>
 <p><strong>Part (b): Random Sample</strong></p>
 <p>We assume that the <span class="math inline">\(n\)</span> observed data points <span class="math display">\[
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{n(p+1)}))
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
 \]</span> are a realization of the <strong>training data random sample</strong> <span class="math display">\[
-((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{n(p+1)})).
+((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
 \]</span></p>
 <p>That is, the <span class="math inline">\(i\)</span>th observed <span class="math inline">\(p+2\)</span> dimensional data point <span class="math display">\[
-(y_{i},x_{i0},\dots,x_{i(p+1)})\in\mathbb{R}^{p+2}
+(y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}
 \]</span> is a realization of a <span class="math inline">\(p+2\)</span> dimensional random variable <span class="math display">\[
-(Y_{i},X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2},
+(Y_{i},X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2},
 \]</span> where</p>
 <ol type="1">
 <li>
-<span class="math inline">\((Y_{i},X_{i0},\dots,X_{i(p+1)})\)</span> has the identical <span class="math inline">\(p+2\)</span> dimensional distribution for all <span class="math inline">\(i=1,\dots,n.\)</span>
+<span class="math inline">\((Y_{i},X_{i0},\dots,X_{ip})\)</span> has the identical <span class="math inline">\(p+2\)</span> dimensional distribution for all <span class="math inline">\(i=1,\dots,n.\)</span>
 </li>
 <li>
-<span class="math inline">\((Y_{i},X_{i0},\dots,X_{i(p+1)})\)</span> is independent of <span class="math inline">\((Y_{j},X_{j0},\dots,X_{j(p+1)})\)</span> for all <span class="math inline">\(i\neq j=1,\dots,n.\)</span>
+<span class="math inline">\((Y_{i},X_{i0},\dots,X_{ip})\)</span> is independent of <span class="math inline">\((Y_{j},X_{j0},\dots,X_{j(p+1)})\)</span> for all <span class="math inline">\(i\neq j=1,\dots,n.\)</span>
 </li>
 </ol>
 <!-- 
 ::: {.callout-note}
 Due to @eq-LinMod, this i.i.d. assumption is equivalent to assuming that the multivariate random variables 
 $$
-(\epsilon_i,X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2}
+(\epsilon_i,X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2}
 $$ 
 are i.i.d. across $i=1,\dots,n$. 
 ::: 
@@ -351,7 +379,7 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Remark:</strong> Often, we do not use a different notation for observed realizations <span class="math inline">\((y_{i},x_{i0},\dots,x_{i(p+1)})\in\mathbb{R}^{p+2}\)</span> and for the corresponding random variable <span class="math inline">\((Y_{i},X_{i0},\dots,X_{i(p+1)})\in\mathbb{R}^{p+2}\)</span> since often both interpretations (random variable and its realizations) can make sense in the same statement and then it depends on the considered context whether the random variables point if view or the realization point of view applies.</p>
+<p><strong>Remark:</strong> Often, we do not use a different notation for observed realizations <span class="math inline">\((y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}\)</span> and for the corresponding random variable <span class="math inline">\((Y_{i},X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2}\)</span> since often both interpretations (random variable and its realizations) can make sense in the same statement and then it depends on the considered context whether the random variables point if view or the realization point of view applies.</p>
 </div>
 </div>
 <p><strong>Assumption 2: Exogeneity</strong> <span id="eq-assExogen"><span class="math display">\[
@@ -409,7 +437,7 @@ E(\epsilon_i|X_i) = 0.
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Example: Heteroskedastic Error
+Examples: Heteroskedastic Error
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -430,7 +458,7 @@ Var(\epsilon_i|X_i) = |X_{i1}|^2.
 <p><strong>Assumption 3: Rank Condition (no perfect multicollinearity)</strong></p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{rank}(X)&amp;=(p+1)\quad\text{a.s.}\\
+\operatorname{rank}(X)&amp;=(p+1)\quad\text{a.s.}\\[2ex]
 \Leftrightarrow P\big(\operatorname{rank}(X)&amp;=(p+1)\big)=1
 \end{align*}
 \]</span> This assumption demands that, with probability one, no predictor variable <span class="math inline">\(X_{k}\in\mathbb{R}^n\)</span> is linearly dependent of the others. (This is the literal translation of the “almost surely (a.s.)” concept.)</p>
@@ -518,8 +546,8 @@ Cov(\epsilon_n,\epsilon_1|X)&amp;Cov(\epsilon_n,\epsilon_2|X)&amp;\dots&amp;Var(
 </ul>
 <p>All four Assumptions 1-4 must hold for doing inference using the (multiple) linear regression model.</p>
 <section id="homoskedastic-versus-heteroskedastic-error-terms" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="homoskedastic-versus-heteroskedastic-error-terms">Homoskedastic versus Heteroskedastic Error Terms</h4>
-<p>The i.i.d. assumption is not as restrictive as it may seem on first sight. It allows for dependence between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\((X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+1}\)</span>. That is, the error term <span class="math inline">\(\epsilon_i\)</span> can have a conditional distribution which depends on <span class="math inline">\((X_{i0},\dots,X_{i(p+1)}).\)</span></p>
-<p>The exogeneity assumption (Assumption 2: Exogeneity) requires that the conditional mean of <span class="math inline">\(\epsilon_i\)</span> is independent of <span class="math inline">\(X_i\)</span>. Besides this, dependencies between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_{i0},\dots,X_{i(p+1)}\)</span> are allowed. For instance, the variance of <span class="math inline">\(\epsilon_i\)</span> can be a function of <span class="math inline">\(X_{i0},\dots,X_{i(p+1)}.\)</span> If this is the case, <span class="math inline">\(\epsilon_i\)</span> is said to be <strong>“heteroskedastic.”</strong></p>
+<p>The i.i.d. assumption is not as restrictive as it may seem on first sight. It allows for dependence between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\((X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+1}\)</span>. That is, the error term <span class="math inline">\(\epsilon_i\)</span> can have a conditional distribution which depends on <span class="math inline">\((X_{i0},\dots,X_{ip}).\)</span></p>
+<p>The exogeneity assumption (Assumption 2: Exogeneity) requires that the conditional mean of <span class="math inline">\(\epsilon_i\)</span> is independent of <span class="math inline">\(X_i\)</span>. Besides this, dependencies between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_{i0},\dots,X_{ip}\)</span> are allowed. For instance, the variance of <span class="math inline">\(\epsilon_i\)</span> can be a function of <span class="math inline">\(X_{i0},\dots,X_{ip}.\)</span> If this is the case, <span class="math inline">\(\epsilon_i\)</span> is said to be <strong>“heteroskedastic.”</strong></p>
 <ul>
 <li><p><strong>Heteroskedastic error terms:</strong> The conditional variances <span class="math display">\[
 Var(\epsilon_i|X_i=x_i)=\sigma^2(x_i)
@@ -682,7 +710,7 @@ P_X=X(X'X)^{-1}X'
 M_X=I_n-X(X'X)^{-1}X'=I_n-P_X
 \]</span> is the associated <span class="math inline">\((n\times n)\)</span> <strong>orthogonal projection matrix</strong> that projects any vector from <span class="math inline">\(\mathbb{R}^n\)</span> into the vector space that is orthogonal to that spanned by the column vectors of <span class="math inline">\(X.\)</span></p>
 </section></section><section id="assessing-the-accuracy-of-the-model-fit-hatf" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="assessing-the-accuracy-of-the-model-fit-hatf">
-<span class="header-section-number">4.3</span> Assessing the Accuracy of the Model fit <span class="math inline">\(\hat{f}\)</span>
+<span class="header-section-number">4.3</span> Assessing the Accuracy of the Model Fit <span class="math inline">\(\hat{f}\)</span>
 </h2>
 <p>The larger the proportion of the explained variance, the better is the fit of the estimated model <span class="math inline">\(\hat{f}\)</span> to the training data. This motivates the definition of the so-called <span class="math inline">\(R^2\)</span> coefficient of determination: <span class="math display">\[
 \begin{eqnarray*}
@@ -726,14 +754,16 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Cautionary Note Nr 1:</strong> Do not forget that there is a <strong>irreducible error</strong> <span class="math inline">\(Var(\epsilon)=\sigma^2&gt;0\)</span>. Thus</p>
+<p><strong>Cautionary Note Nr 1:</strong></p>
+<p>Do not forget that there is a <strong>irreducible error</strong> <span class="math inline">\(Var(\epsilon)=\sigma^2&gt;0\)</span>. Thus</p>
 <ul>
 <li>very low <span class="math inline">\(\operatorname{RSE}\)</span> values <span class="math inline">\((\operatorname{RSE}\approx 0)\)</span> and</li>
 <li>very high <span class="math inline">\(R^2\)</span> values <span class="math inline">\((R^2\approx 1)\)</span>
 </li>
 </ul>
-<p>can be warning signals indicating overfitting. While overfitting typically does not happen with a simple linear regression model, it can happen with a multiple linear regression model.</p>
-<p><strong>Cautionary Note Nr 2:</strong> The <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\operatorname{RSE}\)</span> are only based on <strong>training data</strong>. In <a href="Ch2_StatLearning.html" class="quarto-xref"><span>Chapter 2</span></a>, we have seen that a proper assessment of the model accuracy needs to take into account <strong>test data</strong>.</p>
+<p>can be warning signals indicating overfitting. While overfitting typically does not happen with a simple linear regression model, it can happen with multiple linear regression models containing a lot of parameters (large <span class="math inline">\(p\)</span>).</p>
+<p><strong>Cautionary Note Nr 2:</strong></p>
+<p>The <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\operatorname{RSE}\)</span> are only based on <strong>training data</strong>. In <a href="Ch2_StatLearning.html" class="quarto-xref"><span>Chapter 2</span></a>, we have seen that a proper assessment of the model accuracy needs to take into account <strong>test data</strong>.</p>
 </div>
 </div>
 <section id="r2-and-correlation-coefficient" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="r2-and-correlation-coefficient">
@@ -813,29 +843,54 @@ Caution
 <section id="bias-of-hatbeta" class="level3" data-number="4.4.1"><h3 data-number="4.4.1" class="anchored" data-anchor-id="bias-of-hatbeta">
 <span class="header-section-number">4.4.1</span> Bias of <span class="math inline">\(\hat{\beta}\)</span>
 </h3>
-<p>Under the Assumptions 1-4, once can show that the OLS estimator <span class="math display">\[
+<p>Under the Assumptions 1-4, one can show that the OLS estimator <span class="math display">\[
 \hat\beta = (X'X)^{-1}X'Y
-\]</span> is unbiased, i.e. <span class="math display">\[
-\operatorname{Bias}(\hat\beta) = E(\hat\beta) - \beta = \underset{((p+1)\times 1)}{0}.
-\]</span> That is, on average <span class="math inline">\(\hat\beta\)</span> equals <span class="math inline">\(\beta.\)</span></p>
-<p>This can be shown as following:</p>
+\]</span> is unbiased, i.e. <span id="eq-OLSUnbiased"><span class="math display">\[
+\begin{align*}
+\operatorname{Bias}(\hat\beta)
+&amp; = E(\hat\beta) - \beta \\[2ex]
+&amp; = \beta  - \beta \\[2ex]
+&amp; = \underset{(p+1)\times 1}{0}.
+\end{align*}
+\qquad(4.3)\]</span></span> That is, in the mean <span class="math inline">\(\hat\beta\)</span> equals <span class="math inline">\(\beta.\)</span></p>
+<p><a href="#eq-OLSUnbiased" class="quarto-xref">Equation&nbsp;<span>4.3</span></a> can be shown as following:</p>
 <p>Observe that <span class="math display">\[
 \hat\beta=(X'X)^{-1}X'Y
-\]</span> consists of two multivariate random variables <span class="math inline">\(X\in\mathbb{R}^{n\times(p+1)}\)</span> and <span class="math inline">\(Y\in\mathbb{R}^n.\)</span> Thus one needs to show first the conditional unbiasedness of <span class="math inline">\(\hat\beta\)</span> given <span class="math inline">\(X\)</span> which effectively allows us to focus on randomness due to <span class="math inline">\(\epsilon,\)</span><br><span class="math display">\[
+\]</span> consists of two multivariate random variables; namely</p>
+<ul>
+<li>
+<span class="math inline">\(X\in\mathbb{R}^{n\times(p+1)}\)</span> and</li>
+<li><span class="math inline">\(Y\in\mathbb{R}^n.\)</span></li>
+</ul>
+<p>Thus we firstly need to derive the <strong>conditional mean</strong> <span class="math inline">\(E(\hat\beta|X),\)</span> which effectively allows us to focus on randomness due to <span class="math inline">\(\epsilon,\)</span><br><span class="math display">\[
+\begin{align*}
+E(\hat\beta|X)
+&amp;= E((X'X)^{-1}X'Y|X) \\[2ex]
+&amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
+&amp;= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
+&amp;= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
+&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_K}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&amp;= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
+&amp;= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex]
+&amp;= \underset{(p+1)\times 1}{\beta}  
+\end{align*}
+\]</span> Thus <span class="math inline">\(\hat\beta\)</span> is <strong>conditionally unbiased:</strong> <span class="math display">\[
 \begin{align*}
 \operatorname{Bias}(\hat\beta|X)
-&amp;= E(\hat\beta|X)                                        - \beta \\[2ex]
-&amp;= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) - \beta \\[2ex]
-&amp;= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 - \beta \\[2ex]
-&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_K}\beta|X) + E((X'X)^{-1}X'\epsilon|X) - \beta \\[2ex]
-&amp;= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)} - \beta \\[2ex]
-&amp;=  (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0} =\underset{(K\times 1)}{0}  
+&amp; = E(\hat\beta|X) - \beta\\[2ex]
+&amp; = \beta - \beta \\[2ex]
+&amp; = \underset{(p+1)\times 1}{0}   
 \end{align*}
-\]</span> Thus <span class="math inline">\(\hat\beta\)</span> is unbiased conditionally on <span class="math inline">\(X\)</span> <span class="math display">\[
-\operatorname{Bias}(\hat\beta|X) = 0.
 \]</span></p>
-<p>From this if follows, by the iterated law of expectations, that the OLS estimator is also unconditionally unbiased, i.e.<br><span class="math display">\[
-\operatorname{Bias}(\hat\beta) = E\left(\operatorname{Bias}(\hat\beta|X)\right) = E(0) = 0.
+<p>From this if follows, by the iterated law of expectations, that the OLS estimator is also <strong>unconditionally unbiased:</strong><br><span class="math display">\[
+\begin{align*}
+\operatorname{Bias}(\hat\beta)
+&amp; = E(\operatorname{Bias}(\hat\beta|X))\\[2ex]
+&amp; = E\left(E(\hat\beta|X) - \beta\right)\\[2ex]
+&amp; = E\left(E(\hat\beta|X)\right) - E\left(\beta\right)\\[2ex]
+&amp; = E\left(\beta\right) - E\left(\beta\right)\\[2ex]
+&amp; = \beta - \beta = 0.
+\end{align*}
 \]</span></p>
 </section><section id="standard-error-of-hatbeta_j" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="standard-error-of-hatbeta_j">
 <span class="header-section-number">4.4.2</span> Standard Error of <span class="math inline">\(\hat{\beta}_j\)</span>
@@ -855,7 +910,7 @@ Cov(\hat\beta_p,\hat\beta_0|X)&amp;Cov(\hat\beta_p,\hat\beta_1|X)&amp;\cdots&amp
 \end{pmatrix}
 \end{align*}
 \]</span></p>
-<p>Thus, to compute a useful explicit expression for <span class="math display">\[
+<p>Thus, to compute a useful, explicit expression for <span class="math display">\[
 \operatorname{SE}(\hat\beta_j|X)=?,
 \]</span> we need to compute an explicit expression for the symmetric <span class="math inline">\((p+1)\times(p+1)\)</span> variance-covariance matrix <span class="math inline">\(Var(\hat\beta|X).\)</span></p>
 <p>Let us derive the general explicit expression for <span class="math inline">\(Var(\hat\beta|X).\)</span></p>
@@ -863,15 +918,16 @@ Cov(\hat\beta_p,\hat\beta_0|X)&amp;Cov(\hat\beta_p,\hat\beta_1|X)&amp;\cdots&amp
 \begin{align*}
 \hat{\beta}
 &amp;=(X'X)^{-1}X'Y\\[2ex]
-&amp;\text{Using that $Y=X\beta + \epsilon$:}\\[2ex]
+&amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
 &amp;=(X'X)^{-1}X'(X\beta + \epsilon)\\[2ex]
 &amp;=\underbrace{(X'X)^{-1}X'X\beta}_{=\beta} + (X'X)^{-1}X'\epsilon
 \end{align*}
-\]</span> This leads to the so-called sampling error expression <span class="math display">\[
+\]</span> This leads to the so-called <strong>sampling error expression</strong> <span class="math display">\[
 \hat{\beta} - \beta = (X'X)^{-1}X'\epsilon.
 \]</span> With this, we can derive the general explicit expression for <span class="math inline">\(Var(\hat\beta|X).\)</span> <span class="math display">\[
 \begin{align*}
 &amp;Var(\hat\beta|X)=\\[2ex]
+&amp;\text{Adding/subtracting constants does not change variance:}\\[2ex]
 &amp;=Var(\hat\beta - \beta|X)\\[2ex]
 &amp;\text{Using the sampling error expression:}\\[2ex]
 &amp;=Var((X'X)^{-1}X'\epsilon|X)\\[2ex]
@@ -893,8 +949,13 @@ Cov(\epsilon_n,\epsilon_1|X)&amp;Cov(\epsilon_n,\epsilon_2|X)&amp;\cdots&amp;Var
 \end{align*}
 \]</span></p>
 <p>The explicit form of the symmetric <span class="math inline">\((n\times n)\)</span> matrix <span class="math inline">\(Var(\epsilon|X)\)</span> depends on our (hopefully correct) assumption on the error-term distribution (Assumption 4).</p>
-<section id="case-of-spherical-homoskedastic-uncorrelated-errors" class="level4" data-number="4.4.2.1"><h4 data-number="4.4.2.1" class="anchored" data-anchor-id="case-of-spherical-homoskedastic-uncorrelated-errors">
-<span class="header-section-number">4.4.2.1</span> Case of Spherical (Homoskedastic, Uncorrelated) Errors</h4>
+<p>In the following, we consider the two most prominent types of assumptions for the symmetric <span class="math inline">\((n\times n)\)</span> matrix <span class="math inline">\(Var(\epsilon|X)\)</span>:</p>
+<ul>
+<li>Spherical, i.e., homoskedastic and uncorrelated errors</li>
+<li>Heteroskedastic and uncorrelated errors</li>
+</ul>
+<section id="case-of-spherical-homoskedastic-and-uncorrelated-errors" class="level4" data-number="4.4.2.1"><h4 data-number="4.4.2.1" class="anchored" data-anchor-id="case-of-spherical-homoskedastic-and-uncorrelated-errors">
+<span class="header-section-number">4.4.2.1</span> Case of Spherical (Homoskedastic and Uncorrelated) Errors</h4>
 <p>If <span class="math display">\[
 \begin{align*}
 Var(\epsilon|X)
@@ -905,7 +966,7 @@ Var(\epsilon|X)
 \vdots   &amp; \vdots   &amp; \ddots &amp; 0\\
 0        &amp; 0        &amp; \cdots &amp; \sigma^2\\
 \end{pmatrix}
-&amp;=\sigma^2 I_n,
+=\sigma^2 I_n,
 \end{align*}
 \]</span> then <span class="math display">\[
 \begin{align*}
@@ -926,9 +987,9 @@ Var(\epsilon|X)
 \]</span></p>
 <p><strong>Summing up:</strong></p>
 <p>In the case of spherical (homoskedastic and uncorrelated) error terms the standard error of <span class="math inline">\(\beta_j\)</span> is <span class="math display">\[
-\operatorname{SE}(\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
-\]</span> The above expression is the infeasible (since <span class="math inline">\(\sigma^2\)</span> is typically unknown) population version of the standard error. We can estimate this population version using the empirical standard error <span class="math display">\[
-\widehat{\operatorname{SE}}(\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\]</span> The above expression is infeasible since <span class="math inline">\(\sigma^2\)</span> is typically unknown. We can estimate this infeasible population version using the empirical standard error <span class="math display">\[
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
 \]</span></p>
 <p>This is the default version for computing the standard error in statistical software packages such as <code>R</code>.</p>
 <div class="cell" data-layout-align="center">
@@ -964,8 +1025,8 @@ Multiple R-squared:  0.6565,    Adjusted R-squared:  0.6494
 F-statistic: 92.68 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</section><section id="case-of-heteroskedastic-but-uncorrelated-errors" class="level4" data-number="4.4.2.2"><h4 data-number="4.4.2.2" class="anchored" data-anchor-id="case-of-heteroskedastic-but-uncorrelated-errors">
-<span class="header-section-number">4.4.2.2</span> Case of Heteroskedastic, but Uncorrelated Errors</h4>
+</section><section id="case-of-heteroskedastic-and-uncorrelated-errors" class="level4" data-number="4.4.2.2"><h4 data-number="4.4.2.2" class="anchored" data-anchor-id="case-of-heteroskedastic-and-uncorrelated-errors">
+<span class="header-section-number">4.4.2.2</span> Case of Heteroskedastic and Uncorrelated Errors</h4>
 <p>If <span class="math display">\[
 \begin{align*}
 Var(\epsilon|X)
@@ -1019,7 +1080,7 @@ Var(\epsilon|X)
 </tr>
 <tr class="odd">
 <td>HC4</td>
-<td><span class="math inline">\(\frac{1}{n}\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{\hat{\varepsilon}_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1034,20 +1095,29 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The statistic <span class="math inline">\(h_i:=[P_X]_{ii}\)</span> is called the <strong>leverage statistic</strong> of <span class="math inline">\(X_i,\)</span> where</p>
+<p>The statistic <span class="math inline">\(h_i\)</span> is simply the <span class="math inline">\(i\)</span>th diagonal element of the projection matrix <span class="math inline">\(P_X\)</span> <span class="math display">\[
+h_i=[P_X]_{ii}
+\]</span> and is called the <span class="math inline">\(i\)</span>th <strong>leverage statistic</strong>, where</p>
 <ul>
 <li>
 <span class="math inline">\(1/n\leq h_i\leq 1\)</span> and</li>
 <li>
-<span class="math inline">\(\bar{h}=n^{-1}\sum_{i=1}^nh_i=K/n\)</span>.</li>
+<span class="math inline">\(\bar{h}=n^{-1}\sum_{i=1}^nh_i=(p+1)/n\)</span>.</li>
 </ul>
-<p>Observations <span class="math inline">\(X_i\)</span> with leverage statistics <span class="math inline">\(h_i\)</span> that greatly exceed the average leverage value <span class="math inline">\(K/n\)</span> are referred to as “high leverage” observations. High leverage observations <span class="math inline">\(X_i\)</span> are observations that are far away from all other observations <span class="math inline">\(X_j\)</span>, <span class="math inline">\(i\neq j=1,\dots,n.\)</span></p>
+<p>Observations <span class="math inline">\(X_i\)</span> with leverage statistics <span class="math inline">\(h_i\)</span> that greatly exceed the average leverage value <span class="math inline">\((p+1)/n\)</span> are referred to as “high leverage” observations. High leverage observations <span class="math inline">\(X_i\)</span> are observations that are far away from the predictor values of all other subjects.</p>
 <p>High leverage observations <span class="math inline">\(X_i\)</span> have the potential to distort the estimation results, <span class="math inline">\(\hat\beta_n\)</span>. Indeed, a high leverage observation <span class="math inline">\(X_i\)</span> will have an distorting effect on the estimation results if the absolute value of the corresponding residual <span class="math inline">\(|\hat{\varepsilon}_i|\)</span> is unusually large—such observations are called <strong>influential outliers</strong>. Such observations increase the estimation uncertainty.</p>
 <p>General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals <span class="math inline">\(\hat\varepsilon_i\)</span> belonging to <span class="math inline">\(X_i\)</span> values that have a large leverage <span class="math inline">\(h_i\)</span> receive a higher weight and thus increase the value of <span class="math inline">\(\widehat{E}(\varepsilon^2_iX_iX_i').\)</span> This strategy takes into account increased estimation uncertainties due to single influential outliers.</p>
 </div>
 </div>
 <!-- The estimator HC0 was suggested in the econometrics literature by @White1980 and is justified by asymptotic ($n\to\infty$) arguments. The estimators HC1, HC2 and HC3 were suggested by @MacKinnon_White_1985 to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, @Long_Ervin_2000 concludes that HC3 provides the best overall performance in finite samples. @Cribari_2004 suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large $h_i$ values). 
 -->
+<p><strong>Summing up:</strong></p>
+<p>In the case of heteroskedastic and uncorrelated error terms the standard error of <span class="math inline">\(\beta_j\)</span> is <span class="math display">\[
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\right]_{(j,j)}}.
+\]</span> The above expression is the infeasible (since <span class="math inline">\(\sigma^2\)</span> is typically unknown) population version of the standard error. We can estimate this population version using the empirical standard error <span class="math display">\[
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\textsf{HC}\right) (X'X)^{-1}\right]_{(j,j)}},
+\]</span> where <span class="math inline">\(\textsf{HC}\)</span> is a placeholder for one the <strong>H</strong>eteroskedasticity <strong>C</strong>onsistent estimators HC1-HC4 given above.</p>
+<p>The <code>sandwich</code>-package allows to compute these standard errors in <code>R</code></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">n</span>      <span class="op">&lt;-</span> <span class="fl">100</span>                           <span class="co"># Sample size</span></span>
@@ -1087,8 +1157,235 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
     2.17658     0.22302     0.34716 </code></pre>
 </div>
 </div>
-</section></section></section><section id="exercises" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">4.5</span> Exercises</h2>
+</section></section></section><section id="inference" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="inference">
+<span class="header-section-number">4.5</span> Inference</h2>
+<section id="confidence-intervals-for-beta_j" class="level3" data-number="4.5.1"><h3 data-number="4.5.1" class="anchored" data-anchor-id="confidence-intervals-for-beta_j">
+<span class="header-section-number">4.5.1</span> Confidence Intervals for <span class="math inline">\(\beta_j\)</span>
+</h3>
+<p>Given the estimate <span class="math inline">\(\hat\beta_j\)</span> and the estimate of the standard error <span class="math display">\[
+\widehat{\operatorname{SE}}(\hat\beta_j|X),
+\]</span> we can construct the <span class="math inline">\((1-\alpha)\cdot 100\%\)</span> confidence interval for the true (unknown) <span class="math inline">\(\beta_j\)</span>-parameter: <span class="math display">\[
+\begin{align*}
+&amp;\operatorname{CI}^{1-\alpha}_{\beta_j}=\\[2ex]
+=&amp;\left[\hat\beta_j - q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X),\;
+\hat\beta_j + q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right]\\[2ex]
+&amp;\text{More compact notation:}\\[2ex]
+=&amp;\left[\hat\beta_j\; {\color{red}\pm} \; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right],
+\end{align*}
+\]</span> where <span class="math display">\[
+q^{t,n-(p+1)}_{1-\alpha/2}
+\]</span> denotes the <span class="math inline">\((1-\alpha/2)\)</span>-quantile of the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom, and where <span class="math inline">\(\alpha\)</span> denotes the <strong>significance level</strong> with typical choices:</p>
+<ul>
+<li>
+<span class="math inline">\(\alpha = 0.05\)</span> or</li>
+<li><span class="math inline">\(\alpha = 0.01\)</span></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The confidence interval <span class="math display">\[
+\operatorname{CI}^{1-\alpha}_{\beta_j}
+\]</span> is a <strong>random confidence interval</strong>.</p>
+<p>For a given realization of the training data random sample <span class="math display">\[
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+\]</span> we <strong>obs</strong>serve a specific realization <span class="math display">\[
+\operatorname{CI}^{1-\alpha}_{\beta_j,obs}.
+\]</span></p>
+<p>There is a <span class="math inline">\((1-\alpha)\cdot 100\%\)</span> change (in resamplings from the training data random sample) that the <strong>random confidence interval</strong> <span class="math display">\[
+\operatorname{CI}^{1-\alpha}_{\beta_j}
+\]</span> contains the true (fix) parameter value <span class="math inline">\(\beta_j.\)</span></p>
+<p>To understand the interpretation of confidence intervals, it is very instructive to look at visualizations:</p>
+<ul>
+<li><a href="https://rpsychologist.com/d3/ci/">Interactive visualization for interpreting confidence intervals</a></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Only the above frequentist point of view can be nicely interpreted.</p>
+<p>A given, observed confidence interval <span class="math display">\[
+\operatorname{CI}^{1-\alpha}_{\beta_j,obs},
+\]</span> either contains the true parameter value or not and usually we do not know it, since we do not know the value of <span class="math inline">\(\beta_j.\)</span></p>
+<p><img src="images/CI_meme.jpg" class="img-fluid"></p>
+</div>
+</div>
+</section><section id="confidence-intervals-for-statistical-hypothesis-testing" class="level3" data-number="4.5.2"><h3 data-number="4.5.2" class="anchored" data-anchor-id="confidence-intervals-for-statistical-hypothesis-testing">
+<span class="header-section-number">4.5.2</span> Confidence Intervals for Statistical Hypothesis Testing</h3>
+<p>We can use the <span class="math inline">\((1-\alpha)\cdot 100\%\)</span> confidence interval to do statistical hypothesis testing at the significance level <span class="math inline">\(0&lt;\alpha&lt;1.\)</span> Typical significance levels:</p>
+<ul>
+<li><span class="math inline">\(\alpha=0.05\)</span></li>
+<li><span class="math inline">\(\alpha=0.01\)</span></li>
+</ul>
+<p>Let us consider the following null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_j\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{j}\)</span> versus the two-sided alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_j\)</span> does <strong>not equal</strong> the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{j}:\)</span> <span class="math display">\[
+\begin{align*}
+H_0:&amp;\;\beta_j=\beta^{(H_0)}_{j}\\
+H_1:&amp;\;\beta_j\neq \beta^{(H_0)}_{j}
+\end{align*}
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Classic No-Effect Null-Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the special case, where the null-hypothetical value equals zero <span class="math display">\[
+\beta^{(H_0)}_{j}=0
+\]</span> we test the classic <strong>no-effect null-hypothesis</strong>.</p>
+</div>
+</div>
+<p><strong>Testing-Procedure:</strong></p>
+<ul>
+<li><p>If the observed (obs) realization of the confidence interval, <span class="math inline">\(\operatorname{CI}^{1-\alpha}_{\beta_j,obs},\)</span> <strong>contains</strong> the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{j},\)</span> i.e. <span class="math display">\[
+\begin{align*}
+\beta^{(H_0)}_{j}&amp;\in\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\\[2ex]
+\Leftrightarrow\beta^{(H_0)}_{j}&amp;\in
+\left[
+\hat{\beta}_{j,obs} \;\pm\; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
+\right],
+\end{align*}
+\]</span> then we <strong>cannot reject the null hypothesis</strong> <span class="math inline">\(\beta_j=\beta^{(H_0)}_{j}.\)</span></p></li>
+<li><p>If, however, the observed (obs) realization of the confidence interval, <span class="math inline">\(\operatorname{CI}^{1-\alpha}_{\beta_j,obs},\)</span> does <strong>not contain</strong> the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{j},\)</span> i.e. <span class="math display">\[
+\begin{align*}
+\beta^{(H_0)}_{j}&amp;\not\in\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\\[2ex]
+\Leftrightarrow\beta^{(H_0)}_{j}&amp;\not\in
+\left[
+\hat{\beta}_{j,obs} \;\pm\; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
+\right],
+\end{align*}
+\]</span> then we <strong>reject the null hypothesis</strong> and adopt the alternative <span class="math inline">\(\beta_j\neq\beta^{(H_0)}_{j}.\)</span></p></li>
+</ul></section><section id="test-statistics-for-statistical-hypothesis-testing" class="level3" data-number="4.5.3"><h3 data-number="4.5.3" class="anchored" data-anchor-id="test-statistics-for-statistical-hypothesis-testing">
+<span class="header-section-number">4.5.3</span> Test Statistics for Statistical Hypothesis Testing</h3>
+<p>Standard errors can also be used to construct test statistics for statistical hypothesis testing. In the following, we look at the <span class="math inline">\(t\)</span>-test statistic.</p>
+<p>Choose a significance level <span class="math inline">\(0&lt;\alpha&lt;1\)</span> such as, for instance,</p>
+<ul>
+<li><span class="math inline">\(\alpha=0.05\)</span></li>
+<li><span class="math inline">\(\alpha=0.01\)</span></li>
+</ul>
+<p>Let us (again) consider the null-hypothesis <span class="math inline">\((H_0)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_j\)</span> equals the <strong>null-hypothetical value</strong> <span class="math inline">\(\beta^{(H_0)}_{j}\)</span> versus the two-sided alternative hypothesis <span class="math inline">\((H_1)\)</span> that the true (usually unknown) value <span class="math inline">\(\beta_j\)</span> does not equal the null-hypothetical value <span class="math inline">\(\beta^{(H_0)}_{j}:\)</span> <span class="math display">\[
+\begin{align*}
+H_0:&amp;\;\beta_j=\beta^{(H_0)}_{j}\\[2ex]
+H_1:&amp;\;\beta_j\neq \beta^{(H_0)}_{j}
+\end{align*}
+\]</span></p>
+<p>The <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic is given by <span class="math display">\[
+T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}
+\]</span></p>
+<p>Under the null-hypothesis, <span class="math inline">\(\beta_j=\beta^{(H_0)}_{j},\)</span> the <span class="math inline">\(t\)</span>-test statistic is <span class="math inline">\(t\)</span>-distributed with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom. <span class="math display">\[
+T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}\overset{H_0}{\sim} t_{n-(p+1)},
+\]</span> where <span class="math inline">\(t_{n-(p+1)}\)</span> denotes the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom.</p>
+<p>For a given realization of the training data random sample <span class="math display">\[
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+\]</span> we <strong>obs</strong>serve a specific realization of the <span class="math inline">\(t\)</span>-test statistic <span class="math display">\[
+T_{obs}=\frac{\hat\beta_{j,obs} - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}}
+\]</span></p>
+<section id="p-value" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="p-value"><strong><span class="math inline">\(p\)</span>-value:</strong></h4>
+<p>The <span class="math inline">\(p\)</span>-value is the probability of seeing a realization of the <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic, <span class="math inline">\(T,\)</span> which is more extreme than the observed value of the test-statistic, <span class="math inline">\(T_{obs},\)</span> given the null-hypothesis is true <span class="math display">\[
+\begin{align*}
+p_{obs}
+&amp; = P\left(|T|\geq|T_{obs}|\;\;|\;\; \text{$H_0$ is true}\right)\\[2ex]
+&amp; = 2\cdot\min\{P\left(T\geq T_{obs} \;\;|\;\; \text{$H_0$ is true}\right),\;\\
+&amp; \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; P\left(T\leq T_{obs} \;\;|\;\; \text{$H_0$ is true}\right)\}.
+\end{align*}
+\]</span></p>
+<p><strong>Testing-Procedure:</strong> <!-- To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$).  --></p>
+<ul>
+<li><p>If the observed realization of the <span class="math inline">\(p\)</span>-value is larger than or equal to the significance level <span class="math display">\[
+p_{obs}\geq \alpha,
+\]</span> then we <strong>cannot reject the null hypothesis</strong> <span class="math inline">\(\beta_j=\beta^{(H_0)}_{j}.\)</span></p></li>
+<li><p>If, however, the observed realization of the <span class="math inline">\(p\)</span>-value is strictly smaller than the significance level <span class="math display">\[
+p_{obs}&lt;\alpha,
+\]</span> then we <strong>reject the null hypothesis</strong> and adopt the alternative hypothesis <span class="math inline">\(\beta_j\neq \beta^{(H_0)}_{j}.\)</span></p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Equivalence of Confidence Intervals and Test-Statistics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It can be shown that a statistical hypothesis test based on the above confidence interval <span class="math inline">\(\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\)</span> leads to exactly the same test decisions as a statistical hypothesis test based on the above <span class="math inline">\(t\)</span>-test statistic <span class="math inline">\(T_{obs}.\)</span></p>
+</div>
+</div>
+</section></section><section id="probability-of-a-type-i-error-power-and-consistency" class="level3" data-number="4.5.4"><h3 data-number="4.5.4" class="anchored" data-anchor-id="probability-of-a-type-i-error-power-and-consistency">
+<span class="header-section-number">4.5.4</span> Probability of a Type I Error, Power and Consistency</h3>
+<p>Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the decision of</p>
+<ul>
+<li>not rejecting <span class="math inline">\(H_0\)</span>
+</li>
+</ul>
+<p>versus</p>
+<ul>
+<li>rejecting <span class="math inline">\(H_0\)</span>
+</li>
+</ul>
+<p>In applied research, we “aim” for rejecting <span class="math inline">\(H_0.\)</span> For instance, when we are able to reject the no-effect null-hypothesis <span class="math display">\[
+H_0: \beta_j = 0
+\]</span> and thus able to adopt the alternative <span class="math display">\[
+H_1: \beta_j \neq 0,
+\]</span> then we can state in a publication that variable <span class="math inline">\(X_j\)</span> has an effect.</p>
+<!-- Cautions: 
+
+1. If we cannot reject the null-hypothesis, A too strong desire for rejecting $H_0$ is the reason of a lot of scientific misconduct.  -->
+<p>If we reject the null-hypothesis even though the null-hypothesis is true, we conduct a <strong>Type I Error</strong> and thus may falsely claim that variable <span class="math inline">\(X_j\)</span> has an effect. Such a false claim can be fatal.</p>
+<p>Therefore, a statistical hypothesis test is only valid if it is able control the probability of conducting a type I error from above by the chosen significance level; i.e.&nbsp;if <span class="math display">\[
+\underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
+\]</span> where <span class="math inline">\(\alpha\)</span> is some small value like <span class="math inline">\(\alpha = 0.05\)</span> or <span class="math inline">\(\alpha = 0.01.\)</span> I.e., in <span class="math inline">\(100\)</span> resamples we expect to see at most <span class="math inline">\(\alpha\cdot 100\)</span> false rejections of <span class="math inline">\(H_0.\)</span></p>
+<p>By choosing a small significance level like <span class="math inline">\(\alpha = 0.05\)</span> or <span class="math inline">\(\alpha = 0.01,\)</span> we make sure that we can be quite “sure” that we do not falsely reject <span class="math inline">\(H_0.\)</span></p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A statistical testing procedure only controls the probability of a type I error (falsely rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_0\)</span> is true), <span class="math display">\[
+\underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
+\]</span> but not the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true) <span class="math display">\[
+\underbrace{P(\text{not reject }H_0 \;|\; H_1\text{ is true})}_{\text{Probability of a type II error}}\leq \;\; {\color{red}?}
+\]</span></p>
+<p>Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, since we do not know wether the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true) is small.</p>
+<p>Indeed, even very large <span class="math inline">\(p\)</span>-values <span class="math inline">\(p_{obs}\approx 1 \gg \alpha\)</span> can occur simply because a violation of a null-hypothesis is smaller than the involved estimation errors.</p>
+<p>The <span class="math inline">\(p\)</span>-value is <strong>not</strong> the probability that the null-hypothesis is true❗</p>
+<p><img src="images/terminator.jpeg" class="img-fluid"></p>
+</div>
+</div>
+<p>Under the alternative, i.e., if for instance<br><span class="math display">\[
+H_1: \beta_j \neq 0
+\]</span> is true, we want to be able to reject <span class="math inline">\(H_0\)</span> with a large as possible probability. The probability of rejecting a false null-hypothesis is called <strong>Power</strong> <span class="math display">\[
+\underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}}
+\]</span> We want that <span class="math display">\[
+\underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}} \to 1\quad\text{as}\quad |\beta_j - 0| \to \infty
+\]</span> for each given sample size <span class="math inline">\(n,\)</span> and that <span class="math display">\[
+\underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}} \to 1\quad\text{as}\quad n \to \infty
+\]</span> for each given violation of the null-hypothesis <span class="math inline">\(|\beta_j - 0|&gt;0.\)</span></p>
+<p>A testing procedures that fulfills the latter property is is called <strong>consistent.</strong></p>
+</section></section><section id="exercises" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">4.6</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 3 in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 1</li>

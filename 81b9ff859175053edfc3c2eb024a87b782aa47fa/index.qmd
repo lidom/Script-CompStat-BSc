@@ -18,6 +18,7 @@ timetable %>% kbl() %>%  kable_styling()
 
 * This online script
 * [`R`-Script used during the lectures](https://www.dropbox.com/scl/fi/8foafpmricmtexnevvh2q/R_Script_CASA_2024.R?rlkey=q53jjq2x2hlcyzwbxqo7h63ez&dl=0)
+* [eWhiteboard](https://www.dropbox.com/scl/fi/07sbfshx0lmop8a9w6rpa/CASA_eWhiteboard_2425_annotated.pdf?rlkey=0xzon9ny1fw4cty562wkl03af&dl=0) for some lecture notes.
 
 ### Literature {-}
 
@@ -30,8 +31,6 @@ timetable %>% kbl() %>%  kable_styling()
   * [The Elements of
 Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 
-
-<!-- * [eWhiteboard](https://www.dropbox.com/scl/fi/0znpwx8z5dllu0lecvgar/eWhiteboard_CompStat_BSc.pdf?rlkey=tcyypiqo357lhy8slj76om6td&dl=0) for lecture notes. -->
 
 <!-- * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0) -->
 
