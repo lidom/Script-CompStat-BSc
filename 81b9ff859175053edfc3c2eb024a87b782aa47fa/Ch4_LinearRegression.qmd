@@ -1138,7 +1138,7 @@ then we **reject the null hypothesis** and adopt the alternative  $\beta_j\neq\b
 
 
 
-### Test Statistics for Statistical Hypothesis Testing 
+### $t$-Test 
 
 Standard errors can also be used to construct test statistics for statistical hypothesis testing. In the following, we look at the $t$-test statistic. 
 
@@ -1206,11 +1206,82 @@ then we **reject the null hypothesis** and adopt the alternative hypothesis $\be
 
 ::: {.callout-note}
 
-# Equivalence of Confidence Intervals and Test-Statistics
+# Equivalence of Confidence Intervals and $t$-Test
 
 It can be shown that a statistical hypothesis test based on the above confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_j,obs}$ leads to exactly the same test decisions as a statistical hypothesis test based on the above $t$-test statistic $T_{obs}.$
 ::: 
 
+
+### $F$-Test
+
+The $t$-test statistic (equivalently the confidence interval for $\beta_j$) allows us to test a null-hypothesis about **one** parameter $\beta_j.$ 
+
+To test whether there is a relationship between the response $Y$ and total *vector* predictors $(X_1,\dots,X_p),$ we can use the $F$-test statistic.
+
+In this case, the $F$-test tests the null-hypothesis
+$$
+\begin{align*}
+H_0:&\;\beta_1=\beta_2=\dots=\beta_p=0\\ 
+\text{versus}\quad H_1:&\;\text{at least one $\beta_j\neq 0$; $j=1,\dots,p$}
+\end{align*}
+$$
+
+$F$-test statistic
+$$
+F=\frac{(\operatorname{TSS}-\operatorname{RSS})/p}{\operatorname{
+  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{p,n-p-1}
+$$
+Under $H_0,$ i.e. if $H_0$ is true, the $F$-test statistic has a $F$-distribution with $p$ numerator and $(n-p-1)$ denominator degrees of freedom. 
+
+If $H_0$ is correct
+$$
+\begin{align*}
+E((\operatorname{TSS}-\operatorname{RSS})/p)&=\sigma^2\\[2ex] 
+E(\operatorname{RSS}/(n-p-1))&=\sigma^2
+\end{align*}
+$$
+
+Therefore: 
+
+* If $H_0$ is correct, we expect values of $F\approx 1.$ 
+* If $H_1$ is correct, we expect values of $F\gg 1.$
+
+
+For a given realization of the training data random sample
+$$
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+$$
+we **obs**serve a specific realization of the $F$-test statistic
+$$
+F_{obs}=\frac{(\operatorname{TSS}_{obs}-\operatorname{RSS}_{obs})/p}{\operatorname{
+  RSS}_{obs}/(n-p-1)}
+$$ 
+
+#### **$p$-value:** {-}
+
+The $p$-value is the probability of seeing a realization of the **random** $F$-test statistic, $F,$ which is more extreme than the observed value of the test-statistic, $F_{obs},$ given the null-hypothesis is true
+$$
+\begin{align*}
+p_{obs}
+&=P\left( F \geq F_{obs} \;\;|\;\; \text{$H_0$ is true}\right),
+\end{align*}
+$$
+where $F_{obs}$ denotes the observed value of the $F$-test statistic computed from the observed training data, and where $F$ is a random variable that has a $F_{p,n-p-1}$ distribution. 
+
+**Testing-Procedure:**
+<!-- To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$).  -->
+
+* If the observed realization of the $p$-value is larger than or equal to the significance level 
+$$
+p_{obs}\geq \alpha,
+$$
+then we **cannot reject the null hypothesis**.
+
+* If, however, the observed realization of the $p$-value is strictly smaller than the significance level 
+$$
+p_{obs}<\alpha,
+$$
+then we **reject the null hypothesis** and adopt the alternative hypothesis. 
 
 
 
@@ -1226,7 +1297,8 @@ versus
 
 * rejecting $H_0$
 
-In applied research, we "aim" for rejecting $H_0.$ For instance, when we are able to reject the no-effect null-hypothesis 
+
+In applied research, we "aim" for rejecting $H_0.$ (Caution: the desire for rejecting $H_0$ is the reason of a lot of scientific misconduct!) For instance, when we are able to reject the no-effect null-hypothesis 
 $$
 H_0: \beta_j = 0
 $$
@@ -1236,12 +1308,7 @@ H_1: \beta_j \neq 0,
 $$
 then we can state in a publication that variable $X_j$ has an effect.  
 
-<!-- Cautions: 
-
-1. If we cannot reject the null-hypothesis, A too strong desire for rejecting $H_0$ is the reason of a lot of scientific misconduct.  -->
-
-
-If we reject the null-hypothesis even though the null-hypothesis is true, we conduct a **Type I Error** and thus may falsely claim that variable $X_j$ has an effect. Such a false claim can be fatal.  
+Thus, if we reject the null-hypothesis even though the null-hypothesis is true, we conduct a **Type I Error** and thus may falsely claim that variable $X_j$ has an effect. Such a false claim can be fatal.  
 
 Therefore, a statistical hypothesis test is only valid if it is able control the probability of conducting a type I error from above by the chosen significance level; i.e. if
 $$
@@ -1258,16 +1325,20 @@ A statistical testing procedure only controls the probability of a type I error 
 $$
 \underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
 $$
-but not the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true)
+but not the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true). In fact, we typically do not know the probability of a type II error
 $$
-\underbrace{P(\text{not reject }H_0 \;|\; H_1\text{ is true})}_{\text{Probability of a type II error}}\leq \;\; {\color{red}?}
+\underbrace{P(\text{not reject }H_0 \;|\; H_1\text{ is true})}_{\text{Probability of a type II error}}\leq \;\; {\color{red}?}.
 $$  
 
-Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, since we do not know wether the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true) is small. 
+Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, simply because we cannot guarantee that the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true) is sufficiently small. 
 
-Indeed, even very large $p$-values $p_{obs}\approx 1 \gg \alpha$ can occur simply because a violation of a null-hypothesis is smaller than the involved estimation errors.  
+Indeed, even very large $p$-values $p_{obs}\approx 1 \gg \alpha$ can occur simply because a given violation of a null-hypothesis is smaller than the involved estimation errors.  
 
-The $p$-value is **not** the probability that the null-hypothesis is true❗
+<center>
+❗The $p$-value is **not** the probability that the null-hypothesis is true❗
+</center>
+
+</br>
 
 ![](images/terminator.jpeg)
 :::

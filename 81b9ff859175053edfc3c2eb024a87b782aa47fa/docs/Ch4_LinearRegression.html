@@ -223,8 +223,9 @@ window.Quarto = {
   <ul class="collapse">
 <li><a href="#confidence-intervals-for-beta_j" id="toc-confidence-intervals-for-beta_j" class="nav-link" data-scroll-target="#confidence-intervals-for-beta_j"><span class="header-section-number">4.5.1</span> Confidence Intervals for <span class="math inline">\(\beta_j\)</span></a></li>
   <li><a href="#confidence-intervals-for-statistical-hypothesis-testing" id="toc-confidence-intervals-for-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#confidence-intervals-for-statistical-hypothesis-testing"><span class="header-section-number">4.5.2</span> Confidence Intervals for Statistical Hypothesis Testing</a></li>
-  <li><a href="#test-statistics-for-statistical-hypothesis-testing" id="toc-test-statistics-for-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#test-statistics-for-statistical-hypothesis-testing"><span class="header-section-number">4.5.3</span> Test Statistics for Statistical Hypothesis Testing</a></li>
-  <li><a href="#probability-of-a-type-i-error-power-and-consistency" id="toc-probability-of-a-type-i-error-power-and-consistency" class="nav-link" data-scroll-target="#probability-of-a-type-i-error-power-and-consistency"><span class="header-section-number">4.5.4</span> Probability of a Type I Error, Power and Consistency</a></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><span class="header-section-number">4.5.3</span> <span class="math inline">\(t\)</span>-Test</a></li>
+  <li><a href="#f-test" id="toc-f-test" class="nav-link" data-scroll-target="#f-test"><span class="header-section-number">4.5.4</span> <span class="math inline">\(F\)</span>-Test</a></li>
+  <li><a href="#probability-of-a-type-i-error-power-and-consistency" id="toc-probability-of-a-type-i-error-power-and-consistency" class="nav-link" data-scroll-target="#probability-of-a-type-i-error-power-and-consistency"><span class="header-section-number">4.5.5</span> Probability of a Type I Error, Power and Consistency</a></li>
   </ul>
 </li>
   <li><a href="#the-omitted-variable-bias" id="toc-the-omitted-variable-bias" class="nav-link" data-scroll-target="#the-omitted-variable-bias"><span class="header-section-number">4.6</span> The Omitted Variable Bias</a></li>
@@ -1299,8 +1300,8 @@ Classic No-Effect Null-Hypothesis
 \right],
 \end{align*}
 \]</span> then we <strong>reject the null hypothesis</strong> and adopt the alternative <span class="math inline">\(\beta_j\neq\beta^{(H_0)}_{j}.\)</span></p></li>
-</ul></section><section id="test-statistics-for-statistical-hypothesis-testing" class="level3" data-number="4.5.3"><h3 data-number="4.5.3" class="anchored" data-anchor-id="test-statistics-for-statistical-hypothesis-testing">
-<span class="header-section-number">4.5.3</span> Test Statistics for Statistical Hypothesis Testing</h3>
+</ul></section><section id="t-test" class="level3" data-number="4.5.3"><h3 data-number="4.5.3" class="anchored" data-anchor-id="t-test">
+<span class="header-section-number">4.5.3</span> <span class="math inline">\(t\)</span>-Test</h3>
 <p>Standard errors can also be used to construct test statistics for statistical hypothesis testing. In the following, we look at the <span class="math inline">\(t\)</span>-test statistic.</p>
 <p>Choose a significance level <span class="math inline">\(0&lt;\alpha&lt;1\)</span> such as, for instance,</p>
 <ul>
@@ -1348,15 +1349,63 @@ p_{obs}&lt;\alpha,
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Equivalence of Confidence Intervals and Test-Statistics
+Equivalence of Confidence Intervals and <span class="math inline">\(t\)</span>-Test
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>It can be shown that a statistical hypothesis test based on the above confidence interval <span class="math inline">\(\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\)</span> leads to exactly the same test decisions as a statistical hypothesis test based on the above <span class="math inline">\(t\)</span>-test statistic <span class="math inline">\(T_{obs}.\)</span></p>
 </div>
 </div>
-</section></section><section id="probability-of-a-type-i-error-power-and-consistency" class="level3" data-number="4.5.4"><h3 data-number="4.5.4" class="anchored" data-anchor-id="probability-of-a-type-i-error-power-and-consistency">
-<span class="header-section-number">4.5.4</span> Probability of a Type I Error, Power and Consistency</h3>
+</section></section><section id="f-test" class="level3" data-number="4.5.4"><h3 data-number="4.5.4" class="anchored" data-anchor-id="f-test">
+<span class="header-section-number">4.5.4</span> <span class="math inline">\(F\)</span>-Test</h3>
+<p>The <span class="math inline">\(t\)</span>-test statistic (equivalently the confidence interval for <span class="math inline">\(\beta_j\)</span>) allows us to test a null-hypothesis about <strong>one</strong> parameter <span class="math inline">\(\beta_j.\)</span></p>
+<p>To test whether there is a relationship between the response <span class="math inline">\(Y\)</span> and total <em>vector</em> predictors <span class="math inline">\((X_1,\dots,X_p),\)</span> we can use the <span class="math inline">\(F\)</span>-test statistic.</p>
+<p>In this case, the <span class="math inline">\(F\)</span>-test tests the null-hypothesis <span class="math display">\[
+\begin{align*}
+H_0:&amp;\;\beta_1=\beta_2=\dots=\beta_p=0\\
+\text{versus}\quad H_1:&amp;\;\text{at least one $\beta_j\neq 0$; $j=1,\dots,p$}
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(F\)</span>-test statistic <span class="math display">\[
+F=\frac{(\operatorname{TSS}-\operatorname{RSS})/p}{\operatorname{
+  RSS}/(n-p-1)}\overset{H_0}{\sim} F_{p,n-p-1}
+\]</span> Under <span class="math inline">\(H_0,\)</span> i.e.&nbsp;if <span class="math inline">\(H_0\)</span> is true, the <span class="math inline">\(F\)</span>-test statistic has a <span class="math inline">\(F\)</span>-distribution with <span class="math inline">\(p\)</span> numerator and <span class="math inline">\((n-p-1)\)</span> denominator degrees of freedom.</p>
+<p>If <span class="math inline">\(H_0\)</span> is correct <span class="math display">\[
+\begin{align*}
+E((\operatorname{TSS}-\operatorname{RSS})/p)&amp;=\sigma^2\\[2ex]
+E(\operatorname{RSS}/(n-p-1))&amp;=\sigma^2
+\end{align*}
+\]</span></p>
+<p>Therefore:</p>
+<ul>
+<li>If <span class="math inline">\(H_0\)</span> is correct, we expect values of <span class="math inline">\(F\approx 1.\)</span>
+</li>
+<li>If <span class="math inline">\(H_1\)</span> is correct, we expect values of <span class="math inline">\(F\gg 1.\)</span>
+</li>
+</ul>
+<p>For a given realization of the training data random sample <span class="math display">\[
+((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+\]</span> we <strong>obs</strong>serve a specific realization of the <span class="math inline">\(F\)</span>-test statistic <span class="math display">\[
+F_{obs}=\frac{(\operatorname{TSS}_{obs}-\operatorname{RSS}_{obs})/p}{\operatorname{
+  RSS}_{obs}/(n-p-1)}
+\]</span></p>
+<section id="p-value-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="p-value-1"><strong><span class="math inline">\(p\)</span>-value:</strong></h4>
+<p>The <span class="math inline">\(p\)</span>-value is the probability of seeing a realization of the <strong>random</strong> <span class="math inline">\(F\)</span>-test statistic, <span class="math inline">\(F,\)</span> which is more extreme than the observed value of the test-statistic, <span class="math inline">\(F_{obs},\)</span> given the null-hypothesis is true <span class="math display">\[
+\begin{align*}
+p_{obs}
+&amp;=P\left( F \geq F_{obs} \;\;|\;\; \text{$H_0$ is true}\right),
+\end{align*}
+\]</span> where <span class="math inline">\(F_{obs}\)</span> denotes the observed value of the <span class="math inline">\(F\)</span>-test statistic computed from the observed training data, and where <span class="math inline">\(F\)</span> is a random variable that has a <span class="math inline">\(F_{p,n-p-1}\)</span> distribution.</p>
+<p><strong>Testing-Procedure:</strong> <!-- To do the statistical hypothesis test, we need to select a significance level $\alpha$ (e.g.,  $\alpha=0.05$ or $\alpha=0.01$).  --></p>
+<ul>
+<li><p>If the observed realization of the <span class="math inline">\(p\)</span>-value is larger than or equal to the significance level <span class="math display">\[
+p_{obs}\geq \alpha,
+\]</span> then we <strong>cannot reject the null hypothesis</strong>.</p></li>
+<li><p>If, however, the observed realization of the <span class="math inline">\(p\)</span>-value is strictly smaller than the significance level <span class="math display">\[
+p_{obs}&lt;\alpha,
+\]</span> then we <strong>reject the null hypothesis</strong> and adopt the alternative hypothesis.</p></li>
+</ul></section></section><section id="probability-of-a-type-i-error-power-and-consistency" class="level3" data-number="4.5.5"><h3 data-number="4.5.5" class="anchored" data-anchor-id="probability-of-a-type-i-error-power-and-consistency">
+<span class="header-section-number">4.5.5</span> Probability of a Type I Error, Power and Consistency</h3>
 <p>Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the decision of</p>
 <ul>
 <li>not rejecting <span class="math inline">\(H_0\)</span>
@@ -1367,15 +1416,12 @@ Equivalence of Confidence Intervals and Test-Statistics
 <li>rejecting <span class="math inline">\(H_0\)</span>
 </li>
 </ul>
-<p>In applied research, we “aim” for rejecting <span class="math inline">\(H_0.\)</span> For instance, when we are able to reject the no-effect null-hypothesis <span class="math display">\[
+<p>In applied research, we “aim” for rejecting <span class="math inline">\(H_0.\)</span> (Caution: the desire for rejecting <span class="math inline">\(H_0\)</span> is the reason of a lot of scientific misconduct!) For instance, when we are able to reject the no-effect null-hypothesis <span class="math display">\[
 H_0: \beta_j = 0
 \]</span> and thus able to adopt the alternative <span class="math display">\[
 H_1: \beta_j \neq 0,
 \]</span> then we can state in a publication that variable <span class="math inline">\(X_j\)</span> has an effect.</p>
-<!-- Cautions: 
-
-1. If we cannot reject the null-hypothesis, A too strong desire for rejecting $H_0$ is the reason of a lot of scientific misconduct.  -->
-<p>If we reject the null-hypothesis even though the null-hypothesis is true, we conduct a <strong>Type I Error</strong> and thus may falsely claim that variable <span class="math inline">\(X_j\)</span> has an effect. Such a false claim can be fatal.</p>
+<p>Thus, if we reject the null-hypothesis even though the null-hypothesis is true, we conduct a <strong>Type I Error</strong> and thus may falsely claim that variable <span class="math inline">\(X_j\)</span> has an effect. Such a false claim can be fatal.</p>
 <p>Therefore, a statistical hypothesis test is only valid if it is able control the probability of conducting a type I error from above by the chosen significance level; i.e.&nbsp;if <span class="math display">\[
 \underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
 \]</span> where <span class="math inline">\(\alpha\)</span> is some small value like <span class="math inline">\(\alpha = 0.05\)</span> or <span class="math inline">\(\alpha = 0.01.\)</span> I.e., in <span class="math inline">\(100\)</span> resamples we expect to see at most <span class="math inline">\(\alpha\cdot 100\)</span> false rejections of <span class="math inline">\(H_0.\)</span></p>
@@ -1392,12 +1438,14 @@ Caution
 <div class="callout-body-container callout-body">
 <p>A statistical testing procedure only controls the probability of a type I error (falsely rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_0\)</span> is true), <span class="math display">\[
 \underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
-\]</span> but not the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true) <span class="math display">\[
-\underbrace{P(\text{not reject }H_0 \;|\; H_1\text{ is true})}_{\text{Probability of a type II error}}\leq \;\; {\color{red}?}
+\]</span> but not the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true). In fact, we typically do not know the probability of a type II error <span class="math display">\[
+\underbrace{P(\text{not reject }H_0 \;|\; H_1\text{ is true})}_{\text{Probability of a type II error}}\leq \;\; {\color{red}?}.
 \]</span></p>
-<p>Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, since we do not know wether the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true) is small.</p>
-<p>Indeed, even very large <span class="math inline">\(p\)</span>-values <span class="math inline">\(p_{obs}\approx 1 \gg \alpha\)</span> can occur simply because a violation of a null-hypothesis is smaller than the involved estimation errors.</p>
-<p>The <span class="math inline">\(p\)</span>-value is <strong>not</strong> the probability that the null-hypothesis is true❗</p>
+<p>Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, simply because we cannot guarantee that the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true) is sufficiently small.</p>
+<p>Indeed, even very large <span class="math inline">\(p\)</span>-values <span class="math inline">\(p_{obs}\approx 1 \gg \alpha\)</span> can occur simply because a given violation of a null-hypothesis is smaller than the involved estimation errors.</p>
+<center>
+❗The <span class="math inline">\(p\)</span>-value is <strong>not</strong> the probability that the null-hypothesis is true❗
+</center>
 <p><img src="images/terminator.jpeg" class="img-fluid"></p>
 </div>
 </div>
