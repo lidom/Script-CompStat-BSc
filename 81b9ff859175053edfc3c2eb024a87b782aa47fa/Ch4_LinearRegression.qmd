@@ -1292,7 +1292,1101 @@ $$
 $$
 for each given violation of the null-hypothesis $|\beta_j - 0|>0.$
 
-A testing procedures that fulfills the latter property is is called **consistent.**
+Testing procedures that fulfill the latter property are called **consistent.**
+
+
+
+## The Omitted Variable Bias 
+
+Multiple linear regression is more than mere composition of single simple linear regression models. Take a look at the following two simple linear regression results: 
+
+![](images/Tab_3_3.png)
+
+
+Observations: 
+
+* In the first simple linear regression, we see a statistical significant effect of  `radio` on `sales`; i.e. we can reject the null hypotheses 
+$$
+H_0:\beta_{radio}=0
+$$
+and adopt the alternative hypotheses 
+$$
+H_1:\beta_{radio}\neq 0.
+$$
+
+* In the second simple linear regression, we see a statistical significant effect of  `newspaper` on `sales`; i.e. we can reject the null hypotheses 
+$$
+H_0:\beta_{newspaper}=0
+$$
+and adopt the alternative hypotheses 
+$$
+H_1:\beta_{newspaper}\neq 0.
+$$
+
+By contrast, when looking at the **multiple linear regression** when regressing `sales` onto 
+
+* `TV`, 
+* `radio` and  
+* `newspaper`,
+
+then the effect of `newspaper` becomes statistically **insignificant**; see Table 3.4. 
+
+![](images/Tab_3_4.png)
+
+
+**Reason: Omitted Variable Bias** 
+
+The reason for this change from a statistically significant effect of `newspaper` in the simple linear regression, to an insignificant effect in the multiple linear regression  is the so-called **Omitted Variable Bias**.
+
+Explanation of the omitted variables bias: 
+
+* `radio` has a **true positive effect** on `sales`
+* `newspaper` has actually **no effect** on `sales`
+* But, `newspaper` is correlated with `radio` $r_{\texttt{newspaper},\texttt{radio}}=0.3541$; see Table 3.5
+
+![](images/Tab_3_5.png)
+
+* Thus, when **omitting** `radio` from the regression model, `newspaper` becomes a surrogate for `radio` and we see a spurious effect.  
+
+::: {.callout-caution}
+Interpreting statistically significant results as true effects ("a change of $X_j$ by one unit causes on average a change in $Y$ by $\beta_{j}$") is a delectate thing. 
+
+Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
+:::
+
+
+**Interpretation of the Coefficients in Table 3.4** 
+
+For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
+
+
+
+
+
+
+
+
+
+
+## Other Considerations in the Regression Model
+
+###  Qualitative Predictors
+
+Often some predictors are *qualitative* variables (also known as a *factor* variables). For instance, the `Credit` dataset contains the following qualitative predictors: 
+
+* `own` (house ownership: yes/no)
+* `student` (student status: yes/no)
+* `status` (marital status: yes/no) 
+* `region` (regions: east, west or south)
+
+#### Predictors with Only Two Levels {-}
+
+If a **qualitative predictor (factor)**  only has two levels (i.e. possible values), then incorporating it into a regression model is very simple: We simply create an indicator or **dummy variable** that takes on two possible numerical values; for instance,
+$$
+x_{i} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person owns a house}\\
+  0&\quad \text{if the $i$th person does not own a house.}
+  \end{array}\right.
+$$
+Using this dummy variable as a predictor in the regression equation results in the following regression model:
+\begin{align*}
+y_{i}
+&=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex] 
+&= \left\{
+  \begin{array}{ll}
+  \beta_0 + \beta_1 + \epsilon_i &\quad \text{if the $i$th person owns a house}\\
+  \beta_0 + \epsilon_i           &\quad \text{if the $i$th person does not own a house}
+  \end{array}\right.
+\end{align*}
+
+**Interpretation:**
+
+* $\beta_0$: The average credit card balance among those who do not own a house
+* $\beta_0+\beta_1$: The average credit card balance among those who do own a house
+* $\beta_1$: The average difference in credit card balance between owners and non-owners
+
+![](images/Tab_3_7.png)
+
+Alternatively, instead of a 0/1 coding scheme, we could create a dummy variable
+$$
+x_{i} = \left\{
+  \begin{array}{ll}
+  1 &\quad \text{if the $i$th person owns a house}\\
+ -1 &\quad \text{if the $i$th person does not own a house.}
+  \end{array}\right.
+$$
+\begin{align*}
+y_{i}
+&=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex] 
+&= \left\{
+  \begin{array}{ll}
+  \beta_0 + \beta_1 + \epsilon_i&\quad \text{if the $i$th person owns a house}\\
+  \beta_0 - \beta_1 + \epsilon_i&\quad \text{if the $i$th person does not own a house}
+  \end{array}\right.
+\end{align*}
+
+**Interpretation:**
+
+* $\beta_0$: The overall average credit card balance (ignoring the house ownership effect)
+* $\beta_1$: The average amount by which house owners and non-owners have credit card balances that are above and below the overall average, respectively.
+
+
+#### Qualitative Predictors with More than Two Levels {-}
+
+When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the 
+
+`region` $\in\{$`South`, `West`, `East`$\}$ 
+
+variable, we create **two** dummy variables. The first could be
+$$
+x_{i1} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person is from the South}\\
+  0&\quad \text{if the $i$th person is not from the South,}
+  \end{array}\right.
+$$
+and the second could be
+$$
+x_{i2} = \left\{
+  \begin{array}{ll}
+  1&\quad \text{if the $i$th person is from the West}\\
+  0&\quad \text{if the $i$th person is not from the West.}
+  \end{array}\right.
+$$
+Using both of these dummy variables results in the following regression model:
+order to obtain the model
+\begin{align*}
+y_{i}&=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i\\[2ex] 
+&= \left\{
+  \begin{array}{ll}
+  \beta_0 + \beta_1  + \epsilon_i& \quad \text{if the $i$th person is from the South}\\
+  \beta_0 + \beta_2  + \epsilon_i& \quad \text{if the $i$th person is from the West}\\ 
+  \beta_0            + \epsilon_i& \quad \text{if the $i$th person is from the East.}\\ 
+  \end{array}\right.
+\end{align*}
+
+
+**Interpretation:**
+
+* $\beta_0$: The average credit card balance for individuals from the East
+* $\beta_1$: The difference in the average balance between people from the South versus the East
+* $\beta_2$: The difference in the average balance between people from the West versus the East
+
+![](images/Tab_3_8.png)
+
+
+
+There are many different ways of coding qualitative variables besides the dummy variable approach taken here. All of these approaches lead to equivalent model fits, but the coefficients are different and have different interpretations, and are designed to measure particular **contrasts**. (A detailed discussion of *contrasts* is beyond the scope of this lecture.)
+
+
+### Extensions of the Linear Model 
+
+#### Interaction Effects {-}
+
+Consider the following model 
+
+<center>
+`sales` $= \beta_0 + \beta_1$ `TV` $+ \beta_2$ `radio` $+ \beta_3$ `newspaper` $+\epsilon$
+</center>
+
+which states, for instance, that the average increase in `sales` associated with a one-unit increase in `TV` is $\beta_1,$ regardless of the amount spent on `radio`.
+
+However, this simple model may be incorrect. Suppose that there is a synergy effect, such that spending money on `radio` advertising actually increases the effectiveness of `TV` advertising. 
+
+Figure 3.5 suggests that such an effect may be present in the advertising data: 
+
+* When levels of either `TV` or `radio` are low, then the true `sales` are lower than predicted by the linear model. 
+* But when advertising is split between the two media, then the model tends to **underestimate** sales.
+![](images/Fig_3_5.png)
+
+
+**Solution: Interaction Effects:**
+
+Consider the standard linear regression model with two variables,
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon.
+$$
+Here each predictor $X_1$ and $X_2$ has a given effect, $\beta_1$ and $\beta_2$, on $Y$ and this effect does not depend on the value of the other predictor. **(Additive Assumption)**
+
+One way of extending this model is to include a third predictor, called an **interaction term**, which is constructed by computing the product of $X_1$ and $X_2.$ This results in the model
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 \overbrace{\color{red}X_1X_2}^{=X_3} + \epsilon.
+$$
+This is a powerful extension relaxing the additive assumption. Notice that the model can now be written as
+$$
+\begin{align*}
+Y &= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1(X_2)} X_1 + \beta_2 X_2 + \epsilon,
+\end{align*}
+$$
+where the new slope parameter $\tilde{\beta}_2(X_2)$ is a linear function of $X_2,$ i.e.
+$$
+\tilde{\beta}_1(X_2)=\beta_1 + \beta_3 X_2.
+$$
+
+Thus, a change in the value of $X_2$ will change the association between $X_1$ and $Y.$ 
+
+A similar argument shows that a change in the value of $X_1$ changes the association between $X_2$ and $Y.$
+
+
+Let us return to the `Advertising` example:</br> 
+A linear model that predicts `sales` using 
+
+* the predictor `radio`, 
+* the predictor `TV`, and 
+* the interaction `radio`$\times$`radio`
+
+takes the form 
+
+<center>
+`sales` $= \beta_0 + \beta_1\times$ `TV` $+ \beta_2\times$ `radio` $+ \beta_3\times($ `radio`$\times$ `TV`$)+\epsilon$</br>
+</center>
+
+</br>
+which can be rewritten as
+
+<center>
+`sales` $=\beta_0 + (\beta_1+ \beta_3\times$ `radio` $)\times$ `TV` $+ \beta_2\times$ `radio`  $+\epsilon$
+</center>
+
+
+<br>
+
+**Interpretation:** 
+
+* $\beta_3$ denotes the increase in the effectiveness of TV advertising associated with a one-unit increase in radio advertising. 
+
+![](images/Tab_3_9.png)
+
+
+**Interpretation of Table 3.9:**
+
+* Both separate main effects, `TV` and `radio`, are statistically significant ($p$-values smaller than 0.01). 
+* Additionally, the $p$-value for the interaction term, `TV`$\times$`radio`, is extremely low, indicating that there is strong evidence for $H_1: \beta_3\neq 0.$ In other words, it is clear that the true relationship is not additive. 
+
+
+::: {.callout-tip}
+
+# Hierarchical Principle of Interaction Terms
+
+If we include an interaction in a model, we should also include the main effects, even if the $p$-values associated with their coefficients are not significant.
+:::
+
+
+**Interactions with Qualitative Variables:**
+
+An interaction between a qualitative variable and a quantitative variable has a particularly nice interpretation. 
+
+
+Consider the `Credit` data set and suppose that we wish to predict `balance` using the predictors: 
+
+* `income` (quantitative) and 
+* `student` (qualitative) using a dummy variable with 
+$$
+x_{i2}=\left\{
+  \begin{array}{ll}
+  1&\text{if person $i$ is a student}\\
+  0&\text{if not}\\
+  \end{array}
+\right.
+$$
+
+
+In the absence of an interaction term, the model takes the form
+![](images/Eq_3_34.png)
+
+Thus, the regression lines for students and non-students have different intercepts, $\beta_0+\beta_2$ versus $\beta_0$, **but the same slope** $\beta_1$.
+
+This represents a potentially serious limitation of the model, since a change in `income` may have a very different effect on the credit card `balance` of a student versus a non-student.
+
+This limitation can be addressed by adding an interaction variable, created by multiplying `income` with the dummy variable for student. Our model now becomes
+![](images/Eq_3_35.png)
+
+Now we have different intercepts for students and non-students but also different slopes for these groups. 
+![](images/Fig_3_7.png)
+
+
+#### Polynomial Regression: Non-linear Relationships {-}
+
+Polynomial regression allows to accommodate non-linear relationships between the predictors $X$ and the outcome $Y.$
+![](images/Fig_3_8.png)
+
+
+For example, the points in Figure 3.8 seem to have a quadratic shape, suggesting that a model of the form
+
+<center>
+`mpg` $=\beta_0 + \beta_1\times$ `horsepower` $+ \beta_2\times($`horsepower`$)^2+\epsilon$
+</center>
+</br>
+
+
+This regression model involves predicting `mpg` using a non-linear function of `horsepower`. 
+
+::: {.callout-important}
+**But it is still a linear model!** It's simply a multiple linear regression model 
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+$$
+with 
+
+* $X_1=$`horsepower` and 
+* $X_2 =($`horsepower`$)^2$
+
+as the predictor variables. 
+:::
+
+Since this is nothing but a multiple linear regression model, we can use standard linear regression software to estimate $\beta_0$, $\beta_1$, and $\beta_2$ in order to fit the (quadratic) non-linear regression function. 
+
+![](images/Tab_3_10.png)
+
+
+### Detecting Potential Problems 
+
+In this chapter, we discuss the use of **diagnostic plots** to detect potential problems. 
+
+
+**1. Non-linearity of the response-predictor relationships.**
+
+**Diagnostic residual plots** are most useful to detect possible non-linear response-predictor relationships. 
+
+```{r}
+library("ISLR2")
+data(Auto) 
+
+## Gives the variable names in the Auto dataset
+# names(Auto)
+
+## Simple linear regression
+lmobj_1 <- lm(mpg ~ horsepower, data = Auto)
+
+## Quadratic regression 
+lmobj_2 <- lm(mpg ~ horsepower + I(horsepower^2), data = Auto)
+
+## Diagnostic Plot
+par(mfrow = c(1,2))
+plot(lmobj_1, which = 1)
+plot(lmobj_2, which = 1)
+```
+
+Plotting **residuals versus fitted values**, i.e. plotting the data pairs
+$$
+(\underbrace{y_i - \hat{y}_i}_{=e_i}, \hat{y}_i),\quad\text{for all}\quad i=1,\dots,n
+$$ 
+is a useful graphical tool for identifying non-linearity which works for the  
+
+* **simple linear regression model** with $\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_{i1}$ and the
+* **multiple linear regression model** with $\hat{y}_i=\hat{\beta}_0+\sum_{j=1}^p\hat{\beta}_jx_{ij}$
+
+
+If the residual plot indicates that there are non-linear associations in the
+data, then a simple approach is to use non-linear transformations of the
+predictors, such as 
+$$
+\log(X),\; \sqrt{X},\; \text{or}\; X^2
+$$ 
+in the regression model. 
+
+<!-- In the later chapters, we will discuss other more advanced non-linear approaches for addressing this issue. -->
+
+
+**2. Correlation of Error Terms**
+
+An important assumption of the linear regression model is that the error terms, 
+$$
+\epsilon_1, \epsilon_2, \dots , \epsilon_n,
+$$ 
+are independent and thus uncorrelated. What does this mean? For instance, if the errors are uncorrelated, then the fact that $\epsilon_i$ is positive provides little or no information about the sign of $\epsilon_{i+1}.$  
+
+
+Auto-correlations among the error terms typically occur in time series data. Figure 3.10 shows time-series of residuals with 
+
+* no auto-correlation ($\rho=0$)
+* intermediate auto-correlation ($\rho=0.5$)
+* strong auto-correlation ($\rho=0.9$)
+
+![](images/Fig_3_10.png)
+
+
+**3. Non-Constant Variance of Error Terms (Heteroskedasticity)**
+
+Another important assumption of the linear regression model is that the
+error terms have a constant variance, 
+$$
+Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
+$$ 
+
+One can identify **non-constant variances ("heteroskedasticity")** in the errors, using diagnostic residual plots. 
+
+Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
+$$
+\log(Y)\;\text{ or }\; \sqrt{Y}.
+$$
+Such a transformation results in a greater amount of shrinkage of the larger responses. 
+
+```{r}
+## Quadratic regression 
+lmobj_2 <- lm(mpg ~ horsepower + I(horsepower^2), data = Auto)
+
+## Quadratic regression with transformed response log(Y)
+lmobj_3 <- lm(I(log(mpg)) ~ horsepower + I(horsepower^2), data = Auto)
+
+## Diagnostic Plot
+par(mfrow = c(1,2))
+plot(lmobj_2, which = 1)
+plot(lmobj_3, which = 1)
+```
+
+
+::: {.callout-caution}
+The standard formulas for 
+
+* standard errors, 
+* confidence intervals, and 
+* hypothesis tests 
+
+in this chapter are based on the assumption of 
+
+* uncorrelated error terms $Cor(\epsilon_i,\epsilon_j)=0$ for all $i\neq j$  
+* with equal variances $Var(\epsilon_i)=\sigma^2$ for all $i=1,\dots,n.$  
+
+If in fact there is correlation and/or heteroskedasticity among the error terms, then the estimated standard errors will be wrong leading to invalid inferences. 
+
+Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to take this into account by using so-called auto-correlation and/or heteroskedasticity robust standard errors. 
+
+The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
+:::
+
+
+**4. Outliers**
+
+An outlier is a point $i$ for which $y_i$ is far from the value $\hat{y}_i$ predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording
+of an observation during data collection.
+
+Outliers typically have a strong effect on the $R^2$ value since they add a **very large residual** to its computation. 
+
+
+**Harmless Outlier:**
+Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$; i.e. the $x_i$-value is right in the center of all predicor values. Such outliers have little effect on the regression fit.
+![](images/Fig_3_12.png)
+
+
+**Harmful Outlier:**
+Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value $x_i$ that is **very atypical**. Such outliers are said to have **large leverage** giving them power to affect the regression fit considerably. 
+![](images/Fig_3_13.png)
+
+::: {.callout-tip}
+Critical outliers have both, 
+
+* **large residuals**
+ 
+*and* 
+ 
+* **large leverage**.
+:::
+
+**5. High Leverage Points**
+
+In order to quantify an observation's leverage, we compute the **leverage statistic** $h_i$ for each observation $i=1,\dots,n.$ A large value of this statistic indicates an observation with high leverage. 
+
+In the case of the **simple linear regression model**
+$$
+h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{i'=1}^n(x_{i'}-\bar{x})^2}.
+$$
+
+In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal value of the $(n\times n)$-dimensional "hat-matrix"
+$$
+H=X(X'X)^{-1}X'.
+$$ 
+
+* The leverage statistic $h_i$ is always between $1/n$ and $1$
+* The average leverage for all the observations is equal to 
+$$
+\bar{h}=\frac{1}{n}\sum_{i=1}^n h_i=(p + 1)/n.
+$$ 
+* If a given observation has a leverage statistic $h_i$ that greatly exceeds the average leverage value, $(p+1)/n,$ then we may suspect that the corresponding point has high leverage.
+
+
+**6. Collinearity**
+
+Collinearity refers to the situation in which two or more predictor variables are closely related to one another. 
+
+In the following example, the variables `Age` and `Limit` are essentially unrelated, but the variables `Rating` and `Limit` are closely related to one another. 
+
+
+```{r}
+library("ISLR2")
+data(Credit) # names(Credit)
+
+par(mfrow=c(1,2))
+plot(y = Credit$Age,    x = Credit$Limit, main = "No Collinearity", ylab = "Age", xlab = "Limit")
+plot(y = Credit$Rating, x = Credit$Limit, main = "Strong Collinearity", ylab = "Rating", xlab = "Limit")
+```
+
+
+The left panel of Figure 3.15 shows that, in the case of unrelated predictors (`Age` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Age},\hat\beta_{Limit})$ that is well identified since the minimum is well defined. 
+
+The right panel of Figure 3.15 shows that, in the case of collinear predictors (`Rating` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Rating},\hat\beta_{Limit})$ that is not well identified: One can substitute values of $\hat\beta_{Limit}'$ for $\hat\beta_{Rating}'$ ending up in new pairs $(\hat\beta_{Rating}',\hat\beta_{Limit}')$ with basically the same RSS-value than the original value than it is achieved by the minimizer $(\hat\beta_{Rating},\hat\beta_{Limit})$.  
+
+![](images/Fig_3_15.png)
+
+
+Table 3.11 demonstrates that this identification problem between the collinear predictors (`Rating` and `Limit`) causes a variance inflation in the variance (square of standard error) of the estimators $\hat\beta_{Rating}$ and $\hat\beta_{Limit}.$ 
+
+* In Model 1: $\hat\beta_{Limit} = 0.005^2=0.000025$
+* In Model 2: $\hat\beta_{Rating} = 0.064^2=0.004096$
+
+![](images/Tab_3_11.png)
+
+
+We call this situation **multicollinearity**. 
+
+
+To detect multicollinearity issues, one can use the variance inflation factor (VIF) 
+$$
+\operatorname{VIF}(\hat{\beta}_j)=\frac{1}{1-R^2_{X_j|X_-j}},
+$$
+where $R^2_{X_j|X_-j}$ is the $R^2$ from a regression of $X_j$ onto all of the other predictors. 
+
+* If $R^2_{X_j|X_-j}$ is close to one, then multicollinearity is present, and $\operatorname{VIF}(\hat{\beta}_j)$ will be large. 
+
+
+In the `Credit` data, one gets for the predictors `age`, `rating`, and `limit` the following VIF values: 
+
+* 1.01 (`age`)
+* 160.67 (`rating`)
+* 160.59 (`limit`)
+
+Thus, as we suspected, there is considerable collinearity in the data!
+
+
+Possible solutions:
+
+1. Drop one of the problematic variables from the regression. This can usually be done without much compromise to the regression
+fit, since the presence of collinearity implies that the information that this variable provides about the response is redundant in the presence of the other variables. <br> **Caution:** In econometrics, dropping control variables is generally not a good idea since control variables are there to rule out possible issues with omitted variables biases. 
+
+2. Combine the collinear variables together into a single predictor. For instance, we might take the average of standardized versions of limit and rating in order to create a new variable that measures credit worthiness.
+
+3. Use a different estimation procedure like ridge regression. 
+
+4. Live with it. At least you know where the large stand errors are coming from. 
+
+
+## Comparison: Linear Regression vs. K-NN Regression
+
+
+Linear regression is an example of a parametric approach because it assumes a linear model form for 
+$$
+f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+$$
+
+**Advantages of parametric approaches:**
+
+* Typically easy to fit 
+* Simple interpretation
+* Simple inference
+
+
+**Disadvantages of parametric approaches:**
+
+* The parametric model assumption can be far from true; i.e.
+$$
+f(X_i) \neq \beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+$$
+
+
+**Alternative:** 
+
+**Non-parametric methods** such as **K-nearest neighbors regression** since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
+
+
+### K-Nearest Neighbors (K-NN) Regression 
+
+
+Let $x_0\in\mathbb{R}^p$ denote a certain prediction point at which we want to estimate 
+$$
+f(x_0)
+$$
+and let $K$ denote the number of closest prediction point neighbors of $x_0.$
+
+KNN regression regression then computes the estimate 
+$$
+\hat{f}(x_0)
+$$ 
+in two steps: 
+
+1. Compute the distances between $x_0$ and all training data prediction points $X_1,\dots,X_{n_{Train}}$
+$$
+d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
+$$
+Use these distances to identify the $K$ training data prediction points $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
+$$
+\begin{align*}
+\mathcal{N}_0 
+& =\{i\in\{1,2,\dots,n_{Train}\} \; |\; d(x_0,X_i)\text{ is one of the $K$ smallest distances}\}
+\end{align*}
+$$ 
+such that $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}$ with $|\mathcal{N}_0|=K.$
+2. Estimate $f(x_0)$ using the sample average of all the training responses $y_i$ with $i\in\mathcal{N}_0,$ i.e. 
+$$
+\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
+$$
+
+The above two steps are then repeated for all prediction points $x_0\in\mathbb{R}^p$ of interest.
+
+
+The performance of the estimator $\hat{f}_K(x_0)$ depends on 
+
+* the choice of $K$ and 
+* the choice of distance $d$ 
+
+For real valued predictors a usual choice is the Euclidian distance 
+$$
+d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
+$$
+
+::: {.callout-important}
+Typically, it is important to compute the distances with respect to the standardized (centering, and scaling to unit variance) predictor variables; i.e.
+$$
+d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
+$$
+where 
+$$
+\frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+$$ 
+and 
+$$
+\frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+$$ 
+with $\bar{X}_{j} = \frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}X_{ij}.$
+
+Otherwise, the distance values could be dominated by one of the $p$ predictors. 
+
+E.g. when one predictor is age (values between $0$ and $99$) and another predictor is yearly income (values between $0$ and $12,000,000$), then the differences in income will dominate the differences in age only because of the different scales.
+<!-- 
+$$
+\frac{X_{1j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}},\dots,\frac{X_{n_{Train}j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+$$  -->
+:::
+
+
+The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
+
+![](images/Fig_3_16.png)
+
+
+In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in @sec-SL:
+
+**A small value for $K$** provides the most flexible fit, which will have 
+
+   * low bias 
+   * high variance. 
+
+The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) and thus very close, "good" neighbors $X_i$ with $\hat{f}_K(x_0)\approx \hat{f}_K(X_i).$
+
+The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a small number of $K$ observations (e.g. $K=1$) such that the law of larger numbers had no chance to reduce variance. 
+
+
+**A large value of $K$** provides a less flexible fit, which will have 
+
+   * large bias 
+   * low variance. 
+
+The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=9$) which increases the chance of considering rather distant, "bad" neigboors with $\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).$
+
+The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a a larger number of $K$ observations (e.g. $K=9$) such that the law of larger numbers has a chance to reduce variance.
+
+
+An optimal value of $K$ can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
+
+
+Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
+
+
+Figure 3.17 provides an example with data generated from a one-dimensional linear regression model: 
+
+* black solid lines: true $f(x)$
+* blue curves: KNN fits $\hat{f}(x)$ using $K = 1$ (left plot) and $K = 9$ (right plot). 
+
+Observations: 
+
+* The KNN fit $\hat{f}(x)$ using $K = 1$ is far too wiggly
+* The KNN fit $\hat{f}(x)$ using $K = 9$ is much closer to the true $f(X).$ 
+
+However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
+![](images/Fig_3_17.png)
+
+
+The blue dashed line in the left-hand panel of Figure 3.18 represents the simple linear regression fit to the same data. It is almost perfect. 
+
+The right-hand panel of Figure 3.18 reveals that linear regression outperforms KNN for this data across different choices of $K=1,2,\dots,10.$ 
+![](images/Fig_3_18.png)
+
+
+Figure 3.19 displays a non-linear situations in which KNN performs much better than simple linear regression. 
+![](images/Fig_3_19.png)
+
+
+#### Curse of Dimensionality {-}
+
+Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
+
+
+Figure 3.20 considers the same strongly non-linear situation as in the second row of Figure 3.19, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+
+* When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
+* But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
+![](images/Fig_3_20.png)
+
+Observations: 
+
+* When $p=1$, a sample size of $n=50$ can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
+* However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0$ causing a large bias.  
+
+
+## Self-Study: `R`-Lab: Linear Regression
+
+
+### Libraries
+
+The `library()` function is used to load *libraries*, or groups of  functions and data sets that are not included in the base `R` distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution,  but more exotic functions require additional libraries. 
+
+Here we load the `MASS` package, which is a very large collection of data sets and functions. We  also load the `ISLR2` package, which includes the data sets associated with this book.
+
+```{r chunk1}
+suppressPackageStartupMessages(library(MASS))
+suppressPackageStartupMessages(library(ISLR2))
+```
+
+
+If you receive an error message when loading any of these libraries, it likely indicates that the corresponding library has not yet been installed on your system. Some libraries, such as `MASS`, come with `R` and do not need to be separately installed on your computer. However, other packages, such as `ISLR2`, must be downloaded the first time they are used. 
+<!-- 
+This can be done directly from within `R`. For example, on a Windows system,  select the `Install package` option under the `Packages` tab.  After you select any mirror site, a list of available packages will appear. Simply select the package you wish to install and `R` will automatically download the package. Alternatively,  -->
+
+This can be done, for instance, at the `R` command line via `install.packages("ISLR2")` function. This installation only needs to be done the first time you use a package. However, the `library()` function must be called within each `R` session.
+
+
+### Simple Linear Regression
+
+The `ISLR2` library contains the `Boston`  data set, which
+records `medv` (median house value) for $506$ census tracts in Boston. We will seek to predict `medv` using $12$ predictors such as `rmvar` (average number of  rooms per house), `age` (average age of houses), and `lstat` (percent of households with low socioeconomic status).
+
+```{r chunk2}
+head(Boston)
+```
+
+To find out more about the data set, we can type `?Boston`.
+
+We will start by using the `lm()` function to fit a simple  linear regression model, with `medv` as the response and `lstat`  as the predictor. The basic syntax is `lm(y ~ x, data)`, where `y` is the response, `x` is the predictor, and `data` is the data set in which these two variables are kept.
+
+```{r chunk3, error=TRUE}
+lm.fit <- lm(medv ~ lstat)
+```
+
+The command causes an error because `R` does not know where to find the variables `medv` and `lstat`. 
+
+The next line tells `R` that the variables are in `Boston`: 
+```{r chunk4a}
+lm.fit <- lm(medv ~ lstat, data = Boston)
+```
+
+Alternatively, we can attach the `Boston` object:
+```{r chunk4b}
+attach(Boston)
+lm.fit <- lm(medv ~ lstat)
+```
+
+If we type `lm.fit`,  some basic information about the model is output. For more detailed information, we use `summary(lm.fit)`. This gives us $p$-values and standard errors for the coefficients, as well as the $R^2$ statistic and $F$-statistic for the model.
+
+
+```{r chunk5}
+lm.fit
+summary(lm.fit)
+```
+
+We can use the `names()` or the `str()` function in order to find out what other pieces of information are stored in `lm.fit`. 
+
+We can extract these quantities by name---e.g. `lm.fit$coefficients`. 
+
+For some objects, there are also specific extractor functions like `coef()` to access them.
+
+```{r chunk6}
+names(lm.fit)
+coef(lm.fit)
+```
+
+In order to obtain a confidence interval for the coefficient estimates, we can use the `confint()` command. 
+
+Type `confint(lm.fit)` at the command line to obtain the confidence intervals for the linear regression coefficients.
+
+```{r chunk7}
+confint(lm.fit)
+```
+The `predict()` function can be used to produce confidence intervals and prediction intervals for the prediction of `medv` for a given value of `lstat`.
+
+```{r chunk8}
+predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
+        interval = "confidence")
+```
+
+For instance, the observed value of the 95\% confidence interval associated with a `lstat` value of $10,$ i.e. associated with 
+$$
+\beta_0 + \beta_1 \cdot 10
+$$
+is 
+$$
+\operatorname{CI}_{\beta_0 + \beta_1 \cdot 10,obs}=[24.47, 25.63]
+$$ 
+with observed prediction value
+$$
+25.05335 = \hat\beta_0 + \hat\beta_1 \cdot 10.
+$$
+
+
+<!-- predict(lm.fit, data.frame(lstat = (c(5, 10, 15))), 
+        interval = "prediction")
+The 95\% prediction interval associated with a `lstat` value of 10 is $(12.828, 37.28)$. 
+
+As expected, the confidence and prediction intervals are centered around the same point (a predicted value of $\hat{y}_i=25.05$ for `medv` when $x_{i2}=$`lstat` equals 10), but the latter are substantially wider.
+
+::: {.callout-caution}
+The `predict()` function with the option `interval = "prediction"` assumes **Gaussian** error terms; i.e. 
+$$
+\epsilon_i\sim\mathcal{N}(0,\sigma^2),\quad\text{for all}\quad i=1,\dots,n.
+$$
+If this distributional assumption is not fulfilled, you should not use the prediction interval.
+::: -->
+
+We will now plot `medv` and `lstat` along with the least squares regression line using the `plot()` and `abline()` functions.
+
+```{r chunk9}
+plot(lstat, medv)
+abline(lm.fit)
+```
+There is some evidence for non-linearity in the relationship between `lstat` and `medv`. We will explore this issue  later in this lab.
+
+The `abline()` function can be used to draw any line, not just the least squares regression line. To draw a line with intercept `a` and slope `b`, we  type `abline(a, b)`. Below we experiment with some additional settings for plotting lines and points. The `lwd = 3` command causes the width of the regression line to be increased by a factor of 3;  this works for the `plot()` and `lines()` functions also. We can also use the `pch` option to create different plotting symbols.
+
+```{r chunk10}
+plot(lstat, medv)
+abline(lm.fit, lwd = 3, col = "red")
+plot(lstat, medv, col = "red")
+plot(lstat, medv, pch = 20)
+plot(lstat, medv, pch = "+")
+plot(1:20, 1:20, pch = 1:20)
+```
+
+
+Next we examine some diagnostic plots. Four diagnostic plots are automatically produced by applying the `plot()` function directly to the output from `lm()`. In general, this command will produce one plot at a time, and hitting *Enter* will generate the next plot. However, it is often convenient to view all four plots together. We can achieve this by using the `par()` and `mfrow()` functions, which tell `R` to split the display screen into separate panels so that multiple plots can be viewed simultaneously. For example,  `par(mfrow = c(2, 2))` divides the plotting region into a $2 \times 2$ grid of panels.
+
+```{r chunk11}
+par(mfrow = c(2, 2))
+plot(lm.fit)
+```
+
+Alternatively, we can compute the residuals from a linear regression
+fit using the `residuals()` function. The function
+`rstudent()` will return the studentized residuals, and we
+can use this function to plot the residuals against the fitted values.
+
+```{r chunk12}
+plot(predict(lm.fit), residuals(lm.fit))
+plot(predict(lm.fit), rstudent(lm.fit))
+```
+
+On the basis of the residual plots, there is some evidence of non-linearity.
+
+
+Leverage statistics can be computed using the `hatvalues()` function.
+
+```{r chunk13}
+plot(hatvalues(lm.fit))
+which.max(hatvalues(lm.fit))
+```
+
+The `which.max()` function identifies the index of the largest element of a vector. In this case, it tells us which observation has the largest leverage statistic.
+
+```{r}
+sort(hatvalues(lm.fit), decreasing = TRUE)[1:3]
+```
+
+The `sort()` function can be used to sort and print values of a vector like `hatvalues(lm.fit)`.
+
+### Multiple Linear Regression
+
+In order to fit a multiple linear regression model using least squares, we again use the `lm()` function. The syntax `lm(y ~ x1 + x2 + x3)` is used to fit a model with three predictors, `x1`, `x2`, and `x3`. The `summary()` function now outputs the regression coefficients for all the predictors.
+
+```{r chunk14}
+lm.fit <- lm(medv ~ lstat + age, data = Boston)
+summary(lm.fit)
+```
+
+The `Boston` data set contains 12 variables, and so it would be cumbersome to have to type all of these in order to perform a regression using all of the predictors.
+Instead, we can use the following short-hand:
+
+```{r chunk15}
+lm.fit <- lm(medv ~ ., data = Boston)
+summary(lm.fit)
+```
+
+We can access the individual components of a summary object by name
+(type `?summary.lm` to see what is available). Hence
+`summary(lm.fit)$r.sq` gives us the $R^2$, and
+`summary(lm.fit)$sigma` gives us the RSE. The `vif()` function, part of the `car` package, can be used to compute variance inflation factors.   Most VIF's are low to moderate for this data. The `car` package is not part of the base `R` installation so it must be downloaded the first time you use it via the `install.packages()` function in `R`.
+
+```{r chunk16}
+suppressPackageStartupMessages(library(car)) # contains the vif() function
+sort(vif(lm.fit)) # computes the VIF statistics and sorts them
+```
+
+What if we would like to perform a regression using all of the variables but one?  For example, in the above regression output,  `age` has a high $p$-value. So we may wish to run a regression excluding this predictor.
+ The following syntax results in a regression using all predictors except `age`.
+
+```{r chunk17}
+lm.fit1 <- lm(medv ~ . - age, data = Boston)
+summary(lm.fit1)
+```
+
+Alternatively, the `update()` function can be used.
+
+```{r chunk18}
+lm.fit1 <- update(lm.fit, ~ . - age)
+```
+
+
+### Interaction Terms
+
+It is easy to include interaction terms in a linear model using the `lm()` function. The syntax `lstat:black` tells `R` to include an interaction term between `lstat` and `black`.
+The syntax `lstat * age` simultaneously includes `lstat`, `age`, and the interaction term `lstat`$\times$`age` as predictors; it is a shorthand for `lstat + age + lstat:age`.
+  %We can also pass in transformed versions of the predictors.
+
+```{r chunk19}
+summary(lm(medv ~ lstat * age, data = Boston))
+```
+
+
+### Non-linear Transformations of the Predictors
+
+The `lm()` function can also accommodate non-linear transformations of the predictors. For instance, given a predictor $X$, we can create a predictor $X^2$ using
+ `I(X^2)`. The function `I()` is needed since the `^` has a special meaning in a formula object; wrapping as we do allows the standard usage in `R`, which is to raise `X` to the power `2`. We now
+perform a regression of `medv` onto `lstat` and `lstat^2`.
+
+```{r chunk20}
+lm.fit2 <- lm(medv ~ lstat + I(lstat^2))
+summary(lm.fit2)
+```
+
+The near-zero $p$-value associated with the quadratic term suggests that it leads to an improved model.
+We use the `anova()` function  to further quantify the extent to which the quadratic fit is superior to the linear fit.
+
+```{r chunk21}
+lm.fit <- lm(medv ~ lstat)
+anova(lm.fit, lm.fit2)
+```
+
+Here Model 1 represents the linear submodel containing only one predictor, `lstat`, while Model 2 corresponds to the larger quadratic model that has two predictors, `lstat` and `lstat^2`. The `anova()` function performs a hypothesis test comparing the two models. The null hypothesis is that the two models fit the data equally well,  and the alternative hypothesis is that the full model is superior. 
+
+Here the $F$-statistic is $135$ and the associated $p$-value is virtually zero. This provides very clear evidence that the model containing the predictors `lstat` and `lstat^2` is far superior to the model that only contains the predictor `lstat`.
+
+This is not surprising, since earlier we saw evidence for non-linearity in the relationship between `medv` and `lstat`. 
+ 
+If we type
+
+```{r chunk22}
+par(mfrow = c(2, 2))
+plot(lm.fit2)
+```
+
+then we see that when the `lstat^2` term is included in the model, there is little discernible pattern in the residuals.
+
+In order to create a **cubic fit**, we can include a predictor of the form `I(X^3)`. However, this approach can start to get cumbersome for higher-order polynomials. A better approach involves using the `poly()` function to create the polynomial within `lm()`. For example, the following command produces a
+fifth-order polynomial fit:
+
+```{r chunk23}
+lm.fit5 <- lm(medv ~ poly(lstat, 5))
+summary(lm.fit5)
+```
+
+This suggests that including additional  polynomial terms, up to fifth order, leads to an improvement in the model fit! However, further investigation of the data reveals that no polynomial terms beyond fifth order have significant $p$-values
+in a regression fit.
+
+ By default, the `poly()` function orthogonalizes the predictors:
+ this means that the features output by this function are not simply a
+ sequence of powers of the argument. However, a linear model applied to the output of the `poly()` function will have the same fitted values as a linear model applied to the raw polynomials (although the coefficient estimates, standard errors, and p-values will differ). In order to obtain the raw polynomials from the `poly()` function,  the argument `raw = TRUE` must be used.
+
+Of course, we are in no way restricted to using polynomial transformations of the predictors. Here we try a log transformation.
+
+```{r chunk24}
+summary(lm(medv ~ log(rm), data = Boston))
+```
+
+
+### Qualitative Predictors
+
+We will now examine the `Carseats` data, which is part of the
+`ISLR2` library. We will  attempt to predict `Sales`
+(child car seat sales) in $400$ locations based on a number of
+predictors.
+
+```{r chunk25}
+head(Carseats)
+```
+
+The `Carseats` data includes qualitative predictors such as `shelveloc`, an indicator of the quality of the shelving location---that is, the  space within a store in which the car seat is displayed---at each location. The predictor `shelveloc` takes on three possible values:  *Bad*, *Medium*, and *Good*. Given a qualitative variable such as `shelveloc`, `R` generates dummy variables automatically. Below we fit a multiple regression model that includes some interaction terms.
+
+```{r chunk26}
+lm.fit <- lm(Sales ~ . + Income:Advertising + Price:Age, 
+    data = Carseats)
+summary(lm.fit)
+```
+
+The `contrasts()` function returns the coding that `R` uses for the dummy variables.
+
+```{r chunk27}
+attach(Carseats)
+contrasts(ShelveLoc)
+```
+
+Use `?contrasts` to learn about other contrasts, and how to set them.
+
+`R` has created a `ShelveLocGood` dummy variable that takes on a value of 1 if the shelving location is good, and 0 otherwise. It has also created a `ShelveLocMedium` dummy variable that equals 1 if the shelving location is medium, and 0 otherwise.
+A bad shelving location corresponds to a zero for each of the two dummy variables.
+The fact that the coefficient for `ShelveLocGood` in the regression output is positive indicates that a good shelving location is associated with high sales (relative to a bad location). And `ShelveLocMedium` has a smaller positive coefficient, indicating that a medium shelving location is associated with higher sales than a bad shelving location but lower sales than a good shelving location.
+
+
+### Writing  Functions
+
+As we have seen, `R` comes with many useful functions, and still more functions are available by way of `R` libraries.
+However, we will often be interested in performing an operation for which no function is available. In this setting, we may want to write our own function. For instance, below we provide a simple function that reads in the `ISLR2` and `MASS` libraries, called
+`LoadLibraries()`. Before we have created the function, `R` returns an error if we try to call it.
+
+```{r chunk28, error=TRUE}
+LoadLibraries
+LoadLibraries()
+```
+
+We now create the function. 
+
+```{r chunk29}
+LoadLibraries <- function() {
+ library(ISLR2)
+ library(MASS)
+ print("The libraries have been loaded.")
+}
+```
+
+Now if we type in `LoadLibraries`, `R` will tell us what is in the function.
+
+```{r chunk30}
+LoadLibraries
+```
+
+If we call the function, the libraries are loaded in and the print statement is output.
+
+```{r chunk31}
+LoadLibraries()
+```
+
+
 
 
 

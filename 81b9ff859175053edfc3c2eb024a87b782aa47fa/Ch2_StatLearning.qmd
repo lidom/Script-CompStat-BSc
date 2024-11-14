@@ -755,7 +755,7 @@ Prepare the following exercises of **Chapter 2** in our course textbook `ISLR`:
 - Exercise 8
 - Exercise 9
 
-<!--
+
 ### Solutions
 
 #### Exercise 8: {-}
@@ -1036,7 +1036,6 @@ All of the *quantitative* variables show some sort of relation (either linear or
 
 Moreover, the qualitative variable `origin` might also be useful in predicting `mpg`: cars originated from region 1, 2, and 3 are  associated with lower, intermediate, higher `mpg` values. 
 
--->
 
 
 
