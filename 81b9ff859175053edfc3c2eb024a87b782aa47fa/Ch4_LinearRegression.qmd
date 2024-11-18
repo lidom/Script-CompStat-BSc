@@ -106,11 +106,11 @@ The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, desp
 
 We assume that the $n$ observed data points 
 $$
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((y_{1},x_{10},\dots,x_{1p}),\dots,(y_{n},x_{n0},\dots,x_{np}))
 $$ 
 are a realization of the **training data random sample** 
 $$
-((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
+((Y_{1},X_{10},\dots,X_{1p}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
 $$ 
 
 That is, the $i$th observed $p+2$ dimensional data point 
@@ -125,7 +125,7 @@ where
 
 1. $(Y_{i},X_{i0},\dots,X_{ip})$ has the identical $p+2$ dimensional distribution for all $i=1,\dots,n.$ 
 2. $(Y_{i},X_{i0},\dots,X_{ip})$ is independent of 
-$(Y_{j},X_{j0},\dots,X_{j(p+1)})$ for all $i\neq j=1,\dots,n.$
+$(Y_{j},X_{j0},\dots,X_{jp})$ for all $i\neq j=1,\dots,n.$
 
 <!-- 
 ::: {.callout-note}
@@ -215,8 +215,8 @@ $$
 
 $$
 \begin{align*}
-\operatorname{rank}(X)&=(p+1)\quad\text{a.s.}\\[2ex]
-\Leftrightarrow P\big(\operatorname{rank}(X)&=(p+1)\big)=1
+\operatorname{rank}(X)&=p+1\quad\text{a.s.}\\[2ex]
+\Leftrightarrow P\big(\operatorname{rank}(X)&= p+1 \big)=1
 \end{align*}
 $$
 This assumption demands that, with probability one, no predictor variable $X_{k}\in\mathbb{R}^n$ is linearly dependent of the others. (This is the literal translation of the "almost surely (a.s.)" concept.) 
@@ -722,7 +722,7 @@ E(\hat\beta|X)
 &\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
 &= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
 &= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
-&= E(\underbrace{(X'X)^{-1}X'X}_{=I_K}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&= E(\underbrace{(X'X)^{-1}X'X}_{=I_(p+1)}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
 &= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
 &= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex] 
 &= \underset{(p+1)\times 1}{\beta}  
@@ -775,9 +775,9 @@ Cov(\hat\beta_p,\hat\beta_0|X)&Cov(\hat\beta_p,\hat\beta_1|X)&\cdots&Var(\hat\be
 \end{align*}
 $$
 
-Thus, to compute a useful, explicit expression for 
+Thus, to compute a useful, explicit expression for the standard error, 
 $$
-\operatorname{SE}(\hat\beta_j|X)=?,
+\operatorname{SE}(\hat\beta_j|X)=\;\text{Explicit Expression}\;?,
 $$ 
 we need to compute an explicit expression for the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X).$ 
 
@@ -790,8 +790,9 @@ $$
 \hat{\beta}
 &=(X'X)^{-1}X'Y\\[2ex]
 &\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
-&=(X'X)^{-1}X'(X\beta + \epsilon)\\[2ex]
-&=\underbrace{(X'X)^{-1}X'X\beta}_{=\beta} + (X'X)^{-1}X'\epsilon
+&=(X'X)^{-1}X'\; \underbrace{(X\beta + \epsilon)}_{=Y}\\[2ex]
+&=\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\;\beta + (X'X)^{-1}X'\epsilon\\
+&=\beta + (X'X)^{-1}X'\epsilon
 \end{align*}
 $$
 This leads to the so-called **sampling error expression** 
@@ -941,7 +942,7 @@ $$
 HC-Type  | Formular
 ------|------------
 HC0   | $\sum_{i=1}^ne_i^2X_iX_i'$
-HC1   | $\sum_{i=1}^n\frac{n}{n-K}e_i^2X_iX_i'$
+HC1   | $\sum_{i=1}^n\frac{n}{n-(p+1)}e_i^2X_iX_i'$
 HC2   | $\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i'$
 HC3   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'$
 HC4   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'$
@@ -967,8 +968,8 @@ General idea of the HC2-HC4 estimators is to increase the estimated variance in 
 :::
 
 
-<!-- The estimator HC0 was suggested in the econometrics literature by @White1980 and is justified by asymptotic ($n\to\infty$) arguments. The estimators HC1, HC2 and HC3 were suggested by @MacKinnon_White_1985 to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, @Long_Ervin_2000 concludes that HC3 provides the best overall performance in finite samples. @Cribari_2004 suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large $h_i$ values). 
--->
+The estimator HC0 was suggested in the econometrics literature by @White1980 and is justified by asymptotic ($n\to\infty$) arguments. The estimators HC1, HC2 and HC3 were suggested by @MacKinnon_White_1985 to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, @Long_Ervin_2000 concludes that HC3 provides the best overall performance in finite samples. @Cribari_2004 suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large $h_i$ values). 
+
 
 
 **Summing up:** 
@@ -1035,7 +1036,7 @@ q^{t,n-(p+1)}_{1-\alpha/2}
 $$
 denotes the $(1-\alpha/2)$-quantile of the $t$-distribution with $\operatorname{df}=n-(p+1)$ degrees of freedom, and where $\alpha$ denotes the **significance level** with typical choices: 
 
-* $\alpha = 0.05$ or
+* $\alpha = 0.05$ 
 * $\alpha = 0.01$
 
 

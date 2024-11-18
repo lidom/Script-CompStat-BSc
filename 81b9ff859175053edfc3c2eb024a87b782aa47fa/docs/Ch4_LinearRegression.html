@@ -51,7 +51,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -372,9 +392,9 @@ Note
 </div>
 <p><strong>Part (b): Random Sample</strong></p>
 <p>We assume that the <span class="math inline">\(n\)</span> observed data points <span class="math display">\[
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((y_{1},x_{10},\dots,x_{1p}),\dots,(y_{n},x_{n0},\dots,x_{np}))
 \]</span> are a realization of the <strong>training data random sample</strong> <span class="math display">\[
-((Y_{1},X_{10},\dots,X_{1(p+1)}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
+((Y_{1},X_{10},\dots,X_{1p}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
 \]</span></p>
 <p>That is, the <span class="math inline">\(i\)</span>th observed <span class="math inline">\(p+2\)</span> dimensional data point <span class="math display">\[
 (y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}
@@ -386,7 +406,7 @@ Note
 <span class="math inline">\((Y_{i},X_{i0},\dots,X_{ip})\)</span> has the identical <span class="math inline">\(p+2\)</span> dimensional distribution for all <span class="math inline">\(i=1,\dots,n.\)</span>
 </li>
 <li>
-<span class="math inline">\((Y_{i},X_{i0},\dots,X_{ip})\)</span> is independent of <span class="math inline">\((Y_{j},X_{j0},\dots,X_{j(p+1)})\)</span> for all <span class="math inline">\(i\neq j=1,\dots,n.\)</span>
+<span class="math inline">\((Y_{i},X_{i0},\dots,X_{ip})\)</span> is independent of <span class="math inline">\((Y_{j},X_{j0},\dots,X_{jp})\)</span> for all <span class="math inline">\(i\neq j=1,\dots,n.\)</span>
 </li>
 </ol>
 <!-- 
@@ -486,8 +506,8 @@ Var(\epsilon_i|X_i) = |X_{i1}|^2.
 <p><strong>Assumption 3: Rank Condition (no perfect multicollinearity)</strong></p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{rank}(X)&amp;=(p+1)\quad\text{a.s.}\\[2ex]
-\Leftrightarrow P\big(\operatorname{rank}(X)&amp;=(p+1)\big)=1
+\operatorname{rank}(X)&amp;=p+1\quad\text{a.s.}\\[2ex]
+\Leftrightarrow P\big(\operatorname{rank}(X)&amp;= p+1 \big)=1
 \end{align*}
 \]</span> This assumption demands that, with probability one, no predictor variable <span class="math inline">\(X_{k}\in\mathbb{R}^n\)</span> is linearly dependent of the others. (This is the literal translation of the “almost surely (a.s.)” concept.)</p>
 <p><strong>Note:</strong> The assumption implies that <span class="math inline">\(n\geq (p+1),\)</span> since <span class="math display">\[
@@ -897,7 +917,7 @@ E(\hat\beta|X)
 &amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
 &amp;= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
 &amp;= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
-&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_K}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_(p+1)}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
 &amp;= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
 &amp;= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex]
 &amp;= \underset{(p+1)\times 1}{\beta}  
@@ -938,8 +958,8 @@ Cov(\hat\beta_p,\hat\beta_0|X)&amp;Cov(\hat\beta_p,\hat\beta_1|X)&amp;\cdots&amp
 \end{pmatrix}
 \end{align*}
 \]</span></p>
-<p>Thus, to compute a useful, explicit expression for <span class="math display">\[
-\operatorname{SE}(\hat\beta_j|X)=?,
+<p>Thus, to compute a useful, explicit expression for the standard error, <span class="math display">\[
+\operatorname{SE}(\hat\beta_j|X)=\;\text{Explicit Expression}\;?,
 \]</span> we need to compute an explicit expression for the symmetric <span class="math inline">\((p+1)\times(p+1)\)</span> variance-covariance matrix <span class="math inline">\(Var(\hat\beta|X).\)</span></p>
 <p>Let us derive the general explicit expression for <span class="math inline">\(Var(\hat\beta|X).\)</span></p>
 <p>Note that <span class="math display">\[
@@ -947,8 +967,9 @@ Cov(\hat\beta_p,\hat\beta_0|X)&amp;Cov(\hat\beta_p,\hat\beta_1|X)&amp;\cdots&amp
 \hat{\beta}
 &amp;=(X'X)^{-1}X'Y\\[2ex]
 &amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
-&amp;=(X'X)^{-1}X'(X\beta + \epsilon)\\[2ex]
-&amp;=\underbrace{(X'X)^{-1}X'X\beta}_{=\beta} + (X'X)^{-1}X'\epsilon
+&amp;=(X'X)^{-1}X'\; \underbrace{(X\beta + \epsilon)}_{=Y}\\[2ex]
+&amp;=\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\;\beta + (X'X)^{-1}X'\epsilon\\
+&amp;=\beta + (X'X)^{-1}X'\epsilon
 \end{align*}
 \]</span> This leads to the so-called <strong>sampling error expression</strong> <span class="math display">\[
 \hat{\beta} - \beta = (X'X)^{-1}X'\epsilon.
@@ -1096,7 +1117,7 @@ Var(\epsilon|X)
 </tr>
 <tr class="even">
 <td>HC1</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{n}{n-K}e_i^2X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{n}{n-(p+1)}e_i^2X_iX_i'\)</span></td>
 </tr>
 <tr class="odd">
 <td>HC2</td>
@@ -1137,8 +1158,7 @@ h_i=[P_X]_{ii}
 <p>General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals <span class="math inline">\(e_i\)</span> belonging to <span class="math inline">\(X_i\)</span> values that have a large leverage <span class="math inline">\(h_i\)</span> receive a higher weight and thus increase the value of <span class="math inline">\(\widehat{E}(\epsilon^2_iX_iX_i').\)</span> This strategy takes into account increased estimation uncertainties due to single influential outliers.</p>
 </div>
 </div>
-<!-- The estimator HC0 was suggested in the econometrics literature by @White1980 and is justified by asymptotic ($n\to\infty$) arguments. The estimators HC1, HC2 and HC3 were suggested by @MacKinnon_White_1985 to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, @Long_Ervin_2000 concludes that HC3 provides the best overall performance in finite samples. @Cribari_2004 suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large $h_i$ values). 
--->
+<p>The estimator HC0 was suggested in the econometrics literature by <span class="citation" data-cites="White1980">White (<a href="#ref-White1980" role="doc-biblioref">1980</a>)</span> and is justified by asymptotic (<span class="math inline">\(n\to\infty\)</span>) arguments. The estimators HC1, HC2 and HC3 were suggested by <span class="citation" data-cites="MacKinnon_White_1985">MacKinnon and White (<a href="#ref-MacKinnon_White_1985" role="doc-biblioref">1985</a>)</span> to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, <span class="citation" data-cites="Long_Ervin_2000">Long and Ervin (<a href="#ref-Long_Ervin_2000" role="doc-biblioref">2000</a>)</span> concludes that HC3 provides the best overall performance in finite samples. <span class="citation" data-cites="Cribari_2004">Cribari-Neto (<a href="#ref-Cribari_2004" role="doc-biblioref">2004</a>)</span> suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large <span class="math inline">\(h_i\)</span> values).</p>
 <p><strong>Summing up:</strong></p>
 <p>In the case of heteroskedastic and uncorrelated error terms the standard error of <span class="math inline">\(\beta_j\)</span> is <span class="math display">\[
 \operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\right]_{(j,j)}}.
@@ -1204,8 +1224,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 q^{t,n-(p+1)}_{1-\alpha/2}
 \]</span> denotes the <span class="math inline">\((1-\alpha/2)\)</span>-quantile of the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom, and where <span class="math inline">\(\alpha\)</span> denotes the <strong>significance level</strong> with typical choices:</p>
 <ul>
-<li>
-<span class="math inline">\(\alpha = 0.05\)</span> or</li>
+<li><span class="math inline">\(\alpha = 0.05\)</span></li>
 <li><span class="math inline">\(\alpha = 0.01\)</span></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1446,6 +1465,7 @@ Caution
 <center>
 ❗The <span class="math inline">\(p\)</span>-value is <strong>not</strong> the probability that the null-hypothesis is true❗
 </center>
+<p></p>
 <p><img src="images/terminator.jpeg" class="img-fluid"></p>
 </div>
 </div>
@@ -2696,6 +2716,20 @@ Medium    0      1</code></pre>
 </ul>
 <!-- {{< include Ch4_LinearRegression_Solutions.qmd >}} -->
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Cribari_2004" class="csl-entry" role="listitem">
+Cribari-Neto, Francisco. 2004. <span>“Asymptotic Inference Under Heteroskedasticity of Unknown Form.”</span> <em>Computational Statistics &amp; Data Analysis</em> 45 (2): 215–33.
+</div>
+<div id="ref-Long_Ervin_2000" class="csl-entry" role="listitem">
+Long, J Scott, and Laurie H Ervin. 2000. <span>“Using Heteroscedasticity Consistent Standard Errors in the Linear Regression Model.”</span> <em>The American Statistician</em> 54 (3): 217–24.
+</div>
+<div id="ref-MacKinnon_White_1985" class="csl-entry" role="listitem">
+MacKinnon, James G, and Halbert White. 1985. <span>“Some Heteroskedasticity-Consistent Covariance Matrix Estimators with Improved Finite Sample Properties.”</span> <em>Journal of Econometrics</em> 29 (3): 305–25.
+</div>
+<div id="ref-White1980" class="csl-entry" role="listitem">
+White, Halbert. 1980. <span>“A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct Test for Heteroskedasticity.”</span> <em>Econometrica</em>, 817–38.
+</div>
+</div>
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
