@@ -738,7 +738,7 @@ Hints:
 
 
 
-Link to your personal assignment repository:</br>
+**Link to your personal assignment repository:**</br>
 [https://classroom.github.com/a/Oc5oS4l-](https://classroom.github.com/a/Oc5oS4l-)
 
 
@@ -748,7 +748,7 @@ Upload your PDF file to your assignment repository. Make sure that your PDF file
 
 
 
-## Exercises
+## Self-Study: Exercises 
 
 Prepare the following exercises of **Chapter 2** in our course textbook `ISLR`: 
 

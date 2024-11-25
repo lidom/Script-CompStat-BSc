@@ -276,7 +276,7 @@ window.Quarto = {
   </ul>
 </li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">4.10</span> Assignment</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.11</span> Exercises</a></li>
+  <li><a href="#self-study-exercises" id="toc-self-study-exercises" class="nav-link" data-scroll-target="#self-study-exercises"><span class="header-section-number">4.11</span> Self-Study: Exercises</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -2772,8 +2772,9 @@ Medium    0      1</code></pre>
 \]</span> of the <span class="math inline">\((1-\alpha)\cdot 100 \%\)</span> confidence interval <span class="math inline">\(\operatorname{CI}^{1-\alpha}_{\beta_1}\)</span> for <span class="math inline">\(\beta_1.\)</span>
 </li>
 <li>Approximate the true coverage probability using the empirical coverage probability across all <span class="math inline">\(B\)</span> simulated confidence interals: <span class="math display">\[
-P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{(\beta_1 \in \operatorname{CI}^{1-\alpha}_{\beta_1,j})}
-\]</span> Consider the following two cases:
+P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
+\]</span> where <span class="math inline">\(1_{(\text{TRUE})}=1\)</span> and <span class="math inline">\(1_{(\text{FALSE})}=1.\)</span><br>
+Consider the following two cases:
 <ol type="a">
 <li>The null-hypothesis is true, i.e.&nbsp;<span class="math inline">\(\beta_1^{(H_0)} = 0.1 = \beta_1.\)</span>
 </li>
@@ -2783,8 +2784,9 @@ P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}
 </li>
 </ol>
 <p>Note: By the law of large numbers, the above approximation becomes arbitrarily precise as <span class="math inline">\(B\to\infty.\)</span> Thus, setting, for instance, <span class="math inline">\(B=100,000\)</span> typically guarantees a very good approximation.</p>
-</section></section><section id="exercises" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">4.11</span> Exercises</h2>
+<p><strong>Link to your personal assignment repository:</strong> <a href="https://classroom.github.com/a/GYoOx4tD">https://classroom.github.com/a/GYoOx4tD</a></p>
+</section></section><section id="self-study-exercises" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="self-study-exercises">
+<span class="header-section-number">4.11</span> Self-Study: Exercises</h2>
 <p>Prepare the following exercises of Chapter 3 in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 1</li>
