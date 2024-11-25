@@ -275,7 +275,8 @@ window.Quarto = {
   <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="header-section-number">4.9.7</span> Writing Functions</a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.10</span> Exercises</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">4.10</span> Assignment</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.11</span> Exercises</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -2704,8 +2705,67 @@ Medium    0      1</code></pre>
 <pre><code>[1] "The libraries have been loaded."</code></pre>
 </div>
 </div>
-</section></section><section id="exercises" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">4.10</span> Exercises</h2>
+</section></section><section id="assignment" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="assignment">
+<span class="header-section-number">4.10</span> Assignment</h2>
+<p>Consider the following data generating process:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## A Function to simulate data from a simple linear regression model</span></span>
+<span><span class="va">myDataGenerator</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">n</span>      <span class="op">&lt;-</span> <span class="fl">50</span>                           <span class="co"># sample size</span></span>
+<span>  <span class="va">beta_0</span> <span class="op">&lt;-</span> <span class="fl">0.1</span>                          <span class="co"># intercept parameter</span></span>
+<span>  <span class="va">beta_1</span> <span class="op">&lt;-</span> <span class="fl">5</span>                            <span class="co"># slope parameter</span></span>
+<span>  <span class="va">X</span>      <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># predictor</span></span>
+<span>  <span class="va">error</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">8.5</span><span class="op">)</span> <span class="co"># error term</span></span>
+<span>  <span class="va">Y</span>      <span class="op">&lt;-</span> <span class="va">beta_0</span> <span class="op">+</span> <span class="va">beta_1</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="va">error</span>  <span class="co"># outcome </span></span>
+<span>  <span class="co">##</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"Y"</span> <span class="op">=</span> <span class="va">Y</span>, <span class="st">"X"</span> <span class="op">=</span> <span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Each time you call the function <code>myDataGenerator()</code>, you generate a new realization of the random sample <span class="math display">\[
+((Y_1,X_1'),\dots,(Y_n,X_n'))
+\]</span> as defined by the data generating process specified in the function-body of <code>myDataGenerator()</code></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_sim</span>    <span class="op">&lt;-</span> <span class="fu">myDataGenerator</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_sim</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Y           X
+1  -0.8350238 -1.05464044
+2  11.7739246  0.30174268
+3  -9.4680274 -0.07096835
+4  -8.2463405  0.27741075
+5  -5.6975933 -1.42339074
+6 -11.1699619 -1.41716495</code></pre>
+</div>
+</div>
+<p>For a given data generating process (as, for instance, defined in <code>myDataGenerator()</code>), we can approximate the bias of the OLS estimator by <span class="math display">\[
+\widehat{\operatorname{Bias}}(\hat\beta) = \widehat{E}(\hat\beta) - \beta,
+\]</span> where <span class="math display">\[
+\begin{align*}
+\widehat{E}(\hat\beta)
+&amp; = \frac{1}{B}\sum_{j=1}^B \hat\beta_{b}\\[2ex]
+&amp; = \frac{1}{B}\sum_{j=1}^B \begin{pmatrix}\hat\beta_{0,b}\\\hat\beta_{1,b}\end{pmatrix}\\[2ex]
+&amp; = \begin{pmatrix}\frac{1}{B}\sum_{j=1}^B \hat\beta_{0,b}\\ \frac{1}{B}\sum_{j=1}^B \hat\beta_{1,b}\end{pmatrix}
+\end{align*}
+\]</span> denotes the sample mean across <span class="math inline">\(B\)</span>-many simulated realizations <span class="math display">\[
+\hat\beta_1,\hat\beta_2,\dots,\hat\beta_B
+\]</span> of the OLS estimator <span class="math inline">\(\hat\beta,\)</span> and where <span class="math inline">\(\beta\)</span> denotes the true parameter vector; i.e., here <span class="math display">\[
+\beta
+= \begin{pmatrix}\beta_{0}\\ \beta_{1}\end{pmatrix}
+= \begin{pmatrix}0.1\\ 5\end{pmatrix}.
+\]</span></p>
+<p>By the law of large numbers, the approximation <span class="math display">\[
+\widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta)
+\]</span> becomes arbitrarily precise as <span class="math inline">\(B\to\infty.\)</span> Setting, for instance, <span class="math inline">\(B=100000\)</span> typically guarantees a very good approximation.</p>
+<p><strong>Assignment Task Nr. 1:</strong></p>
+<ul>
+<li>Use the above given data generating process to generate <span class="math inline">\(B=100000\)</span> OLS estimates of the true (usually unknown) parameter vector <span class="math inline">\(\beta'=(\beta_0,\beta_1).\)</span> Use two boxplot (one for the estimates of <span class="math inline">\(\beta_0\)</span> and another for those of <span class="math inline">\(\beta_1\)</span>) to visualize the estimates.<br>
+</li>
+<li>Check the bias of the OLS estimator for the above given data generating process using the above described simulation approach (Monte Carlo simulation).</li>
+<li>Given your simulaiton result, can you state that the OLS estimatior is generally biased/unbiased?</li>
+</ul>
+<!-- **Assignment Task Nr. 2:** --></section><section id="exercises" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">4.11</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 3 in our course textbook <code>ISLR</code>:</p>
 <ul>
 <li>Exercise 1</li>
