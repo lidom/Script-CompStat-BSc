@@ -2711,13 +2711,15 @@ Medium    0      1</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## A Function to simulate data from a simple linear regression model</span></span>
 <span><span class="va">myDataGenerator</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">n</span>      <span class="op">&lt;-</span> <span class="fl">50</span>                           <span class="co"># sample size</span></span>
-<span>  <span class="va">beta_0</span> <span class="op">&lt;-</span> <span class="fl">0.1</span>                          <span class="co"># intercept parameter</span></span>
-<span>  <span class="va">beta_1</span> <span class="op">&lt;-</span> <span class="fl">5</span>                            <span class="co"># slope parameter</span></span>
-<span>  <span class="va">X</span>      <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># predictor</span></span>
-<span>  <span class="va">error</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">8.5</span><span class="op">)</span> <span class="co"># error term</span></span>
-<span>  <span class="va">Y</span>      <span class="op">&lt;-</span> <span class="va">beta_0</span> <span class="op">+</span> <span class="va">beta_1</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="va">error</span>  <span class="co"># outcome </span></span>
-<span>  <span class="co">##</span></span>
+<span>  </span>
+<span>  <span class="va">n</span>      <span class="op">&lt;-</span> <span class="fl">50</span>                                    <span class="co"># sample size</span></span>
+<span>  <span class="va">beta_0</span> <span class="op">&lt;-</span> <span class="fl">0.1</span>                                   <span class="co"># intercept parameter</span></span>
+<span>  <span class="va">beta_1</span> <span class="op">&lt;-</span> <span class="fl">5</span>                                     <span class="co"># slope parameter</span></span>
+<span>  <span class="va">X</span>      <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>           <span class="co"># predictor</span></span>
+<span>  <span class="va">error</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="op">(</span><span class="fl">5</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># heteroskedastic error term</span></span>
+<span>  <span class="va">Y</span>      <span class="op">&lt;-</span> <span class="va">beta_0</span> <span class="op">+</span> <span class="va">beta_1</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="va">error</span>           <span class="co"># generate Y </span></span>
+<span>  </span>
+<span>  <span class="co">## return realization of the random sample</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"Y"</span> <span class="op">=</span> <span class="va">Y</span>, <span class="st">"X"</span> <span class="op">=</span> <span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2729,13 +2731,13 @@ Medium    0      1</code></pre>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_sim</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Y           X
-1  -0.8350238 -1.05464044
-2  11.7739246  0.30174268
-3  -9.4680274 -0.07096835
-4  -8.2463405  0.27741075
-5  -5.6975933 -1.42339074
-6 -11.1699619 -1.41716495</code></pre>
+<pre><code>           Y           X
+1  -2.083072 -1.05464044
+2   7.949106  0.30174268
+3  -5.751286 -0.07096835
+4  -4.556137  0.27741075
+5  -6.019922 -1.42339074
+6 -10.144683 -1.41716495</code></pre>
 </div>
 </div>
 <p>For a given data generating process (as, for instance, defined in <code>myDataGenerator()</code>), we can approximate the bias of the OLS estimator by <span class="math display">\[
@@ -2757,14 +2759,31 @@ Medium    0      1</code></pre>
 <p>By the law of large numbers, the approximation <span class="math display">\[
 \widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta)
 \]</span> becomes arbitrarily precise as <span class="math inline">\(B\to\infty.\)</span> Setting, for instance, <span class="math inline">\(B=100000\)</span> typically guarantees a very good approximation.</p>
-<p><strong>Assignment Task Nr. 1:</strong></p>
-<ul>
-<li>Use the above given data generating process to generate <span class="math inline">\(B=100000\)</span> OLS estimates of the true (usually unknown) parameter vector <span class="math inline">\(\beta'=(\beta_0,\beta_1).\)</span> Use two boxplot (one for the estimates of <span class="math inline">\(\beta_0\)</span> and another for those of <span class="math inline">\(\beta_1\)</span>) to visualize the estimates.<br>
+<section id="assignment-task-nr.-1-bias-of-the-ols-estimator" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="assignment-task-nr.-1-bias-of-the-ols-estimator"><strong>Assignment Task Nr. 1 (Bias of the OLS Estimator):</strong></h4>
+<ol type="1">
+<li>Use the above given data generating process to generate <span class="math inline">\(B=100,000\)</span> OLS estimates of the true (usually unknown) parameter vector <span class="math inline">\(\beta'=(\beta_0,\beta_1).\)</span> Use two boxplot (one for the estimates of <span class="math inline">\(\beta_0\)</span> and another for those of <span class="math inline">\(\beta_1\)</span>) to visualize the estimation results.<br>
 </li>
-<li>Check the bias of the OLS estimator for the above given data generating process using the above described simulation approach (Monte Carlo simulation).</li>
-<li>Given your simulaiton result, can you state that the OLS estimatior is generally biased/unbiased?</li>
-</ul>
-<!-- **Assignment Task Nr. 2:** --></section><section id="exercises" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="exercises">
+<li>Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach.</li>
+<li>Based on your simulation results, can you state that the OLS estimatior is <em>generally</em> biased/unbiased?</li>
+</ol></section><section id="assignment-task-nr.-2-coverage-probability-of-confidence-intervals" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="assignment-task-nr.-2-coverage-probability-of-confidence-intervals"><strong>Assignment Task Nr. 2 (Coverage Probability of Confidence Intervals):</strong></h4>
+<ol type="1">
+<li>Use the above given data generating process to generate <span class="math inline">\(B=100,000\)</span> realizations <span class="math display">\[
+\operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
+\]</span> of the <span class="math inline">\((1-\alpha)\cdot 100 \%\)</span> confidence interval <span class="math inline">\(\operatorname{CI}^{1-\alpha}_{\beta_1}\)</span> for <span class="math inline">\(\beta_1.\)</span>
+</li>
+<li>Approximate the true coverage probability using the empirical coverage probability across all <span class="math inline">\(B\)</span> simulated confidence interals: <span class="math display">\[
+P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{(\beta_1 \in \operatorname{CI}^{1-\alpha}_{\beta_1,j})}
+\]</span> Consider the following two cases:
+<ol type="a">
+<li>The null-hypothesis is true, i.e.&nbsp;<span class="math inline">\(\beta_1^{(H_0)} = 0.1 = \beta_1.\)</span>
+</li>
+<li>The null-hypothesis is false with <span class="math inline">\(\beta_1^{(H_0)} = 0 \neq \beta_1.\)</span>
+</li>
+</ol>
+</li>
+</ol>
+<p>Note: By the law of large numbers, the above approximation becomes arbitrarily precise as <span class="math inline">\(B\to\infty.\)</span> Thus, setting, for instance, <span class="math inline">\(B=100,000\)</span> typically guarantees a very good approximation.</p>
+</section></section><section id="exercises" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">4.11</span> Exercises</h2>
 <p>Prepare the following exercises of Chapter 3 in our course textbook <code>ISLR</code>:</p>
 <ul>
