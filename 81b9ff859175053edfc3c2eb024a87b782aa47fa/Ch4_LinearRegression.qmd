@@ -2543,7 +2543,7 @@ P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}
 $$
 where $1_{(\text{TRUE})}=1$ and $1_{(\text{FALSE})}=0.$  
 Consider the following two cases: 
-      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 0.1 = \beta_1.$
+      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 5 = \beta_1.$
       b. The null-hypothesis is false with $\beta_1^{(H_0)} = 0 \neq \beta_1.$
 
 Note: By the law of large numbers, the above approximation becomes arbitrarily precise as $B\to\infty.$ Thus, setting, for instance, $B=100,000$ typically guarantees a very good approximation. 
