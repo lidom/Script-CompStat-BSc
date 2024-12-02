@@ -345,7 +345,7 @@ Y=\left\{
 Y
 &amp;= f(X) + \epsilon \\[2ex]
 &amp;= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon,
-\end{align*}\]</span> where, under the assumptions of <a href="Ch4_LinearRegression.html" class="quarto-xref"><span>Chapter 4</span></a>, <span class="math display">\[
+\end{align*}\]</span> where, under the assumptions of <span class="quarto-unresolved-ref">?sec-linearRegCh</span>, <span class="math display">\[
 E(\epsilon|X)=0.
 \]</span> Therefore, <span id="eq-LinProb1"><span class="math display">\[
 \begin{align*}
@@ -429,7 +429,7 @@ P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
 1 - \max_{j}P(Y = j| X = x_0 ),
 \]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
 <p>The <em>global</em> overall Bayes error rate is given by <span class="math display">\[
-1 - E\left(\max_{j}P(Y = 1| X )\right),
+1 - E\left(\max_{j}P(Y = j| X )\right),
 \]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X.\)</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">

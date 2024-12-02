@@ -220,7 +220,7 @@ where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$).
 
 The *global* overall Bayes error rate is given by
 $$
-1 - E\left(\max_{j}P(Y = 1| X )\right),
+1 - E\left(\max_{j}P(Y = j| X )\right),
 $$
 where the expectation averages the probability over all possible values of $X.$ 
 
