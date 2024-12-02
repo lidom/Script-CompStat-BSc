@@ -2536,7 +2536,7 @@ becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ t
 $$
 \operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
 $$
-of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$
+of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$ Set $\alpha=0.05.$ 
 2. Approximate the true coverage probability using the empirical coverage probability across all $B$ simulated confidence interals: 
 $$
 P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
