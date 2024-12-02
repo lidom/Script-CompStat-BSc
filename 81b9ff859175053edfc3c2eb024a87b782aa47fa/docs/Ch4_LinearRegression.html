@@ -1672,7 +1672,7 @@ Y &amp;= \beta_0 + \underbrace{(\beta_1 + \beta_3 X_2)}_{=\tilde{\beta}_1(X_2)} 
 <ul>
 <li>the predictor <code>radio</code>,</li>
 <li>the predictor <code>TV</code>, and</li>
-<li>the interaction <code>radio</code><span class="math inline">\(\times\)</span><code>radio</code>
+<li>the interaction <code>radio</code><span class="math inline">\(\times\)</span><code>TV</code>
 </li>
 </ul>
 <p>takes the form</p>
@@ -1843,34 +1843,26 @@ Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Caution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The standard formulas for</p>
-<ul>
-<li>standard errors,</li>
-<li>confidence intervals, and</li>
-<li>hypothesis tests</li>
-</ul>
-<p>in this chapter are based on the assumption of</p>
-<ul>
-<li>uncorrelated error terms <span class="math inline">\(Cor(\epsilon_i,\epsilon_j)=0\)</span> for all <span class="math inline">\(i\neq j\)</span><br>
-</li>
-<li>with equal variances <span class="math inline">\(Var(\epsilon_i)=\sigma^2\)</span> for all <span class="math inline">\(i=1,\dots,n.\)</span>
-</li>
-</ul>
-<p>If in fact there is correlation and/or heteroskedasticity among the error terms, then the estimated standard errors will be wrong leading to invalid inferences.</p>
-<p>Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to take this into account by using so-called auto-correlation and/or heteroskedasticity robust standard errors.</p>
-<p>The <code>R</code> package <a href="https://cran.r-project.org/web/packages/sandwich/index.html">sandwich</a> contains such robust standard error estimators.</p>
-</div>
-</div>
+<!-- 
+::: {.callout-caution}
+The standard formulas for 
+
+* standard errors, 
+* confidence intervals, and 
+* hypothesis tests 
+
+in this chapter are based on the assumption of 
+
+* uncorrelated error terms $Cor(\epsilon_i,\epsilon_j)=0$ for all $i\neq j$  
+* with equal variances $Var(\epsilon_i)=\sigma^2$ for all $i=1,\dots,n.$  
+
+If in fact there is correlation and/or heteroskedasticity among the error terms, then the estimated standard errors will be wrong leading to invalid inferences. 
+
+Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to take this into account by using so-called auto-correlation and/or heteroskedasticity robust standard errors. 
+
+The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
+::: 
+-->
 <p><strong>4. Outliers</strong></p>
 <p>An outlier is a point <span class="math inline">\(i\)</span> for which <span class="math inline">\(y_i\)</span> is far from the value <span class="math inline">\(\hat{y}_i\)</span> predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording of an observation during data collection.</p>
 <p>Outliers typically have a strong effect on the <span class="math inline">\(R^2\)</span> value since they add a <strong>very large residual</strong> to its computation.</p>
@@ -1900,7 +1892,7 @@ Tip
 <p><strong>5. High Leverage Points</strong></p>
 <p>In order to quantify an observation’s leverage, we compute the <strong>leverage statistic</strong> <span class="math inline">\(h_i\)</span> for each observation <span class="math inline">\(i=1,\dots,n.\)</span> A large value of this statistic indicates an observation with high leverage.</p>
 <p>In the case of the <strong>simple linear regression model</strong> <span class="math display">\[
-h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{i'=1}^n(x_{i'}-\bar{x})^2}.
+h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_{j}-\bar{x})^2}.
 \]</span></p>
 <p>In the case of the <strong>multiple linear regression model</strong>, <span class="math inline">\(h_i\)</span> is the <span class="math inline">\(i\)</span>th diagonal value of the <span class="math inline">\((n\times n)\)</span>-dimensional “hat-matrix” <span class="math display">\[
 H=X(X'X)^{-1}X'.
@@ -1984,16 +1976,16 @@ f(X_i) \neq \beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
 <p><strong>Non-parametric methods</strong> such as <strong>K-nearest neighbors regression</strong> since non-parametric approaches do not explicitly assume a parametric form for <span class="math inline">\(f(X).\)</span></p>
 <section id="k-nearest-neighbors-k-nn-regression" class="level3" data-number="4.8.1"><h3 data-number="4.8.1" class="anchored" data-anchor-id="k-nearest-neighbors-k-nn-regression">
 <span class="header-section-number">4.8.1</span> K-Nearest Neighbors (K-NN) Regression</h3>
-<p>Let <span class="math inline">\(x_0\in\mathbb{R}^p\)</span> denote a certain prediction point at which we want to estimate <span class="math display">\[
+<p>Let <span class="math inline">\(x_0\in\mathbb{R}^p\)</span> denote a certain (multivariate) predictor value at which we want to estimate <span class="math display">\[
 f(x_0)
-\]</span> and let <span class="math inline">\(K\)</span> denote the number of closest prediction point neighbors of <span class="math inline">\(x_0.\)</span></p>
+\]</span> and let <span class="math inline">\(K\)</span> denote the number of closest predictior value neighbors of <span class="math inline">\(x_0.\)</span></p>
 <p>KNN regression regression then computes the estimate <span class="math display">\[
 \hat{f}(x_0)
 \]</span> in two steps:</p>
 <ol type="1">
-<li>Compute the distances between <span class="math inline">\(x_0\)</span> and all training data prediction points <span class="math inline">\(X_1,\dots,X_{n_{Train}}\)</span> <span class="math display">\[
+<li>Compute the distances between <span class="math inline">\(x_0\)</span> and all training data predictior values <span class="math inline">\(X_1,\dots,X_{n_{Train}}\)</span> <span class="math display">\[
 d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
-\]</span> Use these distances to identify the <span class="math inline">\(K\)</span> training data prediction points <span class="math inline">\(X_1,\dots,X_{n_{Train}}\)</span> that are closest to <span class="math inline">\(x_0\)</span> and collect their indices the index set <span class="math inline">\(\mathcal{N}_0,\)</span> where <span class="math display">\[
+\]</span> Use these distances to identify the <span class="math inline">\(K\)</span> training data predictior values <span class="math inline">\(X_1,\dots,X_{n_{Train}}\)</span> that are closest to <span class="math inline">\(x_0\)</span> and collect their indices the index set <span class="math inline">\(\mathcal{N}_0,\)</span> where <span class="math display">\[
 \begin{align*}
 \mathcal{N}_0
 &amp; =\{i\in\{1,2,\dots,n_{Train}\} \; |\; d(x_0,X_i)\text{ is one of the $K$ smallest distances}\}
@@ -2005,14 +1997,14 @@ d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
 \]</span>
 </li>
 </ol>
-<p>The above two steps are then repeated for all prediction points <span class="math inline">\(x_0\in\mathbb{R}^p\)</span> of interest.</p>
+<p>The above two steps are then repeated for all predictior values <span class="math inline">\(x_0\in\mathbb{R}^p\)</span> of interest.</p>
 <p>The performance of the estimator <span class="math inline">\(\hat{f}_K(x_0)\)</span> depends on</p>
 <ul>
 <li>the choice of <span class="math inline">\(K\)</span> and</li>
 <li>the choice of distance <span class="math inline">\(d\)</span>
 </li>
 </ul>
-<p>For real valued predictors a usual choice is the Euclidian distance <span class="math display">\[
+<p>For real valued predictors, <span class="math inline">\(x_0,X_i\in\mathbb{R}^p\)</span> a usual choice is the Euclidian distance <span class="math display">\[
 d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
 \]</span></p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -2021,7 +2013,7 @@ d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Use Standardized Predictors!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2047,14 +2039,14 @@ $$  --></p>
 <li>low bias</li>
 <li>high variance.</li>
 </ul>
-<p>The low bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only uses a few (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) and thus very close, “good” neighbors <span class="math inline">\(X_i\)</span> with <span class="math inline">\(\hat{f}_K(x_0)\approx \hat{f}_K(X_i).\)</span></p>
+<p>The low bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only uses a few (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) and very close <span class="math inline">\(||x_0-X_i||\approx 0\)</span> and thus “good” neighbors <span class="math inline">\(X_i\)</span> for which <span class="math inline">\(\hat{f}_K(x_0)\approx \hat{f}_K(X_i).\)</span></p>
 <p>The high variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only depends on a small number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) such that the law of larger numbers had no chance to reduce variance.</p>
 <p><strong>A large value of <span class="math inline">\(K\)</span></strong> provides a less flexible fit, which will have</p>
 <ul>
 <li>large bias</li>
 <li>low variance.</li>
 </ul>
-<p>The large bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> uses observations from a larger neighborhood (e.g.&nbsp;<span class="math inline">\(K=9\)</span>) which increases the chance of considering rather distant, “bad” neigboors with <span class="math inline">\(\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).\)</span></p>
+<p>The large bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> uses observations from a larger neighborhood (e.g.&nbsp;<span class="math inline">\(K=9\)</span>) which increases the chance of considering rather distant <span class="math inline">\(||x_0-X_i||\gg 0\)</span> and thus “bad” neigboors with <span class="math inline">\(\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).\)</span></p>
 <p>The low variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only depends on a a larger number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=9\)</span>) such that the law of larger numbers has a chance to reduce variance.</p>
 <p>An optimal value of <span class="math inline">\(K\)</span> can be chosen using, e.g., cross-validation; see <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
 <p>Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of <span class="math inline">\(f\)</span> and vice versa.</p>

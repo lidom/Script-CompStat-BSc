@@ -1606,7 +1606,7 @@ A linear model that predicts `sales` using
 
 * the predictor `radio`, 
 * the predictor `TV`, and 
-* the interaction `radio`$\times$`radio`
+* the interaction `radio`$\times$`TV`
 
 takes the form 
 
@@ -1809,6 +1809,7 @@ plot(lmobj_3, which = 1)
 ```
 
 
+<!-- 
 ::: {.callout-caution}
 The standard formulas for 
 
@@ -1826,7 +1827,8 @@ If in fact there is correlation and/or heteroskedasticity among the error terms,
 Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to take this into account by using so-called auto-correlation and/or heteroskedasticity robust standard errors. 
 
 The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
-:::
+::: 
+-->
 
 
 **4. Outliers**
@@ -1862,7 +1864,7 @@ In order to quantify an observation's leverage, we compute the **leverage statis
 
 In the case of the **simple linear regression model**
 $$
-h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{i'=1}^n(x_{i'}-\bar{x})^2}.
+h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_{j}-\bar{x})^2}.
 $$
 
 In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal value of the $(n\times n)$-dimensional "hat-matrix"
@@ -1974,11 +1976,11 @@ $$
 ### K-Nearest Neighbors (K-NN) Regression 
 
 
-Let $x_0\in\mathbb{R}^p$ denote a certain prediction point at which we want to estimate 
+Let $x_0\in\mathbb{R}^p$ denote a certain (multivariate) predictor value at which we want to estimate 
 $$
 f(x_0)
 $$
-and let $K$ denote the number of closest prediction point neighbors of $x_0.$
+and let $K$ denote the number of closest predictior value neighbors of $x_0.$
 
 KNN regression regression then computes the estimate 
 $$
@@ -1986,11 +1988,11 @@ $$
 $$ 
 in two steps: 
 
-1. Compute the distances between $x_0$ and all training data prediction points $X_1,\dots,X_{n_{Train}}$
+1. Compute the distances between $x_0$ and all training data predictior values $X_1,\dots,X_{n_{Train}}$
 $$
 d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
 $$
-Use these distances to identify the $K$ training data prediction points $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
+Use these distances to identify the $K$ training data predictior values $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
 $$
 \begin{align*}
 \mathcal{N}_0 
@@ -2003,7 +2005,7 @@ $$
 \hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
 $$
 
-The above two steps are then repeated for all prediction points $x_0\in\mathbb{R}^p$ of interest.
+The above two steps are then repeated for all predictior values $x_0\in\mathbb{R}^p$ of interest.
 
 
 The performance of the estimator $\hat{f}_K(x_0)$ depends on 
@@ -2011,12 +2013,13 @@ The performance of the estimator $\hat{f}_K(x_0)$ depends on
 * the choice of $K$ and 
 * the choice of distance $d$ 
 
-For real valued predictors a usual choice is the Euclidian distance 
+For real valued predictors, $x_0,X_i\in\mathbb{R}^p$ a usual choice is the Euclidian distance 
 $$
 d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
 $$
 
 ::: {.callout-important}
+# Use Standardized Predictors! 
 Typically, it is important to compute the distances with respect to the standardized (centering, and scaling to unit variance) predictor variables; i.e.
 $$
 d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
@@ -2053,7 +2056,7 @@ In general, the optimal value for $K$ will depend on the *bias-variance tradeoff
    * low bias 
    * high variance. 
 
-The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) and thus very close, "good" neighbors $X_i$ with $\hat{f}_K(x_0)\approx \hat{f}_K(X_i).$
+The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) and very  close $||x_0-X_i||\approx 0$ and thus "good" neighbors $X_i$ for which $\hat{f}_K(x_0)\approx \hat{f}_K(X_i).$
 
 The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a small number of $K$ observations (e.g. $K=1$) such that the law of larger numbers had no chance to reduce variance. 
 
@@ -2063,7 +2066,7 @@ The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a g
    * large bias 
    * low variance. 
 
-The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=9$) which increases the chance of considering rather distant, "bad" neigboors with $\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).$
+The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=9$) which increases the chance of considering rather distant $||x_0-X_i||\gg 0$ and thus "bad" neigboors with $\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).$
 
 The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a a larger number of $K$ observations (e.g. $K=9$) such that the law of larger numbers has a chance to reduce variance.
 
