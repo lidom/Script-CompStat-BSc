@@ -2036,19 +2036,31 @@ $$  --></p>
 <p>In general, the optimal value for <span class="math inline">\(K\)</span> will depend on the <em>bias-variance tradeoff</em>, which we introduced in <a href="Ch2_StatLearning.html" class="quarto-xref"><span>Chapter 2</span></a>:</p>
 <p><strong>A small value for <span class="math inline">\(K\)</span></strong> provides the most flexible fit, which will have</p>
 <ul>
-<li>low bias</li>
-<li>high variance.</li>
+<li>low bias <span class="math display">\[
+    |\operatorname{Bias}(\hat{f}(x_0))| = |E(\hat{f}(x_0)) - f(x_0)| \;\text{ is small}
+    \]</span>
+</li>
+<li>high variance <span class="math display">\[
+    Var(\hat(f)(x_0))  \;\text{ is large}
+    \]</span>
+</li>
 </ul>
-<p>The low bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only uses a few (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) and very close <span class="math inline">\(||x_0-X_i||\approx 0\)</span> and thus “good” neighbors <span class="math inline">\(X_i\)</span> for which <span class="math inline">\(\hat{f}_K(x_0)\approx \hat{f}_K(X_i).\)</span></p>
+<p>The low bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only uses a few (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) close neighbors for which we can expect that they are “good neighbors:” Close neighbors are <strong>good neighbors</strong> since <span class="math inline">\(|f(x_0) - f(X_i)|\approx 0.\)</span></p>
 <p>The high variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only depends on a small number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) such that the law of larger numbers had no chance to reduce variance.</p>
 <p><strong>A large value of <span class="math inline">\(K\)</span></strong> provides a less flexible fit, which will have</p>
 <ul>
-<li>large bias</li>
-<li>low variance.</li>
+<li>large bias <span class="math display">\[
+    |\operatorname{Bias}(\hat{f}(x_0))| = |E(\hat{f}(x_0)) - f(x_0)| \;\text{ is large}
+    \]</span>
+</li>
+<li>low variance <span class="math display">\[
+    Var(\hat(f)(x_0))  \;\text{ is small}
+    \]</span>
+</li>
 </ul>
-<p>The large bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> uses observations from a larger neighborhood (e.g.&nbsp;<span class="math inline">\(K=9\)</span>) which increases the chance of considering rather distant <span class="math inline">\(||x_0-X_i||\gg 0\)</span> and thus “bad” neigboors with <span class="math inline">\(\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).\)</span></p>
-<p>The low variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only depends on a a larger number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=9\)</span>) such that the law of larger numbers has a chance to reduce variance.</p>
-<p>An optimal value of <span class="math inline">\(K\)</span> can be chosen using, e.g., cross-validation; see <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
+<p>The large bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> uses observations from a larger neighborhood (e.g.&nbsp;<span class="math inline">\(K=30\)</span>) which increases the chance of considering rather distant <span class="math inline">\(||x_0-X_i||\gg 0\)</span> and thus “bad” neigboors. Distant neighbors are <strong>bad neighbors</strong> since <span class="math inline">\(|f(x_0) - f(X_i)|\gg 0.\)</span></p>
+<p>The low variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> depends on a larger number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=30\)</span>) such that the law of larger numbers has a chance to reduce variance.</p>
+<p><strong>An optimal value of <span class="math inline">\(K\)</span></strong> can be chosen using, e.g., cross-validation; see <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
 <p>Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of <span class="math inline">\(f\)</span> and vice versa.</p>
 <p>Figure 3.17 provides an example with data generated from a one-dimensional linear regression model:</p>
 <ul>

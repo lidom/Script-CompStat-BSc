@@ -2054,24 +2054,36 @@ In general, the optimal value for $K$ will depend on the *bias-variance tradeoff
 **A small value for $K$** provides the most flexible fit, which will have 
 
    * low bias 
-   * high variance. 
+    $$
+    |\operatorname{Bias}(\hat{f}(x_0))| = |E(\hat{f}(x_0)) - f(x_0)| \;\text{ is small}
+    $$
+   * high variance
+    $$
+    Var(\hat(f)(x_0))  \;\text{ is large}
+    $$ 
 
-The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) and very  close $||x_0-X_i||\approx 0$ and thus "good" neighbors $X_i$ for which $\hat{f}_K(x_0)\approx \hat{f}_K(X_i).$
+The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) close neighbors for which we can expect that they are "good neighbors:" Close neighbors are **good neighbors** since $|f(x_0) - f(X_i)|\approx 0.$
 
 The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a small number of $K$ observations (e.g. $K=1$) such that the law of larger numbers had no chance to reduce variance. 
 
 
 **A large value of $K$** provides a less flexible fit, which will have 
 
-   * large bias 
-   * low variance. 
+   * large bias
+    $$
+    |\operatorname{Bias}(\hat{f}(x_0))| = |E(\hat{f}(x_0)) - f(x_0)| \;\text{ is large}
+    $$ 
+   * low variance
+    $$
+    Var(\hat(f)(x_0))  \;\text{ is small}
+    $$ 
 
-The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=9$) which increases the chance of considering rather distant $||x_0-X_i||\gg 0$ and thus "bad" neigboors with $\hat{f}_K(x_0)\not\approx \hat{f}_K(X_i).$
+The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=30$) which increases the chance of considering rather distant $||x_0-X_i||\gg 0$ and thus "bad" neigboors. Distant neighbors are **bad neighbors** since $|f(x_0) - f(X_i)|\gg 0.$
 
-The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a a larger number of $K$ observations (e.g. $K=9$) such that the law of larger numbers has a chance to reduce variance.
+The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ depends on a larger number of $K$ observations (e.g. $K=30$) such that the law of larger numbers has a chance to reduce variance.
 
 
-An optimal value of $K$ can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
+**An optimal value of $K$** can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
 
 
 Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
