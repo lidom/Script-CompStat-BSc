@@ -80,12 +80,14 @@ Y=\left\{
 $${#eq-binaryY}
 We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
 
-For a binary response, $Y\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that 
+For a binary response, $Y\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that
+$$ 
 \begin{align*}
 Y 
 &= f(X) + \epsilon \\[2ex]
 &= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon, 
 \end{align*}
+$$
 where, under the assumptions of @sec-linearRegCh, 
 $$
 E(\epsilon|X)=0.
@@ -107,12 +109,18 @@ E(Y|X)
 \end{align*}
 $${#eq-LinProb2}
 Combining @eq-LinProb1 and @eq-LinProb2 yields
+$$
 \begin{align*}
 Pr(Y=1|X) &=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
 \end{align*}
+$$
 Thus the estimated model approximates the conditional probability of $Y=1$ (e.g. $\texttt{default}=\texttt{Yes}$) given $X:$
 $$
-Pr(Y=1|X) \approx \hat{Y}=\hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+\begin{align*}
+Pr(Y=1|X) \approx Pr(Y=1|X) 
+& = \hat{Y}\\
+& = \hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+\end{align*}
 $$
 
 
@@ -440,8 +448,9 @@ In logistic regression analysis, the unknown model parameters are estimated usin
 simultaneously for all $i=1,\dots,n.$
 
 This intuition can be formalized using the so-called **likelihood function**:
+$$
 \begin{align*}
-\ell(b_0,b_1)
+\mathcal{L}(b_0,b_1)
 &=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))\\[2ex]
 &=
 \prod_{i:y_{i}=1} \frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}
@@ -451,10 +460,51 @@ This intuition can be formalized using the so-called **likelihood function**:
 \left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
 \left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\\[2ex]
 \end{align*}
+$$
 The estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* this likelihood function, i.e.
 $$
-(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1)
+(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\mathcal{L}(b_0,b_1).
 $$
+Typically, however, one does not maximize the **likelihood function** but the **log-likelihood function** 
+$$
+\begin{align*}
+\ell(b_0,b_1) 
+& = \ln(\mathcal{L}(b_0,b_1))\\[2ex]
+& = \ln\left(\prod_{i=1}^n 
+\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
+\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+& = \ln\left(\prod_{i=1}^n 
+\left(\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{y_i}
+\left(1-\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+&= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)\\ 
+&\qquad + (1 - y_i) \ln \left( 1 - \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
+&= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \\
+&\qquad + (1 - y_i) \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
+&= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
+&\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
+&=\dots \\[2ex]
+&= \sum_{i=1}^n \left( -\ln(1 + \exp(-b_0-b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
+\end{align*}
+$$
+Thus, the estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* the log-likelihood function, i.e.
+$$
+(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1).
+$$
+
+In general, there is no analytical solution of this maximization problem and a solution must be found numerically (Newton-Raphon Algorithm).
+
+<!-- Computing the vector of partial derivatives (gradient) with respect to $b_0$ and $b_1$ and setting it to zero, determines the estimates,
+$$
+\begin{pmatrix}
+\left.\frac{\partial}{\partial b_0} \ell(b_0,b_1)\right|_{(b_0,b_1) = (\hat\beta_0,\hat\beta_0)}\\
+\left.\frac{\partial}{\partial b_1} \ell(b_0,b_1)\right|_{(b_0,b_1) = (\hat\beta_0,\hat\beta_0)} =
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}
+$$ -->
+
+
 
 Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).
 

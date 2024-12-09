@@ -341,11 +341,13 @@ Y=\left\{
 \end{array}
 \right.
 \qquad(5.1)\]</span></span> We could then fit a linear regression to this binary response, and predict drug overdose if <span class="math inline">\(\hat{Y}&gt; 0.5\)</span> and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.</p>
-<p>For a binary response, <span class="math inline">\(Y\in\{0,1\},\)</span> as in <a href="#eq-binaryY" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, linear regression is not completely unreasonable. For the multiple linear regression model, we have that <span class="math display">\[\begin{align*}
+<p>For a binary response, <span class="math inline">\(Y\in\{0,1\},\)</span> as in <a href="#eq-binaryY" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, linear regression is not completely unreasonable. For the multiple linear regression model, we have that <span class="math display">\[
+\begin{align*}
 Y
 &amp;= f(X) + \epsilon \\[2ex]
 &amp;= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon,
-\end{align*}\]</span> where, under the assumptions of <span class="quarto-unresolved-ref">?sec-linearRegCh</span>, <span class="math display">\[
+\end{align*}
+\]</span> where, under the assumptions of <span class="quarto-unresolved-ref">?sec-linearRegCh</span>, <span class="math display">\[
 E(\epsilon|X)=0.
 \]</span> Therefore, <span id="eq-LinProb1"><span class="math display">\[
 \begin{align*}
@@ -359,10 +361,16 @@ E(Y|X)
 &amp; =  Pr(Y=1|X)\cdot 1 + Pr(Y=0|X)\cdot 0\\[2ex]
 &amp; =  Pr(Y=1|X).  
 \end{align*}
-\qquad(5.3)\]</span></span> Combining <a href="#eq-LinProb1" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> and <a href="#eq-LinProb2" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> yields <span class="math display">\[\begin{align*}
+\qquad(5.3)\]</span></span> Combining <a href="#eq-LinProb1" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> and <a href="#eq-LinProb2" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> yields <span class="math display">\[
+\begin{align*}
 Pr(Y=1|X) &amp;=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
-\end{align*}\]</span> Thus the estimated model approximates the conditional probability of <span class="math inline">\(Y=1\)</span> (e.g.&nbsp;<span class="math inline">\(\texttt{default}=\texttt{Yes}\)</span>) given <span class="math inline">\(X:\)</span> <span class="math display">\[
-Pr(Y=1|X) \approx \hat{Y}=\hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+\end{align*}
+\]</span> Thus the estimated model approximates the conditional probability of <span class="math inline">\(Y=1\)</span> (e.g.&nbsp;<span class="math inline">\(\texttt{default}=\texttt{Yes}\)</span>) given <span class="math inline">\(X:\)</span> <span class="math display">\[
+\begin{align*}
+Pr(Y=1|X) \approx Pr(Y=1|X)
+&amp; = \hat{Y}\\
+&amp; = \hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+\end{align*}
 \]</span></p>
 <p>However, if we use linear regression, some of our estimates might be outside the <span class="math inline">\([0, 1]\)</span> interval (see left panel in Figure 4.2), which doesn’t make sense when predicting probabilities. <img src="images/Fig_4_2.png" class="img-fluid"></p>
 <p><strong>Summary:</strong></p>
@@ -601,8 +609,9 @@ Caution
 </li>
 </ul>
 <p>simultaneously for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
-<p>This intuition can be formalized using the so-called <strong>likelihood function</strong>: <span class="math display">\[\begin{align*}
-\ell(b_0,b_1)
+<p>This intuition can be formalized using the so-called <strong>likelihood function</strong>: <span class="math display">\[
+\begin{align*}
+\mathcal{L}(b_0,b_1)
 &amp;=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))\\[2ex]
 &amp;=
 \prod_{i:y_{i}=1} \frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}
@@ -611,9 +620,42 @@ Caution
 \prod_{i=1}^n
 \left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
 \left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\\[2ex]
-\end{align*}\]</span> The estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> this likelihood function, i.e. <span class="math display">\[
-(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1)
+\end{align*}
+\]</span> The estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> this likelihood function, i.e. <span class="math display">\[
+(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\mathcal{L}(b_0,b_1).
+\]</span> Typically, however, one does not maximize the <strong>likelihood function</strong> but the <strong>log-likelihood function</strong> <span class="math display">\[
+\begin{align*}
+\ell(b_0,b_1)
+&amp; = \ln(\mathcal{L}(b_0,b_1))\\[2ex]
+&amp; = \ln\left(\prod_{i=1}^n
+\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
+\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+&amp; = \ln\left(\prod_{i=1}^n
+\left(\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{y_i}
+\left(1-\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+&amp;= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)\\
+&amp;\qquad + (1 - y_i) \ln \left( 1 - \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
+&amp;= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \\
+&amp;\qquad + (1 - y_i) \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
+&amp;= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
+&amp;\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
+&amp;=\dots \\[2ex]
+&amp;= \sum_{i=1}^n \left( -\ln(1 + \exp(-b_0-b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
+\end{align*}
+\]</span> Thus, the estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> the log-likelihood function, i.e. <span class="math display">\[
+(\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1).
 \]</span></p>
+<p>In general, there is no analytical solution of this maximization problem and a solution must be found numerically (Newton-Raphon Algorithm).</p>
+<!-- Computing the vector of partial derivatives (gradient) with respect to $b_0$ and $b_1$ and setting it to zero, determines the estimates,
+$$
+\begin{pmatrix}
+\left.\frac{\partial}{\partial b_0} \ell(b_0,b_1)\right|_{(b_0,b_1) = (\hat\beta_0,\hat\beta_0)}\\
+\left.\frac{\partial}{\partial b_1} \ell(b_0,b_1)\right|_{(b_0,b_1) = (\hat\beta_0,\hat\beta_0)} =
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}
+$$ -->
 <p>Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).</p>
 <p>Table 4.1 shows the coefficient estimates and related information that result from fitting a logistic regression model on the <code>Default</code> data in order to predict the probability of <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> using <code>balance</code> as the only predictor. <img src="images/Tab_4_1.png" class="img-fluid"></p>
 <p><strong>Interpretation:</strong></p>
@@ -1188,9 +1230,9 @@ Figure&nbsp;5.1: The ROC curve traces out two types of error as we vary the thre
 <span><span class="co">## depending on your factor levels</span></span>
 <span></span>
 <span><span class="co">## Predicted and actual classes:</span></span>
-<span><span class="va">predict</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://ipa-tys.github.io/ROCR/reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">ldaPredict_obj</span><span class="op">$</span><span class="va">posterior</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, <span class="va">Default</span><span class="op">$</span><span class="va">default</span><span class="op">)</span> </span>
+<span><span class="va">predict</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROCR/man/prediction.html">prediction</a></span><span class="op">(</span><span class="va">ldaPredict_obj</span><span class="op">$</span><span class="va">posterior</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, <span class="va">Default</span><span class="op">$</span><span class="va">default</span><span class="op">)</span> </span>
 <span><span class="co">## compute TP-Ratios and FP-Ratios:</span></span>
-<span><span class="va">perform</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://ipa-tys.github.io/ROCR/reference/performance.html">performance</a></span><span class="op">(</span><span class="va">predict</span>, <span class="st">"tpr"</span>, <span class="st">"fpr"</span><span class="op">)</span></span>
+<span><span class="va">perform</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROCR/man/performance.html">performance</a></span><span class="op">(</span><span class="va">predict</span>, <span class="st">"tpr"</span>, <span class="st">"fpr"</span><span class="op">)</span></span>
 <span><span class="co">## ROC curve</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">perform</span>, colorize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1200,7 +1242,7 @@ Figure&nbsp;5.1: The ROC curve traces out two types of error as we vary the thre
 </div>
 </div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## AUC</span></span>
-<span><span class="va">AUC</span>     <span class="op">&lt;-</span> <span class="fu"><a href="http://ipa-tys.github.io/ROCR/reference/performance.html">performance</a></span><span class="op">(</span><span class="va">predict</span>, measure <span class="op">=</span> <span class="st">"auc"</span><span class="op">)</span></span>
+<span><span class="va">AUC</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROCR/man/performance.html">performance</a></span><span class="op">(</span><span class="va">predict</span>, measure <span class="op">=</span> <span class="st">"auc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">AUC</span><span class="op">@</span><span class="va">y.values</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
