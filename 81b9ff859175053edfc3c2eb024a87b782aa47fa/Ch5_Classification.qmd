@@ -80,11 +80,12 @@ Y=\left\{
 $${#eq-binaryY}
 We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
 
+#### **Binary Response** {-}
+
 For a binary response, $Y\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that
 $$ 
 \begin{align*}
 Y 
-&= f(X) + \epsilon \\[2ex]
 &= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon, 
 \end{align*}
 $$
@@ -114,10 +115,13 @@ $$
 Pr(Y=1|X) &=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
 \end{align*}
 $$
-Thus the estimated model approximates the conditional probability of $Y=1$ (e.g. $\texttt{default}=\texttt{Yes}$) given $X:$
+
+Thus the estimated linear model approximates the conditional probability of $Y=1$ (e.g. $\texttt{default}=\texttt{Yes}$) given $X:$
 $$
 \begin{align*}
-Pr(Y=1|X) \approx Pr(Y=1|X) 
+Pr(Y=1|X) 
+& \approx \widehat{Pr}(Y=1|X)\\[2ex]
+& = \widehat{E}(Y|X)\\[2ex] 
 & = \hat{Y}\\
 & = \hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
 \end{align*}
@@ -125,13 +129,37 @@ $$
 
 
 
-However, if we use linear regression, some of our estimates might be outside the $[0, 1]$ interval (see left panel in Figure 4.2), which doesn't make sense when predicting probabilities. 
+#### **Classification** {-}
+
+The actual classification of an observation $i$ with predictor values $x_i\in\mathbb{R}^p$ is done using a certain probability threshold, such as $0.05$:
+
+$$
+\hat{f}(x_i) = 
+\left\{
+  \begin{array}{l}
+   1\quad\text{if}\quad\widehat{Pr}(Y=1|x_i)    > 0.5\\[2ex]
+   0\quad\text{if}\quad\widehat{Pr}(Y=1|x_i) \leq 0.5\\[2ex] 
+  \end{array} 
+\right.
+$$
+
+
+
+
+However, if we use linear regression, some of our estimates 
+$$
+\widehat{Pr}(Y=1|x_i)
+$$
+might be outside the $[0, 1]$ interval (see left panel in Figure 4.2), which doesn't make sense when predicting probabilities. 
 ![](images/Fig_4_2.png)
+
+
+
 
 **Summary:**
 
 (a) A classic regression method cannot well accommodate a qualitative response with more than two classes
-(b) A classic regression method may not provide meaningful estimates of $Pr(Y |X),$ even with just two classes. 
+(b) A classic regression method may not provide meaningful estimates of $Pr(Y=1|X),$ even with just two classes. 
 
 Thus, it is often preferable to use a classification method that is truly suited for qualitative response values such as, for instance, logistic regression.
 
@@ -362,7 +390,7 @@ $$
 
 ### The Simple $(p=1)$ Logistic Model
 
-For a binary coded dependen variable $Y\in\{0,1\}$ we aim to model the relationship between
+For a binary coded dependent variable $Y\in\{0,1\}$ we aim to model the relationship between
 $$
 p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
 $$
@@ -473,16 +501,16 @@ $$
 & = \ln\left(\prod_{i=1}^n 
 \left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
 \left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
-& = \ln\left(\prod_{i=1}^n 
-\left(\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{y_i}
-\left(1-\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
-&= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)\\ 
-&\qquad + (1 - y_i) \ln \left( 1 - \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
-&= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \\
-&\qquad + (1 - y_i) \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
-&= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
-&\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
-&=\dots \\[2ex]
+%& = \ln\left(\prod_{i=1}^n 
+%\left(\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{y_i}
+%\left(1-\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+%&= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)\\ 
+%&\qquad + (1 - y_i) \ln \left( 1 - \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
+%&= \sum_{i=1}^n \Bigg( y_i \ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right) \\
+%&\qquad + (1 - y_i) \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right) \Bigg) \\[2ex]
+%&= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
+%&\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
+&=\dots \text{rearranging terms} \dots \\[2ex]
 &= \sum_{i=1}^n \left( -\ln(1 + \exp(-b_0-b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
 \end{align*}
 $$
@@ -491,7 +519,7 @@ $$
 (\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1).
 $$
 
-In general, there is no analytical solution of this maximization problem and a solution must be found numerically (Newton-Raphon Algorithm).
+In general, there is no analytical solution of this maximization problem and a solution must be found numerically, for instance, using the Newton-Raphon Algorithm.
 
 <!-- Computing the vector of partial derivatives (gradient) with respect to $b_0$ and $b_1$ and setting it to zero, determines the estimates,
 $$
@@ -531,7 +559,7 @@ For example, using the coefficient estimates given in Table 4.1, we predict that
 $$
 \begin{align*}
 \hat{p}(\texttt{balance}=1000)
-&=Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
+&=\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
 %&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
 &=\frac{e^{-10.6513+ 0.0055\times 1000}}{1+e^{-10.6513+ 0.0055\times 1000}}\\[2ex] 
 &= 0.00576 < 1\%
@@ -542,7 +570,7 @@ By contrast, the default probability for an individual with a `balance`-value of
 $$
 \begin{align*}
 \hat{p}(\texttt{balance}=2000)
-&=Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
+&=\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
 %&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
 &=\frac{e^{-10.6513+ 0.0055\times 2000}}{1+e^{-10.6513+ 0.0055\times 2000}}\\[2ex] 
 & = 0.586
@@ -555,14 +583,16 @@ and is thus much higher.
 
 ![](images/Tab_4_2.png)
 
+$$
 \begin{align*}
-&Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
+&\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
 &=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\[2ex] 
 &= 0.0431\\[4ex]
-&Pr(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
+&\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
 &=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\[2ex] 
 &= 0.0292\\
 \end{align*}
+$$
 
 This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. Thus, this result may be driven by an **omitted-variable bias**.
 
@@ -622,11 +652,19 @@ To do this, we first select a single class to serve as the baseline; without los
 
 We model the probabilities that $Y=k$, for $k=1,\dots,K$, using $k$-specific parameters $\beta_{k0},\dots,\beta_{kp}$ with
 $$
-p_k(x)=Pr(Y=k|X=x)=\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+\begin{align*}
+p_k(x)
+& = Pr(Y=k|X=x)\\[2ex]
+& = \frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+\end{align*}
 $$
 for $k=1,\dots,K-1$, and
 $$
-p_K(x)=Pr(Y=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+\begin{align*}
+p_K(x) 
+& =Pr(Y=K|X=x)\\[2ex]
+& =\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+\end{align*}
 $$
 
 For $k=1,\dots,K-1$ it holds that 
@@ -653,7 +691,7 @@ $$
 
 Suppose that we wish to classify an observation into one of $K\geq 2$ classes. 
 
-**Prior probability:** Let 
+**Prior Probability:** Let 
 $$
 \pi_k=Pr(Y=k)
 $$ 
@@ -673,31 +711,31 @@ Technically, this definition is only correct if $X$ is a *qualitative* random va
 ::: 
 
 
-**Posterior probability:** Then *Bayes' theorem* states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
+**Posterior Probability:** Then **Bayes' theorem** states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
 \begin{align*}
 p_k(x) 
-& = Pr(Y=k|X=x)\\
-& = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\
-& = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\
-& =\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+& = Pr(Y=k|X=x)\\[2ex]
+& = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\[2ex]
+& = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\[2ex]
+& = \frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
 \end{align*}
 $${#eq-postprob1}
 where 
 $$
 \begin{align*}
 Pr(X = x) 
-&= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\
+&= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\[2ex]
 &= \sum_{l=1}^K \pi_l f_l(x) 
 \end{align*}
 $$
 
-While logistic regression aims at estimating the posterior probability $p_k(x)$ directly, Bayes's theorem gives us a way to estimate $p_k(x)$ *indirectly* simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
+While logistic regression estimates the posterior probability $p_k(x)$ using a functional form assumption, Bayes's theorem gives us a way to estimate $p_k(x)$ simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
 
-We know from @sec-SL that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, @eq-postprob1 will lead to the best classifier. 
+We know from @sec-SL that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, if we were able to estimate all unknown quantities in @eq-postprob1, we will get a very good Classifier. 
 
-However, estimating the densities $f_k(x)$ can be very challenging and we therefore have to make some simplifying assumptions; namely, assuming that the data is normal distributed.
+However, estimating the densities $f_k(x)$ can be very challenging. Therefore, we have to make some simplifying assumptions; namely, assuming that the data is normal distributed.
 
 
 In the following sections, we discuss three classifiers that use different estimates of $f_k(x)$ to approximate the Bayes classifier: 
@@ -732,25 +770,30 @@ p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\
 $${#eq-LDp1}
 
 The Bayes classifier involves assigning an observation
-$X = x$ to the class $k$ for which $p_k(x)$ is largest. Taking the $\log$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
+$X = x$ to the class $k$ for which $p_k(x)$ is largest. 
+
+
+Taking the $\log$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
 $$
 \delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
 $$
 is largest. The function $\delta_k(x)$ is called the **discriminant function**.
 
 ::: {.callout-tip icon="false"}
-# Derivation of the discriminant function
+# Derivation of the Discriminant Function
 To see this, observe that the largest $p_k(x)$-value across all $k=1,\dots,K$ is determined by the larges numerator in @eq-LDp1, since the denominator does not change with $k.$ Thus, we only need to look at the numerator.
 
 Moreover, if a certain value $k=1,\dots,K$ maximizes $p_k(x),$ then the same $k$ maximizes also $\log(p_k(x))$ since the $\log$-function is a strictly monotonic increasing formation. 
 
 Thus we can simply look at the logarithm of the numerator: 
+$$
 \begin{align*}
 &\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
 =&\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
 =&\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
 =&\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
 \end{align*} 
+$$
 
 Removing all irrelevant terms that anyways do not depend on $k$ leads to the discriminant function $\delta_k(x).$
 :::
@@ -814,7 +857,10 @@ In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,
 
 **Summary of LDA for $p=1$:**
 
-The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. The following estimates are used: 
+The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. 
+
+
+The following estimates are used: 
 $$
 \begin{align*}
 \hat\pi_k    & = \frac{n_k}{n}\\
