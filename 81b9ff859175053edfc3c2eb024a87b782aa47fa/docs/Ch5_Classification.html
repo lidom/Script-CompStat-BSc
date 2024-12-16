@@ -1508,6 +1508,7 @@ Levels: Down Up</code></pre>
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -1533,6 +1534,7 @@ plot(Volume)
 ![](Ch5_Classification_files/figure-html/chunk3-1.png){fig-align='center' width=672}
 :::
 :::
+
 
 
 
@@ -2254,6 +2256,7 @@ Finally, we fit a  Poisson regression model to the `Bikeshare` data set, which m
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2291,7 +2294,9 @@ names(Bikeshare)
 
 
 
+
 We begin by fitting a least squares linear regression model to the data.
+
 
 
 
@@ -2377,10 +2382,12 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: < 2.2e-16
 
 
 
+
 Due to space constraints, we truncate the output of `summary(mod.lm)`.
 In `mod.lm`, the first level of `hr` (0) and `mnth` (Jan) are treated as the baseline values, and so no coefficient estimates are provided for them: implicitly, their coefficient estimates are zero, and all other levels are measured relative to these baselines. For example, the Feb coefficient of $6.845$ signifies that, holding all other variables constant, there are on average about 7 more riders in February than in January. Similarly there are about 16.5 more riders in March than in January.
 
 The results seen in Section 4.6.1 used a slightly different coding of the variables `hr` and `mnth`, as follows:
+
 
 
 
@@ -2468,9 +2475,11 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: < 2.2e-16
 
 
 
+
 What is the difference between the two codings?  In `mod.lm2`,  a coefficient estimate is reported for all but the last level of `hr` and `mnth`. Importantly, in `mod.lm2`, the coefficient estimate for the last level of `mnth` is not zero: instead, it equals the *negative of the sum of the coefficient estimates for all of the other levels*. Similarly, in `mod.lm2`, the coefficient estimate for the last level of `hr` is the negative of the sum of the coefficient estimates for all of the other levels. This means that the coefficients of `hr` and `mnth` in `mod.lm2` will always sum to zero, and can be interpreted as the difference from the mean level. For example, the coefficient for January of $-46.087$ indicates that, holding all other variables constant, there are typically 46 fewer riders in January relative to the yearly average.
 
 It is important to realize that the choice of coding really does not matter, provided that we interpret the model output correctly in light of the coding used. For example, we see   that the predictions from the linear model are the same regardless of coding:
+
 
 
 
@@ -2496,7 +2505,9 @@ sum((predict(mod.lm) - predict(mod.lm2))^2)
 
 
 
+
 The sum of squared differences is zero. We can also see this using the `all.equal()` function:
+
 
 
 
@@ -2523,7 +2534,9 @@ all.equal(predict(mod.lm), predict(mod.lm2))
 
 
 
+
 To reproduce the left-hand side of Figure 4.13, we must first obtain the coefficient estimates associated with `mnth`. The coefficients for January through November can be obtained directly from the `mod.lm2` object. The coefficient for December must be explicitly computed as the negative sum of all the other months.
+
 
 
 
@@ -2541,7 +2554,9 @@ coef.months <- c(coef(mod.lm2)[2:12],
 
 
 
+
 To make the plot, we manually label the $x$-axis with the names of the months.
+
 
 
 
@@ -2565,7 +2580,9 @@ axis(side = 1, at = 1:12, labels = c("J", "F", "M", "A",
 
 
 
+
 Reproducing the right-hand side of Figure 4.13 follows a similar process.
+
 
 
 
@@ -2591,7 +2608,9 @@ plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
 
 
 
+
 Now, we consider instead fitting a Poisson regression model to the `Bikeshare` data. Very little changes, except that we now use the function `glm()` with the argument `family = poisson` to specify that we wish to  fit a Poisson regression model:
+
 
 
 
@@ -2677,7 +2696,9 @@ Number of Fisher Scoring iterations: 5
 
 
 
+
 We can plot the coefficients associated with `mnth` and `hr`, in order to reproduce Figure 4.15:
+
 
 
 
@@ -2713,7 +2734,9 @@ plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
 
 
 
+
 We can once again use the `predict()` function to obtain the fitted values (predictions) from this Poisson regression model. However, we must use the argument `type = "response"` to specify that we want `R` to output $\exp(\hat\beta_0 + \hat\beta_1 X_1 + \ldots +\hat\beta_p X_p)$ rather than $\hat\beta_0 + \hat\beta_1 X_1 + \ldots + \hat\beta_p X_p$, which it will output by default.
+
 
 
 
@@ -2730,6 +2753,7 @@ abline(0, 1, col = 2, lwd = 3)
 ![](Ch5_Classification_files/figure-html/chunk45-1.png){fig-align='center' width=672}
 :::
 :::
+
 
 
 
@@ -2770,6 +2794,7 @@ The table below provides a training data set containing six observations, three 
 
 
 **Answer:**
+
 
 
 
@@ -2820,9 +2845,11 @@ Dist
 
 
 
+
 **7. b)** What is your prediction with $K = 1$? Why?
 
 **Answer:**
+
 
 
 
@@ -2861,11 +2888,13 @@ Y[which.min(Dist)]
 
 
 
+
 Closest $K=1$ neighbor is `obs5` and thus, our prediction is `Green` because `Green` is the $Y$ value associated to `obs5`.
 
 **7. c)** What is your prediction with $K = 3$? Why?
 
 **Answer:**
+
 
 
 
@@ -2899,6 +2928,7 @@ Y[order(Dist)[1:3]]
 
 :::
 :::
+
 
 
 
@@ -2987,6 +3017,7 @@ Calculations in `R`:
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -3002,6 +3033,7 @@ Calculations in `R`:
 
 :::
 :::
+
 
 
 
@@ -3034,6 +3066,7 @@ This question should be answered using the `Weekly` data set, which is part of t
 **13 a)** Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
 
 **Answer:**
+
 
 
 
@@ -3156,11 +3189,13 @@ pairs(Weekly)
 
 
 
+
 Yes, it appears that `Year` and `Volume` have a strong positive, but non-linear relationship.
 
 **13 b)** Use the full data set to perform a logistic regression with `Direction` as the response and the five `Lag` variables plus `Volume` as predictors. Use the `summary()` function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
 
 **Answer:** 
+
 
 
 
@@ -3218,11 +3253,13 @@ Number of Fisher Scoring iterations: 4
 
 
 
+
 **Conclusion:** The predictor `Lag2` appears to have some statistical significance with a $p$-value smaller than $3\%$. (Ignoring issues due to multiple testing.)
 
 **13 c)** Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
 
 **Answer:** 
+
 
 
 
@@ -3277,6 +3314,7 @@ Up    1
 
 
 
+
 Counts of the classification errors are found at the off-diagonal entries of the confusion matrix 
 
 * Upper off-diagonal entry: Number of False Negatives 
@@ -3304,6 +3342,7 @@ Counts of the correct classifications are found at the diagonal entries of the c
 **13 d)** Now fit the logistic regression model using a training data period from $1990$ to $2008$, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from $2009$ and $2010$).
 
 **Answer:** 
+
 
 
 
@@ -3369,9 +3408,11 @@ mean(glm_pred == Direction_0910)
 
 
 
+
 **13 e)** Repeat (d) using LDA.
 
 **Answer:** 
+
 
 
 
@@ -3423,9 +3464,11 @@ mean(lda_pred$class == Direction_0910)
 
 
 
+
 **13 f)** Repeat (d) using QDA.
 
 **Answer:** 
+
 
 
 
@@ -3474,9 +3517,11 @@ mean(qda_class == Direction_0910)
 
 
 
+
 **13 g)** Repeat (d) using KNN with $K = 1.$
 
 **Answer:** 
+
 
 
 
@@ -3538,9 +3583,11 @@ mean(knn_pred == Direction_0910)
 
 
 
+
 **13 h)** Repeat (d) using naive Bayes. 
 
 **Answer:** 
+
 
 
 
@@ -3592,6 +3639,7 @@ mean(nb_pred == Direction_0910)
 
 
 
+
 **13 i)** Which of these methods appears to provide the best results on this data?
 
 **Answer:** 
@@ -3601,6 +3649,7 @@ Logistic regression and LDA have the largest rates of (overall) correct predicti
 **13 j)** Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
 
 **Answer:** 
+
 
 
 
@@ -3772,6 +3821,7 @@ mean(knn_pred == Direction_0910)
 
 
 
+
 **Conclusion:** Out of these experiments, the original LDA and logistic regression have better performances in terms of overall correct prediction rates on the held out test set.
 
 
@@ -3782,6 +3832,7 @@ This problem involves writing functions.
 **15 a)** Write a function, `Power()`, that prints out the result of raising 2 to the 3rd power. In other words, your function should compute $2^3$ and print out the results. Hint: Recall that `x^a` raises `x` to the power `a`. Use the `print()` function to output the result.
 
 **Answer:** 
+
 
 
 
@@ -3810,9 +3861,11 @@ Power()
 
 
 
+
 **15 b)** Create a new function, `Power2()`, that allows you to pass any two numbers, `x` and `a`, and prints out the value of `x^a`. You can do this by beginning your function with the line `Power2 <- function (x,a){`. You should be able to call your function by entering, for instance, `Power2 (3,8)` on the command line. This should output the value of $38$, namely, $6,561$.
 
 **Answer:** 
+
 
 
 
@@ -3841,9 +3894,11 @@ Power2(3, 8)
 
 
 
+
 **15 c)** Using the `Power2()` function that you just wrote, compute $10^3$, $8^{17}$, and $131^3$.
 
 **Answer:** 
+
 
 
 
@@ -3895,9 +3950,11 @@ Power2(131, 3)
 
 
 
+
 **15 d)** Now create a new function, `Power3()`, that actually returns the result `x^a` as an R object, rather than simply printing it to the screen. That is, if you store the value `x^a` in an object called result within your function, then you can simply `return()` this result, using the following line: `return(result)`. This should be the last line in your function, before the `}` symbol.
 
 **Answer:** 
+
 
 
 
@@ -3917,9 +3974,11 @@ Power3 <- function(x, a) {
 
 
 
+
 **15 e)** Now using the `Power3()` function, create a plot of f(x) = $x^2$. The x-axis should display a range of integers from 1 to 10, and the y-axis should display $x^2$. Label the axes appropriately, and use an appropriate title for the figure. Consider displaying either the x-axis, the y-axis, or both on the log-scale. You can do this by using `log="x"`, `log="y"`, or `log="xy"` as arguments to the `plot()` function.
 
 **Answer:** 
+
 
 
 
@@ -3957,9 +4016,11 @@ par(mfrow=c(1,1))# reset graphic parameters
 
 
 
+
 **15 f)** Create a function, `PlotPower()`, that allows you to create a plot of `x` against `x^a` for a fixed `a` and for a range of values of `x`. For instance, if you call `PlotPower (1:10 ,3)` then a plot should be created with an x-axis taking on values $1, 2, \dots , 10$, and a y-axis taking on values $1^3$, $2^3$, . . . , $10^3$.
 
 **Answer:** 
+
 
 
 
@@ -3985,11 +4046,13 @@ PlotPower(1:10, 3)
 
 
 
+
 ### Exercise 16 (Chapter 4) {-}
 
 Using the `Boston` data set, fit classification models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, and KNN models using various subsets of the predictors. Describe your findings.
 
 **Answer:** 
+
 
 
 
@@ -4057,7 +4120,9 @@ mean(glm_pred != crime01.test)
 
 
 
+
 **Conclusion:** This logistic regression has a test error rate of $18.2\%$.
+
 
 
 
@@ -4101,7 +4166,9 @@ mean(glm_pred != crime01.test)
 
 
 
+
 **Conclusion:** This logistic regression has a test error rate of $18.6\%$.
+
 
 
 
@@ -4131,7 +4198,9 @@ mean(lda_pred$class != crime01.test)
 
 
 
+
 **Conclusion:** This LDA has a test error rate of $13.4\%$.
+
 
 
 
@@ -4160,7 +4229,9 @@ mean(lda_pred$class != crime01.test)
 
 
 
+
 **Conclusion:** This LDA has a test error rate of $12.3\%$.
+
 
 
 
@@ -4190,7 +4261,9 @@ mean(lda_pred$class != crime01.test)
 
 
 
+
 **Conclusion:** This LDA has a test error rate of $11.9\%$.
+
 
 
 
@@ -4229,7 +4302,9 @@ mean(knn_pred != crime01.test)
 
 
 
+
 **Conclusion:** This KNN prediction has a test error rate of $45.8\%$.
+
 
 
 
@@ -4258,7 +4333,9 @@ mean(knn_pred != crime01.test)
 
 
 
+
 **Conclusion:** This KNN prediction has a test error rate of $11.1\%$.
+
 
 
 
@@ -4282,6 +4359,7 @@ mean(knn_pred != crime01.test)
 
 :::
 :::
+
 
 
 
