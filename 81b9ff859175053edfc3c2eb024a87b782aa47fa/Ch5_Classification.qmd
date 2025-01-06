@@ -211,7 +211,7 @@ where $\hat{y}_{0i}$ is the predicted class label that results from applying the
 
 A good classifier is one for which the test error rate is smallest.
 
-## The Bayes Classifier 
+## The Bayes Classifier {#sec-BayesClassifier}
 
 It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value $x_{0}.$ This classifier is called the **Bayes classifier**. 
 
@@ -447,7 +447,7 @@ $$
 
 By taking the logarithm, we arrive at **log odds** or **logit**
 $$
-\log\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
+\ln\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
 $$
 
 
@@ -607,7 +607,7 @@ $$
 \begin{align*}
 p(X)
 &=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\[2ex]
-\log\left(\frac{p(X)}{1-p(X)}\right) 
+\ln\left(\frac{p(X)}{1-p(X)}\right) 
 &= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
 \end{align*}
 $$
@@ -669,7 +669,7 @@ $$
 
 For $k=1,\dots,K-1$ it holds that 
 $$
-\log\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\ln\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
 $$
 which is the counterpart to the log odds equation for $K=2.$
 
@@ -706,10 +706,6 @@ f_k(x)=Pr(X=x|Y=k)
 $$
 denote the (conditional) density of $X$ for an observation that comes from class $k.$
 
-::: {.callout-caution}
-Technically, this definition is only correct if $X$ is a *qualitative* random variable. If $X$ is quantitative, then $f_k(x)dx$ corresponds to the probability of $X$ falling in a small region $dx$ around $x.$
-::: 
-
 
 **Posterior Probability:** Then **Bayes' theorem** states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
@@ -730,12 +726,30 @@ Pr(X = x)
 \end{align*}
 $$
 
+::: {.callout-note}
+Note that @eq-postprob1 also applies to quantitative predictors $X,$ even though for continuous random variables $X$ we have that  
+
+* $Pr(X=x|Y=k) = 0\quad$ and 
+* $Pr(X=x) = 0$
+
+The technical argument is that 
+$$
+\frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)} = \frac{Pr(Y=k)\,Pr(X=x|Y=k)dx}{Pr(X=x)dx},
+$$
+where 
+
+* $Pr(X=x|Y=k) dx\quad$ and 
+* $Pr(X=x)dx$
+
+correspond to the probabilities of $X$ falling in a small region $dx$ around $x$ conditionally and unconditionally on $Y=k,$ respectively.
+::: 
+
 While logistic regression estimates the posterior probability $p_k(x)$ using a functional form assumption, Bayes's theorem gives us a way to estimate $p_k(x)$ simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
 
-We know from @sec-SL that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, if we were able to estimate all unknown quantities in @eq-postprob1, we will get a very good Classifier. 
+We know from @sec-BayesClassifier that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, if we were able to estimate all unknown quantities in @eq-postprob1, we will get a very good Classifier. 
 
-However, estimating the densities $f_k(x)$ can be very challenging. Therefore, we have to make some simplifying assumptions; namely, assuming that the data is normal distributed.
+However, estimating the densities $f_k(x)$ can be very challenging. Therefore, we have to make some simplifying assumptions such as, for instance, assuming that the predictors $X$ are normally distributed.
 
 
 In the following sections, we discuss three classifiers that use different estimates of $f_k(x)$ to approximate the Bayes classifier: 
@@ -760,10 +774,14 @@ where
 * $\sigma_k^2$ is the variance of the $k$th class
 * $\pi\approx 3.14159$ is the mathematical constant $\pi$. (Do not confuse it with the prior probabilities $\pi_k.$)
 
-For now, let us further assume the simplifying case of equal variances across all classes, i.e. 
+In linear discriminant analysis, we further assume equal variances across all classes, i.e. 
 $$
-\sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2.
+\sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2;
 $$
+That is, discriminatory power comes from different means only. In quadratic discriminant analysis (see @sec-QDA) we will also consider the case where discriminatory power comes from both differences in means and variances. 
+
+
+
 Plugging this assumed version of $f_k$ into @eq-postprob1, leads to
 $$
 p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
@@ -773,9 +791,9 @@ The Bayes classifier involves assigning an observation
 $X = x$ to the class $k$ for which $p_k(x)$ is largest. 
 
 
-Taking the $\log$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
+Taking the $\ln$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
 $$
-\delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
+\delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \ln(\pi_k)
 $$
 is largest. The function $\delta_k(x)$ is called the **discriminant function**.
 
@@ -783,19 +801,19 @@ is largest. The function $\delta_k(x)$ is called the **discriminant function**.
 # Derivation of the Discriminant Function
 To see this, observe that the largest $p_k(x)$-value across all $k=1,\dots,K$ is determined by the larges numerator in @eq-LDp1, since the denominator does not change with $k.$ Thus, we only need to look at the numerator.
 
-Moreover, if a certain value $k=1,\dots,K$ maximizes $p_k(x),$ then the same $k$ maximizes also $\log(p_k(x))$ since the $\log$-function is a strictly monotonic increasing formation. 
+Moreover, if a certain value $k=1,\dots,K$ maximizes $p_k(x),$ then the same $k$ maximizes also $\ln(p_k(x))$ since the $\ln$-function is a strictly monotonic increasing formation. 
 
 Thus we can simply look at the logarithm of the numerator: 
 $$
 \begin{align*}
-&\log\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
-=&\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
-=&\log(\pi_k) + \log(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
-=&\log(\pi_k) + \underbrace{\log(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
+&\ln\left(\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\right)\\[2ex]
+=&\ln(\pi_k) + \ln(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)\\[2ex]
+=&\ln(\pi_k) + \ln(\frac{1}{\sqrt{2\pi}\sigma}) + \left(-\frac{1}{2\sigma^2}(x^2 - 2x\mu_k +\mu_k^2)\right)\\[2ex]
+=&\ln(\pi_k) + \underbrace{\ln(\frac{1}{\sqrt{2\pi}\sigma}) -\frac{x^2}{2\sigma^2}}_{\text{not depend on $k$}} + \frac{2x\mu_k}{2\sigma^2} -\frac{\mu_k^2}{2\sigma^2}
 \end{align*} 
 $$
 
-Removing all irrelevant terms that anyways do not depend on $k$ leads to the discriminant function $\delta_k(x).$
+Removing all irrelevant terms that do not depend on $k$ leads to the discriminant function $\delta_k(x).$
 :::
 
 
@@ -803,39 +821,45 @@ Removing all irrelevant terms that anyways do not depend on $k$ leads to the dis
 
 In the case of only two classes, $K=2$, with equal a priori probabilities 
 $$
-\pi_1=\pi_2\equiv \pi^*,
+\pi_1=\pi_2\equiv \pi,
 $$ 
 the Bayes classifier assigns an observation $X=x$ to class $1$ if 
 $$
 \begin{align*}
-\delta_1(x) & > \delta_2(x)\\
+\delta_1(x) & > \delta_2(x)\\[2ex]
 %%%
-x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2} + \log(\pi^*) 
+x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2} + \ln(\pi) 
 & > 
-x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2} + \log(\pi^*)\\
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2} + \ln(\pi)\\[2ex]
 %%%
 x\cdot\frac{\mu_1}{\sigma^2} - \frac{\mu_1^2}{2\sigma^2}  
 & > 
-x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2}\\
+x\cdot\frac{\mu_2}{\sigma^2} - \frac{\mu_2^2}{2\sigma^2}\\[2ex]
 %%%
 x\cdot\mu_1 - \frac{\mu_1^2}{2}  
 & > 
-x\cdot\mu_2 - \frac{\mu_2^2}{2}\\
+x\cdot\mu_2 - \frac{\mu_2^2}{2}\\[2ex]
 %%%
 2x\cdot(\mu_1-\mu_2)   
 & > 
-\mu_1^2 - \mu_2^2\\
+\mu_1^2 - \mu_2^2\\[2ex]
 %%%
 x   
-& > \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+& > \frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}\\[2ex]
+%%%
+x   
+& > \frac{(\mu_1 - \mu_2)(\mu_1 + \mu_2)}{2(\mu_1-\mu_2)}\\[2ex]
+%%%
+x   
+& > \frac{(\mu_1 + \mu_2)}{2}
 \end{align*}
 $$
 The Bayes **decision boundary** is the point for which $\delta_1(x)=\delta_2(x);$ i.e.,
 $$
 \begin{align*}
 x   
-=\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
-&=\frac{(\mu_1 - \mu_2)(\mu_1 + \mu_2)}{2(\mu_1-\mu_2)}\\ 
+%=\frac{\mu_1^2 - \mu_2^2}{2(\mu_1-\mu_2)}
+%&=\frac{(\mu_1 - \mu_2)(\mu_1 + \mu_2)}{2(\mu_1-\mu_2)}\\ 
 &=\frac{(\mu_1 + \mu_2)}{2}
 \end{align*}
 $$
@@ -852,31 +876,38 @@ The two densities $f_1$ and $f_2$ overlap such that for given $X=x$ there is som
 
 ![](images/Fig_4_4.png)
 
-In the above example (Figure 4.4) we know all parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. In practice, however, these parameters are usually unknown, and thus need to be estimated from the data. 
+The above example (Figure 4.4) is based on artificial (simulated) data, where we know all (usually unknown) parameters 
+
+* $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. 
+
+In practice, however, these parameters are usually unknown, and thus need to be estimated from the data. 
 
 
-**Summary of LDA for $p=1$:**
+#### **Summary of LDA for $p=1$:** {-}
 
 The **Linear Discriminant Analysis (LDA)** method approximates the Bayes classifier by using the normality assumption and by plugging in estimates for the unknown parameters $\pi_k$, $\mu_k$, $k=1,\dots,K$, and $\sigma$. 
 
 
-The following estimates are used: 
+The following estimators are used: 
 $$
 \begin{align*}
-\hat\pi_k    & = \frac{n_k}{n}\\
-\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\
-\hat{\sigma}^2 & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2,
+\hat\pi_k    & = \frac{n_k}{n}\\[2ex]
+\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
+& = \frac{1}{n} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
+\hat{\sigma}^2 & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\[2ex]
+& = \frac{1}{n-K}\sum_{k=1}^K\sum_{i=1}^n(x_i-\hat\mu_k)^2 I(y_i=k),
 \end{align*}
 $$
-where the variance estimate $\hat\sigma$ pools the predictor $x_i$ values across all groups $k=1,\dots,K.$
+where the variance estimate $\hat\sigma$ pools the predictor $x_i$ values across all groups $k=1,\dots,K,$
+and where $I()$ denotes the indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
 
 The LDA classifier assigns an observation $X=x$ to the class $k$ for which 
 $$
-\hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \log(\hat\pi_k)
+\hat\delta_k(x)=x\cdot\frac{\hat\mu_k}{\hat\sigma^2} - \frac{\hat\mu_k^2}{2\hat\sigma^2} + \ln(\hat\pi_k)
 $$
 is largest. 
 
-LDA is named **linear** since the discriminant functions $\hat\delta_k(x)$, $k=1,\dots,K$ are linear functions of $x.$
+LDA is named **linear** since the discriminant functions $\hat\delta_k(x)$, $k=1,\dots,K$ are **linear functions of** $x.$
 
 
 Assumptions made by the LDA method:
@@ -954,21 +985,38 @@ Figure 4.5 shows the case of bivariate ($p=2$) Gaussian distribution  predictors
 
 Under the multivariate normality assumption (with common covariance matrix and group-specific mean vectors) the Bayes classifier assigns an multivariate observation $X=x$ to the class for which the discriminant function 
 $$
-\delta_k(x)=x^T \Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \log(\pi_k)
+\delta_k(x)=x^T \Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \ln(\pi_k)
 $${#eq-LDA_mult}
 is largest.
 
+The following estimators are used: 
+$$
+\begin{align*}
+\hat\pi_k    & = \frac{n_k}{n}\\[2ex]
+\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
+& = \frac{1}{n} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
+\hat{\Sigma} & = \frac{1}{n-pK}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)(x_i-\hat\mu_k)'\\[2ex]
+& = \frac{1}{n-K}\sum_{k=1}^K\sum_{i=1}^n(x_i-\hat\mu_k)(x_i-\hat\mu_k)' I(y_i=k),
+\end{align*}
+$$
+where 
 
-An example for $p=2$ and $K=3$ with three equally sized (i.e. $\pi_1=\pi_2=\pi_3$) Gaussian classes is shown in the left-hand panel of Figure 4.6. The three ellipses represent regions that contain $95\%$ of the probability for each of the three classes. The dashed lines are the Bayes decision boundaries. In other words, they represent the set of values x for which $\delta_k(x) = \delta_l(x)$, $k\neq l$. 
+* $\hat\mu_k=(\hat\mu_{k1},\dots,\hat\mu_{kp})'$
+* $x_i=(x_{i1},\dots,x_{ip})'$
+
+
+An artificial example (based on simulated data) for $p=2$ and $K=3$ (yellow, green, blue) with  equal a priori probabilities 
+$$
+\pi_1=\pi_2=\pi_3
+$$
+is shown in the left-hand panel of Figure 4.6. The three ellipses represent regions that contain $95\%$ of the probability for each of the three classes. The dashed lines are the Bayes decision boundaries. In other words, they represent the set of values x for which $\delta_k(x) = \delta_l(x)$, $k\neq l$. 
 
 ![](images/Fig_4_6.png)
-
-Again, the unknown parameters $\mu_k$, $\pi_k$, and $\Sigma$ must be estimated from the data with formulas similar to those for the $p=1$ case. 
 
 
 #### The `Default` data example {-}
 
-We can perform LDA on the `Default` data in order to predict whether or not an individual will default on the basis of 
+We can perform LDA on the `Default` data in order to predict whether or not an individual will default using the two ($p=2$) predictor variables
 
 * credit card balance (real variable) and 
 * student status (qualitative variable).
@@ -976,7 +1024,7 @@ We can perform LDA on the `Default` data in order to predict whether or not an i
 **Note:** Student status is qualitative, and thus the normality assumption made by LDA is clearly violated in this example! However, LDA is often remarkably robust to model violations, as this example (apparently) shows. 
 
 
-The LDA model fit to the $10,000$ training samples results in an overall training error rate of $2.75\%:$ 
+The LDA model fit to the $10,000$ training samples results in an overall *training* error rate of $2.75\%:$ 
 
 ```{r}
 # MASS package contains the lda() function
@@ -998,7 +1046,7 @@ This sounds like a low error rate, but two caveats must be noted:
 
 * Training error rates are usually smaller than test error rates, which are the real quantity of interest. In other words, we might expect this classifier to perform worse if we use it to predict whether or not a **new set of individuals** will default. 
    * The reason is that we specifically adjust the parameters of our model to do well on the training data. Thus, we may **overfit** the training data.
-   * Generally, the higher the ratio of parameters $p$ to the number of samples $n$, the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
+   * Generally, the closer $p$ (number of predictors) is to the sample size $n,$ the more we expect *overfitting* to play a role. However, for these data we don’t expect this to be a problem, since $p = 2$ and $n = 10,000.$
 
 * Since only $3.33\%$ of the individuals in the training sample defaulted, a simple naive classifier that always predicts "not default" for every person, regardless of his or her credit card balance and student status, will result in an error rate of $3.33\%.$ In other words, the trivial **null classifier** will achieve an error rate that is only a bit higher than the LDA training set error rate.
 
@@ -1028,11 +1076,38 @@ table(ldaPredict_obj$class, Default$default,
 
 ![](images/Tab_4_4.png)
 
+Let
 
-Numbers of True/False Positive Predictions:
+* $P^*=$**Number of Predicted Positives** with $P^*=TP + FP$
+  
+  * $TP=$**Number of True Positives**
+  * $FP=$**Number of False Positives**
+
+* $N^*=$**Number of Predicted Negatives** with $N^*=TN + FN$
+
+  * $TN=$**Number of True Negatives**
+  * $FN=$**Number of False Negatives**
+
+
+True/False Positive Predictions in Table 4.4:
+
+* LDA predicts that $P^*=104$ people default, where
+
+  * $TP=81$ of $P^*=104$ actually default.
+  * $FP=23$ of $P^*=104$ actually do not default.
+
+
+* LDA predicts that $N^*=9896$ people do not default, where
+
+  * $TN=9644$ of $N^*=9896$ actually do not default.
+  * $FN=252$ of $N^*=9896$ actually default.
+
+
+
+<!-- Numbers of True/False Positive Predictions:
 
 * LDA predicts that $P^*=104$ people default, where $P^*$ denotes the number of **Predicted Positives**. 
-  * $TP=81$ of $P^*=104$ actually default</br>($TP=$**Number of True Positives**).
+  * $TP=81$ of $P^*=104$ actually default </br>($TP=$**Number of True Positives**).
   * $FP=23$ of $P^*=104$ actually do not default</br>($FP=$**Number of False Positives**).
 
 Numbers of True/False Negative Predictions:
@@ -1041,22 +1116,23 @@ Numbers of True/False Negative Predictions:
   * $TN=9644$ of $N^*=9896$ actually do not default</br> 
   ($TN=$**Number of True Negatives**)
   * $FN=252$ of $N^*=9896$ actually default</br> 
-  ($FN=$**Number of FALSE Negatives**)
+  ($FN=$**Number of False Negatives**) 
+-->
 
 True Positive/Negative Rates:
 
-*   True Positive Rate: $TP/P=(81/333)\cdot 100\%\approx 24.3\%$
+*   True Pos. Rate: $TP/P=(81/333)\cdot 100\%\approx 24.3\%$
 <!-- True Positive Rate is also called *sensitivity* -->
 <!-- $81$ of the $333$ default individuals are correctly labeled by LDA.<br> -->
-* True Negative Rate: $TN/N=(9644/9667)\cdot 100\%\approx 99.8\%$
+* True Neg. Rate: $TN/N=(9644/9667)\cdot 100\%\approx 99.8\%$
 <!-- $9644$ of the $9667$ no default individuals are correctly labeled by LDA.<br> -->
 
 False Positive/Negative Rates:
 
-* False Positive Rate: $FP/N=(23/9667)\cdot 100\%\approx 0.2\%$  
+* False Pos. Rate: $FP/N=(23/9667)\cdot 100\%\approx 0.2\%$  
 <!-- $23$ of the $9667$ no default individuals are incorrectly labeled.<br> -->
 <!-- False Positive Rage equals one minus *specificity* -->
-* False Negative Rate: $FN/P=(252/333)\cdot 100\%\approx 75.7\%$  
+* False Neg. Rate: $FN/P=(252/333)\cdot 100\%\approx 75.7\%$  
 <!-- $252$ of the $333$ default individuals are in correctly labeled.<br>  -->
   
 The small False Positive Rate of $0.2\%$ is good since this means that trustworthy "no default" people are rarely labeled as non-trustworthy "default" people. 
@@ -1069,7 +1145,7 @@ If a "False Negative Event" costs the bank more than a "False Positive Event" (o
 
 <!-- In the two class cases, e.g. $\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},$  -->
 
-The Bayes classifier, and thus also all classifiers which try to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a person $i$ with predictor value $X=x_i$ is assigned to the `default`$=$`Yes` class if
+In binary ($K=2$) classifications, the Bayes classifier, and thus also all classifiers which try to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a person $i$ with predictor value $X=x_i$ is assigned to the `default`$=$`Yes` class if
 $$
 Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5.
 $$
@@ -1090,7 +1166,7 @@ into the `default`$=$`Yes` class.
 ## Container for the predicted classes
 PredictedDefault <- rep("No", n)
 ## Fill in the "Yes" classifications 
-PredictedDefault[ldaPredict_obj$posterior[,2] > 0.2] <- "Yes"
+PredictedDefault[ldaPredict_obj$posterior[,2]>0.2] <- "Yes"
 
 ## Confusion matrix for 0.2 threshold:
 table(PredictedDefault, Default$default, 
@@ -1104,13 +1180,13 @@ table(PredictedDefault, Default$default,
 
 Changing the threshold from $0.5$ to $0.2$ ...
 
-* ... **lowered** the False Negative Rate ($FN/P$) 😎
+* ... **lowered** the False Negative Rate $(FN/P)$ 😎
    * from $252/333\approx 75.7\%$ 
    * to $138/333\approx 41.4\%$  
-* ... **increased** the False Positive Rate ($FP/N$) 😕
+* ... **increased** the False Positive Rate $(FP/N)$ 😕
    * from $23/9667\approx 0.2\%$ 
    * to $235/9667\approx 2.4\%$
-* ... **increased** the Overall Error Rate ($(FN+FP)/n$) 😕
+* ... **increased** the Overall Error Rate $((FN+FP)/n)$ 😕
    * from $(23 + 252)/10000\approx 2.75\%$ 
    * to $(235 + 138)/10000\approx 3.73\%$
 
@@ -1131,11 +1207,11 @@ Table 4.6 and 4.7 summarize the different classification performance measures.
 
 The (Receiver Operating Characteristics) **ROC curve** is a popular graphic for displaying the 
 $$
-\text{TP Rate}=\text{TP/P}\quad \text{(``sensitivity'' or ``power'')}
+\text{TP Rate}=\text{TP/P}\quad \text{(sensitivity or power)}
 $$ 
 against the 
 $$
-\text{FP Rate}=\text{FP/N} \quad \text{(``}1-\text{specificity'' or ``type I error'')}
+\text{FP Rate}=\text{FP/N} \quad \text{($1-$ specificity or type I error)}
 $$ 
 for all possible threshold values (from zero to one). 
 
@@ -1236,12 +1312,12 @@ print(AUC@y.values)
 
 
 
-### Quadratic Discriminant Analysis (QDA) 
+### Quadratic Discriminant Analysis (QDA) {#sec-QDA}
 
 
 Unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the kth class is of the form
 $$
-X|Y=k \sim N(\mu_k,\Sigma_k),
+X|Y=k \sim \mathcal{N}_p(\mu_k,\Sigma_k),
 $$
 where $\Sigma_k$ is a $(p\times p)$ covariance matrix for the $k$th class. 
 
@@ -1250,25 +1326,43 @@ $$
 \begin{align*}
 &\delta_k(x)=\\
 &= - \frac{1}{2}\left(x-\mu_k\right)^T\Sigma_k^{-1}\left(x-\mu_k\right) 
-   - \frac{1}{2}\log\left(|\Sigma_k|\right)
-   + \log(\pi_k)\\
+   - \frac{1}{2}\ln\left(|\Sigma_k|\right)
+   + \ln(\pi_k)\\
 &= - \frac{1}{2}x^T    \Sigma_k^{-1}x
    + \frac{1}{2}x^T    \Sigma_k^{-1}\mu_k
    - \frac{1}{2}\mu_k^T\Sigma_k^{-1}\mu_k 
-   - \frac{1}{2}\log\left(|\Sigma_k|\right)
-   + \log(\pi_k)
+   - \frac{1}{2}\ln\left(|\Sigma_k|\right)
+   + \ln(\pi_k)
 \end{align*}
 $$
 is largest.
 
 This classifier is called *quadratic* discriminant analysis since the predictor-value $x$ appears as a quadratic function. 
 
+
+The following estimators are used: 
+$$
+\begin{align*}
+\hat\pi_k    & = \frac{n_k}{n}\\[2ex]
+\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
+& = \frac{1}{n} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
+\hat{\Sigma}_k & = \frac{1}{n_k-p}\sum_{i:y_i=k}(x_i-\hat\mu_k)(x_i-\hat\mu_k)'\\[2ex]
+& = \frac{1}{n_k-p}\sum_{i=1}^n(x_i-\hat\mu_k)(x_i-\hat\mu_k)' I(y_i=k),
+\end{align*}
+$$
+where 
+
+* $\hat\mu_k=(\hat\mu_{k1},\dots,\hat\mu_{kp})'$
+* $x_i=(x_{i1},\dots,x_{ip})'$
+
+
+
 QDA has **much** more parameters than LDA and is thus a much more flexible  classifier than LDA:
 
 * LDA requires 
    * $K$ a-priori probability estimates 
    * $K\cdot p$ mean estimations 
-   * $(p+1)/2$ covariance estimates
+   * $1\cdot (p+1)/2$ covariance estimates
 
 * QDA requires 
    * $K$ a-priori probability estimates 
@@ -1285,7 +1379,7 @@ Roughly:
 * LDA tends to be better than QDA if there are relatively few training observations (small $n_{Train}$) and so reducing variance is crucial.
 * QDA is recommended 
    * if the training set $n_{Train}$ is large, so that the variance of the classifier is not a major concern, or 
-   * if the assumption of a common covariance matrix for the $K$ classes is clearly unrealistic.
+   * if the assumption of a common covariance matrix for the $K$ classes is clearly very unrealistic.
 
 ![](images/Fig_4_9.png)
 
@@ -2236,7 +2330,7 @@ $$
 \Leftrightarrow 0.50 (1 + \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\[2ex]
 \Leftrightarrow 0.50 + 0.50 \exp(-2.5 + 0.05\,x_1)) &= \exp(-2.5 + 0.05\,x_1)\\[2ex]
 \Leftrightarrow 0.50 &= 0.50 \exp(-2.5 + 0.05\,x_1)\\[2ex]
-\Leftrightarrow \log(1) &= -2.5 + 0.05\,x_1 \\[2ex]
+\Leftrightarrow \ln(1) &= -2.5 + 0.05\,x_1 \\[2ex]
 \Leftrightarrow x_1 &= 2.5 / 0.05 = 50 
 \end{align*}
 $$
