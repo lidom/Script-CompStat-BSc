@@ -976,7 +976,7 @@ X=(X_1,\dots,X_p)\quad \text{with}\quad p&gt;1
 </ul>
 <p>That is, a <span class="math inline">\((p\times 1)\)</span> random vector <span class="math inline">\(X\)</span> of class <span class="math inline">\(k\)</span> is distributed as <span class="math display">\[
 \begin{align*}
-X
+X|Y=k
 &amp; \sim \mathcal{N}_p\left(\mu_k,\Sigma\right)%\\
 %&amp; \sim \mathcal{N}_p\left(
 %  \left(\begin{matrix}
@@ -1461,7 +1461,7 @@ f_{kj}(x),\quad j=1,\dots,p\quad\text{and}\quad k=1,\dots,K
 <ul>
 <li>a univariate parametric distribution assumption. Examples:
 <ul>
-<li>A normal distribution <span class="math inline">\(X_j|Y=k \sim N(\mu_{jk},\sigma_{jk}).\)</span>
+<li>A normal distribution <span class="math inline">\(X_j|Y=k \sim \mathcal{N}(\mu_{jk},\sigma_{jk}).\)</span>
 </li>
 <li>Alternative parametric distributions: Exponential, <span class="math inline">\(\chi^2\)</span>-distribution, Gamma distribution, etc.</li>
 </ul>

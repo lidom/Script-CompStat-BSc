@@ -929,7 +929,7 @@ we need to assume that the observations for each class $k$ come from a **multiva
 That is, a $(p\times 1)$ random vector $X$ of class $k$ is distributed as 
 $$
 \begin{align*}
-X 
+X|Y=k 
 & \sim \mathcal{N}_p\left(\mu_k,\Sigma\right)%\\
 %& \sim \mathcal{N}_p\left(
 %  \left(\begin{matrix}
@@ -1428,7 +1428,7 @@ $$
 we can use ...
 
 * a univariate parametric distribution assumption. Examples: 
-   * A normal distribution $X_j|Y=k \sim N(\mu_{jk},\sigma_{jk}).$ 
+   * A normal distribution $X_j|Y=k \sim \mathcal{N}(\mu_{jk},\sigma_{jk}).$ 
    * Alternative parametric distributions: Exponential, $\chi^2$-distribution, Gamma distribution, etc. 
 * non-parametric kernel density estimation (for quantitative predictors) using the `R`-function `density()`
 * simple relative frequency (for qualitative predictors)
