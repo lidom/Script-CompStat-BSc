@@ -511,7 +511,7 @@ $$
 %&= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
 %&\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
 &=\dots \text{rearranging terms} \dots \\[2ex]
-&= \sum_{i=1}^n \left( -\ln(1 + \exp(-b_0-b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
+&= \sum_{i=1}^n \left( -\ln(1 + \exp(b_0 + b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
 \end{align*}
 $$
 Thus, the estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* the log-likelihood function, i.e.
@@ -892,8 +892,9 @@ The following estimators are used:
 $$
 \begin{align*}
 \hat\pi_k    & = \frac{n_k}{n}\\[2ex]
-\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
-& = \frac{1}{n} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
+\hat\mu_k    
+& = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
+& = \frac{1}{n_k} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
 \hat{\sigma}^2 & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)^2\\[2ex]
 & = \frac{1}{n-K}\sum_{k=1}^K\sum_{i=1}^n(x_i-\hat\mu_k)^2 I(y_i=k),
 \end{align*}
@@ -930,21 +931,7 @@ That is, a $(p\times 1)$ random vector $X$ of class $k$ is distributed as
 $$
 \begin{align*}
 X|Y=k 
-& \sim \mathcal{N}_p\left(\mu_k,\Sigma\right)%\\
-%& \sim \mathcal{N}_p\left(
-%  \left(\begin{matrix}
-%  \mu_{k1}\\
-%  \mu_{k2}\\
-%  \vdots\\
-%  \mu_{kp}
-%  \end{matrix}\right),
-%  \left(\begin{matrix}
-%  Var(X_1)    &Cov(X_1,X_2)&\dots  & Cov(X_1,X_p)\\
-%  Cov(X_2,X_1)&Var(X_2)    &\dots  & Cov(X_2,X_p)\\
-%  \vdots      &\ddots      &\ddots & \vdots      \\
-%  Cov(X_p,X_1)&Cov(X_p,X_2)&\dots  & Var(X_p)
-%  \end{matrix}\right)
-%  \right)
+& \sim \mathcal{N}_p\left(\mu_k,\Sigma\right)
 \end{align*}
 $$
 with class-specific $(p\times 1)$ mean vector $\mu_k$,
@@ -993,11 +980,12 @@ The following estimators are used:
 $$
 \begin{align*}
 \hat\pi_k    & = \frac{n_k}{n}\\[2ex]
-\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
-& = \frac{1}{n} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
+\hat\mu_k    
+& = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
+& = \frac{1}{n_k}\sum_{i=1}^n x_iI(y_i=k)\\[2ex]
 \hat{\Sigma} 
 & = \frac{1}{n-pK}\sum_{k=1}^K\sum_{i:y_i=k}(x_i-\hat\mu_k)(x_i-\hat\mu_k)'\\[2ex]
-& = \frac{1}{n-pK}\sum_{k=1}^K\sum_{i=1}^n(x_i-\hat\mu_k)(x_i-\hat\mu_k)' I(y_i=k),
+& = \frac{1}{n-pK}\sum_{k=1}^K\sum_{i=1}^n  (x_i-\hat\mu_k)(x_i-\hat\mu_k)' I(y_i=k),
 \end{align*}
 $$
 where 
@@ -1345,8 +1333,9 @@ The following estimators are used:
 $$
 \begin{align*}
 \hat\pi_k    & = \frac{n_k}{n}\\[2ex]
-\hat\mu_k    & = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
-& = \frac{1}{n} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
+\hat\mu_k    
+& = \frac{1}{n_k}\sum_{i:y_i=k}x_i\\[2ex]
+& = \frac{1}{n_k} \sum_{i=1}^n x_iI(y_i=k)\\[2ex]
 \hat{\Sigma}_k & = \frac{1}{n_k-p}\sum_{i:y_i=k}(x_i-\hat\mu_k)(x_i-\hat\mu_k)'\\[2ex]
 & = \frac{1}{n_k-p}\sum_{i=1}^n(x_i-\hat\mu_k)(x_i-\hat\mu_k)' I(y_i=k),
 \end{align*}
@@ -1363,12 +1352,12 @@ QDA has **much** more parameters than LDA and is thus a much more flexible  clas
 * LDA requires 
    * $K$ a-priori probability estimates 
    * $K\cdot p$ mean estimations 
-   * $1\cdot (p+1)/2$ covariance estimates
+   * $1\cdot p(p-1)/2$ covariance estimates
 
 * QDA requires 
    * $K$ a-priori probability estimates 
    * $K\cdot p$ mean estimations 
-   * ${\color{red}K}\cdot(p+1)/2$ covariance estimates
+   * ${\color{red}K}\cdot p(p-1)/2$ covariance estimates
 
 The difference in flexibility needs to be considered under the **bias variance trade-off**: 
 
