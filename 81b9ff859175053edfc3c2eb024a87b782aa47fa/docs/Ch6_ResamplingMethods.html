@@ -232,10 +232,9 @@ window.Quarto = {
   </ul>
 </li>
   <li>
-<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.5</span> Exercises</a>
+<a href="#self-study-exercises" id="toc-self-study-exercises" class="nav-link" data-scroll-target="#self-study-exercises"><span class="header-section-number">6.5</span> Self-Study: Exercises</a>
   <ul class="collapse">
-<li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
-  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
+<li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions"><span class="header-section-number">6.5.1</span> Solutions</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -429,19 +428,21 @@ Figure&nbsp;6.2: Test error estimates for ten different random splits into train
 </ul>
 <p>The <span class="math inline">\(i\)</span>th estimate for the test MSE is thus <span class="math display">\[
 \begin{align*}
-\widehat{\operatorname{MSE}}_i
+\widehat{\operatorname{MSE}}_{Test,i}
 &amp;= \left(y_i - \hat{y}_i\right)^2\\[2ex]
 &amp;= \left(y_i - \hat{f}(x_i)\right)^2,
 \end{align*}
 \]</span> where <span class="math inline">\(\hat{f}\)</span> is computed from the <span class="math inline">\(n_{Train}=n-1\)</span> training data points, but evaluated <span class="math display">\[
 \hat{y}_i=\hat{f}(x_i)
 \]</span> at the one test data point <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test}.\)</span></p>
-<p>Since <span class="math inline">\(\hat{f}\)</span> is essentially based on the total dataset, <span class="math inline">\(\widehat{\operatorname{MSE}}_i\)</span> is an (approximately) unbiased (since <span class="math inline">\(n_{Train}=n-1\approx n\)</span>) estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.</p>
+<p>Since <span class="math inline">\(\hat{f}\)</span> is essentially based on the total dataset, <span class="math inline">\(\widehat{\operatorname{MSE}}_{Test,i}\)</span> is an (approximately) unbiased (since <span class="math inline">\(n_{Train}=n-1\approx n\)</span>) estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.</p>
 <p>Repeating this leave-one-out splitting approach for each <span class="math inline">\(i=1,\dots,n,\)</span> produces <span class="math inline">\(n\)</span> many estimates of the test MSE: <span class="math display">\[
-\widehat{\operatorname{MSE}}_1, \widehat{\operatorname{MSE}}_2,\dots,\widehat{\operatorname{MSE}}_n
+\widehat{\operatorname{MSE}}_{Test,1},
+\widehat{\operatorname{MSE}}_{Test,2},\dots,
+\widehat{\operatorname{MSE}}_{Test,n}
 \]</span></p>
 <p>The LOOCV estimate is then formed by the average of the <span class="math inline">\(n\)</span> MSE estimates: <span id="eq-LOOCV"><span class="math display">\[
-\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\widehat{\operatorname{MSE}}_i.
+\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\widehat{\operatorname{MSE}}_{Test,i}.
 \qquad(6.1)\]</span></span></p>
 <p>Figure 5.3 shows schematically the leave-one-out data splitting approach.</p>
 <p><img src="images/Fig_5_3.png" class="img-fluid"></p>
@@ -499,7 +500,7 @@ Figure&nbsp;6.3: LOOCV error estimates for different polynomial degrees <span cl
 </div>
 <section id="cv-often-computationally-expensive" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="cv-often-computationally-expensive"><strong>CV: (Often) Computationally Expensive</strong></h4>
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear regression models, takes<br><center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.969 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 4.062 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -573,16 +574,18 @@ However, the fast version takes only
 </li>
 </ul>
 <p>Each pair of training and test set allows to compute an estimate of the test error <span class="math display">\[
-\widehat{\operatorname{MSE}}_1, \widehat{\operatorname{MSE}}_2,\dots,\widehat{\operatorname{MSE}}_k,
+\widehat{\operatorname{MSE}}_{Train,1},
+\widehat{\operatorname{MSE}}_{Train,2},\dots,
+\widehat{\operatorname{MSE}}_{Train,k},
 \]</span> where <span class="math display">\[
 \begin{align*}
-\widehat{\operatorname{MSE}}_j
+\widehat{\operatorname{MSE}}_{Train,j}
 &amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
 &amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
 \end{align*}
 \]</span> with <span class="math inline">\(\hat{f}\)</span> being computed from the training data, but evaluated at the test data.</p>
 <p>The <span class="math inline">\(k\)</span>-fold CV estimate is computed by averaging these values <span id="eq-kfoldCV"><span class="math display">\[
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Train,j}
 \qquad(6.3)\]</span></span></p>
 <p>Figure 5.5 illustrates the data splitting for <span class="math inline">\(k\)</span>-fold CV.</p>
 <p><img src="images/Fig_5_5.png" class="img-fluid"></p>
@@ -688,9 +691,9 @@ However, the fast version takes only
 <span class="header-section-number">6.2.2</span> Cross-Validation on Classification Problems</h3>
 <p>Cross-validation can also be a very useful approach in the classification setting when <span class="math inline">\(Y\)</span> is qualitative.</p>
 <p>In the classification setting, the LOOCV error rate takes the form <span class="math display">\[
-\operatorname{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n\operatorname{Err}_i,
+\operatorname{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n\operatorname{Err}_{Test,i},
 \]</span> where <span class="math display">\[
-\operatorname{Err}_i=I(y_i\neq \hat{y}_i)
+\operatorname{Err}_{Test,i}=I(y_i\neq \hat{y}_i)
 \]</span> with <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
 <p>Analogously for the <span class="math inline">\(k\)</span>-fold CV error rate and the validation set error rate.</p>
 <p>We can, for instance, determine the degree <span class="math inline">\(d\)</span> in logistic regression models <span class="math display">\[
@@ -1177,8 +1180,8 @@ I(horsepower^2)  0.001230536 0.0001220759  10.08009  2.196340e-21</code></pre>
 </div>
 </div>
 <p>Since the quadratic model provides a good fit to the data (Figure 3.8 of our textbook), there is now a better correspondence between the bootstrap estimates and the standard estimates of <span class="math inline">\({\rm SE}(\hat{\beta}_0)\)</span>, <span class="math inline">\({\rm SE}(\hat{\beta}_1)\)</span> and <span class="math inline">\({\rm SE}(\hat{\beta}_2)\)</span>.</p>
-</section></section></section><section id="exercises" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">6.5</span> Exercises</h2>
+</section></section></section><section id="self-study-exercises" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="self-study-exercises">
+<span class="header-section-number">6.5</span> Self-Study: Exercises</h2>
 <p>Prepare the following exercises of Chapter 5 in our course textbook:</p>
 <ul>
 <li>Exercise 3 <!-- - Exercise 4 -->
@@ -1187,36 +1190,25 @@ I(horsepower^2)  0.001230536 0.0001220759  10.08009  2.196340e-21</code></pre>
 </li>
 <li>Exercise 8</li>
 </ul>
-<!-- 
-
-## Solutions
-
-### Exercise 3 {-}
-
-We now review k-fold cross-validation.
-
-**3 a)** Explain how k-fold cross-validation is implemented.
-
-**Answer:**
-
-k-fold cross-validation is implemented by taking the set of $n$ observations and randomly splitting into $K$ non-overlapping groups of roughly equal group-size (approx. $n/K$). To compute the $k$-th $(k=1,2,\dots,K)$ test MSE estimate, group $k$ is used as a validation set and the remainder as a training set. The test error is estimated by averaging the $K$ resulting test MSE estimates.
-
-**3 b)** What are the advantages and disadvantages of $k$-fold cross-validation relative to: 
-
-i) the validation set approach?
-
-ii) LOOCV?
-
-**Answer:**
-
-The **validation set** approach is conceptually simple and easily implemented as you are simply partitioning the existing training data into two sets. However, there are two drawbacks: 
-
-1. The estimate of the test MSE can be highly variable/instable; i.e. may strongly depend on which observations are included in the training and validation sets. 
-
-2. The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size in comparison to the actual data size $n$.
-
-**LOOCV** is a special case of k-fold cross-validation with $k = n$. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit $n$ times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size $(n-1\approx n).$
-
+<section id="solutions" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="solutions">
+<span class="header-section-number">6.5.1</span> Solutions</h3>
+<section id="exercise-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="exercise-3">Exercise 3</h4>
+<p>We now review k-fold cross-validation.</p>
+<p><strong>3 a)</strong> Explain how k-fold cross-validation is implemented.</p>
+<p><strong>Answer:</strong></p>
+<p>k-fold cross-validation is implemented by taking the set of <span class="math inline">\(n\)</span> observations and randomly splitting into <span class="math inline">\(K\)</span> non-overlapping groups of roughly equal group-size (approx. <span class="math inline">\(n/K\)</span>). To compute the <span class="math inline">\(k\)</span>-th <span class="math inline">\((k=1,2,\dots,K)\)</span> test MSE estimate, group <span class="math inline">\(k\)</span> is used as a validation set and the remainder as a training set. The test error is estimated by averaging the <span class="math inline">\(K\)</span> resulting test MSE estimates.</p>
+<p><strong>3 b)</strong> What are the advantages and disadvantages of <span class="math inline">\(k\)</span>-fold cross-validation relative to:</p>
+<ol type="i">
+<li><p>the validation set approach?</p></li>
+<li><p>LOOCV?</p></li>
+</ol>
+<p><strong>Answer:</strong></p>
+<p>The <strong>validation set</strong> approach is conceptually simple and easily implemented as you are simply partitioning the existing training data into two sets. However, there are two drawbacks:</p>
+<ol type="1">
+<li><p>The estimate of the test MSE can be highly variable/instable; i.e.&nbsp;may strongly depend on which observations are included in the training and validation sets.</p></li>
+<li><p>The validation set error rate may tend to overestimate the test MSE for the actual model fit on the entire data set since the training set has a relatively small sample size in comparison to the actual data size <span class="math inline">\(n\)</span>.</p></li>
+</ol>
+<p><strong>LOOCV</strong> is a special case of k-fold cross-validation with <span class="math inline">\(k = n\)</span>. Thus, LOOCV is the computationally most expensive cross-validation method since the model must be fit <span class="math inline">\(n\)</span> times. Also, LOOCV has higher variance, but lower bias, than k-fold CV: On the one hand, the LOOCV cross-validation samples are highly correlated; one the other hand, the cross-validation samples are having sample sizes roughly equal to the actual sample size <span class="math inline">\((n-1\approx n).\)</span></p>
 <!-- 
 ### Exercise 4 {-}
 
@@ -1235,8 +1227,9 @@ Using these bootstrap predictions we can compute the standard deviation of our p
 $$
 \sqrt{\frac{1}{B}\sum^B_{b=1}\left(\hat{f}^*_b(X)-\left(\frac{1}{B}\sum_{r=1}^B\hat{f}^*_r(X)\right)\right)^2}.
 $$ 
---><section id="exercise-5" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-5">Exercise 5</h3>
-<p>In Chapter 4, we used logistic regression to predict the probability of <code>default</code> using <code>income</code> and <code>balance</code> on the <code>Default</code> dataset. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.</p>
+-->
+</section><section id="exercise-5" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="exercise-5">Exercise 5</h4>
+<p>Previously, we used logistic regression to predict the probability of <code>default</code> using <code>income</code> and <code>balance</code> on the <code>Default</code> dataset. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.</p>
 <p><strong>5 a)</strong> Fit a logistic regression model that uses <code>income</code> and <code>balance</code> to predict <code>default</code>.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
@@ -1379,6 +1372,7 @@ We continue to consider the use of a logistic regression model to predict the pr
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -1429,6 +1423,7 @@ Number of Fisher Scoring iterations: 8
 
 
 
+
 Using the standard formula for the standard errors in logistic regression:
 
 * Estimated standard error of the parameter estimator `income`: $4.985 \cdot 10^{-06}$
@@ -1438,6 +1433,7 @@ Using the standard formula for the standard errors in logistic regression:
 **6 b)** Write a function, `boot_fn()`, that takes as input the `Default` data set as well as an `index` of the observations, and that outputs the coefficient estimates for `income` and `balance` in the multiple logistic regression model.
 
 **Answer:** 
+
 
 
 
@@ -1457,9 +1453,11 @@ boot_fn <- function(data, index){
 
 
 
+
 **6 c)** Use the `boot()` function together with your `boot_fn()` function to estimate the standard errors of the logistic regression coefficients for `income` and `balance`.
 
 **Answer:** 
+
 
 
 
@@ -1505,6 +1503,7 @@ t3*  5.647103e-03 -4.116657e-06 2.226242e-04
 
 
 
+
 **6 d)** Comment on the estimated standard errors obtained using the `glm()` function and using your bootstrap function.
 
 **Answer:** 
@@ -1516,7 +1515,7 @@ t3*  5.647103e-03 -4.116657e-06 2.226242e-04
   * The bootstrap approach and the standard formula yield essentially equal results. 
 
 -->
-</section><section id="exercise-8" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8</h3>
+</section><section id="exercise-8" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="exercise-8">Exercise 8</h4>
 <p>We will now perform cross-validation on a simulated data set.</p>
 <p><strong>8 a)</strong> Generate a simulated data set as follows.</p>
 <div class="cell" data-layout-align="center">
@@ -1751,10 +1750,9 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </div>
 <p><strong>Answer:</strong></p>
 <p>The <span class="math inline">\(p\)</span>-values only show statistical significance of the linear and the quadratic predictor, which agrees with the CV-results.</p>
-<p>–&gt;</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
