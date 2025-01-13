@@ -223,7 +223,7 @@ window.Quarto = {
 </li>
   <li><a href="#the-bootstrap" id="toc-the-bootstrap" class="nav-link" data-scroll-target="#the-bootstrap"><span class="header-section-number">6.3</span> The Bootstrap</a></li>
   <li>
-<a href="#r-lab-resampling-methods" id="toc-r-lab-resampling-methods" class="nav-link" data-scroll-target="#r-lab-resampling-methods"><span class="header-section-number">6.4</span> <code>R</code>-Lab: Resampling Methods</a>
+<a href="#self-study-r-lab-resampling-methods" id="toc-self-study-r-lab-resampling-methods" class="nav-link" data-scroll-target="#self-study-r-lab-resampling-methods"><span class="header-section-number">6.4</span> Self-Study: <code>R</code>-Lab Resampling Methods</a>
   <ul class="collapse">
 <li><a href="#the-validation-set-approach" id="toc-the-validation-set-approach" class="nav-link" data-scroll-target="#the-validation-set-approach"><span class="header-section-number">6.4.1</span> The Validation Set Approach</a></li>
   <li><a href="#sec-RLabLOOCV" id="toc-sec-RLabLOOCV" class="nav-link" data-scroll-target="#sec-RLabLOOCV"><span class="header-section-number">6.4.2</span> Leave-One-Out Cross-Validation</a></li>
@@ -318,11 +318,15 @@ window.Quarto = {
 <span><span class="va">Train_polreg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">horsepower</span>, degree <span class="op">=</span> <span class="va">p</span>, raw<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, </span>
 <span>                   data <span class="op">=</span> <span class="va">Auto_Train_df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Step 3:</strong> Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set: <span class="math display">\[\begin{align*}
-\operatorname{MSE}_{Test}^{ValidationSetApproach}
+<p><strong>Step 3:</strong> Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set: <span class="math display">\[
+\begin{align*}
+\widehat{\operatorname{MSE}}_{Test}^{ValidationSetApproach}
 &amp;=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2\\[2ex]
 &amp;=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}\left(y_i - \hat{f}(x_i)\right)^2
-\end{align*}\]</span> where <span class="math inline">\(\hat{f}\)</span> is computed from the training data, but evaluated at the test data <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test}.\)</span></p>
+\end{align*}
+\]</span> where <span class="math inline">\(\hat{f}\)</span> is computed from the training data, but evaluated <span class="math display">\[
+\hat{y}_i=\hat{f}(x_i)
+\]</span> at the test data <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test}.\)</span></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y_fit_Test</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">Train_polreg</span>, newdata <span class="op">=</span> <span class="va">Auto_Test_df</span><span class="op">)</span></span>
 <span><span class="va">RSS_Test</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">Auto_Test_df</span><span class="op">$</span><span class="va">mpg</span> <span class="op">-</span> <span class="va">y_fit_Test</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
@@ -423,17 +427,21 @@ Figure&nbsp;6.2: Test error estimates for ten different random splits into train
 <strong>Test set:</strong> <span class="math inline">\(\{(x_i,y_i)\}\)</span> with <span class="math inline">\(n_{Test}=1\)</span>
 </li>
 </ul>
-<p>The <span class="math inline">\(i\)</span>th estimate for the test MSE is thus <span class="math display">\[\begin{align*}
-\operatorname{MSE}_i
+<p>The <span class="math inline">\(i\)</span>th estimate for the test MSE is thus <span class="math display">\[
+\begin{align*}
+\widehat{\operatorname{MSE}}_i
 &amp;= \left(y_i - \hat{y}_i\right)^2\\[2ex]
 &amp;= \left(y_i - \hat{f}(x_i)\right)^2,
-\end{align*}\]</span> where <span class="math inline">\(\hat{f}\)</span> is computed from the <span class="math inline">\(n_{Train}=n-1\)</span> training data points, but evaluated at the one (single) test data point <span class="math inline">\((x_i,y_i).\)</span></p>
-<p>Since <span class="math inline">\(\hat{f}\)</span> is essentially based on the total dataset, <span class="math inline">\(\operatorname{MSE}_i\)</span> is an (approximately) unbiased estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.</p>
+\end{align*}
+\]</span> where <span class="math inline">\(\hat{f}\)</span> is computed from the <span class="math inline">\(n_{Train}=n-1\)</span> training data points, but evaluated <span class="math display">\[
+\hat{y}_i=\hat{f}(x_i)
+\]</span> at the one test data point <span class="math inline">\(x_i,\)</span> <span class="math inline">\(i\in\mathcal{I}_{Test}.\)</span></p>
+<p>Since <span class="math inline">\(\hat{f}\)</span> is essentially based on the total dataset, <span class="math inline">\(\widehat{\operatorname{MSE}}_i\)</span> is an (approximately) unbiased (since <span class="math inline">\(n_{Train}=n-1\approx n\)</span>) estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.</p>
 <p>Repeating this leave-one-out splitting approach for each <span class="math inline">\(i=1,\dots,n,\)</span> produces <span class="math inline">\(n\)</span> many estimates of the test MSE: <span class="math display">\[
-\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_n
+\widehat{\operatorname{MSE}}_1, \widehat{\operatorname{MSE}}_2,\dots,\widehat{\operatorname{MSE}}_n
 \]</span></p>
 <p>The LOOCV estimate is then formed by the average of the <span class="math inline">\(n\)</span> MSE estimates: <span id="eq-LOOCV"><span class="math display">\[
-\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\operatorname{MSE}_i.
+\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\widehat{\operatorname{MSE}}_i.
 \qquad(6.1)\]</span></span></p>
 <p>Figure 5.3 shows schematically the leave-one-out data splitting approach.</p>
 <p><img src="images/Fig_5_3.png" class="img-fluid"></p>
@@ -489,8 +497,9 @@ Figure&nbsp;6.3: LOOCV error estimates for different polynomial degrees <span cl
 </div>
 </div>
 </div>
-LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes<br><center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.8 seconds
+<section id="cv-often-computationally-expensive" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="cv-often-computationally-expensive"><strong>CV: (Often) Computationally Expensive</strong></h4>
+LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear regression models, takes<br><center>
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.969 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -536,7 +545,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.017 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.02 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -548,7 +557,7 @@ However, the fast version takes only
 </ul>
 <p>and any statistical prediction method discussed in the lecture or in our textbook <code>ISLR2</code>.</p>
 <p><strong>Caution:</strong> The fast LOOCV <a href="#eq-CVfast" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.</p>
-</section></section><section id="k-fold-cross-validation" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="k-fold-cross-validation">
+</section></section></section><section id="k-fold-cross-validation" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="k-fold-cross-validation">
 <span class="header-section-number">6.2</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h2>
 <p>An alternative to LOOCV is <span class="math inline">\(k\)</span>-fold CV.</p>
 <p>This approach divides the total index set <span class="math inline">\(\mathcal{I}=\{1,2,\dots,n\}\)</span> of the original data data set into <span class="math inline">\(k\)</span> mutually exclusive subsets (folds) of roughly equal sizes <span class="math display">\[
@@ -563,15 +572,17 @@ However, the fast version takes only
 <strong>Test set:</strong> <span class="math inline">\(\{(x_i,y_i),\;i\in\mathcal{I}_j\}\)</span> with sample size of <span class="math inline">\(n_{Test}\approx n/k\)</span>
 </li>
 </ul>
-<p>Each pair of training and test set allow to compute a estimate of the test error <span class="math display">\[
-\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k,
-\]</span> where <span class="math display">\[\begin{align*}
-\operatorname{MSE}_j
+<p>Each pair of training and test set allows to compute an estimate of the test error <span class="math display">\[
+\widehat{\operatorname{MSE}}_1, \widehat{\operatorname{MSE}}_2,\dots,\widehat{\operatorname{MSE}}_k,
+\]</span> where <span class="math display">\[
+\begin{align*}
+\widehat{\operatorname{MSE}}_j
 &amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
 &amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
-\end{align*}\]</span> with <span class="math inline">\(\hat{f}\)</span> being computed from the training data, but evaluated at the test data.</p>
+\end{align*}
+\]</span> with <span class="math inline">\(\hat{f}\)</span> being computed from the training data, but evaluated at the test data.</p>
 <p>The <span class="math inline">\(k\)</span>-fold CV estimate is computed by averaging these values <span id="eq-kfoldCV"><span class="math display">\[
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
 \qquad(6.3)\]</span></span></p>
 <p>Figure 5.5 illustrates the data splitting for <span class="math inline">\(k\)</span>-fold CV.</p>
 <p><img src="images/Fig_5_5.png" class="img-fluid"></p>
@@ -668,9 +679,9 @@ However, the fast version takes only
 </li>
 </ul>
 <p>Thus, the larger <span class="math inline">\(k\)</span> the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates <span class="math display">\[
-\operatorname{MSE}_1,\dots,\operatorname{MSE}_k.
+\widehat{\operatorname{MSE}}_1,\dots,\widehat{\operatorname{MSE}}_k.
 \]</span> Since the (sample) mean of highly correlated quantities <span class="math display">\[
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
 \]</span> has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k&lt;n.\)</span></p>
 <p><span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k=5\)</span> or <span class="math inline">\(k=10\)</span> is often considered a good compromise balancing these bias and variance issues.</p>
 </section><section id="cross-validation-on-classification-problems" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="cross-validation-on-classification-problems">
@@ -781,7 +792,7 @@ Thus, this Monte Carlo simulation estimates that the true standard error equals 
 <span class="math inline">\(\operatorname{SE}(\hat\alpha) \approx\)</span> <code>sd(alpha_hat_MC)</code> <span class="math inline">\(=\)</span> 0.2301389,
 </center>
 <p>and by the law of large number (large <code>B</code>), we can expect this estimation to be really good and reliable.</p>
-<p>But, unfortunately, this result depends on our **completely unrealistic assumption that we know the true population distribution <span class="math inline">\(F_{(X,Y)}\)</span> of <span class="math inline">\((X,Y),\)</span> which makes this simple resampling approach infeasible in practice. 😭</p>
+<p>But, unfortunately, this result depends on our <strong>completely</strong> unrealistic assumption that we know the true population distribution <span class="math inline">\(F_{(X,Y)}\)</span> of <span class="math inline">\((X,Y),\)</span> which makes this simple resampling approach infeasible in practice. 😭</p>
 </section><section id="the-actual-feasible-bootstrap" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="the-actual-feasible-bootstrap">The Actual (Feasible) Bootstrap</h4>
 <p>Fortunately, we can use the <strong>empirical cumulative distribution function</strong> <span class="math inline">\(F_{n,(X,Y)}\)</span> from the originally observed dataset of past measurements for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y,\)</span> as an approximation to the true (unknown) population distribution <span class="math inline">\(F_{(X,Y)}\)</span>, <span class="math display">\[
 F_{n,(X,Y)}\approx F_{(X,Y)}.
@@ -834,8 +845,8 @@ The bootstrap estimate of the true standard error equals 0.2523776, i.e.&nbsp;
 <blockquote class="blockquote">
 <p>The bootstrap method is attributed to Bradley Efron, who received the <em><a href="https://statprize.org/pdfs/2019-Efron-Announcement.pdf">International Prize in Statistics</a></em> (the Nobel price of statistics) for his seminal works on the bootstrap method.</p>
 </blockquote>
-</section></section><section id="r-lab-resampling-methods" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="r-lab-resampling-methods">
-<span class="header-section-number">6.4</span> <code>R</code>-Lab: Resampling Methods</h2>
+</section></section><section id="self-study-r-lab-resampling-methods" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="self-study-r-lab-resampling-methods">
+<span class="header-section-number">6.4</span> Self-Study: <code>R</code>-Lab Resampling Methods</h2>
 <p>In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.</p>
 <section id="the-validation-set-approach" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="the-validation-set-approach">
 <span class="header-section-number">6.4.1</span> The Validation Set Approach</h3>

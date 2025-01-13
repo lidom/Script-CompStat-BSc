@@ -79,12 +79,18 @@ Train_polreg <- lm(mpg ~ poly(horsepower, degree = p, raw=TRUE),
 ```
 
 **Step 3:** Validation of the polynomial regression model by computing the test mean squared (prediction) error using the validation set:
+$$
 \begin{align*}
-\operatorname{MSE}_{Test}^{ValidationSetApproach}
+\widehat{\operatorname{MSE}}_{Test}^{ValidationSetApproach}
 &=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}(y_i - \hat{y}_i)^2\\[2ex]
 &=\frac{1}{n_{Test}}\sum_{i\in\mathcal{I}_{Test}}\left(y_i - \hat{f}(x_i)\right)^2
 \end{align*}
-where $\hat{f}$ is computed from the training data, but evaluated at the test data $x_i,$ $i\in\mathcal{I}_{Test}.$
+$$
+where $\hat{f}$ is computed from the training data, but evaluated 
+$$
+\hat{y}_i=\hat{f}(x_i)
+$$ 
+at the test data $x_i,$ $i\in\mathcal{I}_{Test}.$
 
 ```{r}
 y_fit_Test   <- predict(Train_polreg, newdata = Auto_Test_df)
@@ -178,23 +184,30 @@ However, instead of creating two subsets of comparable size, a **single** observ
 * **Test set:** $\{(x_i,y_i)\}$ with $n_{Test}=1$ 
 
 The $i$th estimate for the test MSE is thus
+$$
 \begin{align*}
-\operatorname{MSE}_i 
+\widehat{\operatorname{MSE}}_i 
 &= \left(y_i - \hat{y}_i\right)^2\\[2ex]
 &= \left(y_i - \hat{f}(x_i)\right)^2,
 \end{align*}
-where $\hat{f}$ is computed from the $n_{Train}=n-1$ training data points, but evaluated at the one (single) test data point $(x_i,y_i).$
+$$
+where $\hat{f}$ is computed from the $n_{Train}=n-1$ training data points, but evaluated 
+$$
+\hat{y}_i=\hat{f}(x_i)
+$$ 
+at the one test data point $x_i,$ $i\in\mathcal{I}_{Test}.$
 
-Since $\hat{f}$ is essentially based on the total dataset, $\operatorname{MSE}_i$ is an (approximately) unbiased estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.
+
+Since $\hat{f}$ is essentially based on the total dataset, $\widehat{\operatorname{MSE}}_i$ is an (approximately) unbiased (since $n_{Train}=n-1\approx n$) estimate for the test MSE, although a poor estimate with a high variance as it is based on only one observation in the test set.
 
 Repeating this leave-one-out splitting approach for each $i=1,\dots,n,$ produces $n$ many estimates of the test MSE:
 $$
-\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_n
+\widehat{\operatorname{MSE}}_1, \widehat{\operatorname{MSE}}_2,\dots,\widehat{\operatorname{MSE}}_n
 $$
 
 The LOOCV estimate is then formed by the average of the $n$ MSE estimates:
 $$
-\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\operatorname{MSE}_i.
+\operatorname{LOOCV}=\operatorname{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^n\widehat{\operatorname{MSE}}_i.
 $${#eq-LOOCV}
 
 Figure 5.3 shows schematically the leave-one-out data splitting approach. 
@@ -251,7 +264,9 @@ points(y = LOOCV[which.min(LOOCV)],
 ```
 
 
-LOOCV has the potential to be **computationally expensive**, since the model has to be fit $n$ times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear/polynomial regression models, takes  
+#### **CV: (Often) Computationally Expensive** {-}
+
+LOOCV has the potential to be **computationally expensive**, since the model has to be fit $n$ times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear regression models, takes  
 <center>
 `end_time`$-$`start_time` $=$ `r round(end_time-start_time,3)` seconds
 </center>
@@ -332,21 +347,23 @@ These $k$ index sets allow us construct different training and test sets for eac
 * **Training set:** $\{(x_i,y_i),\; i\in\mathcal{I}\setminus \mathcal{I}_j\}$ with sample size of $n_{Train}\approx n - n/k$
 * **Test set:** $\{(x_i,y_i),\;i\in\mathcal{I}_j\}$ with sample size of $n_{Test}\approx n/k$ 
 
-Each pair of training and test set allow to compute a estimate of the test error
+Each pair of training and test set allows to compute an estimate of the test error
 $$
-\operatorname{MSE}_1, \operatorname{MSE}_2,\dots,\operatorname{MSE}_k,
+\widehat{\operatorname{MSE}}_1, \widehat{\operatorname{MSE}}_2,\dots,\widehat{\operatorname{MSE}}_k,
 $$
 where
+$$
 \begin{align*}
-\operatorname{MSE}_j
+\widehat{\operatorname{MSE}}_j
 &=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
 &=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
 \end{align*}
+$$
 with $\hat{f}$ being computed from the training data, but evaluated at the test data.  
 
 The $k$-fold CV estimate is computed by averaging these values
 $$
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
 $${#eq-kfoldCV}
 
 Figure 5.5 illustrates the data splitting for $k$-fold CV.
@@ -441,11 +458,11 @@ There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold
 
 Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates
 $$
-\operatorname{MSE}_1,\dots,\operatorname{MSE}_k.
+\widehat{\operatorname{MSE}}_1,\dots,\widehat{\operatorname{MSE}}_k.
 $$
 Since the (sample) mean of highly correlated quantities 
 $$
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\operatorname{MSE}_j
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
 $$
 has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
 
@@ -601,7 +618,7 @@ $\operatorname{SE}(\hat\alpha) \approx$ `sd(alpha_hat_MC)` $=$ `r sd(alpha_hat_M
 </center>
 and by the law of large number (large `B`), we can expect this estimation to be really good and reliable. 
 
-But, unfortunately, this result depends on our **completely unrealistic assumption that we know the true population distribution $F_{(X,Y)}$ of $(X,Y),$ which makes this simple resampling approach infeasible in practice. 😭
+But, unfortunately, this result depends on our **completely** unrealistic assumption that we know the true population distribution $F_{(X,Y)}$ of $(X,Y),$ which makes this simple resampling approach infeasible in practice. 😭
 
 
 #### The Actual (Feasible) Bootstrap {-}
@@ -664,7 +681,7 @@ This is really close to the infeasible Monte Carlo simulation based estimate `sd
 > The bootstrap method is attributed to Bradley Efron, who received the *[International Prize in Statistics](https://statprize.org/pdfs/2019-Efron-Announcement.pdf)* (the Nobel price of statistics) for his seminal works on the bootstrap method. 
 
 
-## `R`-Lab: Resampling Methods
+## Self-Study: `R`-Lab Resampling Methods
 
 In this lab, we explore the resampling techniques covered in this chapter. Some of the commands in this lab may take a while to run on your computer.
 
