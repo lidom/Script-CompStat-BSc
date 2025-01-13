@@ -2130,7 +2130,106 @@ Observations:
 * However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0$ causing a large bias.  
 
 
-## Self-Study: `R`-Lab: Linear Regression
+
+
+## Assignment
+
+Consider the following data generating process: 
+
+```{r}
+## A Function to simulate data from a simple linear regression model
+myDataGenerator <- function(){
+  
+  n      <- 50                                    # sample size
+  beta_0 <- 0.1                                   # intercept parameter
+  beta_1 <- 5                                     # slope parameter
+  X      <- runif(n, min = -2, max = 2)           # predictor
+  error  <- rnorm(n, mean = 0, sd = (5 + abs(X))) # heteroskedastic error term
+  Y      <- beta_0 + beta_1 * X + error           # generate Y 
+  
+  ## return realization of the random sample
+  return(data.frame("Y" = Y, "X" = X))
+}
+```
+
+Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
+$$
+((Y_1,X_1'),\dots,(Y_n,X_n'))
+$$
+as defined by the data generating process specified in the function-body of `myDataGenerator()`
+
+```{r}
+data_sim    <- myDataGenerator()
+
+head(data_sim)
+```
+
+
+For a given data generating process (as, for instance, defined in `myDataGenerator()`), we can approximate the bias of the OLS estimator by 
+$$
+\widehat{\operatorname{Bias}}(\hat\beta) = \widehat{E}(\hat\beta) - \beta, 
+$$
+where 
+$$
+\begin{align*}
+\widehat{E}(\hat\beta) 
+& = \frac{1}{B}\sum_{j=1}^B \hat\beta_{b}\\[2ex] 
+& = \frac{1}{B}\sum_{j=1}^B \begin{pmatrix}\hat\beta_{0,b}\\\hat\beta_{1,b}\end{pmatrix}\\[2ex]
+& = \begin{pmatrix}\frac{1}{B}\sum_{j=1}^B \hat\beta_{0,b}\\ \frac{1}{B}\sum_{j=1}^B \hat\beta_{1,b}\end{pmatrix}
+\end{align*} 
+$$
+denotes the sample mean across $B$-many simulated realizations 
+$$
+\hat\beta_1,\hat\beta_2,\dots,\hat\beta_B 
+$$
+of the OLS estimator $\hat\beta,$ and where $\beta$ denotes the true parameter vector; i.e., here 
+$$
+\beta
+= \begin{pmatrix}\beta_{0}\\ \beta_{1}\end{pmatrix} 
+= \begin{pmatrix}0.1\\ 5\end{pmatrix}. 
+$$
+
+By the law of large numbers, the approximation 
+$$
+\widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta) 
+$$
+becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ typically guarantees a very good approximation. 
+
+
+#### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
+
+1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta'=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
+2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
+3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
+
+
+#### **Assignment Task Nr. 2 (Coverage Probability of Confidence Intervals):** {-}
+
+1. Use the above given data generating process to generate $B=100,000$ realizations 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
+$$
+of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$ Set $\alpha=0.05.$ 
+2. Approximate the true coverage probability using the empirical coverage probability across all $B$ simulated confidence interals: 
+$$
+P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
+$$
+where $1_{(\text{TRUE})}=1$ and $1_{(\text{FALSE})}=0.$  
+Consider the following two cases: 
+      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 5 = \beta_1.$
+      b. The null-hypothesis is false with $\beta_1^{(H_0)} = 0 \neq \beta_1.$
+
+Note: By the law of large numbers, the above approximation becomes arbitrarily precise as $B\to\infty.$ Thus, setting, for instance, $B=100,000$ typically guarantees a very good approximation. 
+
+
+**Link to your personal assignment repository:**</br>
+[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD)
+
+
+
+
+
+## Self-Study: `R`-Lab Linear Regression
 
 
 ### Libraries
@@ -2474,98 +2573,6 @@ LoadLibraries()
 ```
 
 
-## Assignment
-
-Consider the following data generating process: 
-
-```{r}
-## A Function to simulate data from a simple linear regression model
-myDataGenerator <- function(){
-  
-  n      <- 50                                    # sample size
-  beta_0 <- 0.1                                   # intercept parameter
-  beta_1 <- 5                                     # slope parameter
-  X      <- runif(n, min = -2, max = 2)           # predictor
-  error  <- rnorm(n, mean = 0, sd = (5 + abs(X))) # heteroskedastic error term
-  Y      <- beta_0 + beta_1 * X + error           # generate Y 
-  
-  ## return realization of the random sample
-  return(data.frame("Y" = Y, "X" = X))
-}
-```
-
-Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
-$$
-((Y_1,X_1'),\dots,(Y_n,X_n'))
-$$
-as defined by the data generating process specified in the function-body of `myDataGenerator()`
-
-```{r}
-data_sim    <- myDataGenerator()
-
-head(data_sim)
-```
-
-
-For a given data generating process (as, for instance, defined in `myDataGenerator()`), we can approximate the bias of the OLS estimator by 
-$$
-\widehat{\operatorname{Bias}}(\hat\beta) = \widehat{E}(\hat\beta) - \beta, 
-$$
-where 
-$$
-\begin{align*}
-\widehat{E}(\hat\beta) 
-& = \frac{1}{B}\sum_{j=1}^B \hat\beta_{b}\\[2ex] 
-& = \frac{1}{B}\sum_{j=1}^B \begin{pmatrix}\hat\beta_{0,b}\\\hat\beta_{1,b}\end{pmatrix}\\[2ex]
-& = \begin{pmatrix}\frac{1}{B}\sum_{j=1}^B \hat\beta_{0,b}\\ \frac{1}{B}\sum_{j=1}^B \hat\beta_{1,b}\end{pmatrix}
-\end{align*} 
-$$
-denotes the sample mean across $B$-many simulated realizations 
-$$
-\hat\beta_1,\hat\beta_2,\dots,\hat\beta_B 
-$$
-of the OLS estimator $\hat\beta,$ and where $\beta$ denotes the true parameter vector; i.e., here 
-$$
-\beta
-= \begin{pmatrix}\beta_{0}\\ \beta_{1}\end{pmatrix} 
-= \begin{pmatrix}0.1\\ 5\end{pmatrix}. 
-$$
-
-By the law of large numbers, the approximation 
-$$
-\widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta) 
-$$
-becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ typically guarantees a very good approximation. 
-
-
-#### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
-
-1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta'=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
-2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
-3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
-
-
-#### **Assignment Task Nr. 2 (Coverage Probability of Confidence Intervals):** {-}
-
-1. Use the above given data generating process to generate $B=100,000$ realizations 
-$$
-\operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
-$$
-of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$ Set $\alpha=0.05.$ 
-2. Approximate the true coverage probability using the empirical coverage probability across all $B$ simulated confidence interals: 
-$$
-P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
-$$
-where $1_{(\text{TRUE})}=1$ and $1_{(\text{FALSE})}=0.$  
-Consider the following two cases: 
-      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 5 = \beta_1.$
-      b. The null-hypothesis is false with $\beta_1^{(H_0)} = 0 \neq \beta_1.$
-
-Note: By the law of large numbers, the above approximation becomes arbitrarily precise as $B\to\infty.$ Thus, setting, for instance, $B=100,000$ typically guarantees a very good approximation. 
-
-
-**Link to your personal assignment repository:**</br>
-[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD)
 
 
 ## Self-Study: Exercises

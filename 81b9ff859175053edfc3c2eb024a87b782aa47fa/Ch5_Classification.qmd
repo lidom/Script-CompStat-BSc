@@ -700,11 +700,11 @@ $$
 \pi_1+\dots+\pi_K=1.
 $$  
 
-**Conditional Density function of $X$ given $Y=k:$** Let 
+**Conditional Probability of $X=x$ given $Y=k:$** Let 
 $$
 f_k(x)=Pr(X=x|Y=k)
 $$
-denote the (conditional) density of $X$ for an observation that comes from class $k.$
+
 
 
 **Posterior Probability:** Then **Bayes' theorem** states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
@@ -1449,7 +1449,80 @@ OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?
 -->
 
 
-## Self-Study `R`-Lab: Classification
+
+## Assignment
+
+
+The following `R`-code simulates data of a classification problem with 
+
+* two classes, $k\in\{1,2\},$ 
+* one predictor, $p=1,$ 
+* a training data sample size of $n_{Train}=200,$ and
+* a testing data sample size of $n_{Test}=200.$ 
+
+
+```{r}
+set.seed(131)
+
+n         <- 400
+n_train   <- n/2
+n_test    <- n/2
+
+pi_cl1    <- 0.7
+pi_cl2    <- 1 - pi_cl1
+
+cl_label  <- sample(c(1,2), 
+                    size    = n, 
+                    replace = TRUE, 
+                    prob    = c(pi_cl1, pi_cl2))
+
+n_cl1     <- length(cl_label[cl_label == 1])
+n_cl2     <- length(cl_label[cl_label == 2])
+
+mu_cl1    <- 1
+mu_cl2    <- 2
+var       <- 0.75
+
+x_cl1     <- rnorm(n = n_cl1, mean = mu_cl1, sd = sqrt(var))
+x_cl2     <- rnorm(n = n_cl2, mean = mu_cl2, sd = sqrt(var))
+
+x_data    <- c(x_cl1,         x_cl2) 
+class     <- c(rep(1, n_cl1), rep(2, n_cl2))
+
+## create data frame
+dat_temp   <- data.frame("class" = class, 
+                        "x"     = x_data)
+
+## shuffle data (randomly permute rows)
+dat_temp   <- dat_temp[sample(1:n),]
+
+## split data into training and test set
+data_train <- dat_temp[1:n_train, ]
+data_test  <- dat_temp[(n_train+1):n,]
+
+rownames(data_train) <- 1:n_train
+rownames(data_test)  <- 1:n_test
+```
+
+
+1. Compute the classification results using your own implementation of LDA. 
+   a. Compute the training error rate
+   b. Compute the test error rate 
+
+Hints: 
+
+* You are **not** allowed to use the `lda()` function of `R`. 
+* Only use basic `R`-functions like, e.g.: `mean()`, `var()`, `sum()`, `nrow()`, `rowSums()`, `rep()`, `length()`, and `dnorm()`.
+* Show all your code.
+
+
+**Link to your personal assignment repository:**</br>
+[https://classroom.github.com/a/QT0wqt04](https://classroom.github.com/a/QT0wqt04)
+
+
+
+
+## Self-Study: `R`-Lab Classification
 
 
 ### The Stock Market Data
@@ -2135,10 +2208,14 @@ abline(0, 1, col = 2, lwd = 3)
 
 The predictions from the Poisson regression model are correlated with those from the linear model; however, the former are non-negative. As a result the Poisson regression predictions tend to be larger than those from the linear model for either very low or very high levels of ridership.
 
-In this section, we used the `glm()` function with the argument `family = poisson` in order to perform Poisson regression. Earlier in this lab we used the `glm()` function with `family = binomial` to perform logistic regression. Other choices for the `family` argument can be used to fit other types of GLMs. For instance, `family = Gamma` fits a gamma regression model. -->
+In this section, we used the `glm()` function with the argument `family = poisson` in order to perform Poisson regression. Earlier in this lab we used the `glm()` function with `family = binomial` to perform logistic regression. Other choices for the `family` argument can be used to fit other types of GLMs. For instance, `family = Gamma` fits a gamma regression model. 
+-->
 
 
-## Exercises
+
+
+
+## Self-Study: Exercises
 
 Prepare the following exercises of **Chapter 2 and 4** in our course textbook `ISLR`: 
 
@@ -2151,7 +2228,8 @@ Prepare the following exercises of **Chapter 2 and 4** in our course textbook `I
 - Exercise 16 (Chapter 4)
 
 
-<!--
+
+
 ### Solutions
 
 #### Exercise 7 (Chapter 2) {-} 
@@ -2809,6 +2887,3 @@ mean(knn_pred != crime01.test)
 
 
 **Overall conclusion:** The best models are the ones with the smaller test error rates. In our case, this means that the smallest (fewest predictors) LDA-model and the KNN prediction with `K=10` are the best prediction models.
-
-
--->
