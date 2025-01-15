@@ -35,6 +35,18 @@ Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 <!-- * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0) -->
 
 
+### Important Information on the Exam {-}
+
+
+* First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/0gmogr9mw7kzkjkajfp0l/Exam_CASA_1stPage.pdf?rlkey=tmshf9y6bdmjki2mhekre9nw3&dl=0)
+* You are allowed to use a *handwritten* cheat-sheet (**one side** of a DIN A4 page).
+* You are allowed to use a non-programmable scientific calculator.
+* Please, do **not** use a pencil.
+* Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en)
+
+
+
+
 ### Assignments {-}
 
 For each chapter there is a home assignment. You can use the `Open Coding Space` for asking questions and for working on your assignments. You can help each other, but everyone has to submit an own home assignment.  
@@ -58,20 +70,6 @@ To participate in the assignments, you need a GitHub-Account and write your name
 **Results:** [List of Results](https://docs.google.com/spreadsheets/d/1zBNcoepnBX3vMz6E2klOtroi0QfvwbmYFcoMdmNrx-8/edit?usp=sharing)
 
 
-<!-- ### Information on the Exam {-}
-
-* You are allowed to use a **handwritten cheat-sheet** (**one side** of a DIN A4 page). 
-* You are allowed to use a **non-programmable scientific calculator**.
-* Please, do **not** use a pencil.
-* Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en) 
--->
-
-<!-- * Mock Exam with 5 multiple-choice problems and 1 free-text problem: [Download](https://www.dropbox.com/scl/fi/ib7z8bp2d5q775u2hoty0/Mock_Exam1.pdf?rlkey=m5yus4dkxnekpzaoydf6eqok5&dl=0) 
-   * Note: The actual exam will contain 10 multiple-choice problems and 2 free-text problems--> 
-
-<!-- * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/alnf6ny5nw801zsw73p9j/Exam_Instructions.pdf?rlkey=8etgr1y7sfwso9ad3tjkga0y9&dl=0) -->
 
 
-<!-- ### Communication {-}
 
-* You can use the Zulip-Chat [CompStat (B.Sc.)](https://ifs-bonn.zulipchat.com/join/bfmraxkf5rosbd5h3lrfa2jo/) to post questions, share codes, etc. Happy sharing and discussing!  -->
