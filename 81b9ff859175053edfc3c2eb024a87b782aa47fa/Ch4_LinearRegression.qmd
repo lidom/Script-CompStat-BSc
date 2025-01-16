@@ -1781,15 +1781,16 @@ Auto-correlations among the error terms typically occur in time series data. Fig
 
 **3. Non-Constant Variance of Error Terms (Heteroskedasticity)**
 
-Another important assumption of the linear regression model is that the
-error terms have a constant variance, 
+
+Another important issue is to check whether the errors can be assumed homoskedastic
 $$
-Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
+Var(\epsilon_i|X_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
 $$ 
-
-One can identify **non-constant variances ("heteroskedasticity")** in the errors, using diagnostic residual plots. 
-
-Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
+or heteroskedastic 
+$$
+Var(\epsilon_i|X_i) = \sigma^2_i,\quad i=1,\dots,n.
+$$ 
+One can identify **non-constant variances ("heteroskedasticity")** in the errors, using diagnostic residual plots. Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as 
 $$
 \log(Y)\;\text{ or }\; \sqrt{Y}.
 $$
@@ -1829,6 +1830,10 @@ Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to 
 The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
 ::: 
 -->
+
+
+**Note:** In case of doubt (homoskedastic vs heteroskedastic error terms), one should use HC-robust inference, which allows for valid inference under both homoskedastic and heterskedastic errors.
+
 
 
 **4. Outliers**
@@ -2026,11 +2031,11 @@ d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
 $$
 where 
 $$
-\frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+x^*_{0j} = \frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
 $$ 
 and 
 $$
-\frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+X^*_{ij} = \frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
 $$ 
 with $\bar{X}_{j} = \frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}X_{ij}.$
 

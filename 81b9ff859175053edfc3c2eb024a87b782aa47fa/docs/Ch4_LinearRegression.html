@@ -1821,11 +1821,11 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
 </ul>
 <p><img src="images/Fig_3_10.png" class="img-fluid"></p>
 <p><strong>3. Non-Constant Variance of Error Terms (Heteroskedasticity)</strong></p>
-<p>Another important assumption of the linear regression model is that the error terms have a constant variance, <span class="math display">\[
-Var(\epsilon_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
-\]</span></p>
-<p>One can identify <strong>non-constant variances (“heteroskedasticity”)</strong> in the errors, using diagnostic residual plots.</p>
-<p>Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. When faced with this problem, one possible solution is to transform the response <span class="math inline">\(Y\)</span> using a concave function such as <span class="math display">\[
+<p>Another important issue is to check whether the errors can be assumed homoskedastic <span class="math display">\[
+Var(\epsilon_i|X_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
+\]</span> or heteroskedastic <span class="math display">\[
+Var(\epsilon_i|X_i) = \sigma^2_i,\quad i=1,\dots,n.
+\]</span> One can identify <strong>non-constant variances (“heteroskedasticity”)</strong> in the errors, using diagnostic residual plots. Often one observes that the magnitude of the scattering of the residuals tends to increase with the fitted values. When faced with this problem, one possible solution is to transform the response <span class="math inline">\(Y\)</span> using a concave function such as <span class="math display">\[
 \log(Y)\;\text{ or }\; \sqrt{Y}.
 \]</span> Such a transformation results in a greater amount of shrinkage of the larger responses.</p>
 <div class="cell" data-layout-align="center">
@@ -1866,6 +1866,7 @@ Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to 
 The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
 ::: 
 -->
+<p><strong>Note:</strong> In case of doubt (homoskedastic vs heteroskedastic error terms), one should use HC-robust inference, which allows for valid inference under both homoskedastic and heterskedastic errors.</p>
 <p><strong>4. Outliers</strong></p>
 <p>An outlier is a point <span class="math inline">\(i\)</span> for which <span class="math inline">\(y_i\)</span> is far from the value <span class="math inline">\(\hat{y}_i\)</span> predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording of an observation during data collection.</p>
 <p>Outliers typically have a strong effect on the <span class="math inline">\(R^2\)</span> value since they add a <strong>very large residual</strong> to its computation.</p>
@@ -2023,9 +2024,9 @@ Use Standardized Predictors!
 <p>Typically, it is important to compute the distances with respect to the standardized (centering, and scaling to unit variance) predictor variables; i.e. <span class="math display">\[
 d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
 \]</span> where <span class="math display">\[
-\frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+x^*_{0j} = \frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
 \]</span> and <span class="math display">\[
-\frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+X^*_{ij} = \frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
 \]</span> with <span class="math inline">\(\bar{X}_{j} = \frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}X_{ij}.\)</span></p>
 <p>Otherwise, the distance values could be dominated by one of the <span class="math inline">\(p\)</span> predictors.</p>
 <p>E.g. when one predictor is age (values between <span class="math inline">\(0\)</span> and <span class="math inline">\(99\)</span>) and another predictor is yearly income (values between <span class="math inline">\(0\)</span> and <span class="math inline">\(12,000,000\)</span>), then the differences in income will dominate the differences in age only because of the different scales. <!-- 
