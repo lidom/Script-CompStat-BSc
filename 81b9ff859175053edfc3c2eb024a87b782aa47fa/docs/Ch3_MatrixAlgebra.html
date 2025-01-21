@@ -878,7 +878,7 @@ A A^{-1} = I
 <span class="header-section-number">3.4</span> Further Concepts</h2>
 <section id="trace" class="level3" data-number="3.4.1"><h3 data-number="3.4.1" class="anchored" data-anchor-id="trace">
 <span class="header-section-number">3.4.1</span> Trace</h3>
-<p>The <strong>trace</strong> of a <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is the sum of the diagonal entries: <span class="math display">\[\mathop{\mathrm{tr}}(A) = \sum_{i=1}^n a_{ii}\]</span></p>
+<p>The <strong>trace</strong> of a <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is the sum of the diagonal entries: <span class="math display">\[\mathop{\mathrm{tr}}(A) = \sum_{i=1}^k a_{ii}\]</span></p>
 <p><strong>Example:</strong> <span class="math display">\[
 A = \begin{pmatrix}
 1 &amp; 2 &amp; 3 \\ 3 &amp; 9 &amp; 1 \\ 0 &amp; 11 &amp; 5
@@ -928,9 +928,19 @@ A A
 \]</span></p>
 </section><section id="definite-matrix" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="definite-matrix">
 <span class="header-section-number">3.4.3</span> Definite Matrix</h3>
-<p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\({A}\)</span> is called <strong>positive definite</strong> if <span class="math display">\[{c}'{Ac}&gt;0\]</span> holds for all nonzero vectors <span class="math inline">\({c}\in \mathbb{R}^k\)</span>. If <span class="math display">\[{c}'{Ac}\geq 0\]</span></p>
-<p>for all vectors <span class="math inline">\({c}\in \mathbb{R}^k\)</span>, the matrix is called <strong>positive semi-definite</strong>. Analogously, <span class="math inline">\(A\)</span> is called <strong>negative definite</strong> if <span class="math inline">\({c}'{Ac}&lt;0\)</span> and <strong>negative semi-definite</strong> if <span class="math inline">\({c}'{Ac}\leq 0\)</span> for all nonzero vectors <span class="math inline">\(c \in \mathbb R^k\)</span>. A matrix that is neither positive semi-definite nor negative semi-definite is called <strong>indefinite</strong></p>
-<p>The matrix analog of a positive or negative number (scalar) is a positive definite or negative definite matrix. Therefore, we use the notation</p>
+<p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>positive definite</strong> if <span class="math display">\[
+c'Ac &gt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+\]</span></p>
+<p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>negative definite</strong> if <span class="math display">\[
+c'Ac &lt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+\]</span></p>
+<p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>positive semi-definite</strong> if <span class="math display">\[
+{c}'{Ac}\geq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+\]</span></p>
+<p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>negative semi-definite</strong> if <span class="math display">\[
+{c}'{Ac}\leq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+\]</span></p>
+<p>The definiteness of matrix is the matrix-analog of the positiveness/negativeness of a scalar. Therefore, we use the notation</p>
 <ol type="i">
 <li>
 <span class="math inline">\(A &gt; 0\)</span> &nbsp;if <span class="math inline">\(A\)</span> is positive definite</li>
@@ -942,6 +952,9 @@ A A
 <span class="math inline">\(A \leq 0\)</span> &nbsp;if <span class="math inline">\(A\)</span> is negative semi-definite</li>
 </ol>
 <p>The notation <span class="math inline">\(A &gt; B\)</span> means that the matrix <span class="math inline">\(A - B\)</span> is positive definite.</p>
+<p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>indefinite</strong> if there are vectors <span class="math inline">\(c,\tilde{c}\in\mathbb{R}^k\)</span> such that <span class="math display">\[
+c'Ac&lt; 0 &lt; \tilde{c}'{A\tilde{c}}.
+\]</span> In this case, the matrix <span class="math inline">\(A\)</span> is neither positive semi-definite nor negative semi-definite.</p>
 </section></section><section id="matrix-calculus" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="matrix-calculus">
 <span class="header-section-number">3.5</span> Matrix Calculus</h2>
 <p>Let <span class="math inline">\(f(\beta_1, \ldots, \beta_k) = f({\beta})\)</span> be a twice-differential real-valued function that depends on some vector <span class="math inline">\(\beta = (\beta_1, \ldots, \beta_k)'\)</span>. Examples that frequently appear in econometrics are functions of the inner product form <span class="math inline">\(f(\beta) = a' \beta\)</span>, where <span class="math inline">\(a \in \mathbb R^k\)</span>, and functions of the sandwich form <span class="math inline">\(f(\beta) = \beta' A \beta\)</span>, where <span class="math inline">\(A \in \mathbb R^{k \times k}\)</span>.</p>

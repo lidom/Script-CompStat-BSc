@@ -739,7 +739,7 @@ vii) If ${A}$ is symmetric, then ${A}^{-1}$ is
 
 The **trace** of a $k \times k$ square matrix $A$ is the sum
 of the diagonal entries:
-$$\mathop{\mathrm{tr}}(A) = \sum_{i=1}^n a_{ii}$$ 
+$$\mathop{\mathrm{tr}}(A) = \sum_{i=1}^k a_{ii}$$ 
 
 
 **Example:**
@@ -807,23 +807,39 @@ $$
 
 ### Definite Matrix
 
-The $k \times k$ square matrix ${A}$ is called **positive
-definite** if $${c}'{Ac}>0$$ holds for all nonzero
-vectors ${c}\in \mathbb{R}^k$. If
-$${c}'{Ac}\geq 0$$
+The $k \times k$ square matrix $A$ is called 
+**positive definite** 
+if 
+$$
+c'Ac > 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+$$ 
 
-for all vectors ${c}\in \mathbb{R}^k$, the matrix is called
-**positive semi-definite**. Analogously, $A$ is called
-**negative definite** if ${c}'{Ac}<0$ and
-**negative semi-definite** if ${c}'{Ac}\leq 0$ for
-all nonzero vectors $c \in \mathbb R^k$. A matrix that is
-neither positive semi-definite nor negative semi-definite is called
-**indefinite**
+The $k \times k$ square matrix $A$ is called 
+**negative definite** 
+if 
+$$
+c'Ac < 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+$$ 
 
 
-The matrix analog of a positive or negative number (scalar) is a
-positive definite or negative definite matrix. Therefore, we use the
-notation
+The $k \times k$ square matrix $A$ is called 
+**positive semi-definite** 
+if
+$$
+{c}'{Ac}\geq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+$$
+
+
+The $k \times k$ square matrix $A$ is called 
+**negative semi-definite** 
+if
+$$
+{c}'{Ac}\leq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+$$
+
+
+
+The definiteness of matrix is the matrix-analog of the positiveness/negativeness of a scalar. Therefore, we use the notation
 
 i)  $A > 0$  if $A$ is positive definite
 ii) $A < 0$  if $A$ is negative definite
@@ -831,9 +847,16 @@ iii) $A \geq 0$  if $A$ is positive
      semi-definite
 iv) $A \leq 0$  if $A$ is negative semi-definite
 
-The notation $A > B$ means that the matrix
-$A - B$ is positive definite. 
+The notation $A > B$ means that the matrix $A - B$ is positive definite. 
 
+
+
+The $k \times k$ square matrix $A$ is called 
+**indefinite** if there are vectors $c,\tilde{c}\in\mathbb{R}^k$ such that 
+$$
+c'Ac< 0 < \tilde{c}'{A\tilde{c}}.
+$$
+In this case, the matrix $A$ is neither positive semi-definite nor negative semi-definite. 
 
 
 

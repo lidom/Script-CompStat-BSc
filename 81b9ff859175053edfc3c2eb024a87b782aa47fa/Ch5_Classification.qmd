@@ -131,7 +131,7 @@ $$
 
 #### **Classification** {-}
 
-The actual classification of an observation $i$ with predictor values $x_i\in\mathbb{R}^p$ is done using a certain probability threshold, such as $0.05$:
+The actual classification of an observation $i$ with predictor values $x_i\in\mathbb{R}^p$ is done using a certain probability threshold, such as $0.5$:
 
 $$
 \hat{f}(x_i) = 

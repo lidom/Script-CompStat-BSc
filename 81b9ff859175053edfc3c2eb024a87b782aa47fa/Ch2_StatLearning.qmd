@@ -36,7 +36,7 @@ In essence, **statistical learning** refers to a set of approaches for estimatin
 
 In this chapter we outline some of the key theoretical concepts that arise in estimating $f,$ as well as tools for evaluating the estimates obtained.
 
-### Why Estimate $f$?
+#### **Why Estimate $f$?** {-}
 
 There are **two main reasons** that we may wish to estimate $f$: 
 
@@ -47,7 +47,7 @@ There are **two main reasons** that we may wish to estimate $f$:
 In the following, we discuss each in turn.
 
 
-## Prediction {-}
+#### **Prediction** {-}
 
 In many situations, a set of inputs $X$ are readily available, but the output $Y$ cannot be easily obtained. In this setting, since the error term averages to zero, we can predict $Y$ using
 $$
@@ -63,7 +63,7 @@ In this setting, $\hat{f}$ is often treated as a **black box**, in the sense tha
 **Example:** As an example, suppose that $(X_1, X_2, \dots, X_p)$ are characteristics of a patient's blood sample that can be easily measured in a lab, and $Y$ is a variable encoding the patient's risk for a severe adverse reaction to a particular drug. It is natural to seek to predict $Y$ using $X,$ since we can then avoid giving the drug in question to patients who are at high risk of an adverse reaction--that is, patients for whom the estimate of $Y$ is high.
 
 
-### Accuracy of a Prediction {-}
+#### **Accuracy of a Prediction** {-}
 
 The accuracy of $\hat{Y}$ as a prediction for $Y$ depends on two quantities: 
 
@@ -95,26 +95,27 @@ where
 
 
 Derivation of @eq-MSEDecompFixed for a **given** $\hat{f}$ and a **given** $X;$ i.e. only $\epsilon$ is random: 
-
+$$
 \begin{align*}
 &E\left[(Y - \hat{Y})^2\right]\\[2ex] 
 &\text{[using $Y=f(X)+\epsilon$]}\\[2ex]
 &=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right]\\[2ex]
+&=E\left[((f(X)- \hat{f}(X)) + \epsilon )^2\right]\\[2ex]
 &\text{[binomial formula]}\\[2ex]
-&=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex] 
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex] 
 &\text{[using that $X$ and $\hat{f}$ are fixed]}\\[2ex]
 % &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
-&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
 &\text{[using that $E(\epsilon)=0$ and $E(\epsilon^2)=Var(\epsilon)=\sigma^2$]}\\[2ex]
-&=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
+&=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
 &=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
 \end{align*}
+$$
 
-It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for $Y,$ i.e. 
+Variance of the irreducible prediction error equals the lowest possible value of the mean squared (prediction) error, i.e. 
 $$
-E\left[(Y - \hat{Y})^2\right] \geq Var\left(\epsilon\right)
+Var\left(\epsilon\right)\leq E\left[(Y - \hat{Y})^2\right]. 
 $$
-This bound is almost always unknown in practice.
 
 
 ::: {.callout-tip}

@@ -208,18 +208,7 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li>
-<a href="#what-is-statistical-learning" id="toc-what-is-statistical-learning" class="nav-link active" data-scroll-target="#what-is-statistical-learning"><span class="header-section-number">2.1</span> What is Statistical Learning?</a>
-  <ul class="collapse">
-<li><a href="#why-estimate-f" id="toc-why-estimate-f" class="nav-link" data-scroll-target="#why-estimate-f"><span class="header-section-number">2.1.1</span> Why Estimate <span class="math inline">\(f\)</span>?</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a>
-  <ul class="collapse">
-<li><a href="#accuracy-of-a-prediction" id="toc-accuracy-of-a-prediction" class="nav-link" data-scroll-target="#accuracy-of-a-prediction">Accuracy of a Prediction</a></li>
-  </ul>
-</li>
+<li><a href="#what-is-statistical-learning" id="toc-what-is-statistical-learning" class="nav-link active" data-scroll-target="#what-is-statistical-learning"><span class="header-section-number">2.1</span> What is Statistical Learning?</a></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   <li>
 <a href="#how-do-we-estimate-f" id="toc-how-do-we-estimate-f" class="nav-link" data-scroll-target="#how-do-we-estimate-f"><span class="header-section-number">2.2</span> How Do We Estimate <span class="math inline">\(f\)</span>?</a>
@@ -302,15 +291,14 @@ Y = f(X) + \epsilon.
 <p>In this formulation, <span class="math inline">\(f\)</span> represents the <em>systematic</em> information that <span class="math inline">\(X\)</span> provides about <span class="math inline">\(Y.\)</span></p>
 <p>In essence, <strong>statistical learning</strong> refers to a set of approaches for estimating the unknown function <span class="math inline">\(f.\)</span></p>
 <p>In this chapter we outline some of the key theoretical concepts that arise in estimating <span class="math inline">\(f,\)</span> as well as tools for evaluating the estimates obtained.</p>
-<section id="why-estimate-f" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="why-estimate-f">
-<span class="header-section-number">2.1.1</span> Why Estimate <span class="math inline">\(f\)</span>?</h3>
+<section id="why-estimate-f" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="why-estimate-f"><strong>Why Estimate <span class="math inline">\(f\)</span>?</strong></h4>
 <p>There are <strong>two main reasons</strong> that we may wish to estimate <span class="math inline">\(f\)</span>:</p>
 <ul>
 <li>prediction and</li>
 <li>inference.</li>
 </ul>
 <p>In the following, we discuss each in turn.</p>
-</section></section><section id="prediction" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="prediction">Prediction</h2>
+</section><section id="prediction" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="prediction"><strong>Prediction</strong></h4>
 <p>In many situations, a set of inputs <span class="math inline">\(X\)</span> are readily available, but the output <span class="math inline">\(Y\)</span> cannot be easily obtained. In this setting, since the error term averages to zero, we can predict <span class="math inline">\(Y\)</span> using <span class="math display">\[
 \hat{Y} = \hat{f}(X),
 \]</span></p>
@@ -324,7 +312,7 @@ Y = f(X) + \epsilon.
 </ul>
 <p>In this setting, <span class="math inline">\(\hat{f}\)</span> is often treated as a <strong>black box</strong>, in the sense that one is not typically concerned with the exact form of <span class="math inline">\(\hat{f},\)</span> provided that it yields accurate predictions for <span class="math inline">\(Y.\)</span></p>
 <p><strong>Example:</strong> As an example, suppose that <span class="math inline">\((X_1, X_2, \dots, X_p)\)</span> are characteristics of a patient’s blood sample that can be easily measured in a lab, and <span class="math inline">\(Y\)</span> is a variable encoding the patient’s risk for a severe adverse reaction to a particular drug. It is natural to seek to predict <span class="math inline">\(Y\)</span> using <span class="math inline">\(X,\)</span> since we can then avoid giving the drug in question to patients who are at high risk of an adverse reaction–that is, patients for whom the estimate of <span class="math inline">\(Y\)</span> is high.</p>
-<section id="accuracy-of-a-prediction" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="accuracy-of-a-prediction">Accuracy of a Prediction</h3>
+</section><section id="accuracy-of-a-prediction" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="accuracy-of-a-prediction"><strong>Accuracy of a Prediction</strong></h4>
 <p>The accuracy of <span class="math inline">\(\hat{Y}\)</span> as a prediction for <span class="math inline">\(Y\)</span> depends on two quantities:</p>
 <ul>
 <li>the <strong>reducible error</strong>, i.e.&nbsp;the difference between <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(f\)</span> and</li>
@@ -348,23 +336,25 @@ Y = f(X) + \epsilon.
 <li>and <span class="math inline">\(Var(\epsilon)\)</span> represents the variance associated with the error term <span class="math inline">\(\epsilon.\)</span>
 </li>
 </ul>
-<p>Derivation of <a href="#eq-MSEDecompFixed" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> for a <strong>given</strong> <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> <span class="math inline">\(X;\)</span> i.e.&nbsp;only <span class="math inline">\(\epsilon\)</span> is random:</p>
-<p><span class="math display">\[\begin{align*}
+<p>Derivation of <a href="#eq-MSEDecompFixed" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> for a <strong>given</strong> <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> <span class="math inline">\(X;\)</span> i.e.&nbsp;only <span class="math inline">\(\epsilon\)</span> is random: <span class="math display">\[
+\begin{align*}
 &amp;E\left[(Y - \hat{Y})^2\right]\\[2ex]
 &amp;\text{[using $Y=f(X)+\epsilon$]}\\[2ex]
 &amp;=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right]\\[2ex]
+&amp;=E\left[((f(X)- \hat{f}(X)) + \epsilon )^2\right]\\[2ex]
 &amp;\text{[binomial formula]}\\[2ex]
-&amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex]
+&amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex]
 &amp;\text{[using that $X$ and $\hat{f}$ are fixed]}\\[2ex]
 % &amp;=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\[2ex]
-&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex]
+&amp;=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex]
 &amp;\text{[using that $E(\epsilon)=0$ and $E(\epsilon^2)=Var(\epsilon)=\sigma^2$]}\\[2ex]
-&amp;=\left(f(X) -\hat{f}(X)\right)^2 - 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
+&amp;=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
 &amp;=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
-\end{align*}\]</span></p>
-<p>It is important to keep in mind that the irreducible error will always provide an upper bound on the accuracy of our prediction for <span class="math inline">\(Y,\)</span> i.e.&nbsp; <span class="math display">\[
-E\left[(Y - \hat{Y})^2\right] \geq Var\left(\epsilon\right)
-\]</span> This bound is almost always unknown in practice.</p>
+\end{align*}
+\]</span></p>
+<p>Variance of the irreducible prediction error equals the lowest possible value of the mean squared (prediction) error, i.e.&nbsp; <span class="math display">\[
+Var\left(\epsilon\right)\leq E\left[(Y - \hat{Y})^2\right].
+\]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
