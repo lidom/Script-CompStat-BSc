@@ -1060,7 +1060,7 @@ $$
 $$ 
 
 
-There is a $(1-\alpha)\cdot 100\%$ change (in resamplings from the training data random sample) that the **random confidence interval** 
+There is a $(1-\alpha)\cdot 100\%$ chance (in resamplings from the training data random sample) that the **random confidence interval** 
 $$
 \operatorname{CI}^{1-\alpha}_{\beta_j}
 $$ 
