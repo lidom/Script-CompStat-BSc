@@ -722,7 +722,7 @@ E(\hat\beta|X)
 &\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
 &= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
 &= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
-&= E(\underbrace{(X'X)^{-1}X'X}_{=I_(p+1)}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&= E(\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
 &= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
 &= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex] 
 &= \underset{(p+1)\times 1}{\beta}  

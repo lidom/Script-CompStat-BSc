@@ -921,7 +921,7 @@ E(\hat\beta|X)
 &amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
 &amp;= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
 &amp;= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
-&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_(p+1)}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
 &amp;= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
 &amp;= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex]
 &amp;= \underset{(p+1)\times 1}{\beta}  
@@ -2390,6 +2390,7 @@ The predicted value plus prediction interval:
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2410,6 +2411,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 :::
 :::
+
 
 
 
