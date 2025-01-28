@@ -500,7 +500,7 @@ Figure&nbsp;6.3: LOOCV error estimates for different polynomial degrees <span cl
 </div>
 <section id="cv-often-computationally-expensive" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="cv-often-computationally-expensive"><strong>CV: (Often) Computationally Expensive</strong></h4>
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear regression models, takes<br><center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 4.088 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 5.64 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -546,7 +546,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.026 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.019 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -574,18 +574,18 @@ However, the fast version takes only
 </li>
 </ul>
 <p>Each pair of training and test set allows to compute an estimate of the test error <span class="math display">\[
-\widehat{\operatorname{MSE}}_{Train,1},
-\widehat{\operatorname{MSE}}_{Train,2},\dots,
-\widehat{\operatorname{MSE}}_{Train,k},
+\widehat{\operatorname{MSE}}_{Test,1},
+\widehat{\operatorname{MSE}}_{Test,2},\dots,
+\widehat{\operatorname{MSE}}_{Test,k},
 \]</span> where <span class="math display">\[
 \begin{align*}
-\widehat{\operatorname{MSE}}_{Train,j}
+\widehat{\operatorname{MSE}}_{Test,j}
 &amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
 &amp;=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
 \end{align*}
 \]</span> with <span class="math inline">\(\hat{f}\)</span> being computed from the training data, but evaluated at the test data.</p>
 <p>The <span class="math inline">\(k\)</span>-fold CV estimate is computed by averaging these values <span id="eq-kfoldCV"><span class="math display">\[
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Train,j}
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Test,j}
 \qquad(6.3)\]</span></span></p>
 <p>Figure 5.5 illustrates the data splitting for <span class="math inline">\(k\)</span>-fold CV.</p>
 <p><img src="images/Fig_5_5.png" class="img-fluid"></p>
@@ -682,10 +682,10 @@ However, the fast version takes only
 </li>
 </ul>
 <p>Thus, the larger <span class="math inline">\(k\)</span> the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates <span class="math display">\[
-\widehat{\operatorname{MSE}}_1,\dots,\widehat{\operatorname{MSE}}_k.
-\]</span> Since the (sample) mean of highly correlated quantities <span class="math display">\[
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
-\]</span> has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k&lt;n.\)</span></p>
+\widehat{\operatorname{MSE}}_{Test,1},\widehat{\operatorname{MSE}}_{Test,2},\dots,\widehat{\operatorname{MSE}}_{Test,k}.
+\]</span> Since the (sample) mean <span class="math display">\[
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Test,j}
+\]</span> of highly correlated quantities has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k&lt;n.\)</span></p>
 <p><span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k=5\)</span> or <span class="math inline">\(k=10\)</span> is often considered a good compromise balancing these bias and variance issues.</p>
 </section><section id="cross-validation-on-classification-problems" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="cross-validation-on-classification-problems">
 <span class="header-section-number">6.2.2</span> Cross-Validation on Classification Problems</h3>

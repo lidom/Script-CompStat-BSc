@@ -351,14 +351,14 @@ These $k$ index sets allow us construct different training and test sets for eac
 
 Each pair of training and test set allows to compute an estimate of the test error
 $$
-\widehat{\operatorname{MSE}}_{Train,1}, 
-\widehat{\operatorname{MSE}}_{Train,2},\dots,
-\widehat{\operatorname{MSE}}_{Train,k},
+\widehat{\operatorname{MSE}}_{Test,1}, 
+\widehat{\operatorname{MSE}}_{Test,2},\dots,
+\widehat{\operatorname{MSE}}_{Test,k},
 $$
 where
 $$
 \begin{align*}
-\widehat{\operatorname{MSE}}_{Train,j}
+\widehat{\operatorname{MSE}}_{Test,j}
 &=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{y}_i\right)^2\\[2ex]
 &=\frac{1}{|\mathcal{I}_j|}\sum_{i\in\mathcal{I}_j}\left(y_i - \hat{f}(x_i)\right)^2,\quad j=1,\dots,k,
 \end{align*}
@@ -367,7 +367,7 @@ with $\hat{f}$ being computed from the training data, but evaluated at the test 
 
 The $k$-fold CV estimate is computed by averaging these values
 $$
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Train,j}
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Test,j}
 $${#eq-kfoldCV}
 
 Figure 5.5 illustrates the data splitting for $k$-fold CV.
@@ -462,13 +462,13 @@ There is a bias-variance trade-off associated with the choice of $k$ in $k$-fold
 
 Thus, the larger $k$ the more similar the training data sets become. However, very similar training sets lead to highly correlated test MSE estimates
 $$
-\widehat{\operatorname{MSE}}_1,\dots,\widehat{\operatorname{MSE}}_k.
+\widehat{\operatorname{MSE}}_{Test,1},\widehat{\operatorname{MSE}}_{Test,2},\dots,\widehat{\operatorname{MSE}}_{Test,k}.
 $$
-Since the (sample) mean of highly correlated quantities 
+Since the (sample) mean 
 $$
-\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_j
+\operatorname{CV}_{(k)}=\frac{1}{k}\sum_{j=1}^k\widehat{\operatorname{MSE}}_{Test,j}
 $$
-has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
+of highly correlated quantities has higher variance than the (sample) mean of quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from $k$-fold CV with $k<n.$ 
 
 $k$-fold CV with $k=5$ or $k=10$ is often considered a good compromise balancing these bias and variance issues. 
 
