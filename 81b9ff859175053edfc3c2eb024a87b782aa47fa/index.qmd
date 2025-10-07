@@ -37,14 +37,12 @@ timetable %>% kbl() %>%  kable_styling()
     * a *handwritten* cheat-sheet (**one side** of a DIN A4 page).
     * a non-programmable scientific calculator.
 * Please, do **not** use a pencil.
-
+* Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en).
 <!-- 
 * First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/0gmogr9mw7kzkjkajfp0l/Exam_CASA_1stPage.pdf?rlkey=tmshf9y6bdmjki2mhekre9nw3&dl=0) 
 -->
 
-<!-- 
-* Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en)
- -->
+
 
 
 
