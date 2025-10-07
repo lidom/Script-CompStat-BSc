@@ -1,3 +1,4 @@
+<!-- LTeX: language=en-US -->
 # Organization of the Course {-}
 
 ### Timetable {-}
@@ -6,9 +7,9 @@
 suppressPackageStartupMessages(library("kableExtra"))
 suppressPackageStartupMessages(library("tidyverse"))
 
-timetable <- tibble("Mondays"      = c("Theory", "Break", "Theory", "Open Coding Space"),
-                    "Time"         = c("14:15-15:45", "15:45-16:15", "16:15-17:00", "17:00-17:45"),
-                    "Lecture Hall" = c("Jur / Hörsaal K"))
+timetable <- tibble("Mondays"      = c("Theory",      "Break",       "Theory",      "Open Coding Space"),
+                    "Time"         = c("14:15-15:45", "15:45-16:15", "16:15-17:15", "17:15-17:45"),
+                    "Lecture Hall" = c("Jur / Lecture Hall K"))
            
 timetable %>% kbl() %>%  kable_styling()
 ```
@@ -17,37 +18,37 @@ timetable %>% kbl() %>%  kable_styling()
 ### Lecture Material {-}
 
 * This online script
-* [`R`-Script used during the lectures](https://www.dropbox.com/scl/fi/8foafpmricmtexnevvh2q/R_Script_CASA_2024.R?rlkey=q53jjq2x2hlcyzwbxqo7h63ez&dl=0)
-* [eWhiteboard](https://www.dropbox.com/scl/fi/07sbfshx0lmop8a9w6rpa/CASA_eWhiteboard_2425_annotated.pdf?rlkey=0xzon9ny1fw4cty562wkl03af&dl=0) for some lecture notes.
+* [Folder containing `R`-Scripts](https://www.dropbox.com/scl/fo/omfqxytalaiyx4kd0kv4o/AE7EhUu8W3dJPvaA_ETDlQM?rlkey=w6v0am29ypq38gt4xpzy230bj&st=8p60234i&dl=0)
+* [eWhiteboard](https://www.dropbox.com/scl/fi/vnzws3xkbs2ojd5mfcdxr/CASA_eWhiteboard_2526_annotated.pdf?rlkey=ny3rnruqrsyyy1j4i2z3rdoek&st=djjulif7&dl=0) 
 
 ### Literature {-}
 
-
-* Main Course Textbook (`ISLR`): 
-  * [An Introduction to Statistical Learning](https://www.statlearning.com/), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani
-  * The PDF-version and further resources (datasets, etc.) of the textbook can be downloaded **for free** from [https://www.statlearning.com/](https://www.statlearning.com/)
-
-* Further/additional reading: 
-  * [The Elements of
-Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
-
+* [An Introduction to Statistical Learning](https://www.statlearning.com/) (`ISLR`)
+* [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
+* Econometrics (Chapter 1) by Fumio Hayashi
 
 <!-- * **To-Do List for October 9, 2023:** [To-Do List (PDF)](https://www.dropbox.com/scl/fi/oxf406ur56tq4wg5hm1dj/ToDo_List_4_Students.pdf?rlkey=juskpa6o9yx903yywpgatw5j7&dl=0) -->
 
 
-### Important Information on the Exam {-}
+### Exam {-}
 
-
-* First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/0gmogr9mw7kzkjkajfp0l/Exam_CASA_1stPage.pdf?rlkey=tmshf9y6bdmjki2mhekre9nw3&dl=0)
-* You are allowed to use a *handwritten* cheat-sheet (**one side** of a DIN A4 page).
-* You are allowed to use a non-programmable scientific calculator.
+* Written exam (60 minutes)
+* You are allowed to use 
+    * a *handwritten* cheat-sheet (**one side** of a DIN A4 page).
+    * a non-programmable scientific calculator.
 * Please, do **not** use a pencil.
+
+<!-- 
+* First page of the exam (containing the exam instructions): [Download](https://www.dropbox.com/scl/fi/0gmogr9mw7kzkjkajfp0l/Exam_CASA_1stPage.pdf?rlkey=tmshf9y6bdmjki2mhekre9nw3&dl=0) 
+-->
+
+<!-- 
 * Exam dates and times are published by the [examinations office](https://www.econ.uni-bonn.de/examinations/en/dates/dates?set_language=en)
+ -->
 
 
 
-
-### Assignments {-}
+<!-- ### Assignments {-}
 
 For each chapter there is a home assignment. You can use the `Open Coding Space` for asking questions and for working on your assignments. You can help each other, but everyone has to submit an own home assignment.  
 
@@ -68,7 +69,7 @@ To participate in the assignments, you need a GitHub-Account and write your name
 
 
 **Results:** [List of Results](https://docs.google.com/spreadsheets/d/1zBNcoepnBX3vMz6E2klOtroi0QfvwbmYFcoMdmNrx-8/edit?usp=sharing)
-
+ -->
 
 
 

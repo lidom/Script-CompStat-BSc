@@ -14,9 +14,9 @@ book:
   chapters:
     - index.qmd
     - Ch1_Intro2R.qmd
-    - Ch2_StatLearning.qmd      # Comment in/out solutions of exercises
-    - Ch3_MatrixAlgebra.qmd     # Comment in/out solutions of exercises
+    #- Ch2_StatLearning.qmd      # Comment in/out solutions of exercises
     - Ch4_LinearRegression.qmd  # Comment in/out solutions of exercises
+    - Ch3_MatrixAlgebra.qmd     # Comment in/out solutions of exercises
     - Ch5_Classification.qmd    # Comment in/out solutions of exercises
     - Ch6_ResamplingMethods.qmd # Comment in/out solutions of exercises
     #- Ch7_LinModSelectRegul.qmd # Comment in/out solutions of exercises

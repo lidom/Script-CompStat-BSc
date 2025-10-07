@@ -1,4 +1,18 @@
+<!-- LTeX: language=en-US -->
 # Linear Regression {#sec-linearRegCh}
+
+
+::: {.hidden}
+$$
+\require{color}
+%% Colorbox within equation-environments:
+\newcommand{\highlight}[2][yellow]{\mathchoice%
+  {\colorbox{#1}{$\displaystyle#2$}}%
+  {\colorbox{#1}{$\displaystyle#2$}}%
+  {\colorbox{#1}{$\displaystyle#2$}}%
+  }%
+$$
+:::
 
 
 This chapter is based on the following references: 
@@ -12,23 +26,26 @@ This chapter is based on the following references:
 
 The (multiple) linear regression model is defined by the following assumptions which together describe the relevant theoretical aspects of the underlying data generating process:
 
-**Assumption 1: Model and Sampling**
-
-**Part (a): Linear Model**
+#### **Assumption 1: Model and Sampling** {-}
+#### **Part (a): Linear Model** {-}
 
 $$
 \begin{align}
-  Y_i= \underbrace{\sum_{k=0}^p\beta_k X_{ik}}_{=f(X_i)}+\epsilon_i, \quad i=1,\dots,n,
+  Y_i 
+  & = \beta_0 X_{i0}+\beta_1 X_{i1}+\dots+\beta_p X_{ip}+\epsilon_i\\
+  & = \sum_{k=0}^p\beta_k X_{ik}+\epsilon_i, 
 \end{align}
 $${#eq-LinMod}
-where 
+where $i=1,\dots,n$ is the index for denoting the statistical units (individuals, companies). 
+
+We set the values of the first predictor equal to one
 $$
 X_{i0}=1
 $$ 
-for all $i=1,\dots,n.$ 
+for all $i=1,\dots,n$ to model $\beta_0$ as the intercept. 
 
-* $Y_i$ is called "dependent variable" or "outcome variable" or "regressand"
-* $X_{ik}$ is called the $k$th "independent variable" or "predictor variable" or "regressor" or "explanatory variable" or "control variable." 
+* $Y_i$ is called **dependent variable**, **outcome variable** or **regressand**
+* $X_{ik}$ is called the $k$th **independent variable**, **predictor variable**, **regressor**, **explanatory variable**, or **control variable**. 
 * $\epsilon_i$ is the error term.
 
 It is convenient to write @eq-LinMod using matrix notation
@@ -39,11 +56,12 @@ $$
 $$
 where 
 $$
- X_i=\left(\begin{matrix}X_{i0}\\ \vdots\\  X_{ip}\end{matrix}\right)
+ X_i=\left(\begin{matrix}X_{i0}\\ X_{i1}\\ \vdots\\  X_{ip}\end{matrix}\right)
+ =\left(\begin{matrix}1\\ X_{i1}\\ \vdots\\  X_{ip}\end{matrix}\right)
   \quad\text{and}\quad 
-\beta=\left(\begin{matrix}\beta_0\\ \vdots\\ \beta_p\end{matrix}\right).
+\beta=\left(\begin{matrix}\beta_0\\ \beta_1\\ \vdots\\ \beta_p\end{matrix}\right).
 $$ 
-Stacking all individual rows, $X_i',$ $i=1,\dots,n$ leads to
+Stacking the components for all $i=1,\dots,n,$ leads to
 $$
 \begin{eqnarray*}\label{LM}
   \underset{(n\times 1)}{Y}&=&\underset{(n\times (p+1))}{X}\underset{((p+1)\times 1)}{\beta} + \underset{(n\times 1)}{\epsilon},
@@ -51,13 +69,13 @@ $$
 $$
 where 
 $$
-\begin{equation*}
+\begin{align*}
 Y=\left(\begin{matrix}Y_1
 \\ \vdots\\
 Y_n
 \end{matrix}\right),
 \quad 
-X=\left(\begin{matrix}
+X&=\left(\begin{matrix}
 X_{10}&\dots&X_{1p}\\
 \vdots&\ddots&\vdots\\ 
 X_{n0}&\dots&X_{np}\\
@@ -69,63 +87,48 @@ X_{n0}&\dots&X_{np}\\
 \left(\begin{matrix}
 \epsilon_1\\ \vdots\\ 
 \epsilon_n
-\end{matrix}\right).
-\end{equation*}
+\end{matrix}\right)\\
+&=\left(\begin{matrix}
+\;\;1\;\;&\dots&X_{1p}\\
+\vdots&\ddots&\vdots\\ 
+\;\;1\;\;&\dots&X_{np}\\
+\end{matrix}\right)
+\end{align*}
 $$
 
-::: {.callout-tip}
-
-# Simple Linear Regression and Polynomial Regression Model 
-
-The special case of $p=1$
-$$
-Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i
-$$
-is called the ***simple* linear regression model**. With the simple linear regression model, only straight line fits are possible. 
-
-By contrast, with the multiple linear regression model, we can also fit polynomials. For instance, we can define
-$$
-X_{i2} := X_{i1}^2
-$$
-which leads to a quadratic regression model (often used for life-cycle analyses that include the predictor `Age`$_i=X_{i1}$)
-$$
-Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}^2 + \epsilon_i.
-$$
-Of course, further predictor variables $X_{i2},\dots,X_{ip}$ can (and should) be added to this model. 
-
-The same logic applies to polynomials with higher polynomial degrees $(\geq 2).$ Large polynomial degrees, however, can lead to unstable estimation results. 
-:::
 
 
+<!-- 
 ::: {.callout-note}
 The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple.  
-:::
+::: 
+-->
 
 
-**Part (b): Random Sample**
+#### **Part (b): Random Sampling** {-}
 
 We assume that the $n$ observed data points 
 $$
-((y_{1},x_{10},\dots,x_{1p}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((Y_{1,obs},X_{10,obs},\dots,X_{1p,obs}),\dots,(Y_{n,obs},X_{n0,obs},\dots,X_{np,obs}))
 $$ 
-are a realization of the **training data random sample** 
+are a realization of an **(iid) random sample** 
 $$
 ((Y_{1},X_{10},\dots,X_{1p}),\dots,(Y_{n},X_{n0},\dots,X_{np})).
 $$ 
 
-That is, the $i$th observed $p+2$ dimensional data point 
-$$
-(y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}
-$$ 
-is a realization of a $p+2$ dimensional random variable 
-$$
-(Y_{i},X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2},
-$$ 
-where 
+This means that we consider a situation, where the $p+2$-dimensional random vectors $(Y_{i},X_{i0},\dots,X_{ip})$ are **indepenent and identically distributed (iid)** across $i=1,\dots,n$, i.e. 
 
-1. $(Y_{i},X_{i0},\dots,X_{ip})$ has the identical $p+2$ dimensional distribution for all $i=1,\dots,n.$ 
-2. $(Y_{i},X_{i0},\dots,X_{ip})$ is independent of 
-$(Y_{j},X_{j0},\dots,X_{jp})$ for all $i\neq j=1,\dots,n.$
+1. **Independent:** The two $p+2$-dimensional random vectors 
+$$
+(Y_{i},X_{i0},\dots,X_{ip})\quad\text{and}\quad (Y_{j},X_{j0},\dots,X_{jp})
+$$ 
+are independent for all $(i,j)$-paris with $i\neq j=1,\dots,n.$
+2. **Identical Distributions:** The $p+2$-dimensional random vector 
+$$
+(Y_{i},X_{i0},\dots,X_{ip})
+$$ 
+has the same distribution for all $i=1,\dots,n.$ 
+
 
 <!-- 
 ::: {.callout-note}
@@ -137,81 +140,50 @@ are i.i.d. across $i=1,\dots,n$.
 ::: 
 -->
 
+<!-- 
 ::: {.callout-caution}
 **Remark:** Often, we do not use a different notation for observed realizations 
-$(y_{i},x_{i0},\dots,x_{ip})\in\mathbb{R}^{p+2}$ 
-and for the corresponding random variable 
-$(Y_{i},X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+2}$ 
+$$
+(Y_{i,obs},X_{i0,obs},\dots,X_{ip,obs})
+$$
+and the corresponding (multivariate) random variable 
+$$
+(Y_{i},X_{i0},\dots,X_{ip})
+$$ 
 since often both interpretations (random variable and its realizations) can make sense 
 in the same statement and then it depends on the considered context whether the random variables point if view or the realization point of view applies.
-:::
+::: 
+-->
 
 
 
-**Assumption 2: Exogeneity**
+#### **Assumption 2: Exogeneity** {-}
 $$
 E(\epsilon_i|X_i)=0,\quad i=1,\dots,n
 $${#eq-assExogen}
 
-This assumption demands that the mean of the random error term $\epsilon_i$ is zero irrespective of the realizations of $X_i$. This exogeneity assumption is also called
+This assumption demands that the mean of the random error term $\epsilon_i$ is zero irrespective of the realizations of $X_i\in\mathbb{R}^{p+1}.$ 
 
-* "orthogonality assumption" or 
-* "mean independence assumption."
+The exogeneity assumption is also called 
+
+* **orthogonality assumption** or 
+* **mean independence assumption**.
 
 ::: {.callout-note}
 Together with the random sample assumption (Assumption 1, Part (b)) @eq-assExogen even implies **strict exogeneity** 
 $$
 E(\epsilon|X) = \underset{(n\times 1)}{0},
 $$ 
-since we have independence across $i=1,\dots,n$.  Under strict exogeneity, the mean of the random error **vector** $\epsilon\in\mathbb{R}^n$ is zero irrespective of the realizations of the $(n\times (p+1))$-dimensional random predictor matrix $X.$ 
-:::
+since we have independence across $i=1,\dots,n$.  
 
-
-::: {.callout icon="false"}
-
-# Example: Independence between error term and predictors
-
-Let
-
-* $E(\epsilon_i)=0$ and
-* $\epsilon_i$ be independent of $X_i$
-
-Here the assumption of exogeneity is fulfilled since by the independence between $\epsilon_i$ and $X_i$ we have that
-$$
-E(\epsilon_i|X_i) = E(\epsilon_i) 
-$$
-and by assumption $E(\epsilon_i)=0$ such that 
-$$
-E(\epsilon_i|X_i) = 0.
-$$
-
-Note: The assumption $E(\epsilon_i)=0$ is not critical (i.e. not restrictive) due to the intercept term in @eq-assExogen. 
-:::
-
-
-::: {.callout icon="false"}
-
-# Examples: Heteroskedastic Error
-
-Let
-
-* $\epsilon_i\sim\mathcal{N}(0,\sigma_i^2),$ where 
-* $\sigma_i = |X_{i1}|$ 
-
-Here the assumption of exogeneity is fulfilled since realizations of $X_i$ do not affect the mean of $\epsilon_i,$ thus
-$$
-E(\epsilon_i|X_i) = 0. 
-$$
-
-However, $\epsilon_i$ and $X_i$ are not independent of each other, since the conditional variance of $\epsilon_i$ is a function of $X_{i1}$
-$$
-Var(\epsilon_i|X_i) = |X_{i1}|^2.
-$$
+Under strict exogeneity, the mean of the random error **vector** $\epsilon\in\mathbb{R}^n$ is zero irrespective of the realizations of the $(n\times (p+1))$-dimensional random predictor matrix $X.$ 
 :::
 
 
 
-**Assumption 3: Rank Condition (no perfect multicollinearity)**
+
+
+#### **Assumption 3: Rank Condition (No Perfect Multicollinearity)** {-}
 
 $$
 \begin{align*}
@@ -219,7 +191,7 @@ $$
 \Leftrightarrow P\big(\operatorname{rank}(X)&= p+1 \big)=1
 \end{align*}
 $$
-This assumption demands that, with probability one, no predictor variable $X_{k}\in\mathbb{R}^n$ is linearly dependent of the others. (This is the literal translation of the "almost surely (a.s.)" concept.) 
+This assumption demands that, with probability one, no predictor variable $X_{k}\in\mathbb{R}^n$ (i.e. no column in $X$) is linearly dependent of the others. (This is the literal translation of the "almost surely (a.s.)" concept.) 
 
 
 **Note:** The assumption implies that $n\geq (p+1),$ since 
@@ -227,10 +199,13 @@ $$
 \operatorname{rank}(X)\leq \min\{n,(p+1)\}\quad(a.s.)
 $$
 
-This rank assumption is a bit dicey and its violation belongs to one of the classic problems in applied econometrics (keywords: dummy variable trap, multicollinearity, variance inflation).  The violation of this assumption harms any economic interpretation since we cannot disentangle the explanatory variables' individual effects on $Y$. Therefore, this assumption is also often called an **identification assumption**.
+<!-- 
+This rank assumption is a bit dicey and its violation belongs to one of the classic problems in applied econometrics (keywords: dummy variable trap, multicollinearity, variance inflation).   
+-->
 
+This assumption rules out redundant predictors. For instance, when income measured in Euros is a predictor variable, then adding the same income variable, but measured in Cents would be redundant. We would have a perfect linear dependency between both variables violating Assumption 3. 
 
-::: {.callout-tip}
+::: {.callout-note}
 
 * Under Assumption 3, we have that 
 $$
@@ -250,9 +225,87 @@ $$
 
 
 
-**Assumption 4: Error distribution** 
+#### **Assumption 4: Error Variance** {-}
 
-There are different more or less restrictive assumptions.  Some of the most common ones are the following:
+<!-- 
+The $n$-vector of error terms 
+$$
+\epsilon=\left(\begin{matrix}
+\epsilon_1\\ \vdots\\ 
+\epsilon_n
+\end{matrix}\right)
+$$
+has to fulfill the mean independence assumption (Assumption 2), i.e. 
+$$
+E(\epsilon|X)=\underset{(n\times 1)}{0}.
+$$
+But Assumption 2 is fulled by many different error term distributions. Typically, we do not want to specify the total distribution of $\epsilon$, since typically we simply do not know the exact distribution of the error terms.  
+-->
+
+For doing inference, we need to make a realistic assumption about the conditional variance of $\epsilon$, given $X$
+$$
+\begin{align*}
+&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+& = \left(\begin{matrix}
+Var(\epsilon_1|X)&Cov(\epsilon_1,\epsilon_2|X)&\dots&Cov(\epsilon_1,\epsilon_n|X)\\
+Cov(\epsilon_2,\epsilon_1|X)&Var(\epsilon_2|X)&\dots&Cov(\epsilon_2,\epsilon_n|X)\\
+\vdots&\vdots&\ddots&\vdots\\
+Cov(\epsilon_n,\epsilon_1|X)&Cov(\epsilon_n,\epsilon_2|X)&\dots&Var(\epsilon_n|X)
+\end{matrix}\right)
+\end{align*}
+$$
+By the (iid) random sample assumption (Assumption 1, Part (b)), we have independence between individual error terms, such that
+$$
+\begin{align*}
+&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+& = \left(\begin{matrix}
+Var(\epsilon_1|X_1)&0&\dots&0\\
+0&Var(\epsilon_2|X_2)&\dots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\dots&Var(\epsilon_n|X_n)
+\end{matrix}\right)
+\end{align*}
+$$
+
+Under the (iid) random sampling assumption, we distinguishes two cases: **heteroskedastic** and **homoskedastic** errors. 
+
+**Heteroskedastic errors** allow for different conditional variances 
+$$
+Var(\epsilon_i|X_i)=\sigma^2(X_i)>0
+$$
+for all $i=1,\dots,n$ such that 
+$$
+\begin{align*}
+&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+& = \left(\begin{matrix}
+\sigma^2(X_1)&0&\dots&0\\
+0&\sigma^2(X_2)&\dots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\dots&\sigma^2(X_n)
+\end{matrix}\right)
+\end{align*}
+$$
+
+**Homoskedastic errors** assume equal conditional variances 
+$$
+Var(\epsilon_i|X_i)=sigma^2>0
+$$
+for all $i=1,\dots,n$ such that 
+$$
+\begin{align*}
+&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+& = \left(\begin{matrix}
+\sigma^2&0&\dots&0\\
+0&\sigma^2&\dots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\dots&\sigma^2
+\end{matrix}\right)
+= \sigma^2 I_n,
+\end{align*}
+$$
+
+<!--
+List of typical classes of error term distributions:
 
 - **Conditional distribution with sufficiently many moments:** 
 $$
@@ -299,88 +352,352 @@ where $I_n$ denotes the $(n\times n)$ identity matrix with ones on the diagonal 
 Thus, under the spherical errors assumption, one has, for all possible realizations of $X$, that: 
    * **uncorrelated:** $Cov(\epsilon_i,\epsilon_j|X)=0$ for all $i=1,\dots,n$ and all $j=1,\dots,n$ such that $i\neq j$ 
    * **homoskedastic:** $Var(\epsilon_i|X)=\sigma^2$ for all $i=1,\dots,n$
+-->
 
 
 
-
-All four Assumptions 1-4 must hold for doing inference using the (multiple) linear regression model.
-
+### Discussion of the Model Assumptions
 
 
+#### **Assumption 1, Part (a)** {-}
 
-#### Homoskedastic versus Heteroskedastic Error Terms {-}
+Particularly, the **linearity** assumption is often misunderstood. 
 
+A function $f:\mathbb{R}^{p+1}\to\mathbb{R}$ is called a **linear** function if the following two conditions hold:
 
-The i.i.d. assumption is not as restrictive as it may seem on first sight. It allows for dependence between $\epsilon_i$ and $(X_{i0},\dots,X_{ip})\in\mathbb{R}^{p+1}$. That is, the error term $\epsilon_i$ can have a conditional distribution which depends on $(X_{i0},\dots,X_{ip}).$ 
+* $f(X_i + \tilde{X}_i) = f(X_i) + f(\tilde{X}_i)$ for predictors $X_i,\tilde{X}_i\in\mathbb{R}^{p+1}$
+* $f(a\cdot X_i) = a\cdot f( X_i)$ for any scalar $a\in\mathbb{R}$ 
 
-
-The exogeneity assumption (Assumption 2: Exogeneity) requires that the conditional mean of $\epsilon_i$ is independent of $X_i$. Besides this, dependencies between $\epsilon_i$ and $X_{i0},\dots,X_{ip}$ are allowed. For instance, the variance of $\epsilon_i$ can be a function of $X_{i0},\dots,X_{ip}.$ If this is the case, $\epsilon_i$ is said to be **"heteroskedastic."** 
-
-- **Heteroskedastic error terms:** The conditional variances 
+The multiple linear regression function is given by 
 $$
-Var(\epsilon_i|X_i=x_i)=\sigma^2(x_i)
-$$ 
-are a non-constant function $\sigma^2(x_i)>0$ of the realizations $X_i=x_i.$ 
-
-
-
-
-- **Homoskedastic error terms:** The conditional variances 
+f(X_i)  = E(Y_i|X_i) = X_i'\beta.
 $$
-Var(\epsilon_i|X_i=x_i)=\sigma^2
+Derivation: 
+$$
+\begin{align*}
+f(X_i) 
+& = E(Y_i|X_i) \\
+& = E(\beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip} + \epsilon_i |X_i)\\ 
+& = \beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip} + E(\epsilon_i |X_i)\\
+& = \beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip}\\
+& = X_i'\beta
+\end{align*}
+$$
+
+Checking the two linearity conditions for $f(X_i) = X_i'\beta\colon$
+
+* $f(X_i + \tilde{X}_i)=(X_i + \tilde{X}_i)'\beta = X_i'\beta + \tilde{X}_i'\beta=f(X_i) + f(\tilde{X}_i)$
+* $f(aX_i)=(aX_i)'\beta=a(X_i'\beta)=a\,f(X_i)$
+
+Thus, the multiple linear regression function $f(X_i)=X_i'\beta$ is a linear function.
+
+Linear functions are generally **quite flexible** functions and provide a structure that can be **interpreted easily** using partial derivatives: 
+$$
+\frac{\partial}{\partial X_{ik}}f(X_i) = \beta_k
+$$
+That is, changing $X_{ik}$ by one unit, changes $f(X_i)=E(Y_i|X_i)$ by $\beta_k$ units. 
+
+Often we say: "On average, changing $X_{ik}$ by one unit, changes $Y_i$ by $\beta_k$ units."
+
+
+Frequently, the linearity assumption is misunderstood as a straight line fitting assumption. However, only in the special case of the **simple linear regression function**
+$$
+f(X_i) = \beta_0 + \beta_1 X_{i1}
+$$
+**linearity** means **straight line**. 
+
+
+Generally, a linear regression function can have quite complex functional forms. The multiple linear regression model can, for instance, fit polynomials (clearly not straight line). 
+
+
+The **polynomial regression model** is a special case of the multiple linear regression model, where
+$$
+\begin{align*}
+X_{i2} &:= X_{i1}^2\\
+X_{i3} &:= X_{i1}^3\\
+&\vdots\\
+X_{ip} &:= X_{i1}^p
+\end{align*}
+$$
+such that
+$$
+f(X_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}^2 +\dots + \beta_p X_{i1}^p. 
+$$
+
+Partial effects remain easy to interpret in polynomial regression functions:
+$$
+\frac{\partial}{\partial X_{i1}}f(X_i) = \beta_1 + 2\beta_2 X_{i1} + \dots + p\beta_2 X_{i1}^{p-1} 
+$$
+That is, changing $X_{i1}$ by one unit, changes $f(X_i)=E(Y_i|X_i)$ by 
+$$
+\beta_1 + 2\beta_2 X_{i1} + \dots + p\beta_2 X_{i1}^{p-1}
 $$ 
-are constant $\sigma^2>0$ for every possible realization $X_i=x_i.$ 
+units. 
+
+Of course, further predictor variables $X_{i2},\dots,X_{ip}$ can be added to the polynomial regression function. 
+
+
+#### **Assumption 1, Part (b)** {-}
+
+The iid random sample assumption is a rather simple sampling assumption and applies to situations where the subjects $i=1,\dots,n$ were randomly selected from a population. 
+
+The iid random sample is typically violated in 
+
+* **time-series data**, where data points from one time-unit $i$ typically depend on previous time-units $i-1$, $i-2$, etc.
+* **household data**, where one may have independence across households, but not necessarily within the households (family members often share similar characteristics like height, income, etc.)
 
 
 
+#### **Assumption 2: Exogeneity** {-}
 
 
+The exogeneity assumption 
+$$
+E(\epsilon_i|X_i)=0
+$$
+implies that 
+$$
+\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,q,
+$$
+since
+$$
+\begin{align*}
+\operatorname{Cov}(\epsilon_i,X_{ik})
+&=E(\epsilon_i X_{ik})- \overbrace{E(\epsilon_i)}^{=0}\; E(X_{ik})\\
+&=E(\epsilon_i X_{ik})\\
+&=E(E(\epsilon_i X_{ik}|X_i))\\
+&=E(X_{ik} \; \underbrace{E(\epsilon_i |X_k)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,q.
+\end{align*}
+$$
+Thus 
+$$
+\underbrace{E(\epsilon_i|X_i)=0}_{A} \Rightarrow \underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,q}_{B}
+$$
+
+**Remember:** Any logical implication 
+$$
+A\Rightarrow B
+$$ 
+has a logically equivalent contrapositive: 
+$$
+\neg B\Rightarrow \neg A
+$$ 
+Therefore, we also have that
+$$
+\underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})\neq 0\;\text{for at least one}\; k=0,\dots,q}_{\neg B} \Rightarrow \underbrace{E(\epsilon_i|X_i)\neq 0}_{\neg A}
+$$
+I.e., if any of the regressors $X_{ik}$, $k=0,\dots,p,$ correlates with the error term $\epsilon_i$, then the exogeneity assumption is violated. 
+
+
+Unfortunately, this violation often happens in economic data problems. 
+
+<!-- 
+The exogeneity assumption 
+$$
+E(\epsilon_i|X_i)=0,\quad i=1,\dots,n
+$$
+hold trivially, if $\epsilon_i$ is independent of all regressors $X_{i0},X_{i1}\dots,X_{ip}$
+$$
+X_{i0},X_{i1}\dots,X_{ip} \perp\!\!\!\!\perp \epsilon_i.
+$$
+Assuming independence between the error term $\epsilon_i$ and the regressors in $X_i$ is, however, typically unrealistic in economic data.   
+-->
+
+**Classical Example:** Wage regression
+
+$$
+Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,
+$$
+where 
+
+* $Y_i$ denotes subject $i$'s hourly **wage**,  
+* $X_{i1}$ denotes subjects $i$'s years of **education**, and
+* $\epsilon_i$ denotes the error term
+
+Typically, however, the predictor **ability** (natural skill, intelligence, motivation) also affects wages. Let's say, the actually true regression model would be given by
+$$
+Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \eta_i,
+$$
+where 
+
+* $X_{i2}$ denotes subject $i$'s **ability**, 
+* $\eta_i$ denotes a well-behaved error term, which is independent of all regressors, which implies 
+$$
+\operatorname{Cov}(\eta_i,X_{i1})=\operatorname{Cov}(\eta_i,X_{i2})=0.
+$$ 
+
+Subjects with high **ability** typically stay longer in school and at the university such that **ability** and **eduction** correlate positively, i.e., 
+$$
+\operatorname{Cov}(X_{i2},X_{i1})>0.
+$$ 
+
+**Ability** is a hardly measurable predictor and thus usually must be left omitted (**omitted variable**). In this case, the **ability** effect becomes part of the error term in our wage regression model: 
+$$
+Y_i = \beta_0 + \beta_1 X_{i1} + \underbrace{\epsilon_i.}_{=\beta_2 X_{i2} + \eta_i}
+$$
+
+
+This omitted variable situation violates the exogeneity assumption (by the $\neg B\Rightarrow \neg A$ argument above):
+$$
+\begin{align*}
+\operatorname{Cov}(\epsilon_i, X_{i1}) 
+&=\operatorname{Cov}(\beta_2 X_{i2} + \eta_i, X_{i1})\\[2ex]
+&=\beta_2 \;\underbrace{\operatorname{Cov}(X_{i2}, X_{i1})}_{\neq 0} + 
+\underbrace{\operatorname{Cov}(\eta_i, X_{i1})}_{=0} \neq 0\\[2ex]
+\Rightarrow\;E(\epsilon_i|X_i)&\neq 0
+\end{align*}
+$$
+
+Use covariance calculation rules: 
+
+* $\operatorname{Cov}(aX,Z)=a \operatorname{Cov}(X,Z)$
+* $\operatorname{Cov}(X+Y,Z)=\operatorname{Cov}(Y,Z) + \operatorname{Cov}(X,Z)$
+
+::: {.callout icon="false"}
+
+Other scientific fields such as, for instance, physics, usually assume **independence** between the error term and the predictors: 
+$$
+\epsilon_i\perp\!\!\!\!\perp X_{ik}\quad\text{for all}\quad k=0,\dots,q,
+$$
+which is justified, if the error term only captures purely random stuff like, for instance, measurement errors of some measurement device. 
+
+In this case, the assumption of exogeneity (Assumption 2) is trivially fulfilled, since by the independence between $\epsilon_i$ and $X_i=(X_{i0},\dots,X_{ip})'$ we have that
+$$
+E(\epsilon_i|X_i) = E(\epsilon_i) = 0
+$$
+
+Note: The assumption $E(\epsilon_i)=0$ is not critical (i.e. not restrictive) due to the intercept term $X_{i0}=1$ in @eq-assExogen. 
+:::
+
+<!-- 
+::: {.callout icon="false"}
+
+# Example: Heteroskedastic Error
+
+Let
+
+* $\epsilon_i\sim\mathcal{N}(0,\sigma_i^2),$ where 
+* $\sigma_i = |X_{i1}|$ 
+
+Here the assumption of exogeneity (Assumption 2) is fulfilled since realizations of $X_i$ do not affect the mean of $\epsilon_i,$ thus
+$$
+E(\epsilon_i|X_i) = 0. 
+$$
+
+However, $\epsilon_i$ and $X_i$ are not independent of each other, since the conditional variance of $\epsilon_i$ is a function of $X_{i1}$
+$$
+Var(\epsilon_i|X_i) = |X_{i1}|^2.
+$$
+::: 
+-->
+
+
+
+#### **Assumption 4: Error Variance** {-}
+
+
+Here are two specific examples of a heteroskedastic and a homoskedastic error, which you can use in computer simulations. 
 
 ::: {.callout icon="false"}
 
 # Example: Heteroskedastic Error 
 
+Let $X_i\in\mathbb{R}^2$ with $X_{i0}=1$ and 
 $$
-\epsilon_i|X_i\sim \mathcal{U}[-0.5|X_{i2}|, 0.5|X_{i2}|],
+X_{i2}\sim \mathcal{U}[-4,4],\quad i=1,\dots,n,
 $$ 
-with 
+and let
 $$
-X_{i2}\sim \mathcal{U}[-4,4]
+\epsilon_i|X_i\sim \mathcal{U}[-0.5|X_{i2}|, 0.5|X_{i2}|],\quad i=1,\dots,n
 $$ 
-for all $i=1,\dots,n,$ where $\mathcal{U}[a,b]$ denotes the uniform distribution over $[a,b].$ 
+where $\mathcal{U}[a,b]$ denotes the uniform distribution over $[a,b].$ 
 
-This error term is mean independent of $X_i$ since $E(\epsilon_i|X_i)=0$, but it has a heteroskedastic conditional variance since 
+
+
+This error term fulfills the assumption of exogeneity (Assumption 2) since 
 $$
-Var(\epsilon_i|X_i)=\frac{1}{12}X_{i2}^2
+E(\epsilon_i|X_i)=\underbrace{\frac{1}{2}(- 0.5|X_{i2}| + 0.5|X_{i2}|)}_{=\frac{1}{2}(a+b)}=0
 $$ 
-depends on $X_{i2}.$
+for every possible realization of $X_i.$ 
+
+However, the error term $\epsilon_i$ is heteroskedastic, since its conditional variance is a function of the realizations of $X_{i2}\colon$
+$$
+Var(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(0.5|X_{i2}| - (-0.5|X_{i2}|))^2}_{=\frac{1}{12}(b-a)^2}=\frac{1}{12}X_{i2}^2
+$$ 
+
+`R`-code: 
+```{r}
+n   <- 100 # sample size
+X_2 <- runif(n = n, min = -4,              
+                    max =  4)
+eps <- runif(n = n, min = -0.5 * abs(X_2), 
+                    max =  0.5 * abs(X_2))
+
+
+plot(
+  y    = eps[order(X_2)],
+  x    = X_2[order(X_2)],
+  xlab = expression(X[2]),
+  ylab = expression(epsilon),
+  main = "Scatter-Plot: Error Terms agains Predictor" 
+)
+abline(h=0, col = "red")
+```
+
 :::
-
-
-
-
 
 
 ::: {.callout icon="false"}
 
 # Example: Homoskedastic Error
 
+Let $X_i\in\mathbb{R}^2$ with $X_{i0}=1$ and 
 $$
-\epsilon_i\sim{\mathcal N} (0, \sigma^2)
-$$
-for all $i=1,\dots,n.$ Here, the conditional variance of the error terms $\epsilon_i$ given $X_i$
-$$
-Var(\epsilon_i|X_i)=Var(\epsilon_i)=\sigma^2
+X_{i2}\sim \mathcal{U}[-4,4],\quad i=1,\dots,n,
 $$ 
-are equal to the constant $\sigma^2>0$ for all $i=1,\dots,n$ and for every possible realization of $X_i.$ 
+and let
+$$
+\epsilon_i|X_i\sim \mathcal{U}[-1, 1],\quad i=1,\dots,n
+$$ 
+where $\mathcal{U}[a,b]$ denotes the uniform distribution over $[a,b].$ 
+
+This error term fulfills the assumption of exogeneity (Assumption 2) since 
+$$
+E(\epsilon_i|X_i)=\underbrace{\frac{1}{2}(-1 + 1)}_{=\frac{1}{2}(a+b)}=0
+$$ 
+for every possible realization of $X_i.$ 
+
+Moreover, the error term $\epsilon_i$ is also homoskedastic, since its conditional variance is not a function of $X_{i2}\colon$
+$$
+Var(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(1 - (-1))^2}_{=\frac{1}{12}(b-a)^2}=\frac{1}{12}2^2
+$$ 
+
+`R`-code: 
+```{r}
+n   <- 100 # sample size
+X_2 <- runif(n = n, min = -4,              
+                    max =  4)
+eps <- runif(n = n, min = -1, 
+                    max =  1)
+
+plot(
+  y    = eps[order(X_2)],
+  x    = X_2[order(X_2)],
+  xlab = expression(X[2]),
+  ylab = expression(epsilon),
+  main = "Scatter-Plot: Error Terms agains Predictor" 
+)
+abline(h=0, col = "red")
+```
 ::: 
 
 
 
 
 
-
 ## Deriving the Expression of the OLS Estimator
+
+See Section @sec-matrixAlgebra for a refresher on matrix algebra.
 
 We derive the expression for the OLS estimator 
 $$
@@ -390,10 +707,7 @@ as the vector-valued minimizing argument of the sum of squared residuals,
 $$
 \operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i'b}_{\text{$i$th residual}}\big)^2
 $$ 
-with $b\in\mathbb{R}^(p+1)$, for a given sample 
-$$
-((Y_1,X_1),\dots,(Y_n,X_n)).
-$$  
+with $b\in\mathbb{R}^{(p+1)}.$
 
 Using matrix/vector notation we can write $S_n(b)$ as 
 $$
@@ -414,7 +728,7 @@ $$
 \underset{((p+1)\times 1)}{\frac{\partial \operatorname{RSS}(b)}{\partial b}} &=-2\left(X^{\prime}Y -X^{\prime} Xb\right).
 \end{align*}
 $$
-Setting each partial derivative to zero leads to $(p+1)$ linear equations ("normal equations") in $(p+1)$ unknowns. This linear system of equations defines the OLS estimates, $\hat{\beta}$, for a given dataset:
+Setting each partial derivative to zero leads to $(p+1)$ linear equations (**normal equations**) in $(p+1)$ unknowns. This linear system of equations defines the OLS estimates, $\hat{\beta}$, for a given dataset:
 $$
 \begin{align*}
 -2\left(X^{\prime}Y -X^{\prime} X\hat{\beta}\right)
@@ -423,7 +737,7 @@ X^{\prime} X\hat{\beta}
 &=\underset{((p+1)\times 1)}{X^{\prime}Y}.
 \end{align*}
 $$
-From our full rank assumption (Assumption 3) it follows that $X^{\prime}X$ is an invertible $((p+1)\times (p+1))$-dimensional matrix which allows us to solve the equation system by 
+From our full rank assumption (Assumption 3) it follows that $X^{\prime}X$ is invertible which allows us to solve the equation system by 
 $$
 \begin{align*}
 \underset{((p+1)\times 1)}{\hat{\beta}} &=\left(X^{\prime} X\right)^{-1} X^{\prime} Y.
@@ -439,8 +753,10 @@ X_1     <- c(1.9,0.8,1.1,0.1,-0.1,4.4,4.6,1.6,5.5,3.4)
 X_2     <- c(66, 62, 64, 61, 63, 70, 68, 62, 68, 66)
 Y       <- c(0.7,-1.0,-0.2,-1.2,-0.1,3.4,0.0,0.8,3.7,2.0)
 dataset <-  data.frame("X_1" = X_1, "X_2" = X_2, "Y" = Y)
+
 ## Compute the OLS estimation
 lmobj   <- lm(Y ~ X_1 + X_2, data = dataset)
+
 ## Plot sample regression surface
 library("scatterplot3d") # library for 3d plots
 plot3d  <- scatterplot3d(x = X_1, y = X_2, z = Y,
@@ -452,7 +768,7 @@ plot3d  <- scatterplot3d(x = X_1, y = X_2, z = Y,
 plot3d$plane3d(lmobj, lty.box = "solid", col=gray(.5), draw_polygon=TRUE)
 ```
 
-
+<!-- 
 #### Special Case: Simple Linear Regression Model {-}
 
 Let's consider the simple linear regression model $(p=1)$
@@ -484,7 +800,8 @@ $\bar{y}=\frac{1}{n}\sum_{i=1}^ny_i$
 and 
 $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$. 
 
-![](images/Fig_3_1.png)
+![](images/Fig_3_1.png) 
+-->
 
 <!-- 
 ![](images/Fig_3_2.png) 
@@ -493,16 +810,16 @@ $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$.
 
 
 
-#### Some Quantities of Interest {-}
+## Fitted Values, Residuals, and Projection Matrices
 
 
-**Predicted values and residuals.**
+#### **Predicted/Fitted Values and Residuals** {-}
 
-- The (OLS) **predicted values**: 
+- The (OLS) **Predicted/Fitted Values:** 
 $$
 \hat{Y}_i=X_i'\hat\beta, \quad i=1,\dots,n
 $$ 
-The $(n\times 1)$ vector of predicted values
+The $(n\times 1)$ vector of predicted (fitted) values
 $$
 \begin{align*}
 \hat{Y} = \left(\begin{matrix}\hat{Y}_1\\\hat{Y}_2\\ \vdots\\ \hat{Y}_n\end{matrix}\right)
@@ -512,7 +829,7 @@ $$
 \end{align*}
 $$
 
-- The (OLS) **residuals**: 
+- The (OLS) **Residuals:** 
 $$
 e_i=Y_i-\hat{Y}_i, \quad i=1,\dots,n
 $$ 
@@ -533,7 +850,7 @@ e =
 \end{align*}
 $$
 
-**Projection matrices.** 
+#### **Projection Matrices** {-}
 
 The matrix 
 $$
@@ -548,9 +865,11 @@ is the associated $(n\times n)$ **orthogonal projection matrix** that projects a
 
 
 
-## Assessing the Accuracy of the Model Fit $\hat{f}$
+## Assessing the Accuracy of the Model Fit
 
-The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{f}$ to the training data. This motivates the definition of the so-called $R^2$ coefficient of determination:
+The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{Y}_i=\hat{f}(X_i)$ to the data $(Y_i,X_i')$, $i=1,\dots,n$. 
+
+This motivates the definition of the so-called $R^2$ coefficient of determination:
 $$
 \begin{eqnarray*}
 R^2 
@@ -598,7 +917,7 @@ $$
 where $0\leq R^2\leq 1.$
 
 
-
+<!-- 
 ::: {.callout-caution}
 
 **Cautionary Note Nr 1:** 
@@ -615,43 +934,50 @@ can be warning signals indicating overfitting. While overfitting typically does 
 
 The $R^2$ and $\operatorname{RSE}$ are only based on **training data**. In @sec-SL, we have seen that a proper assessment of the model accuracy needs to take into account **test data**.
 :::
+ -->
 
 
+#### **$R^2$ and Correlation Coefficient** {-}
 
-#### $R^2$ and correlation coefficient {-}
-
-In the case of the simple linear regression model, $R^2$ equals the squared sample correlation coefficient between $Y$ and $X$,
+In the case of the **simple linear regression model** 
 $$
-R^2 = r_{yx_1}^2,
+Y_i=\beta_0 + \beta_1 X_{i1} + \epsilon_i,\quad i=1,\dots,n
+$$
+the $R^2$ equals the squared sample correlation coefficient between $Y_i$ and $X_{i1}$,
+$$
+R^2 = r_{Y,X_1}^2,
 $$
 where 
 $$
-r_{yx_1}=\frac{\sum_{i=1}^n(x_{i1}-\bar{x}_1)(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_{i1}-\bar{x}_1)^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}},
+r_{Y,X_1}=\frac{\sum_{i=1}^n(X_{i1}-\bar{X}_1)(Y_i-\bar{Y})}{\sqrt{\sum_{i=1}^n(X_{i1}-\bar{X}_1)^2}\sqrt{\sum_{i=1}^n(Y_i-\bar{Y})^2}},
 $$
-where $\bar{x}_1=n^{-1}\sum_{i=1}^nx_{i1}.$
+where $\bar{X}_1=n^{-1}\sum_{i=1}^nX_{i1}.$
 
-::: {.callout-tip}
-In the multiple linear regression model $Y_i=\beta_0+\sum_{j=1}^p\beta_jX_{ij}+\epsilon_i,$ the $R^2$ equals the squared correlation between response and the fitted values: 
+
+
+In case of the **multiple linear regression model** 
 $$
-R^2=r^2_{y\hat{y}}
+Y_i=\beta_0+\sum_{k=1}^p\beta_k X_{ik}+\epsilon_i,\quad i=1,\dots,n
+$$ 
+the $R^2$ equals the squared correlation between $Y_i$ and the fitted values $\hat{Y}_i$: 
+$$
+R^2=r^2_{Y,\hat{Y}}
 $$
 with 
 $$
-r_{y\hat{y}}=\frac{\sum_{i=1}^n(y_i-\bar{y})(\hat{y}_i-\bar{\hat{y}})}{\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}\sqrt{\sum_{i=1}^n(\hat{y}_i-\bar{\hat{y}})^2}},
+r_{Y,\hat{Y}}=\frac{\sum_{i=1}^n(Y_i-\bar{Y})(\hat{Y}_i-\bar{\hat{Y}})}{\sqrt{\sum_{i=1}^n(Y_i-\bar{Y})^2}\sqrt{\sum_{i=1}^n(\hat{Y}_i-\bar{\hat{Y}})^2}},
 $$
-where $\bar{y}=n^{-1}\sum_{i=1}^ny_{i}.$
-:::
+where $\bar{Y}=n^{-1}\sum_{i=1}^nY_{i}.$
+
 
 
 
 ::: {.callout-caution}
-* A high/low $R^2$ value only means that the predictors have high/low *predictive power* with respect to the training data. 
-
-* A high/low $R^2$ does not mean a validation/falsification of the estimated model. Any econometric model needs a plausible explanation from relevant economic theory.   
+A high/low $R^2$ does not mean a validation/falsification of the estimated model. Any econometric/statistical model needs a plausible explanation from relevant (economic) theory.   
 :::
 
 
-The most often criticized disadvantage of the $R^2$ is that additional regressors (relevant or not) will increase the $R^2$. The below `R`-codes demonstrates this problem.
+The most often criticized disadvantage of the $R^2$ is that additional regressors (relevant or not) will increase the $R^2$. The below `R`-code demonstrates this problem.
 
 ```{r}
 set.seed(123)
@@ -664,6 +990,7 @@ lm1   <- summary(lm(Y~X))     # Correct OLS regression
 lm2   <- summary(lm(Y~X+X_ir))# OLS regression with X_ir 
 lm1$r.squared < lm2$r.squared
 ```
+
 So, $R^2$ increases here even though `X_ir` is a completely irrelevant explanatory variable.  
 
 Because of this, the $R^2$ cannot be used as a criterion for model selection. Possible solutions are given by penalized criterions such as the so-called **adjusted** $R^2$, $\overline{R}^2,$ defined as
@@ -672,6 +999,7 @@ $$
   \overline{R}^2&=&1-\frac{\frac{1}{n-(p+1)}\sum_{i=1}^ne^2_i}{\frac{1}{n-1}\sum_{i=1}^n\left(y_i-\bar{y}\right)^2}\leq R^2%\\
 \end{eqnarray*}
 $$
+
 The adjustment is in terms of the degrees of freedom $n-(p+1)$.
 
 
@@ -695,13 +1023,13 @@ is unbiased, i.e.
 $$
 \begin{align*}
 \operatorname{Bias}(\hat\beta) 
-& = E(\hat\beta) - \beta \\[2ex]
-& = \beta  - \beta \\[2ex]
-& = \underset{(p+1)\times 1}{0}.
+& = E(\hat\beta) - \beta = \underset{(p+1)\times 1}{0}.
 \end{align*}
 $${#eq-OLSUnbiased}
-That is, in the mean $\hat\beta$ equals $\beta.$
+That is, in the mean of $\hat\beta$ equals $\beta.$
 
+
+#### Showing Unbiasedness of $\hat{\beta}$ {-}
 
 @eq-OLSUnbiased can be shown as following: 
 
@@ -775,14 +1103,11 @@ Cov(\hat\beta_p,\hat\beta_0|X)&Cov(\hat\beta_p,\hat\beta_1|X)&\cdots&Var(\hat\be
 \end{align*}
 $$
 
-Thus, to compute a useful, explicit expression for the standard error, 
-$$
-\operatorname{SE}(\hat\beta_j|X)=\;\text{Explicit Expression}\;?,
-$$ 
-we need to compute an explicit expression for the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X).$ 
+To get a useful, explicit expression for the standard error, 
+$\operatorname{SE}(\hat\beta_j|X),$ we need to first compute an explicit expression for the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X).$ 
 
 
-Let us derive the general explicit expression for $Var(\hat\beta|X).$
+#### Deriving the Expression for $Var(\hat\beta|X)\colon$ {-}
 
 Note that
 $$
@@ -805,19 +1130,20 @@ $$
 &Var(\hat\beta|X)=\\[2ex]
 &\text{Adding/subtracting constants does not change variance:}\\[2ex]
 &=Var(\hat\beta - \beta|X)\\[2ex]
-&\text{Using the sampling error expression:}\\[2ex]
+&\text{Using the sampling error expression $\hat{\beta} - \beta = (X'X)^{-1}X'\epsilon$:}\\[2ex]
 &=Var((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&\text{Using that $Var(Z|X)=E[(Z-E(Z|X))(Z-E(Z|X))|X]$:}\\[2ex]
 &=E\Big[\big((X'X)^{-1}X'\epsilon-\underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=0}\big)\times\\[2ex]
 &\phantom{=\Big(}\,\times\big((X'X)^{-1}X'\epsilon-\underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=0}\big)'|X\Big]\\[2ex]
 &=E\left[((X'X)^{-1}X'\epsilon)((X'X)^{-1}X'\epsilon)'|X\right]\\[2ex]
 &=E\left[(X'X)^{-1}X'\epsilon\epsilon' X(X'X)^{-1}|X\right]\\[2ex]
-&=\;\;\;(X'X)^{-1}X'\underbrace{E\left(\epsilon\epsilon'|X\right)}_{=Var(\epsilon|X)}X(X'X)^{-1}
+&=\;\;\;(X'X)^{-1}X'\underbrace{E\left(\epsilon\epsilon'|X\right)}_{=\highlight{Var(\epsilon|X)}}X(X'X)^{-1}
 \end{align*}
 $$
 That is, the explicit expression for $Var(\hat\beta|X)$ depends on the explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ 
 $$
 \begin{align*}
-&Var(\epsilon|X)=\\[2ex]
+&\highlight{Var(\epsilon|X)}=\\[2ex]
 &=\begin{pmatrix}
 Var(\epsilon_1|X)&Cov(\epsilon_1,\epsilon_2|X)&\cdots&Cov(\epsilon_1,\epsilon_n|X)\\
 Cov(\epsilon_2,\epsilon_1|X)&Var(\epsilon_2|X)&  &Cov(\epsilon_2,\epsilon_n|X)\\
@@ -827,14 +1153,14 @@ Cov(\epsilon_n,\epsilon_1|X)&Cov(\epsilon_n,\epsilon_2|X)&\cdots&Var(\epsilon_n|
 \end{align*}
 $$
 
-The explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ depends on our (hopefully correct) assumption on the error-term distribution (Assumption 4). 
+The explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ depends on our (hopefully correct) assumption on the error-term variance (Assumption 4). 
 
-In the following, we consider the two most prominent types of assumptions for the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$:
+We consider the two most prominent types of assumptions for the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$:
 
-* Spherical, i.e., homoskedastic and uncorrelated errors
-* Heteroskedastic and uncorrelated errors
+* Homoskedastic (and uncorrelated) errors
+* Heteroskedastic (and uncorrelated) errors
 
-#### Case of Spherical (Homoskedastic and Uncorrelated) Errors 
+#### Homoskedastic and Uncorrelated Errors 
 
 If 
 $$
@@ -854,8 +1180,8 @@ then
 $$
 \begin{align*}
 &Var(\hat\beta|X)=\\[2ex]
-&=(X'X)^{-1}X' \left(Var(\epsilon|X)\right) X(X'X)^{-1}\\[2ex]
-&=(X'X)^{-1}X' \left(\sigma^2 I_n \right) X(X'X)^{-1}\\[2ex]
+&=(X'X)^{-1}X' \;\highlight{Var(\epsilon|X)}\; X(X'X)^{-1}\\[2ex]
+&=(X'X)^{-1}X' \;\highlight{\sigma^2 I_n}\; X(X'X)^{-1}\\[2ex]
 &=\sigma^2\;(X'X)^{-1}X' \left( I_n \right) X(X'X)^{-1}\\[2ex]
 &=\sigma^2\;\underbrace{(X'X)^{-1}X'X}_{I_{p+1}}\;(X'X)^{-1}\\[2ex]
 &=\sigma^2\;(X'X)^{-1},
@@ -874,11 +1200,11 @@ $$
 
 **Summing up:** 
 
-In the case of spherical (homoskedastic and uncorrelated) error terms the standard error of $\beta_j$ is
+In the case of homoskedastic (and uncorrelated) error terms the standard error of $\hat\beta_j$ is
 $$
 \operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
 $$
-The above expression is infeasible since $\sigma^2$ is typically unknown. We can estimate this infeasible population version using the empirical standard error
+Typically, $\sigma^2$ is unknown, and has to be estimated using, for instance, the empirical residual standard error
 $$
 \widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
 $$
@@ -900,7 +1226,7 @@ summary(lm_obj)
 ```
 
 
-#### Case of Heteroskedastic and Uncorrelated Errors 
+#### Heteroskedastic and Uncorrelated Errors 
 
 
 If 
@@ -914,19 +1240,19 @@ Var(\epsilon|X)
 \vdots     & \vdots     & \ddots & 0\\
 0          & 0          & \cdots & \sigma_n^2\\
 \end{pmatrix}
-&=\operatorname{diag}(\sigma_1^2,\sigma_2^2,\dots,\sigma_n^2),
+=\operatorname{diag}(\sigma_1^2,\sigma_2^2,\dots,\sigma_n^2),
 \end{align*}
 $$
 then 
 $$
 \begin{align*}
 &Var(\hat\beta|X)=\\[2ex]
-&=(X'X)^{-1}X' \left(Var(\epsilon|X)\right) X(X'X)^{-1}\\[2ex]
-&=(X'X)^{-1} \left(X'\left(\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2) \right) X\right) (X'X)^{-1}\\[2ex]
+&=(X'X)^{-1}X' \;\highlight{Var(\epsilon|X)}\; X(X'X)^{-1}\\[2ex]
+&=(X'X)^{-1}X' \;\highlight{\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2)}\; X(X'X)^{-1}\\[2ex]
 &=(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\\[2ex]
 \end{align*}
 $$
-Thus, the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X)$ keeps its "sandwich form", where the inner part of the sandwich
+Thus, the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X)$ keeps its **sandwich form**, where the inner part of the sandwich
 $$
 \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right)
 $$
@@ -974,11 +1300,11 @@ The estimator HC0 was suggested in the econometrics literature by @White1980 and
 
 **Summing up:** 
 
-In the case of heteroskedastic and uncorrelated error terms the standard error of $\beta_j$ is
+In the case of heteroskedastic and uncorrelated error terms the standard error of $\hat\beta_j$ is
 $$
 \operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\right]_{(j,j)}}.
 $$
-The above expression is the infeasible (since $\sigma^2$ is typically unknown) population version of the standard error. We can estimate this population version using the empirical standard error
+Typically, the variance terms $\sigma_i^2$ are unknown, but the expression $\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right)$ can be estimated using the **HC** estimators above, such that we can work with
 $$
 \widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\textsf{HC}\right) (X'X)^{-1}\right]_{(j,j)}},
 $$
@@ -1050,14 +1376,23 @@ $$
 $$ 
 is a **random confidence interval**. 
 
-For a given realization of the training data random sample
+For a given, observed realization of the random sample
 $$
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((Y_{1,obs},X_{10,obs},\dots,X_{1(p+1),obs}),\dots,(Y_{n},X_{n0,obs},\dots,X_{n(p+1),obs}))
 $$
-we **obs**serve a specific realization 
+we can compute a given, **obs**erved realization of the confidence interval 
 $$
-\operatorname{CI}^{1-\alpha}_{\beta_j,obs}.
+\operatorname{CI}^{1-\alpha}_{\beta_j,obs}=\left[\hat\beta_{j,obs}\; \pm \; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}\right],
 $$ 
+where
+$$
+\hat\beta_{j,obs}=\left[(X_{obs}'X_{obs})^{-1}X_{obs}'Y_{obs}\right]_{j}
+$$
+and (homoskedastic case) 
+$$
+\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}=\sqrt{\left[\hat{\sigma}^2_{obs}(X_{obs}'X_{obs})^{-1}\right]}
+$$
+
 
 
 There is a $(1-\alpha)\cdot 100\%$ chance (in resamplings from the training data random sample) that the **random confidence interval** 

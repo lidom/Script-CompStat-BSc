@@ -1,4 +1,4 @@
-# Matrix Algebra
+# Matrix Algebra {#sec-matrixAlgebra}
 
 Relevance for the exam: 
 
