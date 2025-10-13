@@ -2471,7 +2471,7 @@ Observations:
 
 
 
-
+<!-- 
 ## Assignment
 
 Consider the following data generating process: 
@@ -2563,7 +2563,9 @@ Note: By the law of large numbers, the above approximation becomes arbitrarily p
 
 
 **Link to your personal assignment repository:**</br>
-[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD)
+[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD) 
+
+-->
 
 
 

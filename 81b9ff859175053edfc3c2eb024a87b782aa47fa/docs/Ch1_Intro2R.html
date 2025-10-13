@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Ch2_StatLearning.html" rel="next">
+<link href="./Ch4_LinearRegression.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -172,8 +172,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch2_StatLearning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
+  <a href="./Ch4_LinearRegression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -184,20 +184,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch4_LinearRegression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./Ch5_Classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch6_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
   </div>
 </li>
     </ul>
@@ -226,8 +220,7 @@ window.Quarto = {
   <li><a href="#the-group_by-function" id="toc-the-group_by-function" class="nav-link" data-scroll-target="#the-group_by-function"><span class="header-section-number">1.6.3</span> The <code>group_by()</code> function</a></li>
   </ul>
 </li>
-  <li><a href="#gitgithub" id="toc-gitgithub" class="nav-link" data-scroll-target="#gitgithub"><span class="header-section-number">1.7</span> Git/GitHub</a></li>
-  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">1.8</span> Assignment</a></li>
+  <li><a href="#self-study-gitgithub" id="toc-self-study-gitgithub" class="nav-link" data-scroll-target="#self-study-gitgithub"><span class="header-section-number">1.7</span> Self-Study: Git/GitHub</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -248,7 +241,7 @@ window.Quarto = {
   
 
 
-</header><p>This tutorial aims to serve as an introduction to the software package <code>R</code>. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links:</p>
+</header><!-- LTeX: language=en-US --><p>This tutorial aims to serve as an introduction to the software package <code>R</code>. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links:</p>
 <ul>
 <li>
 <a href="http://cran.r-project.org/doc/contrib/refcard.pdf">Reference card for R commands</a> (always useful)</li>
@@ -332,7 +325,7 @@ window.Quarto = {
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "pandoc_dir"      "quarto_bin_path" "x"               "y"              </code></pre>
+<pre><code>[1] "x" "y"</code></pre>
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -518,7 +511,6 @@ Alright, let's do some statistics with real data. You can download the data [HER
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -534,9 +526,7 @@ head(auto.data)
 
 
 
-
 If you have problems to read the data into R, go on with these commands. (For this you need a working internet connection!):
-
 
 
 
@@ -556,9 +546,7 @@ auto.data <- suppressMessages(read_csv(file = "https://cdn.rawgit.com/lidom/Teac
 
 
 
-
 You can select specific variables of the `auto.data` using the `$`-operator:
-
 
 
 
@@ -594,9 +582,7 @@ head(cbind(gasolin.consumption,car.weight))
 
 
 
-
 This is how you can produce your first plot:
-
 
 
 
@@ -622,7 +608,6 @@ plot(y=gasolin.consumption, x=car.weight,
 
 
 
-
 As a first step, we might assume a simple kind of linear relationship between the variables `gasolin.consumption` and `car.weight`. Let us assume that the data was generated by the following simple regression model: 
 $$
 y_i=\alpha+\beta_1 x_i+\varepsilon_i,\quad i=1,\dots,n
@@ -630,7 +615,6 @@ $$
 where $y_i$ denotes the gasoline-consumption, $x_i$ the weight of car $i$, and $\varepsilon_i$ is a mean zero constant variance noise term. (This is clearly a non-sense model!) 
 
 The command `lm()` computes the estimates of this linear regression model. The command (in fact it's a *method*) `summary()` computes further quantities of general interest from the *object* that was returned from the `lm()` function.
-
 
 
 
@@ -675,9 +659,7 @@ F-statistic: 223.8 on 1 and 91 DF,  p-value: < 2.2e-16
 
 
 
-
 Of course, we want to have a possibility to access all the quantities computed so far, e.g., in order to plot the results. This can be done as following: 
-
 
 
 
@@ -720,7 +702,6 @@ abline(a=alpha,
 
 
 
-
 -->
 </section><section id="programming-in-r" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="programming-in-r">
 <span class="header-section-number">1.4</span> Programming in <code>R</code>
@@ -750,12 +731,12 @@ X_1,\dots,X_n
 <span><span class="va">n</span>   <span class="op">&lt;-</span> <span class="fl">100</span>    <span class="co"># Sample size</span></span>
 <span></span>
 <span><span class="co"># Drawing n iid realizations form a normal distr.</span></span>
-<span><span class="va">x_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n    <span class="op">=</span> <span class="va">n</span>, </span>
+<span><span class="va">X_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n    <span class="op">=</span> <span class="va">n</span>, </span>
 <span>               mean <span class="op">=</span> <span class="fl">5</span>, </span>
 <span>               sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>  </span>
 <span></span>
 <span><span class="co"># First three values</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">x_vec</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">X_vec</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.61 7.15 5.43</code></pre>
 </div>
@@ -763,13 +744,15 @@ X_1,\dots,X_n
 <p>OK, we have now one possible realization of the random sample <span class="math display">\[
 X_1,\dots,X_n
 \]</span> namely <span class="math display">\[
-x_1=1.61,
-x_2=7.15,
-x_3=5.43,
+X_{1,obs}=1.61,
+X_{2,obs}=7.15,
+X_{3,obs}=5.43,
 \text{etc.}
 \]</span></p>
-<p>Using this sample, we estimate the usually unknown mean <span class="math inline">\(\mu=5\)</span> using the sample mean <span class="math display">\[
-\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+<p>Using this observed realization of the random sample, we can estimate the usually unknown mean <span class="math inline">\(\mu=5\)</span> using the empirical mean <span class="math display">\[
+\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i
+\]</span> namely, <span class="math display">\[
+\bar{X}_{obs} = \frac{1}{n}\sum_{i=1}^n X_{i,obs} =5.34
 \]</span></p>
 <p>To do so, we program our own <code>myMean()</code>-function:</p>
 <div class="cell" data-layout-align="center">
@@ -782,7 +765,7 @@ x_3=5.43,
 </div>
 <p>Applying the <code>myMean()</code>-function:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">myMean</span><span class="op">(</span><span class="va">x_vec</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">myMean</span><span class="op">(</span><span class="va">X_vec</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.338722</code></pre>
 </div>
@@ -821,7 +804,7 @@ x_3=5.43,
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ stringr   1.5.1
-✔ forcats   1.0.0     ✔ tibble    3.2.1
+✔ forcats   1.0.0     ✔ tibble    3.3.0
 ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -1367,31 +1350,37 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 
 * https://rladies.org/
 -->
-</section></section><section id="gitgithub" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="gitgithub">
-<span class="header-section-number">1.7</span> Git/GitHub</h2>
+</section></section><section id="self-study-gitgithub" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="self-study-gitgithub">
+<span class="header-section-number">1.7</span> Self-Study: Git/GitHub</h2>
 <p>For this course, it is not required and not necessary to learn git. The GitHub assignment repository (see below) can be used simply in the browser. However, if you are interested in learning git, you can, of course, do so.</p>
 <p>Links to good git introductions:</p>
 <ul>
 <li><a href="https://effective-programming-practices.vercel.app/git/index.html">Course Effective Programming Practices (Uni Bonn)</a></li>
 <li><a href="http://happygitwithr.com/">http://happygitwithr.com/</a></li>
-</ul></section><section id="assignment" class="level2" data-number="1.8"><h2 data-number="1.8" class="anchored" data-anchor-id="assignment">
-<span class="header-section-number">1.8</span> Assignment</h2>
-<p>Code functions to compute the following three summary statistics:</p>
-<ul>
-<li>
-<code>myMean()</code> to compute the sample mean</li>
-<li>
-<code>myVariance()</code> to compute the sample variance</li>
-<li>
-<code>myRange()</code> to compute the range of values in a given sample</li>
 </ul>
-<p>Do <strong>not</strong> use pre-implemented functions such as the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>-function in <code>R</code>.</p>
-<p>Apply each function using simulated data sets and compare the population (true) parameters with their sample versions.</p>
-<p>Provide also the mathematical formulas for each implemented summary statistic.</p>
-<p>Link to your personal assignment repository: <a href="https://classroom.github.com/a/5HB8NuPW">https://classroom.github.com/a/5HB8NuPW</a></p>
-<p>Write up everything in <strong>one</strong> PDF document, e.g.&nbsp;using quarto and the provided <code>Template.qmd</code> file.</p>
-<p>Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account.</p>
+<!-- ## Assignment 
 
+
+Code functions to compute the following three summary statistics: 
+
+* `myMean()` to compute the sample mean
+* `myVariance()` to compute the sample variance
+* `myRange()` to compute the range of values in a given sample
+
+Do **not** use pre-implemented functions such as the `mean()`-function in `R`.
+
+Apply each function using simulated data sets and compare the population (true) parameters with their sample versions. 
+
+Provide also the mathematical formulas for each implemented summary statistic.
+
+
+Link to your personal assignment repository:</br>
+[https://classroom.github.com/a/5HB8NuPW](https://classroom.github.com/a/5HB8NuPW) 
+
+
+Write up everything in **one** PDF document, e.g. using quarto and the provided `Template.qmd` file. 
+
+Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account. -->
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1962,8 +1951,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch2_StatLearning.html" class="pagination-link" aria-label="Statistical Learning">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Ch4_LinearRegression.html" class="pagination-link" aria-label="Linear Regression">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

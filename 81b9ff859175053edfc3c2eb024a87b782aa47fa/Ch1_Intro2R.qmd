@@ -1,3 +1,5 @@
+<!-- LTeX: language=en-US -->
+
 # `R`-Lab: Introduction to `R` 
 
 This tutorial aims to serve as an introduction to the software package `R`. Other very good and much more exhaustive tutorials and useful reference-cards can be found at the following links: 
@@ -342,12 +344,12 @@ set.seed(109) # Sets the "seed" of the random number generators:
 n   <- 100    # Sample size
 
 # Drawing n iid realizations form a normal distr.
-x_vec <- rnorm(n    = n, 
+X_vec <- rnorm(n    = n, 
                mean = 5, 
                sd   = sqrt(3))  
 
 # First three values
-round(x_vec[1:3], 2)
+round(X_vec[1:3], 2)
 ```
 
 
@@ -357,15 +359,19 @@ X_1,\dots,X_n
 $$
 namely
 $$
-x_1=`r round(x_vec[1],2)`, 
-x_2=`r round(x_vec[2],2)`,
-x_3=`r round(x_vec[3],2)`,
+X_{1,obs}=`r round(X_vec[1],2)`, 
+X_{2,obs}=`r round(X_vec[2],2)`,
+X_{3,obs}=`r round(X_vec[3],2)`,
 \text{etc.}
 $$
 
-Using this sample, we estimate the usually unknown mean $\mu=5$ using the sample mean 
+Using this observed realization of the random sample, we can estimate the usually unknown mean $\mu=5$ using the empirical mean 
 $$
-\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i
+$$
+namely, 
+$$
+\bar{X}_{obs} = \frac{1}{n}\sum_{i=1}^n X_{i,obs} =`r round(mean(X_vec), 2)`
 $$
 
 
@@ -381,11 +387,11 @@ myMean <- function(x){
 
 Applying the `myMean()`-function:
 ```{r}
-myMean(x_vec)
+myMean(X_vec)
 ```
 
 
-The sample mean $\bar{x}=`r round(myMean(x_vec),2)`$ is close to the true (usually unknown) population mean $\mu=5.$
+The sample mean $\bar{x}=`r round(myMean(X_vec),2)`$ is close to the true (usually unknown) population mean $\mu=5.$
 
 ## `R`-Packages
 
@@ -869,7 +875,7 @@ options(tibble.print_min=10, tibble.print_max=20)
 
 
 
-## Git/GitHub 
+## Self-Study: Git/GitHub 
 
 For this course, it is not required and not necessary to learn git. The GitHub assignment repository (see below) can be used simply in the browser. However, if you are interested in learning git, you can, of course, do so. 
 
@@ -880,7 +886,7 @@ Links to good git introductions:
 
 
 
-## Assignment 
+<!-- ## Assignment 
 
 
 Code functions to compute the following three summary statistics: 
@@ -902,6 +908,6 @@ Link to your personal assignment repository:</br>
 
 Write up everything in **one** PDF document, e.g. using quarto and the provided `Template.qmd` file. 
 
-Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account.
+Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account. -->
 
 
