@@ -391,7 +391,11 @@ myMean(X_vec)
 ```
 
 
-The sample mean $\bar{x}=`r round(myMean(X_vec),2)`$ is close to the true (usually unknown) population mean $\mu=5.$
+The observed realization of the sample mean 
+$$
+\bar{X}_{obs}=`r round(myMean(X_vec),2)`
+$$ 
+is close to the true (usually unknown) population mean $\mu=5.$
 
 ## `R`-Packages
 
@@ -509,7 +513,7 @@ View(CW)
 ```
 
 
-### Tidyverse: Plotting Basics 
+### Self-Study: Tidyverse Plotting Basics 
 
 
 To **visualize** the chick weight data, we will use the `ggplot2` package (part of the
@@ -634,7 +638,7 @@ ggplot(CW, aes(Time, weight, group=Diet,
 
 
 
-### Tidyverse: Data Wrangling Basics 
+### Self-Study: Tidyverse Data Wrangling Basics 
 
 ```{r resettblprint, echo = FALSE}
 # Temporarily resetting the print limit
@@ -742,7 +746,7 @@ preceding it. For example, the dot in `filter(., Time %in% c(0, 21))` is replace
 each function doing its thing and passing it to the next.
 
 
-### The `group_by()` function
+#### The `group_by()` function
 
 
 From the data visualizations above we concluded that the diet 3 has the highest mean 
