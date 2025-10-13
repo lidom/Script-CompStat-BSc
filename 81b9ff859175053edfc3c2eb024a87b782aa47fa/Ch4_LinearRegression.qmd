@@ -1540,6 +1540,24 @@ p_{obs}<\alpha,
 $$
 then we **reject the null hypothesis** and adopt the alternative hypothesis $\beta_j\neq \beta^{(H_0)}_{j}.$ 
 
+
+
+::: {.callout-caution}
+Even very large $p$-values $p_{obs}\approx 1 \gg \alpha$ can occur simply because a given violation of a null-hypothesis is smaller than the involved estimation errors.  
+
+<center>
+❗The $p$-value is **not** the probability that the null-hypothesis is true❗
+</center>
+
+</br>
+
+![](images/terminator.jpeg)
+:::
+
+:::
+
+
+
 ::: {.callout-note}
 
 # Equivalence of Confidence Intervals and $t$-Test
@@ -1667,16 +1685,6 @@ $$
 $$  
 
 Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, simply because we cannot guarantee that the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true) is sufficiently small. 
-
-Indeed, even very large $p$-values $p_{obs}\approx 1 \gg \alpha$ can occur simply because a given violation of a null-hypothesis is smaller than the involved estimation errors.  
-
-<center>
-❗The $p$-value is **not** the probability that the null-hypothesis is true❗
-</center>
-
-</br>
-
-![](images/terminator.jpeg)
 :::
 
 
@@ -1702,7 +1710,7 @@ for each given violation of the null-hypothesis $|\beta_j - 0|>0.$
 Testing procedures that fulfill the latter property are called **consistent.**
 
 
-
+<!-- 
 ## The Omitted Variable Bias 
 
 Multiple linear regression is more than mere composition of single simple linear regression models. Take a look at the following two simple linear regression results: 
@@ -1764,7 +1772,8 @@ Even if the $f(X)$ is really so simple that we can write it as a simple or multi
 
 **Interpretation of the Coefficients in Table 3.4** 
 
-For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units. 
+For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units.  
+-->
 
 
 
