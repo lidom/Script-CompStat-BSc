@@ -521,7 +521,7 @@ $$
 where 
 
 * $X_{i2}$ denotes subject $i$'s **ability**, 
-* $\eta_i$ denotes a well-behaved error term, which is independent of all regressors, which implies 
+* $\eta_i$ denotes a well-behaved error term, for which the exogeneity assumption $E(\eta_i|X_{i})=0$ is fulfilled, which implies 
 $$
 \operatorname{Cov}(\eta_i,X_{i1})=\operatorname{Cov}(\eta_i,X_{i2})=0.
 $$ 
@@ -537,18 +537,19 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \underbrace{\epsilon_i.}_{=\beta_2 X_{i2} + \et
 $$
 
 
-This omitted variable situation violates the exogeneity assumption (by the $\neg B\Rightarrow \neg A$ argument above):
+This omitted variable situation violates the exogeneity assumption for $\epsilon_i$ (by the $\neg B\Rightarrow \neg A$ argument above):
 $$
 \begin{align*}
 \operatorname{Cov}(\epsilon_i, X_{i1}) 
 &=\operatorname{Cov}(\beta_2 X_{i2} + \eta_i, X_{i1})\\[2ex]
 &=\beta_2 \;\underbrace{\operatorname{Cov}(X_{i2}, X_{i1})}_{\neq 0} + 
 \underbrace{\operatorname{Cov}(\eta_i, X_{i1})}_{=0} \neq 0\\[2ex]
-\Rightarrow\;E(\epsilon_i|X_i)&\neq 0
+\Rightarrow\;E(\epsilon_i|X_i)&\neq 0,
 \end{align*}
 $$
+if $\beta_2\neq 0.$
 
-Use covariance calculation rules: 
+Used covariance calculation rules: 
 
 * $\operatorname{Cov}(aX,Z)=a \operatorname{Cov}(X,Z)$
 * $\operatorname{Cov}(X+Y,Z)=\operatorname{Cov}(Y,Z) + \operatorname{Cov}(X,Z)$

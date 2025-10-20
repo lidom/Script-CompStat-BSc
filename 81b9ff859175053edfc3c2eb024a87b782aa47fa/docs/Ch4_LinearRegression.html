@@ -720,7 +720,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \eta_i,
 <li>
 <span class="math inline">\(X_{i2}\)</span> denotes subject <span class="math inline">\(i\)</span>’s <strong>ability</strong>,</li>
 <li>
-<span class="math inline">\(\eta_i\)</span> denotes a well-behaved error term, which is independent of all regressors, which implies <span class="math display">\[
+<span class="math inline">\(\eta_i\)</span> denotes a well-behaved error term, for which the exogeneity assumption <span class="math inline">\(E(\eta_i|X_{i})=0\)</span> is fulfilled, which implies <span class="math display">\[
 \operatorname{Cov}(\eta_i,X_{i1})=\operatorname{Cov}(\eta_i,X_{i2})=0.
 \]</span>
 </li>
@@ -731,16 +731,16 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \eta_i,
 <p><strong>Ability</strong> is a hardly measurable predictor and thus usually must be left omitted (<strong>omitted variable</strong>). In this case, the <strong>ability</strong> effect becomes part of the error term in our wage regression model: <span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_{i1} + \underbrace{\epsilon_i.}_{=\beta_2 X_{i2} + \eta_i}
 \]</span></p>
-<p>This omitted variable situation violates the exogeneity assumption (by the <span class="math inline">\(\neg B\Rightarrow \neg A\)</span> argument above): <span class="math display">\[
+<p>This omitted variable situation violates the exogeneity assumption for <span class="math inline">\(\epsilon_i\)</span> (by the <span class="math inline">\(\neg B\Rightarrow \neg A\)</span> argument above): <span class="math display">\[
 \begin{align*}
 \operatorname{Cov}(\epsilon_i, X_{i1})
 &amp;=\operatorname{Cov}(\beta_2 X_{i2} + \eta_i, X_{i1})\\[2ex]
 &amp;=\beta_2 \;\underbrace{\operatorname{Cov}(X_{i2}, X_{i1})}_{\neq 0} +
 \underbrace{\operatorname{Cov}(\eta_i, X_{i1})}_{=0} \neq 0\\[2ex]
-\Rightarrow\;E(\epsilon_i|X_i)&amp;\neq 0
+\Rightarrow\;E(\epsilon_i|X_i)&amp;\neq 0,
 \end{align*}
-\]</span></p>
-<p>Use covariance calculation rules:</p>
+\]</span> if <span class="math inline">\(\beta_2\neq 0.\)</span></p>
+<p>Used covariance calculation rules:</p>
 <ul>
 <li><span class="math inline">\(\operatorname{Cov}(aX,Z)=a \operatorname{Cov}(X,Z)\)</span></li>
 <li><span class="math inline">\(\operatorname{Cov}(X+Y,Z)=\operatorname{Cov}(Y,Z) + \operatorname{Cov}(X,Z)\)</span></li>

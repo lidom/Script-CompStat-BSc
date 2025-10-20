@@ -937,8 +937,9 @@ $$
     * Plot your observed data $\{X_{1,obs},\dots,X_{n,obs}\}$ for $\Delta=0$ (no effect) and $\Delta = 1.5$ (positive effect)
 2. Estimate the effect of the marketing campaign $\Delta$ using the sample mean $\bar{X}=n^{-1}\sum_{i=1}^nX_i.$ Consider each of the scenarios $\Delta=0$ and $\Delta=1.5$ separately. 
 3. Compute the observed confidence interval $\operatorname{CI}_{obs}$ for (the usually unknown) $\Delta.$ Consider each of the scenarios $\Delta=0$ and $\Delta=1.5$ separately. 
-4. Repeatedly generate $1000$ realizations of the confidence interval $\operatorname{CI}_{obs}$ by repeatedly generating $1000$ realizations of the iid random sample $\{X_1,\dots,X_n\}$.
-    * What is the relative frequency of $\operatorname{CI}$ realizations containing $\Delta$? Consider each of the scenarios $\Delta=0$ and $\Delta=1.5$ separately. 
+4. Repeatedly generate $1000$ realizations of the confidence interval $\operatorname{CI}$ by repeatedly generating $1000$ realizations of the iid random sample $\{X_1,\dots,X_n\}$.
+    * What is the relative frequency of $\operatorname{CI}$ realizations containing $\Delta=0$, when the data is generated under the $\Delta=0$ scenario? 
+    * What is the relative frequency of $\operatorname{CI}$ realizations containing $\Delta=0$, when the data is generated under the $\Delta=1.5$ scenario?  
 
 <!-- ## Assignment 
 
