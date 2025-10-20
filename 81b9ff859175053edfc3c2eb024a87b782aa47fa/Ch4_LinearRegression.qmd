@@ -51,7 +51,7 @@ for all $i=1,\dots,n$ to model $\beta_0$ as the intercept.
 It is convenient to write @eq-LinMod using matrix notation
 $$
 \begin{eqnarray*}
-  Y_i&=&\underset{(1\times (p+1))}{X_i'}\underset{((p+1)\times 1)}{\beta} +\epsilon_i, \quad i=1,\dots,n,
+  Y_i&=&\underset{(1\times (p+1))}{X_i^{\top}}\underset{((p+1)\times 1)}{\beta} +\epsilon_i, \quad i=1,\dots,n,
 \end{eqnarray*}
 $$
 where 
@@ -100,7 +100,7 @@ $$
 
 <!-- 
 ::: {.callout-note}
-The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple.  
+The assumption $f(X_i) = X_i^{\top}\beta$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple.  
 ::: 
 -->
 
@@ -122,7 +122,7 @@ This means that we consider a situation, where the $p+2$-dimensional random vect
 $$
 (Y_{i},X_{i0},\dots,X_{ip})\quad\text{and}\quad (Y_{j},X_{j0},\dots,X_{jp})
 $$ 
-are independent for all $(i,j)$-paris with $i\neq j=1,\dots,n.$
+are independent for all $(i,j)$-pairs with $i,j=1,\dots,n$ and $i\neq j.$
 2. **Identical Distributions:** The $p+2$-dimensional random vector 
 $$
 (Y_{i},X_{i0},\dots,X_{ip})
@@ -212,14 +212,14 @@ $$
 \operatorname{rank}(X)=(p+1)\quad\text{(a.s.)}
 $$ 
 
-* This implies that the $((p+1)\times (p+1))$-dimensional matrix $X'X$ has full rank, i.e. that 
+* This implies that the $((p+1)\times (p+1))$-dimensional matrix $X^{\top}X$ has full rank, i.e. that 
 $$
-\operatorname{rank}(X'X)=(p+1)\quad\text{(a.s.)}
+\operatorname{rank}(X^{\top}X)=(p+1)\quad\text{(a.s.)}
 $$
 
-* Thus $(X'X)$ is invertible; i.e. there exists a $((p+1)\times (p+1))$-dimensional matrix $(X'X)^{-1}$ such that 
+* Thus $(X^{\top}X)$ is invertible; i.e. there exists a $((p+1)\times (p+1))$-dimensional matrix $(X^{\top}X)^{-1}$ such that 
 $$
-(X'X)(X'X)^{-1} = (X'X)^{-1}(X'X) = I_{(p+1)}.
+(X^{\top}X)(X^{\top}X)^{-1} = (X^{\top}X)^{-1}(X^{\top}X) = I_{(p+1)}.
 $$ 
 :::
 
@@ -370,7 +370,7 @@ A function $f:\mathbb{R}^{p+1}\to\mathbb{R}$ is called a **linear** function if 
 
 The multiple linear regression function is given by 
 $$
-f(X_i)  = E(Y_i|X_i) = X_i'\beta.
+f(X_i)  = E(Y_i|X_i) = X_i^{\top}\beta.
 $$
 Derivation: 
 $$
@@ -380,16 +380,16 @@ f(X_i)
 & = E(\beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip} + \epsilon_i |X_i)\\ 
 & = \beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip} + E(\epsilon_i |X_i)\\
 & = \beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip}\\
-& = X_i'\beta
+& = X_i^{\top}\beta
 \end{align*}
 $$
 
-Checking the two linearity conditions for $f(X_i) = X_i'\beta\colon$
+Checking the two linearity conditions for $f(X_i) = X_i^{\top}\beta\colon$
 
-* $f(X_i + \tilde{X}_i)=(X_i + \tilde{X}_i)'\beta = X_i'\beta + \tilde{X}_i'\beta=f(X_i) + f(\tilde{X}_i)$
-* $f(aX_i)=(aX_i)'\beta=a(X_i'\beta)=a\,f(X_i)$
+* $f(X_i + \tilde{X}_i)=(X_i + \tilde{X}_i)^{\top}\beta = X_i^{\top}\beta + \tilde{X}_i^{\top}\beta=f(X_i) + f(\tilde{X}_i)$
+* $f(aX_i)=(aX_i)^{\top}\beta=a(X_i^{\top}\beta)=a\,f(X_i)$
 
-Thus, the multiple linear regression function $f(X_i)=X_i'\beta$ is a linear function.
+Thus, the multiple linear regression function $f(X_i)=X_i^{\top}\beta$ is a linear function.
 
 Linear functions are generally **quite flexible** functions and provide a structure that can be **interpreted easily** using partial derivatives: 
 $$
@@ -457,7 +457,7 @@ E(\epsilon_i|X_i)=0
 $$
 implies that 
 $$
-\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,q,
+\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,p,
 $$
 since
 $$
@@ -466,12 +466,12 @@ $$
 &=E(\epsilon_i X_{ik})- \overbrace{E(\epsilon_i)}^{=0}\; E(X_{ik})\\
 &=E(\epsilon_i X_{ik})\\
 &=E(E(\epsilon_i X_{ik}|X_i))\\
-&=E(X_{ik} \; \underbrace{E(\epsilon_i |X_k)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,q.
+&=E(X_{ik} \; \underbrace{E(\epsilon_i |X_k)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,p.
 \end{align*}
 $$
 Thus 
 $$
-\underbrace{E(\epsilon_i|X_i)=0}_{A} \Rightarrow \underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,q}_{B}
+\underbrace{E(\epsilon_i|X_i)=0}_{A} \Rightarrow \underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,p}_{B}
 $$
 
 **Remember:** Any logical implication 
@@ -484,7 +484,7 @@ $$
 $$ 
 Therefore, we also have that
 $$
-\underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})\neq 0\;\text{for at least one}\; k=0,\dots,q}_{\neg B} \Rightarrow \underbrace{E(\epsilon_i|X_i)\neq 0}_{\neg A}
+\underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})\neq 0\;\text{for at least one}\; k=0,\dots,p}_{\neg B} \Rightarrow \underbrace{E(\epsilon_i|X_i)\neq 0}_{\neg A}
 $$
 I.e., if any of the regressors $X_{ik}$, $k=0,\dots,p,$ correlates with the error term $\epsilon_i$, then the exogeneity assumption is violated. 
 
@@ -526,7 +526,7 @@ $$
 \operatorname{Cov}(\eta_i,X_{i1})=\operatorname{Cov}(\eta_i,X_{i2})=0.
 $$ 
 
-Subjects with high **ability** typically stay longer in school and at the university such that **ability** and **eduction** correlate positively, i.e., 
+Subjects with high **ability** typically stay longer in school and at the university, such that **ability** and **eduction** correlate positively, i.e., 
 $$
 \operatorname{Cov}(X_{i2},X_{i1})>0.
 $$ 
@@ -561,7 +561,7 @@ $$
 $$
 which is justified, if the error term only captures purely random stuff like, for instance, measurement errors of some measurement device. 
 
-In this case, the assumption of exogeneity (Assumption 2) is trivially fulfilled, since by the independence between $\epsilon_i$ and $X_i=(X_{i0},\dots,X_{ip})'$ we have that
+In this case, the assumption of exogeneity (Assumption 2) is trivially fulfilled, since by the independence between $\epsilon_i$ and $X_i=(X_{i0},\dots,X_{ip})^{\top}$ we have that
 $$
 E(\epsilon_i|X_i) = E(\epsilon_i) = 0
 $$
@@ -701,19 +701,19 @@ See Section @sec-matrixAlgebra for a refresher on matrix algebra.
 
 We derive the expression for the OLS estimator 
 $$
-\hat\beta=(\hat\beta_0,\dots,\hat\beta_p)'\in\mathbb{R}^{p+1}
+\hat\beta=(\hat\beta_0,\dots,\hat\beta_p)^{\top}\in\mathbb{R}^{p+1}
 $$ 
 as the vector-valued minimizing argument of the sum of squared residuals, 
 $$
-\operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i'b}_{\text{$i$th residual}}\big)^2
+\operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i^{\top}b}_{\text{$i$th residual}}\big)^2
 $$ 
 with $b\in\mathbb{R}^{(p+1)}.$
 
-Using matrix/vector notation we can write $S_n(b)$ as 
+Using matrix/vector notation we can write $\operatorname{RSS}(b)$ as 
 $$
 \begin{align*}
 \operatorname{RSS}(b)
-&=\sum_{i=1}^n(Y_i-X_i'b)^2\\[2ex]
+&=\sum_{i=1}^n(Y_i-X_i^{\top}b)^2\\[2ex]
 &=(Y-X b)^{\prime}(Y-X b)\\[2ex]
 &=Y^{\prime}Y-2 Y^{\prime} X b+b^{\prime} X^{\prime} X b.
 \end{align*}
@@ -817,14 +817,14 @@ $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$.
 
 - The (OLS) **Predicted/Fitted Values:** 
 $$
-\hat{Y}_i=X_i'\hat\beta, \quad i=1,\dots,n
+\hat{Y}_i=X_i^{\top}\hat\beta, \quad i=1,\dots,n
 $$ 
 The $(n\times 1)$ vector of predicted (fitted) values
 $$
 \begin{align*}
 \hat{Y} = \left(\begin{matrix}\hat{Y}_1\\\hat{Y}_2\\ \vdots\\ \hat{Y}_n\end{matrix}\right)
 &=X\hat{\beta}\\[-2ex]
-&=\underbrace{X(X'X)^{-1}X'}_{=P_X}Y\\[2ex]
+&=\underbrace{X(X^{\top}X)^{-1}X^{\top}}_{=P_X}Y\\[2ex]
 &=P_X Y
 \end{align*}
 $$
@@ -843,7 +843,7 @@ e =
 \left(\begin{matrix}\hat{Y}_1\\\hat{Y}_2\\ \vdots\\ \hat{Y}_n\end{matrix}\right)\\[2ex]
 &=Y - \hat{Y}\\[2ex]
 %&=Y - X\hat{\beta}\\[-2ex]
-%&=Y - \underbrace{X(X'X)^{-1}X'}_{=P_X}Y\\[2ex]
+%&=Y - \underbrace{X(X^{\top}X)^{-1}X^{\top}}_{=P_X}Y\\[2ex]
 &=Y - P_X Y\\[2ex]
 &=\underbrace{(I_n - P_X)}_{=M_X} Y\\[2ex]
 &=M_XY
@@ -854,11 +854,11 @@ $$
 
 The matrix 
 $$
-P_X=X(X'X)^{-1}X'
+P_X=X(X^{\top}X)^{-1}X^{\top}
 $$ 
 is the $(n\times n)$ **projection matrix** that projects any vector from $\mathbb{R}^n$ into the column space spanned by the column vectors of $X$ and 
 $$
-M_X=I_n-X(X'X)^{-1}X'=I_n-P_X
+M_X=I_n-X(X^{\top}X)^{-1}X^{\top}=I_n-P_X
 $$ 
 is the associated $(n\times n)$ **orthogonal projection matrix** that projects any vector from $\mathbb{R}^n$ into the vector space that is orthogonal to that spanned by the column vectors of $X.$
 
@@ -867,7 +867,7 @@ is the associated $(n\times n)$ **orthogonal projection matrix** that projects a
 
 ## Assessing the Accuracy of the Model Fit
 
-The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{Y}_i=\hat{f}(X_i)$ to the data $(Y_i,X_i')$, $i=1,\dots,n$. 
+The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{Y}_i=\hat{f}(X_i)$ to the data $(Y_i,X_i^{\top})$, $i=1,\dots,n$. 
 
 This motivates the definition of the so-called $R^2$ coefficient of determination:
 $$
@@ -881,7 +881,7 @@ $$
 with 
 $$
 \begin{align*}
-\operatorname{RSS}\equiv \operatorname{RSS}(\hat\beta)=\sum_{i=1}^n\left(y_i-x_i'\hat\beta\right)^2=\sum_{i=1}^ne_i^2
+\operatorname{RSS}\equiv \operatorname{RSS}(\hat\beta)=\sum_{i=1}^n\left(Y_i-X_i^{\top}\hat\beta\right)^2=\sum_{i=1}^ne_i^2
 \end{align*}
 $$
 and
@@ -1017,7 +1017,7 @@ round(lm2$adj.r.squared, digits = 3) # model with X_ir
 
 Under the Assumptions 1-4, one can show that the OLS estimator 
 $$
-\hat\beta = (X'X)^{-1}X'Y
+\hat\beta = (X^{\top}X)^{-1}X^{\top}Y
 $$
 is unbiased, i.e.
 $$
@@ -1035,7 +1035,7 @@ That is, in the mean of $\hat\beta$ equals $\beta.$
 
 Observe that 
 $$
-\hat\beta=(X'X)^{-1}X'Y
+\hat\beta=(X^{\top}X)^{-1}X^{\top}Y
 $$ 
 consists of two multivariate random variables; namely 
 
@@ -1046,13 +1046,13 @@ Thus we firstly need to derive the **conditional mean** $E(\hat\beta|X),$ which 
 $$
 \begin{align*}
 E(\hat\beta|X) 
-&= E((X'X)^{-1}X'Y|X) \\[2ex]
+&= E((X^{\top}X)^{-1}X^{\top}Y|X) \\[2ex]
 &\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
-&= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
-&= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
-&= E(\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
-&= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
-&= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex] 
+&= E((X^{\top}X)^{-1}X^{\top}\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
+&= E((X^{\top}X)^{-1}X^{\top}(X\beta+\epsilon)|X)                 \\[2ex]
+&= E(\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{=I_{(p+1)}}\beta|X) + E((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
+&= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=(X^{\top}X)^{-1}X^{\top}E(\epsilon|X)}  \\[2ex]
+&= \beta + (X^{\top}X)^{-1}X^{\top}\underbrace{E(\epsilon|X)}_{=0}\\[2ex] 
 &= \underset{(p+1)\times 1}{\beta}  
 \end{align*}
 $$
@@ -1113,16 +1113,16 @@ Note that
 $$
 \begin{align*}
 \hat{\beta}
-&=(X'X)^{-1}X'Y\\[2ex]
+&=(X^{\top}X)^{-1}X^{\top}Y\\[2ex]
 &\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
-&=(X'X)^{-1}X'\; \underbrace{(X\beta + \epsilon)}_{=Y}\\[2ex]
-&=\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\;\beta + (X'X)^{-1}X'\epsilon\\
-&=\beta + (X'X)^{-1}X'\epsilon
+&=(X^{\top}X)^{-1}X^{\top}\; \underbrace{(X\beta + \epsilon)}_{=Y}\\[2ex]
+&=\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{=I_{(p+1)}}\;\beta + (X^{\top}X)^{-1}X^{\top}\epsilon\\
+&=\beta + (X^{\top}X)^{-1}X^{\top}\epsilon
 \end{align*}
 $$
 This leads to the so-called **sampling error expression** 
 $$
-\hat{\beta} - \beta = (X'X)^{-1}X'\epsilon.
+\hat{\beta} - \beta = (X^{\top}X)^{-1}X^{\top}\epsilon.
 $$
 With this, we can derive the general explicit expression for $Var(\hat\beta|X).$
 $$
@@ -1130,14 +1130,14 @@ $$
 &Var(\hat\beta|X)=\\[2ex]
 &\text{Adding/subtracting constants does not change variance:}\\[2ex]
 &=Var(\hat\beta - \beta|X)\\[2ex]
-&\text{Using the sampling error expression $\hat{\beta} - \beta = (X'X)^{-1}X'\epsilon$:}\\[2ex]
-&=Var((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&\text{Using the sampling error expression $\hat{\beta} - \beta = (X^{\top}X)^{-1}X^{\top}\epsilon$:}\\[2ex]
+&=Var((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
 &\text{Using that $Var(Z|X)=E[(Z-E(Z|X))(Z-E(Z|X))|X]$:}\\[2ex]
-&=E\Big[\big((X'X)^{-1}X'\epsilon-\underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=0}\big)\times\\[2ex]
-&\phantom{=\Big(}\,\times\big((X'X)^{-1}X'\epsilon-\underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=0}\big)'|X\Big]\\[2ex]
-&=E\left[((X'X)^{-1}X'\epsilon)((X'X)^{-1}X'\epsilon)'|X\right]\\[2ex]
-&=E\left[(X'X)^{-1}X'\epsilon\epsilon' X(X'X)^{-1}|X\right]\\[2ex]
-&=\;\;\;(X'X)^{-1}X'\underbrace{E\left(\epsilon\epsilon'|X\right)}_{=\highlight{Var(\epsilon|X)}}X(X'X)^{-1}
+&=E\Big[\big((X^{\top}X)^{-1}X^{\top}\epsilon-\underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=0}\big)\times\\[2ex]
+&\phantom{=\Big(}\,\times\big((X^{\top}X)^{-1}X^{\top}\epsilon-\underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=0}\big)^{\top}|X\Big]\\[2ex]
+&=E\left[((X^{\top}X)^{-1}X^{\top}\epsilon)((X^{\top}X)^{-1}X^{\top}\epsilon)^{\top}|X\right]\\[2ex]
+&=E\left[(X^{\top}X)^{-1}X^{\top}\epsilon\epsilon^{\top} X(X^{\top}X)^{-1}|X\right]\\[2ex]
+&=\;\;\;(X^{\top}X)^{-1}X^{\top}\underbrace{E\left(\epsilon\epsilon^{\top}|X\right)}_{=\highlight{Var(\epsilon|X)}}X(X^{\top}X)^{-1}
 \end{align*}
 $$
 That is, the explicit expression for $Var(\hat\beta|X)$ depends on the explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ 
@@ -1180,11 +1180,11 @@ then
 $$
 \begin{align*}
 &Var(\hat\beta|X)=\\[2ex]
-&=(X'X)^{-1}X' \;\highlight{Var(\epsilon|X)}\; X(X'X)^{-1}\\[2ex]
-&=(X'X)^{-1}X' \;\highlight{\sigma^2 I_n}\; X(X'X)^{-1}\\[2ex]
-&=\sigma^2\;(X'X)^{-1}X' \left( I_n \right) X(X'X)^{-1}\\[2ex]
-&=\sigma^2\;\underbrace{(X'X)^{-1}X'X}_{I_{p+1}}\;(X'X)^{-1}\\[2ex]
-&=\sigma^2\;(X'X)^{-1},
+&=(X^{\top}X)^{-1}X^{\top} \;\highlight{Var(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
+&=(X^{\top}X)^{-1}X^{\top} \;\highlight{\sigma^2 I_n}\; X(X^{\top}X)^{-1}\\[2ex]
+&=\sigma^2\;(X^{\top}X)^{-1}X^{\top} \left( I_n \right) X(X^{\top}X)^{-1}\\[2ex]
+&=\sigma^2\;\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{I_{p+1}}\;(X^{\top}X)^{-1}\\[2ex]
+&=\sigma^2\;(X^{\top}X)^{-1},
 \end{align*}
 $$
 where the only unknown component is $\sigma^2=Var(\epsilon_i).$ 
@@ -1202,11 +1202,11 @@ $$
 
 In the case of homoskedastic (and uncorrelated) error terms the standard error of $\hat\beta_j$ is
 $$
-\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X^{\top}X\right)^{-1}\right]_{(j,j)}}.
 $$
 Typically, $\sigma^2$ is unknown, and has to be estimated using, for instance, the empirical residual standard error
 $$
-\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X^{\top}X\right)^{-1}\right]_{(j,j)}}.
 $$
 
 
@@ -1247,31 +1247,31 @@ then
 $$
 \begin{align*}
 &Var(\hat\beta|X)=\\[2ex]
-&=(X'X)^{-1}X' \;\highlight{Var(\epsilon|X)}\; X(X'X)^{-1}\\[2ex]
-&=(X'X)^{-1}X' \;\highlight{\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2)}\; X(X'X)^{-1}\\[2ex]
-&=(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\\[2ex]
+&=(X^{\top}X)^{-1}X^{\top} \;\highlight{Var(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
+&=(X^{\top}X)^{-1}X^{\top} \;\highlight{\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2)}\; X(X^{\top}X)^{-1}\\[2ex]
+&=(X^{\top}X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right) (X^{\top}X)^{-1}\\[2ex]
 \end{align*}
 $$
 Thus, the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X)$ keeps its **sandwich form**, where the inner part of the sandwich
 $$
-\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right)
+\left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right)
 $$
 is typically unknown, since $\sigma_1^2,\sigma_2^2,\dots,\sigma_n^2$ are typically unknown. 
 
 
 There are different, so-called **Heteroskedasticity Consistent (HC)** estimators to estimate the unknown expression 
 $$
-\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right).
+\left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right).
 $$  
 
 
 HC-Type  | Formular
 ------|------------
-HC0   | $\sum_{i=1}^ne_i^2X_iX_i'$
-HC1   | $\sum_{i=1}^n\frac{n}{n-(p+1)}e_i^2X_iX_i'$
-HC2   | $\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i'$
-HC3   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'$
-HC4   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'$
+HC0   | $\sum_{i=1}^ne_i^2X_iX_i^{\top}$
+HC1   | $\sum_{i=1}^n\frac{n}{n-(p+1)}e_i^2X_iX_i^{\top}$
+HC2   | $\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i^{\top}$
+HC3   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i^{\top}$
+HC4   | $\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i^{\top}$
 
 HC3 is the most often used HC-estimator. 
 
@@ -1290,7 +1290,7 @@ Observations $X_i$ with leverage statistics $h_i$ that greatly exceed the averag
 
 High leverage observations $X_i$ have the potential to distort the estimation results, $\hat\beta_n$. Indeed, a high leverage observation $X_i$ will have an distorting effect on the estimation results if the absolute value of the corresponding residual $|e_i|$ is unusually large---such observations are called **influential outliers**. Such observations increase the estimation uncertainty. 
 
-General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals $e_i$ belonging to $X_i$ values that have a large leverage $h_i$ receive a higher weight and thus increase the value of $\widehat{E}(\epsilon^2_iX_iX_i').$ This strategy takes into account increased estimation uncertainties due to single influential outliers. 
+General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals $e_i$ belonging to $X_i$ values that have a large leverage $h_i$ receive a higher weight and thus increase the value of $\widehat{E}(\epsilon^2_iX_iX_i^{\top}).$ This strategy takes into account increased estimation uncertainties due to single influential outliers. 
 :::
 
 
@@ -1302,11 +1302,11 @@ The estimator HC0 was suggested in the econometrics literature by @White1980 and
 
 In the case of heteroskedastic and uncorrelated error terms the standard error of $\hat\beta_j$ is
 $$
-\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\right]_{(j,j)}}.
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X^{\top}X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right) (X^{\top}X)^{-1}\right]_{(j,j)}}.
 $$
-Typically, the variance terms $\sigma_i^2$ are unknown, but the expression $\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right)$ can be estimated using the **HC** estimators above, such that we can work with
+Typically, the variance terms $\sigma_i^2$ are unknown, but the expression $\left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right)$ can be estimated using the **HC** estimators above, such that we can work with
 $$
-\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\textsf{HC}\right) (X'X)^{-1}\right]_{(j,j)}},
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X^{\top}X)^{-1} \left(\textsf{HC}\right) (X^{\top}X)^{-1}\right]_{(j,j)}},
 $$
 where $\textsf{HC}$ is a placeholder for one the **H**eteroskedasticity **C**onsistent estimators HC1-HC4 given above.
 
@@ -1386,11 +1386,11 @@ $$
 $$ 
 where
 $$
-\hat\beta_{j,obs}=\left[(X_{obs}'X_{obs})^{-1}X_{obs}'Y_{obs}\right]_{j}
+\hat\beta_{j,obs}=\left[(X_{obs}^{\top}X_{obs})^{-1}X_{obs}^{\top}Y_{obs}\right]_{j}
 $$
 and (homoskedastic case) 
 $$
-\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}=\sqrt{\left[\hat{\sigma}^2_{obs}(X_{obs}'X_{obs})^{-1}\right]}
+\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}=\sqrt{\left[\hat{\sigma}^2_{obs}(X_{obs}^{\top}X_{obs})^{-1}\right]}
 $$
 
 
@@ -2218,7 +2218,7 @@ $$
 
 In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal value of the $(n\times n)$-dimensional "hat-matrix"
 $$
-H=X(X'X)^{-1}X'.
+H=X(X^{\top}X)^{-1}X^{\top}.
 $$ 
 
 * The leverage statistic $h_i$ is always between $1/n$ and $1$
@@ -2248,7 +2248,7 @@ plot(y = Credit$Rating, x = Credit$Limit, main = "Strong Collinearity", ylab = "
 
 The left panel of Figure 3.15 shows that, in the case of unrelated predictors (`Age` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Age},\hat\beta_{Limit})$ that is well identified since the minimum is well defined. 
 
-The right panel of Figure 3.15 shows that, in the case of collinear predictors (`Rating` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Rating},\hat\beta_{Limit})$ that is not well identified: One can substitute values of $\hat\beta_{Limit}'$ for $\hat\beta_{Rating}'$ ending up in new pairs $(\hat\beta_{Rating}',\hat\beta_{Limit}')$ with basically the same RSS-value than the original value than it is achieved by the minimizer $(\hat\beta_{Rating},\hat\beta_{Limit})$.  
+The right panel of Figure 3.15 shows that, in the case of collinear predictors (`Rating` and `Limit`), the least squares problem has a minimum $(\hat\beta_{Rating},\hat\beta_{Limit})$ that is not well identified: One can substitute values of $\hat\beta_{Limit}$ for $\hat\beta_{Rating}$ ending up in new pairs $(\hat\beta_{Rating},\hat\beta_{Limit})$ with basically the same RSS-value than the original value than it is achieved by the minimizer $(\hat\beta_{Rating},\hat\beta_{Limit})$.  
 
 ![](images/Fig_3_15.png)
 
@@ -2503,7 +2503,7 @@ myDataGenerator <- function(){
 
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
-((Y_1,X_1'),\dots,(Y_n,X_n'))
+((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
 
@@ -2547,7 +2547,7 @@ becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ t
 
 #### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
 
-1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta'=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
+1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta^{\top}=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
 2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
 3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
 

@@ -1373,7 +1373,39 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <li><a href="https://effective-programming-practices.vercel.app/git/index.html">Course Effective Programming Practices (Uni Bonn)</a></li>
 <li><a href="http://happygitwithr.com/">http://happygitwithr.com/</a></li>
 </ul>
-<!-- ## Assignment 
+<!-- 
+## In Class Coding Exercise (Oct. 20)
+
+#### Marketing Campaign {-}
+
+* Sample size: $n = 5$ stores
+* Sales before the campaign: 
+$$
+S_{i,1}=M_i + u_i
+$$ 
+* Sales after the campaign: 
+$$
+S_{i,2}=M_i + \Delta + v_i,
+$$ 
+where $M_1,\dots,M_n\overset{\text{iid}}{\sim}M$ are the individual "fixed effect" with
+$$
+M \sim \mathcal{N}\left(250,2\right)
+$$
+and $u_{1},\dots,u_{n}\overset{\text{iid}}{\sim}u$ and $v_{1},\dots,v_{n}\overset{\text{iid}}{\sim}v$ are iid error terms with
+$$
+u \sim \mathcal{N}\left(0,1\right)
+$$
+$$
+v \sim \mathcal{N}\left(0,1\right)
+$$
+and where $\Delta$
+denotes the effect of the marketing campaign. 
+
+Consider the differences 
+$$
+X_i = S_{i,2}-S_{i,1},\quad i=1,\dots,n
+$$
+--><!-- ## Assignment 
 
 
 Code functions to compute the following three summary statistics: 

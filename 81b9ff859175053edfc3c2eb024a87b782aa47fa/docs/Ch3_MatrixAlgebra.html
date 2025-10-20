@@ -348,7 +348,7 @@ C = \mathop{\mathrm{diag}}(1,4).
 \]</span> If the order becomes clear from the context, we omit the indices and write <span class="math inline">\(I\)</span> for the identity matrix and <span class="math inline">\(0\)</span> for the zero matrix or zero vector.</p>
 </section><section id="transposition" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="transposition">
 <span class="header-section-number">3.1.3</span> Transposition</h3>
-<p>The <strong>transpose</strong> <span class="math inline">\(A'\)</span> of the matrix <span class="math inline">\(A\)</span> is obtained by flipping rows and columns on the main diagonal: <span class="math display">\[
+<p>The <strong>transpose</strong> <span class="math inline">\(A^{\top}\)</span> of the matrix <span class="math inline">\(A\)</span> is obtained by flipping rows and columns on the main diagonal: <span class="math display">\[
 A =\begin{pmatrix}
              a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m}\\
              a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2m}\\
@@ -356,29 +356,29 @@ A =\begin{pmatrix}
              a_{k1} &amp; a_{k2} &amp; \cdots &amp; a_{km}
 \end{pmatrix}
 \]</span> <span class="math display">\[
-{A}'=\begin{pmatrix}
+{A}^{\top}=\begin{pmatrix}
     a_{11} &amp; a_{21} &amp; \cdots &amp; a_{k1}\\
     a_{12} &amp; a_{22} &amp; \cdots &amp; a_{k2}\\
     \vdots &amp; \vdots &amp;       &amp; \vdots\\
     a_{1m} &amp; a_{2m} &amp; \cdots &amp; a_{km}
 \end{pmatrix}.
-\]</span> If <span class="math inline">\(A\)</span> is a matrix of order <span class="math inline">\(k\times m\)</span>, then <span class="math inline">\(A'\)</span> is a matrix of order <span class="math inline">\(m \times k\)</span>.</p>
+\]</span> If <span class="math inline">\(A\)</span> is a matrix of order <span class="math inline">\(k\times m\)</span>, then <span class="math inline">\(A^{\top}\)</span> is a matrix of order <span class="math inline">\(m \times k\)</span>.</p>
 <p><strong>Example:</strong> <span class="math display">\[
 {A}=\begin{pmatrix}
         1 &amp; 2\\
         4 &amp; 5\\
         7 &amp; 8
 \end{pmatrix}\quad\Rightarrow\quad
-{A}'=\begin{pmatrix}
+{A}^{\top}=\begin{pmatrix}
         1 &amp; 4 &amp; 7\\
         2 &amp; 5 &amp; 8
 \end{pmatrix}
 \]</span> The definition implies that transposing twice produces the original matrix: <span class="math display">\[
-(A')' = A.
+(A^{\top})^{\top} = A.
 \]</span> The transpose of a (column) vector is a row vector: <span class="math display">\[
-a' = (a_1, \ldots, a_k)
+a^{\top} = (a_1, \ldots, a_k)
 \]</span></p>
-<p>A <strong>symmetric matrix</strong> is a square matrix <span class="math inline">\(A\)</span> with <span class="math inline">\({A}'={A}\)</span>. An example of a symmetric matrix is <span class="math display">\[
+<p>A <strong>symmetric matrix</strong> is a square matrix <span class="math inline">\(A\)</span> with <span class="math inline">\({A}^{\top}={A}\)</span>. An example of a symmetric matrix is <span class="math display">\[
 A = \begin{aligned}         \left(\begin{matrix}1 &amp; 2 \\ 2 &amp; 4 \end{matrix}\right)\end{aligned}.
 \]</span></p>
 </section><section id="matrices-in-r" class="level3" data-number="3.1.4"><h3 data-number="3.1.4" class="anchored" data-anchor-id="matrices-in-r">
@@ -455,7 +455,7 @@ a_{k1}+ b_{k1} &amp; a_{k2}+ b_{k2} &amp; \cdots &amp; a_{km}+ b_{km}
 \text{(i)}   &amp; {A}+{B}       &amp;=&amp; {B}+{A}\,       &amp; \text{(commutativity)}   \\
 \text{(ii)}  &amp; ({A}+{B})+{C} &amp;=&amp; {A}+({B}+{C})\, &amp; \text{(associativity)}   \\
 \text{(iii)} &amp; A + 0         &amp;=&amp; A               &amp; \text{(identity element)}\\
-\text{(iv)}  &amp; (A + B)'      &amp;=&amp; A' + B'         &amp; \text{(transposition)}          
+\text{(iv)}  &amp; (A + B)^{\top}      &amp;=&amp; A^{\top} + B^{\top}         &amp; \text{(transposition)}          
 \end{array}
 \]</span></p>
 </section><section id="scalar-matrix-multiplication" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="scalar-matrix-multiplication">
@@ -523,27 +523,27 @@ a_{k1}+ b_{k1} &amp; a_{k2}+ b_{k2} &amp; \cdots &amp; a_{km}+ b_{km}
 <section id="inner-product" class="level4" data-number="3.2.4.1"><h4 data-number="3.2.4.1" class="anchored" data-anchor-id="inner-product">
 <span class="header-section-number">3.2.4.1</span> Inner Product</h4>
 <p>The <strong>inner product</strong> (also known as dot product) of two vectors <span class="math inline">\({a},{b}\in\mathbb{R}^k\)</span> is <span class="math display">\[
-{a}'{b} = a_1 b_1+a_2b_2+\ldots+a_kb_k=\sum_{i=1}^k a_ib_i\in\mathbb{R}.
+{a}^{\top}{b} = a_1 b_1+a_2b_2+\ldots+a_kb_k=\sum_{i=1}^k a_ib_i\in\mathbb{R}.
 \]</span></p>
 <p><strong>Example:</strong> <span class="math display">\[
 {a}=\begin{pmatrix}1\\2\\3\end{pmatrix},\quad
 {b}=\begin{pmatrix}-2\\0\\2\end{pmatrix},\quad
-{a}'{b}=1\cdot(-2)+2\cdot0+3\cdot2=4.
+{a}^{\top}{b}=1\cdot(-2)+2\cdot0+3\cdot2=4.
 \]</span></p>
 <p>The inner product is commutative: <span class="math display">\[
 \begin{align*}
-  a' b = b' a.
+  a^{\top} b = b^{\top} a.
 \end{align*}
 \]</span> Two vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthogonal</strong> if <span class="math display">\[
-a' b = 0.
+a^{\top} b = 0.
 \]</span></p>
-<p>The vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthonormal</strong> if, in addition to <span class="math inline">\(a'b=0,\)</span> we have <span class="math display">\[
-a' a = 1\quad\text{and}\quad b' b=1.
+<p>The vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called <strong>orthonormal</strong> if, in addition to <span class="math inline">\(a^{\top}b=0,\)</span> we have <span class="math display">\[
+a^{\top} a = 1\quad\text{and}\quad b^{\top} b=1.
 \]</span></p>
 </section><section id="outer-product" class="level4" data-number="3.2.4.2"><h4 data-number="3.2.4.2" class="anchored" data-anchor-id="outer-product">
 <span class="header-section-number">3.2.4.2</span> Outer Product</h4>
 <p>The outer product (also known as dyadic product) of two vectors <span class="math inline">\({x} \in \mathbb R^k\)</span> and <span class="math inline">\({y}\in\mathbb{R}^m\)</span> is <span class="math display">\[
-{x}{y}' =
+{x}{y}^{\top} =
 \left(\begin{matrix}
 x_1 y_1 &amp; x_1 y_2  &amp;\ldots &amp; x_1 y_m \\
 x_2 y_1 &amp; x_2 y_2 &amp; \ldots &amp; x_2 y_m \\
@@ -553,7 +553,7 @@ x_k y_1 &amp; x_k y_2 &amp; \ldots &amp; x_k y_m
 \]</span> <strong>Example:</strong> <span class="math display">\[
 {x}=\begin{pmatrix}1\\2\end{pmatrix}\,,\quad
 {y}=\begin{pmatrix}-2\\0\\2\end{pmatrix}\,,\quad
-{x}{y}'=\left(\begin{matrix}
+{x}{y}^{\top}=\left(\begin{matrix}
 -2 &amp; 0 &amp; 2 \\
 -4 &amp; 0 &amp; 4
 \end{matrix}\right).
@@ -587,11 +587,11 @@ x_k y_1 &amp; x_k y_2 &amp; \ldots &amp; x_k y_m
 </section></section><section id="matrix-matrix-multiplication" class="level3" data-number="3.2.5"><h3 data-number="3.2.5" class="anchored" data-anchor-id="matrix-matrix-multiplication">
 <span class="header-section-number">3.2.5</span> Matrix-Matrix Multiplication</h3>
 <p>The <strong>matrix product</strong> of a <span class="math inline">\(k \times m\)</span> matrix <span class="math inline">\({A}\)</span> and a <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\({B}\)</span> is the <span class="math inline">\(k\times n\)</span> matrix <span class="math inline">\(C = {A}{B}\)</span> with the components <span class="math display">\[
-c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\ldots+a_{im}b_{mj}=\sum_{l=1}^m a_{il}b_{lj} = a_i' b_j,
-\]</span> where <span class="math inline">\(a_i = (a_{i1}, \ldots, a_{im})'\)</span> is the <span class="math inline">\(i\)</span>-th row of <span class="math inline">\(A\)</span> written as a column vector, and <span class="math inline">\(b_j = (b_{1j}, \ldots, b_{mj})'\)</span> is the <span class="math inline">\(j\)</span>-th column of <span class="math inline">\(B\)</span>. The full matrix product can be written as <span class="math display">\[
-A B = \begin{pmatrix} a_1' \\ \vdots \\ a_k' \end{pmatrix}
+c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\ldots+a_{im}b_{mj}=\sum_{l=1}^m a_{il}b_{lj} = a_i^{\top} b_j,
+\]</span> where <span class="math inline">\(a_i = (a_{i1}, \ldots, a_{im})^{\top}\)</span> is the <span class="math inline">\(i\)</span>-th row of <span class="math inline">\(A\)</span> written as a column vector, and <span class="math inline">\(b_j = (b_{1j}, \ldots, b_{mj})^{\top}\)</span> is the <span class="math inline">\(j\)</span>-th column of <span class="math inline">\(B\)</span>. The full matrix product can be written as <span class="math display">\[
+A B = \begin{pmatrix} a_1^{\top} \\ \vdots \\ a_k^{\top} \end{pmatrix}
 \begin{pmatrix} b_1 &amp; \ldots &amp; b_n \end{pmatrix}
-= \begin{pmatrix} a_1' b_1 &amp; \ldots &amp; a_1' b_n \\ \vdots &amp; &amp; \vdots \\ a_k' b_1 &amp; \ldots &amp; a_k' b_n \end{pmatrix}.
+= \begin{pmatrix} a_1^{\top} b_1 &amp; \ldots &amp; a_1^{\top} b_n \\ \vdots &amp; &amp; \vdots \\ a_k^{\top} b_1 &amp; \ldots &amp; a_k^{\top} b_n \end{pmatrix}.
 \]</span> The matrix product is only defined if the number of columns of the first matrix equals the number of rows of the second matrix. Therefore, we say that the <span class="math inline">\(k \times m\)</span> matrix <span class="math inline">\(A\)</span> and the <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(B\)</span> are <strong>conformable for matrix multiplication</strong>.</p>
 <p><strong>Example:</strong> Let <span class="math display">\[\begin{aligned}
     {A}=\begin{pmatrix}
@@ -654,8 +654,8 @@ A B = \begin{pmatrix} a_1' \\ \vdots \\ a_k' \end{pmatrix}
 \text{(v)}   &amp; {A}{I}_{n}        &amp; = &amp; {A}\,            &amp; \text{(identity element)}\\
 \text{(vi)}  &amp; {I}_{m}{A}        &amp; = &amp; {A}\,            &amp;
 \text{(identity element)}     \\
-\text{(vii)} &amp;   ({A}{B})'  &amp; = &amp; {B}'{A}'\,         &amp; \text{(product transposition)} \\
-\text{(viii)}&amp;   ({A}{B} C)'  &amp; = &amp; C' {B}'{A}'\,  &amp; \text{(product transposition)}
+\text{(vii)} &amp;   ({A}{B})^{\top}  &amp; = &amp; {B}^{\top}{A}^{\top}\,         &amp; \text{(product transposition)} \\
+\text{(viii)}&amp;   ({A}{B} C)^{\top}  &amp; = &amp; C^{\top} {B}^{\top}{A}^{\top}\,  &amp; \text{(product transposition)}
 \end{array}
 \]</span></p>
 </section></section><section id="rank-and-inverse" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="rank-and-inverse">
@@ -664,7 +664,7 @@ A B = \begin{pmatrix} a_1' \\ \vdots \\ a_k' \end{pmatrix}
 <span class="header-section-number">3.3.1</span> Linear Combination</h3>
 <p>Let <span class="math inline">\(x_1, \ldots, x_n\)</span> be vectors of the same order, and let <span class="math inline">\(\lambda_1, \ldots, \lambda_n\)</span> be scalars. The vector <span class="math display">\[
 \lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n
-\]</span> is called <strong>linear combination</strong> of <span class="math inline">\(x_1, \ldots, x_n\)</span>. A linear combination can also be written as a matrix-vector product. Let <span class="math inline">\(X =\begin{pmatrix} x_1 &amp; \ldots &amp; x_n \end{pmatrix}\)</span> be the matrix with columns <span class="math inline">\(x_1, \ldots, x_n\)</span>, and let <span class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_n)'\)</span>. Then, <span class="math display">\[
+\]</span> is called <strong>linear combination</strong> of <span class="math inline">\(x_1, \ldots, x_n\)</span>. A linear combination can also be written as a matrix-vector product. Let <span class="math inline">\(X =\begin{pmatrix} x_1 &amp; \ldots &amp; x_n \end{pmatrix}\)</span> be the matrix with columns <span class="math inline">\(x_1, \ldots, x_n\)</span>, and let <span class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_n)^{\top}\)</span>. Then, <span class="math display">\[
 \lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = X \lambda.
 \]</span> The vectors <span class="math inline">\(x_1, \ldots, x_n\)</span> are called <strong>linearly dependent</strong> if at least one can be written as a linear combination of the others. That is, there exists a nonzero vector <span class="math inline">\(\lambda\)</span> with <span class="math display">\[
 X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n = 0.
@@ -696,10 +696,10 @@ X = \begin{pmatrix} 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 2 \end{pmatrix},
 <p>Some useful properties are</p>
 <ol type="i">
 <li><span class="math inline">\(\mathop{\mathrm{rank}}(A) \leq \min(k,m)\)</span></li>
-<li><span class="math inline">\(\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A')\)</span></li>
+<li><span class="math inline">\(\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A^{\top})\)</span></li>
 <li><span class="math inline">\(\mathop{\mathrm{rank}}(A B) = \min(\mathop{\mathrm{rank}}(A), \mathop{\mathrm{rank}}(B))\)</span></li>
 <li>
-<span class="math inline">\(\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A' A) = \mathop{\mathrm{rank}}(A A')\)</span>.</li>
+<span class="math inline">\(\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A^{\top} A) = \mathop{\mathrm{rank}}(A A^{\top})\)</span>.</li>
 </ol>
 <p>We can use the <code><a href="https://rdrr.io/r/base/qr.html">qr()</a></code> function to extract the rank in <code>R</code>. Let’s compute the rank of the matrices <span class="math display">\[
 A = \begin{pmatrix}
@@ -858,7 +858,7 @@ A A^{-1} = I
 <p>Important properties for <strong>nonsingular</strong> matrices:</p>
 <ol type="i">
 <li><span class="math inline">\(({A}^{-1})^{-1} = {A}\)</span></li>
-<li><span class="math inline">\(({A}')^{-1} = ({A}^{-1})'\)</span></li>
+<li><span class="math inline">\(({A}^{\top})^{-1} = ({A}^{-1})^{\top}\)</span></li>
 <li>
 <span class="math inline">\((\lambda{A})^{-1} = \frac{1}{\lambda}{A}^{-1}\)</span> for any scalar <span class="math inline">\(\lambda \neq 0\)</span>
 </li>
@@ -887,7 +887,7 @@ A = \begin{pmatrix}
 <ol type="i">
 <li><span class="math inline">\(\mathop{\mathrm{tr}}(\lambda A) = \lambda \mathop{\mathrm{tr}}(A)\)</span></li>
 <li><span class="math inline">\(\mathop{\mathrm{tr}}(A + B) = \mathop{\mathrm{tr}}(A) + \mathop{\mathrm{tr}}(B)\)</span></li>
-<li><span class="math inline">\(\mathop{\mathrm{tr}}(A') = \mathop{\mathrm{tr}}(A)\)</span></li>
+<li><span class="math inline">\(\mathop{\mathrm{tr}}(A^{\top}) = \mathop{\mathrm{tr}}(A)\)</span></li>
 <li><span class="math inline">\(\mathop{\mathrm{tr}}(I_k) = k\)</span></li>
 </ol>
 <p>For <span class="math inline">\(A\in \mathbb R^{k \times m}\)</span> and <span class="math inline">\(B \in \mathbb R^{m \times k}\)</span> we have <span class="math display">\[
@@ -921,16 +921,16 @@ A A
 </section><section id="definite-matrix" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="definite-matrix">
 <span class="header-section-number">3.4.3</span> Definite Matrix</h3>
 <p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>positive definite</strong> if <span class="math display">\[
-c'Ac &gt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+c^{\top}Ac &gt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
 \]</span></p>
 <p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>negative definite</strong> if <span class="math display">\[
-c'Ac &lt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+c^{\top}Ac &lt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
 \]</span></p>
 <p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>positive semi-definite</strong> if <span class="math display">\[
-{c}'{Ac}\geq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+{c}^{\top}{Ac}\geq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
 \]</span></p>
 <p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>negative semi-definite</strong> if <span class="math display">\[
-{c}'{Ac}\leq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+{c}^{\top}{Ac}\leq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
 \]</span></p>
 <p>The definiteness of matrix is the matrix-analog of the positiveness/negativeness of a scalar. Therefore, we use the notation</p>
 <ol type="i">
@@ -945,11 +945,11 @@ c'Ac &lt; 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text
 </ol>
 <p>The notation <span class="math inline">\(A &gt; B\)</span> means that the matrix <span class="math inline">\(A - B\)</span> is positive definite.</p>
 <p>The <span class="math inline">\(k \times k\)</span> square matrix <span class="math inline">\(A\)</span> is called <strong>indefinite</strong> if there are vectors <span class="math inline">\(c,\tilde{c}\in\mathbb{R}^k\)</span> such that <span class="math display">\[
-c'Ac&lt; 0 &lt; \tilde{c}'{A\tilde{c}}.
+c^{\top}Ac&lt; 0 &lt; \tilde{c}^{\top}{A\tilde{c}}.
 \]</span> In this case, the matrix <span class="math inline">\(A\)</span> is neither positive semi-definite nor negative semi-definite.</p>
 </section></section><section id="matrix-calculus" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="matrix-calculus">
 <span class="header-section-number">3.5</span> Matrix Calculus</h2>
-<p>Let <span class="math inline">\(f(\beta_1, \ldots, \beta_k) = f({\beta})\)</span> be a twice-differential real-valued function that depends on some vector <span class="math inline">\(\beta = (\beta_1, \ldots, \beta_k)'\)</span>. Examples that frequently appear in econometrics are functions of the inner product form <span class="math inline">\(f(\beta) = a' \beta\)</span>, where <span class="math inline">\(a \in \mathbb R^k\)</span>, and functions of the sandwich form <span class="math inline">\(f(\beta) = \beta' A \beta\)</span>, where <span class="math inline">\(A \in \mathbb R^{k \times k}\)</span>.</p>
+<p>Let <span class="math inline">\(f(\beta_1, \ldots, \beta_k) = f({\beta})\)</span> be a twice-differential real-valued function that depends on some vector <span class="math inline">\(\beta = (\beta_1, \ldots, \beta_k)^{\top}\)</span>. Examples that frequently appear in econometrics are functions of the inner product form <span class="math inline">\(f(\beta) = a^{\top} \beta\)</span>, where <span class="math inline">\(a \in \mathbb R^k\)</span>, and functions of the sandwich form <span class="math inline">\(f(\beta) = \beta^{\top} A \beta\)</span>, where <span class="math inline">\(A \in \mathbb R^{k \times k}\)</span>.</p>
 <section id="gradient" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="gradient">
 <span class="header-section-number">3.5.1</span> Gradient</h3>
 <p>The <strong>first derivatives vector</strong> or <strong>gradient</strong> is <span class="math display">\[
@@ -958,35 +958,35 @@ c'Ac&lt; 0 &lt; \tilde{c}'{A\tilde{c}}.
 \frac{\partial f}{\partial{\beta}}(b)
 \]</span></p>
 <p>Note that an inner product can be viewed as a linear function in <span class="math inline">\(\beta\in\mathbb{R}^k\)</span> <span class="math display">\[
-f(\beta) = a' \beta
+f(\beta) = a^{\top} \beta
 \]</span> and a sandwich from as a quadratic function in <span class="math inline">\(\beta\in\mathbb{R}^k\)</span> <span class="math display">\[
-f(\beta) = \beta' A\beta.
+f(\beta) = \beta^{\top} A\beta.
 \]</span> Useful properties for inner products and sandwich forms are <span class="math display">\[
 \begin{align*}
-(i)&amp; \quad &amp;&amp;\frac{\partial (a' \beta)}{\partial \beta}  = a \\[2ex]
-(ii)&amp; \quad &amp;&amp;\frac{\partial ( \beta' A \beta)}{\partial \beta}   = (A + A') \beta.
+(i)&amp; \quad &amp;&amp;\frac{\partial (a^{\top} \beta)}{\partial \beta}  = a \\[2ex]
+(ii)&amp; \quad &amp;&amp;\frac{\partial ( \beta^{\top} A \beta)}{\partial \beta}   = (A + A^{\top}) \beta.
 \end{align*}
 \]</span></p>
 </section><section id="hessian" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="hessian">
 <span class="header-section-number">3.5.2</span> Hessian</h3>
 <p>The <strong>second derivatives matrix</strong> or <strong>Hessian</strong> is the <span class="math inline">\(k \times k\)</span> matrix <span class="math display">\[
-    \frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}'}
+    \frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}^{\top}}
     =  \begin{pmatrix}\frac{\partial^2 f(\beta)}{\partial \beta_1 \partial \beta_1} &amp; \ldots &amp; \frac{\partial^2 f(\beta)}{\partial \beta_k \partial \beta_1} \\
     \vdots &amp; &amp; \vdots \\
     \frac{\partial^2 f(\beta)}{\partial \beta_1 \partial \beta_k} &amp; \ldots &amp; \frac{\partial^2 f(\beta)}{\partial \beta_k \partial \beta_k}
     \end{pmatrix}.
 \]</span></p>
 <p>If the Hessian is evaluated at some particular value <span class="math inline">\(\beta = b\)</span>, we write <span class="math display">\[
-\frac{\partial^2 f}{\partial{\beta }\partial {\beta}'}(b)
+\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b)
 \]</span></p>
-<p>The Hessian is symmetric. Each column of the Hessian is the derivative of the components of the gradient for the corresponding variable in <span class="math inline">\(\beta'\)</span>:</p>
+<p>The Hessian is symmetric. Each column of the Hessian is the derivative of the components of the gradient for the corresponding variable in <span class="math inline">\(\beta^{\top}\)</span>:</p>
 <span class="math display">\[\begin{align*}
-\frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}'}
-    &amp;= \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta'} \\
+\frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}^{\top}}
+    &amp;= \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta^{\top}} \\
     &amp;= \Bigg[ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_1} \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_2} \ \ldots \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_n} \Bigg]
 \end{align*}\]</span>
 <p>The Hessian of a sandwich form function is <span class="math display">\[
-  \frac{\partial^2 ( \beta' A \beta)}{\partial \beta \partial \beta'}  = A + A'.
+  \frac{\partial^2 ( \beta^{\top} A \beta)}{\partial \beta \partial \beta^{\top}}  = A + A^{\top}.
 \]</span></p>
 </section><section id="optimization" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="optimization">
 <span class="header-section-number">3.5.3</span> Optimization</h3>
@@ -1001,8 +1001,8 @@ f(\beta) = \beta' A\beta.
 \frac{\partial f}{\partial{\beta}}(b)  = 0.
 \]</span> The <strong>second-order condition</strong> is <span class="math display">\[
 \begin{align*}
-  &amp;\frac{\partial^2 f}{\partial{\beta }\partial {\beta}'}(b) &gt; 0 \quad \text{for a minimum at} \ b, \\
-  &amp;\frac{\partial^2 f}{\partial{\beta }\partial {\beta}'}(b) &lt; 0 \quad \text{for a maximum at} \ b.
+  &amp;\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b) &gt; 0 \quad \text{for a minimum at} \ b, \\
+  &amp;\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b) &lt; 0 \quad \text{for a maximum at} \ b.
 \end{align*}
 \]</span> Recall that, in the context of matrices, the notation “<span class="math inline">\(&gt; 0\)</span>” means positive definite, and “<span class="math inline">\(&lt; 0\)</span>” means negative definite.</p>
 </section></section><section id="advanced-concepts" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="advanced-concepts">
@@ -1028,19 +1028,19 @@ f(\beta) = \beta' A\beta.
 <p>If <span class="math inline">\(\lambda_i\)</span> is an eigenvalue of <span class="math inline">\(A\)</span>, then <span class="math inline">\(\lambda_i I_k - A\)</span> is singular, which implies that there exists a linear combination vector <span class="math inline">\(v_i\)</span> with <span class="math inline">\((\lambda_i I_k - A) v_i = 0\)</span>. Equivalently, <span class="math display">\[
 A v_i = \lambda_i v_i,
 \]</span></p>
-<p>which can be solved by Gaussian elimination. It is convenient to normalize any solution such that <span class="math inline">\(v_i'v_i = 1\)</span>. The solutions <span class="math inline">\(v_1, \ldots, v_k\)</span> are called eigenvectors of <span class="math inline">\(A\)</span> to corresponding eigenvalues <span class="math inline">\(\lambda_1, \ldots, \lambda_k\)</span>.</p>
+<p>which can be solved by Gaussian elimination. It is convenient to normalize any solution such that <span class="math inline">\(v_i^{\top}v_i = 1\)</span>. The solutions <span class="math inline">\(v_1, \ldots, v_k\)</span> are called eigenvectors of <span class="math inline">\(A\)</span> to corresponding eigenvalues <span class="math inline">\(\lambda_1, \ldots, \lambda_k\)</span>.</p>
 </section><section id="spectral-decomposition" class="level4" data-number="3.6.1.3"><h4 data-number="3.6.1.3" class="anchored" data-anchor-id="spectral-decomposition">
 <span class="header-section-number">3.6.1.3</span> Spectral Decomposition</h4>
-<p>If <span class="math inline">\(A\)</span> is symmetric, then <span class="math inline">\(v_1, \ldots, v_k\)</span> are pairwise orthogonal (i.e., <span class="math inline">\(v_i' v_j = 0\)</span> for <span class="math inline">\(i \neq j\)</span>). Let <span class="math inline">\(V = \begin{pmatrix} v_1 &amp; \ldots &amp; v_k \end{pmatrix}\)</span> be the <span class="math inline">\(k \times k\)</span> matrix of eigenvectors and let <span class="math inline">\(\Lambda = \mathop{\mathrm{diag}}(\lambda_1, \ldots, \lambda_k)\)</span> be the <span class="math inline">\(k \times k\)</span> diagonal matrix with the eigenvalues on the main diagonal. Then, we can write <span class="math display">\[
-  A = V \Lambda V',
-\]</span> which is called the <strong>spectral decomposition</strong> of <span class="math inline">\(A\)</span>. The matrix of eigenvalues can be written as <span class="math inline">\(\Lambda = V' A V\)</span>.</p>
+<p>If <span class="math inline">\(A\)</span> is symmetric, then <span class="math inline">\(v_1, \ldots, v_k\)</span> are pairwise orthogonal (i.e., <span class="math inline">\(v_i^{\top} v_j = 0\)</span> for <span class="math inline">\(i \neq j\)</span>). Let <span class="math inline">\(V = \begin{pmatrix} v_1 &amp; \ldots &amp; v_k \end{pmatrix}\)</span> be the <span class="math inline">\(k \times k\)</span> matrix of eigenvectors and let <span class="math inline">\(\Lambda = \mathop{\mathrm{diag}}(\lambda_1, \ldots, \lambda_k)\)</span> be the <span class="math inline">\(k \times k\)</span> diagonal matrix with the eigenvalues on the main diagonal. Then, we can write <span class="math display">\[
+  A = V \Lambda V^{\top},
+\]</span> which is called the <strong>spectral decomposition</strong> of <span class="math inline">\(A\)</span>. The matrix of eigenvalues can be written as <span class="math inline">\(\Lambda = V^{\top} A V\)</span>.</p>
 </section><section id="eigendecomposition-in-r" class="level4" data-number="3.6.1.4"><h4 data-number="3.6.1.4" class="anchored" data-anchor-id="eigendecomposition-in-r">
 <span class="header-section-number">3.6.1.4</span> Eigendecomposition in <code>R</code>
 </h4>
 <p>The function <code><a href="https://rdrr.io/r/base/eigen.html">eigen()</a></code> computes the eigenvalues and corresponding eigenvectors.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">B</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">A</span> </span>
-<span><span class="va">B</span> <span class="co">#A'A is symmetric</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">B</span> <span class="co">#A^{\top}A is symmetric</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]   10   29    6
@@ -1082,7 +1082,7 @@ $vectors
 </section><section id="cholesky-decomposition" class="level3" data-number="3.6.3"><h3 data-number="3.6.3" class="anchored" data-anchor-id="cholesky-decomposition">
 <span class="header-section-number">3.6.3</span> Cholesky Decomposition</h3>
 <p>Any positive definite and symmetric matrix <span class="math inline">\(B\)</span> can be written as <span class="math display">\[
-  B = P P',
+  B = P P^{\top},
 \]</span> where <span class="math inline">\(P\)</span> is a lower triangular matrix with strictly positive diagonal entries <span class="math inline">\(p_{jj} &gt; 0\)</span>. This representation is called <strong>Cholesky decomposition</strong>. The matrix <span class="math inline">\(P\)</span> is unique. For a <span class="math inline">\(2 \times 2\)</span> matrix <span class="math inline">\(B\)</span> we have <span class="math display">\[
 \begin{align*}
 \begin{pmatrix} b_{11} &amp; b_{12} \\ b_{21} &amp; b_{22} \end{pmatrix}
@@ -1118,7 +1118,7 @@ B = \begin{pmatrix} 1 &amp; -0.5 &amp; 0.6 \\ -0.5 &amp; 1 &amp; 0.25 \\ 0.6 &am
 </section><section id="vectorization" class="level3" data-number="3.6.4"><h3 data-number="3.6.4" class="anchored" data-anchor-id="vectorization">
 <span class="header-section-number">3.6.4</span> Vectorization</h3>
 <p>The <strong>vectorization operator</strong> <span class="math inline">\(\mathop{\mathrm{vec}}()\)</span> stacks the matrix entries column-wise into a large vector. The vectorized <span class="math inline">\(k \times m\)</span> matrix <span class="math inline">\(A\)</span> is the <span class="math inline">\(km \times 1\)</span> vector <span class="math display">\[
-\mathop{\mathrm{vec}}(A) = (a_{11}, \ldots, a_{k1}, a_{12}, \ldots, a_{k2}, \ldots, a_{1m}, \ldots, a_{km})'.
+\mathop{\mathrm{vec}}(A) = (a_{11}, \ldots, a_{k1}, a_{12}, \ldots, a_{k2}, \ldots, a_{1m}, \ldots, a_{km})^{\top}.
 \]</span></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="co">#vectorize the matrix A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1149,7 +1149,7 @@ A \otimes B = \begin{pmatrix} a_{11}B &amp; \ldots &amp; a_{1m}B \\ \vdots &amp;
 </section><section id="vector-and-matrix-norm" class="level3" data-number="3.6.6"><h3 data-number="3.6.6" class="anchored" data-anchor-id="vector-and-matrix-norm">
 <span class="header-section-number">3.6.6</span> Vector and Matrix Norm</h3>
 <p>A norm <span class="math inline">\(\|\cdot\|\)</span> of a vector or a matrix is a measure of distance from the origin. The most commonly used norms are the Euclidean vector norm <span class="math display">\[
-  \|a\| = \sqrt{a' a} = \sqrt{\sum_{i=1}^k a_i^2}
+  \|a\| = \sqrt{a^{\top} a} = \sqrt{\sum_{i=1}^k a_i^2}
 \]</span> for <span class="math inline">\(a \in \mathbb R^k\)</span>, and the Frobenius matrix norm <span class="math display">\[
   \|A \| = \sqrt{\sum_{i=1}^k \sum_{j=1}^m a_{ij}^2}
 \]</span> for <span class="math inline">\(A \in \mathbb R^{k \times m}\)</span>.</p>

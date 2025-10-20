@@ -128,7 +128,7 @@ $0$ for the zero matrix or zero vector.
 
 ### Transposition
 
-The **transpose** $A'$ of the matrix $A$ is
+The **transpose** $A^{\top}$ of the matrix $A$ is
 obtained by flipping rows and columns on the main diagonal:
 $$
 A =\begin{pmatrix}
@@ -139,7 +139,7 @@ A =\begin{pmatrix}
 \end{pmatrix}
 $$ 
 $$
-{A}'=\begin{pmatrix}
+{A}^{\top}=\begin{pmatrix}
     a_{11} & a_{21} & \cdots & a_{k1}\\
     a_{12} & a_{22} & \cdots & a_{k2}\\
     \vdots & \vdots &       & \vdots\\
@@ -147,7 +147,7 @@ $$
 \end{pmatrix}.
 $$ 
 If $A$ is a matrix of order $k\times m$,
-then $A'$ is a matrix of order $m \times k$. 
+then $A^{\top}$ is a matrix of order $m \times k$. 
 
 
 **Example:**
@@ -157,7 +157,7 @@ $$
         4 & 5\\
         7 & 8
 \end{pmatrix}\quad\Rightarrow\quad
-{A}'=\begin{pmatrix}
+{A}^{\top}=\begin{pmatrix}
         1 & 4 & 7\\
         2 & 5 & 8
 \end{pmatrix}
@@ -165,15 +165,15 @@ $$
 The definition implies that transposing twice produces
 the original matrix: 
 $$
-(A')' = A.
+(A^{\top})^{\top} = A.
 $$ 
 The transpose of a (column) vector is a row vector: 
 $$
-a' = (a_1, \ldots, a_k)
+a^{\top} = (a_1, \ldots, a_k)
 $$
 
 A **symmetric matrix** is a square matrix $A$ with
-${A}'={A}$. An example of a symmetric matrix is
+${A}^{\top}={A}$. An example of a symmetric matrix is
 $$
 A = \begin{aligned}         \left(\begin{matrix}1 & 2 \\ 2 & 4 \end{matrix}\right)\end{aligned}.
 $$
@@ -225,7 +225,7 @@ $$
 \text{(i)}   & {A}+{B}       &=& {B}+{A}\,       & \text{(commutativity)}   \\
 \text{(ii)}  & ({A}+{B})+{C} &=& {A}+({B}+{C})\, & \text{(associativity)}   \\
 \text{(iii)} & A + 0         &=& A               & \text{(identity element)}\\
-\text{(iv)}  & (A + B)'      &=& A' + B'         & \text{(transposition)}          
+\text{(iv)}  & (A + B)^{\top}      &=& A^{\top} + B^{\top}         & \text{(transposition)}          
 \end{array}
 $$
 
@@ -275,32 +275,32 @@ A*B #element-wise multiplication
 The **inner product** (also known as dot product) of two vectors
 ${a},{b}\in\mathbb{R}^k$ is
 $$
-{a}'{b} = a_1 b_1+a_2b_2+\ldots+a_kb_k=\sum_{i=1}^k a_ib_i\in\mathbb{R}.
+{a}^{\top}{b} = a_1 b_1+a_2b_2+\ldots+a_kb_k=\sum_{i=1}^k a_ib_i\in\mathbb{R}.
 $$
 
 **Example:** 
 $$
 {a}=\begin{pmatrix}1\\2\\3\end{pmatrix},\quad
 {b}=\begin{pmatrix}-2\\0\\2\end{pmatrix},\quad
-{a}'{b}=1\cdot(-2)+2\cdot0+3\cdot2=4.
+{a}^{\top}{b}=1\cdot(-2)+2\cdot0+3\cdot2=4.
 $$
 
 The inner product is commutative: 
 $$
 \begin{align*}
-  a' b = b' a.
+  a^{\top} b = b^{\top} a.
 \end{align*} 
 $$
 Two vectors $a$ and $b$ are called
 **orthogonal** if 
 $$
-a' b = 0.
+a^{\top} b = 0.
 $$ 
 
 The vectors $a$ and $b$ are called **orthonormal** if, in
-addition to $a'b=0,$ we have
+addition to $a^{\top}b=0,$ we have
 $$
-a' a = 1\quad\text{and}\quad b' b=1.
+a^{\top} a = 1\quad\text{and}\quad b^{\top} b=1.
 $$
 
 #### Outer Product
@@ -308,7 +308,7 @@ $$
 The outer product (also known as dyadic product) of two vectors
 ${x} \in \mathbb R^k$ and ${y}\in\mathbb{R}^m$ is
 $$
-{x}{y}' = 
+{x}{y}^{\top} = 
 \left(\begin{matrix}
 x_1 y_1 & x_1 y_2  &\ldots & x_1 y_m \\ 
 x_2 y_1 & x_2 y_2 & \ldots & x_2 y_m \\ 
@@ -320,7 +320,7 @@ $$
 $$
 {x}=\begin{pmatrix}1\\2\end{pmatrix}\,,\quad
 {y}=\begin{pmatrix}-2\\0\\2\end{pmatrix}\,,\quad
-{x}{y}'=\left(\begin{matrix}
+{x}{y}^{\top}=\left(\begin{matrix}
 -2 & 0 & 2 \\
 -4 & 0 & 4
 \end{matrix}\right).
@@ -345,16 +345,16 @@ The **matrix product** of a $k \times m$ matrix ${A}$ and a
 $m \times n$ matrix ${B}$ is the $k\times n$ matrix
 $C = {A}{B}$ with the components
 $$
-c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\ldots+a_{im}b_{mj}=\sum_{l=1}^m a_{il}b_{lj} = a_i' b_j,
+c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\ldots+a_{im}b_{mj}=\sum_{l=1}^m a_{il}b_{lj} = a_i^{\top} b_j,
 $$
-where $a_i = (a_{i1}, \ldots, a_{im})'$ is the $i$-th row of
+where $a_i = (a_{i1}, \ldots, a_{im})^{\top}$ is the $i$-th row of
 $A$ written as a column vector, and
-$b_j = (b_{1j}, \ldots, b_{mj})'$ is the $j$-th column of
+$b_j = (b_{1j}, \ldots, b_{mj})^{\top}$ is the $j$-th column of
 $B$. The full matrix product can be written as 
 $$
-A B = \begin{pmatrix} a_1' \\ \vdots \\ a_k' \end{pmatrix}
+A B = \begin{pmatrix} a_1^{\top} \\ \vdots \\ a_k^{\top} \end{pmatrix}
 \begin{pmatrix} b_1 & \ldots & b_n \end{pmatrix}
-= \begin{pmatrix} a_1' b_1 & \ldots & a_1' b_n \\ \vdots & & \vdots \\ a_k' b_1 & \ldots & a_k' b_n \end{pmatrix}.
+= \begin{pmatrix} a_1^{\top} b_1 & \ldots & a_1^{\top} b_n \\ \vdots & & \vdots \\ a_k^{\top} b_1 & \ldots & a_k^{\top} b_n \end{pmatrix}.
 $$ 
 The matrix product is only defined if the number of columns of the
 first matrix equals the number of rows of the second matrix. Therefore,
@@ -431,8 +431,8 @@ $$
 \text{(v)}   & {A}{I}_{n}        & = & {A}\,            & \text{(identity element)}\\
 \text{(vi)}  & {I}_{m}{A}        & = & {A}\,            &
 \text{(identity element)}     \\
-\text{(vii)} &   ({A}{B})'  & = & {B}'{A}'\,         & \text{(product transposition)} \\
-\text{(viii)}&   ({A}{B} C)'  & = & C' {B}'{A}'\,  & \text{(product transposition)}
+\text{(vii)} &   ({A}{B})^{\top}  & = & {B}^{\top}{A}^{\top}\,         & \text{(product transposition)} \\
+\text{(viii)}&   ({A}{B} C)^{\top}  & = & C^{\top} {B}^{\top}{A}^{\top}\,  & \text{(product transposition)}
 \end{array}
 $$
 
@@ -451,7 +451,7 @@ $x_1, \ldots, x_n$. A linear combination can
 also be written as a matrix-vector product. Let
 $X =\begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix}$
 be the matrix with columns $x_1, \ldots, x_n$,
-and let $\lambda = (\lambda_1, \ldots, \lambda_n)'$. Then,
+and let $\lambda = (\lambda_1, \ldots, \lambda_n)^{\top}$. Then,
 $$
 \lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = X \lambda.
 $$
@@ -519,9 +519,9 @@ $X$ does not have a full column rank.
 Some useful properties are
 
 i)  $\mathop{\mathrm{rank}}(A) \leq \min(k,m)$
-ii) $\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A')$
+ii) $\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A^{\top})$
 iii) $\mathop{\mathrm{rank}}(A B) = \min(\mathop{\mathrm{rank}}(A), \mathop{\mathrm{rank}}(B))$
-iv) $\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A' A) = \mathop{\mathrm{rank}}(A A')$.
+iv) $\mathop{\mathrm{rank}}(A) = \mathop{\mathrm{rank}}(A^{\top} A) = \mathop{\mathrm{rank}}(A A^{\top})$.
 
 We can use the `qr()` function to extract the rank in `R`. Let's compute
 the rank of the matrices 
@@ -723,7 +723,7 @@ $$
 Important properties for **nonsingular** matrices:
 
 i)  $({A}^{-1})^{-1} = {A}$
-ii) $({A}')^{-1} = ({A}^{-1})'$
+ii) $({A}^{\top})^{-1} = ({A}^{-1})^{\top}$
 iii) $(\lambda{A})^{-1} = \frac{1}{\lambda}{A}^{-1}$
      for any scalar $\lambda \neq 0$
 iv) $\det(A^{-1}) = \frac{1}{\det(A)}$
@@ -760,7 +760,7 @@ $B$ and scalars $\lambda$:
 
 i)  $\mathop{\mathrm{tr}}(\lambda A) = \lambda \mathop{\mathrm{tr}}(A)$
 ii) $\mathop{\mathrm{tr}}(A + B) = \mathop{\mathrm{tr}}(A) + \mathop{\mathrm{tr}}(B)$
-iii) $\mathop{\mathrm{tr}}(A') = \mathop{\mathrm{tr}}(A)$
+iii) $\mathop{\mathrm{tr}}(A^{\top}) = \mathop{\mathrm{tr}}(A)$
 iv) $\mathop{\mathrm{tr}}(I_k) = k$
 
 For $A\in \mathbb R^{k \times m}$ and
@@ -811,14 +811,14 @@ The $k \times k$ square matrix $A$ is called
 **positive definite** 
 if 
 $$
-c'Ac > 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+c^{\top}Ac > 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
 $$ 
 
 The $k \times k$ square matrix $A$ is called 
 **negative definite** 
 if 
 $$
-c'Ac < 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
+c^{\top}Ac < 0\quad\text{for all non-zero vectors}\quad c\in \mathbb{R}^k\quad\text{with}\quad c\neq 0.
 $$ 
 
 
@@ -826,7 +826,7 @@ The $k \times k$ square matrix $A$ is called
 **positive semi-definite** 
 if
 $$
-{c}'{Ac}\geq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+{c}^{\top}{Ac}\geq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
 $$
 
 
@@ -834,7 +834,7 @@ The $k \times k$ square matrix $A$ is called
 **negative semi-definite** 
 if
 $$
-{c}'{Ac}\leq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
+{c}^{\top}{Ac}\leq 0\quad \text{for all vectors}\quad c\in \mathbb{R}^k\quad\text{(including}\quad c=0\text{)}.
 $$
 
 
@@ -854,7 +854,7 @@ The notation $A > B$ means that the matrix $A - B$ is positive definite.
 The $k \times k$ square matrix $A$ is called 
 **indefinite** if there are vectors $c,\tilde{c}\in\mathbb{R}^k$ such that 
 $$
-c'Ac< 0 < \tilde{c}'{A\tilde{c}}.
+c^{\top}Ac< 0 < \tilde{c}^{\top}{A\tilde{c}}.
 $$
 In this case, the matrix $A$ is neither positive semi-definite nor negative semi-definite. 
 
@@ -865,11 +865,11 @@ In this case, the matrix $A$ is neither positive semi-definite nor negative semi
 
 Let $f(\beta_1, \ldots, \beta_k) = f({\beta})$ be a
 twice-differential real-valued function that depends on some vector
-$\beta = (\beta_1, \ldots, \beta_k)'$. Examples that
+$\beta = (\beta_1, \ldots, \beta_k)^{\top}$. Examples that
 frequently appear in econometrics are functions of the inner product
-form $f(\beta) = a' \beta$, where
+form $f(\beta) = a^{\top} \beta$, where
 $a \in \mathbb R^k$, and functions of the sandwich form
-$f(\beta) = \beta' A \beta$,
+$f(\beta) = \beta^{\top} A \beta$,
 where $A \in \mathbb R^{k \times k}$.
 
 ### Gradient
@@ -886,17 +886,17 @@ $$
 
 Note that an inner product can be viewed as a linear function in $\beta\in\mathbb{R}^k$
 $$
-f(\beta) = a' \beta
+f(\beta) = a^{\top} \beta
 $$
 and a sandwich from as a quadratic function in $\beta\in\mathbb{R}^k$
 $$
-f(\beta) = \beta' A\beta.
+f(\beta) = \beta^{\top} A\beta.
 $$
 Useful properties for inner products and sandwich forms are
 $$
 \begin{align*}
-(i)& \quad &&\frac{\partial (a' \beta)}{\partial \beta}  = a \\[2ex]
-(ii)& \quad &&\frac{\partial ( \beta' A \beta)}{\partial \beta}   = (A + A') \beta.
+(i)& \quad &&\frac{\partial (a^{\top} \beta)}{\partial \beta}  = a \\[2ex]
+(ii)& \quad &&\frac{\partial ( \beta^{\top} A \beta)}{\partial \beta}   = (A + A^{\top}) \beta.
 \end{align*}
 $$
 
@@ -905,7 +905,7 @@ $$
 The **second derivatives matrix** or **Hessian** is the $k \times k$
 matrix 
 $$
-    \frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}'}
+    \frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}^{\top}}
     =  \begin{pmatrix}\frac{\partial^2 f(\beta)}{\partial \beta_1 \partial \beta_1} & \ldots & \frac{\partial^2 f(\beta)}{\partial \beta_k \partial \beta_1} \\ 
     \vdots & & \vdots \\
     \frac{\partial^2 f(\beta)}{\partial \beta_1 \partial \beta_k} & \ldots & \frac{\partial^2 f(\beta)}{\partial \beta_k \partial \beta_k}
@@ -915,23 +915,23 @@ $$
 If the Hessian is evaluated at some particular value
 $\beta = b$, we write 
 $$
-\frac{\partial^2 f}{\partial{\beta }\partial {\beta}'}(b)
+\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b)
 $$
 
 The Hessian is symmetric. Each column of the Hessian is the derivative
 of the components of the gradient for the corresponding variable in
-$\beta'$:
+$\beta^{\top}$:
 
 ```{=tex}
 \begin{align*}
-\frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}'}
-    &= \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta'} \\
+\frac{\partial^2 f(\beta)}{\partial{\beta }\partial {\beta}^{\top}}
+    &= \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta^{\top}} \\
     &= \Bigg[ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_1} \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_2} \ \ldots \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_n} \Bigg]
 \end{align*}
 ```
 The Hessian of a sandwich form function is 
 $$
-  \frac{\partial^2 ( \beta' A \beta)}{\partial \beta \partial \beta'}  = A + A'.
+  \frac{\partial^2 ( \beta^{\top} A \beta)}{\partial \beta \partial \beta^{\top}}  = A + A^{\top}.
 $$
 
 ### Optimization
@@ -953,8 +953,8 @@ $$
 The **second-order condition** is 
 $$
 \begin{align*}
-  &\frac{\partial^2 f}{\partial{\beta }\partial {\beta}'}(b) > 0 \quad \text{for a minimum at} \ b, \\
-  &\frac{\partial^2 f}{\partial{\beta }\partial {\beta}'}(b) < 0 \quad \text{for a maximum at} \ b.
+  &\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b) > 0 \quad \text{for a minimum at} \ b, \\
+  &\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b) < 0 \quad \text{for a maximum at} \ b.
 \end{align*} 
 $$
 Recall that, in the context of matrices, the notation
@@ -1006,7 +1006,7 @@ A v_i = \lambda_i v_i,
 $$
 
 which can be solved by Gaussian elimination. It is convenient to
-normalize any solution such that $v_i'v_i = 1$.
+normalize any solution such that $v_i^{\top}v_i = 1$.
 The solutions $v_1, \ldots, v_k$ are called
 eigenvectors of $A$ to corresponding eigenvalues
 $\lambda_1, \ldots, \lambda_k$.
@@ -1015,18 +1015,18 @@ $\lambda_1, \ldots, \lambda_k$.
 
 If $A$ is symmetric, then
 $v_1, \ldots, v_k$ are pairwise orthogonal
-(i.e., $v_i' v_j = 0$ for $i \neq j$). Let
+(i.e., $v_i^{\top} v_j = 0$ for $i \neq j$). Let
 $V = \begin{pmatrix} v_1 & \ldots & v_k \end{pmatrix}$
 be the $k \times k$ matrix of eigenvectors and let
 $\Lambda = \mathop{\mathrm{diag}}(\lambda_1, \ldots, \lambda_k)$
 be the $k \times k$ diagonal matrix with the eigenvalues on the main
 diagonal. Then, we can write 
 $$
-  A = V \Lambda V',
+  A = V \Lambda V^{\top},
 $$
 which is called the **spectral decomposition** of $A$. The
 matrix of eigenvalues can be written as
-$\Lambda = V' A V$.
+$\Lambda = V^{\top} A V$.
 
 #### Eigendecomposition in `R`
 
@@ -1035,7 +1035,7 @@ eigenvectors.
 
 ```{r}
 B=t(A)%*%A 
-B #A'A is symmetric
+B #A^{\top}A is symmetric
 eigen(B) #eigenvalues and eigenvector matrix
 ```
 
@@ -1064,7 +1064,7 @@ eigen(B)$values #B is positive definite (all eigenvalues positive)
 Any positive definite and symmetric matrix $B$ can be
 written as 
 $$
-  B = P P',
+  B = P P^{\top},
 $$ 
 where $P$ is a lower triangular matrix with strictly positive
 diagonal entries $p_{jj} > 0$. This representation is called **Cholesky
@@ -1114,7 +1114,7 @@ The **vectorization operator** $\mathop{\mathrm{vec}}()$ stacks the
 matrix entries column-wise into a large vector. The vectorized
 $k \times m$ matrix $A$ is the $km \times 1$ vector 
 $$
-\mathop{\mathrm{vec}}(A) = (a_{11}, \ldots, a_{k1}, a_{12}, \ldots, a_{k2}, \ldots, a_{1m}, \ldots, a_{km})'.
+\mathop{\mathrm{vec}}(A) = (a_{11}, \ldots, a_{k1}, a_{12}, \ldots, a_{k2}, \ldots, a_{1m}, \ldots, a_{km})^{\top}.
 $$
 
 ```{r}
@@ -1141,7 +1141,7 @@ A %x% B #Kronecker product in R
 A norm $\|\cdot\|$ of a vector or a matrix is a measure of distance from
 the origin. The most commonly used norms are the Euclidean vector norm
 $$
-  \|a\| = \sqrt{a' a} = \sqrt{\sum_{i=1}^k a_i^2}
+  \|a\| = \sqrt{a^{\top} a} = \sqrt{\sum_{i=1}^k a_i^2}
 $$ 
 for $a \in \mathbb R^k$, and the Frobenius matrix norm 
 $$

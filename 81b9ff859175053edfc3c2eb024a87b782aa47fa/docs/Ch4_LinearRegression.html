@@ -341,7 +341,7 @@ X_{i0}=1
 </ul>
 <p>It is convenient to write <a href="#eq-LinMod" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> using matrix notation <span class="math display">\[
 \begin{eqnarray*}
-  Y_i&amp;=&amp;\underset{(1\times (p+1))}{X_i'}\underset{((p+1)\times 1)}{\beta} +\epsilon_i, \quad i=1,\dots,n,
+  Y_i&amp;=&amp;\underset{(1\times (p+1))}{X_i^{\top}}\underset{((p+1)\times 1)}{\beta} +\epsilon_i, \quad i=1,\dots,n,
 \end{eqnarray*}
 \]</span> where <span class="math display">\[
 X_i=\left(\begin{matrix}X_{i0}\\ X_{i1}\\ \vdots\\  X_{ip}\end{matrix}\right)
@@ -381,7 +381,7 @@ X_{n0}&amp;\dots&amp;X_{np}\\
 \]</span></p>
 <!-- 
 ::: {.callout-note}
-The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple.  
+The assumption $f(X_i) = X_i^{\top}\beta$ may be a useful working model. However, despite what many textbooks might tell us, we seldom believe that the true (unknown) relationship is that simple.  
 ::: 
 -->
 </section><section id="part-b-random-sampling" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-random-sampling"><strong>Part (b): Random Sampling</strong></h4>
@@ -395,7 +395,7 @@ The assumption $f(X_i) = X_i'\beta$ may be a useful working model. However, desp
 <li>
 <strong>Independent:</strong> The two <span class="math inline">\(p+2\)</span>-dimensional random vectors <span class="math display">\[
 (Y_{i},X_{i0},\dots,X_{ip})\quad\text{and}\quad (Y_{j},X_{j0},\dots,X_{jp})
-\]</span> are independent for all <span class="math inline">\((i,j)\)</span>-paris with <span class="math inline">\(i\neq j=1,\dots,n.\)</span>
+\]</span> are independent for all <span class="math inline">\((i,j)\)</span>-pairs with <span class="math inline">\(i,j=1,\dots,n\)</span> and <span class="math inline">\(i\neq j.\)</span>
 </li>
 <li>
 <strong>Identical Distributions:</strong> The <span class="math inline">\(p+2\)</span>-dimensional random vector <span class="math display">\[
@@ -480,11 +480,11 @@ Note
 <li><p>Under Assumption 3, we have that <span class="math display">\[
 \operatorname{rank}(X)=(p+1)\quad\text{(a.s.)}
 \]</span></p></li>
-<li><p>This implies that the <span class="math inline">\(((p+1)\times (p+1))\)</span>-dimensional matrix <span class="math inline">\(X'X\)</span> has full rank, i.e.&nbsp;that <span class="math display">\[
-\operatorname{rank}(X'X)=(p+1)\quad\text{(a.s.)}
+<li><p>This implies that the <span class="math inline">\(((p+1)\times (p+1))\)</span>-dimensional matrix <span class="math inline">\(X^{\top}X\)</span> has full rank, i.e.&nbsp;that <span class="math display">\[
+\operatorname{rank}(X^{\top}X)=(p+1)\quad\text{(a.s.)}
 \]</span></p></li>
-<li><p>Thus <span class="math inline">\((X'X)\)</span> is invertible; i.e.&nbsp;there exists a <span class="math inline">\(((p+1)\times (p+1))\)</span>-dimensional matrix <span class="math inline">\((X'X)^{-1}\)</span> such that <span class="math display">\[
-(X'X)(X'X)^{-1} = (X'X)^{-1}(X'X) = I_{(p+1)}.
+<li><p>Thus <span class="math inline">\((X^{\top}X)\)</span> is invertible; i.e.&nbsp;there exists a <span class="math inline">\(((p+1)\times (p+1))\)</span>-dimensional matrix <span class="math inline">\((X^{\top}X)^{-1}\)</span> such that <span class="math display">\[
+(X^{\top}X)(X^{\top}X)^{-1} = (X^{\top}X)^{-1}(X^{\top}X) = I_{(p+1)}.
 \]</span></p></li>
 </ul>
 </div>
@@ -616,7 +616,7 @@ Thus, under the spherical errors assumption, one has, for all possible realizati
 </li>
 </ul>
 <p>The multiple linear regression function is given by <span class="math display">\[
-f(X_i)  = E(Y_i|X_i) = X_i'\beta.
+f(X_i)  = E(Y_i|X_i) = X_i^{\top}\beta.
 \]</span> Derivation: <span class="math display">\[
 \begin{align*}
 f(X_i)
@@ -624,15 +624,15 @@ f(X_i)
 &amp; = E(\beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip} + \epsilon_i |X_i)\\
 &amp; = \beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip} + E(\epsilon_i |X_i)\\
 &amp; = \beta_0 + \beta_1 X_{i1} +\dots + \beta_p X_{ip}\\
-&amp; = X_i'\beta
+&amp; = X_i^{\top}\beta
 \end{align*}
 \]</span></p>
-<p>Checking the two linearity conditions for <span class="math inline">\(f(X_i) = X_i'\beta\colon\)</span></p>
+<p>Checking the two linearity conditions for <span class="math inline">\(f(X_i) = X_i^{\top}\beta\colon\)</span></p>
 <ul>
-<li><span class="math inline">\(f(X_i + \tilde{X}_i)=(X_i + \tilde{X}_i)'\beta = X_i'\beta + \tilde{X}_i'\beta=f(X_i) + f(\tilde{X}_i)\)</span></li>
-<li><span class="math inline">\(f(aX_i)=(aX_i)'\beta=a(X_i'\beta)=a\,f(X_i)\)</span></li>
+<li><span class="math inline">\(f(X_i + \tilde{X}_i)=(X_i + \tilde{X}_i)^{\top}\beta = X_i^{\top}\beta + \tilde{X}_i^{\top}\beta=f(X_i) + f(\tilde{X}_i)\)</span></li>
+<li><span class="math inline">\(f(aX_i)=(aX_i)^{\top}\beta=a(X_i^{\top}\beta)=a\,f(X_i)\)</span></li>
 </ul>
-<p>Thus, the multiple linear regression function <span class="math inline">\(f(X_i)=X_i'\beta\)</span> is a linear function.</p>
+<p>Thus, the multiple linear regression function <span class="math inline">\(f(X_i)=X_i^{\top}\beta\)</span> is a linear function.</p>
 <p>Linear functions are generally <strong>quite flexible</strong> functions and provide a structure that can be <strong>interpreted easily</strong> using partial derivatives: <span class="math display">\[
 \frac{\partial}{\partial X_{ik}}f(X_i) = \beta_k
 \]</span> That is, changing <span class="math inline">\(X_{ik}\)</span> by one unit, changes <span class="math inline">\(f(X_i)=E(Y_i|X_i)\)</span> by <span class="math inline">\(\beta_k\)</span> units.</p>
@@ -669,24 +669,24 @@ f(X_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}^2 +\dots + \beta_p X_{i1}^p.
 <p>The exogeneity assumption <span class="math display">\[
 E(\epsilon_i|X_i)=0
 \]</span> implies that <span class="math display">\[
-\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,q,
+\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,p,
 \]</span> since <span class="math display">\[
 \begin{align*}
 \operatorname{Cov}(\epsilon_i,X_{ik})
 &amp;=E(\epsilon_i X_{ik})- \overbrace{E(\epsilon_i)}^{=0}\; E(X_{ik})\\
 &amp;=E(\epsilon_i X_{ik})\\
 &amp;=E(E(\epsilon_i X_{ik}|X_i))\\
-&amp;=E(X_{ik} \; \underbrace{E(\epsilon_i |X_k)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,q.
+&amp;=E(X_{ik} \; \underbrace{E(\epsilon_i |X_k)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,p.
 \end{align*}
 \]</span> Thus <span class="math display">\[
-\underbrace{E(\epsilon_i|X_i)=0}_{A} \Rightarrow \underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,q}_{B}
+\underbrace{E(\epsilon_i|X_i)=0}_{A} \Rightarrow \underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})=0\quad \text{for all}\quad k=0,\dots,p}_{B}
 \]</span></p>
 <p><strong>Remember:</strong> Any logical implication <span class="math display">\[
 A\Rightarrow B
 \]</span> has a logically equivalent contrapositive: <span class="math display">\[
 \neg B\Rightarrow \neg A
 \]</span> Therefore, we also have that <span class="math display">\[
-\underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})\neq 0\;\text{for at least one}\; k=0,\dots,q}_{\neg B} \Rightarrow \underbrace{E(\epsilon_i|X_i)\neq 0}_{\neg A}
+\underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})\neq 0\;\text{for at least one}\; k=0,\dots,p}_{\neg B} \Rightarrow \underbrace{E(\epsilon_i|X_i)\neq 0}_{\neg A}
 \]</span> I.e., if any of the regressors <span class="math inline">\(X_{ik}\)</span>, <span class="math inline">\(k=0,\dots,p,\)</span> correlates with the error term <span class="math inline">\(\epsilon_i\)</span>, then the exogeneity assumption is violated.</p>
 <p>Unfortunately, this violation often happens in economic data problems.</p>
 <!-- 
@@ -725,7 +725,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \eta_i,
 \]</span>
 </li>
 </ul>
-<p>Subjects with high <strong>ability</strong> typically stay longer in school and at the university such that <strong>ability</strong> and <strong>eduction</strong> correlate positively, i.e., <span class="math display">\[
+<p>Subjects with high <strong>ability</strong> typically stay longer in school and at the university, such that <strong>ability</strong> and <strong>eduction</strong> correlate positively, i.e., <span class="math display">\[
 \operatorname{Cov}(X_{i2},X_{i1})&gt;0.
 \]</span></p>
 <p><strong>Ability</strong> is a hardly measurable predictor and thus usually must be left omitted (<strong>omitted variable</strong>). In this case, the <strong>ability</strong> effect becomes part of the error term in our wage regression model: <span class="math display">\[
@@ -754,7 +754,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \underbrace{\epsilon_i.}_{=\beta_2 X_{i2} + \et
 <p>Other scientific fields such as, for instance, physics, usually assume <strong>independence</strong> between the error term and the predictors: <span class="math display">\[
 \epsilon_i\perp\!\!\!\!\perp X_{ik}\quad\text{for all}\quad k=0,\dots,q,
 \]</span> which is justified, if the error term only captures purely random stuff like, for instance, measurement errors of some measurement device.</p>
-<p>In this case, the assumption of exogeneity (Assumption 2) is trivially fulfilled, since by the independence between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_i=(X_{i0},\dots,X_{ip})'\)</span> we have that <span class="math display">\[
+<p>In this case, the assumption of exogeneity (Assumption 2) is trivially fulfilled, since by the independence between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_i=(X_{i0},\dots,X_{ip})^{\top}\)</span> we have that <span class="math display">\[
 E(\epsilon_i|X_i) = E(\epsilon_i) = 0
 \]</span></p>
 <p>Note: The assumption <span class="math inline">\(E(\epsilon_i)=0\)</span> is not critical (i.e.&nbsp;not restrictive) due to the intercept term <span class="math inline">\(X_{i0}=1\)</span> in <a href="#eq-assExogen" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</p>
@@ -881,14 +881,14 @@ Var(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(1 - (-1))^2}_{=\frac{1}{12}(b-a)^2}
 <span class="header-section-number">2.2</span> Deriving the Expression of the OLS Estimator</h2>
 <p>See Section <a href="Ch3_MatrixAlgebra.html" class="quarto-xref"><span>Chapter 3</span></a> for a refresher on matrix algebra.</p>
 <p>We derive the expression for the OLS estimator <span class="math display">\[
-\hat\beta=(\hat\beta_0,\dots,\hat\beta_p)'\in\mathbb{R}^{p+1}
+\hat\beta=(\hat\beta_0,\dots,\hat\beta_p)^{\top}\in\mathbb{R}^{p+1}
 \]</span> as the vector-valued minimizing argument of the sum of squared residuals, <span class="math display">\[
-\operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i'b}_{\text{$i$th residual}}\big)^2
+\operatorname{RSS}(b)=\sum_{i=1}^n\big(\underbrace{Y_i-X_i^{\top}b}_{\text{$i$th residual}}\big)^2
 \]</span> with <span class="math inline">\(b\in\mathbb{R}^{(p+1)}.\)</span></p>
-<p>Using matrix/vector notation we can write <span class="math inline">\(S_n(b)\)</span> as <span class="math display">\[
+<p>Using matrix/vector notation we can write <span class="math inline">\(\operatorname{RSS}(b)\)</span> as <span class="math display">\[
 \begin{align*}
 \operatorname{RSS}(b)
-&amp;=\sum_{i=1}^n(Y_i-X_i'b)^2\\[2ex]
+&amp;=\sum_{i=1}^n(Y_i-X_i^{\top}b)^2\\[2ex]
 &amp;=(Y-X b)^{\prime}(Y-X b)\\[2ex]
 &amp;=Y^{\prime}Y-2 Y^{\prime} X b+b^{\prime} X^{\prime} X b.
 \end{align*}
@@ -979,12 +979,12 @@ $\bar{x}=\frac{1}{n}\sum_{i=1}^nx_i$.
 <section id="predictedfitted-values-and-residuals" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="predictedfitted-values-and-residuals"><strong>Predicted/Fitted Values and Residuals</strong></h4>
 <ul>
 <li><p>The (OLS) <strong>Predicted/Fitted Values:</strong> <span class="math display">\[
-\hat{Y}_i=X_i'\hat\beta, \quad i=1,\dots,n
+\hat{Y}_i=X_i^{\top}\hat\beta, \quad i=1,\dots,n
 \]</span> The <span class="math inline">\((n\times 1)\)</span> vector of predicted (fitted) values <span class="math display">\[
 \begin{align*}
 \hat{Y} = \left(\begin{matrix}\hat{Y}_1\\\hat{Y}_2\\ \vdots\\ \hat{Y}_n\end{matrix}\right)
 &amp;=X\hat{\beta}\\[-2ex]
-&amp;=\underbrace{X(X'X)^{-1}X'}_{=P_X}Y\\[2ex]
+&amp;=\underbrace{X(X^{\top}X)^{-1}X^{\top}}_{=P_X}Y\\[2ex]
 &amp;=P_X Y
 \end{align*}
 \]</span></p></li>
@@ -999,7 +999,7 @@ e =
 \left(\begin{matrix}\hat{Y}_1\\\hat{Y}_2\\ \vdots\\ \hat{Y}_n\end{matrix}\right)\\[2ex]
 &amp;=Y - \hat{Y}\\[2ex]
 %&amp;=Y - X\hat{\beta}\\[-2ex]
-%&amp;=Y - \underbrace{X(X'X)^{-1}X'}_{=P_X}Y\\[2ex]
+%&amp;=Y - \underbrace{X(X^{\top}X)^{-1}X^{\top}}_{=P_X}Y\\[2ex]
 &amp;=Y - P_X Y\\[2ex]
 &amp;=\underbrace{(I_n - P_X)}_{=M_X} Y\\[2ex]
 &amp;=M_XY
@@ -1007,13 +1007,13 @@ e =
 \]</span></p></li>
 </ul></section><section id="projection-matrices" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="projection-matrices"><strong>Projection Matrices</strong></h4>
 <p>The matrix <span class="math display">\[
-P_X=X(X'X)^{-1}X'
+P_X=X(X^{\top}X)^{-1}X^{\top}
 \]</span> is the <span class="math inline">\((n\times n)\)</span> <strong>projection matrix</strong> that projects any vector from <span class="math inline">\(\mathbb{R}^n\)</span> into the column space spanned by the column vectors of <span class="math inline">\(X\)</span> and <span class="math display">\[
-M_X=I_n-X(X'X)^{-1}X'=I_n-P_X
+M_X=I_n-X(X^{\top}X)^{-1}X^{\top}=I_n-P_X
 \]</span> is the associated <span class="math inline">\((n\times n)\)</span> <strong>orthogonal projection matrix</strong> that projects any vector from <span class="math inline">\(\mathbb{R}^n\)</span> into the vector space that is orthogonal to that spanned by the column vectors of <span class="math inline">\(X.\)</span></p>
 </section></section><section id="assessing-the-accuracy-of-the-model-fit" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="assessing-the-accuracy-of-the-model-fit">
 <span class="header-section-number">2.4</span> Assessing the Accuracy of the Model Fit</h2>
-<p>The larger the proportion of the explained variance, the better is the fit of the estimated model <span class="math inline">\(\hat{Y}_i=\hat{f}(X_i)\)</span> to the data <span class="math inline">\((Y_i,X_i')\)</span>, <span class="math inline">\(i=1,\dots,n\)</span>.</p>
+<p>The larger the proportion of the explained variance, the better is the fit of the estimated model <span class="math inline">\(\hat{Y}_i=\hat{f}(X_i)\)</span> to the data <span class="math inline">\((Y_i,X_i^{\top})\)</span>, <span class="math inline">\(i=1,\dots,n\)</span>.</p>
 <p>This motivates the definition of the so-called <span class="math inline">\(R^2\)</span> coefficient of determination: <span class="math display">\[
 \begin{eqnarray*}
 R^2
@@ -1023,7 +1023,7 @@ R^2
 \end{eqnarray*}
 \]</span> with <span class="math display">\[
 \begin{align*}
-\operatorname{RSS}\equiv \operatorname{RSS}(\hat\beta)=\sum_{i=1}^n\left(y_i-x_i'\hat\beta\right)^2=\sum_{i=1}^ne_i^2
+\operatorname{RSS}\equiv \operatorname{RSS}(\hat\beta)=\sum_{i=1}^n\left(Y_i-X_i^{\top}\hat\beta\right)^2=\sum_{i=1}^ne_i^2
 \end{align*}
 \]</span> and <span class="math display">\[
 \begin{align*}
@@ -1131,7 +1131,7 @@ Caution
 <span class="header-section-number">2.5.1</span> Bias of <span class="math inline">\(\hat{\beta}\)</span>
 </h3>
 <p>Under the Assumptions 1-4, one can show that the OLS estimator <span class="math display">\[
-\hat\beta = (X'X)^{-1}X'Y
+\hat\beta = (X^{\top}X)^{-1}X^{\top}Y
 \]</span> is unbiased, i.e. <span id="eq-OLSUnbiased"><span class="math display">\[
 \begin{align*}
 \operatorname{Bias}(\hat\beta)
@@ -1142,7 +1142,7 @@ Caution
 </h4>
 <p><a href="#eq-OLSUnbiased" class="quarto-xref">Equation&nbsp;<span>2.3</span></a> can be shown as following:</p>
 <p>Observe that <span class="math display">\[
-\hat\beta=(X'X)^{-1}X'Y
+\hat\beta=(X^{\top}X)^{-1}X^{\top}Y
 \]</span> consists of two multivariate random variables; namely</p>
 <ul>
 <li>
@@ -1152,13 +1152,13 @@ Caution
 <p>Thus we firstly need to derive the <strong>conditional mean</strong> <span class="math inline">\(E(\hat\beta|X),\)</span> which effectively allows us to focus on randomness due to <span class="math inline">\(\epsilon,\)</span><br><span class="math display">\[
 \begin{align*}
 E(\hat\beta|X)
-&amp;= E((X'X)^{-1}X'Y|X) \\[2ex]
+&amp;= E((X^{\top}X)^{-1}X^{\top}Y|X) \\[2ex]
 &amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
-&amp;= E((X'X)^{-1}X'\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
-&amp;= E((X'X)^{-1}X'(X\beta+\epsilon)|X)                 \\[2ex]
-&amp;= E(\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\beta|X) + E((X'X)^{-1}X'\epsilon|X)\\[2ex]
-&amp;= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=(X'X)^{-1}X'E(\epsilon|X)}  \\[2ex]
-&amp;= \beta + (X'X)^{-1}X'\underbrace{E(\epsilon|X)}_{=0}\\[2ex]
+&amp;= E((X^{\top}X)^{-1}X^{\top}\underbrace{Y}_{=X\beta+\epsilon}|X) \\[2ex]
+&amp;= E((X^{\top}X)^{-1}X^{\top}(X\beta+\epsilon)|X)                 \\[2ex]
+&amp;= E(\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{=I_{(p+1)}}\beta|X) + E((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
+&amp;= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=(X^{\top}X)^{-1}X^{\top}E(\epsilon|X)}  \\[2ex]
+&amp;= \beta + (X^{\top}X)^{-1}X^{\top}\underbrace{E(\epsilon|X)}_{=0}\\[2ex]
 &amp;= \underset{(p+1)\times 1}{\beta}  
 \end{align*}
 \]</span> Thus <span class="math inline">\(\hat\beta\)</span> is <strong>conditionally unbiased:</strong> <span class="math display">\[
@@ -1203,27 +1203,27 @@ Cov(\hat\beta_p,\hat\beta_0|X)&amp;Cov(\hat\beta_p,\hat\beta_1|X)&amp;\cdots&amp
 <p>Note that <span class="math display">\[
 \begin{align*}
 \hat{\beta}
-&amp;=(X'X)^{-1}X'Y\\[2ex]
+&amp;=(X^{\top}X)^{-1}X^{\top}Y\\[2ex]
 &amp;\text{Using that (by Assumption 1 Part (a)) $Y=X\beta + \epsilon$:}\\[2ex]
-&amp;=(X'X)^{-1}X'\; \underbrace{(X\beta + \epsilon)}_{=Y}\\[2ex]
-&amp;=\underbrace{(X'X)^{-1}X'X}_{=I_{(p+1)}}\;\beta + (X'X)^{-1}X'\epsilon\\
-&amp;=\beta + (X'X)^{-1}X'\epsilon
+&amp;=(X^{\top}X)^{-1}X^{\top}\; \underbrace{(X\beta + \epsilon)}_{=Y}\\[2ex]
+&amp;=\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{=I_{(p+1)}}\;\beta + (X^{\top}X)^{-1}X^{\top}\epsilon\\
+&amp;=\beta + (X^{\top}X)^{-1}X^{\top}\epsilon
 \end{align*}
 \]</span> This leads to the so-called <strong>sampling error expression</strong> <span class="math display">\[
-\hat{\beta} - \beta = (X'X)^{-1}X'\epsilon.
+\hat{\beta} - \beta = (X^{\top}X)^{-1}X^{\top}\epsilon.
 \]</span> With this, we can derive the general explicit expression for <span class="math inline">\(Var(\hat\beta|X).\)</span> <span class="math display">\[
 \begin{align*}
 &amp;Var(\hat\beta|X)=\\[2ex]
 &amp;\text{Adding/subtracting constants does not change variance:}\\[2ex]
 &amp;=Var(\hat\beta - \beta|X)\\[2ex]
-&amp;\text{Using the sampling error expression $\hat{\beta} - \beta = (X'X)^{-1}X'\epsilon$:}\\[2ex]
-&amp;=Var((X'X)^{-1}X'\epsilon|X)\\[2ex]
+&amp;\text{Using the sampling error expression $\hat{\beta} - \beta = (X^{\top}X)^{-1}X^{\top}\epsilon$:}\\[2ex]
+&amp;=Var((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
 &amp;\text{Using that $Var(Z|X)=E[(Z-E(Z|X))(Z-E(Z|X))|X]$:}\\[2ex]
-&amp;=E\Big[\big((X'X)^{-1}X'\epsilon-\underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=0}\big)\times\\[2ex]
-&amp;\phantom{=\Big(}\,\times\big((X'X)^{-1}X'\epsilon-\underbrace{E((X'X)^{-1}X'\epsilon|X)}_{=0}\big)'|X\Big]\\[2ex]
-&amp;=E\left[((X'X)^{-1}X'\epsilon)((X'X)^{-1}X'\epsilon)'|X\right]\\[2ex]
-&amp;=E\left[(X'X)^{-1}X'\epsilon\epsilon' X(X'X)^{-1}|X\right]\\[2ex]
-&amp;=\;\;\;(X'X)^{-1}X'\underbrace{E\left(\epsilon\epsilon'|X\right)}_{=\highlight{Var(\epsilon|X)}}X(X'X)^{-1}
+&amp;=E\Big[\big((X^{\top}X)^{-1}X^{\top}\epsilon-\underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=0}\big)\times\\[2ex]
+&amp;\phantom{=\Big(}\,\times\big((X^{\top}X)^{-1}X^{\top}\epsilon-\underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=0}\big)^{\top}|X\Big]\\[2ex]
+&amp;=E\left[((X^{\top}X)^{-1}X^{\top}\epsilon)((X^{\top}X)^{-1}X^{\top}\epsilon)^{\top}|X\right]\\[2ex]
+&amp;=E\left[(X^{\top}X)^{-1}X^{\top}\epsilon\epsilon^{\top} X(X^{\top}X)^{-1}|X\right]\\[2ex]
+&amp;=\;\;\;(X^{\top}X)^{-1}X^{\top}\underbrace{E\left(\epsilon\epsilon^{\top}|X\right)}_{=\highlight{Var(\epsilon|X)}}X(X^{\top}X)^{-1}
 \end{align*}
 \]</span> That is, the explicit expression for <span class="math inline">\(Var(\hat\beta|X)\)</span> depends on the explicit form of the symmetric <span class="math inline">\((n\times n)\)</span> matrix <span class="math inline">\(Var(\epsilon|X)\)</span> <span class="math display">\[
 \begin{align*}
@@ -1258,11 +1258,11 @@ Var(\epsilon|X)
 \]</span> then <span class="math display">\[
 \begin{align*}
 &amp;Var(\hat\beta|X)=\\[2ex]
-&amp;=(X'X)^{-1}X' \;\highlight{Var(\epsilon|X)}\; X(X'X)^{-1}\\[2ex]
-&amp;=(X'X)^{-1}X' \;\highlight{\sigma^2 I_n}\; X(X'X)^{-1}\\[2ex]
-&amp;=\sigma^2\;(X'X)^{-1}X' \left( I_n \right) X(X'X)^{-1}\\[2ex]
-&amp;=\sigma^2\;\underbrace{(X'X)^{-1}X'X}_{I_{p+1}}\;(X'X)^{-1}\\[2ex]
-&amp;=\sigma^2\;(X'X)^{-1},
+&amp;=(X^{\top}X)^{-1}X^{\top} \;\highlight{Var(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
+&amp;=(X^{\top}X)^{-1}X^{\top} \;\highlight{\sigma^2 I_n}\; X(X^{\top}X)^{-1}\\[2ex]
+&amp;=\sigma^2\;(X^{\top}X)^{-1}X^{\top} \left( I_n \right) X(X^{\top}X)^{-1}\\[2ex]
+&amp;=\sigma^2\;\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{I_{p+1}}\;(X^{\top}X)^{-1}\\[2ex]
+&amp;=\sigma^2\;(X^{\top}X)^{-1},
 \end{align*}
 \]</span> where the only unknown component is <span class="math inline">\(\sigma^2=Var(\epsilon_i).\)</span></p>
 <p>We can estimate the homoskedastik error term variance <span class="math inline">\(\sigma^2\)</span> using the <strong>R</strong>esidual <strong>S</strong>tandard <strong>E</strong>rror: <span class="math display">\[
@@ -1274,9 +1274,9 @@ Var(\epsilon|X)
 \]</span></p>
 <p><strong>Summing up:</strong></p>
 <p>In the case of homoskedastic (and uncorrelated) error terms the standard error of <span class="math inline">\(\hat\beta_j\)</span> is <span class="math display">\[
-\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[\sigma^2 \left(X^{\top}X\right)^{-1}\right]_{(j,j)}}.
 \]</span> Typically, <span class="math inline">\(\sigma^2\)</span> is unknown, and has to be estimated using, for instance, the empirical residual standard error <span class="math display">\[
-\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X'X\right)^{-1}\right]_{(j,j)}}.
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[\hat{\sigma}^2 \left(X^{\top}X\right)^{-1}\right]_{(j,j)}}.
 \]</span></p>
 <p>This is the default version for computing the standard error in statistical software packages such as <code>R</code>.</p>
 <div class="cell" data-layout-align="center">
@@ -1329,15 +1329,15 @@ Var(\epsilon|X)
 \]</span> then <span class="math display">\[
 \begin{align*}
 &amp;Var(\hat\beta|X)=\\[2ex]
-&amp;=(X'X)^{-1}X' \;\highlight{Var(\epsilon|X)}\; X(X'X)^{-1}\\[2ex]
-&amp;=(X'X)^{-1}X' \;\highlight{\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2)}\; X(X'X)^{-1}\\[2ex]
-&amp;=(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\\[2ex]
+&amp;=(X^{\top}X)^{-1}X^{\top} \;\highlight{Var(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
+&amp;=(X^{\top}X)^{-1}X^{\top} \;\highlight{\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2)}\; X(X^{\top}X)^{-1}\\[2ex]
+&amp;=(X^{\top}X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right) (X^{\top}X)^{-1}\\[2ex]
 \end{align*}
 \]</span> Thus, the symmetric <span class="math inline">\((p+1)\times(p+1)\)</span> variance-covariance matrix <span class="math inline">\(Var(\hat\beta|X)\)</span> keeps its <strong>sandwich form</strong>, where the inner part of the sandwich <span class="math display">\[
-\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right)
+\left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right)
 \]</span> is typically unknown, since <span class="math inline">\(\sigma_1^2,\sigma_2^2,\dots,\sigma_n^2\)</span> are typically unknown.</p>
 <p>There are different, so-called <strong>Heteroskedasticity Consistent (HC)</strong> estimators to estimate the unknown expression <span class="math display">\[
-\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right).
+\left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right).
 \]</span></p>
 <table class="caption-top table">
 <colgroup>
@@ -1351,23 +1351,23 @@ Var(\epsilon|X)
 <tbody>
 <tr class="odd">
 <td>HC0</td>
-<td><span class="math inline">\(\sum_{i=1}^ne_i^2X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^ne_i^2X_iX_i^{\top}\)</span></td>
 </tr>
 <tr class="even">
 <td>HC1</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{n}{n-(p+1)}e_i^2X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{n}{n-(p+1)}e_i^2X_iX_i^{\top}\)</span></td>
 </tr>
 <tr class="odd">
 <td>HC2</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{1-h_{i}}X_iX_i^{\top}\)</span></td>
 </tr>
 <tr class="even">
 <td>HC3</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{2}}X_iX_i^{\top}\)</span></td>
 </tr>
 <tr class="odd">
 <td>HC4</td>
-<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i'\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^n\frac{e_{i}^{2}}{\left(1-h_{i}\right)^{\delta_{i}}}X_iX_i^{\top}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1393,15 +1393,15 @@ h_i=[P_X]_{ii}
 </ul>
 <p>Observations <span class="math inline">\(X_i\)</span> with leverage statistics <span class="math inline">\(h_i\)</span> that greatly exceed the average leverage value <span class="math inline">\((p+1)/n\)</span> are referred to as “high leverage” observations. High leverage observations <span class="math inline">\(X_i\)</span> are observations that are far away from the predictor values of all other subjects.</p>
 <p>High leverage observations <span class="math inline">\(X_i\)</span> have the potential to distort the estimation results, <span class="math inline">\(\hat\beta_n\)</span>. Indeed, a high leverage observation <span class="math inline">\(X_i\)</span> will have an distorting effect on the estimation results if the absolute value of the corresponding residual <span class="math inline">\(|e_i|\)</span> is unusually large—such observations are called <strong>influential outliers</strong>. Such observations increase the estimation uncertainty.</p>
-<p>General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals <span class="math inline">\(e_i\)</span> belonging to <span class="math inline">\(X_i\)</span> values that have a large leverage <span class="math inline">\(h_i\)</span> receive a higher weight and thus increase the value of <span class="math inline">\(\widehat{E}(\epsilon^2_iX_iX_i').\)</span> This strategy takes into account increased estimation uncertainties due to single influential outliers.</p>
+<p>General idea of the HC2-HC4 estimators is to increase the estimated variance in order to account for the effects of influential outliers. The residuals <span class="math inline">\(e_i\)</span> belonging to <span class="math inline">\(X_i\)</span> values that have a large leverage <span class="math inline">\(h_i\)</span> receive a higher weight and thus increase the value of <span class="math inline">\(\widehat{E}(\epsilon^2_iX_iX_i^{\top}).\)</span> This strategy takes into account increased estimation uncertainties due to single influential outliers.</p>
 </div>
 </div>
 <p>The estimator HC0 was suggested in the econometrics literature by <span class="citation" data-cites="White1980">White (<a href="#ref-White1980" role="doc-biblioref">1980</a>)</span> and is justified by asymptotic (<span class="math inline">\(n\to\infty\)</span>) arguments. The estimators HC1, HC2 and HC3 were suggested by <span class="citation" data-cites="MacKinnon_White_1985">MacKinnon and White (<a href="#ref-MacKinnon_White_1985" role="doc-biblioref">1985</a>)</span> to improve the finite sample performance of HC0. Using an extensive Monte Carlo simulation study comparing HC0-HC3, <span class="citation" data-cites="Long_Ervin_2000">Long and Ervin (<a href="#ref-Long_Ervin_2000" role="doc-biblioref">2000</a>)</span> concludes that HC3 provides the best overall performance in finite samples. <span class="citation" data-cites="Cribari_2004">Cribari-Neto (<a href="#ref-Cribari_2004" role="doc-biblioref">2004</a>)</span> suggested the estimator HC4 to further improve the performance in finite sample behavior, especially in the presence of influential observations (large <span class="math inline">\(h_i\)</span> values).</p>
 <p><strong>Summing up:</strong></p>
 <p>In the case of heteroskedastic and uncorrelated error terms the standard error of <span class="math inline">\(\hat\beta_j\)</span> is <span class="math display">\[
-\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right) (X'X)^{-1}\right]_{(j,j)}}.
-\]</span> Typically, the variance terms <span class="math inline">\(\sigma_i^2\)</span> are unknown, but the expression <span class="math inline">\(\left(\sum_{i=1}^n \sigma_i^2 X_i X_i'\right)\)</span> can be estimated using the <strong>HC</strong> estimators above, such that we can work with <span class="math display">\[
-\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X'X)^{-1} \left(\textsf{HC}\right) (X'X)^{-1}\right]_{(j,j)}},
+\operatorname{SE}(\hat\beta_j|X) = \sqrt{\left[(X^{\top}X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right) (X^{\top}X)^{-1}\right]_{(j,j)}}.
+\]</span> Typically, the variance terms <span class="math inline">\(\sigma_i^2\)</span> are unknown, but the expression <span class="math inline">\(\left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right)\)</span> can be estimated using the <strong>HC</strong> estimators above, such that we can work with <span class="math display">\[
+\widehat{\operatorname{SE}}(\hat\beta_j|X) = \sqrt{\left[(X^{\top}X)^{-1} \left(\textsf{HC}\right) (X^{\top}X)^{-1}\right]_{(j,j)}},
 \]</span> where <span class="math inline">\(\textsf{HC}\)</span> is a placeholder for one the <strong>H</strong>eteroskedasticity <strong>C</strong>onsistent estimators HC1-HC4 given above.</p>
 <p>The <code>sandwich</code>-package allows to compute these standard errors in <code>R</code></p>
 <div class="cell" data-layout-align="center">
@@ -1483,9 +1483,9 @@ Interpretation
 \]</span> we can compute a given, <strong>obs</strong>erved realization of the confidence interval <span class="math display">\[
 \operatorname{CI}^{1-\alpha}_{\beta_j,obs}=\left[\hat\beta_{j,obs}\; \pm \; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}\right],
 \]</span> where <span class="math display">\[
-\hat\beta_{j,obs}=\left[(X_{obs}'X_{obs})^{-1}X_{obs}'Y_{obs}\right]_{j}
+\hat\beta_{j,obs}=\left[(X_{obs}^{\top}X_{obs})^{-1}X_{obs}^{\top}Y_{obs}\right]_{j}
 \]</span> and (homoskedastic case) <span class="math display">\[
-\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}=\sqrt{\left[\hat{\sigma}^2_{obs}(X_{obs}'X_{obs})^{-1}\right]}
+\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}=\sqrt{\left[\hat{\sigma}^2_{obs}(X_{obs}^{\top}X_{obs})^{-1}\right]}
 \]</span></p>
 <p>There is a <span class="math inline">\((1-\alpha)\cdot 100\%\)</span> chance (in resamplings from the training data random sample) that the <strong>random confidence interval</strong> <span class="math display">\[
 \operatorname{CI}^{1-\alpha}_{\beta_j}
@@ -2153,7 +2153,7 @@ Tip
 h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_{j}-\bar{x})^2}.
 \]</span></p>
 <p>In the case of the <strong>multiple linear regression model</strong>, <span class="math inline">\(h_i\)</span> is the <span class="math inline">\(i\)</span>th diagonal value of the <span class="math inline">\((n\times n)\)</span>-dimensional “hat-matrix” <span class="math display">\[
-H=X(X'X)^{-1}X'.
+H=X(X^{\top}X)^{-1}X^{\top}.
 \]</span></p>
 <ul>
 <li>The leverage statistic <span class="math inline">\(h_i\)</span> is always between <span class="math inline">\(1/n\)</span> and <span class="math inline">\(1\)</span>
@@ -2182,7 +2182,7 @@ H=X(X'X)^{-1}X'.
 </div>
 </div>
 <p>The left panel of Figure 3.15 shows that, in the case of unrelated predictors (<code>Age</code> and <code>Limit</code>), the least squares problem has a minimum <span class="math inline">\((\hat\beta_{Age},\hat\beta_{Limit})\)</span> that is well identified since the minimum is well defined.</p>
-<p>The right panel of Figure 3.15 shows that, in the case of collinear predictors (<code>Rating</code> and <code>Limit</code>), the least squares problem has a minimum <span class="math inline">\((\hat\beta_{Rating},\hat\beta_{Limit})\)</span> that is not well identified: One can substitute values of <span class="math inline">\(\hat\beta_{Limit}'\)</span> for <span class="math inline">\(\hat\beta_{Rating}'\)</span> ending up in new pairs <span class="math inline">\((\hat\beta_{Rating}',\hat\beta_{Limit}')\)</span> with basically the same RSS-value than the original value than it is achieved by the minimizer <span class="math inline">\((\hat\beta_{Rating},\hat\beta_{Limit})\)</span>.</p>
+<p>The right panel of Figure 3.15 shows that, in the case of collinear predictors (<code>Rating</code> and <code>Limit</code>), the least squares problem has a minimum <span class="math inline">\((\hat\beta_{Rating},\hat\beta_{Limit})\)</span> that is not well identified: One can substitute values of <span class="math inline">\(\hat\beta_{Limit}\)</span> for <span class="math inline">\(\hat\beta_{Rating}\)</span> ending up in new pairs <span class="math inline">\((\hat\beta_{Rating},\hat\beta_{Limit})\)</span> with basically the same RSS-value than the original value than it is achieved by the minimizer <span class="math inline">\((\hat\beta_{Rating},\hat\beta_{Limit})\)</span>.</p>
 <p><img src="images/Fig_3_15.png" class="img-fluid"></p>
 <p>Table 3.11 demonstrates that this identification problem between the collinear predictors (<code>Rating</code> and <code>Limit</code>) causes a variance inflation in the variance (square of standard error) of the estimators <span class="math inline">\(\hat\beta_{Rating}\)</span> and <span class="math inline">\(\hat\beta_{Limit}.\)</span></p>
 <ul>
@@ -2384,7 +2384,7 @@ myDataGenerator <- function(){
 
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
-((Y_1,X_1'),\dots,(Y_n,X_n'))
+((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
 
@@ -2454,7 +2454,7 @@ becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ t
 
 #### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
 
-1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta'=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
+1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta^{\top}=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
 2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
 3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
 
