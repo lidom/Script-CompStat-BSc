@@ -220,6 +220,7 @@ window.Quarto = {
   </ul>
 </li>
   <li><a href="#self-study-gitgithub" id="toc-self-study-gitgithub" class="nav-link" data-scroll-target="#self-study-gitgithub"><span class="header-section-number">1.7</span> Self-Study: Git/GitHub</a></li>
+  <li><a href="#in-class-coding-exercise-oct.-20" id="toc-in-class-coding-exercise-oct.-20" class="nav-link" data-scroll-target="#in-class-coding-exercise-oct.-20"><span class="header-section-number">1.8</span> In Class Coding Exercise (Oct.&nbsp;20)</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -1372,40 +1373,48 @@ $ weight &lt;dbl&gt; 39, 35, 41, 45, 49, 51, 57, 51, 54, 41, 49, 56, 64, 68, 68,
 <ul>
 <li><a href="https://effective-programming-practices.vercel.app/git/index.html">Course Effective Programming Practices (Uni Bonn)</a></li>
 <li><a href="http://happygitwithr.com/">http://happygitwithr.com/</a></li>
-</ul>
-<!-- 
-## In Class Coding Exercise (Oct. 20)
-
-#### Marketing Campaign {-}
-
-* Sample size: $n = 5$ stores
-* Sales before the campaign: 
-$$
+</ul></section><section id="in-class-coding-exercise-oct.-20" class="level2" data-number="1.8"><h2 data-number="1.8" class="anchored" data-anchor-id="in-class-coding-exercise-oct.-20">
+<span class="header-section-number">1.8</span> In Class Coding Exercise (Oct.&nbsp;20)</h2>
+<section id="marketing-campaign" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="marketing-campaign">Marketing Campaign</h4>
+<ul>
+<li>Sample size: <span class="math inline">\(n = 5\)</span> stores</li>
+<li>Sales before the campaign: <span class="math display">\[
 S_{i,1}=M_i + u_i
-$$ 
-* Sales after the campaign: 
-$$
+\]</span>
+</li>
+<li>Sales after the campaign: <span class="math display">\[
 S_{i,2}=M_i + \Delta + v_i,
-$$ 
-where $M_1,\dots,M_n\overset{\text{iid}}{\sim}M$ are the individual "fixed effect" with
-$$
+\]</span> where <span class="math inline">\(M_1,\dots,M_n\overset{\text{iid}}{\sim}M\)</span> are the individual “fixed effects” with <span class="math display">\[
 M \sim \mathcal{N}\left(250,2\right)
-$$
-and $u_{1},\dots,u_{n}\overset{\text{iid}}{\sim}u$ and $v_{1},\dots,v_{n}\overset{\text{iid}}{\sim}v$ are iid error terms with
-$$
+\]</span> and <span class="math inline">\(u_{1},\dots,u_{n}\overset{\text{iid}}{\sim}u\)</span> and <span class="math inline">\(v_{1},\dots,v_{n}\overset{\text{iid}}{\sim}v\)</span> are iid error terms with <span class="math display">\[
 u \sim \mathcal{N}\left(0,1\right)
-$$
-$$
+\]</span> <span class="math display">\[
 v \sim \mathcal{N}\left(0,1\right)
-$$
-and where $\Delta$
-denotes the effect of the marketing campaign. 
-
-Consider the differences 
-$$
+\]</span> and where <span class="math inline">\(\Delta\)</span> denotes the effect of the marketing campaign.</li>
+</ul>
+<p>Consider the difference sales for each store: <span class="math display">\[
 X_i = S_{i,2}-S_{i,1},\quad i=1,\dots,n
-$$
---><!-- ## Assignment 
+\]</span> Note that <span class="math display">\[
+X_i = S_{i,2}-S_{i,1}= \Delta + v_i - u_i,\quad i=1,\dots,n
+\]</span> such that <span class="math display">\[
+X_i \sim \mathcal{N}(\Delta,2),\quad i=1,\dots,n.
+\]</span></p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Write a function that generates realizations of the iid random sample <span class="math inline">\(\{X_1,\dots,X_n\}\)</span> for a given value of <span class="math inline">\(\Delta\)</span> and of the sample size <span class="math inline">\(n\)</span>.
+<ul>
+<li>Plot your observed data <span class="math inline">\(\{X_{1,obs},\dots,X_{n,obs}\}\)</span> for <span class="math inline">\(\Delta=0\)</span> (no effect) and <span class="math inline">\(\Delta = 1.5\)</span> (positive effect)</li>
+</ul>
+</li>
+<li>Estimate the effect of the marketing campaign <span class="math inline">\(\Delta\)</span> using the sample mean <span class="math inline">\(\bar{X}=n^{-1}\sum_{i=1}^nX_i.\)</span> Consider each of the scenarios <span class="math inline">\(\Delta=0\)</span> and <span class="math inline">\(\Delta=1.5\)</span> separately.</li>
+<li>Compute the observed confidence interval <span class="math inline">\(\operatorname{CI}_{obs}\)</span> for (the usually unknown) <span class="math inline">\(\Delta.\)</span> Consider each of the scenarios <span class="math inline">\(\Delta=0\)</span> and <span class="math inline">\(\Delta=1.5\)</span> separately.</li>
+<li>Repeatedly generate <span class="math inline">\(1000\)</span> realizations of the confidence interval <span class="math inline">\(\operatorname{CI}_{obs}\)</span> by repeatedly generating <span class="math inline">\(1000\)</span> realizations of the iid random sample <span class="math inline">\(\{X_1,\dots,X_n\}\)</span>.
+<ul>
+<li>What is the relative frequency of <span class="math inline">\(\operatorname{CI}\)</span> realizations containing <span class="math inline">\(\Delta\)</span>? Consider each of the scenarios <span class="math inline">\(\Delta=0\)</span> and <span class="math inline">\(\Delta=1.5\)</span> separately.</li>
+</ul>
+</li>
+</ol>
+<!-- ## Assignment 
 
 
 Code functions to compute the following three summary statistics: 
@@ -1429,7 +1438,7 @@ Write up everything in **one** PDF document, e.g. using quarto and the provided 
 
 Upload your PDF file to your assignment repository. Make sure that your PDF file names your (first, and last) name and the name of your GitHub account. -->
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
