@@ -280,6 +280,8 @@ window.Quarto = {
   <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="header-section-number">2.10.7</span> Writing Functions</a></li>
   </ul>
 </li>
+  <li><a href="#in-class-coding-exercises" id="toc-in-class-coding-exercises" class="nav-link" data-scroll-target="#in-class-coding-exercises"><span class="header-section-number">2.11</span> In Class Coding Exercises</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -643,18 +645,18 @@ f(X_i) = \beta_0 + \beta_1 X_{i1}
 <p>Generally, a linear regression function can have quite complex functional forms. The multiple linear regression model can, for instance, fit polynomials (clearly not straight line).</p>
 <p>The <strong>polynomial regression model</strong> is a special case of the multiple linear regression model, where <span class="math display">\[
 \begin{align*}
-X_{i2} &amp;:= X_{i1}^2\\
-X_{i3} &amp;:= X_{i1}^3\\
+X_{i2} &amp;:= X_{i2}^1\\
+X_{i3} &amp;:= X_{i2}^2\\
 &amp;\vdots\\
-X_{ip} &amp;:= X_{i1}^p
+X_{ip} &amp;:= X_{i2}^{p-1}
 \end{align*}
 \]</span> such that <span class="math display">\[
-f(X_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}^2 +\dots + \beta_p X_{i1}^p.
+f(X_i) = \beta_1 + \beta_2 X_{i2} + \beta_3 X_{i2}^2 +\dots + \beta_{p} X_{i2}^{p-1}.
 \]</span></p>
 <p>Partial effects remain easy to interpret in polynomial regression functions: <span class="math display">\[
-\frac{\partial}{\partial X_{i1}}f(X_i) = \beta_1 + 2\beta_2 X_{i1} + \dots + p\beta_2 X_{i1}^{p-1}
+\frac{\partial}{\partial X_{i2}}f(X_i) = \beta_2 + \beta_3 X_{i2} + \dots + (p-1)\beta_p X_{i2}^{p-2}
 \]</span> That is, changing <span class="math inline">\(X_{i1}\)</span> by one unit, changes <span class="math inline">\(f(X_i)=E(Y_i|X_i)\)</span> by <span class="math display">\[
-\beta_1 + 2\beta_2 X_{i1} + \dots + p\beta_2 X_{i1}^{p-1}
+\beta_2 + \beta_3 X_{i2} + \dots + (p-1)\beta_p X_{i2}^{p-2}
 \]</span> units.</p>
 <p>Of course, further predictor variables <span class="math inline">\(X_{i2},\dots,X_{ip}\)</span> can be added to the polynomial regression function.</p>
 </section><section id="assumption-1-part-b" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="assumption-1-part-b"><strong>Assumption 1, Part (b)</strong></h4>
@@ -2359,7 +2361,6 @@ Consider the following data generating process:
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2382,13 +2383,11 @@ myDataGenerator <- function(){
 
 
 
-
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
 ((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
-
 
 
 
@@ -2416,7 +2415,6 @@ head(data_sim)
 
 :::
 :::
-
 
 
 
@@ -2696,7 +2694,6 @@ The predicted value plus prediction interval:
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2717,7 +2714,6 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 :::
 :::
-
 
 
 
@@ -3632,6 +3628,32 @@ Medium    0      1</code></pre>
 <pre><code>[1] "The libraries have been loaded."</code></pre>
 </div>
 </div>
+</section></section><section id="in-class-coding-exercises" class="level2" data-number="2.11"><h2 data-number="2.11" class="anchored" data-anchor-id="in-class-coding-exercises">
+<span class="header-section-number">2.11</span> In Class Coding Exercises</h2>
+<p>Consider the following multiple linear regression model: <span class="math display">\[
+Y_i = \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \beta_4 X_{i3}^2 + \epsilon_i,
+\]</span> where</p>
+<ul>
+<li>
+<span class="math inline">\(i=1,\dots,n\)</span> with <span class="math inline">\(n=250\)</span>
+</li>
+<li>
+<span class="math inline">\(\beta_1=2,\)</span> <span class="math inline">\(\beta_2=-2,\)</span> <span class="math inline">\(\beta_3=0.5,\)</span> <span class="math inline">\(\beta_4=-4\)</span>
+</li>
+<li><span class="math inline">\(X_{i1} = 1\)</span></li>
+<li><span class="math inline">\(X_{i2} \sim\mathcal{N}(4,1.5)\)</span></li>
+<li><span class="math inline">\(X_{i3} \sim\mathcal{U}[-2,2]\)</span></li>
+<li><span class="math inline">\(\epsilon_i|X_{i3}\sim \mathcal{N}(0,|X_{i3}|\cdot 0.5+1)\)</span></li>
+</ul>
+<p><strong>Problems (Oct.&nbsp;27, 2025):</strong></p>
+<ul>
+<li>Plot the true (usually unknown) regression function <span class="math display">\[
+E(Y_i|X_i=x) = f(x),\quad x=(1,x_2,x_3)
+\]</span> as a function of <span class="math inline">\(x_3\)</span> by fixing <span class="math inline">\(x_2\)</span> separately to the following values: <span class="math inline">\(x_2\in\{-2,0,2\}.\)</span>
+</li>
+<li>Generate data (sample size <span class="math inline">\(n\)</span>) by iid resamplings from the above regression model.</li>
+<li>Plot <span class="math inline">\(Y\)</span> separately against <span class="math inline">\(X_{2}\)</span> and <span class="math inline">\(X_{3}\)</span>.</li>
+</ul></section><section id="references" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -3648,7 +3670,7 @@ MacKinnon, James G, and Halbert White. 1985. <span>“Some Heteroskedasticity-Co
 White, Halbert. 1980. <span>“A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct Test for Heteroskedasticity.”</span> <em>Econometrica</em>, 817–38.
 </div>
 </div>
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

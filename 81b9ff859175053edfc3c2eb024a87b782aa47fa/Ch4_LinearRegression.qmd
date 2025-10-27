@@ -413,24 +413,24 @@ Generally, a linear regression function can have quite complex functional forms.
 The **polynomial regression model** is a special case of the multiple linear regression model, where
 $$
 \begin{align*}
-X_{i2} &:= X_{i1}^2\\
-X_{i3} &:= X_{i1}^3\\
+X_{i2} &:= X_{i2}^1\\
+X_{i3} &:= X_{i2}^2\\
 &\vdots\\
-X_{ip} &:= X_{i1}^p
+X_{ip} &:= X_{i2}^{p-1}
 \end{align*}
 $$
 such that
 $$
-f(X_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}^2 +\dots + \beta_p X_{i1}^p. 
+f(X_i) = \beta_1 + \beta_2 X_{i2} + \beta_3 X_{i2}^2 +\dots + \beta_{p} X_{i2}^{p-1}. 
 $$
 
 Partial effects remain easy to interpret in polynomial regression functions:
 $$
-\frac{\partial}{\partial X_{i1}}f(X_i) = \beta_1 + 2\beta_2 X_{i1} + \dots + p\beta_2 X_{i1}^{p-1} 
+\frac{\partial}{\partial X_{i2}}f(X_i) = \beta_2 + \beta_3 X_{i2} + \dots + (p-1)\beta_p X_{i2}^{p-2} 
 $$
 That is, changing $X_{i1}$ by one unit, changes $f(X_i)=E(Y_i|X_i)$ by 
 $$
-\beta_1 + 2\beta_2 X_{i1} + \dots + p\beta_2 X_{i1}^{p-1}
+\beta_2 + \beta_3 X_{i2} + \dots + (p-1)\beta_p X_{i2}^{p-2} 
 $$ 
 units. 
 
@@ -3347,3 +3347,32 @@ If we call the function, the libraries are loaded in and the print statement is 
 ```{r chunk31}
 LoadLibraries()
 ```
+
+
+## In Class Coding Exercises 
+
+Consider the following multiple linear regression model:
+$$
+Y_i = \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \beta_4 X_{i3}^2 + \epsilon_i,
+$$
+where 
+
+* $i=1,\dots,n$ with $n=250$
+* $\beta_1=2,$ $\beta_2=-2,$ $\beta_3=0.5,$ $\beta_4=-4$
+* $X_{i1} = 1$
+* $X_{i2} \sim\mathcal{N}(4,1.5)$
+* $X_{i3} \sim\mathcal{U}[-2,2]$
+* $\epsilon_i|X_{i3}\sim \mathcal{N}(0,|X_{i3}|\cdot 0.5+1)$
+
+**Problems (Oct. 27, 2025):**
+
+* Plot the true (usually unknown) regression function 
+$$
+E(Y_i|X_i=x) = f(x),\quad x=(1,x_2,x_3)
+$$ 
+as a function of $x_3$ by fixing $x_2$ separately to the following values: $x_2\in\{-2,0,2\}.$ 
+* Generate data (sample size $n$) by iid resamplings from the above regression model.
+* Plot $Y$ separately against $X_{2}$ and $X_{3}$.
+
+
+## References {-}
