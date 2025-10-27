@@ -687,7 +687,7 @@ A\Rightarrow B
 \neg B\Rightarrow \neg A
 \]</span> Therefore, we also have that <span class="math display">\[
 \underbrace{\operatorname{Cov}(\epsilon_i,X_{ik})\neq 0\;\text{for at least one}\; k=0,\dots,p}_{\neg B} \Rightarrow \underbrace{E(\epsilon_i|X_i)\neq 0}_{\neg A}
-\]</span> I.e., if any of the regressors <span class="math inline">\(X_{ik}\)</span>, <span class="math inline">\(k=0,\dots,p,\)</span> correlates with the error term <span class="math inline">\(\epsilon_i\)</span>, then the exogeneity assumption is violated.</p>
+\]</span> I.e., if any of the regressors <span class="math inline">\(X_{ik}\)</span>, <span class="math inline">\(k=0,\dots,p,\)</span> has a non-zero covariance with the error term <span class="math inline">\(\epsilon_i\)</span>, then the exogeneity assumption is violated.</p>
 <p>Unfortunately, this violation often happens in economic data problems.</p>
 <!-- 
 The exogeneity assumption 
@@ -700,7 +700,7 @@ X_{i0},X_{i1}\dots,X_{ip} \perp\!\!\!\!\perp \epsilon_i.
 $$
 Assuming independence between the error term $\epsilon_i$ and the regressors in $X_i$ is, however, typically unrealistic in economic data.   
 -->
-<p><strong>Classical Example:</strong> Wage regression</p>
+<p><strong>Classical Example:</strong> Naive wage regression model</p>
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,
 \]</span> where</p>
@@ -713,7 +713,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,
 <li>
 <span class="math inline">\(\epsilon_i\)</span> denotes the error term</li>
 </ul>
-<p>Typically, however, the predictor <strong>ability</strong> (natural skill, intelligence, motivation) also affects wages. Let’s say, the actually true regression model would be given by <span class="math display">\[
+<p>Typically, however, the predictor <strong>ability</strong> (natural skill, intelligence, motivation) also affects wages. Let’s say, the <strong>actually true regression model</strong> would be given by <span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \eta_i,
 \]</span> where</p>
 <ul>
@@ -725,16 +725,17 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \eta_i,
 \]</span>
 </li>
 </ul>
-<p>Subjects with high <strong>ability</strong> typically stay longer in school and at the university, such that <strong>ability</strong> and <strong>eduction</strong> correlate positively, i.e., <span class="math display">\[
+<p>Subjects with high <strong>ability</strong> typically stay longer in school and at the university, such that <strong>ability</strong> and <strong>eduction</strong> have a positive covariance, i.e., <span class="math display">\[
 \operatorname{Cov}(X_{i2},X_{i1})&gt;0.
 \]</span></p>
-<p><strong>Ability</strong> is a hardly measurable predictor and thus usually must be left omitted (<strong>omitted variable</strong>). In this case, the <strong>ability</strong> effect becomes part of the error term in our wage regression model: <span class="math display">\[
+<p><strong>Ability</strong> is, however, a hardly measurable predictor and thus usually must be left omitted (<strong>omitted variable</strong>). In this case, the <strong>ability</strong> effect becomes part of the error term in our wage regression model: <span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_{i1} + \underbrace{\epsilon_i.}_{=\beta_2 X_{i2} + \eta_i}
 \]</span></p>
 <p>This omitted variable situation violates the exogeneity assumption for <span class="math inline">\(\epsilon_i\)</span> (by the <span class="math inline">\(\neg B\Rightarrow \neg A\)</span> argument above): <span class="math display">\[
 \begin{align*}
 \operatorname{Cov}(\epsilon_i, X_{i1})
 &amp;=\operatorname{Cov}(\beta_2 X_{i2} + \eta_i, X_{i1})\\[2ex]
+&amp;=\operatorname{Cov}(\beta_2 X_{i2},X_{i1}) + \operatorname{Cov}(\eta_i, X_{i1})\\[2ex]
 &amp;=\beta_2 \;\underbrace{\operatorname{Cov}(X_{i2}, X_{i1})}_{\neq 0} +
 \underbrace{\operatorname{Cov}(\eta_i, X_{i1})}_{=0} \neq 0\\[2ex]
 \Rightarrow\;E(\epsilon_i|X_i)&amp;\neq 0,
@@ -753,7 +754,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \underbrace{\epsilon_i.}_{=\beta_2 X_{i2} + \et
 <div class="callout-body-container">
 <p>Other scientific fields such as, for instance, physics, usually assume <strong>independence</strong> between the error term and the predictors: <span class="math display">\[
 \epsilon_i\perp\!\!\!\!\perp X_{ik}\quad\text{for all}\quad k=0,\dots,q,
-\]</span> which is justified, if the error term only captures purely random stuff like, for instance, measurement errors of some measurement device.</p>
+\]</span> which is justified, if the error term only captures purely random stuff like, for instance, the measurement errors of some measurement device.</p>
 <p>In this case, the assumption of exogeneity (Assumption 2) is trivially fulfilled, since by the independence between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(X_i=(X_{i0},\dots,X_{ip})^{\top}\)</span> we have that <span class="math display">\[
 E(\epsilon_i|X_i) = E(\epsilon_i) = 0
 \]</span></p>
@@ -783,7 +784,7 @@ $$
 ::: 
 -->
 </section><section id="assumption-4-error-variance-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="assumption-4-error-variance-1"><strong>Assumption 4: Error Variance</strong></h4>
-<p>Here are two specific examples of a heteroskedastic and a homoskedastic error, which you can use in computer simulations.</p>
+<p>Here are two specific examples: one for a heteroskedastic and one for a homoskedastic error.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -889,25 +890,25 @@ Var(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(1 - (-1))^2}_{=\frac{1}{12}(b-a)^2}
 \begin{align*}
 \operatorname{RSS}(b)
 &amp;=\sum_{i=1}^n(Y_i-X_i^{\top}b)^2\\[2ex]
-&amp;=(Y-X b)^{\prime}(Y-X b)\\[2ex]
-&amp;=Y^{\prime}Y-2 Y^{\prime} X b+b^{\prime} X^{\prime} X b.
+&amp;=(Y-X b)^{\top}(Y-X b)\\[2ex]
+&amp;=Y^{\top}Y-2 Y^{\top} X b+b^{\top} X^{\top} X b.
 \end{align*}
 \]</span> To find the minimizing argument <span class="math display">\[
 \hat\beta = \arg\min_{b\in\mathbb{R}^{p+1}}\operatorname{RSS}(b)
 \]</span> we compute the vector containing all partial derivatives <span class="math display">\[
 \begin{align*}
-\underset{((p+1)\times 1)}{\frac{\partial \operatorname{RSS}(b)}{\partial b}} &amp;=-2\left(X^{\prime}Y -X^{\prime} Xb\right).
+\underset{((p+1)\times 1)}{\frac{\partial \operatorname{RSS}(b)}{\partial b}} &amp;=-2\left(X^{\top}Y -X^{\top} Xb\right).
 \end{align*}
 \]</span> Setting each partial derivative to zero leads to <span class="math inline">\((p+1)\)</span> linear equations (<strong>normal equations</strong>) in <span class="math inline">\((p+1)\)</span> unknowns. This linear system of equations defines the OLS estimates, <span class="math inline">\(\hat{\beta}\)</span>, for a given dataset: <span class="math display">\[
 \begin{align*}
--2\left(X^{\prime}Y -X^{\prime} X\hat{\beta}\right)
+-2\left(X^{\top}Y -X^{\top} X\hat{\beta}\right)
 &amp;=\underset{((p+1)\times 1)}{0}\\[2ex]
-X^{\prime} X\hat{\beta}
-&amp;=\underset{((p+1)\times 1)}{X^{\prime}Y}.
+X^{\top} X\hat{\beta}
+&amp;=\underset{((p+1)\times 1)}{X^{\top}Y}.
 \end{align*}
-\]</span> From our full rank assumption (Assumption 3) it follows that <span class="math inline">\(X^{\prime}X\)</span> is invertible which allows us to solve the equation system by <span class="math display">\[
+\]</span> From our full rank assumption (Assumption 3) it follows that <span class="math inline">\(X^{\top}X\)</span> is invertible which allows us to solve the equation system by <span class="math display">\[
 \begin{align*}
-\underset{((p+1)\times 1)}{\hat{\beta}} &amp;=\left(X^{\prime} X\right)^{-1} X^{\prime} Y.
+\underset{((p+1)\times 1)}{\hat{\beta}} &amp;=\left(X^{\top} X\right)^{-1} X^{\top} Y.
 \end{align*}
 \]</span></p>
 <p>The following codes computes the estimate <span class="math inline">\(\hat{\beta}\)</span> for a given dataset with <span class="math inline">\(X_i\in\mathbb{R}^{p+1}\)</span>, <span class="math inline">\(p=2\)</span>.</p>
