@@ -2185,22 +2185,29 @@ Y_i = \beta_0 X_{i0} + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \eps
 </li>
 <li><span class="math inline">\(X_{i1} \sim\mathcal{N}(4,1.5)\)</span></li>
 <li><span class="math inline">\(X_{i2} \sim\mathcal{U}[-2,2]\)</span></li>
-<li><span class="math inline">\(\epsilon_i|X_{i2}\sim \mathcal{N}(0,|X_{i2}|\cdot 0.5+1)\)</span></li>
+<li><span class="math inline">\(\epsilon_i|X_i\sim \mathcal{N}(0,|X_{i2}|\cdot 0.5+1)\)</span></li>
 </ul>
 <p><strong>Problems (Oct.&nbsp;27, 2025):</strong></p>
 <ul>
 <li>Plot the true (usually unknown) regression function <span class="math display">\[
-f(x) = E(Y_i|X_i=x),\quad x=(1,x_2,x_3),
+f(x) = E(Y_i|X_i=x),\quad x=(1,x_2,x_3)^\top,
 \]</span> where <span class="math display">\[\begin{align*}
 f(x)
-&amp; = E(Y_i|X_i=(1,x_1,x_2)^\top)\\
-&amp; = E(\beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \epsilon_i|X_i=x)\\
-&amp; =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2    + E(\epsilon_i|X_i=x)\\
-&amp; =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2
-\end{align*}\]</span> as a function of <span class="math inline">\(x_2\)</span> by fixing <span class="math inline">\(x_1\)</span> separately to the following values: <span class="math inline">\(x_1\in\{-2,0,2\}.\)</span>
+&amp; = E(Y_i|X_i=x)\\
+&amp; = E(\beta_0 X_{i0} + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \epsilon_i|X_i=x)\\
+&amp; =   \beta_0 \cdot 1 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2    + E(\epsilon_i|X_i=x)\\
+&amp; =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2,
+\end{align*}\]</span> as a function of <span class="math inline">\(x_2\)</span> by fixing <span class="math inline">\(x_1\)</span> separately to the following values: <span class="math inline">\(x_1\in\{2,4,6\}.\)</span>
 </li>
-<li>Generate data (sample size <span class="math inline">\(n\)</span>) by iid resamplings from the above regression model.</li>
-<li>Plot <span class="math inline">\(Y\)</span> separately against <span class="math inline">\(X_{1}\)</span> and <span class="math inline">\(X_{2}\)</span>.</li>
+<li>Generate data according to the regression model by generating a realization of the iid random sample <span class="math display">\[
+((Y_1,X_1^\top),\dots,(Y_n,X_n^\top)).
+\]</span>
+</li>
+<li>Plot the observed <span class="math inline">\(Y_i\)</span> values separately against the observed <span class="math inline">\(X_{i1}\)</span> and <span class="math inline">\(X_{i2}\)</span> values.</li>
+</ul>
+<p><strong>Problems (Nov.&nbsp;03, 2025):</strong></p>
+<ul>
+<li>Plot the observed <span class="math inline">\(Y_i\)</span> values against the observed <span class="math inline">\(X_{i2}\)</span> values and add the true regression function as a function of <span class="math inline">\(x_2\)</span> for fixed values of <span class="math inline">\(x_1\in\{2,4,6\}\)</span>.</li>
 </ul></section><section id="self-study-exercises" class="level2" data-number="2.10"><h2 data-number="2.10" class="anchored" data-anchor-id="self-study-exercises">
 <span class="header-section-number">2.10</span> Self-Study: Exercises</h2>
 <p>Prepare the following exercises of Chapter 3 in our course textbook <code>ISLR</code>:</p>
@@ -2415,6 +2422,7 @@ The predicted value plus prediction interval:
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2435,6 +2443,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 :::
 :::
+
 
 
 
@@ -3358,6 +3367,7 @@ Consider the following data generating process:
 
 
 
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -3380,11 +3390,13 @@ myDataGenerator <- function(){
 
 
 
+
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
 ((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
+
 
 
 
@@ -3412,6 +3424,7 @@ head(data_sim)
 
 :::
 :::
+
 
 
 

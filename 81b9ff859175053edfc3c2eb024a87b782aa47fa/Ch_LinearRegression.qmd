@@ -2268,25 +2268,33 @@ where
 * $X_{i0} = 1$ for all $i=1,\dots,n$
 * $X_{i1} \sim\mathcal{N}(4,1.5)$
 * $X_{i2} \sim\mathcal{U}[-2,2]$
-* $\epsilon_i|X_{i2}\sim \mathcal{N}(0,|X_{i2}|\cdot 0.5+1)$
+* $\epsilon_i|X_i\sim \mathcal{N}(0,|X_{i2}|\cdot 0.5+1)$
 
 **Problems (Oct. 27, 2025):**
 
 * Plot the true (usually unknown) regression function 
 $$
-f(x) = E(Y_i|X_i=x),\quad x=(1,x_2,x_3),
+f(x) = E(Y_i|X_i=x),\quad x=(1,x_2,x_3)^\top,
 $$
 where
 \begin{align*}
 f(x)
-& = E(Y_i|X_i=(1,x_1,x_2)^\top)\\ 
-& = E(\beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \epsilon_i|X_i=x)\\
-& =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2    + E(\epsilon_i|X_i=x)\\ 
-& =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2 
+& = E(Y_i|X_i=x)\\ 
+& = E(\beta_0 X_{i0} + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \epsilon_i|X_i=x)\\
+& =   \beta_0 \cdot 1 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2    + E(\epsilon_i|X_i=x)\\ 
+& =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2, 
 \end{align*}
-as a function of $x_2$ by fixing $x_1$ separately to the following values: $x_1\in\{-2,0,2\}.$ 
-* Generate data (sample size $n$) by iid resamplings from the above regression model.
-* Plot $Y$ separately against $X_{1}$ and $X_{2}$. 
+as a function of $x_2$ by fixing $x_1$ separately to the following values: $x_1\in\{2,4,6\}.$ 
+* Generate data according to the regression model by generating a realization of the iid random sample 
+$$
+((Y_1,X_1^\top),\dots,(Y_n,X_n^\top)).
+$$
+* Plot the observed $Y_i$ values separately against the observed $X_{i1}$ and $X_{i2}$ values. 
+
+
+**Problems (Nov. 03, 2025):**
+
+* Plot the observed $Y_i$ values against the observed $X_{i2}$ values and add the true regression function as a function of $x_2$ for fixed values of $x_1\in\{2,4,6\}$.
 
 
 
