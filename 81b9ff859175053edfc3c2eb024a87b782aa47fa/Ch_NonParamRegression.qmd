@@ -1,0 +1,195 @@
+## Comparison: Linear Regression vs. K-NN Regression
+
+
+Linear regression is an example of a parametric approach because it assumes a linear model form for 
+$$
+f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+$$
+
+**Advantages of parametric approaches:**
+
+* Typically easy to fit 
+* Simple interpretation
+* Simple inference
+
+
+**Disadvantages of parametric approaches:**
+
+* The parametric model assumption can be far from true; i.e.
+$$
+f(X_i) \neq \beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+$$
+
+
+**Alternative:** 
+
+**Non-parametric methods** such as **K-nearest neighbors regression** since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
+
+
+### K-Nearest Neighbors (K-NN) Regression 
+
+
+Let $x_0\in\mathbb{R}^p$ denote a certain (multivariate) predictor value at which we want to estimate 
+$$
+f(x_0)
+$$
+and let $K$ denote the number of closest predictior value neighbors of $x_0.$
+
+KNN regression regression then computes the estimate 
+$$
+\hat{f}_K(x_0)
+$$ 
+in two steps: 
+
+1. Compute the distances between $x_0$ and all training data predictior values $X_1,\dots,X_{n_{Train}}$
+$$
+d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
+$$
+Use these distances to identify the $K$ training data predictior values $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
+$$
+\begin{align*}
+\mathcal{N}_0 
+& =\{i\in\{1,2,\dots,n_{Train}\} \; |\; d(x_0,X_i)\text{ is one of the $K$ smallest distances}\}
+\end{align*}
+$$ 
+such that $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}$ with $|\mathcal{N}_0|=K.$
+2. Estimate $f(x_0)$ using the sample average of all the training responses $y_i$ with $i\in\mathcal{N}_0,$ i.e. 
+$$
+\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
+$$
+
+The above two steps are then repeated for all predictior values $x_0\in\mathbb{R}^p$ of interest.
+
+
+The performance of the estimator $\hat{f}_K(x_0)$ depends on 
+
+* the choice of $K$ and 
+* the choice of distance $d$ 
+
+For real valued predictors, $x_0,X_i\in\mathbb{R}^p$ a usual choice is the Euclidian distance 
+$$
+d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
+$$
+
+::: {.callout-important}
+# Use Standardized Predictors! 
+Typically, it is important to compute the distances with respect to the standardized (centering, and scaling to unit variance) predictor variables; i.e.
+$$
+d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
+$$
+where 
+$$
+x^*_{0j} = \frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+$$ 
+and 
+$$
+X^*_{ij} = \frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+$$ 
+with $\bar{X}_{j} = \frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}X_{ij}.$
+
+Otherwise, the distance values could be dominated by one of the $p$ predictors. 
+
+E.g. when one predictor is age (values between $0$ and $99$) and another predictor is yearly income (values between $0$ and $12,000,000$), then the differences in income will dominate the differences in age only because of the different scales.
+<!-- 
+$$
+\frac{X_{1j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}},\dots,\frac{X_{n_{Train}j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
+$$  -->
+:::
+
+
+The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
+
+![](images/Fig_3_16.png)
+
+
+In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in @sec-SL:
+
+**A small value for $K$** provides the most flexible fit, which will have 
+
+   * low bias 
+    $$
+    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is small}
+    $$
+   * high variance
+    $$
+    Var(\hat{f}_K(x_0))  \;\text{ is large}
+    $$ 
+
+The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) close neighbors for which we can expect that they are "good neighbors:" Close neighbors are **good neighbors** since $|f(x_0) - f(X_i)|\approx 0.$
+
+The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a small number of $K$ observations (e.g. $K=1$) such that the law of larger numbers had no chance to reduce variance. 
+
+
+**A large value of $K$** provides a less flexible fit, which will have 
+
+   * large bias
+    $$
+    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is large}
+    $$ 
+   * low variance
+    $$
+    Var(\hat{f}_K(x_0))  \;\text{ is small}
+    $$ 
+
+The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=30$) which increases the chance of considering rather distant $||x_0-X_i||\gg 0$ and thus "bad" neigboors. Distant neighbors are **bad neighbors** since $|f(x_0) - f(X_i)|\gg 0.$
+
+The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ depends on a larger number of $K$ observations (e.g. $K=30$) such that the law of larger numbers has a chance to reduce variance.
+
+
+**An optimal value of $K$** can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
+
+
+Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
+
+
+**Figure 3.17** provides an example with data generated from a one-dimensional linear regression model: 
+
+* black solid lines: true $f(x)$
+* blue curves: KNN fits $\hat{f}_K(x)$ using $K = 1$ (left plot) and $K = 9$ (right plot). 
+
+Observations: 
+
+* The KNN fit $\hat{f}_K(x)$ using $K = 1$ is far too wiggly
+* The KNN fit $\hat{f}_K(x)$ using $K = 9$ is much closer to the true $f(X).$ 
+
+However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
+![](images/Fig_3_17.png)
+
+
+The blue dashed line in the left-hand panel of **Figure 3.18** represents the simple linear regression fit to the same data. It is almost perfect. 
+
+The right-hand panel of **Figure 3.18** reveals that linear regression outperforms KNN for this data across different choices of $K=1,2,\dots,10.$ 
+![](images/Fig_3_18.png)
+
+
+**Figure 3.19** displays a non-linear situations in which KNN performs much better than simple linear regression. 
+![](images/Fig_3_19.png)
+
+
+#### Curse of Dimensionality {-}
+
+Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
+
+
+**Figure 3.20** considers the same strongly non-linear situation as in the second row of **Figure 3.19**, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+
+* When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
+* But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
+![](images/Fig_3_20.png)
+
+Observations: 
+
+* When $p=1$, a sample size of $n=50$ can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
+* However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0$ causing a large bias.  
+
+
+
+
+
+
+
+
+
+
+
+

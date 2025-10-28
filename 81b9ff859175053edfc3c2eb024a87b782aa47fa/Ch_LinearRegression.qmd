@@ -169,7 +169,9 @@ The exogeneity assumption is also called
 * **orthogonality assumption** or 
 * **mean independence assumption**.
 
-::: {.callout-note}
+::: {#nte-strictExogneity .callout-note appearance="simple"}
+## Strict Exogeneity
+
 Together with the random sample assumption (Assumption 1, Part (b)) @eq-assExogen even implies **strict exogeneity** 
 $$
 E(\epsilon|X) = \underset{(n\times 1)}{0},
@@ -242,27 +244,27 @@ $$
 But Assumption 2 is fulled by many different error term distributions. Typically, we do not want to specify the total distribution of $\epsilon$, since typically we simply do not know the exact distribution of the error terms.  
 -->
 
-For doing inference, we need to make a realistic assumption about the conditional variance of $\epsilon$, given $X$
+For doing valid inference, we need to make a realistic/correct assumption about the conditional variance of $\epsilon$, given $X$
 $$
 \begin{align*}
-&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+&\underset{(n\times n)}{\operatorname{Var}\left(\epsilon|X\right)}=\\[2ex] 
 & = \left(\begin{matrix}
-Var(\epsilon_1|X)&Cov(\epsilon_1,\epsilon_2|X)&\dots&Cov(\epsilon_1,\epsilon_n|X)\\
-Cov(\epsilon_2,\epsilon_1|X)&Var(\epsilon_2|X)&\dots&Cov(\epsilon_2,\epsilon_n|X)\\
+\operatorname{Var}(\epsilon_1|X)&\operatorname{Cov}(\epsilon_1,\epsilon_2|X)&\dots&\operatorname{Cov}(\epsilon_1,\epsilon_n|X)\\
+\operatorname{Cov}(\epsilon_2,\epsilon_1|X)&\operatorname{Var}(\epsilon_2|X)&\dots&\operatorname{Cov}(\epsilon_2,\epsilon_n|X)\\
 \vdots&\vdots&\ddots&\vdots\\
-Cov(\epsilon_n,\epsilon_1|X)&Cov(\epsilon_n,\epsilon_2|X)&\dots&Var(\epsilon_n|X)
+\operatorname{Cov}(\epsilon_n,\epsilon_1|X)&\operatorname{Cov}(\epsilon_n,\epsilon_2|X)&\dots&\operatorname{Var}(\epsilon_n|X)
 \end{matrix}\right)
 \end{align*}
 $$
 By the (iid) random sample assumption (Assumption 1, Part (b)), we have independence between individual error terms, such that
 $$
 \begin{align*}
-&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+&\underset{(n\times n)}{\operatorname{Var}\left(\epsilon|X\right)}=\\[2ex] 
 & = \left(\begin{matrix}
-Var(\epsilon_1|X_1)&0&\dots&0\\
-0&Var(\epsilon_2|X_2)&\dots&0\\
+\operatorname{Var}(\epsilon_1|X_1)&0&\dots&0\\
+0&\operatorname{Var}(\epsilon_2|X_2)&\dots&0\\
 \vdots&\vdots&\ddots&\vdots\\
-0&0&\dots&Var(\epsilon_n|X_n)
+0&0&\dots&\operatorname{Var}(\epsilon_n|X_n)
 \end{matrix}\right)
 \end{align*}
 $$
@@ -271,12 +273,12 @@ Under the (iid) random sampling assumption, we distinguishes two cases: **hetero
 
 **Heteroskedastic errors** allow for different conditional variances 
 $$
-Var(\epsilon_i|X_i)=\sigma^2(X_i)>0
+\operatorname{Var}(\epsilon_i|X_i)=\sigma^2(X_i)>0
 $$
 for all $i=1,\dots,n$ such that 
 $$
 \begin{align*}
-&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+&\underset{(n\times n)}{\operatorname{Var}\left(\epsilon|X\right)}=\\[2ex] 
 & = \left(\begin{matrix}
 \sigma^2(X_1)&0&\dots&0\\
 0&\sigma^2(X_2)&\dots&0\\
@@ -288,12 +290,12 @@ $$
 
 **Homoskedastic errors** assume equal conditional variances 
 $$
-Var(\epsilon_i|X_i)=sigma^2>0
+\operatorname{Var}(\epsilon_i|X_i)=sigma^2>0
 $$
 for all $i=1,\dots,n$ such that 
 $$
 \begin{align*}
-&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
+&\underset{(n\times n)}{\operatorname{Var}\left(\epsilon|X\right)}=\\[2ex] 
 & = \left(\begin{matrix}
 \sigma^2&0&\dots&0\\
 0&\sigma^2&\dots&0\\
@@ -304,59 +306,8 @@ $$
 \end{align*}
 $$
 
-<!--
-List of typical classes of error term distributions:
 
-- **Conditional distribution with sufficiently many moments:** 
-$$
-\epsilon_i|X_i \sim f_{\epsilon|X}
-$$ 
-for all $i=1,\dots,n$ and for any distribution $f_{\epsilon|X}$ with two (or more) finite moments.
-  - **Example: Conditional normal distribution** 
-  $$
-  \epsilon_i|X_i \sim \mathcal{N}(0,\sigma^2(X_i))
-  $$ 
-  for all $i=1,\dots,n$.
-
-- **Independence between error and predictors:** $\epsilon_i\sim f_\epsilon$ for all $i=1,\dots,n$ such that $f_\epsilon=f_{\epsilon|X}$ and such that $f_\epsilon$ has two (or more) finite moments.  
-   - **Example: Independence between a Gaussian error and the predictors** 
-   $$
-   f_\epsilon=\mathcal{N}(0,\sigma^2),
-   $$ 
-   where $\sigma^2$ does not depend on $X.$
-
-- **Spherical errors:** The conditional distributions of  $\epsilon_i|X_i$ may generally depend on $X_i$ for all $i=1,\dots,n,$ but only such that
-$$
-E(\epsilon|X)=\underset{(n\times 1)}{0}
-$$
-and 
-$$
-\begin{align*}
-&\underset{(n\times n)}{Var\left(\epsilon|X\right)}=\\[2ex] 
-& = \left(\begin{matrix}
-Var(\epsilon_1|X)&Cov(\epsilon_1,\epsilon_2|X)&\dots&Cov(\epsilon_1,\epsilon_n|X)\\
-Cov(\epsilon_2,\epsilon_1|X)&Var(\epsilon_2|X)&\dots&Cov(\epsilon_2,\epsilon_n|X)\\
-\vdots&\vdots&\ddots&\vdots\\
-Cov(\epsilon_n,\epsilon_1|X)&Cov(\epsilon_n,\epsilon_2|X)&\dots&Var(\epsilon_n|X)
-\end{matrix}\right)\\[2ex]
-& = \left(\begin{matrix}
-\sigma^2&0&\dots&0\\
-0&\sigma^2&\dots&0\\
-\vdots&\vdots&\ddots&\vdots\\
-0&0&\dots&\sigma^2
-\end{matrix}\right)
-= \sigma^2 I_n,
-\end{align*}
-$$
-where $I_n$ denotes the $(n\times n)$ identity matrix with ones on the diagonal and zeros else.</br> 
-Thus, under the spherical errors assumption, one has, for all possible realizations of $X$, that: 
-   * **uncorrelated:** $Cov(\epsilon_i,\epsilon_j|X)=0$ for all $i=1,\dots,n$ and all $j=1,\dots,n$ such that $i\neq j$ 
-   * **homoskedastic:** $Var(\epsilon_i|X)=\sigma^2$ for all $i=1,\dots,n$
--->
-
-
-
-### Discussion of the Model Assumptions
+### Discussion of the Model Assumptions {#sec-DiscussionModelAssumptions}
 
 
 #### **Assumption 1, Part (a)** {-}
@@ -413,24 +364,24 @@ Generally, a linear regression function can have quite complex functional forms.
 The **polynomial regression model** is a special case of the multiple linear regression model, where
 $$
 \begin{align*}
-X_{i2} &:= X_{i2}^1\\
-X_{i3} &:= X_{i2}^2\\
+X_{i1} &:= X_{i1}^1\\
+X_{i2} &:= X_{i1}^2\\
 &\vdots\\
-X_{ip} &:= X_{i2}^{p-1}
+X_{ip} &:= X_{i1}^{p}
 \end{align*}
 $$
 such that
 $$
-f(X_i) = \beta_1 + \beta_2 X_{i2} + \beta_3 X_{i2}^2 +\dots + \beta_{p} X_{i2}^{p-1}. 
+f(X_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}^2 +\dots + \beta_{p} X_{i1}^{p}. 
 $$
 
 Partial effects remain easy to interpret in polynomial regression functions:
 $$
-\frac{\partial}{\partial X_{i2}}f(X_i) = \beta_2 + \beta_3 X_{i2} + \dots + (p-1)\beta_p X_{i2}^{p-2} 
+\frac{\partial}{\partial X_{i1}}f(X_i) = \beta_1 + 2\beta_2 X_{i2} + \dots + p\beta_p X_{i1}^{p-1} 
 $$
 That is, changing $X_{i1}$ by one unit, changes $f(X_i)=E(Y_i|X_i)$ by 
 $$
-\beta_2 + \beta_3 X_{i2} + \dots + (p-1)\beta_p X_{i2}^{p-2} 
+\beta_1 + 2\beta_2 X_{i2} + \dots + p\beta_p X_{i1}^{p-1} 
 $$ 
 units. 
 
@@ -466,7 +417,7 @@ $$
 &=E(\epsilon_i X_{ik})- \overbrace{E(\epsilon_i)}^{=0}\; E(X_{ik})\\
 &=E(\epsilon_i X_{ik})\\
 &=E(E(\epsilon_i X_{ik}|X_i))\\
-&=E(X_{ik} \; \underbrace{E(\epsilon_i |X_k)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,p.
+&=E(X_{ik} \; \underbrace{E(\epsilon_i |X_i)}_{=0}\,) = 0\quad \text{for all}\quad k=0,\dots,p.
 \end{align*}
 $$
 Thus 
@@ -588,7 +539,7 @@ $$
 
 However, $\epsilon_i$ and $X_i$ are not independent of each other, since the conditional variance of $\epsilon_i$ is a function of $X_{i1}$
 $$
-Var(\epsilon_i|X_i) = |X_{i1}|^2.
+\operatorname{Var}(\epsilon_i|X_i) = |X_{i1}|^2.
 $$
 ::: 
 -->
@@ -624,7 +575,7 @@ for every possible realization of $X_i.$
 
 However, the error term $\epsilon_i$ is heteroskedastic, since its conditional variance is a function of the realizations of $X_{i2}\colon$
 $$
-Var(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(0.5|X_{i2}| - (-0.5|X_{i2}|))^2}_{=\frac{1}{12}(b-a)^2}=\frac{1}{12}X_{i2}^2
+\operatorname{Var}(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(0.5|X_{i2}| - (-0.5|X_{i2}|))^2}_{=\frac{1}{12}(b-a)^2}=\frac{1}{12}X_{i2}^2
 $$ 
 
 `R`-code: 
@@ -671,7 +622,7 @@ for every possible realization of $X_i.$
 
 Moreover, the error term $\epsilon_i$ is also homoskedastic, since its conditional variance is not a function of $X_{i2}\colon$
 $$
-Var(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(1 - (-1))^2}_{=\frac{1}{12}(b-a)^2}=\frac{1}{12}2^2
+\operatorname{Var}(\epsilon_i|X_i)=\underbrace{\frac{1}{12}(1 - (-1))^2}_{=\frac{1}{12}(b-a)^2}=\frac{1}{12}2^2
 $$ 
 
 `R`-code: 
@@ -924,7 +875,7 @@ where $0\leq R^2\leq 1.$
 
 **Cautionary Note Nr 1:** 
 
-Do not forget that there is a **irreducible error** $Var(\epsilon)=\sigma^2>0$. Thus 
+Do not forget that there is a **irreducible error** $\operatorname{Var}(\epsilon)=\sigma^2>0$. Thus 
 
 * very low $\operatorname{RSE}$ values $(\operatorname{RSE}\approx 0)$ and 
 * very high $R^2$ values $(R^2\approx 1)$ 
@@ -1014,7 +965,7 @@ round(lm2$adj.r.squared, digits = 3) # model with X_ir
 ## Assessing the Accuracy of the Coefficient Estimators $\hat{\beta}$
 
 
-### Bias of $\hat{\beta}$
+### Mean and Bias of $\hat{\beta}$
 
 
 Under the Assumptions 1-4, one can show that the OLS estimator 
@@ -1031,7 +982,7 @@ $${#eq-OLSUnbiased}
 That is, in the mean of $\hat\beta$ equals $\beta.$
 
 
-#### Showing Unbiasedness of $\hat{\beta}$ {-}
+#### **Showing Unbiasedness of $\hat{\beta}$** {-}
 
 @eq-OLSUnbiased can be shown as following: 
 
@@ -1054,7 +1005,7 @@ E(\hat\beta|X)
 &= E((X^{\top}X)^{-1}X^{\top}(X\beta+\epsilon)|X)                 \\[2ex]
 &= E(\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{=I_{(p+1)}}\beta|X) + E((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
 &= \underbrace{E(\beta|X)}_{=\beta} + \underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=(X^{\top}X)^{-1}X^{\top}E(\epsilon|X)}  \\[2ex]
-&= \beta + (X^{\top}X)^{-1}X^{\top}\underbrace{E(\epsilon|X)}_{=0}\\[2ex] 
+&= \beta + (X^{\top}X)^{-1}X^{\top}\underbrace{\highlight{E(\epsilon|X)}}_{=0}\\[2ex] 
 &= \underset{(p+1)\times 1}{\beta}  
 \end{align*}
 $$
@@ -1082,34 +1033,112 @@ $$
 $$
 
 
-### Standard Error of $\hat{\beta}_j$
+The crucial assumption for $\hat\beta$ being unbiased is the strict exogeneity assumption (see @nte-strictExogneity):
+$$
+E(\epsilon|X)=\underset{(n\times 1)}{0}.
+$$
+
+
+If the exogeneity assumption (Assumption 2) is violated, we will have biased estimators (systematic estimation errors) rendering the estimation results generally unreliable. 
+
+**Omitted variables** — including factors that cannot be directly measured or quantified — are the most common practical cause of violations of the exogeneity assumption; see the wage regression example in @sec-DiscussionModelAssumptions.
+
+
+<!--
+#### The Omitted Variable Bias {-}
+
+
+Multiple linear regression is more than mere composition of single simple linear regression models. Take a look at the following two simple linear regression results: 
+
+![](images/Tab_3_3.png)
+
+
+Observations: 
+
+* In the first simple linear regression, we see a statistical significant effect of  `radio` on `sales`; i.e. we can reject the null hypotheses 
+$$
+H_0:\beta_{radio}=0
+$$
+and adopt the alternative hypotheses 
+$$
+H_1:\beta_{radio}\neq 0.
+$$
+
+* In the second simple linear regression, we see a statistical significant effect of  `newspaper` on `sales`; i.e. we can reject the null hypotheses 
+$$
+H_0:\beta_{newspaper}=0
+$$
+and adopt the alternative hypotheses 
+$$
+H_1:\beta_{newspaper}\neq 0.
+$$
+
+By contrast, when looking at the **multiple linear regression** when regressing `sales` onto 
+
+* `TV`, 
+* `radio` and  
+* `newspaper`,
+
+then the effect of `newspaper` becomes statistically **insignificant**; see Table 3.4. 
+
+![](images/Tab_3_4.png)
+
+
+**Reason: Omitted Variable Bias** 
+
+The reason for this change from a statistically significant effect of `newspaper` in the simple linear regression, to an insignificant effect in the multiple linear regression  is the so-called **Omitted Variable Bias**.
+
+Explanation of the omitted variables bias: 
+
+* `radio` has a **true positive effect** on `sales`
+* `newspaper` has actually **no effect** on `sales`
+* But, `newspaper` is correlated with `radio` $r_{\texttt{newspaper},\texttt{radio}}=0.3541$; see Table 3.5
+
+![](images/Tab_3_5.png)
+
+* Thus, when **omitting** `radio` from the regression model, `newspaper` becomes a surrogate for `radio` and we see a spurious effect.  
+
+::: {.callout-caution}
+Interpreting statistically significant results as true effects ("a change of $X_j$ by one unit causes on average a change in $Y$ by $\beta_{j}$") is a delectate thing. 
+
+Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
+:::
+
+
+**Interpretation of the Coefficients in Table 3.4** 
+
+For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units.  
+-->
+
+
+### Variance and Standard Error of $\hat{\beta}_j$
 
 The standard error of $\hat{\beta}_j,$ for each $j=0,\dots,p,$ is given by
 $$
-\operatorname{SE}(\hat\beta_j|X)=\sqrt{Var(\hat\beta_j|X)},
+\operatorname{SE}(\hat\beta_j|X)=\sqrt{\operatorname{Var}(\hat\beta_j|X)},
 $$
 where 
 $$
-Var(\hat\beta_j|X) = \left[Var(\hat\beta|X)\right]_{(j,j)}
+\operatorname{Var}(\hat\beta_j|X) = \left[\operatorname{Var}(\hat\beta|X)\right]_{(j,j)}
 $$ 
 denotes the $j$th diagonal element of the symmetric $(p+1)\times (p+1)$ variance-covariance matrix
 $$
 \begin{align*}
-&Var(\hat\beta|X)=\\[2ex]
+&\operatorname{Var}(\hat\beta|X)=\\[2ex]
 &=\begin{pmatrix}
-Var(\hat\beta_0|X)&Cov(\hat\beta_0,\hat\beta_1|X)&\cdots&Cov(\hat\beta_0,\hat\beta_{p}|X)\\
-Cov(\hat\beta_1,\hat\beta_0|X)&Var(\hat\beta_1|X)&  &Cov(\hat\beta_1,\hat\beta_{p}|X)\\
+\operatorname{Var}(\hat\beta_0|X)&\operatorname{Cov}(\hat\beta_0,\hat\beta_1|X)&\cdots&\operatorname{Cov}(\hat\beta_0,\hat\beta_{p}|X)\\
+\operatorname{Cov}(\hat\beta_1,\hat\beta_0|X)&\operatorname{Var}(\hat\beta_1|X)&  &\operatorname{Cov}(\hat\beta_1,\hat\beta_{p}|X)\\
 \vdots &&\ddots&\\
-Cov(\hat\beta_p,\hat\beta_0|X)&Cov(\hat\beta_p,\hat\beta_1|X)&\cdots&Var(\hat\beta_{p}|X)\\
+\operatorname{Cov}(\hat\beta_p,\hat\beta_0|X)&\operatorname{Cov}(\hat\beta_p,\hat\beta_1|X)&\cdots&\operatorname{Var}(\hat\beta_{p}|X)\\
 \end{pmatrix}
 \end{align*}
 $$
 
 To get a useful, explicit expression for the standard error, 
-$\operatorname{SE}(\hat\beta_j|X),$ we need to first compute an explicit expression for the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X).$ 
+$\operatorname{SE}(\hat\beta_j|X),$ we need to first compute an explicit expression for the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $\operatorname{Var}(\hat\beta|X).$ 
 
 
-#### Deriving the Expression for $Var(\hat\beta|X)\colon$ {-}
+#### Deriving the Expression for $\operatorname{Var}(\hat\beta|X)\colon$ {-}
 
 Note that
 $$
@@ -1126,38 +1155,38 @@ This leads to the so-called **sampling error expression**
 $$
 \hat{\beta} - \beta = (X^{\top}X)^{-1}X^{\top}\epsilon.
 $$
-With this, we can derive the general explicit expression for $Var(\hat\beta|X).$
+With this, we can derive the general explicit expression for $\operatorname{Var}(\hat\beta|X).$
 $$
 \begin{align*}
-&Var(\hat\beta|X)=\\[2ex]
+&\operatorname{Var}(\hat\beta|X)=\\[2ex]
 &\text{Adding/subtracting constants does not change variance:}\\[2ex]
-&=Var(\hat\beta - \beta|X)\\[2ex]
+&=\operatorname{Var}(\hat\beta - \beta|X)\\[2ex]
 &\text{Using the sampling error expression $\hat{\beta} - \beta = (X^{\top}X)^{-1}X^{\top}\epsilon$:}\\[2ex]
-&=Var((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
-&\text{Using that $Var(Z|X)=E[(Z-E(Z|X))(Z-E(Z|X))|X]$:}\\[2ex]
+&=\operatorname{Var}((X^{\top}X)^{-1}X^{\top}\epsilon|X)\\[2ex]
+&\text{Using that $\operatorname{Var}(Z|X)=E[(Z-E(Z|X))(Z-E(Z|X))|X]$:}\\[2ex]
 &=E\Big[\big((X^{\top}X)^{-1}X^{\top}\epsilon-\underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=0}\big)\times\\[2ex]
 &\phantom{=\Big(}\,\times\big((X^{\top}X)^{-1}X^{\top}\epsilon-\underbrace{E((X^{\top}X)^{-1}X^{\top}\epsilon|X)}_{=0}\big)^{\top}|X\Big]\\[2ex]
 &=E\left[((X^{\top}X)^{-1}X^{\top}\epsilon)((X^{\top}X)^{-1}X^{\top}\epsilon)^{\top}|X\right]\\[2ex]
 &=E\left[(X^{\top}X)^{-1}X^{\top}\epsilon\epsilon^{\top} X(X^{\top}X)^{-1}|X\right]\\[2ex]
-&=\;\;\;(X^{\top}X)^{-1}X^{\top}\underbrace{E\left(\epsilon\epsilon^{\top}|X\right)}_{=\highlight{Var(\epsilon|X)}}X(X^{\top}X)^{-1}
+&=\;\;\;(X^{\top}X)^{-1}X^{\top}\underbrace{E\left(\epsilon\epsilon^{\top}|X\right)}_{=\highlight{\operatorname{Var}(\epsilon|X)}}X(X^{\top}X)^{-1}
 \end{align*}
 $$
-That is, the explicit expression for $Var(\hat\beta|X)$ depends on the explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ 
+That is, the explicit expression for $\operatorname{Var}(\hat\beta|X)$ depends on the explicit form of the symmetric $(n\times n)$ matrix $\operatorname{Var}(\epsilon|X)$ 
 $$
 \begin{align*}
-&\highlight{Var(\epsilon|X)}=\\[2ex]
+&\highlight{\operatorname{Var}(\epsilon|X)}=\\[2ex]
 &=\begin{pmatrix}
-Var(\epsilon_1|X)&Cov(\epsilon_1,\epsilon_2|X)&\cdots&Cov(\epsilon_1,\epsilon_n|X)\\
-Cov(\epsilon_2,\epsilon_1|X)&Var(\epsilon_2|X)&  &Cov(\epsilon_2,\epsilon_n|X)\\
+\operatorname{Var}(\epsilon_1|X)&\operatorname{Cov}(\epsilon_1,\epsilon_2|X)&\cdots&\operatorname{Cov}(\epsilon_1,\epsilon_n|X)\\
+\operatorname{Cov}(\epsilon_2,\epsilon_1|X)&\operatorname{Var}(\epsilon_2|X)&  &\operatorname{Cov}(\epsilon_2,\epsilon_n|X)\\
 \vdots &&\ddots&\\
-Cov(\epsilon_n,\epsilon_1|X)&Cov(\epsilon_n,\epsilon_2|X)&\cdots&Var(\epsilon_n|X)\\
+\operatorname{Cov}(\epsilon_n,\epsilon_1|X)&\operatorname{Cov}(\epsilon_n,\epsilon_2|X)&\cdots&\operatorname{Var}(\epsilon_n|X)\\
 \end{pmatrix}
 \end{align*}
 $$
 
-The explicit form of the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$ depends on our (hopefully correct) assumption on the error-term variance (Assumption 4). 
+The explicit form of the symmetric $(n\times n)$ matrix $\operatorname{Var}(\epsilon|X)$ depends on our (hopefully correct) assumption on the error-term variance (Assumption 4). 
 
-We consider the two most prominent types of assumptions for the symmetric $(n\times n)$ matrix $Var(\epsilon|X)$:
+We consider the two most prominent types of assumptions for the symmetric $(n\times n)$ matrix $\operatorname{Var}(\epsilon|X)$:
 
 * Homoskedastic (and uncorrelated) errors
 * Heteroskedastic (and uncorrelated) errors
@@ -1167,7 +1196,7 @@ We consider the two most prominent types of assumptions for the symmetric $(n\ti
 If 
 $$
 \begin{align*}
-Var(\epsilon|X)
+\operatorname{Var}(\epsilon|X)
 &=
 \begin{pmatrix}
 \sigma^2 & 0        & \cdots & 0\\
@@ -1181,15 +1210,15 @@ $$
 then 
 $$
 \begin{align*}
-&Var(\hat\beta|X)=\\[2ex]
-&=(X^{\top}X)^{-1}X^{\top} \;\highlight{Var(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
+&\operatorname{Var}(\hat\beta|X)=\\[2ex]
+&=(X^{\top}X)^{-1}X^{\top} \;\highlight{\operatorname{Var}(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
 &=(X^{\top}X)^{-1}X^{\top} \;\highlight{\sigma^2 I_n}\; X(X^{\top}X)^{-1}\\[2ex]
 &=\sigma^2\;(X^{\top}X)^{-1}X^{\top} \left( I_n \right) X(X^{\top}X)^{-1}\\[2ex]
 &=\sigma^2\;\underbrace{(X^{\top}X)^{-1}X^{\top}X}_{I_{p+1}}\;(X^{\top}X)^{-1}\\[2ex]
 &=\sigma^2\;(X^{\top}X)^{-1},
 \end{align*}
 $$
-where the only unknown component is $\sigma^2=Var(\epsilon_i).$ 
+where the only unknown component is $\sigma^2=\operatorname{Var}(\epsilon_i).$ 
 
 We can estimate the homoskedastik error term variance $\sigma^2$ using the **R**esidual **S**tandard **E**rror:
 $$
@@ -1234,7 +1263,7 @@ summary(lm_obj)
 If 
 $$
 \begin{align*}
-Var(\epsilon|X)
+\operatorname{Var}(\epsilon|X)
 &=
 \begin{pmatrix}
 \sigma_1^2 & 0          & \cdots & 0\\
@@ -1248,13 +1277,13 @@ $$
 then 
 $$
 \begin{align*}
-&Var(\hat\beta|X)=\\[2ex]
-&=(X^{\top}X)^{-1}X^{\top} \;\highlight{Var(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
+&\operatorname{Var}(\hat\beta|X)=\\[2ex]
+&=(X^{\top}X)^{-1}X^{\top} \;\highlight{\operatorname{Var}(\epsilon|X)}\; X(X^{\top}X)^{-1}\\[2ex]
 &=(X^{\top}X)^{-1}X^{\top} \;\highlight{\operatorname{diag}(\sigma_1^2,\dots,\sigma_n^2)}\; X(X^{\top}X)^{-1}\\[2ex]
 &=(X^{\top}X)^{-1} \left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right) (X^{\top}X)^{-1}\\[2ex]
 \end{align*}
 $$
-Thus, the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $Var(\hat\beta|X)$ keeps its **sandwich form**, where the inner part of the sandwich
+Thus, the symmetric $(p+1)\times(p+1)$ variance-covariance matrix $\operatorname{Var}(\hat\beta|X)$ keeps its **sandwich form**, where the inner part of the sandwich
 $$
 \left(\sum_{i=1}^n \sigma_i^2 X_i X_i^{\top}\right)
 $$
@@ -1340,6 +1369,7 @@ lmtest::coeftest(lm_obj, vcov = vcovHC3_mat)
 round(sqrt(diag(vcovHC3_mat)), digits = 5)
 ```
 
+
 ## Inference 
 
 ### Confidence Intervals for $\beta_j$
@@ -1352,15 +1382,15 @@ we can construct the $(1-\alpha)\cdot 100\%$ confidence interval for the true (u
 $$
 \begin{align*}
 &\operatorname{CI}^{1-\alpha}_{\beta_j}=\\[2ex]
-=&\left[\hat\beta_j - q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X),\;
-\hat\beta_j + q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right]\\[2ex]
+=&\left[\hat\beta_j - q_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X),\;
+\hat\beta_j + q_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right]\\[2ex]
 &\text{More compact notation:}\\[2ex]
-=&\left[\hat\beta_j\; {\color{red}\pm} \; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right],
+=&\left[\hat\beta_j\; {\color{red}\pm} \; q_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)\right],
 \end{align*}
 $$
 where 
 $$
-q^{t,n-(p+1)}_{1-\alpha/2}
+q_{1-\alpha/2}
 $$
 denotes the $(1-\alpha/2)$-quantile of the $t$-distribution with $\operatorname{df}=n-(p+1)$ degrees of freedom, and where $\alpha$ denotes the **significance level** with typical choices: 
 
@@ -1384,7 +1414,7 @@ $$
 $$
 we can compute a given, **obs**erved realization of the confidence interval 
 $$
-\operatorname{CI}^{1-\alpha}_{\beta_j,obs}=\left[\hat\beta_{j,obs}\; \pm \; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}\right],
+\operatorname{CI}^{1-\alpha}_{\beta_j,obs}=\left[\hat\beta_{j,obs}\; \pm \; q_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j|X)_{obs}\right],
 $$ 
 where
 $$
@@ -1456,7 +1486,7 @@ $$
 \beta^{(H_0)}_{j}&\in\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\\[2ex]
 \Leftrightarrow\beta^{(H_0)}_{j}&\in
 \left[
-  \hat{\beta}_{j,obs} \;\pm\; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
+  \hat{\beta}_{j,obs} \;\pm\; q_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
   \right],
 \end{align*}
 $$
@@ -1468,7 +1498,7 @@ $$
 \beta^{(H_0)}_{j}&\not\in\operatorname{CI}^{1-\alpha}_{\beta_j,obs}\\[2ex]
 \Leftrightarrow\beta^{(H_0)}_{j}&\not\in
 \left[
-  \hat{\beta}_{j,obs} \;\pm\; q^{t,n-(p+1)}_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
+  \hat{\beta}_{j,obs} \;\pm\; q_{1-\alpha/2}\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}
   \right],
 \end{align*}
 $$
@@ -1555,9 +1585,6 @@ Even very large $p$-values $p_{obs}\approx 1 \gg \alpha$ can occur simply becaus
 
 ![](images/terminator.jpeg)
 :::
-
-:::
-
 
 
 ::: {.callout-note}
@@ -1710,80 +1737,6 @@ $$
 for each given violation of the null-hypothesis $|\beta_j - 0|>0.$
 
 Testing procedures that fulfill the latter property are called **consistent.**
-
-
-<!-- 
-## The Omitted Variable Bias 
-
-Multiple linear regression is more than mere composition of single simple linear regression models. Take a look at the following two simple linear regression results: 
-
-![](images/Tab_3_3.png)
-
-
-Observations: 
-
-* In the first simple linear regression, we see a statistical significant effect of  `radio` on `sales`; i.e. we can reject the null hypotheses 
-$$
-H_0:\beta_{radio}=0
-$$
-and adopt the alternative hypotheses 
-$$
-H_1:\beta_{radio}\neq 0.
-$$
-
-* In the second simple linear regression, we see a statistical significant effect of  `newspaper` on `sales`; i.e. we can reject the null hypotheses 
-$$
-H_0:\beta_{newspaper}=0
-$$
-and adopt the alternative hypotheses 
-$$
-H_1:\beta_{newspaper}\neq 0.
-$$
-
-By contrast, when looking at the **multiple linear regression** when regressing `sales` onto 
-
-* `TV`, 
-* `radio` and  
-* `newspaper`,
-
-then the effect of `newspaper` becomes statistically **insignificant**; see Table 3.4. 
-
-![](images/Tab_3_4.png)
-
-
-**Reason: Omitted Variable Bias** 
-
-The reason for this change from a statistically significant effect of `newspaper` in the simple linear regression, to an insignificant effect in the multiple linear regression  is the so-called **Omitted Variable Bias**.
-
-Explanation of the omitted variables bias: 
-
-* `radio` has a **true positive effect** on `sales`
-* `newspaper` has actually **no effect** on `sales`
-* But, `newspaper` is correlated with `radio` $r_{\texttt{newspaper},\texttt{radio}}=0.3541$; see Table 3.5
-
-![](images/Tab_3_5.png)
-
-* Thus, when **omitting** `radio` from the regression model, `newspaper` becomes a surrogate for `radio` and we see a spurious effect.  
-
-::: {.callout-caution}
-Interpreting statistically significant results as true effects ("a change of $X_j$ by one unit causes on average a change in $Y$ by $\beta_{j}$") is a delectate thing. 
-
-Even if the $f(X)$ is really so simple that we can write it as a simple or multiple linear regression model, we may miss to include all relevant predictor variables and thus statistically significant results may only be spurious effects due to omitted variables. 
-:::
-
-
-**Interpretation of the Coefficients in Table 3.4** 
-
-For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `radio`, increases on average `sales` by approximately 189 units.  
--->
-
-
-
-
-
-
-
-
 
 
 ## Other Considerations in the Regression Model
@@ -2293,296 +2246,47 @@ fit, since the presence of collinearity implies that the information that this v
 
 3. Use a different estimation procedure like ridge regression. 
 
-4. Live with it. At least you know where the large stand errors are coming from. 
+4. Live with it, since naively dropping variables can cause an omitted variables bias (violation of the exogeneity Assumption 2). At least you know where the large stand errors are coming from. 
 
 
-## Comparison: Linear Regression vs. K-NN Regression
+
+## Exercises 
+
+Here you'll find the exercise sheet for this chapter. 
 
 
-Linear regression is an example of a parametric approach because it assumes a linear model form for 
+## In Class Coding Exercises 
+
+Consider the following multiple linear regression model:
 $$
-f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+Y_i = \beta_0 X_{i0} + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \epsilon_i,
 $$
+where 
 
-**Advantages of parametric approaches:**
+* $i=1,\dots,n$ with $n=250$
+* $\beta_0=2,$ $\beta_1=-2,$ $\beta_2=0.5,$ $\beta_3=-4$
+* $X_{i0} = 1$ for all $i=1,\dots,n$
+* $X_{i1} \sim\mathcal{N}(4,1.5)$
+* $X_{i2} \sim\mathcal{U}[-2,2]$
+* $\epsilon_i|X_{i2}\sim \mathcal{N}(0,|X_{i2}|\cdot 0.5+1)$
 
-* Typically easy to fit 
-* Simple interpretation
-* Simple inference
+**Problems (Oct. 27, 2025):**
 
-
-**Disadvantages of parametric approaches:**
-
-* The parametric model assumption can be far from true; i.e.
+* Plot the true (usually unknown) regression function 
 $$
-f(X_i) \neq \beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+f(x) = E(Y_i|X_i=x),\quad x=(1,x_2,x_3),
 $$
-
-
-**Alternative:** 
-
-**Non-parametric methods** such as **K-nearest neighbors regression** since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
-
-
-### K-Nearest Neighbors (K-NN) Regression 
-
-
-Let $x_0\in\mathbb{R}^p$ denote a certain (multivariate) predictor value at which we want to estimate 
-$$
-f(x_0)
-$$
-and let $K$ denote the number of closest predictior value neighbors of $x_0.$
-
-KNN regression regression then computes the estimate 
-$$
-\hat{f}_K(x_0)
-$$ 
-in two steps: 
-
-1. Compute the distances between $x_0$ and all training data predictior values $X_1,\dots,X_{n_{Train}}$
-$$
-d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
-$$
-Use these distances to identify the $K$ training data predictior values $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
-$$
+where
 \begin{align*}
-\mathcal{N}_0 
-& =\{i\in\{1,2,\dots,n_{Train}\} \; |\; d(x_0,X_i)\text{ is one of the $K$ smallest distances}\}
+f(x)
+& = E(Y_i|X_i=(1,x_1,x_2)^\top)\\ 
+& = E(\beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i2}^2 + \epsilon_i|X_i=x)\\
+& =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2    + E(\epsilon_i|X_i=x)\\ 
+& =   \beta_0 + \beta_1 x_1    + \beta_2 x_2    + \beta_3 x_2^2 
 \end{align*}
-$$ 
-such that $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}$ with $|\mathcal{N}_0|=K.$
-2. Estimate $f(x_0)$ using the sample average of all the training responses $y_i$ with $i\in\mathcal{N}_0,$ i.e. 
-$$
-\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
-$$
-
-The above two steps are then repeated for all predictior values $x_0\in\mathbb{R}^p$ of interest.
-
-
-The performance of the estimator $\hat{f}_K(x_0)$ depends on 
-
-* the choice of $K$ and 
-* the choice of distance $d$ 
-
-For real valued predictors, $x_0,X_i\in\mathbb{R}^p$ a usual choice is the Euclidian distance 
-$$
-d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
-$$
-
-::: {.callout-important}
-# Use Standardized Predictors! 
-Typically, it is important to compute the distances with respect to the standardized (centering, and scaling to unit variance) predictor variables; i.e.
-$$
-d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
-$$
-where 
-$$
-x^*_{0j} = \frac{x_{0j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
-$$ 
-and 
-$$
-X^*_{ij} = \frac{X_{ij} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
-$$ 
-with $\bar{X}_{j} = \frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}X_{ij}.$
-
-Otherwise, the distance values could be dominated by one of the $p$ predictors. 
-
-E.g. when one predictor is age (values between $0$ and $99$) and another predictor is yearly income (values between $0$ and $12,000,000$), then the differences in income will dominate the differences in age only because of the different scales.
-<!-- 
-$$
-\frac{X_{1j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}},\dots,\frac{X_{n_{Train}j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
-$$  -->
-:::
-
-
-The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
-
-![](images/Fig_3_16.png)
-
-
-In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in @sec-SL:
-
-**A small value for $K$** provides the most flexible fit, which will have 
-
-   * low bias 
-    $$
-    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is small}
-    $$
-   * high variance
-    $$
-    Var(\hat{f}_K(x_0))  \;\text{ is large}
-    $$ 
-
-The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) close neighbors for which we can expect that they are "good neighbors:" Close neighbors are **good neighbors** since $|f(x_0) - f(X_i)|\approx 0.$
-
-The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a small number of $K$ observations (e.g. $K=1$) such that the law of larger numbers had no chance to reduce variance. 
-
-
-**A large value of $K$** provides a less flexible fit, which will have 
-
-   * large bias
-    $$
-    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is large}
-    $$ 
-   * low variance
-    $$
-    Var(\hat{f}_K(x_0))  \;\text{ is small}
-    $$ 
-
-The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=30$) which increases the chance of considering rather distant $||x_0-X_i||\gg 0$ and thus "bad" neigboors. Distant neighbors are **bad neighbors** since $|f(x_0) - f(X_i)|\gg 0.$
-
-The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ depends on a larger number of $K$ observations (e.g. $K=30$) such that the law of larger numbers has a chance to reduce variance.
-
-
-**An optimal value of $K$** can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
-
-
-Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
-
-
-**Figure 3.17** provides an example with data generated from a one-dimensional linear regression model: 
-
-* black solid lines: true $f(x)$
-* blue curves: KNN fits $\hat{f}_K(x)$ using $K = 1$ (left plot) and $K = 9$ (right plot). 
-
-Observations: 
-
-* The KNN fit $\hat{f}_K(x)$ using $K = 1$ is far too wiggly
-* The KNN fit $\hat{f}_K(x)$ using $K = 9$ is much closer to the true $f(X).$ 
-
-However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
-![](images/Fig_3_17.png)
-
-
-The blue dashed line in the left-hand panel of **Figure 3.18** represents the simple linear regression fit to the same data. It is almost perfect. 
-
-The right-hand panel of **Figure 3.18** reveals that linear regression outperforms KNN for this data across different choices of $K=1,2,\dots,10.$ 
-![](images/Fig_3_18.png)
-
-
-**Figure 3.19** displays a non-linear situations in which KNN performs much better than simple linear regression. 
-![](images/Fig_3_19.png)
-
-
-#### Curse of Dimensionality {-}
-
-Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
-
-
-**Figure 3.20** considers the same strongly non-linear situation as in the second row of **Figure 3.19**, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
-
-* When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
-* But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
-![](images/Fig_3_20.png)
-
-Observations: 
-
-* When $p=1$, a sample size of $n=50$ can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
-* However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0$ causing a large bias.  
-
-
-
-<!-- 
-## Assignment
-
-Consider the following data generating process: 
-
-```{r}
-## A Function to simulate data from a simple linear regression model
-myDataGenerator <- function(){
-  
-  n      <- 50                                    # sample size
-  beta_0 <- 0.1                                   # intercept parameter
-  beta_1 <- 5                                     # slope parameter
-  X      <- runif(n, min = -2, max = 2)           # predictor
-  error  <- rnorm(n, mean = 0, sd = (5 + abs(X))) # heteroskedastic error term
-  Y      <- beta_0 + beta_1 * X + error           # generate Y 
-  
-  ## return realization of the random sample
-  return(data.frame("Y" = Y, "X" = X))
-}
-```
-
-Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
-$$
-((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
-$$
-as defined by the data generating process specified in the function-body of `myDataGenerator()`
-
-```{r}
-data_sim    <- myDataGenerator()
-
-head(data_sim)
-```
-
-
-For a given data generating process (as, for instance, defined in `myDataGenerator()`), we can approximate the bias of the OLS estimator by 
-$$
-\widehat{\operatorname{Bias}}(\hat\beta) = \widehat{E}(\hat\beta) - \beta, 
-$$
-where 
-$$
-\begin{align*}
-\widehat{E}(\hat\beta) 
-& = \frac{1}{B}\sum_{j=1}^B \hat\beta_{b}\\[2ex] 
-& = \frac{1}{B}\sum_{j=1}^B \begin{pmatrix}\hat\beta_{0,b}\\\hat\beta_{1,b}\end{pmatrix}\\[2ex]
-& = \begin{pmatrix}\frac{1}{B}\sum_{j=1}^B \hat\beta_{0,b}\\ \frac{1}{B}\sum_{j=1}^B \hat\beta_{1,b}\end{pmatrix}
-\end{align*} 
-$$
-denotes the sample mean across $B$-many simulated realizations 
-$$
-\hat\beta_1,\hat\beta_2,\dots,\hat\beta_B 
-$$
-of the OLS estimator $\hat\beta,$ and where $\beta$ denotes the true parameter vector; i.e., here 
-$$
-\beta
-= \begin{pmatrix}\beta_{0}\\ \beta_{1}\end{pmatrix} 
-= \begin{pmatrix}0.1\\ 5\end{pmatrix}. 
-$$
-
-By the law of large numbers, the approximation 
-$$
-\widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta) 
-$$
-becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ typically guarantees a very good approximation. 
-
-
-#### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
-
-1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta^{\top}=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
-2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
-3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
-
-
-#### **Assignment Task Nr. 2 (Coverage Probability of Confidence Intervals):** {-}
-
-1. Use the above given data generating process to generate $B=100,000$ realizations 
-$$
-\operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
-$$
-of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$ Set $\alpha=0.05.$ 
-2. Approximate the true coverage probability using the empirical coverage probability across all $B$ simulated confidence interals: 
-$$
-P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
-$$
-where $1_{(\text{TRUE})}=1$ and $1_{(\text{FALSE})}=0.$  
-Consider the following two cases: 
-      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 5 = \beta_1.$
-      b. The null-hypothesis is false with $\beta_1^{(H_0)} = 0 \neq \beta_1.$
-
-Note: By the law of large numbers, the above approximation becomes arbitrarily precise as $B\to\infty.$ Thus, setting, for instance, $B=100,000$ typically guarantees a very good approximation. 
-
-
-**Link to your personal assignment repository:**</br>
-[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD) 
-
--->
-
-
-
-
-
-
+as a function of $x_2$ by fixing $x_1$ separately to the following values: $x_1\in\{-2,0,2\}.$ 
+* Generate data (sample size $n$) by iid resamplings from the above regression model.
+* Plot $Y$ separately against $X_{1}$ and $X_{2}$. 
 
 
 
@@ -3349,30 +3053,102 @@ LoadLibraries()
 ```
 
 
-## In Class Coding Exercises 
+## References {-}
 
-Consider the following multiple linear regression model:
+
+
+<!-- 
+## Assignment
+
+Consider the following data generating process: 
+
+```{r}
+## A Function to simulate data from a simple linear regression model
+myDataGenerator <- function(){
+  
+  n      <- 50                                    # sample size
+  beta_0 <- 0.1                                   # intercept parameter
+  beta_1 <- 5                                     # slope parameter
+  X      <- runif(n, min = -2, max = 2)           # predictor
+  error  <- rnorm(n, mean = 0, sd = (5 + abs(X))) # heteroskedastic error term
+  Y      <- beta_0 + beta_1 * X + error           # generate Y 
+  
+  ## return realization of the random sample
+  return(data.frame("Y" = Y, "X" = X))
+}
+```
+
+Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
-Y_i = \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \beta_4 X_{i3}^2 + \epsilon_i,
+((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
+$$
+as defined by the data generating process specified in the function-body of `myDataGenerator()`
+
+```{r}
+data_sim    <- myDataGenerator()
+
+head(data_sim)
+```
+
+
+For a given data generating process (as, for instance, defined in `myDataGenerator()`), we can approximate the bias of the OLS estimator by 
+$$
+\widehat{\operatorname{Bias}}(\hat\beta) = \widehat{E}(\hat\beta) - \beta, 
 $$
 where 
-
-* $i=1,\dots,n$ with $n=250$
-* $\beta_1=2,$ $\beta_2=-2,$ $\beta_3=0.5,$ $\beta_4=-4$
-* $X_{i1} = 1$
-* $X_{i2} \sim\mathcal{N}(4,1.5)$
-* $X_{i3} \sim\mathcal{U}[-2,2]$
-* $\epsilon_i|X_{i3}\sim \mathcal{N}(0,|X_{i3}|\cdot 0.5+1)$
-
-**Problems (Oct. 27, 2025):**
-
-* Plot the true (usually unknown) regression function 
 $$
-E(Y_i|X_i=x) = f(x),\quad x=(1,x_2,x_3)
-$$ 
-as a function of $x_3$ by fixing $x_2$ separately to the following values: $x_2\in\{-2,0,2\}.$ 
-* Generate data (sample size $n$) by iid resamplings from the above regression model.
-* Plot $Y$ separately against $X_{2}$ and $X_{3}$.
+\begin{align*}
+\widehat{E}(\hat\beta) 
+& = \frac{1}{B}\sum_{j=1}^B \hat\beta_{b}\\[2ex] 
+& = \frac{1}{B}\sum_{j=1}^B \begin{pmatrix}\hat\beta_{0,b}\\\hat\beta_{1,b}\end{pmatrix}\\[2ex]
+& = \begin{pmatrix}\frac{1}{B}\sum_{j=1}^B \hat\beta_{0,b}\\ \frac{1}{B}\sum_{j=1}^B \hat\beta_{1,b}\end{pmatrix}
+\end{align*} 
+$$
+denotes the sample mean across $B$-many simulated realizations 
+$$
+\hat\beta_1,\hat\beta_2,\dots,\hat\beta_B 
+$$
+of the OLS estimator $\hat\beta,$ and where $\beta$ denotes the true parameter vector; i.e., here 
+$$
+\beta
+= \begin{pmatrix}\beta_{0}\\ \beta_{1}\end{pmatrix} 
+= \begin{pmatrix}0.1\\ 5\end{pmatrix}. 
+$$
+
+By the law of large numbers, the approximation 
+$$
+\widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta) 
+$$
+becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ typically guarantees a very good approximation. 
 
 
-## References {-}
+#### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
+
+1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta^{\top}=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
+2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
+3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
+
+
+#### **Assignment Task Nr. 2 (Coverage Probability of Confidence Intervals):** {-}
+
+1. Use the above given data generating process to generate $B=100,000$ realizations 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
+$$
+of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$ Set $\alpha=0.05.$ 
+2. Approximate the true coverage probability using the empirical coverage probability across all $B$ simulated confidence interals: 
+$$
+P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
+$$
+where $1_{(\text{TRUE})}=1$ and $1_{(\text{FALSE})}=0.$  
+Consider the following two cases: 
+      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 5 = \beta_1.$
+      b. The null-hypothesis is false with $\beta_1^{(H_0)} = 0 \neq \beta_1.$
+
+Note: By the law of large numbers, the above approximation becomes arbitrarily precise as $B\to\infty.$ Thus, setting, for instance, $B=100,000$ typically guarantees a very good approximation. 
+
+
+**Link to your personal assignment repository:**</br>
+[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD) 
+
+-->

@@ -80,8 +80,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Ch3_MatrixAlgebra.html" rel="next">
-<link href="./Ch1_Intro2R.html" rel="prev">
+<link href="./Ch_MatrixAlgebra.html" rel="next">
+<link href="./Ch_Intro2R.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -152,7 +152,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Ch4_LinearRegression.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Ch_LinearRegression.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -186,19 +186,19 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch1_Intro2R.html" class="sidebar-item-text sidebar-link">
+  <a href="./Ch_Intro2R.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code>-Lab: Introduction to <code>R</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch4_LinearRegression.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Ch_LinearRegression.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch3_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+  <a href="./Ch_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Matrix Algebra</span></span></a>
   </div>
 </li>
@@ -773,7 +773,7 @@ E(\epsilon_i|X_i)=\underbrace{\frac{1}{2}(- 0.5|X_{i2}| + 0.5|X_{i2}|)}_{=\frac{
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">0</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -819,7 +819,7 @@ E(\epsilon_i|X_i)=\underbrace{\frac{1}{2}(-1 + 1)}_{=\frac{1}{2}(a+b)}=0
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">0</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -828,7 +828,7 @@ E(\epsilon_i|X_i)=\underbrace{\frac{1}{2}(-1 + 1)}_{=\frac{1}{2}(a+b)}=0
 </div>
 </section></section></section><section id="deriving-the-expression-of-the-ols-estimator" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="deriving-the-expression-of-the-ols-estimator">
 <span class="header-section-number">2.2</span> Deriving the Expression of the OLS Estimator</h2>
-<p>See Section <a href="Ch3_MatrixAlgebra.html" class="quarto-xref"><span>Chapter 3</span></a> for a refresher on matrix algebra.</p>
+<p>See Section <a href="Ch_MatrixAlgebra.html" class="quarto-xref"><span>Chapter 3</span></a> for a refresher on matrix algebra.</p>
 <p>We derive the expression for the OLS estimator <span class="math display">\[
 \hat\beta=(\hat\beta_0,\dots,\hat\beta_p)^{\top}\in\mathbb{R}^{p+1}
 \]</span> as the vector-valued minimizing argument of the sum of squared residuals, <span class="math display">\[
@@ -881,7 +881,7 @@ X^{\top} X\hat{\beta}
 <span><span class="va">plot3d</span><span class="op">$</span><span class="fu">plane3d</span><span class="op">(</span><span class="va">lmobj</span>, lty.box <span class="op">=</span> <span class="st">"solid"</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html">gray</a></span><span class="op">(</span><span class="fl">.5</span><span class="op">)</span>, draw_polygon<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1997,7 +1997,7 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lmobj_2</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2048,7 +2048,7 @@ Var(\epsilon_i|X_i) = \sigma^2_i,\quad i=1,\dots,n.
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lmobj_3</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2129,7 +2129,7 @@ H=X(X^{\top}X)^{-1}X^{\top}.
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">Credit</span><span class="op">$</span><span class="va">Rating</span>, x <span class="op">=</span> <span class="va">Credit</span><span class="op">$</span><span class="va">Limit</span>, main <span class="op">=</span> <span class="st">"Strong Collinearity"</span>, ylab <span class="op">=</span> <span class="st">"Rating"</span>, xlab <span class="op">=</span> <span class="st">"Limit"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2415,7 +2415,6 @@ The predicted value plus prediction interval:
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2439,7 +2438,6 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 
 
-
 -->
 <p><strong>8 b)</strong> Plot the response and the predictor. Use the <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function to display the least squares regression line.</p>
 <p><strong>Answer:</strong></p>
@@ -2451,7 +2449,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <span>       pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="cn">NA</span><span class="op">)</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2463,7 +2461,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lmObj_1</span>, col<span class="op">=</span><span class="st">'blue'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2484,7 +2482,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">Auto</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2567,7 +2565,7 @@ F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fit.lm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2681,7 +2679,7 @@ F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fit.lm2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2722,7 +2720,7 @@ F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fit.lm3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2883,7 +2881,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2895,35 +2893,35 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">lm.fit</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk10-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk10-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, pch <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk10-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, pch <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk10-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2934,7 +2932,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2944,14 +2942,14 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk12-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk12-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2962,7 +2960,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3178,7 +3176,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lm.fit2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch4_LinearRegression_files/figure-html/chunk22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3352,6 +3350,134 @@ Medium    0      1</code></pre>
 </div>
 </div>
 </section></section><section id="references" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<!-- 
+## Assignment
+
+Consider the following data generating process: 
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+## A Function to simulate data from a simple linear regression model
+myDataGenerator <- function(){
+  
+  n      <- 50                                    # sample size
+  beta_0 <- 0.1                                   # intercept parameter
+  beta_1 <- 5                                     # slope parameter
+  X      <- runif(n, min = -2, max = 2)           # predictor
+  error  <- rnorm(n, mean = 0, sd = (5 + abs(X))) # heteroskedastic error term
+  Y      <- beta_0 + beta_1 * X + error           # generate Y 
+  
+  ## return realization of the random sample
+  return(data.frame("Y" = Y, "X" = X))
+}
+```
+:::
+
+
+
+
+Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
+$$
+((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
+$$
+as defined by the data generating process specified in the function-body of `myDataGenerator()`
+
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+data_sim    <- myDataGenerator()
+
+head(data_sim)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+           Y           X
+1  -2.083072 -1.05464044
+2   7.949106  0.30174268
+3  -5.751286 -0.07096835
+4  -4.556137  0.27741075
+5  -6.019922 -1.42339074
+6 -10.144683 -1.41716495
+```
+
+
+:::
+:::
+
+
+
+
+
+For a given data generating process (as, for instance, defined in `myDataGenerator()`), we can approximate the bias of the OLS estimator by 
+$$
+\widehat{\operatorname{Bias}}(\hat\beta) = \widehat{E}(\hat\beta) - \beta, 
+$$
+where 
+$$
+\begin{align*}
+\widehat{E}(\hat\beta) 
+& = \frac{1}{B}\sum_{j=1}^B \hat\beta_{b}\\[2ex] 
+& = \frac{1}{B}\sum_{j=1}^B \begin{pmatrix}\hat\beta_{0,b}\\\hat\beta_{1,b}\end{pmatrix}\\[2ex]
+& = \begin{pmatrix}\frac{1}{B}\sum_{j=1}^B \hat\beta_{0,b}\\ \frac{1}{B}\sum_{j=1}^B \hat\beta_{1,b}\end{pmatrix}
+\end{align*} 
+$$
+denotes the sample mean across $B$-many simulated realizations 
+$$
+\hat\beta_1,\hat\beta_2,\dots,\hat\beta_B 
+$$
+of the OLS estimator $\hat\beta,$ and where $\beta$ denotes the true parameter vector; i.e., here 
+$$
+\beta
+= \begin{pmatrix}\beta_{0}\\ \beta_{1}\end{pmatrix} 
+= \begin{pmatrix}0.1\\ 5\end{pmatrix}. 
+$$
+
+By the law of large numbers, the approximation 
+$$
+\widehat{\operatorname{Bias}}(\hat\beta) \approx \operatorname{Bias}(\hat\beta) 
+$$
+becomes arbitrarily precise as $B\to\infty.$ Setting, for instance, $B=100000$ typically guarantees a very good approximation. 
+
+
+#### **Assignment Task Nr. 1 (Bias of the OLS Estimator):** {-}
+
+1. Use the above given data generating process to generate $B=100,000$ OLS estimates of the true (usually unknown) parameter vector $\beta^{\top}=(\beta_0,\beta_1).$ Use two boxplot (one for the estimates of $\beta_0$ and another for those of $\beta_1$) to visualize the estimation results.  
+2. Check the bias of the OLS estimator for the above given data generating process using the above described (Monte Carlo) simulation approach. 
+3. Based on your simulation results, can you state that the OLS estimatior is *generally* biased/unbiased? 
+
+
+#### **Assignment Task Nr. 2 (Coverage Probability of Confidence Intervals):** {-}
+
+1. Use the above given data generating process to generate $B=100,000$ realizations 
+$$
+\operatorname{CI}^{1-\alpha}_{\beta_1,1},\operatorname{CI}^{1-\alpha}_{\beta_1,2},\dots,\operatorname{CI}^{1-\alpha}_{\beta_1,B}
+$$
+of the $(1-\alpha)\cdot 100 \%$ confidence interval $\operatorname{CI}^{1-\alpha}_{\beta_1}$ for $\beta_1.$ Set $\alpha=0.05.$ 
+2. Approximate the true coverage probability using the empirical coverage probability across all $B$ simulated confidence interals: 
+$$
+P(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1})\approx \frac{1}{B}\sum_{j=1}^B 1_{\left(\beta_1^{(H_0)} \in \operatorname{CI}^{1-\alpha}_{\beta_1,j}\right)},
+$$
+where $1_{(\text{TRUE})}=1$ and $1_{(\text{FALSE})}=0.$  
+Consider the following two cases: 
+      a. The null-hypothesis is true, i.e. $\beta_1^{(H_0)} = 5 = \beta_1.$
+      b. The null-hypothesis is false with $\beta_1^{(H_0)} = 0 \neq \beta_1.$
+
+Note: By the law of large numbers, the above approximation becomes arbitrarily precise as $B\to\infty.$ Thus, setting, for instance, $B=100,000$ typically guarantees a very good approximation. 
+
+
+**Link to your personal assignment repository:**</br>
+[https://classroom.github.com/a/GYoOx4tD](https://classroom.github.com/a/GYoOx4tD) 
+
+-->
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -3932,12 +4058,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./Ch1_Intro2R.html" class="pagination-link" aria-label="`R`-Lab: Introduction to `R`">
+      <a href="./Ch_Intro2R.html" class="pagination-link" aria-label="`R`-Lab: Introduction to `R`">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code>-Lab: Introduction to <code>R</code></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch3_MatrixAlgebra.html" class="pagination-link" aria-label="Matrix Algebra">
+      <a href="./Ch_MatrixAlgebra.html" class="pagination-link" aria-label="Matrix Algebra">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Matrix Algebra</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

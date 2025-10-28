@@ -13,10 +13,10 @@ book:
   search: true
   chapters:
     - index.qmd
-    - Ch1_Intro2R.qmd
-    #- Ch2_StatLearning.qmd      # Comment in/out solutions of exercises
-    - Ch4_LinearRegression.qmd  # Comment in/out solutions of exercises
-    - Ch3_MatrixAlgebra.qmd     # Comment in/out solutions of exercises
+    - Ch_Intro2R.qmd      
+    - Ch_LinearRegression.qmd 
+    - Ch_MatrixAlgebra.qmd 
+    # - Ch_NonParamRegression.qmd combine with Ch2_StatLearning.qmd
     - Ch5_Classification.qmd    # Comment in/out solutions of exercises
     - Ch6_ResamplingMethods.qmd # Comment in/out solutions of exercises
     #- Ch7_LinModSelectRegul.qmd # Comment in/out solutions of exercises
