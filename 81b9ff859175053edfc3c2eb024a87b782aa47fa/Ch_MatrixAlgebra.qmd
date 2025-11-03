@@ -454,33 +454,41 @@ $$
 
 ### Linear Combination
 
-Let $x_1, \ldots, x_n$ be vectors of the same
-dimension, and let $\lambda_1, \ldots, \lambda_n$ be scalars. The vector
+Let $x_1, \ldots, x_m$ be column vectors of dimension $k,$ and let $\lambda_1, \ldots, \lambda_m$ be scalars. The vector
 $$
-\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n 
+\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_m x_m 
 $$
 is called **linear combination** of
-$x_1, \ldots, x_n$. 
+$x_1, \ldots, x_m$. 
 
-A linear combination of vectors $x_1, \ldots, x_n$ can also be written as a matrix-vector product. Let $X =\begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix}$
-be the matrix with columns $x_1, \ldots, x_n$,
-and let $\lambda = (\lambda_1, \ldots, \lambda_n)^{\top}$. Then,
+A linear combination of vectors $x_1, \ldots, x_m$ can also be written as a matrix-vector product. Let $X =\begin{pmatrix} x_1 & \ldots & x_m \end{pmatrix}$
+be the $(k\times m)$ matrix with columns $x_1, \ldots, x_m$,
+and let $\lambda = (\lambda_1, \ldots, \lambda_m)^{\top}$. Then,
 $$
-\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = X \lambda.
+\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = \underset{(k\times m)}{X}\;\underset{(m\times 1)}{\lambda}.
 $$
-The vectors $x_1, \ldots, x_n$ are called
-**linearly dependent** if at least one can be written as a linear
-combination of the others. That is, there exists a nonzero vector
-$\lambda$ with 
+
+
+#### **Linearly Dependent** {-}
+
+The vectors $x_1, \ldots, x_m$ are called
+**linearly dependent** if at least one of them can be written as a linear combination of the others. That is, if there exists a nonzero vector $\lambda\neq 0$ such that 
 $$
-X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n = 0.
+X \lambda = \lambda_1 x_1 + \ldots + \lambda_m x_m = 0.
 $$ 
-The vectors $x_1, \ldots, x_n$ are called
+
+#### **Linearly Independent** {-}
+
+The vectors $x_1, \ldots, x_m$ are called
 **linearly independent** if 
 $$
-X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n \neq 0
+X \lambda = \lambda_1 x_1 + \ldots + \lambda_m x_m \neq 0
 $$ 
 for all nonzero vectors $\lambda$.
+
+::: {.callout-tip appearance="minimal"}
+
+## Checking for Linear (In-)Dependency 
 
 To check whether the vectors are linearly independent, we can solve the system of equations 
 $$
@@ -491,7 +499,7 @@ by [Gaussian elimination](https://math.libretexts.org/Bookshelves/Algebra/Algebr
 * If $\lambda = 0$ is the only solution, then the columns of $X$ are linearly
 independent. 
 * If there is at least one solution $\lambda$ with $\lambda \neq 0$, then the columns of $X$ are linearly dependent.
-
+:::
 
 ### Column Rank
 
@@ -966,7 +974,7 @@ $\beta^{\top}$:
     &= \Bigg[ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_1} \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_2} \ \ldots \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_n} \Bigg]
 \end{align*}
 ```
-The Hessian of a sandwich form function is 
+The Hessian of a sandwich form function $f(\beta) = \beta^{\top} A\beta$ is 
 $$
   \frac{\partial^2 ( \beta^{\top} A \beta)}{\partial \beta \partial \beta^{\top}}  = A + A^{\top}.
 $$
@@ -974,18 +982,18 @@ $$
 ### Optimization
 
 Recall the *first-order* (necessary) and *second-order* (sufficient)
-conditions for optimum (maximum or minimum) in the univariate case:
+conditions for an optimum (maximum or minimum) in the univariate case:
 
 -   **First-order condition**: the first derivative evaluated at the
     optimum is zero.
 -   **Second-order condition**: the second derivative at the optimum is
     negative for a maximum and positive for a minimum.
 
-Similarly, we formulate first and second-order conditions for a function
-$f(\beta)$. The **first-order condition** for an optimum
+Similarly, we formulate first and second-order conditions for a multivariate function
+$f(\beta).$ The **first-order condition** for an optimum
 (maximum or minimum) at $b$ is 
 $$
-\frac{\partial f}{\partial{\beta}}(b)  = 0.
+\frac{\partial f}{\partial{\beta}}(b) = \begin{pmatrix}\frac{\partial f}{\partial \beta_1}(b) \\ \vdots \\ \frac{\partial f}{\partial \beta_k}(b) \end{pmatrix} = 0.
 $$ 
 The **second-order condition** is 
 $$
@@ -995,7 +1003,9 @@ $$
 \end{align*} 
 $$
 Recall that, in the context of matrices, the notation
-"$> 0$" means positive definite, and "$< 0$" means negative definite.
+
+* "$> 0$" means positive definite, and 
+* "$< 0$" means negative definite.
 
 
 
@@ -1196,14 +1206,11 @@ iii) $\|A\| = 0$ implies $A = 0$
      (definiteness)
 
 
-
-
-
 ## Exercises
+
+* [Exercises for Chapter 3](https://www.dropbox.com/scl/fi/2h6d4ipykierblts2aj86/Ch3_Exercises1.pdf?rlkey=w8g3v3c5hpo1tep4o0gzi5jwn&st=1n0vokwd&dl=0)
+
 <!-- 
-* [Exercises for Chapter 3](https://www.dropbox.com/scl/fi/ek72zs19dgw2d3pvmm5hj/Ch3_Exercises1.pdf?rlkey=340htq6s4z5vd0p1cz93tnrq1&dl=0)
-
-
-* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/ectho31ocqag19izefvi8/Ch3_Exercises_with_Solutions1.pdf?rlkey=9q9g90bx3jle1f4y61vhoormc&dl=0) 
+* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/u5kdosakfewp32u81lc8s/Ch3_Exercises_with_Solutions1.pdf?rlkey=f9fqjtgf02v8qe14po4gagj2t&st=ejle81wl&dl=0) 
  -->
 

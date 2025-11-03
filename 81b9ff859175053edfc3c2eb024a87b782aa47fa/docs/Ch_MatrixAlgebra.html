@@ -696,23 +696,40 @@ Matrix Multiplication
 <span class="header-section-number">3.3</span> Rank and Inverse</h2>
 <section id="linear-combination" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="linear-combination">
 <span class="header-section-number">3.3.1</span> Linear Combination</h3>
-<p>Let <span class="math inline">\(x_1, \ldots, x_n\)</span> be vectors of the same dimension, and let <span class="math inline">\(\lambda_1, \ldots, \lambda_n\)</span> be scalars. The vector <span class="math display">\[
-\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n
-\]</span> is called <strong>linear combination</strong> of <span class="math inline">\(x_1, \ldots, x_n\)</span>.</p>
-<p>A linear combination of vectors <span class="math inline">\(x_1, \ldots, x_n\)</span> can also be written as a matrix-vector product. Let <span class="math inline">\(X =\begin{pmatrix} x_1 &amp; \ldots &amp; x_n \end{pmatrix}\)</span> be the matrix with columns <span class="math inline">\(x_1, \ldots, x_n\)</span>, and let <span class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_n)^{\top}\)</span>. Then, <span class="math display">\[
-\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = X \lambda.
-\]</span> The vectors <span class="math inline">\(x_1, \ldots, x_n\)</span> are called <strong>linearly dependent</strong> if at least one can be written as a linear combination of the others. That is, there exists a nonzero vector <span class="math inline">\(\lambda\)</span> with <span class="math display">\[
-X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n = 0.
-\]</span> The vectors <span class="math inline">\(x_1, \ldots, x_n\)</span> are called <strong>linearly independent</strong> if <span class="math display">\[
-X \lambda = \lambda_1 x_1 + \ldots + \lambda_n x_n \neq 0
+<p>Let <span class="math inline">\(x_1, \ldots, x_m\)</span> be column vectors of dimension <span class="math inline">\(k,\)</span> and let <span class="math inline">\(\lambda_1, \ldots, \lambda_m\)</span> be scalars. The vector <span class="math display">\[
+\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_m x_m
+\]</span> is called <strong>linear combination</strong> of <span class="math inline">\(x_1, \ldots, x_m\)</span>.</p>
+<p>A linear combination of vectors <span class="math inline">\(x_1, \ldots, x_m\)</span> can also be written as a matrix-vector product. Let <span class="math inline">\(X =\begin{pmatrix} x_1 &amp; \ldots &amp; x_m \end{pmatrix}\)</span> be the <span class="math inline">\((k\times m)\)</span> matrix with columns <span class="math inline">\(x_1, \ldots, x_m\)</span>, and let <span class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_m)^{\top}\)</span>. Then, <span class="math display">\[
+\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = \underset{(k\times m)}{X}\;\underset{(m\times 1)}{\lambda}.
+\]</span></p>
+<section id="linearly-dependent" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="linearly-dependent"><strong>Linearly Dependent</strong></h4>
+<p>The vectors <span class="math inline">\(x_1, \ldots, x_m\)</span> are called <strong>linearly dependent</strong> if at least one of them can be written as a linear combination of the others. That is, if there exists a nonzero vector <span class="math inline">\(\lambda\neq 0\)</span> such that <span class="math display">\[
+X \lambda = \lambda_1 x_1 + \ldots + \lambda_m x_m = 0.
+\]</span></p>
+</section><section id="linearly-independent" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="linearly-independent"><strong>Linearly Independent</strong></h4>
+<p>The vectors <span class="math inline">\(x_1, \ldots, x_m\)</span> are called <strong>linearly independent</strong> if <span class="math display">\[
+X \lambda = \lambda_1 x_1 + \ldots + \lambda_m x_m \neq 0
 \]</span> for all nonzero vectors <span class="math inline">\(\lambda\)</span>.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Checking for Linear (In-)Dependency
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>To check whether the vectors are linearly independent, we can solve the system of equations <span class="math display">\[
 X \lambda = 0
 \]</span> by <a href="https://math.libretexts.org/Bookshelves/Algebra/Algebra_and_Trigonometry_1e_(OpenStax)/11%3A_Systems_of_Equations_and_Inequalities/11.06%3A_Solving_Systems_with_Gaussian_Elimination">Gaussian elimination</a>.</p>
 <ul>
 <li>If <span class="math inline">\(\lambda = 0\)</span> is the only solution, then the columns of <span class="math inline">\(X\)</span> are linearly independent.</li>
 <li>If there is at least one solution <span class="math inline">\(\lambda\)</span> with <span class="math inline">\(\lambda \neq 0\)</span>, then the columns of <span class="math inline">\(X\)</span> are linearly dependent.</li>
-</ul></section><section id="column-rank" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="column-rank">
+</ul>
+</div>
+</div>
+</section></section><section id="column-rank" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="column-rank">
 <span class="header-section-number">3.3.2</span> Column Rank</h3>
 <p>The <strong>rank</strong> of a <span class="math inline">\((k \times m)\)</span> matrix <span class="math inline">\(A = \begin{pmatrix} a_1 &amp; \ldots &amp; a_m \end{pmatrix}\)</span>, written as <span class="math display">\[
 \mathop{\mathrm{rank}}(A),
@@ -1087,27 +1104,30 @@ f(\beta) = \beta^{\top} A\beta.
     &amp;= \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta^{\top}} \\
     &amp;= \Bigg[ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_1} \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_2} \ \ldots \ \frac{\partial(\partial f(\beta)/\partial \beta)}{\partial \beta_n} \Bigg]
 \end{align*}\]</span>
-<p>The Hessian of a sandwich form function is <span class="math display">\[
+<p>The Hessian of a sandwich form function <span class="math inline">\(f(\beta) = \beta^{\top} A\beta\)</span> is <span class="math display">\[
   \frac{\partial^2 ( \beta^{\top} A \beta)}{\partial \beta \partial \beta^{\top}}  = A + A^{\top}.
 \]</span></p>
 </section><section id="optimization" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="optimization">
 <span class="header-section-number">3.5.3</span> Optimization</h3>
-<p>Recall the <em>first-order</em> (necessary) and <em>second-order</em> (sufficient) conditions for optimum (maximum or minimum) in the univariate case:</p>
+<p>Recall the <em>first-order</em> (necessary) and <em>second-order</em> (sufficient) conditions for an optimum (maximum or minimum) in the univariate case:</p>
 <ul>
 <li>
 <strong>First-order condition</strong>: the first derivative evaluated at the optimum is zero.</li>
 <li>
 <strong>Second-order condition</strong>: the second derivative at the optimum is negative for a maximum and positive for a minimum.</li>
 </ul>
-<p>Similarly, we formulate first and second-order conditions for a function <span class="math inline">\(f(\beta)\)</span>. The <strong>first-order condition</strong> for an optimum (maximum or minimum) at <span class="math inline">\(b\)</span> is <span class="math display">\[
-\frac{\partial f}{\partial{\beta}}(b)  = 0.
+<p>Similarly, we formulate first and second-order conditions for a multivariate function <span class="math inline">\(f(\beta).\)</span> The <strong>first-order condition</strong> for an optimum (maximum or minimum) at <span class="math inline">\(b\)</span> is <span class="math display">\[
+\frac{\partial f}{\partial{\beta}}(b) = \begin{pmatrix}\frac{\partial f}{\partial \beta_1}(b) \\ \vdots \\ \frac{\partial f}{\partial \beta_k}(b) \end{pmatrix} = 0.
 \]</span> The <strong>second-order condition</strong> is <span class="math display">\[
 \begin{align*}
   &amp;\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b) &gt; 0 \quad \text{for a minimum at} \ b, \\
   &amp;\frac{\partial^2 f}{\partial{\beta }\partial {\beta}^{\top}}(b) &lt; 0 \quad \text{for a maximum at} \ b.
 \end{align*}
-\]</span> Recall that, in the context of matrices, the notation “<span class="math inline">\(&gt; 0\)</span>” means positive definite, and “<span class="math inline">\(&lt; 0\)</span>” means negative definite.</p>
-</section></section><section id="advanced-concepts" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="advanced-concepts">
+\]</span> Recall that, in the context of matrices, the notation</p>
+<ul>
+<li>“<span class="math inline">\(&gt; 0\)</span>” means positive definite, and</li>
+<li>“<span class="math inline">\(&lt; 0\)</span>” means negative definite.</li>
+</ul></section></section><section id="advanced-concepts" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="advanced-concepts">
 <span class="header-section-number">3.6</span> Advanced Concepts</h2>
 <section id="eigendecomposition" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="eigendecomposition">
 <span class="header-section-number">3.6.1</span> Eigendecomposition</h3>
@@ -1265,13 +1285,12 @@ A \otimes B = \begin{pmatrix} a_{11}B &amp; \ldots &amp; a_{1m}B \\ \vdots &amp;
 <span class="math inline">\(\|A\| = 0\)</span> implies <span class="math inline">\(A = 0\)</span> (definiteness)</li>
 </ol></section></section><section id="exercises" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">3.7</span> Exercises</h2>
+<ul>
+<li><a href="https://www.dropbox.com/scl/fi/2h6d4ipykierblts2aj86/Ch3_Exercises1.pdf?rlkey=w8g3v3c5hpo1tep4o0gzi5jwn&amp;st=1n0vokwd&amp;dl=0">Exercises for Chapter 3</a></li>
+</ul>
 <!-- 
-* [Exercises for Chapter 3](https://www.dropbox.com/scl/fi/ek72zs19dgw2d3pvmm5hj/Ch3_Exercises1.pdf?rlkey=340htq6s4z5vd0p1cz93tnrq1&dl=0)
-
-
-* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/ectho31ocqag19izefvi8/Ch3_Exercises_with_Solutions1.pdf?rlkey=9q9g90bx3jle1f4y61vhoormc&dl=0) 
+* [Exercises for Chapter 3 with Solutions](https://www.dropbox.com/scl/fi/u5kdosakfewp32u81lc8s/Ch3_Exercises_with_Solutions1.pdf?rlkey=f9fqjtgf02v8qe14po4gagj2t&st=ejle81wl&dl=0) 
  -->
-
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
