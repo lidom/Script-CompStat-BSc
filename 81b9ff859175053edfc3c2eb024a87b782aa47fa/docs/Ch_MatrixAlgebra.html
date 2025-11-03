@@ -700,7 +700,7 @@ Matrix Multiplication
 \lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_m x_m
 \]</span> is called <strong>linear combination</strong> of <span class="math inline">\(x_1, \ldots, x_m\)</span>.</p>
 <p>A linear combination of vectors <span class="math inline">\(x_1, \ldots, x_m\)</span> can also be written as a matrix-vector product. Let <span class="math inline">\(X =\begin{pmatrix} x_1 &amp; \ldots &amp; x_m \end{pmatrix}\)</span> be the <span class="math inline">\((k\times m)\)</span> matrix with columns <span class="math inline">\(x_1, \ldots, x_m\)</span>, and let <span class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_m)^{\top}\)</span>. Then, <span class="math display">\[
-\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = \underset{(k\times m)}{X}\;\underset{(m\times 1)}{\lambda}.
+\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_m x_m = \underset{(k\times m)}{X}\;\underset{(m\times 1)}{\lambda}.
 \]</span></p>
 <section id="linearly-dependent" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="linearly-dependent"><strong>Linearly Dependent</strong></h4>
 <p>The vectors <span class="math inline">\(x_1, \ldots, x_m\)</span> are called <strong>linearly dependent</strong> if at least one of them can be written as a linear combination of the others. That is, if there exists a nonzero vector <span class="math inline">\(\lambda\neq 0\)</span> such that <span class="math display">\[
@@ -735,10 +735,10 @@ X \lambda = 0
 \mathop{\mathrm{rank}}(A),
 \]</span> is the number of linearly independent columns <span class="math inline">\(a_i\)</span>.</p>
 <p>We say that a <span class="math inline">\((k \times m)\)</span> matrix <span class="math inline">\(A\)</span> has <strong>full column rank</strong> if <span class="math display">\[
-\mathop{\mathrm{rank}}(X) = m.
+\mathop{\mathrm{rank}}(A) = m.
 \]</span></p>
 <p>The identity matrix <span class="math inline">\(I_k,\)</span> for instance, has full column rank; i.e., <span class="math display">\[
-\mathop{\mathrm{rank}}(I_n) = k.
+\mathop{\mathrm{rank}}(I_k) = k.
 \]</span></p>
 <p>As another example, consider <span class="math display">\[
 X = \begin{pmatrix} 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 2 \end{pmatrix},

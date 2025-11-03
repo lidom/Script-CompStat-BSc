@@ -697,8 +697,14 @@ $$
 \end{align*}
 $$
 
+In `R` you can compute the OLS estimate using 
+<center>
+$\displaystyle\underset{((p+1)\times 1)}{\hat{\beta}} =$  `solve(t(X) %*% X) %*% t(X) %*% Y`
+</center>
+More conveniently, you can use the `lm()` function.
 
-The following codes computes the estimate $\hat{\beta}$ for a given dataset with $X_i\in\mathbb{R}^{p+1}$, $p=2$. 
+
+The following codes compute the estimate $\hat{\beta}$ for a given dataset with $X_i\in\mathbb{R}^{p+1}$, $p=2$. 
 
 ```{r, fig.align="center"}
 # Some given data
@@ -826,12 +832,11 @@ This motivates the definition of the so-called $R^2$ coefficient of determinatio
 $$
 \begin{eqnarray*}
 R^2 
-%&=\frac{\sum_{i=1}^n\left(\hat{Y}_i-\bar{\hat{Y}}\right)^2}{\sum_{i=1}^n\left(Y_i-\bar{Y}\right)^2}\\[2ex]
 &=1-\frac{\sum_{i=1}^ne_i^2}{\sum_{i=1}^n\left(Y_i-\bar{Y}\right)^2}\\[2ex]
 &=1-\frac{\operatorname{RSS}}{\operatorname{TSS}}
 \end{eqnarray*}
 $$
-with 
+with $\bar{Y}=n^{-1}\sum_{i=1}^nY_i,$ 
 $$
 \begin{align*}
 \operatorname{RSS}\equiv \operatorname{RSS}(\hat\beta)=\sum_{i=1}^n\left(Y_i-X_i^{\top}\hat\beta\right)^2=\sum_{i=1}^ne_i^2
@@ -840,7 +845,7 @@ $$
 and
 $$
 \begin{align*}
-\operatorname{TSS}=\sum_{i=1}^n\left(y_i-\bar{y}\right)^2.
+\operatorname{TSS}=\sum_{i=1}^n\left(Y_i-\bar{Y}\right)^2.
 \end{align*}
 $$
 

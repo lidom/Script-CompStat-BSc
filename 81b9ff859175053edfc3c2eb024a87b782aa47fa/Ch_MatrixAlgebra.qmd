@@ -465,7 +465,7 @@ A linear combination of vectors $x_1, \ldots, x_m$ can also be written as a matr
 be the $(k\times m)$ matrix with columns $x_1, \ldots, x_m$,
 and let $\lambda = (\lambda_1, \ldots, \lambda_m)^{\top}$. Then,
 $$
-\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n = \underset{(k\times m)}{X}\;\underset{(m\times 1)}{\lambda}.
+\lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_m x_m = \underset{(k\times m)}{X}\;\underset{(m\times 1)}{\lambda}.
 $$
 
 
@@ -514,13 +514,13 @@ is the number of linearly independent columns $a_i$.
 
 We say that a $(k \times m)$ matrix $A$ has **full column rank** if
 $$
-\mathop{\mathrm{rank}}(X) = m.
+\mathop{\mathrm{rank}}(A) = m.
 $$
 
 
 The identity matrix $I_k,$ for instance, has full column rank; i.e.,
 $$
-\mathop{\mathrm{rank}}(I_n) = k.
+\mathop{\mathrm{rank}}(I_k) = k.
 $$ 
 
 
