@@ -967,7 +967,7 @@ round(lm2$adj.r.squared, digits = 3) # model with X_ir
 ```
 
 
-## Assessing the Accuracy of the Coefficient Estimators $\hat{\beta}$
+## Assessing the Accuracy of the Coefficient Estimator $\hat{\beta}$
 
 
 ### Mean and Bias of $\hat{\beta}$
