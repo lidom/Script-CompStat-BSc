@@ -1225,13 +1225,17 @@ $$
 $$
 where the only unknown component is $\sigma^2=\operatorname{Var}(\epsilon_i).$ 
 
-We can estimate the homoskedastik error term variance $\sigma^2$ using the **R**esidual **S**tandard **E**rror:
+We can estimate the **homoskedastik** error term variance $\sigma^2$ using the **R**esidual **S**tandard **E**rror:
 $$
 \begin{align*}
 \hat\sigma = \operatorname{RSE}
 &=\sqrt{\frac{\operatorname{RSS}}{n-(p+1)}}\\[2ex]
 &=\sqrt{ \frac{1}{n-(p+1)} \sum_{i=1}^n e_i^2}.
 \end{align*}
+$$
+Thus
+$$
+\hat{\sigma}^2 = \operatorname{RSE}^2 = \frac{1}{n-(p+1)} \sum_{i=1}^n e_i^2.
 $$
 
 **Summing up:** 

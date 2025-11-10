@@ -1287,12 +1287,14 @@ For fixed values of `TV` and `newspaper`, spending additionally 1000 USD for `ra
 &amp;=\sigma^2\;(X^{\top}X)^{-1},
 \end{align*}
 \]</span> where the only unknown component is <span class="math inline">\(\sigma^2=\operatorname{Var}(\epsilon_i).\)</span></p>
-<p>We can estimate the homoskedastik error term variance <span class="math inline">\(\sigma^2\)</span> using the <strong>R</strong>esidual <strong>S</strong>tandard <strong>E</strong>rror: <span class="math display">\[
+<p>We can estimate the <strong>homoskedastik</strong> error term variance <span class="math inline">\(\sigma^2\)</span> using the <strong>R</strong>esidual <strong>S</strong>tandard <strong>E</strong>rror: <span class="math display">\[
 \begin{align*}
 \hat\sigma = \operatorname{RSE}
 &amp;=\sqrt{\frac{\operatorname{RSS}}{n-(p+1)}}\\[2ex]
 &amp;=\sqrt{ \frac{1}{n-(p+1)} \sum_{i=1}^n e_i^2}.
 \end{align*}
+\]</span> Thus <span class="math display">\[
+\hat{\sigma}^2 = \operatorname{RSE}^2 = \frac{1}{n-(p+1)} \sum_{i=1}^n e_i^2.
 \]</span></p>
 <p><strong>Summing up:</strong></p>
 <p>In the case of homoskedastic (and uncorrelated) error terms the standard error of <span class="math inline">\(\hat\beta_j\)</span> is <span class="math display">\[
