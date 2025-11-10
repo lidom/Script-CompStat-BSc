@@ -824,7 +824,7 @@ is the associated $(n\times n)$ **orthogonal projection matrix** that projects a
 
 
 
-## Assessing the Accuracy of the Model Fit
+## Assessing the Accuracy of the Model Fit {#sec-InSampleModelFit}
 
 The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{Y}_i=\hat{f}(X_i)$ to the data $(Y_i,X_i^{\top})$, $i=1,\dots,n$. 
 
@@ -2298,6 +2298,42 @@ $$
 **Problems (Nov. 03, 2025):**
 
 * Plot the observed $Y_i$ values against the observed $X_{i2}$ values and add the true regression function as a function of $x_2$ for fixed values of $x_1\in\{2,4,6\}$.
+
+**Problems (Nov. 10, 2025):**
+
+Look at the following code-chunk of @sec-InSampleModelFit:
+
+```{r}
+set.seed(123)
+n     <- 100                  # Sample size
+X     <- runif(n, 0, 10)      # Relevant X variable
+error <- rt(n, df = 10)*10    # True (usually unknown) error
+Y     <- 1 + 5 * X + error    # Y variable
+lm1   <- summary(lm(Y~X))     # Correct OLS regression 
+lm1$r.squared
+```
+
+So, the true (usually unknown) data generating process is
+$$
+Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\quad i=1,\dots,n
+$$
+where
+
+ * $n=100$
+ * $\beta_0=1$ and $\beta_1=5$
+ * $X_i\overset{\text{iid}}{\sim}\mathcal{U}[0,10]$ for all $i=1,\dots,n$
+ * $\epsilon_i\overset{\text{iid}}{\sim}10\cdot E$ with $E\sim t_{10}$  for all $i=1,\dots,n$
+
+**Problems:**
+
+(a) Increase the in-sample model fit, measured using $R^2=r^2_{Y,\hat{Y}}$, as high as possible by adding further predictor variables that are actually irrelevant, since they are not part of the true model. 
+
+(b) Now generate training data from the true model (sample size $n_{\text{Train}}=100$) to compute $\hat{f}_{\text{Train}}$ and generate further testing data from the true model (sample size $n_{\text{Testing}}=100$) used for computing the out-of-sample predictions
+$$
+\hat{Y}_{i,\text{Test}} = \hat{f}_{\text{Train}}(X_{i,\text{Test}}),\quad i=1,\dots,n_{\text{Test}}.
+$$ 
+Compute the out-of-sample $R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}$ when estimating the true model and when estimating the best model from part (a). What do you observe? 
+
 
 
 ## Exercises 
