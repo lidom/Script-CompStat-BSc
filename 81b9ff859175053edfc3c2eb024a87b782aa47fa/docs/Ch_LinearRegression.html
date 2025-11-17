@@ -230,7 +230,7 @@ window.Quarto = {
 </li>
   <li><a href="#deriving-the-expression-of-the-ols-estimator" id="toc-deriving-the-expression-of-the-ols-estimator" class="nav-link" data-scroll-target="#deriving-the-expression-of-the-ols-estimator"><span class="header-section-number">2.2</span> Deriving the Expression of the OLS Estimator</a></li>
   <li><a href="#fitted-values-residuals-and-projection-matrices" id="toc-fitted-values-residuals-and-projection-matrices" class="nav-link" data-scroll-target="#fitted-values-residuals-and-projection-matrices"><span class="header-section-number">2.3</span> Fitted Values, Residuals, and Projection Matrices</a></li>
-  <li><a href="#sec-InSampleModelFit" id="toc-sec-InSampleModelFit" class="nav-link" data-scroll-target="#sec-InSampleModelFit"><span class="header-section-number">2.4</span> Assessing the Accuracy of the Model Fit</a></li>
+  <li><a href="#sec-InSampleModelFit" id="toc-sec-InSampleModelFit" class="nav-link" data-scroll-target="#sec-InSampleModelFit"><span class="header-section-number">2.4</span> Assessing the (in Sample) Accuracy of the Model Fit</a></li>
   <li>
 <a href="#assessing-the-accuracy-of-the-coefficient-estimator-hatbeta" id="toc-assessing-the-accuracy-of-the-coefficient-estimator-hatbeta" class="nav-link" data-scroll-target="#assessing-the-accuracy-of-the-coefficient-estimator-hatbeta"><span class="header-section-number">2.5</span> Assessing the Accuracy of the Coefficient Estimator <span class="math inline">\(\hat{\beta}\)</span></a>
   <ul class="collapse">
@@ -966,7 +966,7 @@ P_X=X(X^{\top}X)^{-1}X^{\top}
 M_X=I_n-X(X^{\top}X)^{-1}X^{\top}=I_n-P_X
 \]</span> is the associated <span class="math inline">\((n\times n)\)</span> <strong>orthogonal projection matrix</strong> that projects any vector from <span class="math inline">\(\mathbb{R}^n\)</span> into the vector space that is orthogonal to that spanned by the column vectors of <span class="math inline">\(X.\)</span></p>
 </section></section><section id="sec-InSampleModelFit" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="sec-InSampleModelFit">
-<span class="header-section-number">2.4</span> Assessing the Accuracy of the Model Fit</h2>
+<span class="header-section-number">2.4</span> Assessing the (in Sample) Accuracy of the Model Fit</h2>
 <p>The larger the proportion of the explained variance, the better is the fit of the estimated model <span class="math inline">\(\hat{Y}_i=\hat{f}(X_i)\)</span> to the data <span class="math inline">\((Y_i,X_i^{\top})\)</span>, <span class="math inline">\(i=1,\dots,n\)</span>.</p>
 <p>This motivates the definition of the so-called <span class="math inline">\(R^2\)</span> coefficient of determination: <span class="math display">\[
 \begin{eqnarray*}
@@ -2238,7 +2238,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\quad i=1,\dots,n
 <span class="math inline">\(X_i\overset{\text{iid}}{\sim}\mathcal{U}[0,10]\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span>
 </li>
 <li>
-<span class="math inline">\(\epsilon_i\overset{\text{iid}}{\sim}10\cdot E\)</span> with <span class="math inline">\(E\sim t_{10}\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span>
+<span class="math inline">\(\epsilon_i\overset{\text{iid}}{\sim}10\cdot W\)</span> with <span class="math inline">\(W\sim t_{10}\)</span> for all <span class="math inline">\(i=1,\dots,n\)</span>
 </li>
 </ul>
 <p><strong>Problems:</strong></p>
@@ -2247,7 +2247,37 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\quad i=1,\dots,n
 <li><p>Now generate training data from the true model (sample size <span class="math inline">\(n_{\text{Train}}=100\)</span>) to compute <span class="math inline">\(\hat{f}_{\text{Train}}\)</span> and generate further testing data from the true model (sample size <span class="math inline">\(n_{\text{Testing}}=100\)</span>) used for computing the out-of-sample predictions <span class="math display">\[
 \hat{Y}_{i,\text{Test}} = \hat{f}_{\text{Train}}(X_{i,\text{Test}}),\quad i=1,\dots,n_{\text{Test}}.
 \]</span> Compute the out-of-sample <span class="math inline">\(R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}\)</span> when estimating the true model and when estimating the best model from part (a). What do you observe?</p></li>
-</ol></section><section id="exercises" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="exercises">
+</ol>
+<p><strong>Problems (Nov.&nbsp;17, 2025):</strong></p>
+<ul>
+<li>Consider the (usually unknonw) data generating process (simple linear regression model) of last week’s problem (Nov.&nbsp;10, 2025).</li>
+</ul>
+<p><strong>Estimation-Problems:</strong></p>
+<p>Generate one realization of the data generating process and …</p>
+<ol type="a">
+<li>compute the estimate <span class="math inline">\(\hat\beta=(\beta_0,\beta_1)^\top\)</span>
+</li>
+<li>compute the estimates of the standard errors <span class="math inline">\(\widehat{\operatorname{SE}}(\hat\beta_0|X)\)</span> and <span class="math inline">\(\widehat{\operatorname{SE}}(\hat\beta_1|X).\)</span>
+</li>
+</ol>
+<p><strong>Theory- and Simulation-Problems:</strong></p>
+<ol type="a">
+<li>
+<strong>Theory:</strong> What is the bias of <span class="math inline">\(\hat\beta=(\hat\beta_0,\hat\beta_1)^\top\)</span>?</li>
+<li>
+<strong>Theory:</strong> What are the standard errors <span class="math inline">\(\operatorname{SE}(\hat\beta_0|X)\)</span> and <span class="math inline">\(\operatorname{SE}(\hat\beta_1|X)\)</span> of <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span>?</li>
+<li>
+<strong>Simulation:</strong> Generate <span class="math inline">\(10000\)</span> realizations of the estimator <span class="math inline">\(\hat\beta\)</span> by repeatedly drawing independent realizations form the data generating process.</li>
+</ol>
+<ul>
+<li>What is the sample mean of these <span class="math inline">\(10000\)</span> estimates? Does this result fit to the theoretical bias result?</li>
+<li>What is the sample standard deviation of these <span class="math inline">\(10000\)</span> estimates?
+<ul>
+<li>Does this result fit to the theoretical standard error result?</li>
+<li>Does this result fit to the computed estimates <span class="math inline">\(\widehat{\operatorname{SE}}(\hat\beta_0|X)\)</span> and <span class="math inline">\(\widehat{\operatorname{SE}}(\hat\beta_1|X)\)</span>?</li>
+</ul>
+</li>
+</ul></section><section id="exercises" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">2.9</span> Exercises</h2>
 <p>Here you’ll find the exercise sheet for this chapter.</p>
 <!-- 
@@ -2471,11 +2501,6 @@ The predicted value plus prediction interval:
 
 
 
-
-
-
-
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2496,11 +2521,6 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 :::
 :::
-
-
-
-
-
 
 
 
@@ -3426,11 +3446,6 @@ Consider the following data generating process:
 
 
 
-
-
-
-
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -3454,21 +3469,11 @@ myDataGenerator <- function(){
 
 
 
-
-
-
-
-
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
 ((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
-
-
-
-
-
 
 
 
@@ -3497,11 +3502,6 @@ head(data_sim)
 
 :::
 :::
-
-
-
-
-
 
 
 

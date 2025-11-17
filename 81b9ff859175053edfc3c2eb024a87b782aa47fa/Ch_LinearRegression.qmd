@@ -2341,13 +2341,23 @@ Compute the out-of-sample $R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}$ when estimat
 * Consider the (usually unknonw) data generating process (simple linear regression model) of last week's problem (Nov. 10, 2025). 
 
 
-**Problems:**
+**Estimation-Problems:**
 
-(a) What is the bias of $\hat\beta=(\hat\beta_0,\hat\beta_1)^\top$?
-(b) What are the standard errors $\operatorname{SE}(\hat\beta_0|X)$ and $\operatorname{SE}(\hat\beta_1|X)$?
-(c) Generate $10000$ realizations of the estimator $\hat\beta$ by repeatedly drawing independent realizations form the data generating process. 
+Generate one realization of the data generating process and ...
+
+(a) compute the estimate $\hat\beta=(\beta_0,\beta_1)^\top$
+(a) compute the estimates of the standard errors $\widehat{\operatorname{SE}}(\hat\beta_0|X)$ and $\widehat{\operatorname{SE}}(\hat\beta_1|X).$
+
+**Theory- and Simulation-Problems:**
+
+(a) **Theory:** What is the bias of $\hat\beta=(\hat\beta_0,\hat\beta_1)^\top$?
+(b) **Theory:** What are the standard errors $\operatorname{SE}(\hat\beta_0|X)$ and $\operatorname{SE}(\hat\beta_1|X)$ of $\hat\beta_0$ and $\hat\beta_1$?
+(c) **Simulation:** Generate $10000$ realizations of the estimator $\hat\beta$ by repeatedly drawing independent realizations form the data generating process. 
+ 
    * What is the sample mean of these $10000$ estimates? Does this result fit to the theoretical bias result? 
-   * What is the sample sdandard deviation of these $10000$ estimates? Does this result fit to the theoretical standard error result? 
+   * What is the sample standard deviation of these $10000$ estimates? 
+      * Does this result fit to the theoretical standard error result? 
+      * Does this result fit to the computed estimates $\widehat{\operatorname{SE}}(\hat\beta_0|X)$ and $\widehat{\operatorname{SE}}(\hat\beta_1|X)$?
 
 
 
