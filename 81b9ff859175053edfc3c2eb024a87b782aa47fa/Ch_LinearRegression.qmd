@@ -824,7 +824,7 @@ is the associated $(n\times n)$ **orthogonal projection matrix** that projects a
 
 
 
-## Assessing the Accuracy of the Model Fit {#sec-InSampleModelFit}
+## Assessing the (in Sample) Accuracy of the Model Fit {#sec-InSampleModelFit}
 
 The larger the proportion of the explained variance, the better is the fit of the estimated model $\hat{Y}_i=\hat{f}(X_i)$ to the data $(Y_i,X_i^{\top})$, $i=1,\dots,n$. 
 
@@ -2322,7 +2322,7 @@ where
  * $n=100$
  * $\beta_0=1$ and $\beta_1=5$
  * $X_i\overset{\text{iid}}{\sim}\mathcal{U}[0,10]$ for all $i=1,\dots,n$
- * $\epsilon_i\overset{\text{iid}}{\sim}10\cdot E$ with $E\sim t_{10}$  for all $i=1,\dots,n$
+ * $\epsilon_i\overset{\text{iid}}{\sim}10\cdot W$ with $W\sim t_{10}$  for all $i=1,\dots,n$
 
 **Problems:**
 
@@ -2333,6 +2333,23 @@ $$
 \hat{Y}_{i,\text{Test}} = \hat{f}_{\text{Train}}(X_{i,\text{Test}}),\quad i=1,\dots,n_{\text{Test}}.
 $$ 
 Compute the out-of-sample $R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}$ when estimating the true model and when estimating the best model from part (a). What do you observe? 
+
+
+**Problems (Nov. 17, 2025):**
+
+
+* Consider the (usually unknonw) data generating process (simple linear regression model) of last week's problem (Nov. 10, 2025). 
+
+
+**Problems:**
+
+(a) What is the bias of $\hat\beta=(\hat\beta_0,\hat\beta_1)^\top$?
+(b) What are the standard errors $\operatorname{SE}(\hat\beta_0|X)$ and $\operatorname{SE}(\hat\beta_1|X)$?
+(c) Generate $10000$ realizations of the estimator $\hat\beta$ by repeatedly drawing independent realizations form the data generating process. 
+   * What is the sample mean of these $10000$ estimates? Does this result fit to the theoretical bias result? 
+   * What is the sample sdandard deviation of these $10000$ estimates? Does this result fit to the theoretical standard error result? 
+
+
 
 
 

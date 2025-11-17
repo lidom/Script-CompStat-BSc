@@ -2471,6 +2471,11 @@ The predicted value plus prediction interval:
 
 
 
+
+
+
+
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2491,6 +2496,11 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 :::
 :::
+
+
+
+
+
 
 
 
@@ -3416,6 +3426,11 @@ Consider the following data generating process:
 
 
 
+
+
+
+
+
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -3439,11 +3454,21 @@ myDataGenerator <- function(){
 
 
 
+
+
+
+
+
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
 ((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
+
+
+
+
+
 
 
 
@@ -3472,6 +3497,11 @@ head(data_sim)
 
 :::
 :::
+
+
+
+
+
 
 
 
