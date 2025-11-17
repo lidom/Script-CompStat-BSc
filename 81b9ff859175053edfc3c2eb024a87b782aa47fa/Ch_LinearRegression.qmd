@@ -2345,7 +2345,7 @@ Compute the out-of-sample $R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}$ when estimat
 
 Generate one realization of the data generating process and ...
 
-(a) compute the estimate $\hat\beta=(\beta_0,\beta_1)^\top$
+(a) compute the estimate $\hat\beta=(\hat\beta_0,\hat\beta_1)^\top$
 (a) compute the estimates of the standard errors $\widehat{\operatorname{SE}}(\hat\beta_0|X)$ and $\widehat{\operatorname{SE}}(\hat\beta_1|X).$
 
 **Theory- and Simulation-Problems:**
