@@ -1602,9 +1602,23 @@ H_1:&amp;\;\beta_j\neq \beta^{(H_0)}_{j}
 <p>The <strong>random</strong> <span class="math inline">\(t\)</span>-test statistic is given by <span class="math display">\[
 T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}
 \]</span></p>
-<p>Under the null-hypothesis, <span class="math inline">\(\beta_j=\beta^{(H_0)}_{j},\)</span> the <span class="math inline">\(t\)</span>-test statistic is <span class="math inline">\(t\)</span>-distributed with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom. <span class="math display">\[
+<p>Under the null-hypothesis, <span class="math inline">\(\beta_j=\beta^{(H_0)}_{j},\)</span> the <span class="math inline">\(t\)</span>-test statistic is <span class="math inline">\(t\)</span>-distributed with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom. <span id="eq-tTestDistr"><span class="math display">\[
 T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}\overset{H_0}{\sim} t_{n-(p+1)},
-\]</span> where <span class="math inline">\(t_{n-(p+1)}\)</span> denotes the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom.</p>
+\qquad(2.4)\]</span></span> where <span class="math inline">\(t_{n-(p+1)}\)</span> denotes the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In smallish sample sizes (e.g.&nbsp;<span class="math inline">\(n=10\)</span>), the <span class="math inline">\(t\)</span>-distribution statement in <a href="#eq-tTestDistr" class="quarto-xref">Equation&nbsp;<span>2.4</span></a> only holds, if the error terms are <strong>normal distributed</strong>.</p>
+<p>If the error terms are not normal distributed, the statement holds for large sample sizes (<span class="math inline">\(n\to\infty\)</span>) due to the central limit theorem.</p>
+</div>
+</div>
 <p>For a given realization of the training data random sample <span class="math display">\[
 ((Y_{1,obs},X_{10,obs},\dots,X_{1p,obs}),\dots,(Y_{n,obs},X_{n0,obs},\dots,X_{np,obs}))
 \]</span> we <strong>obs</strong>serve a specific realization of the <span class="math inline">\(t\)</span>-test statistic <span class="math display">\[

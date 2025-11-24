@@ -1541,8 +1541,15 @@ $$
 Under the null-hypothesis, $\beta_j=\beta^{(H_0)}_{j},$ the $t$-test statistic is $t$-distributed with $\operatorname{df}=n-(p+1)$ degrees of freedom.
 $$
 T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}\overset{H_0}{\sim} t_{n-(p+1)},
-$$
+$${#eq-tTestDistr}
 where $t_{n-(p+1)}$ denotes the $t$-distribution with $\operatorname{df}=n-(p+1)$ degrees of freedom. 
+
+
+::: {.callout-tip}
+In smallish sample sizes (e.g. $n=10$), the $t$-distribution statement in @eq-tTestDistr only holds, if the error terms are **normal distributed**. 
+
+If the error terms are not normal distributed, the statement holds for large sample sizes ($n\to\infty$) due to the central limit theorem. 
+:::
 
 For a given realization of the training data random sample
 $$
