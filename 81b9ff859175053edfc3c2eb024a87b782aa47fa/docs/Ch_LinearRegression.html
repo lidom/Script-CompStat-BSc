@@ -1606,7 +1606,7 @@ T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j
 T=\frac{\hat\beta_j - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)}\overset{H_0}{\sim} t_{n-(p+1)},
 \]</span> where <span class="math inline">\(t_{n-(p+1)}\)</span> denotes the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\operatorname{df}=n-(p+1)\)</span> degrees of freedom.</p>
 <p>For a given realization of the training data random sample <span class="math display">\[
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((Y_{1,obs},X_{10,obs},\dots,X_{1p,obs}),\dots,(Y_{n,obs},X_{n0,obs},\dots,X_{np,obs}))
 \]</span> we <strong>obs</strong>serve a specific realization of the <span class="math inline">\(t\)</span>-test statistic <span class="math display">\[
 T_{obs}=\frac{\hat\beta_{j,obs} - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}}
 \]</span></p>
@@ -1687,7 +1687,7 @@ E(\operatorname{RSS}/(n-p-1))&amp;=\sigma^2
 </li>
 </ul>
 <p>For a given realization of the training data random sample <span class="math display">\[
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((Y_{1,obs},X_{10,obs},\dots,X_{1p,obs}),\dots,(Y_{n,obs},X_{n0,obs},\dots,X_{np,obs}))
 \]</span> we <strong>obs</strong>serve a specific realization of the <span class="math inline">\(F\)</span>-test statistic <span class="math display">\[
 F_{obs}=\frac{(\operatorname{TSS}_{obs}-\operatorname{RSS}_{obs})/p}{\operatorname{
   RSS}_{obs}/(n-p-1)}
@@ -1709,7 +1709,8 @@ p_{obs}&lt;\alpha,
 \]</span> then we <strong>reject the null hypothesis</strong> and adopt the alternative hypothesis.</p></li>
 </ul></section></section><section id="probability-of-a-type-i-error-power-and-consistency" class="level3" data-number="2.6.5"><h3 data-number="2.6.5" class="anchored" data-anchor-id="probability-of-a-type-i-error-power-and-consistency">
 <span class="header-section-number">2.6.5</span> Probability of a Type I Error, Power and Consistency</h3>
-<p>Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the decision of</p>
+<section id="probability-of-a-type-i-error" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="probability-of-a-type-i-error">Probability of a Type I Error</h4>
+<p>Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the <strong>decision</strong> of</p>
 <ul>
 <li>not rejecting <span class="math inline">\(H_0\)</span>
 </li>
@@ -1725,7 +1726,7 @@ H_0: \beta_j = 0
 H_1: \beta_j \neq 0,
 \]</span> then we can state in a publication that variable <span class="math inline">\(X_j\)</span> has an effect.</p>
 <p>Thus, if we reject the null-hypothesis even though the null-hypothesis is true, we conduct a <strong>Type I Error</strong> and thus may falsely claim that variable <span class="math inline">\(X_j\)</span> has an effect. Such a false claim can be fatal.</p>
-<p>Therefore, a statistical hypothesis test is only valid if it is able control the probability of conducting a type I error from above by the chosen significance level; i.e.&nbsp;if <span class="math display">\[
+<p>Therefore, a statistical hypothesis test is only valid if it is able control the <strong>probability of conducting a type I error</strong> from above by the chosen significance level; i.e.&nbsp;if <span class="math display">\[
 \underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
 \]</span> where <span class="math inline">\(\alpha\)</span> is some small value like <span class="math inline">\(\alpha = 0.05\)</span> or <span class="math inline">\(\alpha = 0.01.\)</span> I.e., in <span class="math inline">\(100\)</span> resamples we expect to see at most <span class="math inline">\(\alpha\cdot 100\)</span> false rejections of <span class="math inline">\(H_0.\)</span></p>
 <p>By choosing a small significance level like <span class="math inline">\(\alpha = 0.05\)</span> or <span class="math inline">\(\alpha = 0.01,\)</span> we make sure that we can be quite “sure” that we do not falsely reject <span class="math inline">\(H_0.\)</span></p>
@@ -1747,6 +1748,7 @@ Caution
 <p>Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, simply because we cannot guarantee that the probability of a type II error (falsely not rejecting <span class="math inline">\(H_0,\)</span> when <span class="math inline">\(H_1\)</span> is true) is sufficiently small.</p>
 </div>
 </div>
+</section><section id="statistical-power-and-consistency" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="statistical-power-and-consistency">Statistical Power and Consistency</h4>
 <p>Under the alternative, i.e., if for instance<br><span class="math display">\[
 H_1: \beta_j \neq 0
 \]</span> is true, we want to be able to reject <span class="math inline">\(H_0\)</span> with a large as possible probability. The probability of rejecting a false null-hypothesis is called <strong>Power</strong> <span class="math display">\[
@@ -1757,7 +1759,7 @@ H_1: \beta_j \neq 0
 \underbrace{P(\text{reject }H_0 \;|\; H_1\text{ is true})}_{\text{Power}} \to 1\quad\text{as}\quad n \to \infty
 \]</span> for each given violation of the null-hypothesis <span class="math inline">\(|\beta_j - 0|&gt;0.\)</span></p>
 <p>Testing procedures that fulfill the latter property are called <strong>consistent.</strong></p>
-</section></section><section id="other-considerations-in-the-regression-model" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="other-considerations-in-the-regression-model">
+</section></section></section><section id="other-considerations-in-the-regression-model" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="other-considerations-in-the-regression-model">
 <span class="header-section-number">2.7</span> Other Considerations in the Regression Model</h2>
 <section id="qualitative-predictors" class="level3" data-number="2.7.1"><h3 data-number="2.7.1" class="anchored" data-anchor-id="qualitative-predictors">
 <span class="header-section-number">2.7.1</span> Qualitative Predictors</h3>
@@ -1774,14 +1776,14 @@ H_1: \beta_j \neq 0
 </ul>
 <section id="predictors-with-only-two-levels" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="predictors-with-only-two-levels">Predictors with Only Two Levels</h4>
 <p>If a <strong>qualitative predictor (factor)</strong> only has two levels (i.e.&nbsp;possible values), then incorporating it into a regression model is very simple: We simply create an indicator or <strong>dummy variable</strong> that takes on two possible numerical values; for instance, <span class="math display">\[
-x_{i} = \left\{
+X_{i1} = \left\{
   \begin{array}{ll}
   1&amp;\quad \text{if the $i$th person owns a house}\\
   0&amp;\quad \text{if the $i$th person does not own a house.}
   \end{array}\right.
 \]</span> Using this dummy variable as a predictor in the regression equation results in the following regression model: <span class="math display">\[\begin{align*}
-y_{i}
-&amp;=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex]
+Y_{i}
+&amp;=\beta_0 + \beta_1 X_{i1} + \epsilon_i\\[2ex]
 &amp;= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1 + \epsilon_i &amp;\quad \text{if the $i$th person owns a house}\\
@@ -1799,13 +1801,13 @@ y_{i}
 </ul>
 <p><img src="images/Tab_3_7.png" class="img-fluid"></p>
 <p>Alternatively, instead of a 0/1 coding scheme, we could create a dummy variable <span class="math display">\[
-x_{i} = \left\{
+X_{i1} = \left\{
   \begin{array}{ll}
   1 &amp;\quad \text{if the $i$th person owns a house}\\
 -1 &amp;\quad \text{if the $i$th person does not own a house.}
   \end{array}\right.
 \]</span> <span class="math display">\[\begin{align*}
-y_{i}
+Y_{i}
 &amp;=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex]
 &amp;= \left\{
   \begin{array}{ll}
@@ -1819,23 +1821,24 @@ y_{i}
 <span class="math inline">\(\beta_0\)</span>: The overall average credit card balance (ignoring the house ownership effect)</li>
 <li>
 <span class="math inline">\(\beta_1\)</span>: The average amount by which house owners and non-owners have credit card balances that are above and below the overall average, respectively.</li>
-</ul></section><section id="qualitative-predictors-with-more-than-two-levels" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="qualitative-predictors-with-more-than-two-levels">Qualitative Predictors with More than Two Levels</h4>
+</ul>
+<hr></section><section id="qualitative-predictors-with-more-than-two-levels" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="qualitative-predictors-with-more-than-two-levels">Qualitative Predictors with More than Two Levels</h4>
 <p>When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. For example, for the</p>
 <p><code>region</code> <span class="math inline">\(\in\{\)</span><code>South</code>, <code>West</code>, <code>East</code><span class="math inline">\(\}\)</span></p>
 <p>variable, we create <strong>two</strong> dummy variables. The first could be <span class="math display">\[
-x_{i1} = \left\{
+X_{i1} = \left\{
   \begin{array}{ll}
   1&amp;\quad \text{if the $i$th person is from the South}\\
   0&amp;\quad \text{if the $i$th person is not from the South,}
   \end{array}\right.
 \]</span> and the second could be <span class="math display">\[
-x_{i2} = \left\{
+X_{i2} = \left\{
   \begin{array}{ll}
   1&amp;\quad \text{if the $i$th person is from the West}\\
   0&amp;\quad \text{if the $i$th person is not from the West.}
   \end{array}\right.
 \]</span> Using both of these dummy variables results in the following regression model: order to obtain the model <span class="math display">\[\begin{align*}
-y_{i}&amp;=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i\\[2ex]
+Y_{i}&amp;=\beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i\\[2ex]
 &amp;= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1  + \epsilon_i&amp; \quad \text{if the $i$th person is from the South}\\
@@ -1924,7 +1927,7 @@ Hierarchical Principle of Interaction Terms
 <p>If we include an interaction in a model, we should also include the main effects, even if the <span class="math inline">\(p\)</span>-values associated with their coefficients are not significant.</p>
 </div>
 </div>
-<p><strong>Interactions with Qualitative Variables:</strong></p>
+</section><section id="interactions-with-qualitative-variables" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="interactions-with-qualitative-variables">Interactions with Qualitative Variables</h4>
 <p>An interaction between a qualitative variable and a quantitative variable has a particularly nice interpretation.</p>
 <p>Consider the <code>Credit</code> data set and suppose that we wish to predict <code>balance</code> using the predictors:</p>
 <ul>
@@ -1932,7 +1935,7 @@ Hierarchical Principle of Interaction Terms
 <code>income</code> (quantitative) and</li>
 <li>
 <code>student</code> (qualitative) using a dummy variable with <span class="math display">\[
-x_{i2}=\left\{
+X_{i2}=\left\{
 \begin{array}{ll}
 1&amp;\text{if person $i$ is a student}\\
 0&amp;\text{if not}\\
@@ -2009,13 +2012,13 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
 </div>
 </div>
 <p>Plotting <strong>residuals versus fitted values</strong>, i.e.&nbsp;plotting the data pairs <span class="math display">\[
-(\underbrace{y_i - \hat{y}_i}_{=e_i}, \hat{y}_i),\quad\text{for all}\quad i=1,\dots,n
+(\underbrace{Y_i - \hat{Y}_i}_{=e_i}, \hat{Y}_i),\quad\text{for all}\quad i=1,\dots,n
 \]</span> is a useful graphical tool for identifying non-linearity which works for the</p>
 <ul>
 <li>
-<strong>simple linear regression model</strong> with <span class="math inline">\(\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_{i1}\)</span> and the</li>
+<strong>simple linear regression model</strong> with <span class="math inline">\(\hat{Y}_i=\hat{\beta}_0+\hat{\beta}_1X_{i1}\)</span> and the</li>
 <li>
-<strong>multiple linear regression model</strong> with <span class="math inline">\(\hat{y}_i=\hat{\beta}_0+\sum_{j=1}^p\hat{\beta}_jx_{ij}\)</span>
+<strong>multiple linear regression model</strong> with <span class="math inline">\(\hat{Y}_i=\hat{\beta}_0+\sum_{j=1}^p\hat{\beta}_jX_{ij}\)</span>
 </li>
 </ul>
 <p>If the residual plot indicates that there are non-linear associations in the data, then a simple approach is to use non-linear transformations of the predictors, such as <span class="math display">\[
@@ -2033,6 +2036,19 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
 <li>strong auto-correlation (<span class="math inline">\(\rho=0.9\)</span>)</li>
 </ul>
 <p><img src="images/Fig_3_10.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In case of auto-correlated error terms, we need to compute the standard error estimates <span class="math inline">\(\widehat{SE}\)</span> taking into account those auto-correlations—additional to having, for instance, heteroskedastik errors. This leads to the so-called Heteroskedasticity Autocorrelation Consistent (<strong>HAC</strong>) SE-estimators. The <code>R</code>-package <a href="https://sandwich.r-forge.r-project.org/index.html"><code>sandwich</code></a> allows to compute these standard error estimators.</p>
+</div>
+</div>
 <p><strong>3. Non-Constant Variance of Error Terms (Heteroskedasticity)</strong></p>
 <p>Another important issue is to check whether the errors can be assumed homoskedastic <span class="math display">\[
 Var(\epsilon_i|X_i) = \sigma^2,\quad\text{for all}\quad i=1,\dots,n.
@@ -2079,12 +2095,24 @@ Thus, if the error terms are auto-correlated and/or heteroskedastic, we need to 
 The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/index.html) contains such robust standard error estimators. 
 ::: 
 -->
-<p><strong>Note:</strong> In case of doubt (homoskedastic vs heteroskedastic error terms), one should use HC-robust inference, which allows for valid inference under both homoskedastic and heterskedastic errors.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Note:</strong> In case of doubt (homoskedastic vs heteroskedastic error terms), or if the transformations lead to difficult model interpretations, one should use HC-robust inference, which allows for valid inference under both homoskedastic and heterskedastic errors.</p>
+</div>
+</div>
 <p><strong>4. Outliers</strong></p>
-<p>An outlier is a point <span class="math inline">\(i\)</span> for which <span class="math inline">\(y_i\)</span> is far from the value <span class="math inline">\(\hat{y}_i\)</span> predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording of an observation during data collection.</p>
+<p>An outlier is a point <span class="math inline">\(i\)</span> for which <span class="math inline">\(Y_i\)</span> is far from the value <span class="math inline">\(\hat{Y}_i\)</span> predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording of an observation during data collection.</p>
 <p>Outliers typically have a strong effect on the <span class="math inline">\(R^2\)</span> value since they add a <strong>very large residual</strong> to its computation.</p>
-<p><strong>Harmless Outlier:</strong> Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value <span class="math inline">\(x_i\)</span>; i.e.&nbsp;the <span class="math inline">\(x_i\)</span>-value is right in the center of all predicor values. Such outliers have little effect on the regression fit. <img src="images/Fig_3_12.png" class="img-fluid"></p>
-<p><strong>Harmful Outlier:</strong> Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value <span class="math inline">\(x_i\)</span> that is <strong>very atypical</strong>. Such outliers are said to have <strong>large leverage</strong> giving them power to affect the regression fit considerably. <img src="images/Fig_3_13.png" class="img-fluid"></p>
+<p><strong>Harmless Outlier:</strong> Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value <span class="math inline">\(X_i\)</span>; i.e.&nbsp;the <span class="math inline">\(X_i\)</span>-value is right in the center of all predicor values. Such outliers have little effect on the regression fit. <img src="images/Fig_3_12.png" class="img-fluid"></p>
+<p><strong>Harmful Outlier:</strong> Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value <span class="math inline">\(X_i\)</span> that is <strong>very atypical</strong>. Such outliers are said to have <strong>large leverage</strong> giving them power to affect the regression fit considerably. <img src="images/Fig_3_13.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2108,11 +2136,8 @@ Tip
 </div>
 <p><strong>5. High Leverage Points</strong></p>
 <p>In order to quantify an observation’s leverage, we compute the <strong>leverage statistic</strong> <span class="math inline">\(h_i\)</span> for each observation <span class="math inline">\(i=1,\dots,n.\)</span> A large value of this statistic indicates an observation with high leverage.</p>
-<p>In the case of the <strong>simple linear regression model</strong> <span class="math display">\[
-h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_{j}-\bar{x})^2}.
-\]</span></p>
-<p>In the case of the <strong>multiple linear regression model</strong>, <span class="math inline">\(h_i\)</span> is the <span class="math inline">\(i\)</span>th diagonal value of the <span class="math inline">\((n\times n)\)</span>-dimensional “hat-matrix” <span class="math display">\[
-H=X(X^{\top}X)^{-1}X^{\top}.
+<p>The <strong>leverage statistic</strong> <span class="math inline">\(h_i\)</span> is the <span class="math inline">\(i\)</span>th diagonal value of the <span class="math inline">\((n\times n)\)</span>-dimensional “hat-matrix” pr Projection matrix <span class="math display">\[
+P_X=X(X^{\top}X)^{-1}X^{\top}.
 \]</span></p>
 <ul>
 <li>The leverage statistic <span class="math inline">\(h_i\)</span> is always between <span class="math inline">\(1/n\)</span> and <span class="math inline">\(1\)</span>
@@ -2358,8 +2383,8 @@ Finally, KNN classifies the test observation $x_0$ to the class $j$ with the lar
 </ol>
 <p><strong>Answer:</strong> Observe that: <span class="math display">\[
 \begin{align*}
-\text{Male\; $(X_3 = 0)$:}\quad   &amp; 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
-\text{Female\; $(X_3 = 1)$:}\quad &amp; 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
+\text{Male $(X_3 = 0)$:}\quad   &amp; 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
+\text{Female $(X_3 = 1)$:}\quad &amp; 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
 \end{align*}
 \]</span></p>
 <p>Thus 3 a) iii. is correct, since once the <span class="math inline">\(X_1=\)</span><code>GPA</code> is high enough (<span class="math inline">\(35-10\,X_1&lt;0 \Leftrightarrow X_1&gt;3.5\)</span>), males earn more on average.</p>

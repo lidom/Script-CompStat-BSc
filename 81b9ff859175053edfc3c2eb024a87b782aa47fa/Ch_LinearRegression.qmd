@@ -1546,8 +1546,8 @@ where $t_{n-(p+1)}$ denotes the $t$-distribution with $\operatorname{df}=n-(p+1)
 
 For a given realization of the training data random sample
 $$
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
-$$
+((Y_{1,obs},X_{10,obs},\dots,X_{1p,obs}),\dots,(Y_{n,obs},X_{n0,obs},\dots,X_{np,obs}))
+$$ 
 we **obs**serve a specific realization of the $t$-test statistic
 $$
 T_{obs}=\frac{\hat\beta_{j,obs} - \beta^{(H_0)}_{j}}{\widehat{\operatorname{SE}}(\hat\beta_j)_{obs}}
@@ -1641,7 +1641,7 @@ Therefore:
 
 For a given realization of the training data random sample
 $$
-((y_{1},x_{10},\dots,x_{1(p+1)}),\dots,(y_{n},x_{n0},\dots,x_{np}))
+((Y_{1,obs},X_{10,obs},\dots,X_{1p,obs}),\dots,(Y_{n,obs},X_{n0,obs},\dots,X_{np,obs}))
 $$
 we **obs**serve a specific realization of the $F$-test statistic
 $$
@@ -1680,8 +1680,9 @@ then we **reject the null hypothesis** and adopt the alternative hypothesis.
 
 ### Probability of a Type I Error, Power and Consistency
 
+#### Probability of a Type I Error {-}
 
-Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the decision of 
+Every statistical testing procedure (conducted using confidence intervals or test-statistics) involves the **decision** of 
 
 * not rejecting $H_0$ 
 
@@ -1702,7 +1703,7 @@ then we can state in a publication that variable $X_j$ has an effect.
 
 Thus, if we reject the null-hypothesis even though the null-hypothesis is true, we conduct a **Type I Error** and thus may falsely claim that variable $X_j$ has an effect. Such a false claim can be fatal.  
 
-Therefore, a statistical hypothesis test is only valid if it is able control the probability of conducting a type I error from above by the chosen significance level; i.e. if
+Therefore, a statistical hypothesis test is only valid if it is able control the **probability of conducting a type I error** from above by the chosen significance level; i.e. if
 $$
 \underbrace{P(\text{reject }H_0 \;|\; H_0\text{ is true})}_{\text{Probability of a type I error}}\leq \alpha,
 $$
@@ -1725,6 +1726,7 @@ $$
 Therefore, when we cannot reject the null-hypothesis we cannot claim that the null-hypothesis is probably true, simply because we cannot guarantee that the probability of a type II error (falsely not rejecting $H_0,$ when $H_1$ is true) is sufficiently small. 
 :::
 
+#### Statistical Power and Consistency {-}
 
 
 Under the alternative, i.e., if for instance  
@@ -1763,7 +1765,7 @@ Often some predictors are *qualitative* variables (also known as a *factor* vari
 
 If a **qualitative predictor (factor)**  only has two levels (i.e. possible values), then incorporating it into a regression model is very simple: We simply create an indicator or **dummy variable** that takes on two possible numerical values; for instance,
 $$
-x_{i} = \left\{
+X_{i1} = \left\{
   \begin{array}{ll}
   1&\quad \text{if the $i$th person owns a house}\\
   0&\quad \text{if the $i$th person does not own a house.}
@@ -1771,8 +1773,8 @@ x_{i} = \left\{
 $$
 Using this dummy variable as a predictor in the regression equation results in the following regression model:
 \begin{align*}
-y_{i}
-&=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex] 
+Y_{i}
+&=\beta_0 + \beta_1 X_{i1} + \epsilon_i\\[2ex] 
 &= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1 + \epsilon_i &\quad \text{if the $i$th person owns a house}\\
@@ -1790,14 +1792,14 @@ y_{i}
 
 Alternatively, instead of a 0/1 coding scheme, we could create a dummy variable
 $$
-x_{i} = \left\{
+X_{i1} = \left\{
   \begin{array}{ll}
   1 &\quad \text{if the $i$th person owns a house}\\
  -1 &\quad \text{if the $i$th person does not own a house.}
   \end{array}\right.
 $$
 \begin{align*}
-y_{i}
+Y_{i}
 &=\beta_0 + \beta_1 x_i + \epsilon_i\\[2ex] 
 &= \left\{
   \begin{array}{ll}
@@ -1811,6 +1813,7 @@ y_{i}
 * $\beta_0$: The overall average credit card balance (ignoring the house ownership effect)
 * $\beta_1$: The average amount by which house owners and non-owners have credit card balances that are above and below the overall average, respectively.
 
+-------------------------------------------------------
 
 #### Qualitative Predictors with More than Two Levels {-}
 
@@ -1820,7 +1823,7 @@ When a qualitative predictor has more than two levels, a single dummy variable c
 
 variable, we create **two** dummy variables. The first could be
 $$
-x_{i1} = \left\{
+X_{i1} = \left\{
   \begin{array}{ll}
   1&\quad \text{if the $i$th person is from the South}\\
   0&\quad \text{if the $i$th person is not from the South,}
@@ -1828,7 +1831,7 @@ x_{i1} = \left\{
 $$
 and the second could be
 $$
-x_{i2} = \left\{
+X_{i2} = \left\{
   \begin{array}{ll}
   1&\quad \text{if the $i$th person is from the West}\\
   0&\quad \text{if the $i$th person is not from the West.}
@@ -1837,7 +1840,7 @@ $$
 Using both of these dummy variables results in the following regression model:
 order to obtain the model
 \begin{align*}
-y_{i}&=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i\\[2ex] 
+Y_{i}&=\beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i\\[2ex] 
 &= \left\{
   \begin{array}{ll}
   \beta_0 + \beta_1  + \epsilon_i& \quad \text{if the $i$th person is from the South}\\
@@ -1953,17 +1956,16 @@ If we include an interaction in a model, we should also include the main effects
 :::
 
 
-**Interactions with Qualitative Variables:**
+#### Interactions with Qualitative Variables {-}
 
 An interaction between a qualitative variable and a quantitative variable has a particularly nice interpretation. 
-
 
 Consider the `Credit` data set and suppose that we wish to predict `balance` using the predictors: 
 
 * `income` (quantitative) and 
 * `student` (qualitative) using a dummy variable with 
 $$
-x_{i2}=\left\{
+X_{i2}=\left\{
   \begin{array}{ll}
   1&\text{if person $i$ is a student}\\
   0&\text{if not}\\
@@ -2050,12 +2052,12 @@ plot(lmobj_2, which = 1)
 
 Plotting **residuals versus fitted values**, i.e. plotting the data pairs
 $$
-(\underbrace{y_i - \hat{y}_i}_{=e_i}, \hat{y}_i),\quad\text{for all}\quad i=1,\dots,n
+(\underbrace{Y_i - \hat{Y}_i}_{=e_i}, \hat{Y}_i),\quad\text{for all}\quad i=1,\dots,n
 $$ 
 is a useful graphical tool for identifying non-linearity which works for the  
 
-* **simple linear regression model** with $\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_{i1}$ and the
-* **multiple linear regression model** with $\hat{y}_i=\hat{\beta}_0+\sum_{j=1}^p\hat{\beta}_jx_{ij}$
+* **simple linear regression model** with $\hat{Y}_i=\hat{\beta}_0+\hat{\beta}_1X_{i1}$ and the
+* **multiple linear regression model** with $\hat{Y}_i=\hat{\beta}_0+\sum_{j=1}^p\hat{\beta}_jX_{ij}$
 
 
 If the residual plot indicates that there are non-linear associations in the
@@ -2085,6 +2087,11 @@ Auto-correlations among the error terms typically occur in time series data. Fig
 * strong auto-correlation ($\rho=0.9$)
 
 ![](images/Fig_3_10.png)
+
+
+::: {.callout-tip}
+In case of auto-correlated error terms, we need to compute the standard error estimates $\widehat{SE}$ taking into account those auto-correlations---additional to having, for instance, heteroskedastik errors. This leads to the so-called Heteroskedasticity Autocorrelation Consistent (**HAC**) SE-estimators.  The `R`-package [`sandwich`](https://sandwich.r-forge.r-project.org/index.html) allows to compute these standard error estimators. 
+:::
 
 
 **3. Non-Constant Variance of Error Terms (Heteroskedasticity)**
@@ -2139,26 +2146,25 @@ The `R` package [sandwich](https://cran.r-project.org/web/packages/sandwich/inde
 ::: 
 -->
 
-
-**Note:** In case of doubt (homoskedastic vs heteroskedastic error terms), one should use HC-robust inference, which allows for valid inference under both homoskedastic and heterskedastic errors.
-
+::: {.callout-tip}
+**Note:** In case of doubt (homoskedastic vs heteroskedastic error terms), or if the transformations lead to difficult model interpretations, one should use HC-robust inference, which allows for valid inference under both homoskedastic and heterskedastic errors.
+:::
 
 
 **4. Outliers**
 
-An outlier is a point $i$ for which $y_i$ is far from the value $\hat{y}_i$ predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording
-of an observation during data collection.
+An outlier is a point $i$ for which $Y_i$ is far from the value $\hat{Y}_i$ predicted by the model. Outliers can arise for a variety of reasons, such as incorrect recording of an observation during data collection.
 
 Outliers typically have a strong effect on the $R^2$ value since they add a **very large residual** to its computation. 
 
 
 **Harmless Outlier:**
-Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value $x_i$; i.e. the $x_i$-value is right in the center of all predicor values. Such outliers have little effect on the regression fit.
+Figure 3.12 shows a clear outlier (observation 20) which, however, has a typical predictor value $X_i$; i.e. the $X_i$-value is right in the center of all predicor values. Such outliers have little effect on the regression fit.
 ![](images/Fig_3_12.png)
 
 
 **Harmful Outlier:**
-Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value $x_i$ that is **very atypical**. Such outliers are said to have **large leverage** giving them power to affect the regression fit considerably. 
+Figure 3.13 shows again a clear outlier (observation 41) which, however, has a predictor value $X_i$ that is **very atypical**. Such outliers are said to have **large leverage** giving them power to affect the regression fit considerably. 
 ![](images/Fig_3_13.png)
 
 ::: {.callout-tip}
@@ -2175,14 +2181,9 @@ Critical outliers have both,
 
 In order to quantify an observation's leverage, we compute the **leverage statistic** $h_i$ for each observation $i=1,\dots,n.$ A large value of this statistic indicates an observation with high leverage. 
 
-In the case of the **simple linear regression model**
+The **leverage statistic** $h_i$ is the $i$th diagonal value of the $(n\times n)$-dimensional "hat-matrix" pr Projection matrix
 $$
-h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n(x_{j}-\bar{x})^2}.
-$$
-
-In the case of the **multiple linear regression model**, $h_i$ is the $i$th diagonal value of the $(n\times n)$-dimensional "hat-matrix"
-$$
-H=X(X^{\top}X)^{-1}X^{\top}.
+P_X=X(X^{\top}X)^{-1}X^{\top}.
 $$ 
 
 * The leverage statistic $h_i$ is always between $1/n$ and $1$
@@ -2474,8 +2475,8 @@ $$
 Observe that:
 $$
 \begin{align*}
-\text{Male\; $(X_3 = 0)$:}\quad   & 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
-\text{Female\; $(X_3 = 1)$:}\quad & 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
+\text{Male $(X_3 = 0)$:}\quad   & 50 + 20 X_1 + 0.07 X_2 + \phantom{3}0 + 0.01\,(X_1 \cdot X_2) -0     \\[1.5ex]
+\text{Female $(X_3 = 1)$:}\quad & 50 + 20 X_1 + 0.07 X_2 + 35 + 0.01(X_1 \cdot X_2) - 10\,X_1
 \end{align*}
 $$
 
