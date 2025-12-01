@@ -204,14 +204,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Ch_NonParamRegression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparison: Parametric vs.&nbsp;Nonparametric Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./Ch5_Classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch6_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
   </div>
 </li>
     </ul>
@@ -2287,7 +2293,7 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\quad i=1,\dots,n
 \hat{Y}_{i,\text{Test}} = \hat{f}_{\text{Train}}(X_{i,\text{Test}}),\quad i=1,\dots,n_{\text{Test}}.
 \]</span> Compute the out-of-sample <span class="math inline">\(R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}\)</span> when estimating the true model and when estimating the best model from part (a). What do you observe?</p></li>
 </ol>
-<p><strong>Problems (Nov.&nbsp;17, 2025):</strong></p>
+<p><strong>Problems (Nov.&nbsp;17 and 24, 2025):</strong></p>
 <ul>
 <li>Consider the (usually unknonw) data generating process (simple linear regression model) of last week’s problem (Nov.&nbsp;10, 2025).</li>
 </ul>
@@ -2316,7 +2322,42 @@ Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i,\quad i=1,\dots,n
 <li>Does this result fit to the computed estimates <span class="math inline">\(\widehat{\operatorname{SE}}(\hat\beta_0|X)\)</span> and <span class="math inline">\(\widehat{\operatorname{SE}}(\hat\beta_1|X)\)</span>?</li>
 </ul>
 </li>
-</ul></section><section id="exercises" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="exercises">
+</ul>
+<p><strong>Problems (Dec.&nbsp;1, 2025):</strong></p>
+<p>Look at the following data generating process (DGP):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">n</span>     <span class="op">&lt;-</span> <span class="fl">100</span>                          <span class="co"># Sample size</span></span>
+<span><span class="va">X</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>              <span class="co"># Predictor variable</span></span>
+<span><span class="va">error</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>   <span class="co"># True (usually unknown) error</span></span>
+<span><span class="va">beta_0</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">beta_1</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span>
+<span><span class="va">Y</span>      <span class="op">&lt;-</span> <span class="va">beta_0</span> <span class="op">+</span> <span class="va">beta_1</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="va">error</span> <span class="co"># Y variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Problems:</strong></p>
+<ol type="a">
+<li>Generate <em>one</em> realization of the DGP and use the <span class="math inline">\(t\)</span>-test to test (<span class="math inline">\(\alpha=0.05\)</span>):
+<ul>
+<li>
+<strong>False Null-Hypothesis:</strong> <span class="math inline">\(H_0\colon \beta_1 = 0\)</span> against <span class="math inline">\(H_1\colon \beta_1 \neq 0\)</span>
+</li>
+<li>
+<strong>True Null-Hypothesis:</strong> <span class="math inline">\(H_0\colon \beta_1 = 0.1\)</span> against <span class="math inline">\(H_1\colon \beta_1 \neq 0.1\)</span>
+</li>
+</ul>
+</li>
+<li>Now repeat the above test 10000 times and compute the relative frequencies of rejecting <span class="math inline">\(H_0\)</span> when using the <span class="math inline">\(t\)</span>-test to test (<span class="math inline">\(\alpha=0.05\)</span>):
+<ul>
+<li>
+<strong>False Null-Hypothesis:</strong> <span class="math inline">\(H_0\colon \beta_1 = 0\)</span> against <span class="math inline">\(H_1\colon \beta_1 \neq 0\)</span>
+</li>
+<li>
+<strong>True Null-Hypothesis:</strong> <span class="math inline">\(H_0\colon \beta_1 = 0.1\)</span> against <span class="math inline">\(H_1\colon \beta_1 \neq 0.1\)</span>
+</li>
+</ul>
+</li>
+<li>What are your conclusions?</li>
+</ol></section><section id="exercises" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">2.9</span> Exercises</h2>
 <p>Here you’ll find the exercise sheet for this chapter.</p>
 <!-- 
@@ -2405,7 +2446,7 @@ Finally, KNN classifies the test observation $x_0$ to the class $j$ with the lar
 <p><strong>3 b)</strong> Predict the salary of a female with <code>IQ</code> of 110 and a <code>GPA</code> of 4.0.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GPA</span>    <span class="op">&lt;-</span>   <span class="fl">4</span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GPA</span>    <span class="op">&lt;-</span>   <span class="fl">4</span></span>
 <span><span class="va">IQ</span>     <span class="op">&lt;-</span> <span class="fl">110</span></span>
 <span><span class="va">Gender</span> <span class="op">&lt;-</span>   <span class="fl">1</span> <span class="co"># female = 1</span></span>
 <span><span class="co">## Prediction</span></span>
@@ -2422,7 +2463,7 @@ Finally, KNN classifies the test observation $x_0$ to the class $j$ with the lar
 <p>This question involves the use of simple linear regression on the <code>Auto</code> data set.</p>
 <p><strong>8 a)</strong> Use the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function to perform a simple linear regression with <code>mpg</code> as the response and <code>horsepower</code> as the predictor. Use the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function to print the results.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://www.statlearning.com">"ISLR2"</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://www.statlearning.com">"ISLR2"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Auto"</span><span class="op">)</span></span>
 <span></span>
@@ -2467,7 +2508,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 <p>The Residual Standard Error (RSE) of the regression model with <code>intercept</code> and <code>horsepower</code> as predictors is given by:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## RSE of lm(mpg ~ horsepower):</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## RSE of lm(mpg ~ horsepower):</span></span>
 <span><span class="va">RSS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">n</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">RSE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">RSS</span><span class="op">/</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -2475,7 +2516,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.906</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Alternatively: </span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Alternatively: </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">$</span><span class="va">sigma</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.906</code></pre>
@@ -2483,7 +2524,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>This RSE value is considerable smaller than the RSE of a model with only an intercept:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lmObj_onlyIntercept</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="op">+</span><span class="fl">1</span>, data <span class="op">=</span> <span class="va">Auto</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lmObj_onlyIntercept</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="op">+</span><span class="fl">1</span>, data <span class="op">=</span> <span class="va">Auto</span><span class="op">)</span></span>
 <span><span class="va">RSS_onlyIntercept</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">lmObj_onlyIntercept</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">n</span>                   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">lmObj_onlyIntercept</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">RSE_onlyIntercept</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">RSS_onlyIntercept</span><span class="op">/</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -2495,7 +2536,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Thus, the larger model with <code>horsepower</code> included explains more of the variances in the response variable <code>mpg</code>. Including <code>horsepower</code> as a predictor reduces the RSE by <code>((RSE_onlyIntercept - RSE)/RSE_onlyIntercept)*100</code> %; i.e.&nbsp;by 37.15%.</p>
 <p>The <span class="math inline">\(R^2\)</span> value:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.61</code></pre>
 </div>
@@ -2503,7 +2544,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>shows that <span class="math inline">\(60\%\)</span> of variability in <span class="math inline">\(Y\)</span> can be explained using an intercept and <code>horsepower</code> as predictors.</p>
 <p>The value of the <span class="math inline">\(F\)</span> statistic</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">$</span><span class="va">fstatistic</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">$</span><span class="va">fstatistic</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> value  numdf  dendf 
 599.72   1.00 390.00 </code></pre>
@@ -2514,7 +2555,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>Answer:</strong></p>
 <p>The relationship is negative, as we can see from the parameter estimate for <code>horsepower</code></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lmObj_1</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>horsepower 
 -0.1578447 </code></pre>
@@ -2524,7 +2565,7 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>Answer:</strong></p>
 <p>The predicted value plus confidence interval:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Horsepower of 98</span></span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Horsepower of 98</span></span>
 <span><span class="va">new_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>horsepower <span class="op">=</span> <span class="fl">98</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># confidence interval </span></span>
@@ -2536,7 +2577,6 @@ F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <!-- 
 The predicted value plus prediction interval:
-
 
 
 
@@ -2565,19 +2605,18 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 
 
 
-
 -->
 <p><strong>8 b)</strong> Plot the response and the predictor. Use the <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function to display the least squares regression line.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Auto</span><span class="op">$</span><span class="va">horsepower</span>, y <span class="op">=</span> <span class="va">Auto</span><span class="op">$</span><span class="va">mpg</span>, ylab <span class="op">=</span> <span class="st">"MPG"</span>, xlab <span class="op">=</span> <span class="st">"Horsepower"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Auto</span><span class="op">$</span><span class="va">horsepower</span>, y <span class="op">=</span> <span class="va">Auto</span><span class="op">$</span><span class="va">mpg</span>, ylab <span class="op">=</span> <span class="st">"MPG"</span>, xlab <span class="op">=</span> <span class="st">"Horsepower"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">lmObj_1</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, </span>
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"(y,x)"</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"("</span>,<span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hat</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,<span class="st">",x)"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>       pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="cn">NA</span><span class="op">)</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2585,11 +2624,11 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <p><strong>8 c)</strong> Use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lmObj_1</span>, col<span class="op">=</span><span class="st">'blue'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2602,7 +2641,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <p><strong>9 a)</strong> Produce a scatterplot matrix which includes all of the variables in the data set.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://www.statlearning.com">"ISLR2"</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://www.statlearning.com">"ISLR2"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Auto"</span><span class="op">)</span></span>
 <span></span>
@@ -2610,7 +2649,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">Auto</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2618,7 +2657,7 @@ predict(object = lmObj_1, newdata = new_df, interval = "prediction")
 <p><strong>9 b)</strong> Compute the matrix of correlations between the variables using the function <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>. You will need to exclude the <code>name</code> variable, which is qualitative.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Auto</span>, select <span class="op">=</span> <span class="op">-</span><span class="va">name</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Auto</span>, select <span class="op">=</span> <span class="op">-</span><span class="va">name</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              mpg cylinders displacement horsepower weight acceleration year
 mpg           1.0      -0.8         -0.8       -0.8   -0.8          0.4  0.6
@@ -2643,7 +2682,7 @@ origin          1.0</code></pre>
 <p><strong>9 c)</strong> Use the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function to perform a multiple linear regression with <code>mpg</code> as the response and all other variables except <code>name</code> as the predictors. Use the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function to print the results. Comment on the output by answering the below questions 9 c i) to 9 c iii).</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center" data-scrolled="true">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Perform multiplie linear regression</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Perform multiplie linear regression</span></span>
 <span><span class="va">fit.lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">name</span>, data<span class="op">=</span><span class="va">Auto</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Print results</span></span>
@@ -2689,11 +2728,11 @@ F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>9 d)</strong> Use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fit.lm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2708,7 +2747,7 @@ F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>Answer:</strong></p>
 <p>Violating the hierarchy principle:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">horsepower</span><span class="op">+</span><span class="va">cylinders</span><span class="op">+</span><span class="va">year</span><span class="op">+</span><span class="va">weight</span><span class="op">:</span><span class="va">displacement</span>, </span>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">horsepower</span><span class="op">+</span><span class="va">cylinders</span><span class="op">+</span><span class="va">year</span><span class="op">+</span><span class="va">weight</span><span class="op">:</span><span class="va">displacement</span>, </span>
 <span>              data<span class="op">=</span><span class="va">Auto</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit.lm0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2738,7 +2777,7 @@ F-statistic: 278.2 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>Following the hierarchical principle:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="va">horsepower</span><span class="op">+</span><span class="va">cylinders</span><span class="op">+</span><span class="va">year</span><span class="op">+</span><span class="va">weight</span><span class="op">*</span><span class="va">displacement</span>, </span>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="va">horsepower</span><span class="op">+</span><span class="va">cylinders</span><span class="op">+</span><span class="va">year</span><span class="op">+</span><span class="va">weight</span><span class="op">*</span><span class="va">displacement</span>, </span>
 <span>              data<span class="op">=</span><span class="va">Auto</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit.lm1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2774,7 +2813,7 @@ F-statistic: 384.1 on 6 and 385 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Try a few different transformations of the variables, such as <span class="math inline">\(\log(X)\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, <span class="math inline">\(X^2\)</span>. Comment on your findings.</p>
 <p><strong>Answer:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">horsepower</span><span class="op">)</span><span class="op">+</span></span>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">horsepower</span><span class="op">)</span><span class="op">+</span></span>
 <span>                <span class="va">acceleration</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">acceleration</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>              data<span class="op">=</span><span class="va">Auto</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit.lm2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2802,12 +2841,12 @@ Residual standard error: 3.99 on 387 degrees of freedom
 Multiple R-squared:  0.7414,    Adjusted R-squared:  0.7387 
 F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##</span></span>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fit.lm2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2815,7 +2854,7 @@ F-statistic: 277.3 on 4 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>This try suffers basically from the same issues as the model considered in 9 d)</p>
 <p>Let’s consider again the model with all predictors (except <code>name</code>), but with transforming the outcome variable <code>mpg</code> by a <span class="math inline">\(\log\)</span>-transformation.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm3</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">name</span>, data<span class="op">=</span><span class="va">Auto</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit.lm3</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">name</span>, data<span class="op">=</span><span class="va">Auto</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit.lm3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -2843,12 +2882,12 @@ Residual standard error: 0.1191 on 384 degrees of freedom
 Multiple R-squared:  0.8795,    Adjusted R-squared:  0.8773 
 F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##</span></span>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fit.lm3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2866,7 +2905,7 @@ F-statistic: 400.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> function is used to load <em>libraries</em>, or groups of functions and data sets that are not included in the base <code>R</code> distribution. Basic functions that perform least squares linear regression and other simple analyses come standard with the base distribution, but more exotic functions require additional libraries.</p>
 <p>Here we load the <code>MASS</code> package, which is a very large collection of data sets and functions. We also load the <code>ISLR2</code> package, which includes the data sets associated with this book.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com">ISLR2</a></span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you receive an error message when loading any of these libraries, it likely indicates that the corresponding library has not yet been installed on your system. Some libraries, such as <code>MASS</code>, come with <code>R</code> and do not need to be separately installed on your computer. However, other packages, such as <code>ISLR2</code>, must be downloaded the first time they are used. <!-- 
@@ -2876,7 +2915,7 @@ This can be done directly from within `R`. For example, on a Windows system,  se
 <span class="header-section-number">2.11.2</span> Simple Linear Regression</h3>
 <p>The <code>ISLR2</code> library contains the <code>Boston</code> data set, which records <code>medv</code> (median house value) for <span class="math inline">\(506\)</span> census tracts in Boston. We will seek to predict <code>medv</code> using <span class="math inline">\(12\)</span> predictors such as <code>rmvar</code> (average number of rooms per house), <code>age</code> (average age of houses), and <code>lstat</code> (percent of households with low socioeconomic status).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Boston</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Boston</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     crim zn indus chas   nox    rm  age    dis rad tax ptratio  black lstat
 1 0.00632 18  2.31    0 0.538 6.575 65.2 4.0900   1 296    15.3 396.90  4.98
@@ -2897,7 +2936,7 @@ This can be done directly from within `R`. For example, on a Windows system,  se
 <p>To find out more about the data set, we can type <code><a href="https://rdrr.io/pkg/ISLR2/man/Boston.html">?Boston</a></code>.</p>
 <p>We will start by using the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function to fit a simple linear regression model, with <code>medv</code> as the response and <code>lstat</code> as the predictor. The basic syntax is <code>lm(y ~ x, data)</code>, where <code>y</code> is the response, <code>x</code> is the predictor, and <code>data</code> is the data set in which these two variables are kept.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(predvars, data, env): object 'medv' not found</code></pre>
 </div>
@@ -2905,16 +2944,16 @@ This can be done directly from within `R`. For example, on a Windows system,  se
 <p>The command causes an error because <code>R</code> does not know where to find the variables <code>medv</code> and <code>lstat</code>.</p>
 <p>The next line tells <code>R</code> that the variables are in <code>Boston</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Alternatively, we can attach the <code>Boston</code> object:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">Boston</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">Boston</span><span class="op">)</span></span>
 <span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we type <code>lm.fit</code>, some basic information about the model is output. For more detailed information, we use <code>summary(lm.fit)</code>. This gives us <span class="math inline">\(p\)</span>-values and standard errors for the coefficients, as well as the <span class="math inline">\(R^2\)</span> statistic and <span class="math inline">\(F\)</span>-statistic for the model.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2924,7 +2963,7 @@ Coefficients:
 (Intercept)        lstat  
       34.55        -0.95  </code></pre>
 </div>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2950,13 +2989,13 @@ F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We can extract these quantities by name—e.g.&nbsp;<code>lm.fit$coefficients</code>.</p>
 <p>For some objects, there are also specific extractor functions like <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> to access them.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "coefficients"  "residuals"     "effects"       "rank"         
  [5] "fitted.values" "assign"        "qr"            "df.residual"  
  [9] "xlevels"       "call"          "terms"         "model"        </code></pre>
 </div>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)       lstat 
  34.5538409  -0.9500494 </code></pre>
@@ -2965,7 +3004,7 @@ F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>In order to obtain a confidence interval for the coefficient estimates, we can use the <code><a href="https://rdrr.io/r/stats/confint.html">confint()</a></code> command.</p>
 <p>Type <code>confint(lm.fit)</code> at the command line to obtain the confidence intervals for the linear regression coefficients.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %     97.5 %
 (Intercept) 33.448457 35.6592247
@@ -2974,7 +3013,7 @@ lstat       -1.026148 -0.8739505</code></pre>
 </div>
 <p>The <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function can be used to produce confidence intervals and prediction intervals for the prediction of <code>medv</code> for a given value of <code>lstat</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>lstat <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>lstat <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>        interval <span class="op">=</span> <span class="st">"confidence"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
@@ -3005,7 +3044,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 ::: -->
 <p>We will now plot <code>medv</code> and <code>lstat</code> along with the least squares regression line using the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> functions.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -3017,7 +3056,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <p>There is some evidence for non-linearity in the relationship between <code>lstat</code> and <code>medv</code>. We will explore this issue later in this lab.</p>
 <p>The <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function can be used to draw any line, not just the least squares regression line. To draw a line with intercept <code>a</code> and slope <code>b</code>, we type <code>abline(a, b)</code>. Below we experiment with some additional settings for plotting lines and points. The <code>lwd = 3</code> command causes the width of the regression line to be increased by a factor of 3; this works for the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="https://rdrr.io/r/graphics/lines.html">lines()</a></code> functions also. We can also use the <code>pch</code> option to create different plotting symbols.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">lm.fit</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -3025,28 +3064,28 @@ If this distributional assumption is not fulfilled, you should not use the predi
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, pch <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="va">medv</span>, pch <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, pch <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, pch <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk10-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
@@ -3056,7 +3095,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 </div>
 <p>Next we examine some diagnostic plots. Four diagnostic plots are automatically produced by applying the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function directly to the output from <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. In general, this command will produce one plot at a time, and hitting <em>Enter</em> will generate the next plot. However, it is often convenient to view all four plots together. We can achieve this by using the <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code> and <code>mfrow()</code> functions, which tell <code>R</code> to split the display screen into separate panels so that multiple plots can be viewed simultaneously. For example, <code>par(mfrow = c(2, 2))</code> divides the plotting region into a <span class="math inline">\(2 \times 2\)</span> grid of panels.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -3067,14 +3106,14 @@ If this distributional assumption is not fulfilled, you should not use the predi
 </div>
 <p>Alternatively, we can compute the residuals from a linear regression fit using the <code><a href="https://rdrr.io/r/stats/residuals.html">residuals()</a></code> function. The function <code><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent()</a></code> will return the studentized residuals, and we can use this function to plot the residuals against the fitted values.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk12-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
@@ -3085,14 +3124,14 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <p>On the basis of the residual plots, there is some evidence of non-linearity.</p>
 <p>Leverage statistics can be computed using the <code><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues()</a></code> function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="Ch_LinearRegression_files/figure-html/chunk13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>375 
 375 </code></pre>
@@ -3100,7 +3139,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 </div>
 <p>The <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code> function identifies the index of the largest element of a vector. In this case, it tells us which observation has the largest leverage statistic.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">hatvalues</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       375        415        374 
 0.02686517 0.02495670 0.02097101 </code></pre>
@@ -3111,7 +3150,7 @@ If this distributional assumption is not fulfilled, you should not use the predi
 <span class="header-section-number">2.11.3</span> Multiple Linear Regression</h3>
 <p>In order to fit a multiple linear regression model using least squares, we again use the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. The syntax <code>lm(y ~ x1 + x2 + x3)</code> is used to fit a model with three predictors, <code>x1</code>, <code>x2</code>, and <code>x3</code>. The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function now outputs the regression coefficients for all the predictors.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3137,7 +3176,7 @@ F-statistic:   309 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The <code>Boston</code> data set contains 12 variables, and so it would be cumbersome to have to type all of these in order to perform a regression using all of the predictors. Instead, we can use the following short-hand:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3174,7 +3213,7 @@ F-statistic: 108.1 on 13 and 492 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>We can access the individual components of a summary object by name (type <code><a href="https://rdrr.io/r/stats/summary.lm.html">?summary.lm</a></code> to see what is available). Hence <code>summary(lm.fit)$r.sq</code> gives us the <span class="math inline">\(R^2\)</span>, and <code>summary(lm.fit)$sigma</code> gives us the RSE. The <code><a href="https://rdrr.io/pkg/car/man/vif.html">vif()</a></code> function, part of the <code>car</code> package, can be used to compute variance inflation factors. Most VIF’s are low to moderate for this data. The <code>car</code> package is not part of the base <code>R</code> installation so it must be downloaded the first time you use it via the <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> function in <code>R</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span><span class="op">)</span> <span class="co"># contains the vif() function</span></span>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span><span class="op">)</span> <span class="co"># contains the vif() function</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/car/man/vif.html">vif</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span><span class="op">)</span> <span class="co"># computes the VIF statistics and sorts them</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    chas    black     crim  ptratio       rm       zn    lstat      age 
@@ -3185,7 +3224,7 @@ F-statistic: 108.1 on 13 and 492 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>What if we would like to perform a regression using all of the variables but one? For example, in the above regression output, <code>age</code> has a high <span class="math inline">\(p\)</span>-value. So we may wish to run a regression excluding this predictor. The following syntax results in a regression using all predictors except <code>age</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3221,13 +3260,13 @@ F-statistic: 117.3 on 12 and 493 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>Alternatively, the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> function can be used.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">lm.fit</span>, <span class="op">~</span> <span class="va">.</span> <span class="op">-</span> <span class="va">age</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">lm.fit</span>, <span class="op">~</span> <span class="va">.</span> <span class="op">-</span> <span class="va">age</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="interaction-terms" class="level3" data-number="2.11.4"><h3 data-number="2.11.4" class="anchored" data-anchor-id="interaction-terms">
 <span class="header-section-number">2.11.4</span> Interaction Terms</h3>
 <p>It is easy to include interaction terms in a linear model using the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. The syntax <code>lstat:black</code> tells <code>R</code> to include an interaction term between <code>lstat</code> and <code>black</code>. The syntax <code>lstat * age</code> simultaneously includes <code>lstat</code>, <code>age</code>, and the interaction term <code>lstat</code><span class="math inline">\(\times\)</span><code>age</code> as predictors; it is a shorthand for <code>lstat + age + lstat:age</code>. %We can also pass in transformed versions of the predictors.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span> <span class="op">*</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span> <span class="op">*</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -3255,7 +3294,7 @@ F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span class="header-section-number">2.11.5</span> Non-linear Transformations of the Predictors</h3>
 <p>The <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function can also accommodate non-linear transformations of the predictors. For instance, given a predictor <span class="math inline">\(X\)</span>, we can create a predictor <span class="math inline">\(X^2\)</span> using <code>I(X^2)</code>. The function <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> is needed since the <code>^</code> has a special meaning in a formula object; wrapping as we do allows the standard usage in <code>R</code>, which is to raise <code>X</code> to the power <code>2</code>. We now perform a regression of <code>medv</code> onto <code>lstat</code> and <code>lstat^2</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">lstat</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">lstat</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3281,7 +3320,7 @@ F-statistic: 448.5 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The near-zero <span class="math inline">\(p\)</span>-value associated with the quadratic term suggests that it leads to an improved model. We use the <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> function to further quantify the extent to which the quadratic fit is superior to the linear fit.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="va">lstat</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">lm.fit</span>, <span class="va">lm.fit2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
@@ -3300,7 +3339,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>This is not surprising, since earlier we saw evidence for non-linearity in the relationship between <code>medv</code> and <code>lstat</code>.</p>
 <p>If we type</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lm.fit2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -3312,7 +3351,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>then we see that when the <code>lstat^2</code> term is included in the model, there is little discernible pattern in the residuals.</p>
 <p>In order to create a <strong>cubic fit</strong>, we can include a predictor of the form <code>I(X^3)</code>. However, this approach can start to get cumbersome for higher-order polynomials. A better approach involves using the <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code> function to create the polynomial within <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. For example, the following command produces a fifth-order polynomial fit:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">lstat</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3343,7 +3382,7 @@ F-statistic: 214.2 on 5 and 500 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>By default, the <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code> function orthogonalizes the predictors: this means that the features output by this function are not simply a sequence of powers of the argument. However, a linear model applied to the output of the <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code> function will have the same fitted values as a linear model applied to the raw polynomials (although the coefficient estimates, standard errors, and p-values will differ). In order to obtain the raw polynomials from the <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code> function, the argument <code>raw = TRUE</code> must be used.</p>
 <p>Of course, we are in no way restricted to using polynomial transformations of the predictors. Here we try a log transformation.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rm</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">medv</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rm</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Boston</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -3369,7 +3408,7 @@ F-statistic: 389.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span class="header-section-number">2.11.6</span> Qualitative Predictors</h3>
 <p>We will now examine the <code>Carseats</code> data, which is part of the <code>ISLR2</code> library. We will attempt to predict <code>Sales</code> (child car seat sales) in <span class="math inline">\(400\)</span> locations based on a number of predictors.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Carseats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Carseats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sales CompPrice Income Advertising Population Price ShelveLoc Age Education
 1  9.50       138     73          11        276   120       Bad  42        17
@@ -3389,7 +3428,7 @@ F-statistic: 389.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The <code>Carseats</code> data includes qualitative predictors such as <code>shelveloc</code>, an indicator of the quality of the shelving location—that is, the space within a store in which the car seat is displayed—at each location. The predictor <code>shelveloc</code> takes on three possible values: <em>Bad</em>, <em>Medium</em>, and <em>Good</em>. Given a qualitative variable such as <code>shelveloc</code>, <code>R</code> generates dummy variables automatically. Below we fit a multiple regression model that includes some interaction terms.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sales</span> <span class="op">~</span> <span class="va">.</span> <span class="op">+</span> <span class="va">Income</span><span class="op">:</span><span class="va">Advertising</span> <span class="op">+</span> <span class="va">Price</span><span class="op">:</span><span class="va">Age</span>, </span>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sales</span> <span class="op">~</span> <span class="va">.</span> <span class="op">+</span> <span class="va">Income</span><span class="op">:</span><span class="va">Advertising</span> <span class="op">+</span> <span class="va">Price</span><span class="op">:</span><span class="va">Age</span>, </span>
 <span>    data <span class="op">=</span> <span class="va">Carseats</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm.fit</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3427,7 +3466,7 @@ F-statistic:   210 on 13 and 386 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>The <code><a href="https://rdrr.io/r/stats/contrasts.html">contrasts()</a></code> function returns the coding that <code>R</code> uses for the dummy variables.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">Carseats</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">Carseats</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">ShelveLoc</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Good Medium
@@ -3442,18 +3481,18 @@ Medium    0      1</code></pre>
 <span class="header-section-number">2.11.7</span> Writing Functions</h3>
 <p>As we have seen, <code>R</code> comes with many useful functions, and still more functions are available by way of <code>R</code> libraries. However, we will often be interested in performing an operation for which no function is available. In this setting, we may want to write our own function. For instance, below we provide a simple function that reads in the <code>ISLR2</code> and <code>MASS</code> libraries, called <code>LoadLibraries()</code>. Before we have created the function, <code>R</code> returns an error if we try to call it.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LoadLibraries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LoadLibraries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'LoadLibraries' not found</code></pre>
 </div>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">LoadLibraries</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">LoadLibraries</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in LoadLibraries(): could not find function "LoadLibraries"</code></pre>
 </div>
 </div>
 <p>We now create the function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LoadLibraries</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LoadLibraries</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com">ISLR2</a></span><span class="op">)</span></span>
 <span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"The libraries have been loaded."</span><span class="op">)</span></span>
@@ -3461,7 +3500,7 @@ Medium    0      1</code></pre>
 </div>
 <p>Now if we type in <code>LoadLibraries</code>, <code>R</code> will tell us what is in the function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LoadLibraries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LoadLibraries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function() {
  library(ISLR2)
@@ -3472,7 +3511,7 @@ Medium    0      1</code></pre>
 </div>
 <p>If we call the function, the libraries are loaded in and the print statement is output.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">LoadLibraries</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">LoadLibraries</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "The libraries have been loaded."</code></pre>
 </div>
@@ -3482,7 +3521,6 @@ Medium    0      1</code></pre>
 ## Assignment
 
 Consider the following data generating process: 
-
 
 
 
@@ -3511,13 +3549,11 @@ myDataGenerator <- function(){
 
 
 
-
 Each time you call the function `myDataGenerator()`, you generate a new realization of the random sample
 $$
 ((Y_1,X_1^{\top}),\dots,(Y_n,X_n^{\top}))
 $$
 as defined by the data generating process specified in the function-body of `myDataGenerator()`
-
 
 
 
@@ -3534,19 +3570,18 @@ head(data_sim)
 ::: {.cell-output .cell-output-stdout}
 
 ```
-           Y          X
-1  -1.906151  0.0393716
-2  -7.279944 -1.9353581
-3 -22.660882 -1.8091601
-4  10.110972  1.7174027
-5  13.001161  1.0771422
-6   6.745764 -1.1956775
+           Y           X
+1 -0.9360497  1.13830107
+2 -9.4483085 -1.96228038
+3  7.5802997  1.11626353
+4  7.2709681  0.91756261
+5  0.1722187  0.52052741
+6 -5.6796061 -0.07635668
 ```
 
 
 :::
 :::
-
 
 
 

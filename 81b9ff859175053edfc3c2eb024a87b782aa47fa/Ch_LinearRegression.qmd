@@ -2343,7 +2343,7 @@ $$
 Compute the out-of-sample $R_{OOS}^2=r^2_{Y,\hat{Y}_{\text{Test}}}$ when estimating the true model and when estimating the best model from part (a). What do you observe? 
 
 
-**Problems (Nov. 17, 2025):**
+**Problems (Nov. 17 and 24, 2025):**
 
 
 * Consider the (usually unknonw) data generating process (simple linear regression model) of last week's problem (Nov. 10, 2025). 
@@ -2368,8 +2368,32 @@ Generate one realization of the data generating process and ...
       * Does this result fit to the computed estimates $\widehat{\operatorname{SE}}(\hat\beta_0|X)$ and $\widehat{\operatorname{SE}}(\hat\beta_1|X)$?
 
 
+**Problems (Dec. 1, 2025):**
+
+Look at the following data generating process (DGP): 
+
+```{r}
+set.seed(123)
+n     <- 100                          # Sample size
+X     <- runif(n, 0, 10)              # Predictor variable
+error <- rnorm(n, mean = 0, sd = 2)   # True (usually unknown) error
+beta_0 <- 2
+beta_1 <- 0.1
+Y      <- beta_0 + beta_1 * X + error # Y variable
+```
 
 
+**Problems:**
+
+(a) Generate *one* realization of the DGP and use the $t$-test to test ($\alpha=0.05$): 
+    * **False Null-Hypothesis:** $H_0\colon \beta_1 = 0$ against $H_1\colon \beta_1 \neq 0$ 
+    * **True Null-Hypothesis:** $H_0\colon \beta_1 = 0.1$ against $H_1\colon \beta_1 \neq 0.1$ 
+
+(b) Now repeat the above test 10000 times and compute the relative frequencies of rejecting $H_0$ when using the $t$-test to test ($\alpha=0.05$): 
+    * **False Null-Hypothesis:** $H_0\colon \beta_1 = 0$ against $H_1\colon \beta_1 \neq 0$ 
+    * **True Null-Hypothesis:** $H_0\colon \beta_1 = 0.1$ against $H_1\colon \beta_1 \neq 0.1$
+
+(c) What are your conclusions? 
 
 ## Exercises 
 
