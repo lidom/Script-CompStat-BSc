@@ -1,9 +1,13 @@
-## Comparison: Linear Regression vs. K-NN Regression
+<!-- LTeX: language=en-US -->
+# Comparison: Parametric vs. Nonparametric Regression
 
-
-Linear regression is an example of a parametric approach because it assumes a linear model form for 
+Linear regression is an example of a parametric regression model because it parametrizes the general regression model 
 $$
-f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
+Y_i = f(X_i) + \epsilon_i 
+$$
+using a linear model assumption, such that
+$$
+f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}.
 $$
 
 **Advantages of parametric approaches:**
@@ -26,26 +30,26 @@ $$
 **Non-parametric methods** such as **K-nearest neighbors regression** since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
 
 
-### K-Nearest Neighbors (K-NN) Regression 
+## K-Nearest Neighbors (K-NN) Regression 
 
 
 Let $x_0\in\mathbb{R}^p$ denote a certain (multivariate) predictor value at which we want to estimate 
 $$
 f(x_0)
 $$
-and let $K$ denote the number of closest predictior value neighbors of $x_0.$
+and let $K$ denote the number of closest predictor value neighbors of $x_0.$
 
-KNN regression regression then computes the estimate 
+KNN regression then computes the estimate 
 $$
 \hat{f}_K(x_0)
 $$ 
 in two steps: 
 
-1. Compute the distances between $x_0$ and all training data predictior values $X_1,\dots,X_{n_{Train}}$
+1. Compute the distances between $x_0$ and all training data predictor values $X_1,\dots,X_{n_{Train}}$
 $$
 d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
 $$
-Use these distances to identify the $K$ training data predictior values $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
+Use these distances to identify the $K$ training data predictor values $X_1,\dots,X_{n_{Train}}$ that are closest to $x_0$ and collect their indices the index set $\mathcal{N}_0,$ where
 $$
 \begin{align*}
 \mathcal{N}_0 
@@ -58,7 +62,7 @@ $$
 \hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
 $$
 
-The above two steps are then repeated for all predictior values $x_0\in\mathbb{R}^p$ of interest.
+The above two steps are then repeated for all predictor values $x_0\in\mathbb{R}^p$ of interest.
 
 
 The performance of the estimator $\hat{f}_K(x_0)$ depends on 
@@ -66,14 +70,14 @@ The performance of the estimator $\hat{f}_K(x_0)$ depends on
 * the choice of $K$ and 
 * the choice of distance $d$ 
 
-For real valued predictors, $x_0,X_i\in\mathbb{R}^p$ a usual choice is the Euclidian distance 
+For real valued predictors, $X_i\in\mathbb{R}^p$ a usual choice is the Euclidian distance 
 $$
 d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
 $$
 
 ::: {.callout-important}
 # Use Standardized Predictors! 
-Typically, it is important to compute the distances with respect to the standardized (centering, and scaling to unit variance) predictor variables; i.e.
+Typically, it is important to compute the distances with respect to the **standardized** (centering, and scaling to unit variance) predictor variables; i.e.
 $$
 d^*_E(x_0, X_i) = ||x^*_0 - X^*_i||^2 = \sum_{j=1}^p (x^*_{0j} - X^*_{ij})^2,
 $$
@@ -95,6 +99,486 @@ $$
 \frac{X_{1j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}},\dots,\frac{X_{n_{Train}j} - \bar{X}_{j}}{\sqrt{\frac{1}{n_{Train}}\sum_{i=1}^{n_{Train}}(X_{ij}-\bar{X}_{j})^2}}
 $$  -->
 :::
+
+The problem is now, to find the optimal value for $K.$ 
+
+## Assessing Model Accuracy
+
+It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
+
+Let 
+$$
+\{(X_{1}^{Test},Y_{1}^{Test}),(X_{2}^{Test},Y_{2}^{Test}),\dots,(X_{n_{Test}}^{Test},Y_{n_{Test}}^{Test})\},
+$${#eq-trainingsample}
+denote the **test data random sample**, where 
+$$
+(X_{i}^{Test},Y_{i}^{Test})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
+$$ 
+with $(X,Y)$ being defined by the general regression model 
+$$
+Y=f(X)+\epsilon.
+$$ 
+
+
+That is, the new test data is **random sample**, which ...
+
+1. is independent of the training data random sample 
+2. has the same distribution as the training data random sample
+
+The observed realization 
+$$
+\{(X_{1,obs}^{Test},Y_{1,obs}^{Test}),(X_{2,obs}^{Test},Y_{2,obs}^{Test}),\dots,(X_{n_{Test},obs}^{Test},Y_{n_{Test},obs}^{Test})\},
+$$
+of the test data random sample is used to check the accuracy of the estimate $\hat{f}.$ 
+
+In the following, we will often supress the subscript "obs", since often both points of view---the random variables points of view and the observed realizations points of view---make sense.
+
+### Measuring the Accuracy of the Model Fit {#sec-mqfit}
+
+#### **Global Training Data MSE** {-}
+
+A commonly used measure for the model fit is the mean squared (prediction) error (MSE). 
+
+The global **training data MSE** is given by
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n_{Train}}\sum_{i=1}^n\left(Y_i - \hat{f}(X_i)\right)^2,
+\end{align*}
+where 
+
+* $\hat{f}$ is computed from the training data
+* $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
+
+In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
+
+<!-- In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$ -->
+
+
+<!-- **Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
+or next month's price.  -->
+
+<!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
+
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
+
+
+#### **Local Test Data MSE** {-}
+
+Let $\hat{f}$ be computed from the training data $\{(X_1,Y_1),\dots,(X_n,Y_{n_{Train}})\}.$ And let 
+$$
+\{(x_{0},Y^{Test}_{1}),(x_{0},Y^{Test}_{2})\dots,(x_{0},Y^{Test}_{n_{Test}})\}
+$$
+denote a specific set of $n_{Test}$ **test data points** $Y^{Test}_{1},\dots,Y^{Test}_{n_{Test}}$ for a **specific predictor value** $x_0.$ 
+
+This type of $x_0$-specific test data is a realization of a **conditional random sample** given $X=x_0,$
+$$
+(x_{0},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,n_{Test}.
+$$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+
+Then, the **point-wise (local) test MSE** at $X=x_0$ is given by,
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}(x_0)= \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y^{Test}_{i} - \hat{f}(x_{0})\right)^2.
+\end{align*}
+
+
+
+The **local test MSE** $\widehat{\operatorname{MSE}}_{\text{test}}(x_0)$ is an estimator of the population version of the local Mean Squared (Prediction) Error of $\hat{f}$
+$$
+\begin{align*}
+\operatorname{MSE}(x_0) 
+&= E\left[(Y - \hat{Y})^2|X=x_0\right]\\
+&= E\left[(Y - \hat{f}(X))^2|X=x_0\right].
+\end{align*}
+$$
+
+#### **Global Test Data MSE** {-}
+
+
+Typically, we do not have access to such $x_0$-specific test data. Moreover, we typically we want that a method has **globally**, i.e. for all predictor values in the range of $X$, a low test MSE (not only locally at a certain given value $x_0$). Let 
+$$
+\{(X^{Test}_{1},Y^{Test}_{1}),(x^{Test}_{2},Y^{Test}_{2})\dots,(X_{n_{Test}},Y_{n_{Test}}^{Test})\}
+$$
+denote the set of $n_{Test}$ test data points with different predictor values $X_{1}^{Test},\dots,X_{n_{Test}}^{Test}$. This type of test data is a realization of a random sample 
+$$
+(X^{Test}_{i},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
+$$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+
+
+
+Then, the **global test MSE** is given by,
+$$
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test} - \hat{f}(X_{i}^{Test})\right)^2.
+\end{align*}
+$$
+
+The **global test MSE** $\widehat{\operatorname{MSE}}_{\text{test}}$ is an estimator of the population version of the global Mean Squared (Prediction) Error of $\hat{f}$
+$$
+\begin{align*}
+\operatorname{MSE} 
+&= E\left[(Y - \hat{Y})^2\right]\\
+&= E\left[(Y - \hat{f}(X))^2\right].
+\end{align*}
+$$
+
+
+
+### The Local Bias-Variance Trade-Off
+
+One can show that 
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}(x_0)= \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y^{Test}_{i} - \hat{f}(x_{0})\right)^2.
+\end{align*}
+is an **unbiased estimator** of the true (unknown) Mean Squared (Prediction) Error of $\hat{f}(x_0)$
+$$
+\begin{align*}
+\operatorname{MSE}(x_0) 
+& = E\left[(Y - \hat{Y})^2|X=x_0\right]\\
+&=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{\text{Mean Squared Prediction Error of $\hat{f}(x_0)$}},
+\end{align*}
+$$ 
+i.e., that
+$$
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}
+$${#eq-MSEUnbiased}
+
+
+::: {.callout collapse="true"}
+
+# Proof of @eq-MSEUnbiased:
+$$
+\begin{align*}
+E\left[\widehat{\operatorname{MSE}}_{Test}(x_0)\right] 
+& =E\left[\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& \text{By the linearity of $E()$:}\\[2ex]
+& =\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}E\left[\left(Y_{i}^{Test}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+%& =\frac{1}{n_{Test}}\,\sum_{i=1}^{n_{Test}}\,E\left[\left(Y_{1}^{Test}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& \text{Using that $Y_{i}^{Test}$ and $\hat{f}$ are iid across $i=1,\dots,n_{Test}$:}\\[2ex]
+& =\frac{1}{n_{Test}}\,E\left[\left(Y^{Test}- \hat{f}(x_0)\right)^2\right]\,\sum_{i=1}^{n_{Test}} 1\\[2ex]
+& =\frac{1}{n_{Test}}\,n_{Test}\,E\left[\left(Y^{Test}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =E\left[\left(Y^{Test}- \hat{f}(x_0)\right)^2\right]\\[2ex]
+& \text{Using that}\;Y^{Test}=f(x_0)+\epsilon^{Test}\\[2ex]
+& =E\left[\left(f(x_0) + \epsilon^{Test} - \hat{f}(x_0)\right)^2\right]\\[2ex]
+& =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2 +2\left(f(x_0)- \hat{f}(x_0)\right)\epsilon^{Test} + (\epsilon^{Test})^2 \right]\\[2ex]
+& =E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]\\[2ex] 
+&+ \underbrace{2E\left[\left(f(x_0)- \hat{f}(x_0)\right)\right]\overbrace{E\left[\epsilon^{Test}\right]}^{=0}}_{\text{using independence between training (in $\hat{f}$) and testing data}}\\[2ex] 
+&+ \underbrace{E\left[(\epsilon^{Test})^2 \right]}_{=Var(\epsilon^{Test})}\\[2ex]
+& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{Mean Squared Estimation Error of $\hat{f}(x_0)$}}+0+Var(\epsilon^{Test})\\[2ex] 
+& =\underbrace{E\left[\left(f(x_0)- \hat{f}(x_0)\right)^2\right]}_{\text{reducable}}+\overbrace{\underbrace{Var(\epsilon^{Test})}_{\text{irreducable}}}^{=\sigma^2}\\[2ex] 
+\end{align*}
+$$
+:::
+
+
+<!-- The **expected MSE** at $x_0,$ 
+$$
+E\left[\operatorname{MSE}_{test}(x_0)\right],
+$$ 
+refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using training data set, and evaluated each at $x_0.$  
+-->
+
+<!-- 
+::: {.callout-note}
+A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding challenge) is not able to consistently approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$
+
+However, to get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$ This will be (among others) the topic of  @sec-resamplingmethods.
+::: 
+-->
+
+
+The mean squared estimation error of $\hat{f}(x_0)$ can be further decomposed into a variance component and a squared bias component, i.e.
+$$
+E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right] = 
+Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2
+$${#eq-MSEBiasVar}
+
+::: {.callout collapse="true"}
+
+# Proof of @eq-MSEBiasVar:
+
+<br>
+
+$$
+\begin{align*}
+&   E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right]\\[2ex]
+& = E\left[\left(\hat{f}(x_0) - f(x_0)\right)^2\right]\\[2ex]
+&\text{Adding $0=E[\hat{f}(x_0)] - E[\hat{f}(x_0)]$ yields}\\[2ex]
+& = E\left[\left(\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\} - \left\{ f(x_0)- E[\hat{f}(x_0)]\right\}\right)^2\right]\\[2ex]
+& = \overbrace{E\left[\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\}^2\right]}^{=Var\left(\hat{f}(x_0)\right)} + \overbrace{E\left[\left\{ f(x_0)- E[\hat{f}(x_0)]\right\}^2\right]}^{=\left\{E[\hat{f}(x_0)] - f(x_0) \right\}^2}\\[2ex]
+& \;\; -2\;\; \underbrace{E\left[\left\{\hat{f}(x_0) - E[\hat{f}(x_0)]\right\} \cdot 
+                 \left\{ f(x_0)- E[\hat{f}(x_0)]\right\}\right]}_{=E\left[\hat{f}(x_0)f(x_0)
+                                                                         -\hat{f}(x_0)E\left[\hat{f}(x_0)\right]
+                                                                         -     f(x_0) E\left[\hat{f}(x_0)\right]
+                                                                         +\left(E\left[\hat{f}(x_0)\right]\right)^2\right]}\\[2ex]
+& = Var\left(\hat{f}(x_0)\right) + \Big\{\;\overbrace{E[\hat{f}(x_0)] - f(x_0)}^{=\operatorname{Bias}\left(\hat{f}(x_0)\right)}\; \Big\}^2\\[2ex]
+& \;\; -2\;\; \underbrace{E\left[\hat{f}(x_0)f(x_0) -\hat{f}(x_0)E\left[\hat{f}(x_0)\right]
+                                                                         -     f(x_0) E\left[\hat{f}(x_0)\right]
+                                                                         +\left(E\left[\hat{f}(x_0)\right]\right)^2\right]}_{= 0
+                                                                         }\\[2ex]                  
+% = E\left[\hat{f}(x_0)\right]f(x_0) - \left(E\left[\hat{f}(x_0)\right]\right)^2 - f(x_0) E\left[\hat{f}(x_0)\right]+\left(E\left[\hat{f}(x_0)\right]\right)^2                                                                          
+& = \underbrace{Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2}_{\text{reducible}} 
+\end{align*}
+$$
+:::
+
+#### Variance of $\hat{f}$ at $x_0$ {-}
+$$
+Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
+$$
+**Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ Ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
+
+
+
+
+#### Bias of $\hat{f}$ at $x_0$ {-}
+$$
+\operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
+$$
+**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
+
+Note that 
+$$
+Var\left(\hat{f}(x_0)\right)\geq 0
+$$ 
+and that 
+$$
+\left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2\geq 0.
+$$
+Thus, the expected test MSE can never lie below of $Var(\epsilon),$ i.e.
+$$
+\begin{align*}
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right] 
+=\operatorname{MSE}(x_0)
+%& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
+\geq Var\left(\epsilon\right)=\sigma^2.
+\end{align*}
+$$
+
+
+
+
+
+
+### The Global Bias-Variance Trade-Off
+
+
+::: {.callout}
+
+The overall, i.e., **global** MSE can be computed by averaging the local $\operatorname{MSE}(x_0)$ over all possible values of $x_0,$ i.e.
+$$
+E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
+$$
+
+We can estimate the global MSE using 
+$$
+\widehat{\operatorname{MSE}}_{test} = \frac{1}{m}\sum_{i=1}^m\left(y_{0i}-\hat{f}(x_{0i})\right)^2.
+$$
+:::
+
+
+
+
+## Under Revision
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Population Version of the Mean Squared (Prediction) Error 
+
+Consider a **given** estimate $\hat{f}$ and a **given** predictor $X,$ which yields a **given** prediction $\hat{Y} = \hat{f}(X).$ That is, assume for a moment that both $\hat{f}$ and $X$ are **fixed**, so that the only variability comes from $\epsilon.$ Then, it is easy to show that
+$$
+\begin{align*}
+\overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
+=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}, 
+\end{align*}
+$${#eq-MSEDecompFixed}
+where 
+
+* $E\left[(Y - \hat{Y})^2\right]$ represents the expected value, of the squared difference between the predicted $\hat{Y}=\hat{f}(X)$ and actual value of $Y,$ 
+* and $Var(\epsilon)$ represents the variance associated with the error term $\epsilon.$
+
+
+Derivation of @eq-MSEDecompFixed for a **given** $\hat{f}$ and a **given** $X;$ i.e. only $\epsilon$ is random: 
+$$
+\begin{align*}
+&E\left[(Y - \hat{Y})^2\right]\\[2ex] 
+&\text{[using $Y=f(X)+\epsilon$]}\\[2ex]
+&=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right]\\[2ex]
+&=E\left[((f(X)- \hat{f}(X)) + \epsilon )^2\right]\\[2ex]
+&\text{[binomial formula]}\\[2ex]
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex] 
+&\text{[using that $X$ and $\hat{f}$ are fixed]}\\[2ex]
+% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&\text{[using that $E(\epsilon)=0$ and $E(\epsilon^2)=Var(\epsilon)=\sigma^2$]}\\[2ex]
+&=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
+&=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
+\end{align*}
+$$
+
+Thus, the variance of the irreducible prediction error equals the **lowest possible value** of the mean squared (prediction) error, i.e. 
+$$
+E\left[(Y - \hat{Y})^2\right]\geq Var\left(\epsilon\right). 
+$$
+
+
+The same can be done for the local version of the MSE: 
+$$
+\begin{align*}
+&E\left[(Y - \hat{Y})^2|X=x_0\right]\\[2ex] 
+&\text{[using $Y=f(X)+\epsilon$]}\\[2ex]
+&=E\left[(f(X) + \epsilon - \hat{f}(X))^2\right]\\[2ex]
+&=E\left[((f(X)- \hat{f}(X)) + \epsilon )^2\right]\\[2ex]
+&\text{[binomial formula]}\\[2ex]
+&=E\left[\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right)\epsilon + \epsilon^2\right]\\[2ex] 
+&\text{[using that $X$ and $\hat{f}$ are fixed]}\\[2ex]
+% &=E\left[\left(f(X) -\hat{f}(X)\right)^2\right] - 2E\left[\left(f(X) -\hat{f}(X)\right)\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) E\left[\epsilon\right] + E\left[\epsilon^2\right] \\[2ex] 
+&\text{[using that $E(\epsilon)=0$ and $E(\epsilon^2)=Var(\epsilon)=\sigma^2$]}\\[2ex]
+&=\left(f(X) -\hat{f}(X)\right)^2 + 2\left(f(X) -\hat{f}(X)\right) \cdot 0 + Var\left(\epsilon\right) \\[2ex]
+&=\underbrace{\left(f(X) -\hat{f}(X)\right)^2}_{\text{reducable}} + \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}
+\end{align*}
+$$
+
+
+
+
+For a really good estimate $\hat{f}$ of $f,$ we expect that $\hat{f}(X)\approx f(X)$ such that
+$$
+E\left[(Y - \hat{Y})^2\right] \approx \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}.
+$$
+For a bad estimate $\hat{f}$ of $f,$ however, we expect that  
+$$
+E\left[(Y - \hat{Y})^2\right] \gg \underbrace{Var\left(\epsilon\right)}_{\text{irreducable}}.
+$$
+
+Connecting the **global test MSE** with the population MSE:
+
+
+The unknown MSE $E\left[(Y - \hat{Y})^2\right]$ can be estimated using the **global test MSE:**
+$$
+E\left[(Y - \hat{Y})^2\right] \approx \widehat{\operatorname{MSE}}_{\text{test}}.
+$$
+
+Thus, if $\hat{f}$ is a really good estimate of $f,$ i.e. if $\hat{f}(X_i^{Test})\approx f(X_i^{Test}),$ then 
+$$
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}
+&=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i} - \hat{f}(X_{i}^{Test})\right)^2\\
+&\approx\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test} - f(X_{i}^{Test})\right)^2\\
+&=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}(\epsilon_{i}^{Test})^2\\
+&=\hat{\sigma}^2\\ 
+&\approx \sigma^2. 
+\end{align*}
+$$
+For a bad estimate $\hat{f}$ of $f,$ however, we expect that  
+$$
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}
+&=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i} - \hat{f}(X_{i}^{Test})\right)^2\\
+&\gg \sigma^2. 
+\end{align*}
+$$
+
+
+::: {.callout-important}
+
+The training data MSE is **not able** to estimate the mean squared (prediction) error 
+$$
+E\left[(Y - \hat{Y})^2\right].
+$$
+:::
+
+
+<br>
+
+### Global Training and Test MSE in Nonparametric Smoothing Spline Regression {-}
+
+Figure 2.9 shows training and test MSEs for smoothing spline (`R` command `smooth.spline()`) estimates $\hat{f}$ in the case of 
+
+* a moderately complex $f$ 
+* a moderate signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
+
+![](images/Fig_2_9.png)
+
+<br>
+
+Figure 2.10 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a very simple $f$ 
+* a moderate signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
+
+![](images/Fig_2_10.png)
+
+<br>
+
+Figure 2.11 shows training and test MSEs for smoothing spline estimates $\hat{f}$ in the case of 
+
+* a moderately complex $f$
+* a very large signal-to-noise ratio $\frac{Var(f(X))}{Var(\epsilon)}$
+
+![](images/Fig_2_11.png)
+
+<br>
+
+
+
+
+In practice, one can usually compute the training MSE with relative ease, but estimating the test MSE is considerably more difficult because usually no test data are available. 
+
+As the three examples in Figures 2.9, 2.10, and 2.11 of our textbook illustrate, the flexibility level corresponding to the model with the minimal test MSE can vary considerably. 
+
+Throughout this book, we discuss a variety of approaches that can be used in practice to estimate the minimum point of the test MSE. 
+
+One important method is **cross-validation**, which is a method for estimating the test MSE using the training data.
+
+
+
+
+
+<!-- $$
+E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
+$$ -->
+
+
+
+
+
+![](images/Fig_2_12.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
