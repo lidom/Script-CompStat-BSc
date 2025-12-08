@@ -427,7 +427,7 @@ Y_i
 \end{align*}
 where the training data has a sample size of $n_{Train}=100,$ the error term is iid normal 
 $$
-\epsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,1),
+\epsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,1),,\quad i=1,\dots,n_{Train},
 $$
 and the predictor values are deterministic and equidistant, i.e.,
 $$
