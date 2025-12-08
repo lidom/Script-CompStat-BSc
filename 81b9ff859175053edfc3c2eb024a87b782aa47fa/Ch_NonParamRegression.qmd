@@ -436,9 +436,9 @@ $$
 
 **Problems:**
 
-(a) Programm KNN-Regression Estimator $\hat{f}_K(x_0).$ Compute the KNN-Regression estimation $\hat{f}_K(x_0)$ for $K=5$ and $x_0 = 0.2.$ Compare the result with the true regression function value $f(0.2).$
+(a) Programm the KNN-Regression estimator $\hat{f}_K(x_0).$ Compute the KNN-Regression estimation $\hat{f}_K(x_0)$ for $K=5$ and $x_0 = 0.2.$ Compare the result with the true regression function value $f(0.2).$
 
-(b) Compute the KNN-Regression estimation for $K=5$ and a *dense* $x$-grid between 0 and 1 (e.g. `seq(0,1,len=500)`) and compare the results with the true regression function values using a plot.
+(b) Compute the KNN-Regression estimation for $K=5$ and a *dense* $x$-grid between 0 and 1 (e.g. `seq(0,1,len=1000)`) and compare the results with the true regression function values using a plot.
 
 (c) Generate $200$ estimation results $\hat{f}_K(x_0)$ for $x0 = 0.2$ using $200$ independent training data set. Plot the results along with their sample means and the true $f(0.2)$ value using plots for different values of $K=1,\dots,K.$ 
 
