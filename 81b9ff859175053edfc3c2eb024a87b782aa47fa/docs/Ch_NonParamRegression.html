@@ -602,10 +602,10 @@ Large <span class="math inline">\(K\)</span>
 </section>
 <section id="in-class-coding-exercises" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="in-class-coding-exercises"><span class="header-section-number">4.3</span> In Class Coding Exercises</h2>
-<p>Consider the following multiple linear regression model: <span class="math display">\[\begin{align*}
+<p>Consider the following regression model: <span class="math display">\[\begin{align*}
 Y_i
-&amp; = f(x)+ \epsilon_i\\
-&amp; = 5+ 3\sin(2\pi x) + \epsilon_i,
+&amp; = f(X_i)+ \epsilon_i\\
+&amp; = 5+ 3\sin(2\pi\,X_i) + \epsilon_i,
 \end{align*}\]</span> where the training data has a sample size of <span class="math inline">\(n_{Train}=100,\)</span> the error term is iid normal <span class="math display">\[
 \epsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,1),
 \]</span> and the predictor values are deterministic and equidistant, i.e., <span class="math display">\[
@@ -613,7 +613,7 @@ X_i=\frac{i}{n},\quad i=1,\dots,n_{Train}.
 \]</span></p>
 <p><strong>Problems:</strong></p>
 <ol type="a">
-<li><p>Programm KNN-Regression Estimator <span class="math inline">\(\hat{f}_K(x_0).\)</span> Compute the KNN-Regression estimation <span class="math inline">\(\hat{f}_K(x_0)\)</span> for <span class="math inline">\(K=5\)</span> and <span class="math inline">\(x0 = 0.2.\)</span> Compare the result with the true regression function value <span class="math inline">\(f(0.2).\)</span></p></li>
+<li><p>Programm KNN-Regression Estimator <span class="math inline">\(\hat{f}_K(x_0).\)</span> Compute the KNN-Regression estimation <span class="math inline">\(\hat{f}_K(x_0)\)</span> for <span class="math inline">\(K=5\)</span> and <span class="math inline">\(x_0 = 0.2.\)</span> Compare the result with the true regression function value <span class="math inline">\(f(0.2).\)</span></p></li>
 <li><p>Compute the KNN-Regression estimation for <span class="math inline">\(K=5\)</span> and a <em>dense</em> <span class="math inline">\(x\)</span>-grid between 0 and 1 (e.g.&nbsp;<code>seq(0,1,len=500)</code>) and compare the results with the true regression function values using a plot.</p></li>
 <li><p>Generate <span class="math inline">\(200\)</span> estimation results <span class="math inline">\(\hat{f}_K(x_0)\)</span> for <span class="math inline">\(x0 = 0.2\)</span> using <span class="math inline">\(200\)</span> independent training data set. Plot the results along with their sample means and the true <span class="math inline">\(f(0.2)\)</span> value using plots for different values of <span class="math inline">\(K=1,\dots,K.\)</span></p></li>
 </ol>
