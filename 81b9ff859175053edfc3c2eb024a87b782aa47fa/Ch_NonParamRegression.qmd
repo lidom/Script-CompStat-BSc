@@ -1,11 +1,11 @@
 <!-- LTeX: language=en-US -->
-# Comparison: Parametric vs. Nonparametric Regression
+# Parametric vs. Nonparametric Regression
 
-Linear regression is an example of a parametric regression model because it parametrizes the general regression model 
+The linear regression model as considered in @sec-linearRegCh is an example of a **parametric** regression model because it parametrizes the general regression model 
 $$
 Y_i = f(X_i) + \epsilon_i 
 $$
-using a linear model assumption, such that
+using a linear model assumption (Assumption 1 in @sec-linearRegCh), such that
 $$
 f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}.
 $$
@@ -25,25 +25,35 @@ f(X_i) \neq \beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
 $$
 
 
-**Alternative:** 
-
-**Non-parametric methods** such as **K-nearest neighbors regression** since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
+**Alternative:** **Non-parametric methods** such as **K-nearest neighbors regression** since non-parametric approaches do not explicitly assume a parametric form for $f(X).$
 
 
 ## K-Nearest Neighbors (K-NN) Regression 
 
+Let 
+$$
+Y_i = f(X_i) + \epsilon_i 
+$$
+denote the **general regression model.** 
+
+
+In the following, we do not assume a certain parametric model form for $f(x),$ but only make the **qualitative assumption** that $f$ is a sufficiently **smooth** function, such that 
+$$
+|f(x_1)-f(x_2)|\approx 0\quad\text{if}\quad d(x_1,x_2)\approx 0,
+$$
+where $d(x_1,x_2)$ measures the distance (e.g. $d(x_1,x_2)=||x_1-x_2||$) between the points $x_1$ and $x_2.$
+
 
 Let $x_0\in\mathbb{R}^p$ denote a certain (multivariate) predictor value at which we want to estimate 
 $$
-f(x_0)
+f(x_0).
 $$
-and let $K$ denote the number of closest predictor value neighbors of $x_0.$
 
-KNN regression then computes the estimate 
+**KNN regression** estimates $f(x_0)$ by 
 $$
-\hat{f}_K(x_0)
+\hat{f}_K(x_0),
 $$ 
-in two steps: 
+where $\hat{f}_K(x_0)$ is computed in two steps: 
 
 1. Compute the distances between $x_0$ and all training data predictor values $X_1,\dots,X_{n_{Train}}$
 $$
@@ -56,10 +66,12 @@ $$
 & =\{i\in\{1,2,\dots,n_{Train}\} \; |\; d(x_0,X_i)\text{ is one of the $K$ smallest distances}\}
 \end{align*}
 $$ 
-such that $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}$ with $|\mathcal{N}_0|=K.$
-2. Estimate $f(x_0)$ using the sample average of all the training responses $y_i$ with $i\in\mathcal{N}_0,$ i.e. 
+such that 
+     * $\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}$ 
+     * $|\mathcal{N}_0|=K$ (number of elements in $\mathcal{N}_0$)
+2. Estimate $f(x_0)$ using the sample average of all the training responses $Y_i$ with $i\in\mathcal{N}_0,$ i.e. 
 $$
-\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
+\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}Y_i.
 $$
 
 The above two steps are then repeated for all predictor values $x_0\in\mathbb{R}^p$ of interest.
@@ -70,7 +82,7 @@ The performance of the estimator $\hat{f}_K(x_0)$ depends on
 * the choice of $K$ and 
 * the choice of distance $d$ 
 
-For real valued predictors, $X_i\in\mathbb{R}^p$ a usual choice is the Euclidian distance 
+For real valued predictors, $X_i\in\mathbb{R}^p$ a usual choice is the **Euclidian distance** 
 $$
 d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
 $$
@@ -102,53 +114,13 @@ $$  -->
 
 The problem is now, to find the optimal value for $K.$ 
 
-## Assessing Model Accuracy
-
-It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
-
-Let 
-$$
-\{(X_{1}^{Test},Y_{1}^{Test}),(X_{2}^{Test},Y_{2}^{Test}),\dots,(X_{n_{Test}}^{Test},Y_{n_{Test}}^{Test})\},
-$${#eq-trainingsample}
-denote the **test data random sample**, where 
-$$
-(X_{i}^{Test},Y_{i}^{Test})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
-$$ 
-with $(X,Y)$ being defined by the general regression model 
-$$
-Y=f(X)+\epsilon.
-$$ 
+**Idea:** Choose $K$ by minimizing the mean squared (prediction) error.
 
 
-That is, the new test data is **random sample**, which ...
+## Local Mean Squared (Prediction) Error (MSE) {#sec-mqfit}
 
-1. is independent of the training data random sample 
-2. has the same distribution as the training data random sample
+A fair and reliable assessment of the model accuracy requires **testing data**, i.e., data which comes from the same data generating process as the **training data**, but which was not used to compute (train) the estimator. 
 
-The observed realization 
-$$
-\{(X_{1,obs}^{Test},Y_{1,obs}^{Test}),(X_{2,obs}^{Test},Y_{2,obs}^{Test}),\dots,(X_{n_{Test},obs}^{Test},Y_{n_{Test},obs}^{Test})\},
-$$
-of the test data random sample is used to check the accuracy of the estimate $\hat{f}.$ 
-
-In the following, we will often supress the subscript "obs", since often both points of view---the random variables points of view and the observed realizations points of view---make sense.
-
-### Measuring the Accuracy of the Model Fit {#sec-mqfit}
-
-#### **Global Training Data MSE** {-}
-
-A commonly used measure for the model fit is the mean squared (prediction) error (MSE). 
-
-The global **training data MSE** is given by
-\begin{align*}
-\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n_{Train}}\sum_{i=1}^n\left(Y_i - \hat{f}(X_i)\right)^2,
-\end{align*}
-where 
-
-* $\hat{f}$ is computed from the training data
-* $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
-
-In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
 
 <!-- In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$ -->
 
@@ -158,7 +130,9 @@ or next month's price.  -->
 
 <!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
 
-Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
+<!-- In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
+
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE.  -->
 
 
 #### **Local Test Data MSE** {-}
@@ -169,11 +143,18 @@ $$
 $$
 denote a specific set of $n_{Test}$ **test data points** $Y^{Test}_{1},\dots,Y^{Test}_{n_{Test}}$ for a **specific predictor value** $x_0.$ 
 
+
+::: {.callout-tip}
 This type of $x_0$-specific test data is a realization of a **conditional random sample** given $X=x_0,$
 $$
 (x_{0},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,n_{Test}.
 $$ 
+I.e, the test data $(x_{0},Y^{Test}_{i}),$ is generated using iid realization from 
+$$
+Y^{Test}_{i} = f(x_0) +  \epsilon^{Test}_{i}, \quad i=1,\dots,n_{Test}.
+$$
 This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+:::
 
 Then, the **point-wise (local) test MSE** at $X=x_0$ is given by,
 \begin{align*}
@@ -182,7 +163,7 @@ Then, the **point-wise (local) test MSE** at $X=x_0$ is given by,
 
 
 
-The **local test MSE** $\widehat{\operatorname{MSE}}_{\text{test}}(x_0)$ is an estimator of the population version of the local Mean Squared (Prediction) Error of $\hat{f}$
+This **local test MSE** is an **estimator** of the population version of the local Mean Squared (Prediction) Error of $\hat{f}$
 $$
 \begin{align*}
 \operatorname{MSE}(x_0) 
@@ -191,37 +172,25 @@ $$
 \end{align*}
 $$
 
-#### **Global Test Data MSE** {-}
+**KNN-Regression**: 
 
+For the KNN-regression estimator $\hat{f}_K(x_{0})$ we have that
 
-Typically, we do not have access to such $x_0$-specific test data. Moreover, we typically we want that a method has **globally**, i.e. for all predictor values in the range of $X$, a low test MSE (not only locally at a certain given value $x_0$). Let 
-$$
-\{(X^{Test}_{1},Y^{Test}_{1}),(x^{Test}_{2},Y^{Test}_{2})\dots,(X_{n_{Test}},Y_{n_{Test}}^{Test})\}
-$$
-denote the set of $n_{Test}$ test data points with different predictor values $X_{1}^{Test},\dots,X_{n_{Test}}^{Test}$. This type of test data is a realization of a random sample 
-$$
-(X^{Test}_{i},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
-$$ 
-This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
-
-
-
-Then, the **global test MSE** is given by,
-$$
 \begin{align*}
-\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test} - \hat{f}(X_{i}^{Test})\right)^2.
+\widehat{\operatorname{MSE}}_{\text{test}}(x_0,K)= \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y^{Test}_{i} - \hat{f}_K(x_{0})\right)^2.
 \end{align*}
-$$
 
-The **global test MSE** $\widehat{\operatorname{MSE}}_{\text{test}}$ is an estimator of the population version of the global Mean Squared (Prediction) Error of $\hat{f}$
-$$
+which estimates the population counterpart
 \begin{align*}
-\operatorname{MSE} 
-&= E\left[(Y - \hat{Y})^2\right]\\
-&= E\left[(Y - \hat{f}(X))^2\right].
+\operatorname{MSE}(x_0,K) 
+&= E\left[(Y - \hat{f}_K(X))^2|X=x_0\right].
 \end{align*}
-$$
 
+
+Generally, we'll find a minimum of $\operatorname{MSE}(x_0,K)$ with respect to the **smoothing parameter** $K$. 
+
+
+The minimum of $\operatorname{MSE}(x_0,K)$ finds the optimal compromize between the squared bias of $\hat{f}(x_0)$ and the variance of $\hat{f}(x_0).$
 
 
 ### The Local Bias-Variance Trade-Off
@@ -240,7 +209,7 @@ $$
 $$ 
 i.e., that
 $$
-E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}.
 $${#eq-MSEUnbiased}
 
 
@@ -287,10 +256,10 @@ However, to get information about Bias and Variance of a method, we need to appr
 -->
 
 
-The mean squared estimation error of $\hat{f}(x_0)$ can be further decomposed into a variance component and a squared bias component, i.e.
+The mean squared estimation error of $\hat{f}(x_0)$ can be **decomposed** into a **variance** component and a **squared bias** component, i.e.
 $$
 E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right] = 
-Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2
+Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2.
 $${#eq-MSEBiasVar}
 
 ::: {.callout collapse="true"}
@@ -322,20 +291,31 @@ $$
 $$
 :::
 
-#### Variance of $\hat{f}$ at $x_0$ {-}
+#### **Variance of $\hat{f}$ at $x_0$** {-}
 $$
 Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
 $$
-**Variance** refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different $\hat{f}.$ Ideally the estimate for $f$ should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in $\hat{f}.$ In general, more flexible statistical methods have higher variance.
+
+::: {.callout-tip}
+# Variance
+The variance of $\hat{f}$ at $x_0$ refers to the amount by which $\hat{f}(x_0)$ would change if we estimated it using a different training data set. Generally, different training data sets will result in a different $\hat{f}(x_0).$ Ideally the estimate for $f$ should not vary too much between training sets. If a method has high variance then small changes in the training data can result in large changes in $\hat{f}(x_0).$ 
+
+🤓 In general, more flexible statistical methods (e.g., KNN-regression with small $K$) have higher variance---and vice versa.
+:::
 
 
 
-
-#### Bias of $\hat{f}$ at $x_0$ {-}
+#### **Bias of $\hat{f}$ at $x_0$** {-}
 $$
 \operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
 $$
-**Bias** refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease---and vice versa. 
+
+::: {.callout-tip}
+# Bias
+The bias of $\hat{f}$ at $x_0$ refers to the error that is introduced by approximating $f(x_0)$ using a **nonparametric** estimation approach. 
+
+🤓 In general, more flexible statistical methods (e.g., KNN-regression with small $K$) have smaller bias---and vice versa. 
+:::
 
 Note that 
 $$
@@ -349,9 +329,188 @@ Thus, the expected test MSE can never lie below of $Var(\epsilon),$ i.e.
 $$
 \begin{align*}
 E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right] 
-=\operatorname{MSE}(x_0)
-%& =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
-\geq Var\left(\epsilon\right)=\sigma^2.
+&=\operatorname{MSE}(x_0) \\
+&=E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right] + \sigma^2\\
+&=Var\left(\hat{f}(x_0)\right)+\left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2+ \sigma^2\\
+& \geq \sigma^2 = Var\left(\epsilon\right).
+\end{align*}
+$$
+
+
+### Local MSE, Variance, and Bias of KNN-Regression
+
+The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
+
+
+**Case $K=1:$** KNN-regression **interpolates** all the (yellow) training data points.
+
+
+**Case $K=9:$** KNN-regression **smoothes** the (yellow) training data points.
+
+
+![](images/Fig_3_16.png)
+
+
+**A small value for $K$** provides a very flexible fit, which will have 
+
+   * small bias 
+    $$
+    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| =\;\text{small}
+    $$
+   * large variance
+    $$
+    Var(\hat{f}_K(x_0)) = \text{large}
+    $$ 
+
+
+
+::: {.callout-tip}
+
+# Small $K$
+
+The **small bias** is due to the fact that the estimator $\hat{f}_K(x_0)$ only uses a few ($K$ small) and thus **very close** and thus **very good** training data neighbors with 
+$$
+|f(x_0) - f(X_i^{Train})|\approx 0\quad\text{since}\quad d(x_0, X_i^{Train})\approx 0.
+$$
+Thus, if we were able to average multiple estimation results $\hat{f}(x_0)$ computed from many different (independent) training data sets, then this average would be close to $f(x_0),$ i.e. $E(\hat{f}(x_0))\approx f(x_0)$ (small bias). 
+
+
+The **large variance** is due to the fact that the estimator $\hat{f}_K(x_0)$ depends on a small number of $K$ training data points such that the law of larger numbers had no chance to reduce variance yet. Thus the estimation result $\hat{f}(x_0)$ would change a lot if we re-estimated it using a different training data set.
+:::
+
+
+**A large value of $K$** provides a less flexible fit, which will have 
+
+   * large bias
+    $$
+    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| =\;\text{large}
+    $$ 
+   * small variance
+    $$
+    Var(\hat{f}_K(x_0)) = \;\text{small}
+    $$ 
+
+
+::: {.callout-tip}
+
+# Large $K$
+
+The **large bias** is due to the fact that the estimator $\hat{f}_K(x_0)$ also uses **more distant** and thus **rather bad** training data neighbors with 
+$$
+|f(x_0) - f(X_i^{Train})|\not\approx 0\quad\text{since}\quad d(x_0, X_i^{Train})\not\approx 0.
+$$
+Thus, if we were able to average multiple estimation results $\hat{f}(x_0)$ computed from many different (independent) training data sets, then this average may not be close to $f(x_0),$ i.e. $E(\hat{f}(x_0))\not \approx f(x_0)$ (large bias, potentially). 
+
+
+The **small variance** is due to the fact that the estimator $\hat{f}_K(x_0)$ depends on a larger number of $K$ traing data points such that the law of larger numbers has a chance to reduce variance. Thus the estimation result $\hat{f}(x_0)$ would not change a lot if we re-estimated it using a different training data set.
+:::
+
+#### **Locally Optimal Smoothing Parameter $K$** {-}
+
+**An optimal value of $K$** can be chosen **locally** for every $x_0$ of interest by choosing that value of $K$ that **minimizes** 
+
+\begin{align*}
+\widehat{\operatorname{MSE}}_{Test}(x_0,K)
+& =\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test}- \hat{f}_K(x_0)\right)^2
+\end{align*}
+with respect to $K=1,2,\dots.$
+
+
+
+## Under Construction
+
+
+
+## Assessing Model Accuracy of Nonparametric Regression
+
+A fair and reliable assessment of the model accuracy requires **testing data**, i.e., data which comes from the same data generating process as the **training data**, but which was not used to compute (train) the estimator. 
+
+Let 
+$$
+\{(X_{1}^{Test},Y_{1}^{Test}),(X_{2}^{Test},Y_{2}^{Test}),\dots,(X_{n_{Test}}^{Test},Y_{n_{Test}}^{Test})\},
+$${#eq-trainingsample}
+denote the **test data random sample**, where 
+$$
+(X_{i}^{Test},Y_{i}^{Test})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
+$$ 
+with $(X,Y)$ being defined by the general regression model 
+$$
+Y=f(X)+\epsilon.
+$$ 
+
+
+That is, the new test data is a **random sample**, which ...
+
+1. is independent of the training data random sample 
+2. has the same distribution as the training data random sample
+
+The observed realization 
+$$
+\{(X_{1,obs}^{Test},Y_{1,obs}^{Test}),(X_{2,obs}^{Test},Y_{2,obs}^{Test}),\dots,(X_{n_{Test},obs}^{Test},Y_{n_{Test},obs}^{Test})\},
+$$
+of the test data random sample is used to check the accuracy of the estimate $\hat{f}.$ 
+
+::: {.callout-important}
+In the following, we will often supress the subscript "obs", since often both points of view, the random variables points of view, and the observed realizations points of view make sense.
+:::
+
+
+#### **Global Training Data MSE** {-}
+
+A commonly used measure for the model fit is the mean squared (prediction) error (MSE). 
+
+The global **training data MSE** is given by
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n_{Train}}\sum_{i=1}^n\left(Y_i - \hat{f}(X_i)\right)^2,
+\end{align*}
+where 
+
+* $\hat{f}$ is computed from the training data
+* $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th training data observation. 
+
+
+In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
+
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE. 
+
+
+
+#### **Global Test Data MSE** {-}
+
+
+Typically, we do not have access to such $x_0$-specific test data. 
+
+
+Moreover, we typically we want a **global** measure of fit, i.e. for all predictor values in the range of $X.$
+
+Let 
+$$
+\{(X^{Test}_{1},Y^{Test}_{1}),(X^{Test}_{2},Y^{Test}_{2})\dots,(X_{n_{Test}},Y_{n_{Test}}^{Test})\}
+$$
+denote the **test data** with different predictor values $X_{1}^{Test},\dots,X_{n_{Test}}^{Test}.$ 
+
+::: {.callout-tip}
+This type of test data is a realization of a random sample 
+$$
+(X^{Test}_{i},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
+$$ 
+This test data random sample is independent of the training data random sample whose realization was used to compute $\hat{f}.$
+:::
+
+
+Then, the **global test MSE** is given by,
+$$
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test} - \hat{f}(X_{i}^{Test})\right)^2.
+\end{align*}
+$$
+
+The **global test MSE** is an **estimator** of the population version of the global Mean Squared (Prediction) Error of $\hat{f}$
+$$
+\begin{align*}
+\operatorname{MSE} 
+&= E\left[(Y - \hat{Y})^2\right]\\
+&= E\left[(Y - \hat{f}(X))^2\right].
 \end{align*}
 $$
 
@@ -359,22 +518,78 @@ $$
 
 
 
-
 ### The Global Bias-Variance Trade-Off
 
+using, e.g., cross-validation; see @sec-resamplingmethods. 
 
-::: {.callout}
 
-The overall, i.e., **global** MSE can be computed by averaging the local $\operatorname{MSE}(x_0)$ over all possible values of $x_0,$ i.e.
+
+
+The overall, i.e., **global MSE**  can be computed by averaging the local $\operatorname{MSE}(x_0)$ over all possible values of $x_0,$ i.e.
 $$
-E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
+\operatorname{MSE} = E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx,
+$$
+where $f_X$ denotes the design density of the predicors $X.$
+
+
+We can **estimate** the global MSE using 
+$$
+\widehat{\operatorname{MSE}}_{test} = \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test}-\hat{f}(X_{i}^{Test})\right)^2.
 $$
 
-We can estimate the global MSE using 
-$$
-\widehat{\operatorname{MSE}}_{test} = \frac{1}{m}\sum_{i=1}^m\left(y_{0i}-\hat{f}(x_{0i})\right)^2.
-$$
-:::
+
+
+
+
+
+Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
+
+
+**Figure 3.17** provides an example with data generated from a one-dimensional linear regression model: 
+
+* black solid lines: true $f(x)$
+* blue curves: KNN fits $\hat{f}_K(x)$ using $K = 1$ (left plot) and $K = 9$ (right plot). 
+
+Observations: 
+
+* The KNN fit $\hat{f}_K(x)$ using $K = 1$ is far too wiggly
+* The KNN fit $\hat{f}_K(x)$ using $K = 9$ is much closer to the true $f(X).$ 
+
+However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
+![](images/Fig_3_17.png)
+
+
+The blue dashed line in the left-hand panel of **Figure 3.18** represents the simple linear regression fit to the same data. It is almost perfect. 
+
+The right-hand panel of **Figure 3.18** reveals that linear regression outperforms KNN for this data across different choices of $K=1,2,\dots,10.$ 
+![](images/Fig_3_18.png)
+
+
+**Figure 3.19** displays a non-linear situations in which KNN performs much better than simple linear regression. 
+![](images/Fig_3_19.png)
+
+
+#### Curse of Dimensionality {-}
+
+Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
+
+
+**Figure 3.20** considers the same strongly non-linear situation as in the second row of **Figure 3.19**, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+
+* When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
+* But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
+![](images/Fig_3_20.png)
+
+Observations: 
+
+* When $p=1$, a sample size of $n=50$ can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
+* However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0$ causing a large bias.  
+
+
+
+
+
+
 
 
 
@@ -581,90 +796,6 @@ $$ -->
 
 
 
-The left panel of Figure 3.16 shows the estimation result for $K=1$ and the right panel for $K=9.$
-
-![](images/Fig_3_16.png)
-
-
-In general, the optimal value for $K$ will depend on the *bias-variance tradeoff*, which we introduced in @sec-SL:
-
-**A small value for $K$** provides the most flexible fit, which will have 
-
-   * low bias 
-    $$
-    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is small}
-    $$
-   * high variance
-    $$
-    Var(\hat{f}_K(x_0))  \;\text{ is large}
-    $$ 
-
-The low bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only uses a few (e.g. $K=1$) close neighbors for which we can expect that they are "good neighbors:" Close neighbors are **good neighbors** since $|f(x_0) - f(X_i)|\approx 0.$
-
-The high variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ only depends on a small number of $K$ observations (e.g. $K=1$) such that the law of larger numbers had no chance to reduce variance. 
-
-
-**A large value of $K$** provides a less flexible fit, which will have 
-
-   * large bias
-    $$
-    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is large}
-    $$ 
-   * low variance
-    $$
-    Var(\hat{f}_K(x_0))  \;\text{ is small}
-    $$ 
-
-The large bias is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ uses observations from a larger neighborhood (e.g. $K=30$) which increases the chance of considering rather distant $||x_0-X_i||\gg 0$ and thus "bad" neigboors. Distant neighbors are **bad neighbors** since $|f(x_0) - f(X_i)|\gg 0.$
-
-The low variance is due to the fact that the prediction $\hat{f}_K(x_0)$ at a given $x_0$ depends on a larger number of $K$ observations (e.g. $K=30$) such that the law of larger numbers has a chance to reduce variance.
-
-
-**An optimal value of $K$** can be chosen using, e.g., cross-validation; see @sec-resamplingmethods. 
-
-
-Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$ and vice versa. 
-
-
-**Figure 3.17** provides an example with data generated from a one-dimensional linear regression model: 
-
-* black solid lines: true $f(x)$
-* blue curves: KNN fits $\hat{f}_K(x)$ using $K = 1$ (left plot) and $K = 9$ (right plot). 
-
-Observations: 
-
-* The KNN fit $\hat{f}_K(x)$ using $K = 1$ is far too wiggly
-* The KNN fit $\hat{f}_K(x)$ using $K = 9$ is much closer to the true $f(X).$ 
-
-However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. 
-![](images/Fig_3_17.png)
-
-
-The blue dashed line in the left-hand panel of **Figure 3.18** represents the simple linear regression fit to the same data. It is almost perfect. 
-
-The right-hand panel of **Figure 3.18** reveals that linear regression outperforms KNN for this data across different choices of $K=1,2,\dots,10.$ 
-![](images/Fig_3_18.png)
-
-
-**Figure 3.19** displays a non-linear situations in which KNN performs much better than simple linear regression. 
-![](images/Fig_3_19.png)
-
-
-#### Curse of Dimensionality {-}
-
-Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
-
-
-**Figure 3.20** considers the same strongly non-linear situation as in the second row of **Figure 3.19**, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
-
-* When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
-* But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
-![](images/Fig_3_20.png)
-
-Observations: 
-
-* When $p=1$, a sample size of $n=50$ can provide enough information to estimate $f(X)$ accurately using non-parametric methods since the $K$ nearest neighbors can actually be close to a given test observation $x_0.$ 
-* However, when spreading the $n=50$ data points over a large number of, for instance, $p=20$ dimensions, the $K$ nearest neighbors tend to become far away from $x_0$ causing a large bias.  
 
 
 

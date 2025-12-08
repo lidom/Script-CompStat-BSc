@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Comparison: Parametric vs.&nbsp;Nonparametric Regression – Computer-Aided Statistical Analysis (B.Sc.)</title>
+<title>4&nbsp; Parametric vs.&nbsp;Nonparametric Regression – Computer-Aided Statistical Analysis (B.Sc.)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Ch_NonParamRegression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparison: Parametric vs.&nbsp;Nonparametric Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Ch_NonParamRegression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Parametric vs.&nbsp;Nonparametric Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -170,7 +170,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch_NonParamRegression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparison: Parametric vs.&nbsp;Nonparametric Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Parametric vs.&nbsp;Nonparametric Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -196,15 +196,19 @@ window.Quarto = {
    
   <ul>
   <li><a href="#k-nearest-neighbors-k-nn-regression" id="toc-k-nearest-neighbors-k-nn-regression" class="nav-link active" data-scroll-target="#k-nearest-neighbors-k-nn-regression"><span class="header-section-number">4.1</span> K-Nearest Neighbors (K-NN) Regression</a></li>
-  <li><a href="#assessing-model-accuracy" id="toc-assessing-model-accuracy" class="nav-link" data-scroll-target="#assessing-model-accuracy"><span class="header-section-number">4.2</span> Assessing Model Accuracy</a>
+  <li><a href="#sec-mqfit" id="toc-sec-mqfit" class="nav-link" data-scroll-target="#sec-mqfit"><span class="header-section-number">4.2</span> Local Mean Squared (Prediction) Error (MSE)</a>
   <ul class="collapse">
-  <li><a href="#sec-mqfit" id="toc-sec-mqfit" class="nav-link" data-scroll-target="#sec-mqfit"><span class="header-section-number">4.2.1</span> Measuring the Accuracy of the Model Fit</a></li>
-  <li><a href="#the-local-bias-variance-trade-off" id="toc-the-local-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-local-bias-variance-trade-off"><span class="header-section-number">4.2.2</span> The Local Bias-Variance Trade-Off</a></li>
-  <li><a href="#the-global-bias-variance-trade-off" id="toc-the-global-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-global-bias-variance-trade-off"><span class="header-section-number">4.2.3</span> The Global Bias-Variance Trade-Off</a></li>
+  <li><a href="#the-local-bias-variance-trade-off" id="toc-the-local-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-local-bias-variance-trade-off"><span class="header-section-number">4.2.1</span> The Local Bias-Variance Trade-Off</a></li>
+  <li><a href="#local-mse-variance-and-bias-of-knn-regression" id="toc-local-mse-variance-and-bias-of-knn-regression" class="nav-link" data-scroll-target="#local-mse-variance-and-bias-of-knn-regression"><span class="header-section-number">4.2.2</span> Local MSE, Variance, and Bias of KNN-Regression</a></li>
   </ul></li>
-  <li><a href="#under-revision" id="toc-under-revision" class="nav-link" data-scroll-target="#under-revision"><span class="header-section-number">4.3</span> Under Revision</a>
+  <li><a href="#under-construction" id="toc-under-construction" class="nav-link" data-scroll-target="#under-construction"><span class="header-section-number">4.3</span> Under Construction</a></li>
+  <li><a href="#assessing-model-accuracy-of-nonparametric-regression" id="toc-assessing-model-accuracy-of-nonparametric-regression" class="nav-link" data-scroll-target="#assessing-model-accuracy-of-nonparametric-regression"><span class="header-section-number">4.4</span> Assessing Model Accuracy of Nonparametric Regression</a>
   <ul class="collapse">
-  <li><a href="#population-version-of-the-mean-squared-prediction-error" id="toc-population-version-of-the-mean-squared-prediction-error" class="nav-link" data-scroll-target="#population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.3.1</span> Population Version of the Mean Squared (Prediction) Error</a></li>
+  <li><a href="#the-global-bias-variance-trade-off" id="toc-the-global-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-global-bias-variance-trade-off"><span class="header-section-number">4.4.1</span> The Global Bias-Variance Trade-Off</a></li>
+  </ul></li>
+  <li><a href="#under-revision" id="toc-under-revision" class="nav-link" data-scroll-target="#under-revision"><span class="header-section-number">4.5</span> Under Revision</a>
+  <ul class="collapse">
+  <li><a href="#population-version-of-the-mean-squared-prediction-error" id="toc-population-version-of-the-mean-squared-prediction-error" class="nav-link" data-scroll-target="#population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.5.1</span> Population Version of the Mean Squared (Prediction) Error</a></li>
   <li><a href="#global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" id="toc-global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" class="nav-link" data-scroll-target="#global-training-and-test-mse-in-nonparametric-smoothing-spline-regression">Global Training and Test MSE in Nonparametric Smoothing Spline Regression</a></li>
   </ul></li>
   </ul>
@@ -215,7 +219,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparison: Parametric vs.&nbsp;Nonparametric Regression</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Parametric vs.&nbsp;Nonparametric Regression</span></h1>
 </div>
 
 
@@ -233,9 +237,9 @@ window.Quarto = {
 
 
 <!-- LTeX: language=en-US -->
-<p>Linear regression is an example of a parametric regression model because it parametrizes the general regression model <span class="math display">\[
+<p>The linear regression model as considered in <a href="Ch_LinearRegression.html" class="quarto-xref"><span>Chapter 2</span></a> is an example of a <strong>parametric</strong> regression model because it parametrizes the general regression model <span class="math display">\[
 Y_i = f(X_i) + \epsilon_i
-\]</span> using a linear model assumption, such that <span class="math display">\[
+\]</span> using a linear model assumption (Assumption 1 in <a href="Ch_LinearRegression.html" class="quarto-xref"><span>Chapter 2</span></a>), such that <span class="math display">\[
 f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}.
 \]</span></p>
 <p><strong>Advantages of parametric approaches:</strong></p>
@@ -250,16 +254,21 @@ f(X_i)=\beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}.
 f(X_i) \neq \beta_0 + \beta_1 X_{i1} + \dots + \beta_p X_{ip}
 \]</span></li>
 </ul>
-<p><strong>Alternative:</strong></p>
-<p><strong>Non-parametric methods</strong> such as <strong>K-nearest neighbors regression</strong> since non-parametric approaches do not explicitly assume a parametric form for <span class="math inline">\(f(X).\)</span></p>
+<p><strong>Alternative:</strong> <strong>Non-parametric methods</strong> such as <strong>K-nearest neighbors regression</strong> since non-parametric approaches do not explicitly assume a parametric form for <span class="math inline">\(f(X).\)</span></p>
 <section id="k-nearest-neighbors-k-nn-regression" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="k-nearest-neighbors-k-nn-regression"><span class="header-section-number">4.1</span> K-Nearest Neighbors (K-NN) Regression</h2>
+<p>Let <span class="math display">\[
+Y_i = f(X_i) + \epsilon_i
+\]</span> denote the <strong>general regression model.</strong></p>
+<p>In the following, we do not assume a certain parametric model form for <span class="math inline">\(f(x),\)</span> but only make the <strong>qualitative assumption</strong> that <span class="math inline">\(f\)</span> is a sufficiently <strong>smooth</strong> function, such that <span class="math display">\[
+|f(x_1)-f(x_2)|\approx 0\quad\text{if}\quad d(x_1,x_2)\approx 0,
+\]</span> where <span class="math inline">\(d(x_1,x_2)\)</span> measures the distance (e.g.&nbsp;<span class="math inline">\(d(x_1,x_2)=||x_1-x_2||\)</span>) between the points <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2.\)</span></p>
 <p>Let <span class="math inline">\(x_0\in\mathbb{R}^p\)</span> denote a certain (multivariate) predictor value at which we want to estimate <span class="math display">\[
-f(x_0)
-\]</span> and let <span class="math inline">\(K\)</span> denote the number of closest predictor value neighbors of <span class="math inline">\(x_0.\)</span></p>
-<p>KNN regression then computes the estimate <span class="math display">\[
-\hat{f}_K(x_0)
-\]</span> in two steps:</p>
+f(x_0).
+\]</span></p>
+<p><strong>KNN regression</strong> estimates <span class="math inline">\(f(x_0)\)</span> by <span class="math display">\[
+\hat{f}_K(x_0),
+\]</span> where <span class="math inline">\(\hat{f}_K(x_0)\)</span> is computed in two steps:</p>
 <ol type="1">
 <li>Compute the distances between <span class="math inline">\(x_0\)</span> and all training data predictor values <span class="math inline">\(X_1,\dots,X_{n_{Train}}\)</span> <span class="math display">\[
 d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
@@ -268,9 +277,13 @@ d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
 \mathcal{N}_0
 &amp; =\{i\in\{1,2,\dots,n_{Train}\} \; |\; d(x_0,X_i)\text{ is one of the $K$ smallest distances}\}
 \end{align*}
-\]</span> such that <span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}\)</span> with <span class="math inline">\(|\mathcal{N}_0|=K.\)</span></li>
-<li>Estimate <span class="math inline">\(f(x_0)\)</span> using the sample average of all the training responses <span class="math inline">\(y_i\)</span> with <span class="math inline">\(i\in\mathcal{N}_0,\)</span> i.e.&nbsp; <span class="math display">\[
-\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}y_i.
+\]</span> such that
+<ul>
+<li><span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n_{Train}\}\)</span></li>
+<li><span class="math inline">\(|\mathcal{N}_0|=K\)</span> (number of elements in <span class="math inline">\(\mathcal{N}_0\)</span>)</li>
+</ul></li>
+<li>Estimate <span class="math inline">\(f(x_0)\)</span> using the sample average of all the training responses <span class="math inline">\(Y_i\)</span> with <span class="math inline">\(i\in\mathcal{N}_0,\)</span> i.e.&nbsp; <span class="math display">\[
+\hat{f}_K(x_0)=\frac{1}{K}\sum_{i\in\mathcal{N}_0}Y_i.
 \]</span></li>
 </ol>
 <p>The above two steps are then repeated for all predictor values <span class="math inline">\(x_0\in\mathbb{R}^p\)</span> of interest.</p>
@@ -279,7 +292,7 @@ d(x_0,X_1),d(x_0,X_2)\dots,d(x_0,X_{n_{Train}}).
 <li>the choice of <span class="math inline">\(K\)</span> and</li>
 <li>the choice of distance <span class="math inline">\(d\)</span></li>
 </ul>
-<p>For real valued predictors, <span class="math inline">\(X_i\in\mathbb{R}^p\)</span> a usual choice is the Euclidian distance <span class="math display">\[
+<p>For real valued predictors, <span class="math inline">\(X_i\in\mathbb{R}^p\)</span> a usual choice is the <strong>Euclidian distance</strong> <span class="math display">\[
 d_E(x_0, X_i) = ||x_0 - X_i||^2 = \sum_{j=1}^p (x_{0j} - X_{ij})^2.
 \]</span></p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -307,87 +320,64 @@ $$  --></p>
 </div>
 </div>
 <p>The problem is now, to find the optimal value for <span class="math inline">\(K.\)</span></p>
+<p><strong>Idea:</strong> Choose <span class="math inline">\(K\)</span> by minimizing the mean squared (prediction) error.</p>
 </section>
-<section id="assessing-model-accuracy" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="assessing-model-accuracy"><span class="header-section-number">4.2</span> Assessing Model Accuracy</h2>
-<p>It is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.</p>
-<p>Let <span id="eq-trainingsample"><span class="math display">\[
-\{(X_{1}^{Test},Y_{1}^{Test}),(X_{2}^{Test},Y_{2}^{Test}),\dots,(X_{n_{Test}}^{Test},Y_{n_{Test}}^{Test})\},
-\qquad(4.1)\]</span></span> denote the <strong>test data random sample</strong>, where <span class="math display">\[
-(X_{i}^{Test},Y_{i}^{Test})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
-\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math display">\[
-Y=f(X)+\epsilon.
-\]</span></p>
-<p>That is, the new test data is <strong>random sample</strong>, which …</p>
-<ol type="1">
-<li>is independent of the training data random sample</li>
-<li>has the same distribution as the training data random sample</li>
-</ol>
-<p>The observed realization <span class="math display">\[
-\{(X_{1,obs}^{Test},Y_{1,obs}^{Test}),(X_{2,obs}^{Test},Y_{2,obs}^{Test}),\dots,(X_{n_{Test},obs}^{Test},Y_{n_{Test},obs}^{Test})\},
-\]</span> of the test data random sample is used to check the accuracy of the estimate <span class="math inline">\(\hat{f}.\)</span></p>
-<p>In the following, we will often supress the subscript “obs”, since often both points of view—the random variables points of view and the observed realizations points of view—make sense.</p>
-<section id="sec-mqfit" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-mqfit"><span class="header-section-number">4.2.1</span> Measuring the Accuracy of the Model Fit</h3>
-<section id="global-training-data-mse" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="global-training-data-mse"><strong>Global Training Data MSE</strong></h4>
-<p>A commonly used measure for the model fit is the mean squared (prediction) error (MSE).</p>
-<p>The global <strong>training data MSE</strong> is given by <span class="math display">\[\begin{align*}
-\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n_{Train}}\sum_{i=1}^n\left(Y_i - \hat{f}(X_i)\right)^2,
-\end{align*}\]</span> where</p>
-<ul>
-<li><span class="math inline">\(\hat{f}\)</span> is computed from the training data</li>
-<li><span class="math inline">\(\hat{f}(x_i)\)</span> is the prediction that <span class="math inline">\(\hat{f}\)</span> gives for the <span class="math inline">\(i\)</span>th training data observation.</li>
-</ul>
-<p>In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to <strong>previously unseen test data</strong>.</p>
+<section id="sec-mqfit" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-mqfit"><span class="header-section-number">4.2</span> Local Mean Squared (Prediction) Error (MSE)</h2>
+<p>A fair and reliable assessment of the model accuracy requires <strong>testing data</strong>, i.e., data which comes from the same data generating process as the <strong>training data</strong>, but which was not used to compute (train) the estimator.</p>
 <!-- In fact, a very flexible (e.g. non-parametric) estimation method will tend to overfit the training data such that $y_i\approx \hat{f}(x_i)$ for all $i=1,\dots,n$ resulting in a training MSE that is close to zero since $\hat{f}(x_i)$ fits also the errors $\epsilon_i.$ -->
 <!-- **Example:** Suppose that we are interested in developing an algorithm to predict a stock’s price based on previous stock returns. We can train the method using stock returns from the past 6 months. But we don't really care how well our method predicts last week's stock price. We instead care about how well it will predict tomorrow's price
 or next month's price.  -->
 <!-- **Example:** Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements.  -->
-<p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest <em>training</em> MSE.</p>
-</section>
+<!-- In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to **previously unseen test data**. 
+
+Thus, we want to choose the method that gives the **lowest *test* MSE**, as opposed to the lowest *training* MSE.  -->
 <section id="local-test-data-mse" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="local-test-data-mse"><strong>Local Test Data MSE</strong></h4>
 <p>Let <span class="math inline">\(\hat{f}\)</span> be computed from the training data <span class="math inline">\(\{(X_1,Y_1),\dots,(X_n,Y_{n_{Train}})\}.\)</span> And let <span class="math display">\[
 \{(x_{0},Y^{Test}_{1}),(x_{0},Y^{Test}_{2})\dots,(x_{0},Y^{Test}_{n_{Test}})\}
 \]</span> denote a specific set of <span class="math inline">\(n_{Test}\)</span> <strong>test data points</strong> <span class="math inline">\(Y^{Test}_{1},\dots,Y^{Test}_{n_{Test}}\)</span> for a <strong>specific predictor value</strong> <span class="math inline">\(x_0.\)</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>This type of <span class="math inline">\(x_0\)</span>-specific test data is a realization of a <strong>conditional random sample</strong> given <span class="math inline">\(X=x_0,\)</span> <span class="math display">\[
 (x_{0},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y)|X=x_0,\quad i=1,\dots,n_{Test}.
+\]</span> I.e, the test data <span class="math inline">\((x_{0},Y^{Test}_{i}),\)</span> is generated using iid realization from <span class="math display">\[
+Y^{Test}_{i} = f(x_0) +  \epsilon^{Test}_{i}, \quad i=1,\dots,n_{Test}.
 \]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
+</div>
+</div>
 <p>Then, the <strong>point-wise (local) test MSE</strong> at <span class="math inline">\(X=x_0\)</span> is given by, <span class="math display">\[\begin{align*}
 \widehat{\operatorname{MSE}}_{\text{test}}(x_0)= \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y^{Test}_{i} - \hat{f}(x_{0})\right)^2.
 \end{align*}\]</span></p>
-<p>The <strong>local test MSE</strong> <span class="math inline">\(\widehat{\operatorname{MSE}}_{\text{test}}(x_0)\)</span> is an estimator of the population version of the local Mean Squared (Prediction) Error of <span class="math inline">\(\hat{f}\)</span> <span class="math display">\[
+<p>This <strong>local test MSE</strong> is an <strong>estimator</strong> of the population version of the local Mean Squared (Prediction) Error of <span class="math inline">\(\hat{f}\)</span> <span class="math display">\[
 \begin{align*}
 \operatorname{MSE}(x_0)
 &amp;= E\left[(Y - \hat{Y})^2|X=x_0\right]\\
 &amp;= E\left[(Y - \hat{f}(X))^2|X=x_0\right].
 \end{align*}
 \]</span></p>
+<p><strong>KNN-Regression</strong>:</p>
+<p>For the KNN-regression estimator <span class="math inline">\(\hat{f}_K(x_{0})\)</span> we have that</p>
+<p><span class="math display">\[\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}(x_0,K)= \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y^{Test}_{i} - \hat{f}_K(x_{0})\right)^2.
+\end{align*}\]</span></p>
+<p>which estimates the population counterpart <span class="math display">\[\begin{align*}
+\operatorname{MSE}(x_0,K)
+&amp;= E\left[(Y - \hat{f}_K(X))^2|X=x_0\right].
+\end{align*}\]</span></p>
+<p>Generally, we’ll find a minimum of <span class="math inline">\(\operatorname{MSE}(x_0,K)\)</span> with respect to the <strong>smoothing parameter</strong> <span class="math inline">\(K\)</span>.</p>
+<p>The minimum of <span class="math inline">\(\operatorname{MSE}(x_0,K)\)</span> finds the optimal compromize between the squared bias of <span class="math inline">\(\hat{f}(x_0)\)</span> and the variance of <span class="math inline">\(\hat{f}(x_0).\)</span></p>
 </section>
-<section id="global-test-data-mse" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="global-test-data-mse"><strong>Global Test Data MSE</strong></h4>
-<p>Typically, we do not have access to such <span class="math inline">\(x_0\)</span>-specific test data. Moreover, we typically we want that a method has <strong>globally</strong>, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X\)</span>, a low test MSE (not only locally at a certain given value <span class="math inline">\(x_0\)</span>). Let <span class="math display">\[
-\{(X^{Test}_{1},Y^{Test}_{1}),(x^{Test}_{2},Y^{Test}_{2})\dots,(X_{n_{Test}},Y_{n_{Test}}^{Test})\}
-\]</span> denote the set of <span class="math inline">\(n_{Test}\)</span> test data points with different predictor values <span class="math inline">\(X_{1}^{Test},\dots,X_{n_{Test}}^{Test}\)</span>. This type of test data is a realization of a random sample <span class="math display">\[
-(X^{Test}_{i},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
-\]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
-<p>Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[
-\begin{align*}
-\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test} - \hat{f}(X_{i}^{Test})\right)^2.
-\end{align*}
-\]</span></p>
-<p>The <strong>global test MSE</strong> <span class="math inline">\(\widehat{\operatorname{MSE}}_{\text{test}}\)</span> is an estimator of the population version of the global Mean Squared (Prediction) Error of <span class="math inline">\(\hat{f}\)</span> <span class="math display">\[
-\begin{align*}
-\operatorname{MSE}
-&amp;= E\left[(Y - \hat{Y})^2\right]\\
-&amp;= E\left[(Y - \hat{f}(X))^2\right].
-\end{align*}
-\]</span></p>
-</section>
-</section>
-<section id="the-local-bias-variance-trade-off" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="the-local-bias-variance-trade-off"><span class="header-section-number">4.2.2</span> The Local Bias-Variance Trade-Off</h3>
+<section id="the-local-bias-variance-trade-off" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="the-local-bias-variance-trade-off"><span class="header-section-number">4.2.1</span> The Local Bias-Variance Trade-Off</h3>
 <p>One can show that <span class="math display">\[\begin{align*}
 \widehat{\operatorname{MSE}}_{\text{test}}(x_0)= \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y^{Test}_{i} - \hat{f}(x_{0})\right)^2.
 \end{align*}\]</span> is an <strong>unbiased estimator</strong> of the true (unknown) Mean Squared (Prediction) Error of <span class="math inline">\(\hat{f}(x_0)\)</span> <span class="math display">\[
@@ -397,19 +387,19 @@ or next month's price.  -->
 &amp;=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{\text{Mean Squared Prediction Error of $\hat{f}(x_0)$}},
 \end{align*}
 \]</span> i.e., that <span id="eq-MSEUnbiased"><span class="math display">\[
-E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}
-\qquad(4.2)\]</span></span></p>
+E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]=\underbrace{E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right]+\sigma^2}_{=\operatorname{MSE}(x_0)}.
+\qquad(4.1)\]</span></span></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof of <a href="#eq-MSEUnbiased" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>:
+Proof of <a href="#eq-MSEUnbiased" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>:
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
 \begin{align*}
@@ -448,21 +438,21 @@ A computed value of $\operatorname{MSE}_{test}(x_0)$ (as done in the coding chal
 However, to get information about Bias and Variance of a method, we need to approximate $E\left[\operatorname{MSE}_{test}(x_0)\right].$ This will be (among others) the topic of  @sec-resamplingmethods.
 ::: 
 -->
-<p>The mean squared estimation error of <span class="math inline">\(\hat{f}(x_0)\)</span> can be further decomposed into a variance component and a squared bias component, i.e. <span id="eq-MSEBiasVar"><span class="math display">\[
+<p>The mean squared estimation error of <span class="math inline">\(\hat{f}(x_0)\)</span> can be <strong>decomposed</strong> into a <strong>variance</strong> component and a <strong>squared bias</strong> component, i.e. <span id="eq-MSEBiasVar"><span class="math display">\[
 E\left[\left(f(x_0) - \hat{f}(x_0)\right)^2\right] =
-Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2
-\qquad(4.3)\]</span></span></p>
+Var\left(\hat{f}(x_0)\right) + \left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2.
+\qquad(4.2)\]</span></span></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof of <a href="#eq-MSEBiasVar" class="quarto-xref">Equation&nbsp;<span>4.3</span></a>:
+Proof of <a href="#eq-MSEBiasVar" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>:
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><br></p>
 <p><span class="math display">\[
@@ -490,16 +480,44 @@ Proof of <a href="#eq-MSEBiasVar" class="quarto-xref">Equation&nbsp;<span>4.3</s
 </div>
 </div>
 <section id="variance-of-hatf-at-x_0" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0">Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
+<h4 class="unnumbered anchored" data-anchor-id="variance-of-hatf-at-x_0"><strong>Variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></strong></h4>
 <p><span class="math display">\[
 Var(\hat{f}(x_0))=E\left[\left(\hat{f}(x_0) - E\left[\hat{f}(x_0)\right]\right)^2\right]
-\]</span> <strong>Variance</strong> refers to the amount by which <span class="math inline">\(\hat{f}\)</span> would change if we estimated it using a different training data set. Since the training data are used to fit the statistical learning method, different training data sets will result in a different <span class="math inline">\(\hat{f}.\)</span> Ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. However, if a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}.\)</span> In general, more flexible statistical methods have higher variance.</p>
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The variance of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span> refers to the amount by which <span class="math inline">\(\hat{f}(x_0)\)</span> would change if we estimated it using a different training data set. Generally, different training data sets will result in a different <span class="math inline">\(\hat{f}(x_0).\)</span> Ideally the estimate for <span class="math inline">\(f\)</span> should not vary too much between training sets. If a method has high variance then small changes in the training data can result in large changes in <span class="math inline">\(\hat{f}(x_0).\)</span></p>
+<p>🤓 In general, more flexible statistical methods (e.g., KNN-regression with small <span class="math inline">\(K\)</span>) have higher variance—and vice versa.</p>
+</div>
+</div>
 </section>
 <section id="bias-of-hatf-at-x_0" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0">Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></h4>
+<h4 class="unnumbered anchored" data-anchor-id="bias-of-hatf-at-x_0"><strong>Bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span></strong></h4>
 <p><span class="math display">\[
 \operatorname{Bias}(\hat{f}(x_0))=E\left[\hat{f}(x_0)\right] - f(x_0)
-\]</span> <strong>Bias</strong> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease—and vice versa.</p>
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bias
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The bias of <span class="math inline">\(\hat{f}\)</span> at <span class="math inline">\(x_0\)</span> refers to the error that is introduced by approximating <span class="math inline">\(f(x_0)\)</span> using a <strong>nonparametric</strong> estimation approach.</p>
+<p>🤓 In general, more flexible statistical methods (e.g., KNN-regression with small <span class="math inline">\(K\)</span>) have smaller bias—and vice versa.</p>
+</div>
+</div>
 <p>Note that <span class="math display">\[
 Var\left(\hat{f}(x_0)\right)\geq 0
 \]</span> and that <span class="math display">\[
@@ -507,36 +525,206 @@ Var\left(\hat{f}(x_0)\right)\geq 0
 \]</span> Thus, the expected test MSE can never lie below of <span class="math inline">\(Var(\epsilon),\)</span> i.e. <span class="math display">\[
 \begin{align*}
 E\left[\widehat{\operatorname{MSE}}_{test}(x_0)\right]
-=\operatorname{MSE}(x_0)
-%&amp; =E\left[\left(Y_0- \hat{f}(x_0)\right)^2\right]
-\geq Var\left(\epsilon\right)=\sigma^2.
+&amp;=\operatorname{MSE}(x_0) \\
+&amp;=E\left[\left(f(x_0)-\hat{f}(x_0)\right)^2\right] + \sigma^2\\
+&amp;=Var\left(\hat{f}(x_0)\right)+\left[\operatorname{Bias}\left(\hat{f}(x_0)\right)\right]^2+ \sigma^2\\
+&amp; \geq \sigma^2 = Var\left(\epsilon\right).
 \end{align*}
 \]</span></p>
 </section>
 </section>
-<section id="the-global-bias-variance-trade-off" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="the-global-bias-variance-trade-off"><span class="header-section-number">4.2.3</span> The Global Bias-Variance Trade-Off</h3>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<section id="local-mse-variance-and-bias-of-knn-regression" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="local-mse-variance-and-bias-of-knn-regression"><span class="header-section-number">4.2.2</span> Local MSE, Variance, and Bias of KNN-Regression</h3>
+<p>The left panel of Figure 3.16 shows the estimation result for <span class="math inline">\(K=1\)</span> and the right panel for <span class="math inline">\(K=9.\)</span></p>
+<p><strong>Case <span class="math inline">\(K=1:\)</span></strong> KNN-regression <strong>interpolates</strong> all the (yellow) training data points.</p>
+<p><strong>Case <span class="math inline">\(K=9:\)</span></strong> KNN-regression <strong>smoothes</strong> the (yellow) training data points.</p>
+<p><img src="images/Fig_3_16.png" class="img-fluid"></p>
+<p><strong>A small value for <span class="math inline">\(K\)</span></strong> provides a very flexible fit, which will have</p>
+<ul>
+<li>small bias <span class="math display">\[
+    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| =\;\text{small}
+    \]</span></li>
+<li>large variance <span class="math display">\[
+    Var(\hat{f}_K(x_0)) = \text{large}
+    \]</span></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>The overall, i.e., <strong>global</strong> MSE can be computed by averaging the local <span class="math inline">\(\operatorname{MSE}(x_0)\)</span> over all possible values of <span class="math inline">\(x_0,\)</span> i.e. <span class="math display">\[
-E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx.
-\]</span></p>
-<p>We can estimate the global MSE using <span class="math display">\[
-\widehat{\operatorname{MSE}}_{test} = \frac{1}{m}\sum_{i=1}^m\left(y_{0i}-\hat{f}(x_{0i})\right)^2.
-\]</span></p>
+<div class="callout-title-container flex-fill">
+Small <span class="math inline">\(K\)</span>
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>The <strong>small bias</strong> is due to the fact that the estimator <span class="math inline">\(\hat{f}_K(x_0)\)</span> only uses a few (<span class="math inline">\(K\)</span> small) and thus <strong>very close</strong> and thus <strong>very good</strong> training data neighbors with <span class="math display">\[
+|f(x_0) - f(X_i^{Train})|\approx 0\quad\text{since}\quad d(x_0, X_i^{Train})\approx 0.
+\]</span> Thus, if we were able to average multiple estimation results <span class="math inline">\(\hat{f}(x_0)\)</span> computed from many different (independent) training data sets, then this average would be close to <span class="math inline">\(f(x_0),\)</span> i.e.&nbsp;<span class="math inline">\(E(\hat{f}(x_0))\approx f(x_0)\)</span> (small bias).</p>
+<p>The <strong>large variance</strong> is due to the fact that the estimator <span class="math inline">\(\hat{f}_K(x_0)\)</span> depends on a small number of <span class="math inline">\(K\)</span> training data points such that the law of larger numbers had no chance to reduce variance yet. Thus the estimation result <span class="math inline">\(\hat{f}(x_0)\)</span> would change a lot if we re-estimated it using a different training data set.</p>
 </div>
+</div>
+<p><strong>A large value of <span class="math inline">\(K\)</span></strong> provides a less flexible fit, which will have</p>
+<ul>
+<li>large bias <span class="math display">\[
+    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| =\;\text{large}
+    \]</span></li>
+<li>small variance <span class="math display">\[
+    Var(\hat{f}_K(x_0)) = \;\text{small}
+    \]</span></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Large <span class="math inline">\(K\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>large bias</strong> is due to the fact that the estimator <span class="math inline">\(\hat{f}_K(x_0)\)</span> also uses <strong>more distant</strong> and thus <strong>rather bad</strong> training data neighbors with <span class="math display">\[
+|f(x_0) - f(X_i^{Train})|\not\approx 0\quad\text{since}\quad d(x_0, X_i^{Train})\not\approx 0.
+\]</span> Thus, if we were able to average multiple estimation results <span class="math inline">\(\hat{f}(x_0)\)</span> computed from many different (independent) training data sets, then this average may not be close to <span class="math inline">\(f(x_0),\)</span> i.e.&nbsp;<span class="math inline">\(E(\hat{f}(x_0))\not \approx f(x_0)\)</span> (large bias, potentially).</p>
+<p>The <strong>small variance</strong> is due to the fact that the estimator <span class="math inline">\(\hat{f}_K(x_0)\)</span> depends on a larger number of <span class="math inline">\(K\)</span> traing data points such that the law of larger numbers has a chance to reduce variance. Thus the estimation result <span class="math inline">\(\hat{f}(x_0)\)</span> would not change a lot if we re-estimated it using a different training data set.</p>
+</div>
+</div>
+<section id="locally-optimal-smoothing-parameter-k" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="locally-optimal-smoothing-parameter-k"><strong>Locally Optimal Smoothing Parameter <span class="math inline">\(K\)</span></strong></h4>
+<p><strong>An optimal value of <span class="math inline">\(K\)</span></strong> can be chosen <strong>locally</strong> for every <span class="math inline">\(x_0\)</span> of interest by choosing that value of <span class="math inline">\(K\)</span> that <strong>minimizes</strong></p>
+<p><span class="math display">\[\begin{align*}
+\widehat{\operatorname{MSE}}_{Test}(x_0,K)
+&amp; =\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test}- \hat{f}_K(x_0)\right)^2
+\end{align*}\]</span> with respect to <span class="math inline">\(K=1,2,\dots.\)</span></p>
 </section>
 </section>
-<section id="under-revision" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="under-revision"><span class="header-section-number">4.3</span> Under Revision</h2>
-<section id="population-version-of-the-mean-squared-prediction-error" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.3.1</span> Population Version of the Mean Squared (Prediction) Error</h3>
+</section>
+<section id="under-construction" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="under-construction"><span class="header-section-number">4.3</span> Under Construction</h2>
+</section>
+<section id="assessing-model-accuracy-of-nonparametric-regression" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="assessing-model-accuracy-of-nonparametric-regression"><span class="header-section-number">4.4</span> Assessing Model Accuracy of Nonparametric Regression</h2>
+<p>A fair and reliable assessment of the model accuracy requires <strong>testing data</strong>, i.e., data which comes from the same data generating process as the <strong>training data</strong>, but which was not used to compute (train) the estimator.</p>
+<p>Let <span id="eq-trainingsample"><span class="math display">\[
+\{(X_{1}^{Test},Y_{1}^{Test}),(X_{2}^{Test},Y_{2}^{Test}),\dots,(X_{n_{Test}}^{Test},Y_{n_{Test}}^{Test})\},
+\qquad(4.3)\]</span></span> denote the <strong>test data random sample</strong>, where <span class="math display">\[
+(X_{i}^{Test},Y_{i}^{Test})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
+\]</span> with <span class="math inline">\((X,Y)\)</span> being defined by the general regression model <span class="math display">\[
+Y=f(X)+\epsilon.
+\]</span></p>
+<p>That is, the new test data is a <strong>random sample</strong>, which …</p>
+<ol type="1">
+<li>is independent of the training data random sample</li>
+<li>has the same distribution as the training data random sample</li>
+</ol>
+<p>The observed realization <span class="math display">\[
+\{(X_{1,obs}^{Test},Y_{1,obs}^{Test}),(X_{2,obs}^{Test},Y_{2,obs}^{Test}),\dots,(X_{n_{Test},obs}^{Test},Y_{n_{Test},obs}^{Test})\},
+\]</span> of the test data random sample is used to check the accuracy of the estimate <span class="math inline">\(\hat{f}.\)</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the following, we will often supress the subscript “obs”, since often both points of view, the random variables points of view, and the observed realizations points of view make sense.</p>
+</div>
+</div>
+<section id="global-training-data-mse" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="global-training-data-mse"><strong>Global Training Data MSE</strong></h4>
+<p>A commonly used measure for the model fit is the mean squared (prediction) error (MSE).</p>
+<p>The global <strong>training data MSE</strong> is given by <span class="math display">\[\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{train}}=\frac{1}{n_{Train}}\sum_{i=1}^n\left(Y_i - \hat{f}(X_i)\right)^2,
+\end{align*}\]</span> where</p>
+<ul>
+<li><span class="math inline">\(\hat{f}\)</span> is computed from the training data</li>
+<li><span class="math inline">\(\hat{f}(x_i)\)</span> is the prediction that <span class="math inline">\(\hat{f}\)</span> gives for the <span class="math inline">\(i\)</span>th training data observation.</li>
+</ul>
+<p>In general, however, we do not really care how well the method works on the training data. We are interested in the accuracy of the predictions that we obtain when we apply our method to <strong>previously unseen test data</strong>.</p>
+<p>Thus, we want to choose the method that gives the <strong>lowest <em>test</em> MSE</strong>, as opposed to the lowest <em>training</em> MSE.</p>
+</section>
+<section id="global-test-data-mse" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="global-test-data-mse"><strong>Global Test Data MSE</strong></h4>
+<p>Typically, we do not have access to such <span class="math inline">\(x_0\)</span>-specific test data.</p>
+<p>Moreover, we typically we want a <strong>global</strong> measure of fit, i.e.&nbsp;for all predictor values in the range of <span class="math inline">\(X.\)</span></p>
+<p>Let <span class="math display">\[
+\{(X^{Test}_{1},Y^{Test}_{1}),(X^{Test}_{2},Y^{Test}_{2})\dots,(X_{n_{Test}},Y_{n_{Test}}^{Test})\}
+\]</span> denote the <strong>test data</strong> with different predictor values <span class="math inline">\(X_{1}^{Test},\dots,X_{n_{Test}}^{Test}.\)</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This type of test data is a realization of a random sample <span class="math display">\[
+(X^{Test}_{i},Y^{Test}_{i})\overset{\text{iid}}{\sim}(X,Y),\quad i=1,\dots,n_{Test}.
+\]</span> This test data random sample is independent of the training data random sample whose realization was used to compute <span class="math inline">\(\hat{f}.\)</span></p>
+</div>
+</div>
+<p>Then, the <strong>global test MSE</strong> is given by, <span class="math display">\[
+\begin{align*}
+\widehat{\operatorname{MSE}}_{\text{test}}=\frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test} - \hat{f}(X_{i}^{Test})\right)^2.
+\end{align*}
+\]</span></p>
+<p>The <strong>global test MSE</strong> is an <strong>estimator</strong> of the population version of the global Mean Squared (Prediction) Error of <span class="math inline">\(\hat{f}\)</span> <span class="math display">\[
+\begin{align*}
+\operatorname{MSE}
+&amp;= E\left[(Y - \hat{Y})^2\right]\\
+&amp;= E\left[(Y - \hat{f}(X))^2\right].
+\end{align*}
+\]</span></p>
+</section>
+<section id="the-global-bias-variance-trade-off" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="the-global-bias-variance-trade-off"><span class="header-section-number">4.4.1</span> The Global Bias-Variance Trade-Off</h3>
+<p>using, e.g., cross-validation; see <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
+<p>The overall, i.e., <strong>global MSE</strong> can be computed by averaging the local <span class="math inline">\(\operatorname{MSE}(x_0)\)</span> over all possible values of <span class="math inline">\(x_0,\)</span> i.e. <span class="math display">\[
+\operatorname{MSE} = E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx,
+\]</span> where <span class="math inline">\(f_X\)</span> denotes the design density of the predicors <span class="math inline">\(X.\)</span></p>
+<p>We can <strong>estimate</strong> the global MSE using <span class="math display">\[
+\widehat{\operatorname{MSE}}_{test} = \frac{1}{n_{Test}}\sum_{i=1}^{n_{Test}}\left(Y_{i}^{Test}-\hat{f}(X_{i}^{Test})\right)^2.
+\]</span></p>
+<p>Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of <span class="math inline">\(f\)</span> and vice versa.</p>
+<p><strong>Figure 3.17</strong> provides an example with data generated from a one-dimensional linear regression model:</p>
+<ul>
+<li>black solid lines: true <span class="math inline">\(f(x)\)</span></li>
+<li>blue curves: KNN fits <span class="math inline">\(\hat{f}_K(x)\)</span> using <span class="math inline">\(K = 1\)</span> (left plot) and <span class="math inline">\(K = 9\)</span> (right plot).</li>
+</ul>
+<p>Observations:</p>
+<ul>
+<li>The KNN fit <span class="math inline">\(\hat{f}_K(x)\)</span> using <span class="math inline">\(K = 1\)</span> is far too wiggly</li>
+<li>The KNN fit <span class="math inline">\(\hat{f}_K(x)\)</span> using <span class="math inline">\(K = 9\)</span> is much closer to the true <span class="math inline">\(f(X).\)</span></li>
+</ul>
+<p>However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. <img src="images/Fig_3_17.png" class="img-fluid"></p>
+<p>The blue dashed line in the left-hand panel of <strong>Figure 3.18</strong> represents the simple linear regression fit to the same data. It is almost perfect.</p>
+<p>The right-hand panel of <strong>Figure 3.18</strong> reveals that linear regression outperforms KNN for this data across different choices of <span class="math inline">\(K=1,2,\dots,10.\)</span> <img src="images/Fig_3_18.png" class="img-fluid"></p>
+<p><strong>Figure 3.19</strong> displays a non-linear situations in which KNN performs much better than simple linear regression. <img src="images/Fig_3_19.png" class="img-fluid"></p>
+<section id="curse-of-dimensionality" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="curse-of-dimensionality">Curse of Dimensionality</h4>
+<p>Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the <strong>curse of dimensionality</strong>.</p>
+<p><strong>Figure 3.20</strong> considers the same strongly non-linear situation as in the second row of <strong>Figure 3.19</strong>, except that we have added additional noise (i.e.&nbsp;redundant) predictors that are not associated with the response.</p>
+<ul>
+<li>When <span class="math inline">\(p = 1\)</span> or <span class="math inline">\(p = 2,\)</span> KNN outperforms linear regression.</li>
+<li>But for <span class="math inline">\(p = 3\)</span> the results are mixed, and for <span class="math inline">\(p\geq 4\)</span> linear regression is superior to KNN. <img src="images/Fig_3_20.png" class="img-fluid"></li>
+</ul>
+<p>Observations:</p>
+<ul>
+<li>When <span class="math inline">\(p=1\)</span>, a sample size of <span class="math inline">\(n=50\)</span> can provide enough information to estimate <span class="math inline">\(f(X)\)</span> accurately using non-parametric methods since the <span class="math inline">\(K\)</span> nearest neighbors can actually be close to a given test observation <span class="math inline">\(x_0.\)</span></li>
+<li>However, when spreading the <span class="math inline">\(n=50\)</span> data points over a large number of, for instance, <span class="math inline">\(p=20\)</span> dimensions, the <span class="math inline">\(K\)</span> nearest neighbors tend to become far away from <span class="math inline">\(x_0\)</span> causing a large bias.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="under-revision" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="under-revision"><span class="header-section-number">4.5</span> Under Revision</h2>
+<section id="population-version-of-the-mean-squared-prediction-error" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.5.1</span> Population Version of the Mean Squared (Prediction) Error</h3>
 <p>Consider a <strong>given</strong> estimate <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> predictor <span class="math inline">\(X,\)</span> which yields a <strong>given</strong> prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> That is, assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are <strong>fixed</strong>, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span id="eq-MSEDecompFixed"><span class="math display">\[
 \begin{align*}
 \overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}
@@ -657,63 +845,8 @@ E\left[(Y - \hat{Y})^2\right].
 E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
 $$ -->
 <p><img src="images/Fig_2_12.png" class="img-fluid"></p>
-<p>The left panel of Figure 3.16 shows the estimation result for <span class="math inline">\(K=1\)</span> and the right panel for <span class="math inline">\(K=9.\)</span></p>
-<p><img src="images/Fig_3_16.png" class="img-fluid"></p>
-<p>In general, the optimal value for <span class="math inline">\(K\)</span> will depend on the <em>bias-variance tradeoff</em>, which we introduced in <span class="quarto-unresolved-ref">?sec-SL</span>:</p>
-<p><strong>A small value for <span class="math inline">\(K\)</span></strong> provides the most flexible fit, which will have</p>
-<ul>
-<li>low bias <span class="math display">\[
-    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is small}
-    \]</span></li>
-<li>high variance <span class="math display">\[
-    Var(\hat{f}_K(x_0))  \;\text{ is large}
-    \]</span></li>
-</ul>
-<p>The low bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only uses a few (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) close neighbors for which we can expect that they are “good neighbors:” Close neighbors are <strong>good neighbors</strong> since <span class="math inline">\(|f(x_0) - f(X_i)|\approx 0.\)</span></p>
-<p>The high variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> only depends on a small number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=1\)</span>) such that the law of larger numbers had no chance to reduce variance.</p>
-<p><strong>A large value of <span class="math inline">\(K\)</span></strong> provides a less flexible fit, which will have</p>
-<ul>
-<li>large bias <span class="math display">\[
-    |\operatorname{Bias}(\hat{f}_K(x_0))| = |E(\hat{f}_K(x_0)) - f(x_0)| \;\text{ is large}
-    \]</span></li>
-<li>low variance <span class="math display">\[
-    Var(\hat{f}_K(x_0))  \;\text{ is small}
-    \]</span></li>
-</ul>
-<p>The large bias is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> uses observations from a larger neighborhood (e.g.&nbsp;<span class="math inline">\(K=30\)</span>) which increases the chance of considering rather distant <span class="math inline">\(||x_0-X_i||\gg 0\)</span> and thus “bad” neigboors. Distant neighbors are <strong>bad neighbors</strong> since <span class="math inline">\(|f(x_0) - f(X_i)|\gg 0.\)</span></p>
-<p>The low variance is due to the fact that the prediction <span class="math inline">\(\hat{f}_K(x_0)\)</span> at a given <span class="math inline">\(x_0\)</span> depends on a larger number of <span class="math inline">\(K\)</span> observations (e.g.&nbsp;<span class="math inline">\(K=30\)</span>) such that the law of larger numbers has a chance to reduce variance.</p>
-<p><strong>An optimal value of <span class="math inline">\(K\)</span></strong> can be chosen using, e.g., cross-validation; see <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
-<p>Generally, the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of <span class="math inline">\(f\)</span> and vice versa.</p>
-<p><strong>Figure 3.17</strong> provides an example with data generated from a one-dimensional linear regression model:</p>
-<ul>
-<li>black solid lines: true <span class="math inline">\(f(x)\)</span></li>
-<li>blue curves: KNN fits <span class="math inline">\(\hat{f}_K(x)\)</span> using <span class="math inline">\(K = 1\)</span> (left plot) and <span class="math inline">\(K = 9\)</span> (right plot).</li>
-</ul>
-<p>Observations:</p>
-<ul>
-<li>The KNN fit <span class="math inline">\(\hat{f}_K(x)\)</span> using <span class="math inline">\(K = 1\)</span> is far too wiggly</li>
-<li>The KNN fit <span class="math inline">\(\hat{f}_K(x)\)</span> using <span class="math inline">\(K = 9\)</span> is much closer to the true <span class="math inline">\(f(X).\)</span></li>
-</ul>
-<p>However, since the true regression function is here linear, it is hard for a non-parametric approach to compete with simple linear regression: a non-parametric approach incurs a cost in variance that is here not offset by a reduction in bias. <img src="images/Fig_3_17.png" class="img-fluid"></p>
-<p>The blue dashed line in the left-hand panel of <strong>Figure 3.18</strong> represents the simple linear regression fit to the same data. It is almost perfect.</p>
-<p>The right-hand panel of <strong>Figure 3.18</strong> reveals that linear regression outperforms KNN for this data across different choices of <span class="math inline">\(K=1,2,\dots,10.\)</span> <img src="images/Fig_3_18.png" class="img-fluid"></p>
-<p><strong>Figure 3.19</strong> displays a non-linear situations in which KNN performs much better than simple linear regression. <img src="images/Fig_3_19.png" class="img-fluid"></p>
-<section id="curse-of-dimensionality" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="curse-of-dimensionality">Curse of Dimensionality</h4>
-<p>Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the <strong>curse of dimensionality</strong>.</p>
-<p><strong>Figure 3.20</strong> considers the same strongly non-linear situation as in the second row of <strong>Figure 3.19</strong>, except that we have added additional noise (i.e.&nbsp;redundant) predictors that are not associated with the response.</p>
-<ul>
-<li>When <span class="math inline">\(p = 1\)</span> or <span class="math inline">\(p = 2,\)</span> KNN outperforms linear regression.</li>
-<li>But for <span class="math inline">\(p = 3\)</span> the results are mixed, and for <span class="math inline">\(p\geq 4\)</span> linear regression is superior to KNN. <img src="images/Fig_3_20.png" class="img-fluid"></li>
-</ul>
-<p>Observations:</p>
-<ul>
-<li>When <span class="math inline">\(p=1\)</span>, a sample size of <span class="math inline">\(n=50\)</span> can provide enough information to estimate <span class="math inline">\(f(X)\)</span> accurately using non-parametric methods since the <span class="math inline">\(K\)</span> nearest neighbors can actually be close to a given test observation <span class="math inline">\(x_0.\)</span></li>
-<li>However, when spreading the <span class="math inline">\(n=50\)</span> data points over a large number of, for instance, <span class="math inline">\(p=20\)</span> dimensions, the <span class="math inline">\(K\)</span> nearest neighbors tend to become far away from <span class="math inline">\(x_0\)</span> causing a large bias.</li>
-</ul>
 
 
-</section>
 </section>
 </section>
 
