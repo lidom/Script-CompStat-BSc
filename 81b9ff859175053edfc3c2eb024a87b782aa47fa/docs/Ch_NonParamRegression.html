@@ -201,14 +201,15 @@ window.Quarto = {
   <li><a href="#the-local-bias-variance-trade-off" id="toc-the-local-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-local-bias-variance-trade-off"><span class="header-section-number">4.2.1</span> The Local Bias-Variance Trade-Off</a></li>
   <li><a href="#local-mse-variance-and-bias-of-knn-regression" id="toc-local-mse-variance-and-bias-of-knn-regression" class="nav-link" data-scroll-target="#local-mse-variance-and-bias-of-knn-regression"><span class="header-section-number">4.2.2</span> Local MSE, Variance, and Bias of KNN-Regression</a></li>
   </ul></li>
-  <li><a href="#under-construction" id="toc-under-construction" class="nav-link" data-scroll-target="#under-construction"><span class="header-section-number">4.3</span> Under Construction</a></li>
-  <li><a href="#assessing-model-accuracy-of-nonparametric-regression" id="toc-assessing-model-accuracy-of-nonparametric-regression" class="nav-link" data-scroll-target="#assessing-model-accuracy-of-nonparametric-regression"><span class="header-section-number">4.4</span> Assessing Model Accuracy of Nonparametric Regression</a>
+  <li><a href="#in-class-coding-exercises" id="toc-in-class-coding-exercises" class="nav-link" data-scroll-target="#in-class-coding-exercises"><span class="header-section-number">4.3</span> In Class Coding Exercises</a></li>
+  <li><a href="#under-construction" id="toc-under-construction" class="nav-link" data-scroll-target="#under-construction"><span class="header-section-number">4.4</span> Under Construction</a></li>
+  <li><a href="#assessing-model-accuracy-of-nonparametric-regression" id="toc-assessing-model-accuracy-of-nonparametric-regression" class="nav-link" data-scroll-target="#assessing-model-accuracy-of-nonparametric-regression"><span class="header-section-number">4.5</span> Assessing Model Accuracy of Nonparametric Regression</a>
   <ul class="collapse">
-  <li><a href="#the-global-bias-variance-trade-off" id="toc-the-global-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-global-bias-variance-trade-off"><span class="header-section-number">4.4.1</span> The Global Bias-Variance Trade-Off</a></li>
+  <li><a href="#the-global-bias-variance-trade-off" id="toc-the-global-bias-variance-trade-off" class="nav-link" data-scroll-target="#the-global-bias-variance-trade-off"><span class="header-section-number">4.5.1</span> The Global Bias-Variance Trade-Off</a></li>
   </ul></li>
-  <li><a href="#under-revision" id="toc-under-revision" class="nav-link" data-scroll-target="#under-revision"><span class="header-section-number">4.5</span> Under Revision</a>
+  <li><a href="#under-revision" id="toc-under-revision" class="nav-link" data-scroll-target="#under-revision"><span class="header-section-number">4.6</span> Under Revision</a>
   <ul class="collapse">
-  <li><a href="#population-version-of-the-mean-squared-prediction-error" id="toc-population-version-of-the-mean-squared-prediction-error" class="nav-link" data-scroll-target="#population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.5.1</span> Population Version of the Mean Squared (Prediction) Error</a></li>
+  <li><a href="#population-version-of-the-mean-squared-prediction-error" id="toc-population-version-of-the-mean-squared-prediction-error" class="nav-link" data-scroll-target="#population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.6.1</span> Population Version of the Mean Squared (Prediction) Error</a></li>
   <li><a href="#global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" id="toc-global-training-and-test-mse-in-nonparametric-smoothing-spline-regression" class="nav-link" data-scroll-target="#global-training-and-test-mse-in-nonparametric-smoothing-spline-regression">Global Training and Test MSE in Nonparametric Smoothing Spline Regression</a></li>
   </ul></li>
   </ul>
@@ -599,11 +600,29 @@ Large <span class="math inline">\(K\)</span>
 </section>
 </section>
 </section>
-<section id="under-construction" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="under-construction"><span class="header-section-number">4.3</span> Under Construction</h2>
+<section id="in-class-coding-exercises" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="in-class-coding-exercises"><span class="header-section-number">4.3</span> In Class Coding Exercises</h2>
+<p>Consider the following multiple linear regression model: <span class="math display">\[\begin{align*}
+Y_i
+&amp; = f(x)+ \epsilon_i\\
+&amp; = 5+ 3\sin(2\pi x) + \epsilon_i,
+\end{align*}\]</span> where the training data has a sample size of <span class="math inline">\(n_{Train}=100,\)</span> the error term is iid normal <span class="math display">\[
+\epsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,1),
+\]</span> and the predictor values are deterministic and equidistant, i.e., <span class="math display">\[
+X_i=\frac{i}{n},\quad i=1,\dots,n_{Train}.
+\]</span></p>
+<p><strong>Problems:</strong></p>
+<ol type="a">
+<li><p>Programm KNN-Regression Estimator <span class="math inline">\(\hat{f}_K(x_0).\)</span> Compute the KNN-Regression estimation <span class="math inline">\(\hat{f}_K(x_0)\)</span> for <span class="math inline">\(K=5\)</span> and <span class="math inline">\(x0 = 0.2.\)</span> Compare the result with the true regression function value <span class="math inline">\(f(0.2).\)</span></p></li>
+<li><p>Compute the KNN-Regression estimation for <span class="math inline">\(K=5\)</span> and a <em>dense</em> <span class="math inline">\(x\)</span>-grid between 0 and 1 (e.g.&nbsp;<code>seq(0,1,len=500)</code>) and compare the results with the true regression function values using a plot.</p></li>
+<li><p>Generate <span class="math inline">\(200\)</span> estimation results <span class="math inline">\(\hat{f}_K(x_0)\)</span> for <span class="math inline">\(x0 = 0.2\)</span> using <span class="math inline">\(200\)</span> independent training data set. Plot the results along with their sample means and the true <span class="math inline">\(f(0.2)\)</span> value using plots for different values of <span class="math inline">\(K=1,\dots,K.\)</span></p></li>
+</ol>
 </section>
-<section id="assessing-model-accuracy-of-nonparametric-regression" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="assessing-model-accuracy-of-nonparametric-regression"><span class="header-section-number">4.4</span> Assessing Model Accuracy of Nonparametric Regression</h2>
+<section id="under-construction" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="under-construction"><span class="header-section-number">4.4</span> Under Construction</h2>
+</section>
+<section id="assessing-model-accuracy-of-nonparametric-regression" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="assessing-model-accuracy-of-nonparametric-regression"><span class="header-section-number">4.5</span> Assessing Model Accuracy of Nonparametric Regression</h2>
 <p>A fair and reliable assessment of the model accuracy requires <strong>testing data</strong>, i.e., data which comes from the same data generating process as the <strong>training data</strong>, but which was not used to compute (train) the estimator.</p>
 <p>Let <span id="eq-trainingsample"><span class="math display">\[
 \{(X_{1}^{Test},Y_{1}^{Test}),(X_{2}^{Test},Y_{2}^{Test}),\dots,(X_{n_{Test}}^{Test},Y_{n_{Test}}^{Test})\},
@@ -681,8 +700,8 @@ Tip
 \end{align*}
 \]</span></p>
 </section>
-<section id="the-global-bias-variance-trade-off" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="the-global-bias-variance-trade-off"><span class="header-section-number">4.4.1</span> The Global Bias-Variance Trade-Off</h3>
+<section id="the-global-bias-variance-trade-off" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="the-global-bias-variance-trade-off"><span class="header-section-number">4.5.1</span> The Global Bias-Variance Trade-Off</h3>
 <p>using, e.g., cross-validation; see <a href="Ch6_ResamplingMethods.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
 <p>The overall, i.e., <strong>global MSE</strong> can be computed by averaging the local <span class="math inline">\(\operatorname{MSE}(x_0)\)</span> over all possible values of <span class="math inline">\(x_0,\)</span> i.e. <span class="math display">\[
 \operatorname{MSE} = E(\operatorname{MSE}(X)) = \int f_X(x)\operatorname{MSE}(x) dx,
@@ -721,10 +740,10 @@ Tip
 </section>
 </section>
 </section>
-<section id="under-revision" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="under-revision"><span class="header-section-number">4.5</span> Under Revision</h2>
-<section id="population-version-of-the-mean-squared-prediction-error" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.5.1</span> Population Version of the Mean Squared (Prediction) Error</h3>
+<section id="under-revision" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="under-revision"><span class="header-section-number">4.6</span> Under Revision</h2>
+<section id="population-version-of-the-mean-squared-prediction-error" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="population-version-of-the-mean-squared-prediction-error"><span class="header-section-number">4.6.1</span> Population Version of the Mean Squared (Prediction) Error</h3>
 <p>Consider a <strong>given</strong> estimate <span class="math inline">\(\hat{f}\)</span> and a <strong>given</strong> predictor <span class="math inline">\(X,\)</span> which yields a <strong>given</strong> prediction <span class="math inline">\(\hat{Y} = \hat{f}(X).\)</span> That is, assume for a moment that both <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are <strong>fixed</strong>, so that the only variability comes from <span class="math inline">\(\epsilon.\)</span> Then, it is easy to show that <span id="eq-MSEDecompFixed"><span class="math display">\[
 \begin{align*}
 \overbrace{E\left[(Y - \hat{Y})^2\right]}^{\text{Mean Squared (Prediction) Error}}

@@ -417,6 +417,32 @@ with respect to $K=1,2,\dots.$
 
 
 
+## In Class Coding Exercises 
+
+Consider the following multiple linear regression model:
+\begin{align*}
+Y_i 
+& = f(x)+ \epsilon_i\\ 
+& = 5+ 3\sin(2\pi x) + \epsilon_i,
+\end{align*}
+where the training data has a sample size of $n_{Train}=100,$ the error term is iid normal 
+$$
+\epsilon_i\overset{\text{iid}}{\sim}\mathcal{N}(0,1),
+$$
+and the predictor values are deterministic and equidistant, i.e.,
+$$
+X_i=\frac{i}{n},\quad i=1,\dots,n_{Train}.
+$$
+
+**Problems:**
+
+(a) Programm KNN-Regression Estimator $\hat{f}_K(x_0).$ Compute the KNN-Regression estimation $\hat{f}_K(x_0)$ for $K=5$ and $x0 = 0.2.$ Compare the result with the true regression function value $f(0.2).$
+
+(b) Compute the KNN-Regression estimation for $K=5$ and a *dense* $x$-grid between 0 and 1 (e.g. `seq(0,1,len=500)`) and compare the results with the true regression function values using a plot.
+
+(c) Generate $200$ estimation results $\hat{f}_K(x_0)$ for $x0 = 0.2$ using $200$ independent training data set. Plot the results along with their sample means and the true $f(0.2)$ value using plots for different values of $K=1,\dots,K.$ 
+
+
 ## Under Construction
 
 
