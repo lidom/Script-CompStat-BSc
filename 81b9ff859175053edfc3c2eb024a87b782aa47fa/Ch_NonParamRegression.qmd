@@ -464,14 +464,14 @@ The left panel of Figure 3.16 shows the estimation result for $K=1$ and the righ
 
 **Small Bias:** The estimator $\hat{f}_K(x_0)$ has **small bias** if it only uses **very close and thus good** training data neighbors since, by our qualitative smoothness assumption on $f$
 $$
-d(x_0, X_i^{\text{Train}})\approx 0\quad\Rightarrow\quad |\hat{f}_K(X_i^{\text{Train}}) - f(x_0)|\approx 0.
+d(x_0, X_i^{\text{Train}})\approx 0\quad\Rightarrow\quad |f(X_i^{\text{Train}}) - f(x_0)|\approx 0.
 $$
 In this case, we can expect that the systematic estimation error is small, i.e. that $E(\hat{f}_K(x_0))\approx f(x_0)$ (small bias). 
 
 
 **Large Bias:** The estimator $\hat{f}_K(x_0)$ has **large bias** if it also uses **more distant and thus bad** training data neighbors for which
 $$
-d(x_0, X_i^{\text{Train}})\gg 0\quad\Rightarrow\quad |\hat{f}_K(X_i^{\text{Train}}) - f(x_0)|\gg 0.
+d(x_0, X_i^{\text{Train}})\gg 0\quad\Rightarrow\quad |f(X_i^{\text{Train}}) - f(x_0)|\gg 0.
 $$
 In this case, we expect a large systematic estimation error, i.e. that $E(\hat{f}_K(x_0))\not\approx f(x_0)$ (large bias). 
 :::
@@ -1380,7 +1380,7 @@ $$
 $$
 and the predictor values are deterministic and equidistant, i.e.,
 $$
-X_i=\frac{i}{n},\quad i=1,\dots,n_{\text{Train}}.
+X_i=\frac{i}{n_{\text{Train}}},\quad i=1,\dots,n_{\text{Train}}.
 $$
 
 **Problems:**
@@ -1393,23 +1393,28 @@ $$
 $$
 \hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)
 $$ 
-for $x_0 = 0.2.$ 
+for $x_0 = 0.2$ and $K\in\{1,2,\dots,35\}.$ 
 
-* Plot the estimation results $\hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)$ along with their sample mean and the true value of $f(0.2).$
-* What is the (approximated) conditional bias of $\hat{f}_{K}(X),$ given $X=x_0.$
-* What is the (approximated) variance of $\hat{f}_{K}(X),$ given $X=x_0.$
-* What is the (approximated) mean squared estimation error of $\hat{f}_{K}(X),$ given $X=x_0.$
+* Plot the estimation results $\hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)$ along with their sample mean and the true value of $f(0.2)$ for $K=5,$ $K=15,$ and $K=30.$
+* What is the (approximated) conditional bias of $\hat{f}_{K}(X),$ given $X=x_0,$ for $K\in\{1,2,\dots,35\}.$
+* What is the (approximated) variance of $\hat{f}_{K}(X),$ given $X=x_0,$ for $K\in\{1,2,\dots,35\}.$
+* What is the (approximated) mean squared estimation error of $\hat{f}_{K}(X),$ given $X=x_0,$ for $K\in\{1,2,\dots,35\}.$
 
 
 
 
 ::: {.callout-tip}
-# Approximating the local ($x_0$-specific) Mean, Variance, and Mean Squared Estimation Error
-The empirical mean 
+# Approximating the local ($x_0$-specific) Bias, Variance, and Mean Squared Estimation Error using simulated data
+
+The empirical bias 
 $$
-\frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)\approx E\left[\hat{f}_{K}(X)\mid X=x_0\right]=E\left[\hat{f}_{K}(x_0)\right]
+\begin{align*}
+\frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)-f(x_0)
+&\approx \operatorname{Bias}\left[\hat{f}_{K}(X)\mid X=x_0\right]\\
+&=\operatorname{Bias}\left[\hat{f}_{K}(x_0)\right]
+\end{align*}
 $$
-approximates the conditional mean of $\hat{f}_{K}(X),$ given $X=x_0.$
+approximates the conditional bias of $\hat{f}_{K}(X),$ given $X=x_0.$
 
 The empirical variance 
 $$
