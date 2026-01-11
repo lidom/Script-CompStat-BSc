@@ -1389,18 +1389,16 @@ $$
 
 (b) Compute the KNN-Regression estimation for $K=5$ and a *dense* $x$-grid between 0 and 1 (e.g. `c(1:1000)/1000`) and compare the results with the true regression function values using a plot.
 
-(c) Generate $B=1000$ estimation results 
+(c) **Approximating the local bias, variance, and mean squared estimation error:** Generate $B=1000$ estimation results 
 $$
 \hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)
 $$ 
 for $x_0 = 0.2$ and $K\in\{1,2,\dots,35\}.$ 
 
 * Plot the estimation results $\hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)$ along with their sample mean and the true value of $f(0.2)$ for $K=5,$ $K=15,$ and $K=30.$
-* What is the (approximated) conditional bias of $\hat{f}_{K}(X),$ given $X=x_0,$ for $K\in\{1,2,\dots,35\}.$
-* What is the (approximated) variance of $\hat{f}_{K}(X),$ given $X=x_0,$ for $K\in\{1,2,\dots,35\}.$
-* What is the (approximated) mean squared estimation error of $\hat{f}_{K}(X),$ given $X=x_0,$ for $K\in\{1,2,\dots,35\}.$
-
-
+* Use the $B$ simulated estimation results to approximate the true bias of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
+* Use the $B$ simulated estimation results to approximate the true variance of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
+* Use the $B$ simulated estimation results to approximate to true mean squared estimation error of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
 
 
 ::: {.callout-tip}
@@ -1410,31 +1408,28 @@ The empirical bias
 $$
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)-f(x_0)
-&\approx \operatorname{Bias}\left[\hat{f}_{K}(X)\mid X=x_0\right]\\
-&=\operatorname{Bias}\left[\hat{f}_{K}(x_0)\right]
+&\approx \operatorname{Bias}\left[\hat{f}_{K}(x_0)\right]
 \end{align*}
 $$
-approximates the conditional bias of $\hat{f}_{K}(X),$ given $X=x_0.$
+approximates the true bias of $\hat{f}_{K}(x_0).$
 
 The empirical variance 
 $$
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\left(\hat{f}_{K,j}(x_0)-\frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)\right)^2
-&\approx Var\left[\hat{f}_{K}(X)\mid X=x_0\right]\\
-&=Var\left[\hat{f}_{K}(x_0)\right]
+&\approx Var\left[\hat{f}_{K}(x_0)\right]
 \end{align*}
 $$
-approximates the conditional variance of $\hat{f}_{K}(X),$ given $X=x_0.$
+approximates the true variance of $\hat{f}_{K}(x_0).$
 
 The empirical mean squared *estimation* error  
 $$
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\left(\hat{f}_{K,j}(x_0)-f(x_0)\right)^2
-&\approx E\left[\left(\hat{f}_{K}(X)-f(x_0)\right)^2\mid X=x_0\right]\\
-&= E\left[\left(\hat{f}_{K}(x_0)-f(x_0)\right)^2\right]
+&\approx E\left[\left(\hat{f}_{K}(x_0)-f(x_0)\right)^2\right]
 \end{align*}
 $$
-approximates the conditional mean squared *estimation* error of $\hat{f}_{K}(X),$ given $X=x_0.$
+approximates the true mean squared *estimation* error of $\hat{f}_{K}(x_0).$
 :::
 
 
@@ -1478,14 +1473,8 @@ In the following, we will often supress the subscript "obs", since often both po
 
 
 
-<!-- $$
-E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
-$$ -->
 
-
-
-
-
+## Exercises {-}
 
 
 

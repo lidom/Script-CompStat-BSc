@@ -233,6 +233,7 @@ window.Quarto = {
   <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="header-section-number">4.6</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
   <li><a href="#parametric-versus-nonparametric-regression" id="toc-parametric-versus-nonparametric-regression" class="nav-link" data-scroll-target="#parametric-versus-nonparametric-regression"><span class="header-section-number">4.7</span> Parametric versus Nonparametric Regression</a></li>
   <li><a href="#in-class-coding-exercises" id="toc-in-class-coding-exercises" class="nav-link" data-scroll-target="#in-class-coding-exercises"><span class="header-section-number">4.8</span> In Class Coding Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -1074,7 +1075,7 @@ Figure&nbsp;4.3: LOOCV error estimates for different polynomial degrees <span cl
 </div>
 <section id="cv-often-computationally-expensive" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="cv-often-computationally-expensive"><strong>CV: (Often) Computationally Expensive</strong></h4>
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear regression models, takes<br><center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 3.579 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 6.098 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -1120,7 +1121,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.018 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.023 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -1502,18 +1503,18 @@ X_i=\frac{i}{n_{\text{Train}}},\quad i=1,\dots,n_{\text{Train}}.
 <ol type="a">
 <li><p>Programm the KNN-Regression estimator <span class="math inline">\(\hat{f}_K(x_0).\)</span> Compute the KNN-Regression estimation <span class="math inline">\(\hat{f}_K(x_0)\)</span> for <span class="math inline">\(K=5\)</span> and <span class="math inline">\(x_0 = 0.2.\)</span> Compare the result with the true regression function value <span class="math inline">\(f(0.2).\)</span></p></li>
 <li><p>Compute the KNN-Regression estimation for <span class="math inline">\(K=5\)</span> and a <em>dense</em> <span class="math inline">\(x\)</span>-grid between 0 and 1 (e.g.&nbsp;<code>c(1:1000)/1000</code>) and compare the results with the true regression function values using a plot.</p></li>
-<li><p>Generate <span class="math inline">\(B=1000\)</span> estimation results <span class="math display">\[
+<li><p><strong>Approximating the local bias, variance, and mean squared estimation error:</strong> Generate <span class="math inline">\(B=1000\)</span> estimation results <span class="math display">\[
 \hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)
 \]</span> for <span class="math inline">\(x_0 = 0.2\)</span> and <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span></p></li>
 </ol>
 <ul>
 <li>Plot the estimation results <span class="math inline">\(\hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)\)</span> along with their sample mean and the true value of <span class="math inline">\(f(0.2)\)</span> for <span class="math inline">\(K=5,\)</span> <span class="math inline">\(K=15,\)</span> and <span class="math inline">\(K=30.\)</span>
 </li>
-<li>What is the (approximated) conditional bias of <span class="math inline">\(\hat{f}_{K}(X),\)</span> given <span class="math inline">\(X=x_0,\)</span> for <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span>
+<li>Use the <span class="math inline">\(B\)</span> simulated estimation results to approximate the true bias of <span class="math inline">\(\hat{f}_{K}(x_0)\)</span> for <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span>
 </li>
-<li>What is the (approximated) variance of <span class="math inline">\(\hat{f}_{K}(X),\)</span> given <span class="math inline">\(X=x_0,\)</span> for <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span>
+<li>Use the <span class="math inline">\(B\)</span> simulated estimation results to approximate the true variance of <span class="math inline">\(\hat{f}_{K}(x_0)\)</span> for <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span>
 </li>
-<li>What is the (approximated) mean squared estimation error of <span class="math inline">\(\hat{f}_{K}(X),\)</span> given <span class="math inline">\(X=x_0,\)</span> for <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span>
+<li>Use the <span class="math inline">\(B\)</span> simulated estimation results to approximate to true mean squared estimation error of <span class="math inline">\(\hat{f}_{K}(x_0)\)</span> for <span class="math inline">\(K\in\{1,2,\dots,35\}.\)</span>
 </li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1529,24 +1530,21 @@ Approximating the local (<span class="math inline">\(x_0\)</span>-specific) Bias
 <p>The empirical bias <span class="math display">\[
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)-f(x_0)
-&amp;\approx \operatorname{Bias}\left[\hat{f}_{K}(X)\mid X=x_0\right]\\
-&amp;=\operatorname{Bias}\left[\hat{f}_{K}(x_0)\right]
+&amp;\approx \operatorname{Bias}\left[\hat{f}_{K}(x_0)\right]
 \end{align*}
-\]</span> approximates the conditional bias of <span class="math inline">\(\hat{f}_{K}(X),\)</span> given <span class="math inline">\(X=x_0.\)</span></p>
+\]</span> approximates the true bias of <span class="math inline">\(\hat{f}_{K}(x_0).\)</span></p>
 <p>The empirical variance <span class="math display">\[
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\left(\hat{f}_{K,j}(x_0)-\frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)\right)^2
-&amp;\approx Var\left[\hat{f}_{K}(X)\mid X=x_0\right]\\
-&amp;=Var\left[\hat{f}_{K}(x_0)\right]
+&amp;\approx Var\left[\hat{f}_{K}(x_0)\right]
 \end{align*}
-\]</span> approximates the conditional variance of <span class="math inline">\(\hat{f}_{K}(X),\)</span> given <span class="math inline">\(X=x_0.\)</span></p>
+\]</span> approximates the true variance of <span class="math inline">\(\hat{f}_{K}(x_0).\)</span></p>
 <p>The empirical mean squared <em>estimation</em> error<br><span class="math display">\[
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\left(\hat{f}_{K,j}(x_0)-f(x_0)\right)^2
-&amp;\approx E\left[\left(\hat{f}_{K}(X)-f(x_0)\right)^2\mid X=x_0\right]\\
-&amp;= E\left[\left(\hat{f}_{K}(x_0)-f(x_0)\right)^2\right]
+&amp;\approx E\left[\left(\hat{f}_{K}(x_0)-f(x_0)\right)^2\right]
 \end{align*}
-\]</span> approximates the conditional mean squared <em>estimation</em> error of <span class="math inline">\(\hat{f}_{K}(X),\)</span> given <span class="math inline">\(X=x_0.\)</span></p>
+\]</span> approximates the true mean squared <em>estimation</em> error of <span class="math inline">\(\hat{f}_{K}(x_0).\)</span></p>
 </div>
 </div>
 <!-- 
@@ -1583,9 +1581,7 @@ of the test data random sample is used to check the accuracy of the estimate $\h
 In the following, we will often supress the subscript "obs", since often both points of view, the random variables points of view, and the observed realizations points of view make sense.
 :::
 -->
-<!-- $$
-E\left[E[(Y_0- \hat{f}(X))^2|X]\right]
-$$ -->
+</section><section id="exercises" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
 
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
