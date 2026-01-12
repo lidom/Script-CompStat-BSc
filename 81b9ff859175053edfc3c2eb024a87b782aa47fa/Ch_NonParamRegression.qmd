@@ -1408,7 +1408,7 @@ The empirical bias
 $$
 \begin{align*}
 \frac{1}{B}\sum_{j=1}^B\hat{f}_{K,j}(x_0)-f(x_0)
-&\approx \operatorname{Bias}\left[\hat{f}_{K}(x_0)\right]
+&\approx E\left(\hat{f}_{K}(x_0)\right)-f(x_0)=\operatorname{Bias}\left(\hat{f}_{K}(x_0)\right)
 \end{align*}
 $$
 approximates the true bias of $\hat{f}_{K}(x_0).$
