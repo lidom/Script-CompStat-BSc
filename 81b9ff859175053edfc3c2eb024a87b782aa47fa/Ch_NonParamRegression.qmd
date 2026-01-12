@@ -864,13 +864,13 @@ Figure 5.3 shows schematically the leave-one-out data splitting approach.
 ![](images/Fig_5_3.png)
 
 
-Advantages of CV over the Validation Set approach: 
+**Advantages** of CV over the Validation Set approach: 
 
 1. Lower bias. Since the test MSE estimates are based on training sets with sample sizes 
 $$
 n_{\text{Train}}=n-1 \approx n
 $$ 
-LOOCV does not overestimate the test error rate as much the validation set approach does. 
+LOOCV does not overestimate the test error rate as much as the validation set approach does. 
 2. Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/testing set splits as seen for the validation set approach.
 
 Codes to implement the LOOCV approach for the `Auto` data example: 
@@ -975,8 +975,6 @@ predictive modeling; e.g.
 * Linear discriminant analysis
 * Quadratic discriminant analysis
 * etc.
-
-and any statistical prediction method discussed in the lecture or in our textbook `ISLR2`. 
 
 
 **Caution:** The fast LOOCV @eq-CVfast does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.  
@@ -1224,7 +1222,10 @@ The right-hand panel of **Figure 3.18** reveals that linear regression outperfor
 Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the **curse of dimensionality**. 
 
 
-**Figure 3.20** considers the same strongly non-linear situation as in the second row of **Figure 3.19**, except that we have added additional noise (i.e. redundant) predictors that are not associated with the response. 
+**Figure 3.20** considers the same strongly non-linear situation as in the second row of **Figure 3.19** (sample size $n=50$), except that we have added additional noise (i.e. redundant) predictors that are not associated with the response: 
+$$
+Y_i = f(X_{i1}) + 0\cdot X_{i2} + \dots + 0\cdot X_{ip} + \epsilon_i
+$$
 
 * When $p = 1$ or $p = 2,$ KNN outperforms linear regression. 
 * But for $p = 3$ the results are mixed, and for $p\geq 4$ linear regression is superior to KNN. 
@@ -1400,7 +1401,6 @@ for $x_0 = 0.2$ and $K\in\{1,2,\dots,35\}.$
 * Use the $B$ simulated estimation results to approximate the true variance of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
 * Use the $B$ simulated estimation results to approximate to true mean squared estimation error of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
 
-
 ::: {.callout-tip}
 # Approximating the local ($x_0$-specific) Bias, Variance, and Mean Squared Estimation Error using simulated data
 
@@ -1432,6 +1432,7 @@ $$
 approximates the true mean squared *estimation* error of $\hat{f}_{K}(x_0).$
 :::
 
+(d) Generate one realization of $n_{Train}=100$ training data points from the above defined non-parametric data generating process. Estimate the globally optimal $K$ using LOOCV. 
 
 <!-- 
 ## Assessing Model Accuracy of Nonparametric Regression

@@ -1,9 +1,12 @@
+<!-- LTeX: language=en-US -->
 # Classification
 
+<!-- 
 > Reading: 
 
 * Chapter 2 (the classification parts) of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
-* Chapter 4 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+* Chapter 4 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/)  
+-->
 
 ## Overview 
 
@@ -171,22 +174,22 @@ Thus, it is often preferable to use a classification method that is truly suited
 
 Setup: 
 
-* Observed **training data** 
+* **Training data** 
 $$
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_{n_{\text{Train}}},Y_{n_{\text{Train}}})\}
 $$
-* Qualitative response $y_i$ with categorical class labels. E.g. 
-   * $y_i\in\{\text{red},\text{blue}\}$
-   * $y_i\in\{\text{positive returns},\text{negative returns}\}$
+* Qualitative response $Y_i$ with categorical class labels. E.g. 
+   * $Y_i\in\{\text{red},\text{blue}\}$
+   * $Y_i\in\{\text{positive returns},\text{negative returns}\}$
 * The **classifier** $\hat{f}$ is computed from the training data.
 * Predicted training data class labels: 
 $$
-\hat{y}_i = \hat{f}(x_i)
+\hat{Y}_i = \hat{f}(X_i)
 $$
 
 The alternative to the training MSE (introduced in @sec-mqfit) is here the **training error rate**
 $$
-\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
+\frac{1}{{n_{Train}}}\sum_{i=1}^{n_{Train}} I(Y_i\neq \hat{Y}_i)
 $$
 which gives the relative frequency of false categorical predictions. 
 
@@ -199,15 +202,15 @@ is an indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
 
 Let 
 $$
-\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
+\{(Y_{1}^{\text{Test}},X_{1}^{\text{Test}}), (Y_{2}^{\text{Test}},X_{2}^{\text{Test}}),\dots, (Y_{n_{\text{Test}}}^{\text{Test}},X_{n_{\text{Test}}}^{\text{Test}})\}
 $$
-denote $m$ **test data** observations. 
+denote $n_{\text{Test}}$ **test data** observations. 
 
 The alternative to the test MSE is here the **test error rate**
 $$
-\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
+\frac{1}{n_{\text{Test}}}\sum_{i=1}^{n_{\text{Test}}} I(Y_{i}^{\text{Test}} \neq \hat{Y}_{i}^{\text{Test}}),
 $$
-where $\hat{y}_{0i}$ is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation with predictor value $x_{i0}.$ 
+where $\hat{Y}_{i}^{\text{Test}}=\hat{f}(X_{i}^{\text{Test}})$ is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation $X_{i}^{\text{Test}}.$ 
 
 A good classifier is one for which the test error rate is smallest.
 
@@ -271,15 +274,15 @@ However, in certain applications, different thresholds are used. If, for instanc
 
 Example: 
 $$
-y\in\{\text{Person pays back}, \text{Person does not pay back}\}
+Y_i\in\{\text{Person $i$ pays back}, \text{Person $i$ does not pay back}\}
 $$
 The classification error 
 $$
-\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
+\hat{Y}_i=\text{Person $i$ pays back} \neq Y_i = \text{Person $i$ does not pay back}
 $$
-can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value $x_0$ to the "Person pays back"-class only if, for instance, 
+can be very costly for a bank. So, it can make sense to classify a person with a certain predictor value $x_0$ to the "Person pays back"-class only if, for instance, 
 $$
-\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
+\hat{P}(Y_i = \text{Person $i$ pays back}|X_i=x_0) \geq 0.9,
 $$
 and otherwise classify this person to the "Person does not pay back"-class. This will reduce the frequency of miss-classifications when classifying into the "Person pays back"-class, and thus reduce the costs. 
 :::
@@ -294,13 +297,13 @@ Many approaches attempt to estimate the conditional distribution of $Y$ given $X
 
 Given a positive integer $K$ and a test observation $x_0,$ the KNN classifier first identifies the $K$ points in the training data
 $$
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_{n_{\text{Train}}},Y_{n_{\text{Train}}})\},
 $$
 that are closest to $x_0.$ 
 
 This set of $K$ nearest points (near to $x_0$) can be represented by the $x_0$-specfic index set 
 $$
-\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+\mathcal{N}_0=\{i\in\{1,\dots,n\} \;|\; X_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
 $$
 I.e. $\mathcal{N}_0$ is an index set that allows to select the $K$ nearest neighbors in the training data. 
 
@@ -314,7 +317,7 @@ $$
 \begin{align}
 P(Y = j | X = x_{0}) 
 &\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
-&= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
+&= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(Y_i = j),
 \end{align}
 $${#eq-DefKNN}
 where $I(\texttt{TRUE})=1$ and $I(\texttt{FALSE})=0.$
@@ -328,7 +331,7 @@ Figure 2.14 provides an illustrative example of the KNN approach.
 * Two class labels $Y\in\{\text{yellow}, \text{blue}\}.$
 * Training data consists of six data points
 $$
-\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
+\{(Y_1,X_{11},X_{12}),\dots,(Y_6,X_{61},X_{62})\}
 $$ 
 (See the left panel of Figure 2.14.)
 * Class-label prediction ("classification") are computed for a regular grid of predictor values $x_{0}=(x_{01},x_{02}).$ (See the regular grid of points in the right panel of Figure 2.14.)

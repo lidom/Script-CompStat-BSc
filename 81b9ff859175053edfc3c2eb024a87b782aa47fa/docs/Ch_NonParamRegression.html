@@ -194,12 +194,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch6_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Bootstrap</span></span></a>
-  </div>
-</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -1021,11 +1015,11 @@ n_{{\text{Train}}}\ll n.
 \qquad(4.4)\]</span></span></p>
 <p>Figure 5.3 shows schematically the leave-one-out data splitting approach.</p>
 <p><img src="images/Fig_5_3.png" class="img-fluid"></p>
-<p>Advantages of CV over the Validation Set approach:</p>
+<p><strong>Advantages</strong> of CV over the Validation Set approach:</p>
 <ol type="1">
 <li>Lower bias. Since the test MSE estimates are based on training sets with sample sizes <span class="math display">\[
 n_{\text{Train}}=n-1 \approx n
-\]</span> LOOCV does not overestimate the test error rate as much the validation set approach does.</li>
+\]</span> LOOCV does not overestimate the test error rate as much as the validation set approach does.</li>
 <li>Performing LOOCV multiple times, always yields the same result. I.e., there is no randomness due to the training/testing set splits as seen for the validation set approach.</li>
 </ol>
 <p>Codes to implement the LOOCV approach for the <code>Auto</code> data example:</p>
@@ -1075,7 +1069,7 @@ Figure&nbsp;4.3: LOOCV error estimates for different polynomial degrees <span cl
 </div>
 <section id="cv-often-computationally-expensive" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="cv-often-computationally-expensive"><strong>CV: (Often) Computationally Expensive</strong></h4>
 LOOCV has the potential to be <strong>computationally expensive</strong>, since the model has to be fit <span class="math inline">\(n\)</span> times. Indeed the above code, which represents a rather simple implementation of LOOCV for least squares fits of linear regression models, takes<br><center>
-<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 6.098 seconds
+<code>end_time</code><span class="math inline">\(-\)</span><code>start_time</code> <span class="math inline">\(=\)</span> 4.056 seconds
 </center>
 <p>for the computations which is quite long.</p>
 <p>Luckily, for least squares fits of linear/polynomial regression models one can use the following short-cut formula <span id="eq-CVfast"><span class="math display">\[
@@ -1121,7 +1115,7 @@ h_i=\left[X(X'X)^{-1}X'\right]_{ii}.
 </div>
 However, the fast version takes only
 <center>
-<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.023 seconds
+<code>end_time2</code><span class="math inline">\(-\)</span><code>start_time2</code> <span class="math inline">\(=\)</span> 0.024 seconds
 </center>
 <p>for the computations.</p>
 <p>LOOCV is a very general method, and can be used with any kind of predictive modeling; e.g.</p>
@@ -1131,7 +1125,6 @@ However, the fast version takes only
 <li>Quadratic discriminant analysis</li>
 <li>etc.</li>
 </ul>
-<p>and any statistical prediction method discussed in the lecture or in our textbook <code>ISLR2</code>.</p>
 <p><strong>Caution:</strong> The fast LOOCV <a href="#eq-CVfast" class="quarto-xref">Equation&nbsp;<span>4.5</span></a> does not hold in general, but only for least squares fits of linear regression models, which includes, for instance, polynomial regressions, but, for instance, not logistic regression models.</p>
 </section></section></section><section id="k-fold-cross-validation" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="k-fold-cross-validation">
 <span class="header-section-number">4.6</span> <span class="math inline">\(k\)</span>-Fold Cross-Validation</h2>
@@ -1352,7 +1345,9 @@ One important method is **cross-validation**, which is a method for estimating t
 <p><strong>Figure 3.19</strong> displays a non-linear situations in which KNN performs much better than simple linear regression. <img src="images/Fig_3_19.png" class="img-fluid"></p>
 <section id="curse-of-dimensionality" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="curse-of-dimensionality">Curse of Dimensionality</h4>
 <p>Unfortunately, in higher dimensions, KNN often performs worse than simple/multiple linear regression, since non-parametric approaches suffer from the <strong>curse of dimensionality</strong>.</p>
-<p><strong>Figure 3.20</strong> considers the same strongly non-linear situation as in the second row of <strong>Figure 3.19</strong>, except that we have added additional noise (i.e.&nbsp;redundant) predictors that are not associated with the response.</p>
+<p><strong>Figure 3.20</strong> considers the same strongly non-linear situation as in the second row of <strong>Figure 3.19</strong> (sample size <span class="math inline">\(n=50\)</span>), except that we have added additional noise (i.e.&nbsp;redundant) predictors that are not associated with the response: <span class="math display">\[
+Y_i = f(X_{i1}) + 0\cdot X_{i2} + \dots + 0\cdot X_{ip} + \epsilon_i
+\]</span></p>
 <ul>
 <li>When <span class="math inline">\(p = 1\)</span> or <span class="math inline">\(p = 2,\)</span> KNN outperforms linear regression.</li>
 <li>But for <span class="math inline">\(p = 3\)</span> the results are mixed, and for <span class="math inline">\(p\geq 4\)</span> linear regression is superior to KNN. <img src="images/Fig_3_20.png" class="img-fluid">
@@ -1547,6 +1542,9 @@ Approximating the local (<span class="math inline">\(x_0\)</span>-specific) Bias
 \]</span> approximates the true mean squared <em>estimation</em> error of <span class="math inline">\(\hat{f}_{K}(x_0).\)</span></p>
 </div>
 </div>
+<ol start="4" type="a">
+<li>Generate one realization of <span class="math inline">\(n_{Train}=100\)</span> training data points from the above defined non-parametric data generating process. Estimate the globally optimal <span class="math inline">\(K\)</span> using LOOCV.</li>
+</ol>
 <!-- 
 ## Assessing Model Accuracy of Nonparametric Regression
 
@@ -1580,8 +1578,7 @@ of the test data random sample is used to check the accuracy of the estimate $\h
 ::: {.callout-important}
 In the following, we will often supress the subscript "obs", since often both points of view, the random variables points of view, and the observed realizations points of view make sense.
 :::
--->
-</section><section id="exercises" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+--></section><section id="exercises" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
 
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

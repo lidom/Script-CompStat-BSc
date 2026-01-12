@@ -60,7 +60,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Ch6_ResamplingMethods.html" rel="next">
 <link href="./Ch_NonParamRegression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -194,12 +193,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch6_ResamplingMethods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Bootstrap</span></span></a>
-  </div>
-</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -277,16 +270,12 @@ window.Quarto = {
   
 
 
-</header><blockquote class="blockquote">
-<p>Reading:</p>
-</blockquote>
-<ul>
-<li>Chapter 2 (the classification parts) of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a>
-</li>
-<li>Chapter 4 of our course textbook <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a>
-</li>
-</ul>
-<section id="overview" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="overview">
+</header><!-- LTeX: language=en-US --><!-- 
+> Reading: 
+
+* Chapter 2 (the classification parts) of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
+* Chapter 4 of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/)  
+--><section id="overview" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">5.1</span> Overview</h2>
 <p>Classification problems occur often, perhaps even more so than regression problems.</p>
 <p>Some examples include:</p>
@@ -410,34 +399,35 @@ Pr(Y=1|X)
 <span class="header-section-number">5.3</span> Assessing Model Accuracy: The Classification Setting</h2>
 <p>Setup:</p>
 <ul>
-<li>Observed <strong>training data</strong> <span class="math display">\[
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\}
+<li>
+<strong>Training data</strong> <span class="math display">\[
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_{n_{\text{Train}}},Y_{n_{\text{Train}}})\}
 \]</span>
 </li>
-<li>Qualitative response <span class="math inline">\(y_i\)</span> with categorical class labels. E.g.
+<li>Qualitative response <span class="math inline">\(Y_i\)</span> with categorical class labels. E.g.
 <ul>
-<li><span class="math inline">\(y_i\in\{\text{red},\text{blue}\}\)</span></li>
-<li><span class="math inline">\(y_i\in\{\text{positive returns},\text{negative returns}\}\)</span></li>
+<li><span class="math inline">\(Y_i\in\{\text{red},\text{blue}\}\)</span></li>
+<li><span class="math inline">\(Y_i\in\{\text{positive returns},\text{negative returns}\}\)</span></li>
 </ul>
 </li>
 <li>The <strong>classifier</strong> <span class="math inline">\(\hat{f}\)</span> is computed from the training data.</li>
 <li>Predicted training data class labels: <span class="math display">\[
-\hat{y}_i = \hat{f}(x_i)
+\hat{Y}_i = \hat{f}(X_i)
 \]</span>
 </li>
 </ul>
 <p>The alternative to the training MSE (introduced in <a href="Ch_NonParamRegression.html#sec-mqfit" class="quarto-xref"><span>Section 4.3</span></a>) is here the <strong>training error rate</strong> <span class="math display">\[
-\frac{1}{n}\sum_{i=1}^nI(y_i\neq \hat{y}_i)
+\frac{1}{{n_{Train}}}\sum_{i=1}^{n_{Train}} I(Y_i\neq \hat{Y}_i)
 \]</span> which gives the relative frequency of false categorical predictions.</p>
 <p>Here, <span class="math display">\[
 I(\cdot)
 \]</span> is an indicator function with <span class="math inline">\(I(\text{true})=1\)</span> and <span class="math inline">\(I(\text{false})=0.\)</span></p>
 <p>Let <span class="math display">\[
-\{(y_{01},x_{01}), (y_{02},x_{02}),\dots, (y_{0m},x_{0m})\}
-\]</span> denote <span class="math inline">\(m\)</span> <strong>test data</strong> observations.</p>
+\{(Y_{1}^{\text{Test}},X_{1}^{\text{Test}}), (Y_{2}^{\text{Test}},X_{2}^{\text{Test}}),\dots, (Y_{n_{\text{Test}}}^{\text{Test}},X_{n_{\text{Test}}}^{\text{Test}})\}
+\]</span> denote <span class="math inline">\(n_{\text{Test}}\)</span> <strong>test data</strong> observations.</p>
 <p>The alternative to the test MSE is here the <strong>test error rate</strong> <span class="math display">\[
-\frac{1}{m}\sum_{i=1}^mI(y_{0i}\neq \hat{y}_{0i}),
-\]</span> where <span class="math inline">\(\hat{y}_{0i}\)</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation with predictor value <span class="math inline">\(x_{i0}.\)</span></p>
+\frac{1}{n_{\text{Test}}}\sum_{i=1}^{n_{\text{Test}}} I(Y_{i}^{\text{Test}} \neq \hat{Y}_{i}^{\text{Test}}),
+\]</span> where <span class="math inline">\(\hat{Y}_{i}^{\text{Test}}=\hat{f}(X_{i}^{\text{Test}})\)</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation <span class="math inline">\(X_{i}^{\text{Test}}.\)</span></p>
 <p>A good classifier is one for which the test error rate is smallest.</p>
 </section><section id="sec-BayesClassifier" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="sec-BayesClassifier">
 <span class="header-section-number">5.4</span> The Bayes Classifier</h2>
@@ -479,11 +469,11 @@ Classification threshold <span class="math inline">\(0.5\)</span>?
 <p>If no further information is given, one uses usually a threshold of <span class="math inline">\(0.5\)</span> in a two-class classification problem; or, more generally, a threshold of <span class="math inline">\(\frac{1}{G}\)</span> in a <span class="math inline">\(G\)</span>-classes classification problem.</p>
 <p>However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.</p>
 <p>Example: <span class="math display">\[
-y\in\{\text{Person pays back}, \text{Person does not pay back}\}
+Y_i\in\{\text{Person $i$ pays back}, \text{Person $i$ does not pay back}\}
 \]</span> The classification error <span class="math display">\[
-\hat{y}=\text{Person pays back} \neq y = \text{Person does not pay back}
-\]</span> can be very costly for a bank. So, it makes sense to classify a person with a certain predictor value <span class="math inline">\(x_0\)</span> to the “Person pays back”-class only if, for instance, <span class="math display">\[
-\hat{P}(Y = \text{Person pays back}|X=x_0) \geq 0.9,
+\hat{Y}_i=\text{Person $i$ pays back} \neq Y_i = \text{Person $i$ does not pay back}
+\]</span> can be very costly for a bank. So, it can make sense to classify a person with a certain predictor value <span class="math inline">\(x_0\)</span> to the “Person pays back”-class only if, for instance, <span class="math display">\[
+\hat{P}(Y_i = \text{Person $i$ pays back}|X_i=x_0) \geq 0.9,
 \]</span> and otherwise classify this person to the “Person does not pay back”-class. This will reduce the frequency of miss-classifications when classifying into the “Person pays back”-class, and thus reduce the costs.</p>
 </div>
 </div>
@@ -492,10 +482,10 @@ y\in\{\text{Person pays back}, \text{Person does not pay back}\}
 <p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and so computing the Bayes classifier is impossible.</p>
 <p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-nearest neighbors</strong> (KNN) classifier.</p>
 <p>Given a positive integer <span class="math inline">\(K\)</span> and a test observation <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> points in the training data <span class="math display">\[
-\{(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)\},
+\{(X_1,Y_1),(X_2,Y_2),\dots,(X_{n_{\text{Train}}},Y_{n_{\text{Train}}})\},
 \]</span> that are closest to <span class="math inline">\(x_0.\)</span></p>
 <p>This set of <span class="math inline">\(K\)</span> nearest points (near to <span class="math inline">\(x_0\)</span>) can be represented by the <span class="math inline">\(x_0\)</span>-specfic index set <span class="math display">\[
-\mathcal{N}_0=\{i=1,\dots,n \;|\; x_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+\mathcal{N}_0=\{i\in\{1,\dots,n\} \;|\; X_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
 \]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is an index set that allows to select the <span class="math inline">\(K\)</span> nearest neighbors in the training data.</p>
 <p>From the definition of <span class="math inline">\(\mathcal{N}_0\)</span> is follows that:</p>
 <ul>
@@ -506,7 +496,7 @@ y\in\{\text{Person pays back}, \text{Person does not pay back}\}
 \begin{align}
 P(Y = j | X = x_{0})
 &amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
-&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(y_i = j),
+&amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(Y_i = j),
 \end{align}
 \qquad(5.4)\]</span></span> where <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
 <p>Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>.</p>
@@ -516,7 +506,7 @@ P(Y = j | X = x_{0})
 <li>Two class labels <span class="math inline">\(Y\in\{\text{yellow}, \text{blue}\}.\)</span>
 </li>
 <li>Training data consists of six data points <span class="math display">\[
-\{(y_1,x_{11},x_{12}),\dots,(y_6,x_{61},x_{62})\}
+\{(Y_1,X_{11},X_{12}),\dots,(Y_6,X_{61},X_{62})\}
 \]</span> (See the left panel of Figure 2.14.)</li>
 <li>Class-label prediction (“classification”) are computed for a regular grid of predictor values <span class="math inline">\(x_{0}=(x_{01},x_{02}).\)</span> (See the regular grid of points in the right panel of Figure 2.14.)</li>
 <li>
@@ -4298,9 +4288,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch6_ResamplingMethods.html" class="pagination-link" aria-label="The Bootstrap">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Bootstrap</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
