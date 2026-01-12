@@ -1386,7 +1386,7 @@ $$
 
 **Problems:**
 
-(a) Programm the KNN-Regression estimator $\hat{f}_K(x_0).$ Compute the KNN-Regression estimation $\hat{f}_K(x_0)$ for $K=5$ and $x_0 = 0.2.$ Compare the result with the true regression function value $f(0.2).$
+(a) Program the KNN-Regression estimator $\hat{f}_K(x_0).$ Compute the KNN-Regression estimation $\hat{f}_K(x_0)$ for $K=5$ and $x_0 = 0.25.$ Compare the result with the true regression function value $f(0.25).$
 
 (b) Compute the KNN-Regression estimation for $K=5$ and a *dense* $x$-grid between 0 and 1 (e.g. `c(1:1000)/1000`) and compare the results with the true regression function values using a plot.
 
@@ -1394,9 +1394,9 @@ $$
 $$
 \hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)
 $$ 
-for $x_0 = 0.2$ and $K\in\{1,2,\dots,35\}.$ 
+for $x_0 = 0.25$ and $K\in\{1,2,\dots,35\}.$ 
 
-* Plot the estimation results $\hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)$ along with their sample mean and the true value of $f(0.2)$ for $K=5,$ $K=15,$ and $K=30.$
+* Plot the estimation results $\hat{f}_{K,1}(x_0),\hat{f}_{K,2}(x_0),\dots,\hat{f}_{K,B}(x_0)$ along with their sample mean and the true value of $f(0.25)$ for $K=5,$ $K=15,$ and $K=30.$
 * Use the $B$ simulated estimation results to approximate the true bias of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
 * Use the $B$ simulated estimation results to approximate the true variance of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
 * Use the $B$ simulated estimation results to approximate to true mean squared estimation error of $\hat{f}_{K}(x_0)$ for $K\in\{1,2,\dots,35\}.$
