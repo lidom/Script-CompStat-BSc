@@ -1470,14 +1470,13 @@ In the following, we will often supress the subscript "obs", since often both po
 -->
 
 
-
-
-
-
-
 ## Exercises {-}
 
+* [Exercises for Chapter 4](https://www.dropbox.com/scl/fi/df0xgp99t3gskg53picvc/Ch4_Exercises1.pdf?rlkey=j5iome3qr5s6yst8lai2xtma4&st=qbdsrh9q&dl=0)
 
+<!-- 
+* [Exercises for Chapter 4 with Solutions](https://www.dropbox.com/scl/fi/1ymyos344i1gzjhd3kwjt/Ch4_Exercises_with_Solutions1.pdf?rlkey=uenhjeuq7wvm8eeptyh18kfes&st=bsefvrxn&dl=0) 
+ -->
 
 
 
