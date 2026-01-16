@@ -16,7 +16,7 @@ Classification problems occur often, perhaps even more so than regression proble
 Some examples include:
 
 1. A person arrives at the emergency room with a set of symptoms that could possibly be attributed to one of three medical conditions. Which of the three conditions does the individual have?
-2. An online banking service must be able to determine whether or not a transaction being performed on the site is fraudulent, on the basis of the user's IP address, past transaction history, and so forth.
+2. An online banking service must be able to determine whether a transaction being performed on the site is fraudulent, on the basis of the user's IP address, past transaction history, and so forth.
 3. On the basis of DNA sequence data for a number of patients with and without a given disease, a biologist would like to figure out which DNA mutations are deleterious (disease-causing) and which are not.
 
 One of the running example for this chapter: The (simulated) `Default` data set which is part of the [online resources](https://www.statlearning.com/resources-second-edition) of our textbook `ISLR`, and which is also contained in the `R` package `ISLR2`.
@@ -49,84 +49,84 @@ Linear regression is often not appropriate in the case of a qualitative response
 
 Suppose that we are trying to predict the medical condition of a patient in the emergency room on the basis of her symptoms. In this simplified example, there are three possible diagnoses: 
 
-* `stroke`
-* `drug overdose`, and
-* `epileptic seizure`
+* $\texttt{stroke}$
+* $\texttt{drug overdose}$, and
+* $\texttt{epileptic seizure}$
 
-We can encoding these values as a quantitative response variable,
+We can encode these values as a quantitative response variable for subject $i$,
 $$
-Y=\left\{
+Y_i=\left\{
     \begin{array}{ll}
-    1&\quad\text{if }\texttt{stroke}\\
-    2&\quad\text{if }\texttt{drug overdose}\\
-    3&\quad\text{if }\texttt{epileptic seizure}\\
+    1&\quad\text{if }\texttt{diagnose}_i=\texttt{stroke}\\
+    2&\quad\text{if }\texttt{diagnose}_i=\texttt{drug overdose}\\
+    3&\quad\text{if }\texttt{diagnose}_i=\texttt{epileptic seizure}\\
     \end{array}
 \right.
 $$
-Using this coding, least squares could be used to fit a linear regression model to predict $Y,$ but 
+Using this coding, least squares could be used to fit a linear regression model to predict $Y_i,$ but 
 
 1. the results would then depend on the numeric ordering $1<2<3,$ even though the ordering was completely arbitrary and could have been made differently.
-2. the results would then depend on the assumption that the gap $(2-1=1)$ between `stroke` and `drug overdose` is comparable to the gap $(3-2=1)$ between `drug overdose` and `epileptic seizure` which would be a very unrealistic. 
+2. the results would then depend on the assumption that the gap $(2-1=1)$ between $\texttt{stroke}$ and $\texttt{drug overdose}$ is comparable to the gap $(3-2=1)$ between $\texttt{drug overdose}$ and $\texttt{epileptic seizure}$ which would be a very unrealistic. 
 
 Generally, both points are quite problematic for most applications.
 
 Only if the response variable's values did take on a natural ordering, such as *"mild"*, *"moderate"*, and *"severe"*, and we felt the gap between *mild* and *moderate* was similar to the gap between *moderate* and *severe*, then a 1, 2, 3 coding would be reasonable. 
 
-For a **binary (two level) qualitative response**, the situation is better. For instance, if there are only two conditions that we need to predict (e.g. either `default`$=$`Yes` or `default`$=$`No`), we can use a dummy variable coding
+For a **binary (two level) qualitative response**, the situation is better. For instance, if there are only two conditions that we need to predict (e.g. either $\texttt{default}_i=\texttt{Yes}$ or $\texttt{default}_i=\texttt{No}$), we can use a dummy variable coding
 $$
-Y=\left\{
+Y_i=\left\{
 \begin{array}{ll}
-    1&\quad\text{if }\texttt{default}=\texttt{Yes}\\
-    0&\quad\text{if }\texttt{default}=\texttt{No}\\
+    1&\quad\text{if }\texttt{default}_i=\texttt{Yes}\\
+    0&\quad\text{if }\texttt{default}_i=\texttt{No}\\
 \end{array}
 \right.
 $${#eq-binaryY}
-We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}> 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
+We could then fit a linear regression to this binary response, and predict drug overdose if $\hat{Y}_i > 0.5$ and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.
 
 #### **Binary Response** {-}
 
-For a binary response, $Y\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that
+For a binary response, $Y_i\in\{0,1\},$ as in @eq-binaryY, linear regression is not completely unreasonable. For the multiple linear regression model, we have that
 $$ 
 \begin{align*}
-Y 
-&= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon, 
+Y_i 
+&= \beta_0+ \beta_1 X_{i1}+\dots +\beta_p X_{ip} + \epsilon_i, 
 \end{align*}
 $$
 where, under the assumptions of @sec-linearRegCh, 
 $$
-E(\epsilon|X)=0.
+E(\epsilon_i|X_i)=0.
 $$
 Therefore, 
 $$
 \begin{align*}
-E(Y|X) 
-&=E\left(\beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon|X\right)\\[2ex]
-&=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+E(Y_i|X_i) 
+&=E\left(\beta_0+ \beta_1 X_{i1}+\dots +\beta_p X_{ip} + \epsilon_i|X_i\right)\\[2ex]
+&=\beta_0+ \beta_1 X_{i1} + \dots +\beta_p X_{ip}.
 \end{align*}
 $${#eq-LinProb1}
-Moreover, since $Y\in\{0,1\}$ is a binary random variable, the conditional mean $E(Y|X)$ equals the conditional probability of $Y=1$ given $X$
+Moreover, since $Y_i\in\{0,1\}$ is a binary random variable, the conditional mean $E(Y_i|X_i)$ equals the **conditional probability** of $Y_i=1$ given $X_i\colon$
 $$
 \begin{align*}
-E(Y|X)
-& =  Pr(Y=1|X)\cdot 1 + Pr(Y=0|X)\cdot 0\\[2ex]
-& =  Pr(Y=1|X).  
+E(Y_i|X_i)
+& =  P(Y_i=1|X_i)\cdot 1 + P(Y_i=0|X_i)\cdot 0\\[2ex]
+& =  P(Y_i=1|X_i).  
 \end{align*}
 $${#eq-LinProb2}
 Combining @eq-LinProb1 and @eq-LinProb2 yields
 $$
 \begin{align*}
-Pr(Y=1|X) &=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
+P(Y_i=1|X_i) &=\beta_0+ \beta_1 X_{i1} +\dots +\beta_p X_{ip}
 \end{align*}
 $$
 
-Thus the estimated linear model approximates the conditional probability of $Y=1$ (e.g. $\texttt{default}=\texttt{Yes}$) given $X:$
+Thus the estimated linear model approximates the conditional probability of $Y_i=1$ (e.g. $\texttt{default}_i=\texttt{Yes}$) given $X_i\colon$
 $$
 \begin{align*}
-Pr(Y=1|X) 
-& \approx \widehat{Pr}(Y=1|X)\\[2ex]
-& = \widehat{E}(Y|X)\\[2ex] 
-& = \hat{Y}\\
-& = \hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+P(Y_i=1|X_i) 
+& \approx \widehat{P}(Y_i=1|X_i)\\[2ex]
+& = \widehat{E}(Y_i|X_i)\\[2ex] 
+& = \hat{Y}_i\\
+& = \hat\beta_0+ \hat\beta_1 X_{i1} + \dots + \hat\beta_p X_{ip}.
 \end{align*}
 $$
 
@@ -140,8 +140,8 @@ $$
 \hat{f}(x_i) = 
 \left\{
   \begin{array}{l}
-   1\quad\text{if}\quad\widehat{Pr}(Y=1|x_i)    > 0.5\\[2ex]
-   0\quad\text{if}\quad\widehat{Pr}(Y=1|x_i) \leq 0.5\\[2ex] 
+   1\quad\text{if}\quad\widehat{P}(Y_i=1|x_i)    > 0.5\\[2ex]
+   0\quad\text{if}\quad\widehat{P}(Y_i=1|x_i) \leq 0.5\\[2ex] 
   \end{array} 
 \right.
 $$
@@ -151,7 +151,7 @@ $$
 
 However, if we use linear regression, some of our estimates 
 $$
-\widehat{Pr}(Y=1|x_i)
+\widehat{P}(Y_i=1|x_i)
 $$
 might be outside the $[0, 1]$ interval (see left panel in Figure 4.2), which doesn't make sense when predicting probabilities. 
 ![](images/Fig_4_2.png)
@@ -162,7 +162,7 @@ might be outside the $[0, 1]$ interval (see left panel in Figure 4.2), which doe
 **Summary:**
 
 (a) A classic regression method cannot well accommodate a qualitative response with more than two classes
-(b) A classic regression method may not provide meaningful estimates of $Pr(Y=1|X),$ even with just two classes. 
+(b) A classic regression method may not provide meaningful estimates of $P(Y_i=1|X_i),$ even with just two classes. 
 
 Thus, it is often preferable to use a classification method that is truly suited for qualitative response values such as, for instance, logistic regression.
 
@@ -189,15 +189,13 @@ $$
 
 The alternative to the training MSE (introduced in @sec-mqfit) is here the **training error rate**
 $$
-\frac{1}{{n_{Train}}}\sum_{i=1}^{n_{Train}} I(Y_i\neq \hat{Y}_i)
+\frac{1}{{n_{\text{Train}}}}\sum_{i=1}^{n_{\text{Train}}} I(Y_i\neq \hat{Y}_i),\quad \hat{Y}_i = \hat{f}(X_i),
 $$
-which gives the relative frequency of false categorical predictions. 
-
-Here, 
+which gives the relative frequency of false categorical predictions, 
 $$
 I(\cdot)
 $$
-is an indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
+is the indicator function with $I(\text{true})=1$ and $I(\text{false})=0.$
 
 
 Let 
@@ -210,38 +208,47 @@ The alternative to the test MSE is here the **test error rate**
 $$
 \frac{1}{n_{\text{Test}}}\sum_{i=1}^{n_{\text{Test}}} I(Y_{i}^{\text{Test}} \neq \hat{Y}_{i}^{\text{Test}}),
 $$
-where $\hat{Y}_{i}^{\text{Test}}=\hat{f}(X_{i}^{\text{Test}})$ is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation $X_{i}^{\text{Test}}.$ 
+where 
+$$
+\hat{Y}_{i}^{\text{Test}}=\hat{f}(X_{i}^{\text{Test}})
+$$ 
+is the predicted class label that results from applying the classifier $\hat{f}$ (computed from the training data) to the test observation $X_{i}^{\text{Test}}.$ 
 
-A good classifier is one for which the test error rate is smallest.
+A good classifier is one for which the test error rate is small.
 
 ## The Bayes Classifier {#sec-BayesClassifier}
 
+
+#### **Bayes Classifier** {-}
+
 It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value $x_{0}.$ This classifier is called the **Bayes classifier**. 
 
-In other words, the Bayes classifier assigns a test observation with predictor vector $x_{0}$ to the class $j$ for which
+In other words, the Bayes classifier assigns a subject $i$ with predictor vector value $X_i=x_{0}$ to the class $j$ for which
 $$
-P(Y = j | X = x_{0})
+P(Y_i = j | X_i = x_{0})
 $$
 is largest among all possible class labels $j$ (e.g. $j\in\{1,2\}$). 
 
 
-In a **two-class problem** where there are only two possible response values, say class $1$ or class $2,$ the Bayes classifier corresponds to predicting class $1$ if 
+In a **two-class problem** where there are only two possible response values, say class $1$ or class $2,$ such that $Y_i\in\{1,2\}$, the Bayes classifier predicts class $1$ for subject $i$ if 
 $$
-P(Y = 1| X = x_0 ) \geq 0.5,
+P(Y_i = 1| X_i = x_0 ) \geq 0.5,
 $$ 
 and class $2$ if 
 $$
 \begin{align*}
-& P(Y = 1| X = x_0 ) < 0.5 \\[2ex]
-\Leftrightarrow\; & P(Y = 2| X = x_0 ) > 0.5  
+& P(Y_i = 1| X_i = x_0 ) < 0.5 \\[2ex]
+\Leftrightarrow\; & P(Y_i = 2| X_i = x_0 ) > 0.5  
 \end{align*}
 $$
 
 
-Those values of $x_0$ for which 
+#### **Bayes Decision Boundary** {-}
+
+Those predictor values $x_0$ for which 
 $$
 \begin{align*}
-P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
+P(Y_i = 1| X_i = x_0 ) = 0.5 = P(Y_i = 2| X_i = x_0 )
 \end{align*}
 $$
 are called the **Bayes decision boundary**. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.
@@ -251,17 +258,19 @@ are called the **Bayes decision boundary**. An example of a Bayes decision bound
 **Note to Fig. 2.13:** Here, a *perfect* classification (i.e. zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups. 
 
 
-The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The point-wise Bayes error rate at $x_0$ is given by
+#### **Bayes Error Rate** {-}
+
+The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The *local* Bayes error rate at $x_0$ is given by
 $$
-1 - \max_{j}P(Y = j| X = x_0 ),
+1 - \max_{j}P(Y_i = j| X_i = x_0 ),
 $$
 where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$).
 
 The *global* overall Bayes error rate is given by
 $$
-1 - E\left(\max_{j}P(Y = j| X )\right),
+1 - E\left(\max_{j}P(Y_i = j| X_i)\right),
 $$
-where the expectation averages the probability over all possible values of $X.$ 
+where the expectation averages the probability over all possible values of $X_i.$ 
 
 
 
@@ -282,7 +291,7 @@ $$
 $$
 can be very costly for a bank. So, it can make sense to classify a person with a certain predictor value $x_0$ to the "Person pays back"-class only if, for instance, 
 $$
-\hat{P}(Y_i = \text{Person $i$ pays back}|X_i=x_0) \geq 0.9,
+\widehat{P}(Y_i = \text{Person $i$ pays back}|X_i=x_0) \geq 0.9,
 $$
 and otherwise classify this person to the "Person does not pay back"-class. This will reduce the frequency of miss-classifications when classifying into the "Person pays back"-class, and thus reduce the costs. 
 :::
@@ -290,61 +299,101 @@ and otherwise classify this person to the "Person does not pay back"-class. This
 
 ## $K$-Nearest Neighbors Classification 
 
-In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of $Y$ given $X,$ and so computing the Bayes classifier is impossible. 
+In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the true conditional distribution of $Y_i$ given $X_i,$ and so computing the Bayes classifier is impossible. 
 
 
-Many approaches attempt to estimate the conditional distribution of $Y$ given $X,$ and then classify a given observation to the class with highest estimated probability. One such method is the **$K$-nearest neighbors** (KNN) classifier. 
+Many approaches attempt to estimate the conditional distribution of $Y_i$ given $X_i,$ and then classify a given observation to the class with highest estimated probability. One such method is the **$K$-Nearest Neighbors** (KNN) classifier. 
 
-Given a positive integer $K$ and a test observation $x_0,$ the KNN classifier first identifies the $K$ points in the training data
+Given a positive integer $K$ and a given predictor value $x_0,$ the KNN classifier first identifies the $K$ subjects (or firms, states) $i$ with predictors
 $$
-\{(X_1,Y_1),(X_2,Y_2),\dots,(X_{n_{\text{Train}}},Y_{n_{\text{Train}}})\},
+\{X_{1},\dots,X_{n_{\text{Train}}}\},
 $$
-that are closest to $x_0.$ 
+closest to $x_0,$ by computing the distances 
+$$
+d(x_0,X_1),d(x_0,X_2),\dots,d(x_0,X_n)
+$$
+from $x_0.$ 
 
-This set of $K$ nearest points (near to $x_0$) can be represented by the $x_0$-specfic index set 
+The set of $K$ nearest neighbors (near to $x_0$) is represented by the $x_0$-specfic index set 
 $$
-\mathcal{N}_0=\{i\in\{1,\dots,n\} \;|\; X_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
+\mathcal{N}_0 
+=\{i\in\{1,2,\dots,n_{\text{Train}}\} \; |\; d(x_0,X_i)\text{ is among the $K$ smallest distances}\}
 $$
-I.e. $\mathcal{N}_0$ is an index set that allows to select the $K$ nearest neighbors in the training data. 
+I.e. $\mathcal{N}_0$ is the set of index values $i\in\{1,2,\dots,n_{\text{Train}}\}$ for which $d(x_0,X_i)$ is among the $K$ smallest distances. 
 
 From the definition of $\mathcal{N}_0$ is follows that:
 
 * $\mathcal{N}_0\subset\{1,2,\dots,n\}$
-* $|\mathcal{N}_0|=K$
+* $|\mathcal{N}_0|=K$ (Number of elements in the set $\mathcal{N}_0$)
 
-KNN estimates the conditional probability for class $j$ as the fraction of the $K$ points $(x_i,y_i)$ selected by the index-set $\mathcal{N}_0$ whose response value $y_i$ equals $j:$
+
+#### **Classify new $Y$ with $X=x_0$** {-}
+
+Now, let $Y$ denote the response of a **new subject** with predictor value $X=x_0.$ Aim is to classify the new subject into one of the classes.   
+
+KNN estimates the conditional probability of $Y=j$ given $X=x_0,$ 
+$$
+P(Y = j | X = x_{0}) ,
+$$
+as the fraction of the $K$ training data responses $Y_i$ with $i\in\mathcal{N}_0$ whose response value $Y_i$ equals $j\colon$
 $$
 \begin{align}
 P(Y = j | X = x_{0}) 
-&\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
+&\approx \widehat{P}(Y = j | X = x_{0})\\[2ex]
 &= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(Y_i = j),
 \end{align}
-$${#eq-DefKNN}
+$$
 where $I(\texttt{TRUE})=1$ and $I(\texttt{FALSE})=0.$
 
-Finally, KNN classifies the test observation $x_0$ to the class $j$ with the largest probability from @eq-DefKNN. 
-
-
-Figure 2.14 provides an illustrative example of the KNN approach. 
-
-* Two-dimensional predictor $X=(X_1,X_2),$ where $X_1$ is shown on the x-axis and $X_2$ on the y-axis. 
-* Two class labels $Y\in\{\text{yellow}, \text{blue}\}.$
-* Training data consists of six data points
+Finally, KNN classifies the new subject with predictor value $X=x_0$ to that class $j$ which has the largest conditional probability, i.e.
 $$
-\{(Y_1,X_{11},X_{12}),\dots,(Y_6,X_{61},X_{62})\}
-$$ 
-(See the left panel of Figure 2.14.)
-* Class-label prediction ("classification") are computed for a regular grid of predictor values $x_{0}=(x_{01},x_{02}).$ (See the regular grid of points in the right panel of Figure 2.14.)
-* $K=3$ nearest neighbors are used to compute the class-label predictions. 
+\hat{f}_K(x_0) = \arg\max_j \widehat{P}(Y=j|x_0).
+$$
 
+::: {.callout-tip icon="false"}
+# Example
+For instance, if $j\in\{\texttt{red},\texttt{blue},\texttt{green}\},$ then the classifier
+$$
+\hat{f}_K(x_0) = \arg\max_{j\in \{\texttt{red},\texttt{blue},\texttt{green}\}} \widehat{P}(Y=j|x_0).
+$$
+assigns a new subject with predictor value $X=x_0$ to class $\texttt{blue}$ if 
+$$
+\begin{align*}
+\widehat{P}(Y=\texttt{blue}|x_0) & > \widehat{P}(Y=\texttt{red}|x_0)\\
+\text{and}\quad \widehat{P}(Y=\texttt{blue}|x_0) & > \widehat{P}(Y=\texttt{green}|x_0).
+\end{align*}
+$$
+:::
+
+Figure 2.14 provides an illustrative example of the KNN approach: 
+
+* Two-dimensional predictors $X_i=(X_{i1},X_{i2})^\top$
+* Two class labels $Y_i\in\{\texttt{orange}, \texttt{blue}\}$
+* Training data consists of $n_{\text{Train}}=12$ data points
+$$
+\{(X_1,Y_{1}),\dots,(X_{12},Y_{12})\},
+$$ 
+where $6$ of the observations belong to group $\texttt{orange}$ and the other $6$ observations to group $\texttt{blue}$ (see the left panel of Figure 2.14.)
 
 <br>
 
 ![](images/Fig_2_14.png)
 
-* In the **left-hand panel** of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross. 
-* In the **right-hand panel** of Figure 2.14, we have applied the KNN approach with $K = 3$ at all of the possible values for $X_1$ and $X_2,$ and have drawn in the corresponding KNN decision boundary.
+* **Left-hand panel** of Figure 2.14: KNN-classification with $K=3$ classifies a new subject with predictor value $X=x_0$ ($x_0$-value marked by the black cross) into group $\texttt{blue},$ since  
+$$
+\widehat{P}(Y=\texttt{blue}|x_0) = \frac{2}{3} > \frac{1}{3} = \widehat{P}(Y=\texttt{orange}|x_0).
+$$
 
+
+* **Right-hand panel** of Figure 2.14: KNN-classification with $K = 3$ applied to predictor values $x_0=(x_{10},x_{20})^\top$ over a fine grid across all possible predictor values. The black lines correspond to those values $x_0=(x_{10},x_{20})^\top$ for which 
+$$
+\widehat{P}(Y=\texttt{blue}|x_0) = \widehat{P}(Y=\texttt{orange}|x_0).
+$$
+and thus show the **estimated KNN decision boundary**.
+
+
+
+Figures 2.15 and Figure 2.16 show the results for $K=10,$ $K=1,$ and $K=100.$
 
 <br>
 
@@ -363,51 +412,44 @@ $$
 
 ## Logistic Regression
 
-Logistic regression models the probability that $Y$ belongs to a particular category. We begin with $K=2$ category problems, and consider $K>2$ category problems below in @sec-multinomialLogistic.
+Logistic regression models the probability that $Y_i$ belongs to a particular category. We begin with $K=2$ category problems, and consider $K>2$ category problems later in @sec-multinomialLogistic.
 
-For the `Default` data, logistic regression models the conditional probability of `default`$\in\{\texttt{Yes},\texttt{No}\}$ given values for the predictor(s). For example, the probability of the even `default`$=$`Yes` given `balance`: 
+For the `Default` dataset, logistic regression models the conditional probability of $\texttt{default}_i\in\{\texttt{Yes},\texttt{No}\}$ given values for the predictor(s) $X_i,$ 
 $$
-Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
+P(\texttt{default}_i=\texttt{Yes}|\texttt{balance}_i) = p(\texttt{balance}_i),
 $$
-where $p(\texttt{balance})\in[0,1]$ is used as a short hand notation. 
+where $p(\texttt{balance}_i)\in[0,1]$ is used as a short hand notation. 
 
-Then
+Then, since $K=2,$
 $$
-Pr(\texttt{default}=\texttt{No}|\texttt{balance}) = 1 - p(\texttt{balance}),
-$$
-
-
-One might predict the event `default`$=$`Yes` for any individual with a `balance`-value such that  
-$$
-p(\texttt{balance}) > 0.5.
+P(\texttt{default}_i=\texttt{No}|\texttt{balance}_i) = 1 - p(\texttt{balance}_i).
 $$
 
-::: {.callout-caution}
-However, $0.5$ this is not the only reasonable classification threshold! 
 
-For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as 
+One might predict the event $\texttt{default}_i=\texttt{Yes}$ for any individual $i$ with a $\texttt{balance}_i$-value such that  
 $$
-Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})=p(\texttt{balance}) > 0.1.
+p(\texttt{balance}_i) > 0.5.
 $$
-:::
+
+
 
 ### The Simple $(p=1)$ Logistic Model
 
-For a binary coded dependent variable $Y\in\{0,1\}$ we aim to model the relationship between
+For a binary coded dependent variable $Y_i\in\{0,1\}$ we aim to model the relationship between
 $$
-p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
+p(X_i)=P(Y_i=1|X_i)\quad\text{and}\quad X_i.
 $$
 
 As discussed above, a linear regression model, e.g.,
 $$
-p(X)=\beta_0+\beta_1 X
+p(X_i)=\beta_0+\beta_1 X_i
 $$
-can produce nonsense predictions $p(X)\not\in[0,1]0;$ see the left panel of Figure 4.2.  
+can produce nonsense predictions with $p(X_i)\not\in[0,1];$ see the left panel of Figure 4.2.  
 
 
-Logistic regression avoids this problem **by assuming** that $p(X)$ can be modeled using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
+Logistic regression avoids this problem **by assuming** that $p(X_i)$ can be modeled using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
 $$
-p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}.
+p(X_i)=\frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}.
 $$
 To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called **maximum likelihood**. 
 
@@ -417,18 +459,18 @@ The right panel of Figure 4.2 illustrates the fit of the logistic regression mod
 Note that 
 $$
 \begin{align*}
-p(X) & = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}} 
+p(X_i) & = \frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}} 
 %\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
 %\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
 %\frac{p(X)}{1-p(X)} & = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
-\quad \Leftrightarrow\quad  \frac{p(X)}{1-p(X)} = e^{\beta_0+\beta_1 X}
+\quad \Leftrightarrow\quad  \frac{p(X_i)}{1-p(X_i)} = e^{\beta_0+\beta_1 X_i}
 \end{align*}
 $$
 
 
 The quantity 
 $$
-0\leq \frac{p(X)}{1 − p(X)} \leq \infty
+0\leq \frac{p(X_i)}{1 − p(X_i)} \leq \infty
 $$ 
 is called the **odds**, and can take any value between 0 and plus infinity.
 
@@ -450,20 +492,26 @@ $$
 
 By taking the logarithm, we arrive at **log odds** or **logit**
 $$
-\ln\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
+\ln\left(\frac{p(X_i)}{1-p(X_i)}\right) = \beta_0+\beta_1 X_i
 $$
 
 
-Thus increasing $X$ by one unit ... 
+Thus increasing $X_i$ by one unit ... 
 
   * ... changes the *log odds* by $\beta_1$ 
   * ... multiplies the odds by $e^{\beta_1}$ 
 
 
 ::: {.callout-caution}
-The amount that $p(X)$ changes due to a one-unit change in $X$ depends on the current value of $X.$ That is, the simple logistic regression model is not linear in the parameters $\beta_0$ and $\beta_1.$
 
-But regardless of the value of $X$, if $\beta_1$ is positive then increasing $X$ will be associated with increasing $p(X)$, and if $\beta_1$ is negative then increasing $X$ will be associated with decreasing $p(X).$ 
+**Non-Linearity:** 
+
+The amount that $p(X_i)$ changes due to a one-unit change in $X_i$ depends on the current value of $X_i.$ That is, the simple logistic regression model is not linear in the parameters $\beta_0$ and $\beta_1.$
+
+
+**Monotonicity:**
+
+But regardless of the value of $X_i$, if $\beta_1$ is positive then increasing $X_i$ will be associated with increasing $p(X_i)$, and if $\beta_1$ is negative then increasing $X_i$ will be associated with decreasing $p(X_i).$ 
 :::
 
 ### Estimating the Regression Coefficients
@@ -471,39 +519,43 @@ But regardless of the value of $X$, if $\beta_1$ is positive then increasing $X$
 
 In logistic regression analysis, the unknown model parameters are estimated using *maximum likelihood*. 
 
-**Basic intuition:** Find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ such that the predicted probability $\hat{p}(x_i)$ for each person $i$ corresponds as close as possible to its observed `default` status. I.e., choose $\hat{\beta}_0$ and $\hat{\beta}_1$ such that 
+**Basic intuition:** Find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ such that the predicted probability $\hat{p}(X_i)$ for each person $i$ corresponds as close as possible to its observed $\texttt{default}_i$ status. I.e., choose $\hat{\beta}_0$ and $\hat{\beta}_1$ such that 
 
-* $\hat{p}(x_i)\approx 1$ if `default`$=$`Yes` for person $i$ 
-* $\hat{p}(x_i)\approx 0$ if `default`$=$`No` for person $i$
+* $\hat{p}(X_i)\approx 1\quad$ if $\quad\texttt{default}_i=\texttt{Yes}$ for person $i$ 
+* $\hat{p}(X_i)\approx 0\quad$ if $\quad\texttt{default}_i=\texttt{No}$ for person $i$
 
 simultaneously for all $i=1,\dots,n.$
 
-This intuition can be formalized using the so-called **likelihood function**:
+Let
+$$
+Y_i=\left\{\begin{array}{ll}
+1&\quad\text{if }\texttt{default}_i=\texttt{Yes}\\
+0&\quad\text{if }\texttt{default}_i=\texttt{No}\\
+\end{array}\right.
+$$
+
+Then the idea of maximum likelihood can be formalized using the so-called **likelihood function**:
 $$
 \begin{align*}
 \mathcal{L}(b_0,b_1)
-&=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))\\[2ex]
-&=
-\prod_{i:y_{i}=1} \frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}
-\prod_{i:y_{i}=0}\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)\\[2ex]
-&=
-\prod_{i=1}^n 
-\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
-\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\\[2ex]
+&=\prod_{i=1}^n \left(p(X_i)\right)^{Y_i}\left(1-p(X_i)\right)^{1-Y_i}\\[2ex]
+&=\prod_{i=1}^n 
+\left(\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{Y_i}
+\left(1-\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{1-Y_i}\\[2ex]
 \end{align*}
 $$
 The estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* this likelihood function, i.e.
 $$
 (\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\mathcal{L}(b_0,b_1).
 $$
-Typically, however, one does not maximize the **likelihood function** but the **log-likelihood function** 
+Typically, one does not maximize the **likelihood function** but the **log-likelihood function** 
 $$
 \begin{align*}
 \ell(b_0,b_1) 
 & = \ln(\mathcal{L}(b_0,b_1))\\[2ex]
 & = \ln\left(\prod_{i=1}^n 
-\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
-\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+\left(\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{Y_i}
+\left(1-\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{1-Y_i}\right)\\[2ex]
 %& = \ln\left(\prod_{i=1}^n 
 %\left(\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{y_i}
 %\left(1-\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
@@ -514,10 +566,12 @@ $$
 %&= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
 %&\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
 &=\dots \text{rearranging terms} \dots \\[2ex]
-&= \sum_{i=1}^n \left( -\ln(1 + \exp(b_0 + b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
+&= \sum_{i=1}^n \left( -\ln(1 + \exp(b_0 + b_1 X_i)) + Y_i (b_0 + b_1 X_i) \right).
 \end{align*}
 $$
-Thus, the estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* the log-likelihood function, i.e.
+which yields the same solutions, since the logarithm applies only a **monotonic** transformation. 
+
+Thus, the estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to *maximize* the log-likelihood function,
 $$
 (\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1).
 $$
@@ -541,7 +595,7 @@ Maximum likelihood is a very general estimation method that allows to estimate a
 
 
 Table 4.1 shows the coefficient estimates and related information that
-result from fitting a logistic regression model on the `Default` data in order to predict the probability of `default`$=$`Yes` using `balance` as the only predictor.
+result from fitting a logistic regression model on the `Default` data in order to predict the probability of $Y_i=1$ (i.e. $\texttt{default}_i=\texttt{Yes}$) using $\texttt{balance}_i$ as the only predictor.
 ![](images/Tab_4_1.png)
 
 
@@ -555,25 +609,25 @@ result from fitting a logistic regression model on the `Default` data in order t
 
 ### Making Predictions 
 
-Once the coefficients have been estimated, we can compute the probability of `default`$=1$ for any given value of `balance`. 
+Once the coefficients have been estimated, we can compute the probability of $Y=1,$ i.e. $\texttt{default}=\texttt{Yes},$ for a new person with predictor value $\texttt{balance}.$ 
 
 
-For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a `balance`-value of 1,000 [USD] is
+For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a $\texttt{balance}$-value of 1,000 [USD] is
 $$
 \begin{align*}
 \hat{p}(\texttt{balance}=1000)
-&=\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
+&=\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
 %&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
 &=\frac{e^{-10.6513+ 0.0055\times 1000}}{1+e^{-10.6513+ 0.0055\times 1000}}\\[2ex] 
 &= 0.00576 < 1\%
 \end{align*}
 $$
 
-By contrast, the default probability for an individual with a `balance`-value of 2,000 [USD] is
+By contrast, the default probability for an individual with a $\texttt{balance}$-value of 2,000 [USD] is
 $$
 \begin{align*}
 \hat{p}(\texttt{balance}=2000)
-&=\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
+&=\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
 %&=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
 &=\frac{e^{-10.6513+ 0.0055\times 2000}}{1+e^{-10.6513+ 0.0055\times 2000}}\\[2ex] 
 & = 0.586
@@ -584,22 +638,27 @@ and is thus much higher.
 
 #### Qualitative Predictors: {-}
 
+Similarly, one can do prediction using qualitative predictors such as 
+$$
+\textttt{student}\in\{\texttt{Yes}, \texttt{No}\}
+$$
+
 ![](images/Tab_4_2.png)
 
 $$
 \begin{align*}
-&\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
+&\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
 &=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\[2ex] 
 &= 0.0431\\[4ex]
-&\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
+&\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
 &=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\[2ex] 
 &= 0.0292\\
 \end{align*}
 $$
 
-This may indicate that students tend to have higher default probabilities than non-students. But we may **missed further factors** here since we only use one predictor variable. Thus, this result may be driven by an **omitted-variable bias**.
+This may indicate that students tend to have higher default probabilities than non-students. But we may **miss further relevant factors** here as we only use one predictor variable. Thus, this result may be driven by an **omitted-variable bias**.
 
-To control for other confounding predictors, we need to use multiple logistic regression. 
+To control for other confounding predictors, we may need to use multiple logistic regression. 
 
 
 ### Multiple Logistic Regression 
@@ -608,13 +667,13 @@ To control for other confounding predictors, we need to use multiple logistic re
 By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following
 $$
 \begin{align*}
-p(X)
-&=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\[2ex]
-\ln\left(\frac{p(X)}{1-p(X)}\right) 
-&= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
+p(X_i)
+&=\frac{e^{\beta_0+\beta_1 X_{i1}+\dots+\beta_p X_{ip}}}{1+e^{\beta_0+\beta_1 X_{i1}+\dots+\beta_p X_{ip}}}\\[2ex]
+\ln\left(\frac{p(X_i)}{1-p(X_i)}\right) 
+&= \beta_0+\beta_1 X_{i1}+\dots+\beta_p X_{ip},\\
 \end{align*}
 $$
-where $X=(X_1,\dots,X_p)$, and where the unknown parameters $\beta_0,\dots,\beta_p$ are estimated by maximum likelihood.</br>
+where $X_i=(X_{i1},\dots,X_{ip})^\top,$ and where the unknown parameters $\beta_0,\dots,\beta_p$ are estimated by maximum likelihood.</br>
 
 ![](images/Tab_4_3.png)
 
@@ -657,7 +716,7 @@ We model the probabilities that $Y=k$, for $k=1,\dots,K$, using $k$-specific par
 $$
 \begin{align*}
 p_k(x)
-& = Pr(Y=k|X=x)\\[2ex]
+& = P(Y=k|X=x)\\[2ex]
 & = \frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
 \end{align*}
 $$
@@ -665,14 +724,14 @@ for $k=1,\dots,K-1$, and
 $$
 \begin{align*}
 p_K(x) 
-& =Pr(Y=K|X=x)\\[2ex]
+& =P(Y=K|X=x)\\[2ex]
 & =\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
 \end{align*}
 $$
 
 For $k=1,\dots,K-1$ it holds that 
 $$
-\ln\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\ln\left(\frac{P(Y=k|X=x)}{P(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
 $$
 which is the counterpart to the log odds equation for $K=2.$
 
@@ -689,14 +748,14 @@ Note that:
 
 We now consider an alternative and less direct approach to estimating the probabilities 
 $$
-Pr(Y=K|X=x).
+P(Y=K|X=x).
 $$
 
 Suppose that we wish to classify an observation into one of $K\geq 2$ classes. 
 
 **Prior Probability:** Let 
 $$
-\pi_k=Pr(Y=k)
+\pi_k=P(Y=k)
 $$ 
 represent the overall *prior probability* that a randomly chosen observation comes from class $k.$ We have that 
 $$
@@ -705,7 +764,7 @@ $$
 
 **Conditional Probability of $X=x$ given $Y=k:$** Let 
 $$
-f_k(x)=Pr(X=x|Y=k)
+f_k(x)=P(X=x|Y=k)
 $$
 
 
@@ -714,17 +773,17 @@ $$
 $$
 \begin{align*}
 p_k(x) 
-& = Pr(Y=k|X=x)\\[2ex]
-& = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\[2ex]
-& = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\[2ex]
+& = P(Y=k|X=x)\\[2ex]
+& = \frac{P(Y=k\;\text{ and }\;X=x)}{P(X=x)}\\[2ex]
+& = \frac{P(Y=k)\,P(X=x|Y=k)}{P(X=x)}\\[2ex]
 & = \frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
 \end{align*}
 $${#eq-postprob1}
 where 
 $$
 \begin{align*}
-Pr(X = x) 
-&= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\[2ex]
+P(X = x) 
+&= \sum_{l=1}^K \underbrace{P(Y = l)}_{\pi_l} \;\underbrace{P(X_x|Y=l)}_{f_l(x)} \\[2ex]
 &= \sum_{l=1}^K \pi_l f_l(x) 
 \end{align*}
 $$
@@ -732,17 +791,17 @@ $$
 ::: {.callout-note}
 Note that @eq-postprob1 also applies to quantitative predictors $X,$ even though for continuous random variables $X$ we have that  
 
-* $Pr(X=x|Y=k) = 0\quad$ and 
-* $Pr(X=x) = 0$
+* $P(X=x|Y=k) = 0\quad$ and 
+* $P(X=x) = 0$
 
 The technical argument is that 
 $$
-\frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)} = \frac{Pr(Y=k)\,Pr(X=x|Y=k)dx}{Pr(X=x)dx},
+\frac{P(Y=k)\,P(X=x|Y=k)}{P(X=x)} = \frac{P(Y=k)\,P(X=x|Y=k)dx}{P(X=x)dx},
 $$
 where 
 
-* $Pr(X=x|Y=k) dx\quad$ and 
-* $Pr(X=x)dx$
+* $P(X=x|Y=k) dx\quad$ and 
+* $P(X=x)dx$
 
 correspond to the probabilities of $X$ falling in a small region $dx$ around $x$ conditionally and unconditionally on $Y=k,$ respectively.
 ::: 
@@ -1139,7 +1198,7 @@ If a "False Negative Event" costs the bank more than a "False Positive Event" (o
 
 In binary ($K=2$) classifications, the Bayes classifier, and thus also all classifiers which try to approximate the Bayes classifier, use a threshold of $50\%$. I.e., a person $i$ with predictor value $X=x_i$ is assigned to the `default`$=$`Yes` class if
 $$
-Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5.
+P(\texttt{default}_i=\texttt{Yes}|X=x_i)>0.5.
 $$
 
 However, if the costs of False Negatives (FN) are higher than the costs of False Positives (FP), one can consider lowering the classifying threshold. This decreases the predicted negatives (N$^*$) and thus also decreases the False Negatives (FN) since N$^*=$TN$+$FN.
@@ -1147,7 +1206,7 @@ However, if the costs of False Negatives (FN) are higher than the costs of False
 
 For instance, we might classify any person $i$ with a posterior probability of default above $20\%,$
 $$
-Pr(\texttt{default}=\texttt{Yes}|X=x_i)>0.2,
+P(\texttt{default}=\texttt{Yes}|X=x_i)>0.2,
 $$ 
 into the `default`$=$`Yes` class. 
 
@@ -1381,11 +1440,11 @@ Roughly:
 
 Remember, that Bayes’ theorem states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
 $$
-p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+p_k(x) = P(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
 $$
 where 
 
-* $\pi_k=Pr(Y=k)$ denote the prior probabilities and
+* $\pi_k=P(Y=k)$ denote the prior probabilities and
 * $f_k(x)$ denotes the $p$-dimensional, conditional density of $X,$ given $Y=k.$
 
 We have seen above, that estimating the prior probabilities $\pi_1,\dots,\pi_K$ is typically straight forward using the relative frequencies
@@ -1410,7 +1469,7 @@ This simplifying assumption may not be completely correct, but it often leads to
 
 Under the naive Bayes assumption, we have that
 $$
-Pr(Y=k|X=x)=\frac{\pi_k f_{k1}(x_1)\cdot\;\dots\;\cdot f_{kp}(x_p)}{\sum_{l=1}^K\pi_l f_{l1}(x_1)\cdot\;\dots\;\cdot f_{lp}(x_p)}.
+P(Y=k|X=x)=\frac{\pi_k f_{k1}(x_1)\cdot\;\dots\;\cdot f_{kp}(x_p)}{\sum_{l=1}^K\pi_l f_{l1}(x_1)\cdot\;\dots\;\cdot f_{lp}(x_p)}.
 $$
 
 For estimating the single, one dimensional marginal density functions 
