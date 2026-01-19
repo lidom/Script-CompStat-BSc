@@ -847,7 +847,7 @@ In the following sections, we discuss three classifiers that use different estim
 
 ### Linear Discriminant Analysis for $p = 1$ 
 
-For the beginning, let us assume that we have only one predictor, i.e., $p=1.$ 
+For the beginning, let us assume that we have only a one-dimensional predictor $X,$ i.e., $p=1.$ 
 
 To estimate $f_k(x)$, we will assume that $f_k$ is *normal* (or *Gaussian*). In the simple $p=1$ dimensional setting, the normal distribution is
 $$
