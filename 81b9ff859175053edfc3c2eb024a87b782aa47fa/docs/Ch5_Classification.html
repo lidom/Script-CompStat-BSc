@@ -281,7 +281,7 @@ window.Quarto = {
 <p>Some examples include:</p>
 <ol type="1">
 <li>A person arrives at the emergency room with a set of symptoms that could possibly be attributed to one of three medical conditions. Which of the three conditions does the individual have?</li>
-<li>An online banking service must be able to determine whether or not a transaction being performed on the site is fraudulent, on the basis of the user’s IP address, past transaction history, and so forth.</li>
+<li>An online banking service must be able to determine whether a transaction being performed on the site is fraudulent, on the basis of the user’s IP address, past transaction history, and so forth.</li>
 <li>On the basis of DNA sequence data for a number of patients with and without a given disease, a biologist would like to figure out which DNA mutations are deleterious (disease-causing) and which are not.</li>
 </ol>
 <p>One of the running example for this chapter: The (simulated) <code>Default</code> data set which is part of the <a href="https://www.statlearning.com/resources-second-edition">online resources</a> of our textbook <code>ISLR</code>, and which is also contained in the <code>R</code> package <code>ISLR2</code>. <img src="images/Fig_4_1.png" class="img-fluid"></p>
@@ -313,66 +313,66 @@ window.Quarto = {
 <p>Linear regression is often not appropriate in the case of a qualitative response <span class="math inline">\(Y.\)</span></p>
 <p>Suppose that we are trying to predict the medical condition of a patient in the emergency room on the basis of her symptoms. In this simplified example, there are three possible diagnoses:</p>
 <ul>
-<li><code>stroke</code></li>
+<li><span class="math inline">\(\texttt{stroke}\)</span></li>
 <li>
-<code>drug overdose</code>, and</li>
-<li><code>epileptic seizure</code></li>
+<span class="math inline">\(\texttt{drug overdose}\)</span>, and</li>
+<li><span class="math inline">\(\texttt{epileptic seizure}\)</span></li>
 </ul>
-<p>We can encoding these values as a quantitative response variable, <span class="math display">\[
-Y=\left\{
+<p>We can encode these values as a quantitative response variable for subject <span class="math inline">\(i\)</span>, <span class="math display">\[
+Y_i=\left\{
     \begin{array}{ll}
-    1&amp;\quad\text{if }\texttt{stroke}\\
-    2&amp;\quad\text{if }\texttt{drug overdose}\\
-    3&amp;\quad\text{if }\texttt{epileptic seizure}\\
+    1&amp;\quad\text{if }\texttt{diagnose}_i=\texttt{stroke}\\
+    2&amp;\quad\text{if }\texttt{diagnose}_i=\texttt{drug overdose}\\
+    3&amp;\quad\text{if }\texttt{diagnose}_i=\texttt{epileptic seizure}\\
     \end{array}
 \right.
-\]</span> Using this coding, least squares could be used to fit a linear regression model to predict <span class="math inline">\(Y,\)</span> but</p>
+\]</span> Using this coding, least squares could be used to fit a linear regression model to predict <span class="math inline">\(Y_i,\)</span> but</p>
 <ol type="1">
 <li>the results would then depend on the numeric ordering <span class="math inline">\(1&lt;2&lt;3,\)</span> even though the ordering was completely arbitrary and could have been made differently.</li>
-<li>the results would then depend on the assumption that the gap <span class="math inline">\((2-1=1)\)</span> between <code>stroke</code> and <code>drug overdose</code> is comparable to the gap <span class="math inline">\((3-2=1)\)</span> between <code>drug overdose</code> and <code>epileptic seizure</code> which would be a very unrealistic.</li>
+<li>the results would then depend on the assumption that the gap <span class="math inline">\((2-1=1)\)</span> between <span class="math inline">\(\texttt{stroke}\)</span> and <span class="math inline">\(\texttt{drug overdose}\)</span> is comparable to the gap <span class="math inline">\((3-2=1)\)</span> between <span class="math inline">\(\texttt{drug overdose}\)</span> and <span class="math inline">\(\texttt{epileptic seizure}\)</span> which would be a very unrealistic.</li>
 </ol>
 <p>Generally, both points are quite problematic for most applications.</p>
 <p>Only if the response variable’s values did take on a natural ordering, such as <em>“mild”</em>, <em>“moderate”</em>, and <em>“severe”</em>, and we felt the gap between <em>mild</em> and <em>moderate</em> was similar to the gap between <em>moderate</em> and <em>severe</em>, then a 1, 2, 3 coding would be reasonable.</p>
-<p>For a <strong>binary (two level) qualitative response</strong>, the situation is better. For instance, if there are only two conditions that we need to predict (e.g.&nbsp;either <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> or <code>default</code><span class="math inline">\(=\)</span><code>No</code>), we can use a dummy variable coding <span id="eq-binaryY"><span class="math display">\[
-Y=\left\{
+<p>For a <strong>binary (two level) qualitative response</strong>, the situation is better. For instance, if there are only two conditions that we need to predict (e.g.&nbsp;either <span class="math inline">\(\texttt{default}_i=\texttt{Yes}\)</span> or <span class="math inline">\(\texttt{default}_i=\texttt{No}\)</span>), we can use a dummy variable coding <span id="eq-binaryY"><span class="math display">\[
+Y_i=\left\{
 \begin{array}{ll}
-    1&amp;\quad\text{if }\texttt{default}=\texttt{Yes}\\
-    0&amp;\quad\text{if }\texttt{default}=\texttt{No}\\
+    1&amp;\quad\text{if }\texttt{default}_i=\texttt{Yes}\\
+    0&amp;\quad\text{if }\texttt{default}_i=\texttt{No}\\
 \end{array}
 \right.
-\qquad(5.1)\]</span></span> We could then fit a linear regression to this binary response, and predict drug overdose if <span class="math inline">\(\hat{Y}&gt; 0.5\)</span> and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.</p>
+\qquad(5.1)\]</span></span> We could then fit a linear regression to this binary response, and predict drug overdose if <span class="math inline">\(\hat{Y}_i &gt; 0.5\)</span> and stroke otherwise. In the binary case it is not hard to show that even if we flip the above coding, linear regression will produce the same final predictions.</p>
 <section id="binary-response" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="binary-response"><strong>Binary Response</strong></h4>
-<p>For a binary response, <span class="math inline">\(Y\in\{0,1\},\)</span> as in <a href="#eq-binaryY" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, linear regression is not completely unreasonable. For the multiple linear regression model, we have that <span class="math display">\[
+<p>For a binary response, <span class="math inline">\(Y_i\in\{0,1\},\)</span> as in <a href="#eq-binaryY" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, linear regression is not completely unreasonable. For the multiple linear regression model, we have that <span class="math display">\[
 \begin{align*}
-Y
-&amp;= \beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon,
+Y_i
+&amp;= \beta_0+ \beta_1 X_{i1}+\dots +\beta_p X_{ip} + \epsilon_i,
 \end{align*}
 \]</span> where, under the assumptions of <a href="Ch_LinearRegression.html" class="quarto-xref"><span>Chapter 2</span></a>, <span class="math display">\[
-E(\epsilon|X)=0.
+E(\epsilon_i|X_i)=0.
 \]</span> Therefore, <span id="eq-LinProb1"><span class="math display">\[
 \begin{align*}
-E(Y|X)
-&amp;=E\left(\beta_0+ \beta_1 X_1+\dots +\beta_p X_p + \epsilon|X\right)\\[2ex]
-&amp;=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p.
+E(Y_i|X_i)
+&amp;=E\left(\beta_0+ \beta_1 X_{i1}+\dots +\beta_p X_{ip} + \epsilon_i|X_i\right)\\[2ex]
+&amp;=\beta_0+ \beta_1 X_{i1} + \dots +\beta_p X_{ip}.
 \end{align*}
-\qquad(5.2)\]</span></span> Moreover, since <span class="math inline">\(Y\in\{0,1\}\)</span> is a binary random variable, the conditional mean <span class="math inline">\(E(Y|X)\)</span> equals the conditional probability of <span class="math inline">\(Y=1\)</span> given <span class="math inline">\(X\)</span> <span id="eq-LinProb2"><span class="math display">\[
+\qquad(5.2)\]</span></span> Moreover, since <span class="math inline">\(Y_i\in\{0,1\}\)</span> is a binary random variable, the conditional mean <span class="math inline">\(E(Y_i|X_i)\)</span> equals the <strong>conditional probability</strong> of <span class="math inline">\(Y_i=1\)</span> given <span class="math inline">\(X_i\colon\)</span> <span id="eq-LinProb2"><span class="math display">\[
 \begin{align*}
-E(Y|X)
-&amp; =  Pr(Y=1|X)\cdot 1 + Pr(Y=0|X)\cdot 0\\[2ex]
-&amp; =  Pr(Y=1|X).  
+E(Y_i|X_i)
+&amp; =  P(Y_i=1|X_i)\cdot 1 + P(Y_i=0|X_i)\cdot 0\\[2ex]
+&amp; =  P(Y_i=1|X_i).  
 \end{align*}
 \qquad(5.3)\]</span></span> Combining <a href="#eq-LinProb1" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> and <a href="#eq-LinProb2" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> yields <span class="math display">\[
 \begin{align*}
-Pr(Y=1|X) &amp;=\beta_0+ \beta_1 X_1+\dots +\beta_p X_p
+P(Y_i=1|X_i) &amp;=\beta_0+ \beta_1 X_{i1} +\dots +\beta_p X_{ip}
 \end{align*}
 \]</span></p>
-<p>Thus the estimated linear model approximates the conditional probability of <span class="math inline">\(Y=1\)</span> (e.g.&nbsp;<span class="math inline">\(\texttt{default}=\texttt{Yes}\)</span>) given <span class="math inline">\(X:\)</span> <span class="math display">\[
+<p>Thus the estimated linear model approximates the conditional probability of <span class="math inline">\(Y_i=1\)</span> (e.g.&nbsp;<span class="math inline">\(\texttt{default}_i=\texttt{Yes}\)</span>) given <span class="math inline">\(X_i\colon\)</span> <span class="math display">\[
 \begin{align*}
-Pr(Y=1|X)
-&amp; \approx \widehat{Pr}(Y=1|X)\\[2ex]
-&amp; = \widehat{E}(Y|X)\\[2ex]
-&amp; = \hat{Y}\\
-&amp; = \hat\beta_0+ \hat\beta_1 X_1+\dots + \hat\beta_p X_p.
+P(Y_i=1|X_i)
+&amp; \approx \widehat{P}(Y_i=1|X_i)\\[2ex]
+&amp; = \widehat{E}(Y_i|X_i)\\[2ex]
+&amp; = \hat{Y}_i\\
+&amp; = \hat\beta_0+ \hat\beta_1 X_{i1} + \dots + \hat\beta_p X_{ip}.
 \end{align*}
 \]</span></p>
 </section><section id="classification" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="classification"><strong>Classification</strong></h4>
@@ -381,18 +381,18 @@ Pr(Y=1|X)
 \hat{f}(x_i) =
 \left\{
   \begin{array}{l}
-   1\quad\text{if}\quad\widehat{Pr}(Y=1|x_i)    &gt; 0.5\\[2ex]
-   0\quad\text{if}\quad\widehat{Pr}(Y=1|x_i) \leq 0.5\\[2ex]
+   1\quad\text{if}\quad\widehat{P}(Y_i=1|x_i)    &gt; 0.5\\[2ex]
+   0\quad\text{if}\quad\widehat{P}(Y_i=1|x_i) \leq 0.5\\[2ex]
   \end{array}
 \right.
 \]</span></p>
 <p>However, if we use linear regression, some of our estimates <span class="math display">\[
-\widehat{Pr}(Y=1|x_i)
+\widehat{P}(Y_i=1|x_i)
 \]</span> might be outside the <span class="math inline">\([0, 1]\)</span> interval (see left panel in Figure 4.2), which doesn’t make sense when predicting probabilities. <img src="images/Fig_4_2.png" class="img-fluid"></p>
 <p><strong>Summary:</strong></p>
 <ol type="a">
 <li>A classic regression method cannot well accommodate a qualitative response with more than two classes</li>
-<li>A classic regression method may not provide meaningful estimates of <span class="math inline">\(Pr(Y=1|X),\)</span> even with just two classes.</li>
+<li>A classic regression method may not provide meaningful estimates of <span class="math inline">\(P(Y_i=1|X_i),\)</span> even with just two classes.</li>
 </ol>
 <p>Thus, it is often preferable to use a classification method that is truly suited for qualitative response values such as, for instance, logistic regression.</p>
 </section></section><section id="assessing-model-accuracy-the-classification-setting" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="assessing-model-accuracy-the-classification-setting">
@@ -417,45 +417,49 @@ Pr(Y=1|X)
 </li>
 </ul>
 <p>The alternative to the training MSE (introduced in <a href="Ch_NonParamRegression.html#sec-mqfit" class="quarto-xref"><span>Section 4.3</span></a>) is here the <strong>training error rate</strong> <span class="math display">\[
-\frac{1}{{n_{Train}}}\sum_{i=1}^{n_{Train}} I(Y_i\neq \hat{Y}_i)
-\]</span> which gives the relative frequency of false categorical predictions.</p>
-<p>Here, <span class="math display">\[
+\frac{1}{{n_{\text{Train}}}}\sum_{i=1}^{n_{\text{Train}}} I(Y_i\neq \hat{Y}_i),\quad \hat{Y}_i = \hat{f}(X_i),
+\]</span> which gives the relative frequency of false categorical predictions, <span class="math display">\[
 I(\cdot)
-\]</span> is an indicator function with <span class="math inline">\(I(\text{true})=1\)</span> and <span class="math inline">\(I(\text{false})=0.\)</span></p>
+\]</span> is the indicator function with <span class="math inline">\(I(\text{true})=1\)</span> and <span class="math inline">\(I(\text{false})=0.\)</span></p>
 <p>Let <span class="math display">\[
 \{(Y_{1}^{\text{Test}},X_{1}^{\text{Test}}), (Y_{2}^{\text{Test}},X_{2}^{\text{Test}}),\dots, (Y_{n_{\text{Test}}}^{\text{Test}},X_{n_{\text{Test}}}^{\text{Test}})\}
 \]</span> denote <span class="math inline">\(n_{\text{Test}}\)</span> <strong>test data</strong> observations.</p>
 <p>The alternative to the test MSE is here the <strong>test error rate</strong> <span class="math display">\[
 \frac{1}{n_{\text{Test}}}\sum_{i=1}^{n_{\text{Test}}} I(Y_{i}^{\text{Test}} \neq \hat{Y}_{i}^{\text{Test}}),
-\]</span> where <span class="math inline">\(\hat{Y}_{i}^{\text{Test}}=\hat{f}(X_{i}^{\text{Test}})\)</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation <span class="math inline">\(X_{i}^{\text{Test}}.\)</span></p>
-<p>A good classifier is one for which the test error rate is smallest.</p>
+\]</span> where <span class="math display">\[
+\hat{Y}_{i}^{\text{Test}}=\hat{f}(X_{i}^{\text{Test}})
+\]</span> is the predicted class label that results from applying the classifier <span class="math inline">\(\hat{f}\)</span> (computed from the training data) to the test observation <span class="math inline">\(X_{i}^{\text{Test}}.\)</span></p>
+<p>A good classifier is one for which the test error rate is small.</p>
 </section><section id="sec-BayesClassifier" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="sec-BayesClassifier">
 <span class="header-section-number">5.4</span> The Bayes Classifier</h2>
+<section id="bayes-classifier" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="bayes-classifier"><strong>Bayes Classifier</strong></h4>
 <p>It is possible to show (proof is outside of the scope of this course) that the test error rate is minimized, on average, by the classifier that assigns an observation to the most likely class, given its predictor value <span class="math inline">\(x_{0}.\)</span> This classifier is called the <strong>Bayes classifier</strong>.</p>
-<p>In other words, the Bayes classifier assigns a test observation with predictor vector <span class="math inline">\(x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
-P(Y = j | X = x_{0})
+<p>In other words, the Bayes classifier assigns a subject <span class="math inline">\(i\)</span> with predictor vector value <span class="math inline">\(X_i=x_{0}\)</span> to the class <span class="math inline">\(j\)</span> for which <span class="math display">\[
+P(Y_i = j | X_i = x_{0})
 \]</span> is largest among all possible class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
-<p>In a <strong>two-class problem</strong> where there are only two possible response values, say class <span class="math inline">\(1\)</span> or class <span class="math inline">\(2,\)</span> the Bayes classifier corresponds to predicting class <span class="math inline">\(1\)</span> if <span class="math display">\[
-P(Y = 1| X = x_0 ) \geq 0.5,
+<p>In a <strong>two-class problem</strong> where there are only two possible response values, say class <span class="math inline">\(1\)</span> or class <span class="math inline">\(2,\)</span> such that <span class="math inline">\(Y_i\in\{1,2\}\)</span>, the Bayes classifier predicts class <span class="math inline">\(1\)</span> for subject <span class="math inline">\(i\)</span> if <span class="math display">\[
+P(Y_i = 1| X_i = x_0 ) \geq 0.5,
 \]</span> and class <span class="math inline">\(2\)</span> if <span class="math display">\[
 \begin{align*}
-&amp; P(Y = 1| X = x_0 ) &lt; 0.5 \\[2ex]
-\Leftrightarrow\; &amp; P(Y = 2| X = x_0 ) &gt; 0.5  
+&amp; P(Y_i = 1| X_i = x_0 ) &lt; 0.5 \\[2ex]
+\Leftrightarrow\; &amp; P(Y_i = 2| X_i = x_0 ) &gt; 0.5  
 \end{align*}
 \]</span></p>
-<p>Those values of <span class="math inline">\(x_0\)</span> for which <span class="math display">\[
+</section><section id="bayes-decision-boundary" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="bayes-decision-boundary"><strong>Bayes Decision Boundary</strong></h4>
+<p>Those predictor values <span class="math inline">\(x_0\)</span> for which <span class="math display">\[
 \begin{align*}
-P(Y = 1| X = x_0 ) = 0.5 = P(Y = 2| X = x_0 )
+P(Y_i = 1| X_i = x_0 ) = 0.5 = P(Y_i = 2| X_i = x_0 )
 \end{align*}
 \]</span> are called the <strong>Bayes decision boundary</strong>. An example of a Bayes decision boundary is shown as the purple dashed line in Fig. 2.13.</p>
 <p><img src="images/Fig_2_13.png" class="img-fluid"></p>
 <p><strong>Note to Fig. 2.13:</strong> Here, a <em>perfect</em> classification (i.e.&nbsp;zero error rate) is impossible, since the Bayes decision boundary does not partition the two groups (yellow, blue) in to complete separate groups.</p>
-<p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The point-wise Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
-1 - \max_{j}P(Y = j| X = x_0 ),
+</section><section id="bayes-error-rate" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="bayes-error-rate"><strong>Bayes Error Rate</strong></h4>
+<p>The Bayes classifier produces the lowest possible test error rate, called the <strong>Bayes error rate</strong>. The <em>local</em> Bayes error rate at <span class="math inline">\(x_0\)</span> is given by <span class="math display">\[
+1 - \max_{j}P(Y_i = j| X_i = x_0 ),
 \]</span> where the maximization is over all class labels <span class="math inline">\(j\)</span> (e.g.&nbsp;<span class="math inline">\(j\in\{1,2\}\)</span>).</p>
 <p>The <em>global</em> overall Bayes error rate is given by <span class="math display">\[
-1 - E\left(\max_{j}P(Y = j| X )\right),
-\]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X.\)</span></p>
+1 - E\left(\max_{j}P(Y_i = j| X_i)\right),
+\]</span> where the expectation averages the probability over all possible values of <span class="math inline">\(X_i.\)</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -473,108 +477,132 @@ Y_i\in\{\text{Person $i$ pays back}, \text{Person $i$ does not pay back}\}
 \]</span> The classification error <span class="math display">\[
 \hat{Y}_i=\text{Person $i$ pays back} \neq Y_i = \text{Person $i$ does not pay back}
 \]</span> can be very costly for a bank. So, it can make sense to classify a person with a certain predictor value <span class="math inline">\(x_0\)</span> to the “Person pays back”-class only if, for instance, <span class="math display">\[
-\hat{P}(Y_i = \text{Person $i$ pays back}|X_i=x_0) \geq 0.9,
+\widehat{P}(Y_i = \text{Person $i$ pays back}|X_i=x_0) \geq 0.9,
 \]</span> and otherwise classify this person to the “Person does not pay back”-class. This will reduce the frequency of miss-classifications when classifying into the “Person pays back”-class, and thus reduce the costs.</p>
 </div>
 </div>
-</section><section id="k-nearest-neighbors-classification" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="k-nearest-neighbors-classification">
+</section></section><section id="k-nearest-neighbors-classification" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="k-nearest-neighbors-classification">
 <span class="header-section-number">5.5</span> <span class="math inline">\(K\)</span>-Nearest Neighbors Classification</h2>
-<p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and so computing the Bayes classifier is impossible.</p>
-<p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-nearest neighbors</strong> (KNN) classifier.</p>
-<p>Given a positive integer <span class="math inline">\(K\)</span> and a test observation <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> points in the training data <span class="math display">\[
-\{(X_1,Y_1),(X_2,Y_2),\dots,(X_{n_{\text{Train}}},Y_{n_{\text{Train}}})\},
-\]</span> that are closest to <span class="math inline">\(x_0.\)</span></p>
-<p>This set of <span class="math inline">\(K\)</span> nearest points (near to <span class="math inline">\(x_0\)</span>) can be represented by the <span class="math inline">\(x_0\)</span>-specfic index set <span class="math display">\[
-\mathcal{N}_0=\{i\in\{1,\dots,n\} \;|\; X_i \text{ is the $K$th closest point to }x_0 \text{ or closter}\}.
-\]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is an index set that allows to select the <span class="math inline">\(K\)</span> nearest neighbors in the training data.</p>
+<p>In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the true conditional distribution of <span class="math inline">\(Y_i\)</span> given <span class="math inline">\(X_i,\)</span> and so computing the Bayes classifier is impossible.</p>
+<p>Many approaches attempt to estimate the conditional distribution of <span class="math inline">\(Y_i\)</span> given <span class="math inline">\(X_i,\)</span> and then classify a given observation to the class with highest estimated probability. One such method is the <strong><span class="math inline">\(K\)</span>-Nearest Neighbors</strong> (KNN) classifier.</p>
+<p>Given a positive integer <span class="math inline">\(K\)</span> and a given predictor value <span class="math inline">\(x_0,\)</span> the KNN classifier first identifies the <span class="math inline">\(K\)</span> subjects (or firms, states) <span class="math inline">\(i\)</span> with predictors <span class="math display">\[
+\{X_{1},\dots,X_{n_{\text{Train}}}\},
+\]</span> closest to <span class="math inline">\(x_0,\)</span> by computing the distances <span class="math display">\[
+d(x_0,X_1),d(x_0,X_2),\dots,d(x_0,X_n)
+\]</span> from <span class="math inline">\(x_0.\)</span></p>
+<p>The set of <span class="math inline">\(K\)</span> nearest neighbors (near to <span class="math inline">\(x_0\)</span>) is represented by the <span class="math inline">\(x_0\)</span>-specfic index set <span class="math display">\[
+\mathcal{N}_0
+=\{i\in\{1,2,\dots,n_{\text{Train}}\} \; |\; d(x_0,X_i)\text{ is among the $K$ smallest distances}\}
+\]</span> I.e. <span class="math inline">\(\mathcal{N}_0\)</span> is the set of index values <span class="math inline">\(i\in\{1,2,\dots,n_{\text{Train}}\}\)</span> for which <span class="math inline">\(d(x_0,X_i)\)</span> is among the <span class="math inline">\(K\)</span> smallest distances.</p>
 <p>From the definition of <span class="math inline">\(\mathcal{N}_0\)</span> is follows that:</p>
 <ul>
 <li><span class="math inline">\(\mathcal{N}_0\subset\{1,2,\dots,n\}\)</span></li>
-<li><span class="math inline">\(|\mathcal{N}_0|=K\)</span></li>
+<li>
+<span class="math inline">\(|\mathcal{N}_0|=K\)</span> (Number of elements in the set <span class="math inline">\(\mathcal{N}_0\)</span>)</li>
 </ul>
-<p>KNN estimates the conditional probability for class <span class="math inline">\(j\)</span> as the fraction of the <span class="math inline">\(K\)</span> points <span class="math inline">\((x_i,y_i)\)</span> selected by the index-set <span class="math inline">\(\mathcal{N}_0\)</span> whose response value <span class="math inline">\(y_i\)</span> equals <span class="math inline">\(j:\)</span> <span id="eq-DefKNN"><span class="math display">\[
+<section id="classify-new-y-with-xx_0" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="classify-new-y-with-xx_0"><strong>Classify new <span class="math inline">\(Y\)</span> with <span class="math inline">\(X=x_0\)</span></strong></h4>
+<p>Now, let <span class="math inline">\(Y\)</span> denote the response of a <strong>new subject</strong> with predictor value <span class="math inline">\(X=x_0.\)</span> Aim is to classify the new subject into one of the classes.</p>
+<p>KNN estimates the conditional probability of <span class="math inline">\(Y=j\)</span> given <span class="math inline">\(X=x_0,\)</span> <span class="math display">\[
+P(Y = j | X = x_{0}) ,
+\]</span> as the fraction of the <span class="math inline">\(K\)</span> training data responses <span class="math inline">\(Y_i\)</span> with <span class="math inline">\(i\in\mathcal{N}_0\)</span> whose response value <span class="math inline">\(Y_i\)</span> equals <span class="math inline">\(j\colon\)</span> <span class="math display">\[
 \begin{align}
 P(Y = j | X = x_{0})
-&amp;\approx \hat{P}(Y = j | X = x_{0})\\[2ex]
+&amp;\approx \widehat{P}(Y = j | X = x_{0})\\[2ex]
 &amp;= \frac{1}{K}\sum_{i\in\mathcal{N}_0}I(Y_i = j),
 \end{align}
-\qquad(5.4)\]</span></span> where <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
-<p>Finally, KNN classifies the test observation <span class="math inline">\(x_0\)</span> to the class <span class="math inline">\(j\)</span> with the largest probability from <a href="#eq-DefKNN" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>.</p>
-<p>Figure 2.14 provides an illustrative example of the KNN approach.</p>
+\]</span> where <span class="math inline">\(I(\texttt{TRUE})=1\)</span> and <span class="math inline">\(I(\texttt{FALSE})=0.\)</span></p>
+<p>Finally, KNN classifies the new subject with predictor value <span class="math inline">\(X=x_0\)</span> to that class <span class="math inline">\(j\)</span> which has the largest conditional probability, i.e. <span class="math display">\[
+\hat{f}_K(x_0) = \arg\max_j \widehat{P}(Y=j|x_0).
+\]</span></p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For instance, if <span class="math inline">\(j\in\{\texttt{red},\texttt{blue},\texttt{green}\},\)</span> then the classifier <span class="math display">\[
+\hat{f}_K(x_0) = \arg\max_{j\in \{\texttt{red},\texttt{blue},\texttt{green}\}} \widehat{P}(Y=j|x_0).
+\]</span> assigns a new subject with predictor value <span class="math inline">\(X=x_0\)</span> to class <span class="math inline">\(\texttt{blue}\)</span> if <span class="math display">\[
+\begin{align*}
+\widehat{P}(Y=\texttt{blue}|x_0) &amp; &gt; \widehat{P}(Y=\texttt{red}|x_0)\\
+\text{and}\quad \widehat{P}(Y=\texttt{blue}|x_0) &amp; &gt; \widehat{P}(Y=\texttt{green}|x_0).
+\end{align*}
+\]</span></p>
+</div>
+</div>
+<p>Figure 2.14 provides an illustrative example of the KNN approach:</p>
 <ul>
-<li>Two-dimensional predictor <span class="math inline">\(X=(X_1,X_2),\)</span> where <span class="math inline">\(X_1\)</span> is shown on the x-axis and <span class="math inline">\(X_2\)</span> on the y-axis.</li>
-<li>Two class labels <span class="math inline">\(Y\in\{\text{yellow}, \text{blue}\}.\)</span>
+<li>Two-dimensional predictors <span class="math inline">\(X_i=(X_{i1},X_{i2})^\top\)</span>
 </li>
-<li>Training data consists of six data points <span class="math display">\[
-\{(Y_1,X_{11},X_{12}),\dots,(Y_6,X_{61},X_{62})\}
-\]</span> (See the left panel of Figure 2.14.)</li>
-<li>Class-label prediction (“classification”) are computed for a regular grid of predictor values <span class="math inline">\(x_{0}=(x_{01},x_{02}).\)</span> (See the regular grid of points in the right panel of Figure 2.14.)</li>
-<li>
-<span class="math inline">\(K=3\)</span> nearest neighbors are used to compute the class-label predictions.</li>
+<li>Two class labels <span class="math inline">\(Y_i\in\{\texttt{orange}, \texttt{blue}\}\)</span>
+</li>
+<li>Training data consists of <span class="math inline">\(n_{\text{Train}}=12\)</span> data points <span class="math display">\[
+\{(X_1,Y_{1}),\dots,(X_{12},Y_{12})\},
+\]</span> where <span class="math inline">\(6\)</span> of the observations belong to group <span class="math inline">\(\texttt{orange}\)</span> and the other <span class="math inline">\(6\)</span> observations to group <span class="math inline">\(\texttt{blue}\)</span> (see the left panel of Figure 2.14.)</li>
 </ul>
 <p><br></p>
 <p><img src="images/Fig_2_14.png" class="img-fluid"></p>
 <ul>
-<li>In the <strong>left-hand panel</strong> of Figure 2.14, a small training data set is shown consisting of six blue and six orange observations. Our goal is to make a prediction for the point labeled by the black cross.</li>
-<li>In the <strong>right-hand panel</strong> of Figure 2.14, we have applied the KNN approach with <span class="math inline">\(K = 3\)</span> at all of the possible values for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2,\)</span> and have drawn in the corresponding KNN decision boundary.</li>
+<li><p><strong>Left-hand panel</strong> of Figure 2.14: KNN-classification with <span class="math inline">\(K=3\)</span> classifies a new subject with predictor value <span class="math inline">\(X=x_0\)</span> (<span class="math inline">\(x_0\)</span>-value marked by the black cross) into group <span class="math inline">\(\texttt{blue},\)</span> since<br><span class="math display">\[
+\widehat{P}(Y=\texttt{blue}|x_0) = \frac{2}{3} &gt; \frac{1}{3} = \widehat{P}(Y=\texttt{orange}|x_0).
+\]</span></p></li>
+<li><p><strong>Right-hand panel</strong> of Figure 2.14: KNN-classification with <span class="math inline">\(K = 3\)</span> applied to predictor values <span class="math inline">\(x_0=(x_{10},x_{20})^\top\)</span> over a fine grid across all possible predictor values. The black lines correspond to those values <span class="math inline">\(x_0=(x_{10},x_{20})^\top\)</span> for which <span class="math display">\[
+\widehat{P}(Y=\texttt{blue}|x_0) = \widehat{P}(Y=\texttt{orange}|x_0).
+\]</span> and thus show the <strong>estimated KNN decision boundary</strong>.</p></li>
 </ul>
+<p>Figures 2.15 and Figure 2.16 show the results for <span class="math inline">\(K=10,\)</span> <span class="math inline">\(K=1,\)</span> and <span class="math inline">\(K=100.\)</span></p>
 <p><br></p>
 <p><img src="images/Fig_2_15.png" class="img-fluid"></p>
 <p><br></p>
 <p><img src="images/Fig_2_16.png" class="img-fluid"></p>
 <p><br></p>
+<p>Figure 2.17 shows the <strong>training error rate</strong> <span class="math display">\[
+\frac{1}{{n_{\text{Train}}}}\sum_{i=1}^{n_{\text{Train}}} I(Y_i\neq \hat{Y}_i),\quad \hat{Y}_i = \hat{f}(X_i),
+\]</span> and the <strong>test error rate</strong> <span class="math display">\[
+\frac{1}{n_{\text{Test}}}\sum_{i=1}^{n_{\text{Test}}} I(Y_{i}^{\text{Test}} \neq \hat{Y}_{i}^{\text{Test}}),
+\]</span> for different values of <span class="math inline">\(1/K,\)</span> <span class="math display">\[
+\frac{1}{K}=\frac{1}{100},\dots,\frac{1}{K}=\frac{1}{1}.
+\]</span></p>
 <p><img src="images/Fig_2_17.png" class="img-fluid"></p>
-</section><section id="logistic-regression" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="logistic-regression">
+</section></section><section id="logistic-regression" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="logistic-regression">
 <span class="header-section-number">5.6</span> Logistic Regression</h2>
-<p>Logistic regression models the probability that <span class="math inline">\(Y\)</span> belongs to a particular category. We begin with <span class="math inline">\(K=2\)</span> category problems, and consider <span class="math inline">\(K&gt;2\)</span> category problems below in <a href="#sec-multinomialLogistic" class="quarto-xref"><span>Section 5.6.5</span></a>.</p>
-<p>For the <code>Default</code> data, logistic regression models the conditional probability of <code>default</code><span class="math inline">\(\in\{\texttt{Yes},\texttt{No}\}\)</span> given values for the predictor(s). For example, the probability of the even <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> given <code>balance</code>: <span class="math display">\[
-Pr(\texttt{default}=\texttt{Yes}|\texttt{balance}) = p(\texttt{balance}),
-\]</span> where <span class="math inline">\(p(\texttt{balance})\in[0,1]\)</span> is used as a short hand notation.</p>
-<p>Then <span class="math display">\[
-Pr(\texttt{default}=\texttt{No}|\texttt{balance}) = 1 - p(\texttt{balance}),
+<p>Logistic regression models the probability that <span class="math inline">\(Y_i\)</span> belongs to a particular category. We begin with <span class="math inline">\(K=2\)</span> category problems, and consider <span class="math inline">\(K&gt;2\)</span> category problems later in <a href="#sec-multinomialLogistic" class="quarto-xref"><span>Section 5.6.5</span></a>.</p>
+<p>For the <code>Default</code> dataset, logistic regression models the conditional probability of <span class="math inline">\(\texttt{default}_i\in\{\texttt{Yes},\texttt{No}\}\)</span> given values for the predictor(s) <span class="math inline">\(X_i,\)</span> <span class="math display">\[
+P(\texttt{default}_i=\texttt{Yes}|\texttt{balance}_i) = p(\texttt{balance}_i),
+\]</span> where <span class="math inline">\(p(\texttt{balance}_i)\in[0,1]\)</span> is used as a short hand notation.</p>
+<p>Then, since <span class="math inline">\(K=2,\)</span> <span class="math display">\[
+P(\texttt{default}_i=\texttt{No}|\texttt{balance}_i) = 1 - p(\texttt{balance}_i).
 \]</span></p>
-<p>One might predict the event <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> for any individual with a <code>balance</code>-value such that<br><span class="math display">\[
-p(\texttt{balance}) &gt; 0.5.
+<p>One might predict the event <span class="math inline">\(\texttt{default}_i=\texttt{Yes}\)</span> for any individual <span class="math inline">\(i\)</span> with a <span class="math inline">\(\texttt{balance}_i\)</span>-value such that<br><span class="math display">\[
+p(\texttt{balance}_i) &gt; 0.5.
 \]</span></p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Caution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>However, <span class="math inline">\(0.5\)</span> this is not the only reasonable classification threshold!</p>
-<p>For instance, if a company wishes to be conservative in predicting individuals who are at risk for default, then they may choose to use a lower threshold, such as <span class="math display">\[
-Pr(\texttt{default}=\texttt{Yes}|\texttt{balance})=p(\texttt{balance}) &gt; 0.1.
-\]</span></p>
-</div>
-</div>
 <section id="the-simple-p1-logistic-model" class="level3" data-number="5.6.1"><h3 data-number="5.6.1" class="anchored" data-anchor-id="the-simple-p1-logistic-model">
 <span class="header-section-number">5.6.1</span> The Simple <span class="math inline">\((p=1)\)</span> Logistic Model</h3>
-<p>For a binary coded dependent variable <span class="math inline">\(Y\in\{0,1\}\)</span> we aim to model the relationship between <span class="math display">\[
-p(X)=Pr(Y=1|X)\quad\text{and}\quad X.
+<p>For a binary coded dependent variable <span class="math inline">\(Y_i\in\{0,1\}\)</span> we aim to model the relationship between <span class="math display">\[
+p(X_i)=P(Y_i=1|X_i)\quad\text{and}\quad X_i.
 \]</span></p>
 <p>As discussed above, a linear regression model, e.g., <span class="math display">\[
-p(X)=\beta_0+\beta_1 X
-\]</span> can produce nonsense predictions <span class="math inline">\(p(X)\not\in[0,1]0;\)</span> see the left panel of Figure 4.2.</p>
-<p>Logistic regression avoids this problem <strong>by assuming</strong> that <span class="math inline">\(p(X)\)</span> can be modeled using the <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>, <span class="math display">\[
-p(X)=\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}.
+p(X_i)=\beta_0+\beta_1 X_i
+\]</span> can produce nonsense predictions with <span class="math inline">\(p(X_i)\not\in[0,1];\)</span> see the left panel of Figure 4.2.</p>
+<p>Logistic regression avoids this problem <strong>by assuming</strong> that <span class="math inline">\(p(X_i)\)</span> can be modeled using the <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>, <span class="math display">\[
+p(X_i)=\frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}.
 \]</span> To fit the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we use an estimation method called <strong>maximum likelihood</strong>.</p>
 <p>The right panel of Figure 4.2 illustrates the fit of the logistic regression model to the <code>Default</code> data.</p>
 <p>Note that <span class="math display">\[
 \begin{align*}
-p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
+p(X_i) &amp; = \frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}
 %\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-p(X)} \\
 %\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{1-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
 %\frac{p(X)}{1-p(X)} &amp; = \frac{\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}}{\frac{1+e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}-\frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}} \\
-\quad \Leftrightarrow\quad  \frac{p(X)}{1-p(X)} = e^{\beta_0+\beta_1 X}
+\quad \Leftrightarrow\quad  \frac{p(X_i)}{1-p(X_i)} = e^{\beta_0+\beta_1 X_i}
 \end{align*}
 \]</span></p>
 <p>The quantity <span class="math display">\[
-0\leq \frac{p(X)}{1 − p(X)} \leq \infty
+0\leq \frac{p(X_i)}{1 − p(X_i)} \leq \infty
 \]</span> is called the <strong>odds</strong>, and can take any value between 0 and plus infinity.</p>
 <ul>
 <li>A small odds value (close to zero) indicates a low probability of default.</li>
@@ -589,10 +617,10 @@ p(X) &amp; = \frac{e^{\beta_0+\beta_1 X}}{1+e^{\beta_0+\beta_1 X}}
 \frac{0.9}{1-0.9}=9
 \]</span></p></li>
 </ul>
-<p>By taking the logarithm, we arrive at <strong>log odds</strong> or <strong>logit</strong> <span class="math display">\[
-\ln\left(\frac{p(X)}{1-p(X)}\right) = \beta_0+\beta_1 X
-\]</span></p>
-<p>Thus increasing <span class="math inline">\(X\)</span> by one unit …</p>
+<p>By taking the logarithm, we arrive at <strong>log odds</strong> or <strong>logit</strong> <span id="eq-logodds"><span class="math display">\[
+\ln\left(\frac{p(X_i)}{1-p(X_i)}\right) = \beta_0+\beta_1 X_i
+\qquad(5.4)\]</span></span></p>
+<p>Thus increasing <span class="math inline">\(X_i\)</span> by one unit …</p>
 <ul>
 <li>… changes the <em>log odds</em> by <span class="math inline">\(\beta_1\)</span>
 </li>
@@ -609,44 +637,48 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The amount that <span class="math inline">\(p(X)\)</span> changes due to a one-unit change in <span class="math inline">\(X\)</span> depends on the current value of <span class="math inline">\(X.\)</span> That is, the simple logistic regression model is not linear in the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1.\)</span></p>
-<p>But regardless of the value of <span class="math inline">\(X\)</span>, if <span class="math inline">\(\beta_1\)</span> is positive then increasing <span class="math inline">\(X\)</span> will be associated with increasing <span class="math inline">\(p(X)\)</span>, and if <span class="math inline">\(\beta_1\)</span> is negative then increasing <span class="math inline">\(X\)</span> will be associated with decreasing <span class="math inline">\(p(X).\)</span></p>
+<p><strong>Non-Linearity:</strong></p>
+<p>The amount that <span class="math inline">\(p(X_i)\)</span> changes due to a one-unit change in <span class="math inline">\(X_i\)</span> depends on the current value of <span class="math inline">\(X_i.\)</span> That is, the simple logistic regression model is not linear in the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1.\)</span></p>
+<p><strong>Monotonicity:</strong></p>
+<p>But regardless of the value of <span class="math inline">\(X_i\)</span>, if <span class="math inline">\(\beta_1\)</span> is positive then increasing <span class="math inline">\(X_i\)</span> will be associated with increasing <span class="math inline">\(p(X_i)\)</span>, and if <span class="math inline">\(\beta_1\)</span> is negative then increasing <span class="math inline">\(X_i\)</span> will be associated with decreasing <span class="math inline">\(p(X_i).\)</span></p>
 </div>
 </div>
 </section><section id="estimating-the-regression-coefficients" class="level3" data-number="5.6.2"><h3 data-number="5.6.2" class="anchored" data-anchor-id="estimating-the-regression-coefficients">
 <span class="header-section-number">5.6.2</span> Estimating the Regression Coefficients</h3>
 <p>In logistic regression analysis, the unknown model parameters are estimated using <em>maximum likelihood</em>.</p>
-<p><strong>Basic intuition:</strong> Find estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that the predicted probability <span class="math inline">\(\hat{p}(x_i)\)</span> for each person <span class="math inline">\(i\)</span> corresponds as close as possible to its observed <code>default</code> status. I.e., choose <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that</p>
+<p><strong>Basic intuition:</strong> Find estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that the predicted probability <span class="math inline">\(\hat{p}(X_i)\)</span> for each person <span class="math inline">\(i\)</span> corresponds as close as possible to its observed <span class="math inline">\(\texttt{default}_i\)</span> status. I.e., choose <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that</p>
 <ul>
 <li>
-<span class="math inline">\(\hat{p}(x_i)\approx 1\)</span> if <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> for person <span class="math inline">\(i\)</span>
+<span class="math inline">\(\hat{p}(X_i)\approx 1\quad\)</span> if <span class="math inline">\(\quad\texttt{default}_i=\texttt{Yes}\)</span> for person <span class="math inline">\(i\)</span>
 </li>
 <li>
-<span class="math inline">\(\hat{p}(x_i)\approx 0\)</span> if <code>default</code><span class="math inline">\(=\)</span><code>No</code> for person <span class="math inline">\(i\)</span>
+<span class="math inline">\(\hat{p}(X_i)\approx 0\quad\)</span> if <span class="math inline">\(\quad\texttt{default}_i=\texttt{No}\)</span> for person <span class="math inline">\(i\)</span>
 </li>
 </ul>
 <p>simultaneously for all <span class="math inline">\(i=1,\dots,n.\)</span></p>
-<p>This intuition can be formalized using the so-called <strong>likelihood function</strong>: <span class="math display">\[
+<p>Let <span class="math display">\[
+Y_i=\left\{\begin{array}{ll}
+1&amp;\;\text{if }\texttt{default}_i=\texttt{Yes}\\
+0&amp;\;\text{if }\texttt{default}_i=\texttt{No}\\
+\end{array}\right.
+\]</span></p>
+<p>Then the idea of maximum likelihood can be formalized using the so-called <strong>likelihood function</strong>: <span class="math display">\[
 \begin{align*}
 \mathcal{L}(b_0,b_1)
-&amp;=\prod_{i:y_{i}=1} p(x_i)\prod_{i:y_{i}=0} (1-p(x_i))\\[2ex]
-&amp;=
-\prod_{i:y_{i}=1} \frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}
-\prod_{i:y_{i}=0}\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)\\[2ex]
-&amp;=
-\prod_{i=1}^n
-\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
-\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\\[2ex]
+&amp;=\prod_{i=1}^n \left(p(X_i)\right)^{Y_i}\left(1-p(X_i)\right)^{1-Y_i}\\[2ex]
+&amp;=\prod_{i=1}^n
+\left(\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{Y_i}
+\left(1-\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{1-Y_i}\\[2ex]
 \end{align*}
 \]</span> The estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> this likelihood function, i.e. <span class="math display">\[
 (\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\mathcal{L}(b_0,b_1).
-\]</span> Typically, however, one does not maximize the <strong>likelihood function</strong> but the <strong>log-likelihood function</strong> <span class="math display">\[
+\]</span> Typically, one does not maximize the <strong>likelihood function</strong> but the <strong>log-likelihood function</strong> <span class="math display">\[
 \begin{align*}
 \ell(b_0,b_1)
 &amp; = \ln(\mathcal{L}(b_0,b_1))\\[2ex]
 &amp; = \ln\left(\prod_{i=1}^n
-\left(\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{y_i}
-\left(1-\frac{e^{b_0+b_1 x_i}}{1+e^{b_0+b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
+\left(\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{Y_i}
+\left(1-\frac{e^{b_0+b_1 X_i}}{1+e^{b_0+b_1 X_i}}\right)^{1-Y_i}\right)\\[2ex]
 %&amp; = \ln\left(\prod_{i=1}^n
 %\left(\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{y_i}
 %\left(1-\frac{1}{1+e^{-b_0-b_1 x_i}}\right)^{1-y_i}\right)\\[2ex]
@@ -657,9 +689,10 @@ Caution
 %&amp;= \sum_{i=1}^n \Bigg(\ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \\
 %&amp;\qquad + y_i \left(\ln \left( \frac{1}{1 + \exp(-b_0-b_1 x_i)} \right)  -  \ln \left( \frac{\exp(-b_0-b_1 x_i)}{1 + \exp(-b_0-b_1 x_i)} \right)  \right) \Bigg) \\[2ex]
 &amp;=\dots \text{rearranging terms} \dots \\[2ex]
-&amp;= \sum_{i=1}^n \left( -\ln(1 + \exp(b_0 + b_1 x_i)) + y_i (b_0 + b_1 x_i) \right).
+&amp;= \sum_{i=1}^n \left( -\ln(1 + \exp(b_0 + b_1 X_i)) + Y_i (b_0 + b_1 X_i) \right).
 \end{align*}
-\]</span> Thus, the estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> the log-likelihood function, i.e. <span class="math display">\[
+\]</span> which yields the same solutions, since the logarithm applies only a <strong>monotonic</strong> transformation.</p>
+<p>Thus, the estimates <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> are chosen to <em>maximize</em> the log-likelihood function, <span class="math display">\[
 (\hat\beta_0,\hat\beta_1)=\arg\max_{(b_0,b_1)\in\mathbb{R}^2}\ell(b_0,b_1).
 \]</span></p>
 <p>In general, there is no analytical solution of this maximization problem and a solution must be found numerically, for instance, using the Newton-Raphon Algorithm.</p>
@@ -674,7 +707,7 @@ $$
 \end{pmatrix}
 $$ -->
 <p>Maximum likelihood is a very general estimation method that allows to estimate also non-linear models (like the logistic regression model).</p>
-<p>Table 4.1 shows the coefficient estimates and related information that result from fitting a logistic regression model on the <code>Default</code> data in order to predict the probability of <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> using <code>balance</code> as the only predictor. <img src="images/Tab_4_1.png" class="img-fluid"></p>
+<p>Table 4.1 shows the coefficient estimates and related information that result from fitting a logistic regression model on the <code>Default</code> data in order to predict the probability of <span class="math inline">\(Y_i=1\)</span> (i.e.&nbsp;<span class="math inline">\(\texttt{default}_i=\texttt{Yes}\)</span>) using <span class="math inline">\(\texttt{balance}_i\)</span> as the only predictor. <img src="images/Tab_4_1.png" class="img-fluid"></p>
 <p><strong>Interpretation:</strong></p>
 <ul>
 <li>We see that <span class="math inline">\(\hat\beta_1=0.0055\)</span>; this indicates that an increase in <code>balance</code> is associated with an increase in the probability of default.
@@ -686,49 +719,52 @@ $$ -->
 </li>
 </ul></section><section id="making-predictions" class="level3" data-number="5.6.3"><h3 data-number="5.6.3" class="anchored" data-anchor-id="making-predictions">
 <span class="header-section-number">5.6.3</span> Making Predictions</h3>
-<p>Once the coefficients have been estimated, we can compute the probability of <code>default</code><span class="math inline">\(=1\)</span> for any given value of <code>balance</code>.</p>
-<p>For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a <code>balance</code>-value of 1,000 [USD] is <span class="math display">\[
+<p>Once the coefficients have been estimated, we can compute the probability of <span class="math inline">\(Y=1,\)</span> i.e.&nbsp;<span class="math inline">\(\texttt{default}=\texttt{Yes},\)</span> for a new person with predictor value <span class="math inline">\(\texttt{balance}.\)</span></p>
+<p>For example, using the coefficient estimates given in Table 4.1, we predict that the default probability for an individual with a <span class="math inline">\(\texttt{balance}\)</span>-value of 1,000 [USD] is <span class="math display">\[
 \begin{align*}
 \hat{p}(\texttt{balance}=1000)
-&amp;=\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
+&amp;=\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{balance}=1000)\\[2ex]
 %&amp;=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
 &amp;=\frac{e^{-10.6513+ 0.0055\times 1000}}{1+e^{-10.6513+ 0.0055\times 1000}}\\[2ex]
 &amp;= 0.00576 &lt; 1\%
 \end{align*}
 \]</span></p>
-<p>By contrast, the default probability for an individual with a <code>balance</code>-value of 2,000 [USD] is <span class="math display">\[
+<p>By contrast, the default probability for an individual with a <span class="math inline">\(\texttt{balance}\)</span>-value of 2,000 [USD] is <span class="math display">\[
 \begin{align*}
 \hat{p}(\texttt{balance}=2000)
-&amp;=\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
+&amp;=\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{balance}=2000)\\[2ex]
 %&amp;=\frac{e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}{1+e^{\hat\beta_0+\hat\beta_1 \texttt{balance}}}\\[2ex]
 &amp;=\frac{e^{-10.6513+ 0.0055\times 2000}}{1+e^{-10.6513+ 0.0055\times 2000}}\\[2ex]
 &amp; = 0.586
 \end{align*}
 \]</span> and is thus much higher.</p>
 <section id="qualitative-predictors" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="qualitative-predictors">Qualitative Predictors:</h4>
+<p>Similarly, one can do prediction using qualitative predictors such as <span class="math display">\[
+\texttt{student}\in\{\texttt{Yes}, \texttt{No}\}
+\]</span></p>
 <p><img src="images/Tab_4_2.png" class="img-fluid"></p>
 <p><span class="math display">\[
 \begin{align*}
-&amp;\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
+&amp;\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{Yes})\\[2ex]
 &amp;=\frac{e^{-3.5041+0.4049\times 1}}{1+e^{-3.5041+0.4049\times 1}}\\[2ex]
 &amp;= 0.0431\\[4ex]
-&amp;\widehat{Pr}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
+&amp;\widehat{P}(\texttt{default}=\texttt{Yes}|\texttt{student}=\texttt{No})\\[2ex]
 &amp;=\frac{e^{-3.5041+0.4049\times 0}}{1+e^{-3.5041+0.4049\times 0}}\\[2ex]
 &amp;= 0.0292\\
 \end{align*}
 \]</span></p>
-<p>This may indicate that students tend to have higher default probabilities than non-students. But we may <strong>missed further factors</strong> here since we only use one predictor variable. Thus, this result may be driven by an <strong>omitted-variable bias</strong>.</p>
-<p>To control for other confounding predictors, we need to use multiple logistic regression.</p>
+<p>This may indicate that students tend to have higher default probabilities than non-students. But we may <strong>miss further relevant factors</strong> here as we only use one predictor variable. Thus, this result may be driven by an <strong>omitted-variable bias</strong>.</p>
+<p>To control for other confounding predictors, we may need to use multiple logistic regression.</p>
 </section></section><section id="multiple-logistic-regression" class="level3" data-number="5.6.4"><h3 data-number="5.6.4" class="anchored" data-anchor-id="multiple-logistic-regression">
 <span class="header-section-number">5.6.4</span> Multiple Logistic Regression</h3>
 <p>By analogy with the extension from simple to multiple linear, we can generalize the (simple) logistic regression model as following <span class="math display">\[
 \begin{align*}
-p(X)
-&amp;=\frac{e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}{1+e^{\beta_0+\beta_1 X_1+\dots+\beta_p X_p}}\\[2ex]
-\ln\left(\frac{p(X)}{1-p(X)}\right)
-&amp;= \beta_0+\beta_1 X_1+\dots+\beta_p X_p,\\
+p(X_i)
+&amp;=\frac{e^{\beta_0+\beta_1 X_{i1}+\dots+\beta_p X_{ip}}}{1+e^{\beta_0+\beta_1 X_{i1}+\dots+\beta_p X_{ip}}}\\[2ex]
+\ln\left(\frac{p(X_i)}{1-p(X_i)}\right)
+&amp;= \beta_0+\beta_1 X_{i1}+\dots+\beta_p X_{ip},\\
 \end{align*}
-\]</span> where <span class="math inline">\(X=(X_1,\dots,X_p)\)</span>, and where the unknown parameters <span class="math inline">\(\beta_0,\dots,\beta_p\)</span> are estimated by maximum likelihood.</p>
+\]</span> where <span class="math inline">\(X_i=(X_{i1},\dots,X_{ip})^\top,\)</span> and where the unknown parameters <span class="math inline">\(\beta_0,\dots,\beta_p\)</span> are estimated by maximum likelihood.</p>
 <p><img src="images/Tab_4_3.png" class="img-fluid"></p>
 <p>Interestingly, the effect of the dummy variable <code>student[Yes]</code> is now <em>negative</em>, in contrast to the estimation results of the (simple) logistic regression in Table 4.2 where it was <em>positive</em>.</p>
 <p>The negative coefficient for student in the multiple logistic regression indicates that for fixed values of balance and income, a student is less likely to default than a non-student.</p>
@@ -749,54 +785,62 @@ p(X)
 </section><section id="sec-multinomialLogistic" class="level3" data-number="5.6.5"><h3 data-number="5.6.5" class="anchored" data-anchor-id="sec-multinomialLogistic">
 <span class="header-section-number">5.6.5</span> Multinomial Logistic Regression</h3>
 <p>It is possible to extend the two-class logistic regression approach to the setting of <span class="math inline">\(K &gt; 2\)</span> classes. This extension is sometimes known as <em>multinomial logistic regression</em>.</p>
-<p>To do this, we first select a single class to serve as the baseline; without loss of generality, we select the <span class="math inline">\(K\)</span>th class for this role.</p>
+<p>To do this, we first select a single class to serve as the <strong>baseline class</strong>; without loss of generality, we select the <span class="math inline">\(K\)</span>th class for this role.</p>
 <p>We model the probabilities that <span class="math inline">\(Y=k\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span>, using <span class="math inline">\(k\)</span>-specific parameters <span class="math inline">\(\beta_{k0},\dots,\beta_{kp}\)</span> with <span class="math display">\[
 \begin{align*}
 p_k(x)
-&amp; = Pr(Y=k|X=x)\\[2ex]
-&amp; = \frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+&amp; = P(Y=k|X=x)\\[2ex]
+&amp; = \frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}
 \end{align*}
 \]</span> for <span class="math inline">\(k=1,\dots,K-1\)</span>, and <span class="math display">\[
 \begin{align*}
 p_K(x)
-&amp; =Pr(Y=K|X=x)\\[2ex]
-&amp; =\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+&amp; =P(Y=K|X=x)\\[2ex]
+&amp; =\frac{1}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}
 \end{align*}
-\]</span></p>
+\]</span> for the baseline class <span class="math inline">\(K.\)</span></p>
 <p>For <span class="math inline">\(k=1,\dots,K-1\)</span> it holds that <span class="math display">\[
-\ln\left(\frac{Pr(Y=k|X=x)}{Pr(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
-\]</span> which is the counterpart to the log odds equation for <span class="math inline">\(K=2.\)</span></p>
+\begin{align*}
+\ln\left(\frac{P(Y=k|X=x)}{P(Y=K|X=x)}\right)
+&amp;=\ln\left(\frac{\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}}{\frac{1}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}}\right)\\[2ex]
+&amp;=\ln\left(e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}\right)\\[2ex]
+&amp;=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\end{align*}
+\]</span> which is the counterpart to the log odds equation for <span class="math inline">\(K=2\)</span> (see <a href="#eq-logodds" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>)</p>
 <p>Note that:</p>
 <ul>
 <li><p>The predictions <span class="math inline">\(\hat{p}_k(x)\)</span>, for <span class="math inline">\(k=1,\dots,K\)</span> do not depend on the choice of the baseline class.</p></li>
 <li><p>However, interpretation of the coefficients in a multinomial logistic regression model must be done with care, since it is tied to the choice of baseline.</p></li>
 </ul></section></section><section id="discriminant-analysis-generative-models-for-classification" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="discriminant-analysis-generative-models-for-classification">
 <span class="header-section-number">5.7</span> Discriminant Analysis: Generative Models for Classification</h2>
-<p>We now consider an alternative and less direct approach to estimating the probabilities <span class="math display">\[
-Pr(Y=K|X=x).
+<p>Let <span class="math inline">\(Y\)</span> denote the response of a <strong>new subject</strong> with predictor value <span class="math inline">\(X=x.\)</span> Aim is to classify the new subject into one of the classes <span class="math inline">\(k=1,\dots,K.\)</span></p>
+<p>We now consider an alternative approach to estimating the probabilities <span class="math display">\[
+P(Y=K|X=x).
 \]</span></p>
 <p>Suppose that we wish to classify an observation into one of <span class="math inline">\(K\geq 2\)</span> classes.</p>
 <p><strong>Prior Probability:</strong> Let <span class="math display">\[
-\pi_k=Pr(Y=k)
+\pi_k=P(Y=k)
 \]</span> represent the overall <em>prior probability</em> that a randomly chosen observation comes from class <span class="math inline">\(k.\)</span> We have that <span class="math display">\[
 \pi_1+\dots+\pi_K=1.
 \]</span></p>
+<p><br></p>
 <p><strong>Conditional Probability of <span class="math inline">\(X=x\)</span> given <span class="math inline">\(Y=k:\)</span></strong> Let <span class="math display">\[
-f_k(x)=Pr(X=x|Y=k)
+f_k(x)=P(X=x|Y=k)
 \]</span></p>
-<p><strong>Posterior Probability:</strong> Then <strong>Bayes’ theorem</strong> states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span id="eq-postprob1"><span class="math display">\[
+<p><br></p>
+<p><strong>Posterior Probability:</strong> Then <strong>Bayes’ theorem</strong> states that the probability that a observation with predictor value <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the <em>posterior probability</em>), is given by <span id="eq-postprob1"><span class="math display">\[
 \begin{align*}
 p_k(x)
-&amp; = Pr(Y=k|X=x)\\[2ex]
-&amp; = \frac{Pr(Y=k\;\text{ and }\;X=x)}{Pr(X=x)}\\[2ex]
-&amp; = \frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)}\\[2ex]
-&amp; = \frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+&amp; = P(Y=k|X=x)\\[2ex]
+&amp; = \frac{P(Y=k\;\text{ and }\;X=x)}{P(X=x)}\\[2ex]
+&amp; = \frac{P(Y=k)\,P(X=x|Y=k)}{P(X=x)}\\[2ex]
+&amp; = \frac{\pi_k f_k(x)}{\sum_{\ell=1}^K\pi_{\ell} f_{\ell}(x)},
 \end{align*}
 \qquad(5.5)\]</span></span> where <span class="math display">\[
 \begin{align*}
-Pr(X = x)
-&amp;= \sum_{l=1}^K \underbrace{Pr(Y = l)}_{\pi_l} \;\underbrace{Pr(X_x|Y=l)}_{f_l(x)} \\[2ex]
-&amp;= \sum_{l=1}^K \pi_l f_l(x)
+P(X = x)
+&amp;= \sum_{k=1}^K \underbrace{P(Y = k)}_{\pi_k} \;\underbrace{P(X = x|Y=k)}_{f_k(x)} \\[2ex]
+&amp;= \sum_{k=1}^K \pi_k f_k(x)
 \end{align*}
 \]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -809,24 +853,24 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a> also applies to quantitative predictors <span class="math inline">\(X,\)</span> even though for continuous random variables <span class="math inline">\(X\)</span> we have that</p>
+<p>Note that <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a> also applies to real-valued predictors <span class="math inline">\(X\)</span> (i.e.&nbsp;continuous random variables <span class="math inline">\(X\in\mathbb{R}^p\)</span>) even though for continuous random variables <span class="math inline">\(X\)</span> we have that</p>
 <ul>
 <li>
-<span class="math inline">\(Pr(X=x|Y=k) = 0\quad\)</span> and</li>
-<li><span class="math inline">\(Pr(X=x) = 0\)</span></li>
+<span class="math inline">\(P(X=x|Y=k) = 0\quad\)</span> and</li>
+<li><span class="math inline">\(P(X=x) = 0\)</span></li>
 </ul>
 <p>The technical argument is that <span class="math display">\[
-\frac{Pr(Y=k)\,Pr(X=x|Y=k)}{Pr(X=x)} = \frac{Pr(Y=k)\,Pr(X=x|Y=k)dx}{Pr(X=x)dx},
+\frac{P(Y=k)\,P(X=x|Y=k)}{P(X=x)} = \frac{P(Y=k)\,P(X=x|Y=k)dx}{P(X=x)dx},
 \]</span> where</p>
 <ul>
 <li>
-<span class="math inline">\(Pr(X=x|Y=k) dx\quad\)</span> and</li>
-<li><span class="math inline">\(Pr(X=x)dx\)</span></li>
+<span class="math inline">\(P(X=x|Y=k) dx\quad\)</span> and</li>
+<li><span class="math inline">\(P(X=x)dx\)</span></li>
 </ul>
 <p>correspond to the probabilities of <span class="math inline">\(X\)</span> falling in a small region <span class="math inline">\(dx\)</span> around <span class="math inline">\(x\)</span> conditionally and unconditionally on <span class="math inline">\(Y=k,\)</span> respectively.</p>
 </div>
 </div>
-<p>While logistic regression estimates the posterior probability <span class="math inline">\(p_k(x)\)</span> using a functional form assumption, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
+<p>While logistic regression estimates the posterior probability <span class="math inline">\(p_k(x)\)</span> using a <strong>functional form assumption</strong>, Bayes’s theorem gives us a way to estimate <span class="math inline">\(p_k(x)\)</span> simply by plugging in estimates of <span class="math inline">\(\pi_k\)</span> and <span class="math inline">\(f_k(x)\)</span>.</p>
 <p>We know from <a href="#sec-BayesClassifier" class="quarto-xref"><span>Section 5.4</span></a> that the <strong>Bayes classifier</strong>, which classifies an observation <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest, has the lowest possible error rate out of all classifiers. Therefore, if we were able to estimate all unknown quantities in <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a>, we will get a very good Classifier.</p>
 <p>However, estimating the densities <span class="math inline">\(f_k(x)\)</span> can be very challenging. Therefore, we have to make some simplifying assumptions such as, for instance, assuming that the predictors <span class="math inline">\(X\)</span> are normally distributed.</p>
 <p>In the following sections, we discuss three classifiers that use different estimates of <span class="math inline">\(f_k(x)\)</span> to approximate the Bayes classifier:</p>
@@ -850,14 +894,16 @@ f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{1}{2\sigma_k^2}(x-\mu_k)^
 <li>
 <span class="math inline">\(\pi\approx 3.14159\)</span> is the mathematical constant <span class="math inline">\(\pi\)</span>. (Do not confuse it with the prior probabilities <span class="math inline">\(\pi_k.\)</span>)</li>
 </ul>
-<p>In linear discriminant analysis, we further assume equal variances across all classes, i.e.&nbsp; <span class="math display">\[
+<p>In linear discriminant analysis, we further <strong>assume equal variances across all classes</strong>, i.e.&nbsp; <span class="math display">\[
 \sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2;
-\]</span> That is, discriminatory power comes from different means only. In quadratic discriminant analysis (see <a href="#sec-QDA" class="quarto-xref"><span>Section 5.7.5</span></a>) we will also consider the case where discriminatory power comes from both differences in means and variances.</p>
-<p>Plugging this assumed version of <span class="math inline">\(f_k\)</span> into <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a>, leads to <span id="eq-LDp1"><span class="math display">\[
+\]</span> That is, discriminatory power comes from different means only.</p>
+<blockquote class="blockquote">
+<p>In quadratic discriminant analysis (see <a href="#sec-QDA" class="quarto-xref"><span>Section 5.7.5</span></a>) we will also consider the case where discriminatory power comes from both differences in means and variances.</p>
+</blockquote>
+<p>Plugging this assumed (possibly wrong) version of <span class="math inline">\(f_k\)</span> into <a href="#eq-postprob1" class="quarto-xref">Equation&nbsp;<span>5.5</span></a>, leads to <span id="eq-LDp1"><span class="math display">\[
 p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
 \qquad(5.6)\]</span></span></p>
-<p>The Bayes classifier involves assigning an observation <span class="math inline">\(X = x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest.</p>
-<p>Taking the <span class="math inline">\(\ln\)</span> of <a href="#eq-LDp1" class="quarto-xref">Equation&nbsp;<span>5.6</span></a> (i.e.&nbsp;a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
+<p>The Bayes classifier involves assigning an observation with predictor value <span class="math inline">\(X = x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math inline">\(p_k(x)\)</span> is largest. Taking the <span class="math inline">\(\ln\)</span> of <a href="#eq-LDp1" class="quarto-xref">Equation&nbsp;<span>5.6</span></a> (i.e.&nbsp;a monotonic transformation) and rearranging terms shows that this assignment mechanism is equivalent to assigning an observation <span class="math inline">\(X=x\)</span> to the class <span class="math inline">\(k\)</span> for which <span class="math display">\[
 \delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \ln(\pi_k)
 \]</span> is largest. The function <span class="math inline">\(\delta_k(x)\)</span> is called the <strong>discriminant function</strong>.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -1172,11 +1218,11 @@ Numbers of True/False Negative Predictions:
 <p>If a “False Negative Event” costs the bank more than a “False Positive Event” (or vice versa), then the bank will want to adjust the classifying threshold of the classifier.</p>
 <!-- In the two class cases, e.g. $\texttt{default}\in\{\texttt{No}, \texttt{Yes}\},$  -->
 <p>In binary (<span class="math inline">\(K=2\)</span>) classifications, the Bayes classifier, and thus also all classifiers which try to approximate the Bayes classifier, use a threshold of <span class="math inline">\(50\%\)</span>. I.e., a person <span class="math inline">\(i\)</span> with predictor value <span class="math inline">\(X=x_i\)</span> is assigned to the <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> class if <span class="math display">\[
-Pr(\texttt{default}_i=\texttt{Yes}|X=x_i)&gt;0.5.
+P(\texttt{default}_i=\texttt{Yes}|X=x_i)&gt;0.5.
 \]</span></p>
 <p>However, if the costs of False Negatives (FN) are higher than the costs of False Positives (FP), one can consider lowering the classifying threshold. This decreases the predicted negatives (N<span class="math inline">\(^*\)</span>) and thus also decreases the False Negatives (FN) since N<span class="math inline">\(^*=\)</span>TN<span class="math inline">\(+\)</span>FN.</p>
 <p>For instance, we might classify any person <span class="math inline">\(i\)</span> with a posterior probability of default above <span class="math inline">\(20\%,\)</span> <span class="math display">\[
-Pr(\texttt{default}=\texttt{Yes}|X=x_i)&gt;0.2,
+P(\texttt{default}=\texttt{Yes}|X=x_i)&gt;0.2,
 \]</span> into the <code>default</code><span class="math inline">\(=\)</span><code>Yes</code> class.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Predicted posterior probabilities </span></span>
@@ -1423,11 +1469,11 @@ X|Y=k \sim \mathcal{N}_p(\mu_k,\Sigma_k),
 </section><section id="naive-bayes" class="level3" data-number="5.7.6"><h3 data-number="5.7.6" class="anchored" data-anchor-id="naive-bayes">
 <span class="header-section-number">5.7.6</span> Naive Bayes</h3>
 <p>Remember, that Bayes’ theorem states that the probability that a observation with predictor values <span class="math inline">\(X=x\)</span> comes from class <span class="math inline">\(k\)</span> (i.e.&nbsp;the posterior probability), is given by <span class="math display">\[
-p_k(x) = Pr(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+p_k(x) = P(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
 \]</span> where</p>
 <ul>
 <li>
-<span class="math inline">\(\pi_k=Pr(Y=k)\)</span> denote the prior probabilities and</li>
+<span class="math inline">\(\pi_k=P(Y=k)\)</span> denote the prior probabilities and</li>
 <li>
 <span class="math inline">\(f_k(x)\)</span> denotes the <span class="math inline">\(p\)</span>-dimensional, conditional density of <span class="math inline">\(X,\)</span> given <span class="math inline">\(Y=k.\)</span>
 </li>
@@ -1443,7 +1489,7 @@ f_k(x) = f_{k1}(x_1)\cdot f_{k2}(x_2)\cdot\;\dots\;\cdot f_{kp}(x_p)
 \]</span></p>
 <p>This simplifying assumption may not be completely correct, but it often leads to very good classification results - particularly, in classification problems with smallish sample sizes.</p>
 <p>Under the naive Bayes assumption, we have that <span class="math display">\[
-Pr(Y=k|X=x)=\frac{\pi_k f_{k1}(x_1)\cdot\;\dots\;\cdot f_{kp}(x_p)}{\sum_{l=1}^K\pi_l f_{l1}(x_1)\cdot\;\dots\;\cdot f_{lp}(x_p)}.
+P(Y=k|X=x)=\frac{\pi_k f_{k1}(x_1)\cdot\;\dots\;\cdot f_{kp}(x_p)}{\sum_{l=1}^K\pi_l f_{l1}(x_1)\cdot\;\dots\;\cdot f_{lp}(x_p)}.
 \]</span></p>
 <p>For estimating the single, one dimensional marginal density functions <span class="math display">\[
 f_{kj}(x),\quad j=1,\dots,p\quad\text{and}\quad k=1,\dots,K
@@ -2475,31 +2521,6 @@ Levels: Down Up</code></pre>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2536,31 +2557,6 @@ plot(Volume)
 ![](Ch5_Classification_files/figure-html/chunk3-1.png){fig-align='center' width=672}
 :::
 :::
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3282,31 +3278,6 @@ Finally, we fit a  Poisson regression model to the `Bikeshare` data set, which m
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -3344,57 +3315,7 @@ names(Bikeshare)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 We begin by fitting a least squares linear regression model to the data.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3480,60 +3401,10 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: < 2.2e-16
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Due to space constraints, we truncate the output of `summary(mod.lm)`.
 In `mod.lm`, the first level of `hr` (0) and `mnth` (Jan) are treated as the baseline values, and so no coefficient estimates are provided for them: implicitly, their coefficient estimates are zero, and all other levels are measured relative to these baselines. For example, the Feb coefficient of $6.845$ signifies that, holding all other variables constant, there are on average about 7 more riders in February than in January. Similarly there are about 16.5 more riders in March than in January.
 
 The results seen in Section 4.6.1 used a slightly different coding of the variables `hr` and `mnth`, as follows:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3621,59 +3492,9 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: < 2.2e-16
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 What is the difference between the two codings?  In `mod.lm2`,  a coefficient estimate is reported for all but the last level of `hr` and `mnth`. Importantly, in `mod.lm2`, the coefficient estimate for the last level of `mnth` is not zero: instead, it equals the *negative of the sum of the coefficient estimates for all of the other levels*. Similarly, in `mod.lm2`, the coefficient estimate for the last level of `hr` is the negative of the sum of the coefficient estimates for all of the other levels. This means that the coefficients of `hr` and `mnth` in `mod.lm2` will always sum to zero, and can be interpreted as the difference from the mean level. For example, the coefficient for January of $-46.087$ indicates that, holding all other variables constant, there are typically 46 fewer riders in January relative to the yearly average.
 
 It is important to realize that the choice of coding really does not matter, provided that we interpret the model output correctly in light of the coding used. For example, we see   that the predictions from the linear model are the same regardless of coding:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3699,57 +3520,7 @@ sum((predict(mod.lm) - predict(mod.lm2))^2)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 The sum of squared differences is zero. We can also see this using the `all.equal()` function:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3776,57 +3547,7 @@ all.equal(predict(mod.lm), predict(mod.lm2))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 To reproduce the left-hand side of Figure 4.13, we must first obtain the coefficient estimates associated with `mnth`. The coefficients for January through November can be obtained directly from the `mod.lm2` object. The coefficient for December must be explicitly computed as the negative sum of all the other months.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3844,57 +3565,7 @@ coef.months <- c(coef(mod.lm2)[2:12],
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 To make the plot, we manually label the $x$-axis with the names of the months.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3918,57 +3589,7 @@ axis(side = 1, at = 1:12, labels = c("J", "F", "M", "A",
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Reproducing the right-hand side of Figure 4.13 follows a similar process.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3994,57 +3615,7 @@ plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Now, we consider instead fitting a Poisson regression model to the `Bikeshare` data. Very little changes, except that we now use the function `glm()` with the argument `family = poisson` to specify that we wish to  fit a Poisson regression model:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4130,57 +3701,7 @@ Number of Fisher Scoring iterations: 5
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 We can plot the coefficients associated with `mnth` and `hr`, in order to reproduce Figure 4.15:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4216,57 +3737,7 @@ plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 We can once again use the `predict()` function to obtain the fitted values (predictions) from this Poisson regression model. However, we must use the argument `type = "response"` to specify that we want `R` to output $\exp(\hat\beta_0 + \hat\beta_1 X_1 + \ldots +\hat\beta_p X_p)$ rather than $\hat\beta_0 + \hat\beta_1 X_1 + \ldots + \hat\beta_p X_p$, which it will output by default.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4283,31 +3754,6 @@ abline(0, 1, col = 2, lwd = 3)
 ![](Ch5_Classification_files/figure-html/chunk45-1.png){fig-align='center' width=672}
 :::
 :::
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

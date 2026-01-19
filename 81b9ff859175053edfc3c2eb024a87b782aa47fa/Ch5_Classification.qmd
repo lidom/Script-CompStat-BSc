@@ -405,6 +405,19 @@ Figures 2.15 and Figure 2.16 show the results for $K=10,$ $K=1,$ and $K=100.$
 
 <br>
 
+Figure 2.17 shows the **training error rate**
+$$
+\frac{1}{{n_{\text{Train}}}}\sum_{i=1}^{n_{\text{Train}}} I(Y_i\neq \hat{Y}_i),\quad \hat{Y}_i = \hat{f}(X_i),
+$$
+and the **test error rate**
+$$
+\frac{1}{n_{\text{Test}}}\sum_{i=1}^{n_{\text{Test}}} I(Y_{i}^{\text{Test}} \neq \hat{Y}_{i}^{\text{Test}}),
+$$
+for different values of $1/K,$
+$$
+\frac{1}{K}=\frac{1}{100},\dots,\frac{1}{K}=\frac{1}{1}.
+$$
+
 ![](images/Fig_2_17.png)
 
 
@@ -493,7 +506,7 @@ $$
 By taking the logarithm, we arrive at **log odds** or **logit**
 $$
 \ln\left(\frac{p(X_i)}{1-p(X_i)}\right) = \beta_0+\beta_1 X_i
-$$
+$${#eq-logodds}
 
 
 Thus increasing $X_i$ by one unit ... 
@@ -529,8 +542,8 @@ simultaneously for all $i=1,\dots,n.$
 Let
 $$
 Y_i=\left\{\begin{array}{ll}
-1&\quad\text{if }\texttt{default}_i=\texttt{Yes}\\
-0&\quad\text{if }\texttt{default}_i=\texttt{No}\\
+1&\;\text{if }\texttt{default}_i=\texttt{Yes}\\
+0&\;\text{if }\texttt{default}_i=\texttt{No}\\
 \end{array}\right.
 $$
 
@@ -640,7 +653,7 @@ and is thus much higher.
 
 Similarly, one can do prediction using qualitative predictors such as 
 $$
-\textttt{student}\in\{\texttt{Yes}, \texttt{No}\}
+\texttt{student}\in\{\texttt{Yes}, \texttt{No}\}
 $$
 
 ![](images/Tab_4_2.png)
@@ -710,14 +723,14 @@ In other words: A student is riskier than a non-student if no information about 
 It is possible to extend the two-class logistic regression approach to the setting of $K > 2$ classes. This extension is sometimes known as *multinomial logistic regression*. 
 
 
-To do this, we first select a single class to serve as the baseline; without loss of generality, we select the $K$th class for this role. 
+To do this, we first select a single class to serve as the **baseline class**; without loss of generality, we select the $K$th class for this role. 
 
 We model the probabilities that $Y=k$, for $k=1,\dots,K$, using $k$-specific parameters $\beta_{k0},\dots,\beta_{kp}$ with
 $$
 \begin{align*}
 p_k(x)
 & = P(Y=k|X=x)\\[2ex]
-& = \frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+& = \frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}
 \end{align*}
 $$
 for $k=1,\dots,K-1$, and
@@ -725,15 +738,21 @@ $$
 \begin{align*}
 p_K(x) 
 & =P(Y=K|X=x)\\[2ex]
-& =\frac{1}{1+\sum_{l=1}^{K-1}e^{\beta_{l0} + \beta_{l1} x_1 + \dots +  \beta_{lp} x_l}}
+& =\frac{1}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}
 \end{align*}
 $$
+for the baseline class $K.$
 
 For $k=1,\dots,K-1$ it holds that 
 $$
-\ln\left(\frac{P(Y=k|X=x)}{P(Y=K|X=x)}\right)=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\begin{align*}
+\ln\left(\frac{P(Y=k|X=x)}{P(Y=K|X=x)}\right)
+&=\ln\left(\frac{\frac{e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}}{\frac{1}{1+\sum_{\ell=1}^{K-1}e^{\beta_{\ell 0} + \beta_{\ell 1} x_1 + \dots +  \beta_{\ell p} x_l}}}\right)\\[2ex]
+&=\ln\left(e^{\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p}\right)\\[2ex]
+&=\beta_{k0} + \beta_{k1} x_1 + \dots +  \beta_{kp} x_p
+\end{align*}
 $$
-which is the counterpart to the log odds equation for $K=2.$
+which is the counterpart to the log odds equation for $K=2$ (see @eq-logodds)
 
 Note that:
 
@@ -746,7 +765,9 @@ Note that:
 
 ## Discriminant Analysis: Generative Models for Classification
 
-We now consider an alternative and less direct approach to estimating the probabilities 
+Let $Y$ denote the response of a **new subject** with predictor value $X=x.$ Aim is to classify the new subject into one of the classes $k=1,\dots,K.$   
+
+We now consider an alternative approach to estimating the probabilities 
 $$
 P(Y=K|X=x).
 $$
@@ -762,34 +783,36 @@ $$
 \pi_1+\dots+\pi_K=1.
 $$  
 
+<br>
+
 **Conditional Probability of $X=x$ given $Y=k:$** Let 
 $$
 f_k(x)=P(X=x|Y=k)
 $$
 
+<br>
 
-
-**Posterior Probability:** Then **Bayes' theorem** states that the probability that a observation with predictor values $X=x$ comes from class $k$ (i.e. the posterior probability), is given by
+**Posterior Probability:** Then **Bayes' theorem** states that the probability that a observation with predictor value $X=x$ comes from class $k$ (i.e. the *posterior probability*), is given by
 $$
 \begin{align*}
 p_k(x) 
 & = P(Y=k|X=x)\\[2ex]
 & = \frac{P(Y=k\;\text{ and }\;X=x)}{P(X=x)}\\[2ex]
 & = \frac{P(Y=k)\,P(X=x|Y=k)}{P(X=x)}\\[2ex]
-& = \frac{\pi_k f_k(x)}{\sum_{l=1}^K\pi_l f_l(x)},
+& = \frac{\pi_k f_k(x)}{\sum_{\ell=1}^K\pi_{\ell} f_{\ell}(x)},
 \end{align*}
 $${#eq-postprob1}
 where 
 $$
 \begin{align*}
 P(X = x) 
-&= \sum_{l=1}^K \underbrace{P(Y = l)}_{\pi_l} \;\underbrace{P(X_x|Y=l)}_{f_l(x)} \\[2ex]
-&= \sum_{l=1}^K \pi_l f_l(x) 
+&= \sum_{k=1}^K \underbrace{P(Y = k)}_{\pi_k} \;\underbrace{P(X = x|Y=k)}_{f_k(x)} \\[2ex]
+&= \sum_{k=1}^K \pi_k f_k(x) 
 \end{align*}
 $$
 
 ::: {.callout-note}
-Note that @eq-postprob1 also applies to quantitative predictors $X,$ even though for continuous random variables $X$ we have that  
+Note that @eq-postprob1 also applies to real-valued predictors $X$ (i.e. continuous random variables $X\in\mathbb{R}^p$) even though for continuous random variables $X$ we have that  
 
 * $P(X=x|Y=k) = 0\quad$ and 
 * $P(X=x) = 0$
@@ -806,7 +829,7 @@ where
 correspond to the probabilities of $X$ falling in a small region $dx$ around $x$ conditionally and unconditionally on $Y=k,$ respectively.
 ::: 
 
-While logistic regression estimates the posterior probability $p_k(x)$ using a functional form assumption, Bayes's theorem gives us a way to estimate $p_k(x)$ simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
+While logistic regression estimates the posterior probability $p_k(x)$ using a **functional form assumption**, Bayes's theorem gives us a way to estimate $p_k(x)$ simply by plugging in estimates of $\pi_k$ and $f_k(x)$.
 
 
 We know from @sec-BayesClassifier that the **Bayes classifier**, which classifies an observation $x$ to the class $k$ for which $p_k(x)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, if we were able to estimate all unknown quantities in @eq-postprob1, we will get a very good Classifier. 
@@ -836,24 +859,22 @@ where
 * $\sigma_k^2$ is the variance of the $k$th class
 * $\pi\approx 3.14159$ is the mathematical constant $\pi$. (Do not confuse it with the prior probabilities $\pi_k.$)
 
-In linear discriminant analysis, we further assume equal variances across all classes, i.e. 
+In linear discriminant analysis, we further **assume equal variances across all classes**, i.e. 
 $$
 \sigma_1^2=\dots = \sigma_K^2\equiv \sigma^2;
 $$
-That is, discriminatory power comes from different means only. In quadratic discriminant analysis (see @sec-QDA) we will also consider the case where discriminatory power comes from both differences in means and variances. 
+That is, discriminatory power comes from different means only. 
+
+> In quadratic discriminant analysis (see @sec-QDA) we will also consider the case where discriminatory power comes from both differences in means and variances. 
 
 
 
-Plugging this assumed version of $f_k$ into @eq-postprob1, leads to
+Plugging this assumed (possibly wrong) version of $f_k$ into @eq-postprob1, leads to
 $$
 p_k(x)=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum_{l=1}^K\pi_l \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}.
 $${#eq-LDp1}
 
-The Bayes classifier involves assigning an observation
-$X = x$ to the class $k$ for which $p_k(x)$ is largest. 
-
-
-Taking the $\ln$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this is equivalent to assigning an observation $X=x$ to the class $k$ for which 
+The Bayes classifier involves assigning an observation with predictor value $X = x$ to the class $k$ for which $p_k(x)$ is largest. Taking the $\ln$ of @eq-LDp1 (i.e. a monotonic transformation) and rearranging terms shows that this assignment mechanism is equivalent to assigning an observation $X=x$ to the class $k$ for which 
 $$
 \delta_k(x)=x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \ln(\pi_k)
 $$
