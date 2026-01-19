@@ -262,13 +262,13 @@ are called the **Bayes decision boundary**. An example of a Bayes decision bound
 
 The Bayes classifier produces the lowest possible test error rate, called the **Bayes error rate**. The *local* Bayes error rate at $x_0$ is given by
 $$
-1 - \max_{j}P(Y_i = j| X_i = x_0 ),
+1 - \max_{k\in\{1,\dots,K\}}P(Y_i = k| X_i = x_0 ),
 $$
-where the maximization is over all class labels $j$ (e.g. $j\in\{1,2\}$).
+where the maximization is over all class labels $k\in\{1,\dots,K\}.$
 
 The *global* overall Bayes error rate is given by
 $$
-1 - E\left(\max_{j}P(Y_i = j| X_i)\right),
+1 - E\left(\max_{k\in\{1,\dots,K\}}P(Y_i = k| X_i)\right),
 $$
 where the expectation averages the probability over all possible values of $X_i.$ 
 
@@ -277,7 +277,7 @@ where the expectation averages the probability over all possible values of $X_i.
 ::: {.callout-note}
 ## Classification threshold $0.5$?
 
-If no further information is given, one uses usually a threshold of $0.5$ in a two-class classification problem; or, more generally, a threshold of $\frac{1}{G}$ in a $G$-classes classification problem. 
+If no further information is given, one uses usually a threshold of $0.5$ in a two-class classification problem; or, more generally, a threshold of $\frac{1}{K}$ in a $K$-classes classification problem. 
 
 However, in certain applications, different thresholds are used. If, for instance, a certain classification error is very costly, we want to take this into account when choosing the classification threshold in order to the reduce the costs due to miss-classifications.
 
@@ -1533,79 +1533,33 @@ OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN? OUT OR IN?
 
 
 
-## Assignment
+## In Class Coding Exercises 
+
+Consider the following setup:
+
+* Two-class classification problem with $Y_i\in\{0,1\}$
+* One-dimensional $(p=1)$ predictor with $X_i\sim\mathcal{U}[0,1]$
+* iid-data: $(X_1,Y_1),\dots,(X_n,Y_n)$ with sample size $n.$
+
+Let the true (usually unknown) conditional probability function be 
+\begin{align*}
+P(Y_i=1|X_i=x)=(\sin(x \pi))^2 \cdot 0.9.
+\end{align*}
+
+**Problems:**
+
+(a) Generate $n=200$ data points $(X_1,Y_1),\dots,(X_n,Y_n)$ and plot them along with the true conditional probaility function $P(Y_i=1|X_i=x)$ for values $x\in[0,1].$
+
+(b) Partition the data into $n_{\text{Train}}=100$ training data and $n_{\text{Test}}=100$ data points. Compute the classification using an estimation of the simple linear regression model $Y_i=\beta_0+\beta_1X_{i}+\epsilon_i;$ i.e. using 
+$$
+\widehat{P}(Y_i=1|X_i)=\hat{\beta}_0+\hat{\beta}_1X_i.
+$$
+What is the **test error rate**?
+
+(b) Do the same as in the preveous problem, but use the KNN-classifier with $K=5$ and $K=15.$ What are the **test error rates**?
 
 
-The following `R`-code simulates data of a classification problem with 
-
-* two classes, $k\in\{1,2\},$ 
-* one predictor, $p=1,$ 
-* a training data sample size of $n_{Train}=200,$ and
-* a testing data sample size of $n_{Test}=200.$ 
-
-
-```{r}
-set.seed(131)
-
-n         <- 400
-n_train   <- n/2
-n_test    <- n/2
-
-pi_cl1    <- 0.7
-pi_cl2    <- 1 - pi_cl1
-
-cl_label  <- sample(c(1,2), 
-                    size    = n, 
-                    replace = TRUE, 
-                    prob    = c(pi_cl1, pi_cl2))
-
-n_cl1     <- length(cl_label[cl_label == 1])
-n_cl2     <- length(cl_label[cl_label == 2])
-
-mu_cl1    <- 1
-mu_cl2    <- 2
-var       <- 0.75
-
-x_cl1     <- rnorm(n = n_cl1, mean = mu_cl1, sd = sqrt(var))
-x_cl2     <- rnorm(n = n_cl2, mean = mu_cl2, sd = sqrt(var))
-
-x_data    <- c(x_cl1,         x_cl2) 
-class     <- c(rep(1, n_cl1), rep(2, n_cl2))
-
-## create data frame
-dat_temp   <- data.frame("class" = class, 
-                        "x"     = x_data)
-
-## shuffle data (randomly permute rows)
-dat_temp   <- dat_temp[sample(1:n),]
-
-## split data into training and test set
-data_train <- dat_temp[1:n_train, ]
-data_test  <- dat_temp[(n_train+1):n,]
-
-rownames(data_train) <- 1:n_train
-rownames(data_test)  <- 1:n_test
-```
-
-
-1. Compute the classification results using your own implementation of LDA. 
-   a. Compute the training error rate
-   b. Compute the test error rate 
-
-Hints: 
-
-* You are **not** allowed to use the `lda()` function of `R`. 
-* Only use basic `R`-functions like, e.g.: `mean()`, `var()`, `sum()`, `nrow()`, `rowSums()`, `rep()`, `length()`, and `dnorm()`.
-* Show all your code.
-
-
-**Link to your personal assignment repository:**</br>
-[https://classroom.github.com/a/QT0wqt04](https://classroom.github.com/a/QT0wqt04)
-
-
-
-
-
+## Exercises 
 
 
 ## Self-Study: Exercises
