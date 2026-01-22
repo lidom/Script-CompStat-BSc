@@ -1562,6 +1562,15 @@ What is the **test error rate**?
 ## Exercises 
 
 
+* [Exercises for Chapter 5](https://www.dropbox.com/scl/fi/2r56zkd0kdgbv533e7sc7/Ch5_Exercises1.pdf?rlkey=xcwkr0dm37z664camsc323wur&st=z3pdhn5v&dl=0)
+
+* [Exercises for Chapter 5 with Solutions](https://www.dropbox.com/scl/fi/f5to9jhy5jm0x84bfn1iz/Ch5_Exercises_with_Solutions1.pdf?rlkey=1y9aps0vp1260h4enj00ve5uq&st=nromvlhq&dl=0) 
+
+
+
+
+
+
 ## Self-Study: Exercises
 
 Prepare the following exercises of **Chapter 2 and 4** in our course textbook `ISLR`: 
