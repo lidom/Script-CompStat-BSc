@@ -1556,7 +1556,8 @@ $$
 $$
 What is the **test error rate**?
 
-(b) Do the same as in the preveous problem, but use the KNN-classifier with $K=5$ and $K=15.$ What are the **test error rates**?
+(b) Do the same as in problem b, but use the KNN-classifier with $K=5$ and $K=15.$ What are the **test error rates**?
+(b) Do the same as in problem b, but use the logistic regression classifier. What is the **test error rate**?
 
 
 ## Exercises 
