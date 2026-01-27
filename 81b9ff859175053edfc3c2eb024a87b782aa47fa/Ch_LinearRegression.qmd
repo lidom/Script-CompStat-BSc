@@ -2,6 +2,13 @@
 # Linear Regression {#sec-linearRegCh}
 
 
+<!-- 
+Points for future Revision: 
+
+* Adding cluster robust SEs
+
+ -->
+
 ::: {.hidden}
 $$
 \require{color}
