@@ -18,7 +18,7 @@ book:
     - Ch_MatrixAlgebra.qmd 
     - Ch_NonParamRegression.qmd #combine with Ch2_StatLearning.qmd
     - Ch5_Classification.qmd    # Comment in/out solutions of exercises
-    #- Ch6_Bootstrap.qmd # Comment in/out solutions of exercises
+    - Ch6_Bootstrap.qmd # Comment in/out solutions of exercises
     #- Ch7_LinModSelectRegul.qmd # Comment in/out solutions of exercises
 
 bibliography: references.bib

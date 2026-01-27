@@ -2,6 +2,16 @@
 # Classification
 
 <!-- 
+Points for future Revision: 
+
+* KNN: $\mathcal{N}_0$ to $\mathcal{N}_x$ and $x_0$ to $x$
+* classes: $c=1,\dots,C$ instead of $k$ or $j$
+
+ -->
+
+
+
+<!-- 
 > Reading: 
 
 * Chapter 2 (the classification parts) of our course textbook [An Introduction to Statistical Learning](https://www.statlearning.com/) 
