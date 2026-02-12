@@ -602,9 +602,11 @@ p(X_i)=P(Y_i=1|X_i)\quad\text{and}\quad X_i.
 <p>As discussed above, a linear regression model, e.g., <span class="math display">\[
 p(X_i)=\beta_0+\beta_1 X_i
 \]</span> can produce nonsense predictions with <span class="math inline">\(p(X_i)\not\in[0,1];\)</span> see the left panel of Figure 4.2.</p>
-<p>Logistic regression avoids this problem <strong>by assuming</strong> that <span class="math inline">\(p(X_i)\)</span> can be modeled using the <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>, <span class="math display">\[
-p(X_i)=\frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}.
-\]</span> To fit the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we use an estimation method called <strong>maximum likelihood</strong>.</p>
+<p>Logistic regression avoids this problem <strong>by assuming</strong> that <span class="math inline">\(p(X_i)\)</span> can be modeled using the <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>, <span class="math display">\[\begin{align*}
+p(X_i)
+&amp;=\frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}\\
+&amp;=\frac{1}{1+e^{-(\beta_0+\beta_1 X_i)}}.
+\end{align*}\]</span> To fit the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we use an estimation method called <strong>maximum likelihood</strong>.</p>
 <p>The right panel of Figure 4.2 illustrates the fit of the logistic regression model to the <code>Default</code> data.</p>
 <p>Note that <span class="math display">\[
 \begin{align*}
@@ -2493,7 +2495,6 @@ Levels: Down Up</code></pre>
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -2530,7 +2531,6 @@ plot(Volume)
 ![](Ch5_Classification_files/figure-html/chunk3-1.png){fig-align='center' width=672}
 :::
 :::
-
 
 
 
@@ -3252,7 +3252,6 @@ Finally, we fit a  Poisson regression model to the `Bikeshare` data set, which m
 
 
 
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -3290,9 +3289,7 @@ names(Bikeshare)
 
 
 
-
 We begin by fitting a least squares linear regression model to the data.
-
 
 
 
@@ -3378,12 +3375,10 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: < 2.2e-16
 
 
 
-
 Due to space constraints, we truncate the output of `summary(mod.lm)`.
 In `mod.lm`, the first level of `hr` (0) and `mnth` (Jan) are treated as the baseline values, and so no coefficient estimates are provided for them: implicitly, their coefficient estimates are zero, and all other levels are measured relative to these baselines. For example, the Feb coefficient of $6.845$ signifies that, holding all other variables constant, there are on average about 7 more riders in February than in January. Similarly there are about 16.5 more riders in March than in January.
 
 The results seen in Section 4.6.1 used a slightly different coding of the variables `hr` and `mnth`, as follows:
-
 
 
 
@@ -3471,11 +3466,9 @@ F-statistic: 457.3 on 39 and 8605 DF,  p-value: < 2.2e-16
 
 
 
-
 What is the difference between the two codings?  In `mod.lm2`,  a coefficient estimate is reported for all but the last level of `hr` and `mnth`. Importantly, in `mod.lm2`, the coefficient estimate for the last level of `mnth` is not zero: instead, it equals the *negative of the sum of the coefficient estimates for all of the other levels*. Similarly, in `mod.lm2`, the coefficient estimate for the last level of `hr` is the negative of the sum of the coefficient estimates for all of the other levels. This means that the coefficients of `hr` and `mnth` in `mod.lm2` will always sum to zero, and can be interpreted as the difference from the mean level. For example, the coefficient for January of $-46.087$ indicates that, holding all other variables constant, there are typically 46 fewer riders in January relative to the yearly average.
 
 It is important to realize that the choice of coding really does not matter, provided that we interpret the model output correctly in light of the coding used. For example, we see   that the predictions from the linear model are the same regardless of coding:
-
 
 
 
@@ -3501,9 +3494,7 @@ sum((predict(mod.lm) - predict(mod.lm2))^2)
 
 
 
-
 The sum of squared differences is zero. We can also see this using the `all.equal()` function:
-
 
 
 
@@ -3530,9 +3521,7 @@ all.equal(predict(mod.lm), predict(mod.lm2))
 
 
 
-
 To reproduce the left-hand side of Figure 4.13, we must first obtain the coefficient estimates associated with `mnth`. The coefficients for January through November can be obtained directly from the `mod.lm2` object. The coefficient for December must be explicitly computed as the negative sum of all the other months.
-
 
 
 
@@ -3550,9 +3539,7 @@ coef.months <- c(coef(mod.lm2)[2:12],
 
 
 
-
 To make the plot, we manually label the $x$-axis with the names of the months.
-
 
 
 
@@ -3576,9 +3563,7 @@ axis(side = 1, at = 1:12, labels = c("J", "F", "M", "A",
 
 
 
-
 Reproducing the right-hand side of Figure 4.13 follows a similar process.
-
 
 
 
@@ -3604,9 +3589,7 @@ plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
 
 
 
-
 Now, we consider instead fitting a Poisson regression model to the `Bikeshare` data. Very little changes, except that we now use the function `glm()` with the argument `family = poisson` to specify that we wish to  fit a Poisson regression model:
-
 
 
 
@@ -3692,9 +3675,7 @@ Number of Fisher Scoring iterations: 5
 
 
 
-
 We can plot the coefficients associated with `mnth` and `hr`, in order to reproduce Figure 4.15:
-
 
 
 
@@ -3730,9 +3711,7 @@ plot(coef.hours, xlab = "Hour", ylab = "Coefficient",
 
 
 
-
 We can once again use the `predict()` function to obtain the fitted values (predictions) from this Poisson regression model. However, we must use the argument `type = "response"` to specify that we want `R` to output $\exp(\hat\beta_0 + \hat\beta_1 X_1 + \ldots +\hat\beta_p X_p)$ rather than $\hat\beta_0 + \hat\beta_1 X_1 + \ldots + \hat\beta_p X_p$, which it will output by default.
-
 
 
 
@@ -3749,7 +3728,6 @@ abline(0, 1, col = 2, lwd = 3)
 ![](Ch5_Classification_files/figure-html/chunk45-1.png){fig-align='center' width=672}
 :::
 :::
-
 
 
 

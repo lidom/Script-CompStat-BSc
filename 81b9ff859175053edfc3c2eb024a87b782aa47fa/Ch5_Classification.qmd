@@ -471,9 +471,11 @@ can produce nonsense predictions with $p(X_i)\not\in[0,1];$ see the left panel o
 
 
 Logistic regression avoids this problem **by assuming** that $p(X_i)$ can be modeled using the [logistic function](https://en.wikipedia.org/wiki/Logistic_function),
-$$
-p(X_i)=\frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}.
-$$
+\begin{align*}
+p(X_i)
+&=\frac{e^{\beta_0+\beta_1 X_i}}{1+e^{\beta_0+\beta_1 X_i}}\\
+&=\frac{1}{1+e^{-(\beta_0+\beta_1 X_i)}}.
+\end{align*}
 To fit the parameters $\beta_0$ and $\beta_1$ we use an estimation method called **maximum likelihood**. 
 
 The right panel of Figure 4.2 illustrates the fit of the logistic regression model to the `Default` data.
