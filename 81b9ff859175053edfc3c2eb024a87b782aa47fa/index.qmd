@@ -1,7 +1,7 @@
 <!-- LTeX: language=en-US -->
 # Organization of the Course {-}
 
-### Timetable {-}
+### Timetable {-} 
 
 ```{r, echo=FALSE}
 suppressPackageStartupMessages(library("kableExtra"))

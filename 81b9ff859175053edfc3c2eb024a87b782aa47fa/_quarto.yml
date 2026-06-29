@@ -3,17 +3,18 @@ project:
   output-dir: docs
   
 book:
-  title: Computer-Aided Statistical Analysis (B.Sc.)
+  title: Statistics II B.Sc.
   author: Prof. Dr. Dominik Liebl 
   date: last-modified
   date-format: "[Last Updated on] MMMM DD, YYYY"
   sidebar: 
-    logo: images/Uni_Bonn_Logo.jpeg
+    logo: images/KU_Logo_2.png
     number-depth: 2
   search: true
   chapters:
     - index.qmd
     - Ch_Intro2R.qmd      
+    - Ch_ReviewProbStats.qmd
     - Ch_LinearRegression.qmd 
     - Ch_MatrixAlgebra.qmd 
     - Ch_NonParamRegression.qmd #combine with Ch2_StatLearning.qmd
