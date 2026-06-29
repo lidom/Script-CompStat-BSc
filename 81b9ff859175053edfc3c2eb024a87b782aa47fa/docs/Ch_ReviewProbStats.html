@@ -126,7 +126,7 @@ window.Quarto = {
 };
 </script>
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
@@ -219,8 +219,8 @@ window.Quarto = {
   <li>
 <a href="#sec-rv" id="toc-sec-rv" class="nav-link" data-scroll-target="#sec-rv"><span class="header-section-number">2.2</span> Random Variables and Distributions</a>
   <ul class="collapse">
-<li><a href="#sec-pdf" id="toc-sec-pdf" class="nav-link" data-scroll-target="#sec-pdf"><span class="header-section-number">2.2.1</span> Density Function: Continuous Random Variables</a></li>
-  <li><a href="#sec-pmf" id="toc-sec-pmf" class="nav-link" data-scroll-target="#sec-pmf"><span class="header-section-number">2.2.2</span> Probability Mass Function: Discrete Random Variables</a></li>
+<li><a href="#sec-pdf" id="toc-sec-pdf" class="nav-link" data-scroll-target="#sec-pdf"><span class="header-section-number">2.2.1</span> Density Function</a></li>
+  <li><a href="#sec-pmf" id="toc-sec-pmf" class="nav-link" data-scroll-target="#sec-pmf"><span class="header-section-number">2.2.2</span> Probability Mass Function</a></li>
   <li><a href="#sec-cdf" id="toc-sec-cdf" class="nav-link" data-scroll-target="#sec-cdf"><span class="header-section-number">2.2.3</span> Cumulative Distribution Function</a></li>
   </ul>
 </li>
@@ -262,7 +262,7 @@ window.Quarto = {
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title"><span id="sec-probstats" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Probability and Statistics</span></span></h1>
 </div>
 
@@ -336,17 +336,15 @@ Code to Generate the Jump-Test Data
 <span></span>
 <span><span class="va">jumpreach</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="va">beta1</span> <span class="op">+</span> <span class="va">beta2</span> <span class="op">*</span> <span class="va">hairlength</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="va">sigma</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">gender01</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co">## Data frame (the only thing we observe usually)</span></span>
-<span><span class="va">jumptest_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>hairlength <span class="op">=</span> <span class="va">hairlength</span>, jumpreach <span class="op">=</span> <span class="va">jumpreach</span><span class="op">)</span></span>
+<span><span class="va">jumptest_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>hairlength <span class="op">=</span> <span class="va">hairlength</span>,</span>
+<span>                            jumpreach  <span class="op">=</span> <span class="va">jumpreach</span>, </span>
+<span>                            gender     <span class="op">=</span> <span class="va">gender</span>, </span>
+<span>                            gender01   <span class="op">=</span> <span class="va">gender01</span><span class="op">)</span></span>
 <span></span>
-<span></span>
-<span><span class="va">gender01</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">jumpreach</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">gender01</span><span class="op">[</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"famle"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span> </span>
-<span></span>
-<span><span class="va">data_ch2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>hairlength <span class="op">=</span> <span class="va">hairlength</span>, jumpreach <span class="op">=</span> <span class="va">jumpreach</span>, gender <span class="op">=</span> <span class="va">gender</span>, gender01 <span class="op">=</span> <span class="va">gender01</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">data_ch2</span>, file <span class="op">=</span> <span class="st">"DATA/data_jumptest_ch2.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">jumptest_data</span>, file <span class="op">=</span> <span class="st">"DATA/jumptest_data.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Marginal distribution of Y (derived analytically by marginalising over X):</span></span>
 <span><span class="co">##   Y ~ 0.5*N(mu_Y_m, sigma_Y_m^2) + 0.5*N(mu_Y_f, sigma_Y_f^2)</span></span>
@@ -454,9 +452,9 @@ Guiding Questions
 </ol>
 </div>
 </div>
-</section><section id="sec-rv" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="sec-rv">
+</section><section id="sec-rv" class="level2 page-columns page-full" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="sec-rv">
 <span class="header-section-number">2.2</span> Random Variables and Distributions</h2>
-<p>The key mathematical concept is the <strong>random variable</strong>. You can view a random variable as a data production unit.</p>
+<p>The key mathematical concept is the <strong>random variable</strong>. You can view a random variable as a data generator.</p>
 <p>A <strong>random variable</strong>, say <span class="math inline">\(X,\)</span> can gives us values (e.g.&nbsp;numeric values like <span class="math inline">\(0.4, 1.9, \dots\)</span> or qualitative values like <code>red</code>, <code>blue</code>, etc.) based on an underlying (typically unknown) law: <strong>its distribution</strong>.</p>
 <p>Before we observe the realized value, <span class="math inline">\(X\)</span> is uncertain — it could take many different values. After observing it, we have a <strong>realization</strong>: one specific value that <span class="math inline">\(X\)</span> happened to take. For this realized, no-longer-uncertain value we write <span class="math display">\[
 X_{\operatorname{obs}}.
@@ -537,7 +535,8 @@ Summary and Outline
 </div>
 </div>
 </section><section id="sec-pdf" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="sec-pdf">
-<span class="header-section-number">2.2.1</span> Density Function: Continuous Random Variables</h3>
+<span class="header-section-number">2.2.1</span> Density Function</h3>
+<section id="continuous-random-variables" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="continuous-random-variables"><strong>Continuous Random Variables</strong></h4>
 <p>A random variable, say <span class="math inline">\(X,\)</span> that can take <em>any</em> value in an interval <span class="math inline">\([a,b]\)</span> <span class="math display">\[
 X\in[a,b]
 \]</span> is called a <strong>continuous random variable</strong> as it takes values in the continuum of real numbers <span class="math inline">\([a,b]\subset\mathbb{R}.\)</span></p>
@@ -546,15 +545,15 @@ X\in[a,b]
 <li>Age <span class="math inline">\(A_i\)</span> taking the values <span class="math inline">\(A_i\geq 0\)</span> [years, days, hours, minutes, seconds, etc.]</li>
 <li>Height <span class="math inline">\(H_i\)</span> taking the values <span class="math inline">\(H_i\geq 0\)</span> [m, cm, mm, etc.]</li>
 <li>Temperature <span class="math inline">\(T_i\)</span> taking values <span class="math inline">\(-\infty &lt; T_i &lt; \infty\)</span> [Degree Celcius]</li>
-</ul>
+</ul></section><section id="density-function" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="density-function"><strong>Density Function</strong></h4>
 <p>For a <strong>continuous</strong> random variable <span class="math inline">\(X\)</span> we can describe its distribution most conveniently using the <strong>probability density function (pdf)</strong> <span class="math inline">\(f_X(x).\)</span></p>
 <p>A <strong>probability density function (pdf)</strong> <span class="math inline">\(f_X(x)\)</span> has the following key properties:</p>
 <p><strong>1. Non-Negativity:</strong> <span class="math display">\[
 f_X(x) \geq 0 \quad \text{for all} \quad x
 \]</span> <strong>2. Total Probability:</strong> <span class="math display">\[
-\int_{-\infty}^{\infty} f_X(x)\, dx = 1.
+\int_{-\infty}^{\infty} f_X(x)\, dx = 1
 \]</span> <strong>3. General Probabilities:</strong> The probability that <span class="math inline">\(X\)</span> falls in the interval <span class="math inline">\([a, b]\)</span> is the area under the density curve over <span class="math inline">\([a,b]\)</span>: <span class="math display">\[
-P(a \leq X \leq b) = \int_a^b f_X(x)\, dx.
+P(a \leq X \leq b) = \int_a^b f_X(x)\, dx
 \]</span></p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -566,22 +565,26 @@ P(a \leq X \leq b) = \int_a^b f_X(x)\, dx.
 </div>
 </div>
 </div>
+</section><section id="data-generation" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="data-generation">💻 <strong>Data Generation</strong>
+</h4>
 <p>If the true density is known, we can generate realizations on a the computer. For instance, in case of a normally distributed random variable (<a href="#sec-normal" class="quarto-xref"><span>Section 2.6.1</span></a>) with mean <span class="math inline">\(1.6\)</span> and variance <span class="math inline">\(2,\)</span> we can use the following code:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">12</span> <span class="co"># sample size (number of realizations)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span></span>
+<span><span class="va">realizations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span></span>
 <span>    <span class="va">n</span>,            <span class="co"># sample size</span></span>
 <span>    mean <span class="op">=</span> <span class="fl">1.6</span>,   <span class="co"># mean</span></span>
 <span>    sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="co"># standard deviation = square root of variance</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">realizations</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="co"># first six values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  1.7492191  1.0028400  1.4269707  1.8661451  1.7685190  1.5645138
- [7]  1.7528379  0.9134909  0.8869293 -0.7491488  1.0592985  0.8750031</code></pre>
+<pre><code>[1] 1.75 1.00 1.43 1.87 1.77 1.56</code></pre>
 </div>
 </div>
+</section><section id="estimation" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="estimation">⚒️ <strong>Estimation</strong>
+</h4>
 <p>In practice, the true functional form of a density <span class="math inline">\(f_X\)</span> which generates the data is <strong>(typically) unknown</strong>. It’s a part of the data-generating process we are trying to learn from data.</p>
-<section id="jump-test-data-example-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-1">🤸‍♀️ <strong>Jump-Test Data Example</strong>
+</section><section id="jump-test-data-example-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-1">🤸‍♀️ <strong>Jump-Test Data Example</strong>
 </h4>
 <p>Given a sample of observations <span class="math display">\[
 X_{1,\text{obs}}, \ldots, X_{n,\text{obs}},
@@ -644,36 +647,64 @@ Summary: Density Function
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>🤓 The probability density funciton (pdf) or short <strong>density</strong> allows describing the distribution of <strong>continuous random variables</strong> taking any value in an interval <span class="math inline">\([a,b]\)</span>.</li>
-<li>🙂 Densities are particularly intuitive to interpret: The realizations of a random variable tend to cluster at regions of high density.</li>
-<li>🙁 As long as we only look at <strong><em>marginal</em> densities</strong> <span class="math inline">\(f_X\)</span> or <span class="math inline">\(f_Y,\)</span> we cannot see a possible connection between the random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y.\)</span> To see the possible connections, we need <strong><em>joint</em> densities</strong> <span class="math inline">\(f_{YX}\)</span> (<a href="#sec-joint-conditional" class="quarto-xref"><span>Section 2.4</span></a>) or <strong>conditional means (regression)</strong> (<a href="#sec-regression-function" class="quarto-xref"><span>Section 2.5</span></a>).</li>
+<li>🤓 The probability density funciton (pdf) or short <strong>density</strong> allows describing the distribution of <strong>continuous random variables</strong>. <br>
+</li>
+<li>🙂 Densities are particularly intuitive to interpret: The realizations of a random variable tend to cluster at regions of high density. <br>
+</li>
+<li>🙁 As long as we only look at <strong><em>marginal</em> densities</strong> <span class="math inline">\(f_X(x)\)</span> or <span class="math inline">\(f_Y(x),\)</span> we cannot see a possible connection between the random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y.\)</span> To see connections, we need
+<ul>
+<li>
+<strong><em>joint</em> densities</strong> <span class="math inline">\(f_{YX}\)</span> (<a href="#sec-joint-conditional" class="quarto-xref"><span>Section 2.4</span></a>) or</li>
+<li>
+<strong>conditional means (regression)</strong> (<a href="#sec-regression-function" class="quarto-xref"><span>Section 2.5</span></a>). <br>
+</li>
+</ul>
+</li>
+<li>⚒️ <strong>Non-parametric estimation:</strong> To estimate an unknown density function <span class="math inline">\(f_X(x)\)</span> we can use for instance a histogram or a kernel density estimator.
+<ul>
+<li>🙂 Require no functional form assumption</li>
+<li>🙁 Inefficient estimation <br>
+</li>
+</ul>
+</li>
+<li>⚒️ <strong>Parametric estimation:</strong> If you know the general functional form of <span class="math inline">\(f_X(x)\)</span> you can improve the estimation result. For instance, if <span class="math inline">\(f_X(x)\)</span> is the density of a normal distribution, but you do not know the mean and variance parameters, you can focus on estimating these unknown parameters instead of estimating the total functional form; see <span class="quarto-unresolved-ref">?sec-sec-normal</span>.
+<ul>
+<li>🙁 Requires a functional form assumption</li>
+<li>🙂 Efficient estimation<br>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-</section></section><section id="sec-pmf" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="sec-pmf">
-<span class="header-section-number">2.2.2</span> Probability Mass Function: Discrete Random Variables</h3>
+</section></section><section id="sec-pmf" class="level3 page-columns page-full" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="sec-pmf">
+<span class="header-section-number">2.2.2</span> Probability Mass Function</h3>
+<section id="discrete-random-variables" class="level4 unnumbered page-columns page-full"><h4 class="unnumbered anchored" data-anchor-id="discrete-random-variables"><strong>Discrete Random Variables</strong></h4>
 <p>A random variable, say <span class="math inline">\(W,\)</span> that takes only <strong>countably many values</strong> such as <span class="math display">\[
 W_i \in\{w_1, w_2, \ldots\},
 \]</span> is called a <strong>discrete random variable.</strong></p>
 <p>Examples of discrete random variables:</p>
 <ul>
-<li>Gender <span class="math inline">\(G_i\in\{\texttt{female}, \text{male}\}\)</span>
+<li>Gender<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math inline">\(G_i\in\{\texttt{female}, \text{male}\}\)</span>
 </li>
 <li>Rolling a die <span class="math inline">\(D_i\in\{1,2,3,4,5,6\}\)</span>
 </li>
-<li>Eye color <span class="math inline">\(E_i\in\{\texttt{blue}, \texttt{brown}, \texttt{hazel}, \texttt{green}, \texttt{gray}\}\)</span>
+<li>Eye color <span class="math inline">\(C_i\in\{\texttt{blue}, \texttt{brown}, \texttt{hazel}, \texttt{green}, \texttt{gray}\}\)</span>
 </li>
 <li>Number of coin flips required to get the first head, <span class="math inline">\(N_i\in\{1,2,\dots\}\)</span>
 </li>
 </ul>
-<p>For discrete random variable a density function does <em>not</em> exist. There is no smooth curve whose area gives probabilities, because all probability is concentrated on isolated points.</p>
-<p>The discrete counterpart of the density function is the <strong>probability mass function (pmf)</strong> <span class="math display">\[
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;In practice, gender and biological sex are measured in various ways depending on the research context. This example uses a binary coding for simplicity; real datasets may include additional categories or continuous measures.</p></div></div><p>For discrete random variable a density function does <em>not</em> exist. There is no smooth curve whose area gives probabilities, because all probability is concentrated on isolated points.</p>
+</section><section id="probability-mass-function" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="probability-mass-function"><strong>Probability Mass Function</strong></h4>
+<p>For a <strong>discrete</strong> random variable <span class="math display">\[
+W\in\{w_1,w_2,\dots\}
+\]</span> we describe its distribution using the <strong>probability mass function (pmf)</strong> <span class="math display">\[
 p_W(w_k) = P(W = w_k)\quad\text{for all}\quad k=1,2,\dots
-\]</span> It has the following three key properties:</p>
+\]</span> The pmf has the following three key properties:</p>
 <p><strong>1. Non-Negativity:</strong> <span class="math display">\[
 p_W(w_k) \geq 0\quad\text{for all}\quad k=1,2,\dots
 \]</span> <strong>2. Total Probability:</strong> <span class="math display">\[
-\sum_{k=1,2,\ldots} p_W(w_k) = 1.
+\sum_{k=1,2,\ldots} p_W(w_k) = 1
 \]</span> <strong>3. General Probabilities:</strong> <span class="math display">\[
 p_W(w_k) = P(W = w_k), \quad\text{for all}\quad k = 1, 2, \ldots
 \]</span></p>
@@ -687,14 +718,18 @@ p_W(w_k) = P(W = w_k), \quad\text{for all}\quad k = 1, 2, \ldots
 </div>
 </div>
 </div>
-<p><strong>Data generation:</strong> If the true pmf is known, we can generate realizations using the computer 💻. For instance, in case of rolling a die we can use the following code:</p>
+</section><section id="data-generation-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="data-generation-1">💻 <strong>Data Generation</strong>
+</h4>
+<p>If the true pmf is known, we can generate realizations on the computer. For instance, to generate realization of a random gender variable with two gender-outcomes <span class="math display">\[
+G_i\in\{\texttt{female}, \text{male}\}
+\]</span> we can use the following code:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">11</span> <span class="co"># sample size (number of die rolls)</span></span>
 <span></span>
 <span><span class="va">gender_realizations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>,  <span class="co"># possible outcome values </span></span>
 <span>    size    <span class="op">=</span> <span class="va">n</span>,          <span class="co"># sample size</span></span>
-<span>    replace <span class="op">=</span> <span class="cn">TRUE</span>,       <span class="co"># with replacement (values can occure more than once)</span></span>
+<span>    replace <span class="op">=</span> <span class="cn">TRUE</span>,       <span class="co"># values can occure more than once</span></span>
 <span>    prob    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="co"># probabilities for each outcome value</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gender_realizations</span><span class="op">)</span> <span class="co"># first six values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -702,14 +737,16 @@ p_W(w_k) = P(W = w_k), \quad\text{for all}\quad k = 1, 2, \ldots
 <pre><code>[1] "female" "female" "male"   "female" "female" "male"  </code></pre>
 </div>
 </div>
-<p>In practice, however, we typically know the values a discrite random variable can take, but the corresponding probabilities <span class="math inline">\(p_W\)</span> are <strong>(typically) unknown</strong>. Given the observed realizations <span class="math display">\[
+</section><section id="estimation-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="estimation-1">⚒️ <strong>Estimation</strong>
+</h4>
+<p>In practice, we typically know the values <span class="math inline">\(w_1,w_2,\dots\)</span> a discrete random variable <span class="math inline">\(W\)</span> can take, but the corresponding probabilities <span class="math inline">\(p_W\)</span> are <strong>(typically) unknown</strong>. Given the observed realizations <span class="math display">\[
 W_{1,\operatorname{obs}}, \ldots, W_{n,\operatorname{obs}},
 \]</span> we estimate the values of the pmf <span class="math inline">\(p_W(w_k)\)</span> using <strong>relative frequencies</strong>: <span class="math display">\[\begin{align*}
 \hat{p}_{W,\operatorname{obs}}(w_k)
 &amp;= \frac{\text{number of observations equal to } w_k}{n}\\
 &amp;= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(W_{i,\text{obs}} = w_k)\quad\text{for all}\quad k = 1, 2, \ldots,
 \end{align*}\]</span> where <span class="math inline">\(\mathbf{1}(\texttt{TRUE})=1\)</span> and <span class="math inline">\(\mathbf{1}(\texttt{FALSE})=0\)</span> is the indicator function.</p>
-<section id="jump-test-data-example-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-2">🤸‍♀️ <strong>Jump-Test Data Example</strong>
+</section><section id="jump-test-data-example-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-2">🤸‍♀️ <strong>Jump-Test Data Example</strong>
 </h4>
 <p>Let’s say a third variable was recorded alongside hair length and jump and reach: a <strong>gender indicator</strong> <span class="math inline">\(G_i\)</span> called <code>gender</code> taking the value</p>
 <ul>
@@ -758,30 +795,21 @@ Table&nbsp;2.2: First six values of the observed gender variable.
 </div>
 </div>
 <p>Since <span class="math inline">\(G_i\)</span> takes only two values <span class="math inline">\(\{\texttt{male},\texttt{female}\},\)</span> it is a <strong>discrete random variable</strong>, and its distribution is characterized by the (unknown) pmf values <span class="math inline">\(p_G(\texttt{male})\)</span> and <span class="math inline">\(p_G(\texttt{female}).\)</span></p>
-<a href="#fig-gender-pmf" class="quarto-xref">Figure&nbsp;<span>2.5</span></a> shows the estimation results <span class="math display">\[\begin{align*}
+<p><a href="#fig-gender-pmf" class="quarto-xref">Figure&nbsp;<span>2.5</span></a> shows the estimation results <span class="math display">\[\begin{align*}
 \hat{p}_{G,\operatorname{obs}}(\texttt{male})
-&amp;= \frac{\text{number of observations equal to } \texttt{male}}{n}\\
-&amp;= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{male})
-\end{align*}\]</span>
-<center>
-<span class="math inline">\(\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{male})} \;\;=\)</span> <code>sum(gender == "male") / length(gender)</code>
-</center>
-<center>
-<span class="math inline">\(\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{male})} \;\;=\)</span> 0.37
-</center>
+&amp;= \frac{\text{number of observations equal to } \texttt{male}}{n}\\[4pt]
+&amp;= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{male})\\[4pt]
+&amp;= \texttt{sum(gender == "male") / length(gender)}\\[4pt]
+&amp;= 0.37
+\end{align*}\]</span></p>
 <p>and</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[\begin{align*}
 \hat{p}_{G,\operatorname{obs}}(\texttt{female})
-&amp;= \frac{\text{number of observations equal to } \texttt{female}}{n}\\
-&amp;= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{female})
-\end{align*}\]</span>
-<center>
-<span class="math inline">\(\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{female})} \;\;=\)</span> <code>sum(gender == "female") / length(gender)</code>
-</center>
-<center>
-<span class="math inline">\(\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{female})} \;\;=\)</span> 0.63
-</center>
-<p><br> together with the <strong>usually unknown</strong> true pmf values <span class="math display">\[
+&amp;= \frac{\text{number of observations equal to } \texttt{female}}{n}\\[4pt]
+&amp;= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{female})\\[4pt]
+&amp;= \texttt{sum(gender == "female") / length(gender)}\\[4pt]
+&amp;= 0.63
+\end{align*}\]</span> <br> together with the <strong>usually unknown</strong> true pmf values <span class="math display">\[
 p_G(\texttt{male}) = p_G(\texttt{female}) = 0.5.
 \]</span></p>
 <div class="cell" data-layout-align="center">
@@ -807,42 +835,49 @@ Summary: Probability Mass Function
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>🤓 The probability mass funciton (pmf) allows describing the distribution of <strong>discrete random variables</strong> taking only countable many values.</li>
-<li>🙂 Probability mass functions are intuitive to interpret: The realizations of a discrete random variable tend to take values that have a high pmf value (i.e.&nbsp;a high probability).</li>
-<li>🙁 As long as we only look at <strong><em>marginal</em> pmfs</strong>, we cannot see a possible connection between the random variables. To see the possible connections, we need <strong><em>joint</em> distribution functions</strong> (<a href="#sec-joint-conditional" class="quarto-xref"><span>Section 2.4</span></a>) or <strong>conditional means (regression)</strong> (<a href="#sec-regression-function" class="quarto-xref"><span>Section 2.5</span></a>).</li>
+<li>🤓 The probability mass funciton (pmf) allows describing the distribution of <strong>discrete random variables</strong>. <br>
+</li>
+<li>🙂 Probability mass functions are to interpret: The realizations of a discrete random variable tend to take values that have a high probability. <br>
+</li>
+<li>🙁 As long as we only look at <strong><em>marginal</em> pmfs</strong>, we cannot see a possible connections between two or more random variables. <br>
+</li>
+<li>⚒️ <strong>Non-parametric estimation:</strong> To estimate an unknown pmf we can simply use relative frequencies.</li>
 </ul>
 </div>
 </div>
 </section></section><section id="sec-cdf" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="sec-cdf">
 <span class="header-section-number">2.2.3</span> Cumulative Distribution Function</h3>
-<p>The <strong>cumulative distribution function (cdf)</strong> <span class="math inline">\(F_X(x)\)</span> is defined for any random variable — continuous or discrete — as</p>
-<p><span class="math display">\[
-F(x) = P(X \leq x)
+<p>The <strong>cumulative distribution function (cdf)</strong> or short <strong>distribution function</strong> <span class="math inline">\(F_X(x)\)</span> is defined as <span class="math display">\[
+F_X(x) = P(X \leq x).
 \]</span></p>
-<p>For continuous random variables, we have <span class="math display">\[
-F(x) = P(X \leq x) = \int_{-\infty}^x f(x)dx.
-\]</span></p>
-<p>It tells us the probability that <span class="math inline">\(X\)</span> takes a value at most <span class="math inline">\(x\)</span>. It has the following properties:</p>
-<p><strong>1. <span class="math inline">\(F(x)\)</span> is Non-Decreasing:</strong> <span class="math display">\[
-x_1 &lt; x_2 \Rightarrow F(x_1) \leq F(x_2)
-\]</span> <strong>2. <span class="math inline">\(F(x)\)</span> is Normalized:</strong> <span class="math display">\[
-\lim_{x \to -\infty} F(x) = 0\quad\text{and}\quad \lim_{x \to +\infty} F(x) = 1.
+<p>This definition works for any random variable, continuous, discrete, and even hybrid forms of random variables that are partly continuous and discrete.</p>
+<p><span class="math inline">\(F_X(x)\)</span> tells us the probability that <span class="math inline">\(X\)</span> takes a value at most <span class="math inline">\(x\)</span>. It has the following properties:</p>
+<p><strong>1. <span class="math inline">\(F_X(x)\)</span> is Non-Decreasing:</strong> <span class="math display">\[
+x_1 &lt; x_2 \Rightarrow F_X(x_1) \leq F_X(x_2)
+\]</span> <strong>2. <span class="math inline">\(F_X(x)\)</span> is Normalized:</strong> <span class="math display">\[
+\lim_{x \to -\infty} F_X(x) = 0\quad\text{and}\quad \lim_{x \to +\infty} F_X(x) = 1.
 \]</span> <strong>3. <span class="math inline">\(F(x)\)</span> is Right-Continuous:</strong> <span class="math display">\[
-\lim_{x \to c+} f(x) = f(c),
-\]</span> where <span class="math inline">\(x \to c+\)</span> means that <span class="math inline">\(x\)</span> goes to <span class="math inline">\(c\)</span> from the “right”, i.e.&nbsp;from values larger than <span class="math inline">\(c\)</span>.</p>
+\lim_{x \to c+} F_X(x) = F_X(c),
+\]</span> where <span class="math inline">\(x \to c+\)</span> means that <span class="math inline">\(x\)</span> goes to <span class="math inline">\(c\)</span> from the “right”, i.e.&nbsp;coming from values larger than <span class="math inline">\(c\)</span>.</p>
 <p><strong>4. For continuous <span class="math inline">\(X\)</span>:</strong> <span class="math display">\[
-f(x) = F'(x)
-\]</span> the pdf is the derivative of the cdf.</p>
+F_X(x) = P(X \leq x) = \int_{-\infty}^x f_X(x)dx.
+\]</span> and <span class="math display">\[
+f_X(x) = F'_X(x),
+\]</span> where <span class="math inline">\(F'_X(x)\)</span> denotes the first derivative of <span class="math inline">\(F_X(x).\)</span></p>
+<section id="estimation-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="estimation-2">⚒️ <strong>Estimation</strong>
+</h4>
 <p>In practice, the true cdf is <strong>(typically) unknown</strong>. Given the observed values, we estimate it with the <strong>empirical cdf</strong>, defined as the fraction of observations at most <span class="math inline">\(x\)</span>:</p>
-<p><span class="math display">\[
-\hat{F}_{\operatorname{obs}}(x) = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
-\]</span> where <span class="math inline">\(\mathbf{1}(\texttt{TRUE})=1\)</span> and <span class="math inline">\(\mathbf{1}(\texttt{FALSE})=0\)</span> is the indicator function.</p>
-<p>The empirical cdf <span class="math inline">\(\hat{F}_{\operatorname{obs}}\)</span> is a step function that converges to the true cdf <span class="math inline">\(F\)</span> as <span class="math inline">\(n \to \infty\)</span>.</p>
-<p>In R, <code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code> computes the empirical cdf <span class="math inline">\(\hat{F}_{\operatorname{obs}}(x).\)</span></p>
-<section id="jump-test-data-example-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-3">🤸‍♀️ <strong>Jump-Test Data Example</strong>
+<p><span class="math display">\[\begin{align*}
+\widehat{F}_{\operatorname{obs}}(x)
+&amp; = \frac{\text{number of observations equal to or smaller than $x$}}{n}\\
+&amp; = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
+\end{align*}\]</span> where <span class="math inline">\(\mathbf{1}(\texttt{TRUE})=1\)</span> and <span class="math inline">\(\mathbf{1}(\texttt{FALSE})=0\)</span> is the indicator function.</p>
+<p>The empirical cdf <span class="math inline">\(\widehat{F}_{\operatorname{obs}}\)</span> is a step function that converges to the true cdf <span class="math inline">\(F\)</span> as <span class="math inline">\(n \to \infty\)</span>.</p>
+<p>In R, <code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code> computes the empirical cdf <span class="math inline">\(\widehat{F}_{\operatorname{obs}}(x).\)</span></p>
+</section><section id="jump-test-data-example-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-3">🤸‍♀️ <strong>Jump-Test Data Example</strong>
 </h4>
 <p><a href="#fig-hairlength-ecdf" class="quarto-xref">Figure&nbsp;<span>2.6</span></a> shows <span class="math display">\[
-\hat{F}_{X,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
+\widehat{F}_{X,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
 \]</span> based on the observed hair-length data <span class="math display">\[
 X_{1,\text{obs}}, \ldots, X_{n,\text{obs}}
 \]</span> together with the true <strong>usually unknown</strong> cdf <span class="math inline">\(F_X\)</span>.</p>
@@ -866,13 +901,13 @@ X_{1,\text{obs}}, \ldots, X_{n,\text{obs}}
 <img src="Ch_ReviewProbStats_files/figure-html/fig-hairlength-ecdf-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hairlength-ecdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.6: Empirical cdf <span class="math inline">\(\hat{F}_{X,\operatorname{obs}}(x)\)</span> of hair lengths (solid blue step function). The dashed black curve is the true cdf <span class="math inline">\(F_X(x)\)</span>.
+Figure&nbsp;2.6: Empirical cdf <span class="math inline">\(\widehat{F}_{X,\operatorname{obs}}(x)\)</span> of hair lengths (solid blue step function). The dashed black curve is the true cdf <span class="math inline">\(F_X(x)\)</span>.
 </figcaption></figure>
 </div>
 </div>
 </div>
 <p><a href="#fig-jumpreach-ecdf" class="quarto-xref">Figure&nbsp;<span>2.7</span></a> shows <span class="math display">\[
-\hat{F}_{Y,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(Y_{i,\operatorname{obs}} \leq x),
+\widehat{F}_{Y,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(Y_{i,\operatorname{obs}} \leq x),
 \]</span> based on the observed jump and reach data <span class="math display">\[
 Y_{1,\text{obs}}, \ldots, Y_{n,\text{obs}}
 \]</span> together with the true <strong>usually unknown</strong> cdf <span class="math inline">\(F_Y\)</span>.</p>
@@ -896,34 +931,44 @@ Y_{1,\text{obs}}, \ldots, Y_{n,\text{obs}}
 <img src="Ch_ReviewProbStats_files/figure-html/fig-jumpreach-ecdf-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jumpreach-ecdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.7: Empirical cdf <span class="math inline">\(\hat{F}_{Y,\operatorname{obs}}(y)\)</span> of jump and reach scores (solid red step function). The dashed black curve is the true marginal cdf <span class="math inline">\(F_Y(y)\)</span>.
+Figure&nbsp;2.7: Empirical cdf <span class="math inline">\(\widehat{F}_{Y,\operatorname{obs}}(y)\)</span> of jump and reach scores (solid red step function). The dashed black curve is the true marginal cdf <span class="math inline">\(F_Y(y)\)</span>.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>Unlike the density, the cdf is well-defined for both continuous and discrete, and even for a <strong>mixture</strong> of the two (a distribution that has both a smooth part and point masses). The definition <span class="math display">\[
-F(x) = P(X \leq x)
-\]</span> requires nothing more than a probability, and probabilities are always defined.</p>
+<div class="callout-title-container flex-fill">
+Summary: Distribution Function
 </div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>🤓 The cdf is well-defined for both continuous and discrete, and even for <strong>mixtures</strong> of continuous and discrete random variables. The definition <span class="math display">\[
+F_X(x) = P(X \leq x)
+\]</span> requires nothing more than a probability, and probabilities are always defined. <br>
+</li>
+<li>🙁 As long as we only look at <strong><em>marginal</em> cdfs</strong>, we cannot see a possible connections between two or more random variables. <br>
+</li>
+<li>⚒️ <strong>Non-parametric estimation:</strong> To estimate an unknown cdf we can simply use relative frequencies.</li>
+</ul>
 </div>
 </div>
 </section></section></section><section id="sec-moments" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="sec-moments">
 <span class="header-section-number">2.3</span> Mean and Variance</h2>
-<p>Two numbers summarize a distribution more compactly than the full density:</p>
+<p>Two following two parameters summarize a distribution more compactly than the full density:</p>
 <ul>
-<li>the <strong>expected value</strong> tells us something about the center (i.e.&nbsp;its location) of a distribution</li>
-<li>the <strong>variance</strong> tells us something about how much the data spreads out around its center.</li>
+<li>
+<strong>Mean:</strong> The <strong>expected value</strong> or <strong>mean</strong> tells us something about the center (i.e.&nbsp;its location) of a distribution</li>
+<li>
+<strong>Variance:</strong> The <strong>variance</strong> tells us something about how much the data spreads out around its mean.</li>
 </ul>
-<p>Known location and spread means, of course, not knowing the total distributions. But location and spread are two important features of a distribution.</p>
+<p>❗ Mean (location) and variance (spread) are only important features of a distribution. Knowing both parameters does <em>not</em> give us the complete functional form of a distribution.</p>
 <section id="mean-value" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="mean-value">Mean Value</h3>
-<p>The <strong>mean value</strong> or <strong>expected value</strong> of a continuous random variable <span class="math inline">\(X\)</span> with density <span class="math inline">\(f\)</span> is</p>
-<p><span class="math display">\[
+<p>The <strong>mean</strong> or <strong>expected value</strong> of a continuous random variable <span class="math inline">\(X\)</span> with density <span class="math inline">\(f_X\)</span> is <span class="math display">\[
 \mu_X = E(X) = \int_{-\infty}^{\infty} x\, f_X(x)\, dx.
 \]</span></p>
 <div class="callout callout-style-simple callout-note">
@@ -932,32 +977,62 @@ F(x) = P(X \leq x)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Think of <span class="math inline">\(E(X)\)</span> as the long-run average: if you drew from the distribution <span class="math inline">\(f_X\)</span> <em>many</em> times and averaged the results, the average would converge to <span class="math inline">\(E(X).\)</span></p>
+<p>Think of <span class="math inline">\(E(X)\)</span> as the long-run average: if you drew from the distribution <span class="math inline">\(f_X\)</span> <em>many</em> times and averaged the results, the average would converge to <span class="math inline">\(E(X)\)</span> when averaging infinitely many results.</p>
 </div>
 </div>
 </div>
-<p>For a discrete random variable <span class="math inline">\(W\)</span> with possible values <span class="math inline">\(w_1, w_2, \ldots\)</span> and probabilities <span class="math inline">\(p_W(w_k) = P(W = w_k)\)</span>, the integral becomes a sum:</p>
-<p><span class="math display">\[
-\mu_W = E(Y) = \sum_{k=1,2,\dots} w_k\, p_W(w_k).
+<p>For a discrete random variable <span class="math inline">\(W\)</span> with possible values <span class="math inline">\(w_1, w_2, \ldots\)</span> and probabilities <span class="math inline">\(p_W(w_k) = P(W = w_k)\)</span>, the integral becomes a sum: <span class="math display">\[
+\mu_W = E(W) = \sum_{k=1,2,\dots} w_k\, p_W(w_k).
 \]</span></p>
-<p>Note: The expected value is <strong>linear</strong>: for constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>,</p>
-<p><span class="math display">\[
+<p>❗ The mean of a discrete random variable <span class="math display">\[
+W\in\{w_1,w_2,\dots\}
+\]</span> only makes sense in cases where the values <span class="math inline">\(w_1,w_2,\dots\)</span> are numeric.</p>
+<p><strong>Example:</strong> The expected value when rolling a die <span class="math display">\[
+D\in\{1,2,3,4,5,6\}
+\]</span> is <span class="math display">\[\begin{align*}
+E(D)
+&amp; = 1 \cdot  \frac{1}{6} +  2 \cdot\frac{1}{6} + 3\cdot\frac{1}{6} + 4 \cdot\frac{1}{6} + 5 \cdot\frac{1}{6}+ 6 \cdot\frac{1}{6}\\
+&amp; = \frac{1}{6}\cdot(1+2+3+4+5+6)\\
+&amp; = \frac{1}{6} \cdot \sum_{k=1}^6 k \\
+&amp; = \frac{1}{6} \cdot \frac{6\cdot(6+1)}{2} = 3.5
+\end{align*}\]</span> where <span class="math inline">\(\sum_{k=1}^6 k = \frac{6\cdot(6+1)}{2}\)</span> follows from the <a href="https://de.wikipedia.org/wiki/Gau%C3%9Fsche_Summenformel">Gaussian summation formula</a>.</p>
+<section id="properties-of-the-expected-value" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="properties-of-the-expected-value"><strong>Properties of the Expected Value</strong></h4>
+<p>The expected value is <em>linear</em>; i.e.&nbsp;for constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, <span class="math display">\[
 E(aX + b) = a\, E(X) + b.
 \]</span></p>
 <p>For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> (not necessarily independent of each other): <span class="math display">\[
 E(X + Y) = E(X) + E(Y).
 \]</span></p>
-<p>In practice, the true densities <span class="math inline">\(f_X\)</span> and <span class="math inline">\(f_Y\)</span> are unknown — so neither formula can be evaluated directly.</p>
-<section id="jump-test-data-example-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-4">🤸‍♀️ <strong>Jump-Test Data Example</strong>
+</section><section id="estimation-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="estimation-3">⚒️ <strong>Estimation</strong>
+</h4>
+<p>In practice, the true density <span class="math inline">\(f_X\)</span> and the true pmf <span class="math inline">\(p_W\)</span> are typically unknown — so neither formula can be evaluated directly to compute the true means <span class="math inline">\(E(Y)\)</span> and <span class="math inline">\(E(W).\)</span></p>
+<p>Given observed realizations of a continuous random variable <span class="math display">\[
+X_{1,\text{obs}},\dots,X_{n,\text{obs}}
+\]</span> we can estimate <span class="math inline">\(E(X)\)</span> by <span class="math display">\[
+\bar{X}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n X_{i,\operatorname{obs}}.
+\]</span> Alternative notations: <span class="math display">\[
+\bar{X}_{\operatorname{obs}} = \hat{\mu}_{X,\operatorname{obs}} = \widehat{E}_{\operatorname{obs}}(X)
+\]</span></p>
+<p>Given observed realizations of a discrete random variable <span class="math display">\[
+W_{1,\text{obs}},\dots,W_{n,\text{obs}}
+\]</span> we can estimate <span class="math inline">\(E(W)\)</span> by <span class="math display">\[
+\bar{W}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n W_{i,\operatorname{obs}}.
+\]</span> Alternative notations: <span class="math display">\[
+\bar{W}_{\operatorname{obs}} = \hat{\mu}_{W,\operatorname{obs}} = \widehat{E}_{\operatorname{obs}}(W)
+\]</span></p>
+<p>❗ Estimating the mean of a discrete random variable <span class="math display">\[
+W\in\{w_1,w_2,\dots\}
+\]</span> only makes sense in cases where the values <span class="math inline">\(w_1,w_2,\dots\)</span> are numeric (e.g.&nbsp;rolling dice).</p>
+</section><section id="jump-test-data-example-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-4">🤸‍♀️ <strong>Jump-Test Data Example</strong>
 </h4>
 <p>Given observed data <span class="math display">\[
 X_{1,\operatorname{obs}}, \ldots, X_{n,\operatorname{obs}}
 \]</span> and <span class="math display">\[
 Y_{1,\operatorname{obs}}, \ldots, Y_{n,\operatorname{obs}}
 \]</span> we can estimate the expected values <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(E(Y)\)</span> by the <strong>sample means</strong>: <span class="math display">\[
-\hat{\mu}_{X,\operatorname{obs}} = \bar{X}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n X_{i,\operatorname{obs}}
+\bar{X}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n X_{i,\operatorname{obs}}
 \]</span> <span class="math display">\[
-\hat{\mu}_{Y,\operatorname{obs}} = \bar{Y}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n Y_{i,\operatorname{obs}}
+\bar{Y}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n Y_{i,\operatorname{obs}}
 \]</span></p>
 <p>In R, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> computes sample means:</p>
 <ul>
@@ -965,55 +1040,90 @@ Y_{1,\operatorname{obs}}, \ldots, Y_{n,\operatorname{obs}}
 <span class="math inline">\(\bar{X}_{\operatorname{obs}}=\)</span><code>mean(jumptest_data$hairlength)</code> <span class="math inline">\(=\)</span> 18.2</li>
 <li>
 <span class="math inline">\(\bar{Y}_{\operatorname{obs}}=\)</span><code>mean(jumptest_data$jumpreach)</code> <span class="math inline">\(=\)</span> 45.8</li>
-</ul></section></section><section id="variance-and-standard-deviation" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="variance-and-standard-deviation">Variance and Standard Deviation</h3>
-<p>The <strong>variance</strong> of <span class="math inline">\(X\)</span> is the expected squared deviation from the mean:</p>
-<p><span class="math display">\[\begin{align*}
-\sigma_X^2=\text{Var}(X)
-&amp; = E\!\left[(X - E(X))^2\right]\\
-&amp; = \int_{-\infty}^{\infty} (x - E(X))^2\, f(x)\, dx.
-\end{align*}\]</span></p>
-<p>The <strong>standard deviation</strong> is <span class="math display">\[
-\text{SD}(X) = \sqrt{\text{Var}(X)},
-\]</span> which has the same units as <span class="math inline">\(X\)</span> and is therefore easier to interpret.</p>
-<p>For a discrete random variable <span class="math inline">\(W\)</span>, the integral becomes a sum:</p>
-<p><span class="math display">\[\begin{align*}
-\sigma_W^2=\text{Var}(W)
-&amp;= E\!\left[(W - E(W))^2\right]\\
-&amp;= \sum_{k=1,2,\dots} (w_k - E(W))^2\, p_W(w_k).
-\end{align*}\]</span></p>
-<p>Variance scales <strong>quadratically</strong>, but remains unchanged for constant shifts (<span class="math inline">\(b\)</span>): <span class="math display">\[
-\text{Var}(aX + b) = a^2\, \text{Var}(X).
-\]</span> Standard deviation scales <strong>linearly</strong> and also remains unchanged for constant shifts (<span class="math inline">\(b\)</span>): <span class="math display">\[
-\text{SD}(aX + b) = a\, \text{SD}(X).
-\]</span></p>
-<p>In practice, neither the true variance nor the true standard deviation can be computed without knowing the true <span class="math inline">\(f_X\)</span> or <span class="math inline">\(f_Y\)</span>.</p>
-<section id="jump-test-data-example-5" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-5">🤸‍♀️ <strong>Jump-Test Data Example</strong>
-</h4>
-<p>Given observed data <span class="math display">\[
-X_{1,\operatorname{obs}}, \ldots, X_{n,\operatorname{obs}}
-\]</span> and <span class="math display">\[
-Y_{1,\operatorname{obs}}, \ldots, Y_{n,\operatorname{obs}}
-\]</span> we can estimate the <strong>typically unknown</strong> variances <span class="math inline">\(\text{Var}(X)\)</span> and <span class="math inline">\(\text{Var}(X)\)</span> using the <strong>sample variances</strong> <span class="math display">\[
-\hat{\sigma}^2_{X,\operatorname{obs}} = \widehat{\text{Var}}_{X,\operatorname{obs}} = \frac{1}{n-1} \sum_{i=1}^n
-  (X_{i,\operatorname{obs}} - \bar{X}_{\operatorname{obs}})^2
-\]</span> <span class="math display">\[
-\hat{\sigma}^2_{Y,\operatorname{obs}} = \widehat{\text{Var}}_{Y,\operatorname{obs}} = \frac{1}{n-1} \sum_{i=1}^n
-  (Y_{i,\operatorname{obs}} - \bar{Y}_{\operatorname{obs}})^2
-\]</span> To estimate the <strong>typically unknown</strong> standard deviations <span class="math inline">\(\text{SD}(X)\)</span> and <span class="math inline">\(\text{SD}(X)\)</span> we can use the <strong>sample standard deviations</strong> <span class="math display">\[
-\hat{\sigma}_{X,\operatorname{obs}} = \sqrt{\widehat{\text{Var}}_{X,\operatorname{obs}}}
-\]</span> <span class="math display">\[
-\hat{\sigma}_{Y,\operatorname{obs}} = \sqrt{\widehat{\text{Var}}_{Y,\operatorname{obs}}}
-\]</span></p>
-<p>In R, <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code> computes <span class="math inline">\(\hat{\sigma}^2_{X,\operatorname{obs}}\)</span> and <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code> computes <span class="math inline">\(\hat{\sigma}_{X,\operatorname{obs}}\colon\)</span></p>
+</ul>
+<p>Since we generated the data ourselves, we also know the true population means (usually unknown in practice):</p>
 <ul>
 <li>
-<span class="math inline">\(\hat\sigma_{X,\operatorname{obs}}^2=\)</span> <code>var(jumptest_data$hairlength)</code><span class="math inline">\(=\)</span> 144.6</li>
+<span class="math inline">\(E(X)=\)</span> 17</li>
+<li>
+<span class="math inline">\(E(Y)=\)</span> 47.25</li>
+</ul>
+<p>So, the estimates <span class="math inline">\(\bar{X}_{\operatorname{obs}}\)</span> and <span class="math inline">\(\bar{Y}_{\operatorname{obs}}\)</span> are doing a good job - both have values close to the true (usually unknown) values.</p>
+</section></section><section id="variance-and-standard-deviation" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="variance-and-standard-deviation">Variance and Standard Deviation</h3>
+<p>The <strong>variance</strong> of a continuous random variable <span class="math inline">\(X\)</span> with density <span class="math inline">\(f_X\)</span> is the expected squared deviation from its mean:</p>
+<p><span class="math display">\[\begin{align*}
+\sigma_X^2 = \text{Var}(X)
+&amp;= E\!\left[(X - \mu_X)^2\right]\\
+&amp;= \int_{-\infty}^{\infty} (x - \mu_X)^2\, f_X(x)\, dx.
+\end{align*}\]</span></p>
+<p>The <strong>standard deviation</strong> is <span class="math display">\[
+\sigma_X = \text{SD}(X) = \sqrt{\text{Var}(X)},
+\]</span> which has the same units as <span class="math inline">\(X\)</span> and is therefore easier to interpret.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Think of <span class="math inline">\(\text{Var}(X)\)</span> as the average squared distance of a draw from the mean. A large variance means draws tend to spread far from <span class="math inline">\(\mu_X\)</span>; a small variance means they cluster tightly around it. The standard deviation <span class="math inline">\(\text{SD}(X)\)</span> expresses that same spread on the original scale of <span class="math inline">\(X\)</span>.</p>
+</div>
+</div>
+</div>
+<p>For a discrete random variable <span class="math inline">\(W\)</span> with possible values <span class="math inline">\(w_1, w_2, \ldots\)</span> and probabilities <span class="math inline">\(p_W(w_k) = P(W = w_k)\)</span>, the integral becomes a sum:</p>
+<p><span class="math display">\[\begin{align*}
+\sigma_W^2 = \text{Var}(W)
+&amp;= E\!\left[(W - \mu_W)^2\right]\\
+&amp;= \sum_{k=1,2,\dots} (w_k - \mu_W)^2\, p_W(w_k).
+\end{align*}\]</span></p>
+<p><strong>Example:</strong> The variance when rolling a fair die <span class="math inline">\(D \in \{1,2,3,4,5,6\}\)</span>, where <span class="math inline">\(E(D) = 3.5\)</span>, is <span class="math display">\[\begin{align*}
+\text{Var}(D)
+&amp;= (1-3.5)^2\cdot\tfrac{1}{6} + (2-3.5)^2\cdot\tfrac{1}{6} + (3-3.5)^2\cdot\tfrac{1}{6}+\\
+&amp;+ (4-3.5)^2\cdot\tfrac{1}{6} + (5-3.5)^2\cdot\tfrac{1}{6} + (6-3.5)^2\cdot\tfrac{1}{6}\\
+&amp;= \frac{1}{6}\cdot\big[(1-3.5)^2 + (2-3.5)^2 + (3-3.5)^2 \\
+&amp;\phantom{\frac{1}{6}\cdot} + (4-3.5)^2 + (5-3.5)^2 + (6-3.5)^2\big]\\
+&amp;= \frac{1}{6}\cdot\left[\frac{25}{4} + \frac{9}{4} + \frac{1}{4} + \frac{1}{4} + \frac{9}{4} + \frac{25}{4}\right]\\
+&amp;= \frac{1}{6}\cdot\frac{25+9+1+1+9+25}{4}\\
+&amp;= \frac{35}{12} \approx 2.92,
+\end{align*}\]</span> so the standard deviation is <span class="math inline">\(\text{SD}(D) = \sqrt{35/12} \approx 1.71\)</span>.</p>
+<section id="properties-of-variance-and-standard-deviation" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="properties-of-variance-and-standard-deviation"><strong>Properties of Variance and Standard Deviation</strong></h4>
+<p>Variance scales <strong>quadratically</strong> with the scale factor and is unaffected by constant shifts: <span class="math display">\[
+\text{Var}(aX + b) = a^2\,\text{Var}(X).
+\]</span> Standard deviation scales <strong>linearly</strong> and is likewise unaffected by constant shifts: <span class="math display">\[
+\text{SD}(aX + b) = |a|\,\text{SD}(X).
+\]</span></p>
+</section><section id="estimation-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="estimation-4">⚒️ <strong>Estimation</strong>
+</h4>
+<p>In practice, the true density <span class="math inline">\(f_X\)</span> is typically unknown — so neither <span class="math inline">\(\text{Var}(X)\)</span> nor <span class="math inline">\(\text{SD}(X)\)</span> can be evaluated directly.</p>
+<p>Given observed realizations <span class="math display">\[
+X_{1,\operatorname{obs}}, \ldots, X_{n,\operatorname{obs}},
+\]</span> we estimate <span class="math inline">\(\text{Var}(X)\)</span> by the <strong>sample variance</strong> <span class="math display">\[
+\hat{\sigma}^2_{X,\operatorname{obs}} = \widehat{\text{Var}}_{\operatorname{obs}}(X) = \frac{1}{n-1}\sum_{i=1}^n \bigl(X_{i,\operatorname{obs}} - \bar{X}_{\operatorname{obs}}\bigr)^2,
+\]</span> and <span class="math inline">\(\text{SD}(X)\)</span> by the <strong>sample standard deviation</strong> <span class="math display">\[
+\hat{\sigma}_{X,\operatorname{obs}} = \sqrt{\hat{\sigma}^2_{X,\operatorname{obs}}}.
+\]</span> The divisor <span class="math inline">\(n-1\)</span> rather than <span class="math inline">\(n\)</span> corrects for the fact that <span class="math inline">\(\bar{X}_{\operatorname{obs}}\)</span> is itself estimated from the same data.</p>
+</section><section id="jump-test-data-example-5" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="jump-test-data-example-5">🤸‍♀️ <strong>Jump-Test Data Example</strong>
+</h4>
+<p>In R, <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code> computes the sample variance and <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code> computes the sample standard deviation:</p>
+<ul>
+<li>
+<span class="math inline">\(\hat\sigma_{X,\operatorname{obs}}^2=\)</span> <code>var(jumptest_data$hairlength)</code> <span class="math inline">\(=\)</span> 144.6</li>
 <li>
 <span class="math inline">\(\hat\sigma_{X,\operatorname{obs}}=\)</span> <code>sd(jumptest_data$hairlength)</code> <span class="math inline">\(=\)</span> 12</li>
 <li>
 <span class="math inline">\(\hat\sigma_{Y,\operatorname{obs}}^2=\)</span> <code>var(jumptest_data$jumpreach)</code> <span class="math inline">\(=\)</span> 516.6</li>
 <li>
 <span class="math inline">\(\hat\sigma_{Y,\operatorname{obs}}=\)</span> <code>sd(jumptest_data$jumpreach)</code> <span class="math inline">\(=\)</span> 22.7</li>
+</ul>
+<p>Since we generated the data ourselves, we also know the true population variances and standard deviations (usually unknown in practice):</p>
+<ul>
+<li>
+<span class="math inline">\(\sigma_X^2=\)</span> 129</li>
+<li>
+<span class="math inline">\(\sigma_X=\)</span> 11.4</li>
+<li>
+<span class="math inline">\(\sigma_Y^2=\)</span> 420.1</li>
+<li>
+<span class="math inline">\(\sigma_Y=\)</span> 20.5</li>
 </ul></section></section></section><section id="sec-joint-conditional" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="sec-joint-conditional">
 <span class="header-section-number">2.4</span> Joint and Conditional Distributions</h2>
 <p>Most interesting statistical questions involve two and more than two random variables. Often, we want to understand how they vary together.</p>
@@ -1267,34 +1377,34 @@ X_{i,2,\text{obs}} = 1\quad\text{if person $i$ is female}
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">71.84</td>
 <td style="text-align: right;">3.94</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">71.84</td>
+<td style="text-align: right;">male</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">64.82</td>
 <td style="text-align: right;">3.40</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">64.82</td>
+<td style="text-align: right;">male</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">26.43</td>
 <td style="text-align: right;">30.06</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">26.43</td>
+<td style="text-align: right;">female</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">77.58</td>
 <td style="text-align: right;">3.95</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">77.58</td>
+<td style="text-align: right;">male</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">64.46</td>
 <td style="text-align: right;">4.10</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">64.46</td>
+<td style="text-align: right;">male</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">53.45</td>
 <td style="text-align: right;">16.68</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">53.45</td>
+<td style="text-align: right;">female</td>
 </tr>
 </tbody>
 </table>
@@ -1312,9 +1422,9 @@ X_{i,2,\text{obs}} = 1\quad\text{if person $i$ is female}
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           jumpreach hairlength gender01
-jumpreach     516.64    -264.78        0
-hairlength   -264.78     144.62        0
-gender01        0.00       0.00        0</code></pre>
+jumpreach     516.64    -264.78    -8.54
+hairlength   -264.78     144.62     4.75
+gender01       -8.54       4.75     0.24</code></pre>
 </div>
 </div>
 <p>and <span class="math display">\[
@@ -1327,20 +1437,16 @@ gender01        0.00       0.00        0</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">jumpreach</span>, <span class="va">hairlength</span>, <span class="va">gender01</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in cor(cbind(jumpreach, hairlength, gender01)): the standard deviation
-is zero</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           jumpreach hairlength gender01
-jumpreach       1.00      -0.97       NA
-hairlength     -0.97       1.00       NA
-gender01          NA         NA        1</code></pre>
+jumpreach       1.00      -0.97    -0.77
+hairlength     -0.97       1.00     0.81
+gender01       -0.77       0.81     1.00</code></pre>
 </div>
 </div>
 <p>You should, however, never trust single number. Always also <strong>look at the data</strong>!</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">jumpreach</span>, <span class="va">hairlength</span>, <span class="va">gender01</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">jumpreach</span>, <span class="va">hairlength</span>, <span class="va">gender01</span><span class="op">)</span>, </span>
 <span>      lower.panel <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1406,7 +1512,7 @@ m(x) = E(Y_i \mid X_i = x)
 <span class="math inline">\(E(Y|X= 32.08 )  \approx \widehat{E}(Y|X= 32.08 )=\)</span> <code>mean(grp3)</code> <span class="math inline">\(=\)</span> 19.28</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cond_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">grp1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">grp2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">grp3</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cond_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">grp1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">grp2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">grp3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">jumptest_data</span><span class="op">$</span><span class="va">hairlength</span>, <span class="va">jumptest_data</span><span class="op">$</span><span class="va">jumpreach</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="st">"Hair Length (cm)"</span>, ylab <span class="op">=</span> <span class="st">"Jump Height (cm)"</span>,</span>
@@ -1468,7 +1574,7 @@ f_X(x) = \frac{1}{\sigma\sqrt{2\pi}}
 </ul>
 <p>The special case <span class="math inline">\(\mu = 0\)</span>, <span class="math inline">\(\sigma = 1\)</span> is called the <strong>standard normal distribution</strong>, denoted <span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>      xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.65</span><span class="op">)</span>,</span>
 <span>      ylab <span class="op">=</span> <span class="st">"Density"</span>, xlab <span class="op">=</span> <span class="st">"x"</span>,</span>
 <span>      col  <span class="op">=</span> <span class="st">"steelblue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -1495,20 +1601,20 @@ Figure&nbsp;2.11: Normal distributions with different means and standard deviati
 </div>
 <p>R provides four functions for any distribution: <code>d</code> (density), <code>p</code> (cdf), <code>q</code> (quantile), <code>r</code> (random draws). For the normal:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>       <span class="co">## 5 random draws from N(0,1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1.3709584 -0.5646982  0.3631284  0.6328626  0.4042683</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>       <span class="co">## density at x = 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>       <span class="co">## density at x = 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3989423</code></pre>
 </div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">1.96</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>    <span class="co">## P(Z &lt;= 1.96)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">1.96</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>    <span class="co">## P(Z &lt;= 1.96)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9750021</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fl">0.975</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   <span class="co">## z such that P(Z &lt;= z) = 0.975</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fl">0.975</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   <span class="co">## z such that P(Z &lt;= z) = 0.975</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.959964</code></pre>
 </div>
@@ -1536,7 +1642,7 @@ Z = \frac{X - \mu}{\sigma} \sim \mathcal{N}(0, 1).
 <p>This is a <strong>parametric</strong> approach: it assumes a specific functional form (the bell curve) and only estimates the two free parameters. The non-parametric estimators <span class="math inline">\(\hat{f}_{X,\operatorname{obs}}^{\operatorname{hist}}\)</span> and <span class="math inline">\(\hat{f}_{X,\operatorname{obs}}^{\operatorname{kernel}}\)</span> from <a href="#sec-pdf" class="quarto-xref"><span>Section 2.2.1</span></a> make no such functional form assumption. The trade-off is flexibility versus efficiency: parametric estimates use fewer degrees of freedom and can be more precise — but only if the assumed distribution is correct.</p>
 <p><a href="#fig-hairlength-normal" class="quarto-xref">Figure&nbsp;<span>2.12</span></a> overlays <span class="math inline">\(\hat{f}_{X,\operatorname{obs}}^{\operatorname{norm}}\)</span> on the histogram of hair lengths. The bell curve does <strong>not</strong> fit well: the two peaks (one for short-haired, one for long-haired students) are a feature a single normal distribution cannot capture. This is a reminder that distributional assumptions should always be checked against the data.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mu_hat</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">jumptest_data</span><span class="op">$</span><span class="va">hairlength</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mu_hat</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">jumptest_data</span><span class="op">$</span><span class="va">hairlength</span><span class="op">)</span></span>
 <span><span class="va">sig_hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">jumptest_data</span><span class="op">$</span><span class="va">hairlength</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">jumptest_data</span><span class="op">$</span><span class="va">hairlength</span>,</span>
@@ -1577,7 +1683,7 @@ W = Z_1^2 + Z_2^2 + \cdots + Z_\nu^2 \sim \chi^2_\nu,
 \]</span></p>
 <p>Key properties: the distribution is <strong>right-skewed</strong> with support on <span class="math inline">\([0, \infty)\)</span>. Its mean is <span class="math inline">\(\nu\)</span> and its variance is <span class="math inline">\(2\nu\)</span>. As <span class="math inline">\(\nu\)</span> grows, the distribution becomes more symmetric and shifts rightward.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>      ylab <span class="op">=</span> <span class="st">"Density"</span>, xlab <span class="op">=</span> <span class="st">"x"</span>, col <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">df_val</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="va">df_val</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="va">df_val</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -1607,7 +1713,7 @@ Y = \frac{W_1/m}{W_2/n} \sim F_{m,n},
 \]</span></p>
 <p>Like the chi-squared, the F-distribution has support on <span class="math inline">\([0, \infty)\)</span> and is right-skewed. Its shape depends on both <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">df</a></span><span class="op">(</span><span class="va">x</span>, df1 <span class="op">=</span> <span class="fl">1</span>, df2 <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.3</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">df</a></span><span class="op">(</span><span class="va">x</span>, df1 <span class="op">=</span> <span class="fl">1</span>, df2 <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.3</span><span class="op">)</span>,</span>
 <span>      ylab <span class="op">=</span> <span class="st">"Density"</span>, xlab <span class="op">=</span> <span class="st">"x"</span>,</span>
 <span>      col  <span class="op">=</span> <span class="st">"steelblue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">df</a></span><span class="op">(</span><span class="va">x</span>, df1 <span class="op">=</span> <span class="fl">3</span>, df2 <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
@@ -1722,7 +1828,7 @@ Y_i |X_i \sim \mathcal{N}( \beta_0 + \beta_1 X_i , \sigma^2)
 <p>Because the DGP specifies a complete probability model, we can <strong>simulate</strong> from it: we draw artificial data according to the model, with known parameter values. Simulation is a powerful pedagogical tool — it lets us see what data the DGP would produce if the parameters were known, and check whether our estimation methods recover those parameters.</p>
 <p>The code below simulates jump and reach and hair-length data from a linear DGP with known <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma\)</span>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">n_sim</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
 <span></span>
 <span><span class="co">## True DGP parameters</span></span>

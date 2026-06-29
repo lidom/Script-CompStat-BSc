@@ -47,17 +47,15 @@ hairlength <- round(pmax(
 
 jumpreach <- round(pmax(beta1 + beta2 * hairlength + rnorm(n, 0, sigma), 0), 2)
 
+gender01  <- ifelse(gender == "female", 1, 0)
+
 ## Data frame (the only thing we observe usually)
-jumptest_data <- data.frame(hairlength = hairlength, jumpreach = jumpreach)
+jumptest_data <- data.frame(hairlength = hairlength,
+                            jumpreach  = jumpreach, 
+                            gender     = gender, 
+                            gender01   = gender01)
 
-
-gender01 <- rep(0, length(jumpreach))
-gender01[gender == "famle"] <- 1 
-
-data_ch2 <- data.frame(hairlength = hairlength, jumpreach = jumpreach, gender = gender, gender01 = gender01)
-
-write.csv(data_ch2, file = "DATA/data_jumptest_ch2.csv", row.names = FALSE)
-
+write.csv(jumptest_data, file = "DATA/jumptest_data.csv", row.names = FALSE)
 
 ## Marginal distribution of Y (derived analytically by marginalising over X):
 ##   Y ~ 0.5*N(mu_Y_m, sigma_Y_m^2) + 0.5*N(mu_Y_f, sigma_Y_f^2)
@@ -85,7 +83,7 @@ f_YgX <- function(y, x) dnorm(y, beta1 + beta2 * x, sigma)  ## conditional densi
 #| tbl-cap: "First six rows of the jump and reach test data set."
 
 library("kableExtra")
-kbl(head(jumptest_data),
+kbl(head(jumptest_data[,1:2]),
     col.names = c("Hair Length (cm)", "Jump Height (cm)"),
     align = c("r", "r")) |>
   kable_styling(bootstrap_options = c("striped", "hover"),
@@ -129,7 +127,7 @@ This observation is the starting point of statistics. The data we observe are a 
 
 ## Random Variables and Distributions {#sec-rv}
 
-The key mathematical concept is the **random variable**. You can view a random variable as a data production unit.
+The key mathematical concept is the **random variable**. You can view a random variable as a data generator.
 
 A **random variable**, say $X,$ can gives us values (e.g. numeric values like $0.4, 1.9, \dots$ or qualitative values like `red`, `blue`, etc.) based on an underlying (typically unknown) law: **its distribution**. 
 
@@ -254,8 +252,9 @@ The main tools for characterizing connections between distributions (connection 
 :::
 
 
-### Density Function: Continuous Random Variables {#sec-pdf}
+### Density Function {#sec-pdf}
 
+#### **Continuous Random Variables** {-} 
 
 A random variable, say $X,$ that can take *any* value in an interval $[a,b]$
 $$
@@ -269,6 +268,9 @@ Examples of continuous random variables:
 * Height $H_i$ taking the values $H_i\geq 0$ [m, cm, mm, etc.]
 * Temperature $T_i$ taking values $-\infty < T_i < \infty$ [Degree Celcius]
 
+
+#### **Density Function** {-}
+
 For a **continuous** random variable $X$ we can describe its distribution most conveniently using the **probability density function (pdf)** $f_X(x).$ 
 
 A **probability density function (pdf)** $f_X(x)$ has the following key properties:
@@ -279,31 +281,34 @@ f_X(x) \geq 0 \quad \text{for all} \quad x
 $$
 **2. Total Probability:**
 $$
-\int_{-\infty}^{\infty} f_X(x)\, dx = 1.
+\int_{-\infty}^{\infty} f_X(x)\, dx = 1
 $$
 **3. General Probabilities:**
 The probability that $X$ falls in the interval $[a, b]$ is the area under the density curve over $[a,b]$:
 $$
-P(a \leq X \leq b) = \int_a^b f_X(x)\, dx.
+P(a \leq X \leq b) = \int_a^b f_X(x)\, dx
 $$
 
 ::: {.callout-note appearance="simple"}
 Note that the density value $f_X(x)$ is **not** itself a probability. Only **areas under $f_X$** correspond to probabilities. In fact, $f(x)$ can take values larger than 1.
 :::
 
+#### 💻 **Data Generation** {-} 
 
 If the true density is known, we can generate realizations on a the computer. For instance, in case of a normally distributed random variable (@sec-normal) with mean $1.6$ and variance $2,$ we can use the following code:
 
 ```{r}
 n <- 12 # sample size (number of realizations)
 
-rnorm(
+realizations <- rnorm(
     n,            # sample size
     mean = 1.6,   # mean
     sd   = sqrt(2)# standard deviation = square root of variance
 )
+head(round(realizations, digits = 2)) # first six values
 ```
 
+#### ⚒️ **Estimation** {-} 
 
 In practice, the true functional form of a density $f_X$ which generates the data is **(typically) unknown**. It's a part of the data-generating process we are trying to learn from data. 
 
@@ -410,14 +415,26 @@ legend("top",
 ::: {.callout-note}
 # Summary: Density Function
 
-* 🤓 The probability density funciton (pdf) or short **density** allows describing the distribution of **continuous random variables** taking any value in an interval $[a,b]$. 
-* 🙂 Densities are particularly intuitive to interpret: The realizations of a random variable tend to cluster at regions of high density. 
-* 🙁 As long as we only look at ***marginal* densities** $f_X$ or $f_Y,$ we cannot see a possible connection between the random variables $X$ and $Y.$ To see the possible connections, we need ***joint* densities** $f_{YX}$ (@sec-joint-conditional) or **conditional means (regression)** (@sec-regression-function). 
-
+* 🤓 The probability density funciton (pdf) or short **density** allows describing the distribution of **continuous random variables**.
+<br> 
+* 🙂 Densities are particularly intuitive to interpret: The realizations of a random variable tend to cluster at regions of high density.
+<br> 
+* 🙁 As long as we only look at ***marginal* densities** $f_X(x)$ or $f_Y(x),$ we cannot see a possible connection between the random variables $X$ and $Y.$ To see connections, we need 
+   * ***joint* densities** $f_{YX}$ (@sec-joint-conditional) or
+   * **conditional means (regression)** (@sec-regression-function). 
+<br>
+* ⚒️ **Non-parametric estimation:** To estimate an unknown density function $f_X(x)$ we can use for instance a histogram or a kernel density estimator.
+    * 🙂 Require no functional form assumption
+    * 🙁 Inefficient estimation 
+<br>
+* ⚒️ **Parametric estimation:** If you know the general functional form of $f_X(x)$ you can improve the estimation result. For instance, if $f_X(x)$ is the density of a normal distribution, but you do not know the mean and variance parameters, you can focus on estimating these unknown parameters instead of estimating the total functional form; see @sec-sec-normal.
+    * 🙁 Requires a functional form assumption
+    * 🙂 Efficient estimation    
 :::
 
-### Probability Mass Function: Discrete Random Variables {#sec-pmf}
+### Probability Mass Function {#sec-pmf}
 
+#### **Discrete Random Variables** {-} 
 
 A random variable, say $W,$ that takes only **countably many values** such as 
 $$
@@ -427,19 +444,26 @@ is called a **discrete random variable.**
 
 Examples of discrete random variables:
 
-* Gender $G_i\in\{\texttt{female}, \text{male}\}$
+* Gender[^1] $G_i\in\{\texttt{female}, \text{male}\}$
 * Rolling a die $D_i\in\{1,2,3,4,5,6\}$
-* Eye color $E_i\in\{\texttt{blue}, \texttt{brown}, \texttt{hazel}, \texttt{green}, \texttt{gray}\}$
+* Eye color $C_i\in\{\texttt{blue}, \texttt{brown}, \texttt{hazel}, \texttt{green}, \texttt{gray}\}$
 * Number of coin flips required to get the first head, $N_i\in\{1,2,\dots\}$
 
+[^1]: In practice, gender and biological sex are measured in various ways depending on the research context. This example uses a binary coding for simplicity; real datasets may include additional categories or continuous measures.
 
 For discrete random variable a density function does *not* exist. There is no smooth curve whose area gives probabilities, because all probability is concentrated on isolated points.
 
-The discrete counterpart of the density function is the **probability mass function (pmf)** 
+#### **Probability Mass Function** {-}
+
+For a **discrete** random variable 
+$$
+W\in\{w_1,w_2,\dots\}
+$$ 
+we describe its distribution using the **probability mass function (pmf)** 
 $$
 p_W(w_k) = P(W = w_k)\quad\text{for all}\quad k=1,2,\dots
 $$ 
-It has the following three key properties:
+The pmf has the following three key properties:
 
 **1. Non-Negativity:**
 $$
@@ -447,7 +471,7 @@ p_W(w_k) \geq 0\quad\text{for all}\quad k=1,2,\dots
 $$
 **2. Total Probability:**
 $$
-\sum_{k=1,2,\ldots} p_W(w_k) = 1.
+\sum_{k=1,2,\ldots} p_W(w_k) = 1
 $$
 **3. General Probabilities:**
 $$
@@ -459,7 +483,13 @@ Unlike the density $f_X(x)$, the value $p_W(w_k)$ **is** itself a probability �
 :::
 
 
-**Data generation:** If the true pmf is known, we can generate realizations using the computer 💻. For instance, in case of rolling a die we can use the following code:
+#### 💻 **Data Generation** {-} 
+
+If the true pmf is known, we can generate realizations on the computer. For instance, to generate realization of a random gender variable with two gender-outcomes 
+$$
+G_i\in\{\texttt{female}, \text{male}\}
+$$
+we can use the following code:
 
 ```{r}
 n <- 11 # sample size (number of die rolls)
@@ -467,13 +497,16 @@ n <- 11 # sample size (number of die rolls)
 gender_realizations <- sample(
     c("female", "male"),  # possible outcome values 
     size    = n,          # sample size
-    replace = TRUE,       # with replacement (values can occure more than once)
+    replace = TRUE,       # values can occure more than once
     prob    = c(1/2, 1/2) # probabilities for each outcome value
 )
 head(gender_realizations) # first six values
 ```
 
-In practice, however, we typically know the values a discrite random variable can take, but the corresponding probabilities $p_W$ are **(typically) unknown**. Given the observed realizations 
+
+#### ⚒️ **Estimation** {-} 
+
+In practice, we typically know the values $w_1,w_2,\dots$ a discrete random variable $W$ can take, but the corresponding probabilities $p_W$ are **(typically) unknown**. Given the observed realizations 
 $$
 W_{1,\operatorname{obs}}, \ldots, W_{n,\operatorname{obs}},
 $$ 
@@ -515,29 +548,21 @@ Since $G_i$ takes only two values $\{\texttt{male},\texttt{female}\},$ it is a *
 @fig-gender-pmf shows the estimation results
 \begin{align*}
 \hat{p}_{G,\operatorname{obs}}(\texttt{male})
-&= \frac{\text{number of observations equal to } \texttt{male}}{n}\\
-&= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{male})
+&= \frac{\text{number of observations equal to } \texttt{male}}{n}\\[4pt]
+&= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{male})\\[4pt]
+&= \texttt{sum(gender == "male") / length(gender)}\\[4pt]
+&= `r round(sum(jumptest_data$gender == "male") / length(jumptest_data$gender), 2)`
 \end{align*}
-<center>
-$\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{male})} \;\;=$ `sum(gender == "male") / length(gender)`
-</center>
-<center>
-$\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{male})} \;\;=$ `r round(sum(gender == "male") / length(gender),2)`
-</center>
 
 and
 
 \begin{align*}
 \hat{p}_{G,\operatorname{obs}}(\texttt{female})
-&= \frac{\text{number of observations equal to } \texttt{female}}{n}\\
-&= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{female})
+&= \frac{\text{number of observations equal to } \texttt{female}}{n}\\[4pt]
+&= \frac{1}{n}\sum_{i=1}^n\mathbf{1}(G_{i,\text{obs}} = \texttt{female})\\[4pt]
+&= \texttt{sum(gender == "female") / length(gender)}\\[4pt]
+&= `r round(sum(jumptest_data$gender == "female") / length(jumptest_data$gender), 2)`
 \end{align*}
-<center>
-$\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{female})} \;\;=$ `sum(gender == "female") / length(gender)`
-</center>
-<center>
-$\phantom{\hat{p}_{G,\operatorname{obs}}(\texttt{female})} \;\;=$ `r round(sum(gender == "female") / length(gender),2)`
-</center>
 <br>
 together with the **usually unknown** true pmf values
 $$
@@ -549,10 +574,10 @@ $$
 #| echo: false
 #| fig-cap: "Estimated probability mass function values $\\hat{p}_{G,\\operatorname{obs}}(\texttt{male})$ and $\\hat{p}_{G,\\operatorname{obs}}(\texttt{female})$ (purple bars). The dashed black line is the true pmf $p_G(\texttt{male}) = p_G(\texttt{female}) = 0.5$."
 
-gender_probs <- as.numeric(table(gender)) / length(gender)
+gender_probs <- as.numeric(table(jumptest_data$gender)) / length(jumptest_data$gender)
 
 bp <- barplot(gender_probs,
-              names.arg = c("G = male", "G = female"),
+              names.arg = c("G = female", "G = male"),
               col       = adjustcolor("purple", alpha.f = 0.5),
               border    = "white",
               ylab      = "",
@@ -572,64 +597,75 @@ legend("topright",
 ::: {.callout-note}
 # Summary: Probability Mass Function
 
-* 🤓 The probability mass funciton (pmf) allows describing the distribution of **discrete random variables** taking only countable many values. 
-* 🙂 Probability mass functions are intuitive to interpret: The realizations of a discrete random variable tend to take values that have a high pmf value (i.e. a high probability). 
-* 🙁 As long as we only look at ***marginal* pmfs**, we cannot see a possible connection between the random variables. To see the possible connections, we need ***joint* distribution functions** (@sec-joint-conditional) or **conditional means (regression)** (@sec-regression-function). 
+* 🤓 The probability mass funciton (pmf) allows describing the distribution of **discrete random variables**. 
+<br> 
+* 🙂 Probability mass functions are to interpret: The realizations of a discrete random variable tend to take values that have a high probability. 
+<br> 
+* 🙁 As long as we only look at ***marginal* pmfs**, we cannot see a possible connections between two or more random variables. 
+<br>
+* ⚒️ **Non-parametric estimation:** To estimate an unknown pmf we can simply use relative frequencies.
 :::
+
 
 ### Cumulative Distribution Function {#sec-cdf}
 
-The **cumulative distribution function (cdf)** $F_X(x)$ is defined for any random variable — continuous or discrete — as
-
+The **cumulative distribution function (cdf)** or short **distribution function** $F_X(x)$ is defined as 
 $$
-F(x) = P(X \leq x)
-$$
-
-For continuous random variables, we have
-$$
-F(x) = P(X \leq x) = \int_{-\infty}^x f(x)dx.
+F_X(x) = P(X \leq x).
 $$
 
-It tells us the probability that $X$ takes a value at most $x$. It has the following properties:
+This definition works for any random variable, continuous, discrete, and even hybrid forms of random variables that are partly continuous and discrete. 
 
-**1. $F(x)$ is Non-Decreasing:** 
+$F_X(x)$ tells us the probability that $X$ takes a value at most $x$. It has the following properties:
+
+**1. $F_X(x)$ is Non-Decreasing:** 
 $$
-x_1 < x_2 \Rightarrow F(x_1) \leq F(x_2)
+x_1 < x_2 \Rightarrow F_X(x_1) \leq F_X(x_2)
 $$
-**2. $F(x)$ is Normalized:**
+**2. $F_X(x)$ is Normalized:**
 $$
-\lim_{x \to -\infty} F(x) = 0\quad\text{and}\quad \lim_{x \to +\infty} F(x) = 1.
+\lim_{x \to -\infty} F_X(x) = 0\quad\text{and}\quad \lim_{x \to +\infty} F_X(x) = 1.
 $$
 **3. $F(x)$ is Right-Continuous:**
 $$
-\lim_{x \to c+} f(x) = f(c),
+\lim_{x \to c+} F_X(x) = F_X(c),
 $$
-where $x \to c+$ means that $x$ goes to $c$ from the "right", i.e. from values larger than $c$.
+where $x \to c+$ means that $x$ goes to $c$ from the "right", i.e. coming from values larger than $c$.
 
 **4. For continuous $X$:** 
 $$
-f(x) = F'(x)
+F_X(x) = P(X \leq x) = \int_{-\infty}^x f_X(x)dx.
+$$
+and
+$$
+f_X(x) = F'_X(x),
 $$ 
-the pdf is the derivative of the cdf.
+where $F'_X(x)$ denotes the first derivative of $F_X(x).$
+
+
+
+#### ⚒️ **Estimation** {-} 
 
 In practice, the true cdf is **(typically) unknown**. Given the observed values, we estimate it with the **empirical cdf**, defined as the fraction of observations at most $x$:
 
-$$
-\hat{F}_{\operatorname{obs}}(x) = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
-$$
+\begin{align*}
+\widehat{F}_{\operatorname{obs}}(x) 
+& = \frac{\text{number of observations equal to or smaller than $x$}}{n}\\
+& = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
+\end{align*}
 where $\mathbf{1}(\texttt{TRUE})=1$ and $\mathbf{1}(\texttt{FALSE})=0$ is the indicator function. 
 
-The empirical cdf $\hat{F}_{\operatorname{obs}}$ is a step function that converges to the true cdf $F$ as $n \to \infty$. 
+The empirical cdf $\widehat{F}_{\operatorname{obs}}$ is a step function that converges to the true cdf $F$ as $n \to \infty$. 
 
 
-In R, `ecdf()` computes the empirical cdf $\hat{F}_{\operatorname{obs}}(x).$
+In R, `ecdf()` computes the empirical cdf $\widehat{F}_{\operatorname{obs}}(x).$
 
 
 #### 🤸‍♀️ **Jump-Test Data Example** {-}
 
 @fig-hairlength-ecdf shows 
 $$
-\hat{F}_{X,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
+\widehat{F}_{X,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(X_{i,\operatorname{obs}} \leq x),
 $$ 
 based on the observed hair-length data
 $$
@@ -640,7 +676,7 @@ together with the true **usually unknown** cdf $F_X$.
 
 ```{r}
 #| label: fig-hairlength-ecdf
-#| fig-cap: "Empirical cdf $\\hat{F}_{X,\\operatorname{obs}}(x)$ of hair lengths (solid blue step function). The dashed black curve is the true cdf $F_X(x)$."
+#| fig-cap: "Empirical cdf $\\widehat{F}_{X,\\operatorname{obs}}(x)$ of hair lengths (solid blue step function). The dashed black curve is the true cdf $F_X(x)$."
 
 plot(ecdf(jumptest_data$hairlength),
      xlab      = "Hair Length (cm)",
@@ -660,7 +696,7 @@ legend("topleft",
 
 @fig-jumpreach-ecdf shows 
 $$
-\hat{F}_{Y,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(Y_{i,\operatorname{obs}} \leq x),
+\widehat{F}_{Y,\operatorname{obs}}  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(Y_{i,\operatorname{obs}} \leq x),
 $$ 
 based on the observed jump and reach data
 $$
@@ -671,7 +707,7 @@ together with the true **usually unknown** cdf $F_Y$.
 
 ```{r}
 #| label: fig-jumpreach-ecdf
-#| fig-cap: "Empirical cdf $\\hat{F}_{Y,\\operatorname{obs}}(y)$ of jump and reach scores (solid red step function). The dashed black curve is the true marginal cdf $F_Y(y)$."
+#| fig-cap: "Empirical cdf $\\widehat{F}_{Y,\\operatorname{obs}}(y)$ of jump and reach scores (solid red step function). The dashed black curve is the true marginal cdf $F_Y(y)$."
 
 plot(ecdf(jumptest_data$jumpreach),
      xlab      = "Jump Height (cm)",
@@ -689,43 +725,71 @@ legend("topleft",
 ```
 
 
+
+
 ::: {.callout-note appearance="simple"}
-Unlike the density, the cdf is well-defined for both continuous and discrete, and even for a **mixture** of the two (a distribution that has both a smooth part and point masses). The definition 
+# Summary: Distribution Function
+
+* 🤓 The cdf is well-defined for both continuous and discrete, and even for  **mixtures** of continuous and discrete random variables. The definition 
 $$
-F(x) = P(X \leq x)
+F_X(x) = P(X \leq x)
 $$ 
 requires nothing more than a probability, and probabilities are always defined.
+<br> 
+* 🙁 As long as we only look at ***marginal* cdfs**, we cannot see a possible connections between two or more random variables. 
+<br>
+* ⚒️ **Non-parametric estimation:** To estimate an unknown cdf we can simply use relative frequencies.
 :::
 
 ## Mean and Variance {#sec-moments}
 
-Two numbers summarize a distribution more compactly than the full density: 
+Two following two parameters summarize a distribution more compactly than the full density: 
 
-* the **expected value** tells us something about the center (i.e. its location) of a distribution
-* the **variance** tells us something about how much the data spreads out around its center.
+* **Mean:** The **expected value** or **mean** tells us something about the center (i.e. its location) of a distribution
+* **Variance:** The **variance** tells us something about how much the data spreads out around its mean.
 
-Known location and spread means, of course, not knowing the total distributions. But location and spread are two important features of a distribution. 
+❗ Mean (location) and variance (spread) are only important features of a distribution. Knowing both parameters does *not* give us the complete functional form of a distribution. 
 
 ### Mean Value {-}
 
-The **mean value** or **expected value** of a continuous random variable $X$ with density $f$ is
-
+The **mean** or **expected value** of a continuous random variable $X$ with density $f_X$ is
 $$
 \mu_X = E(X) = \int_{-\infty}^{\infty} x\, f_X(x)\, dx.
 $$
 
 ::: {.callout-note appearance="simple"}
-Think of $E(X)$ as the long-run average: if you drew from the distribution $f_X$ *many* times and averaged the results, the average would converge to $E(X).$
+Think of $E(X)$ as the long-run average: if you drew from the distribution $f_X$ *many* times and averaged the results, the average would converge to $E(X)$ when averaging infinitely many results.
 :::
 
 For a discrete random variable $W$ with possible values $w_1, w_2, \ldots$ and probabilities $p_W(w_k) = P(W = w_k)$, the integral becomes a sum:
-
 $$
-\mu_W = E(Y) = \sum_{k=1,2,\dots} w_k\, p_W(w_k).
+\mu_W = E(W) = \sum_{k=1,2,\dots} w_k\, p_W(w_k).
 $$
 
-Note: The expected value is **linear**: for constants $a$ and $b$,
+❗ The mean of a discrete random variable 
+$$
+W\in\{w_1,w_2,\dots\}
+$$ 
+only makes sense in cases where the values $w_1,w_2,\dots$ are numeric. 
 
+**Example:** The expected value when rolling a die 
+$$
+D\in\{1,2,3,4,5,6\}
+$$
+is
+\begin{align*}
+E(D) 
+& = 1 \cdot  \frac{1}{6} +  2 \cdot\frac{1}{6} + 3\cdot\frac{1}{6} + 4 \cdot\frac{1}{6} + 5 \cdot\frac{1}{6}+ 6 \cdot\frac{1}{6}\\
+& = \frac{1}{6}\cdot(1+2+3+4+5+6)\\
+& = \frac{1}{6} \cdot \sum_{k=1}^6 k \\
+& = \frac{1}{6} \cdot \frac{6\cdot(6+1)}{2} = 3.5
+\end{align*}
+where $\sum_{k=1}^6 k = \frac{6\cdot(6+1)}{2}$ follows from the [Gaussian summation formula](https://de.wikipedia.org/wiki/Gau%C3%9Fsche_Summenformel).
+
+
+#### **Properties of the Expected Value** {-}
+
+The expected value is *linear*; i.e. for constants $a$ and $b$,
 $$
 E(aX + b) = a\, E(X) + b.
 $$
@@ -736,7 +800,41 @@ E(X + Y) = E(X) + E(Y).
 $$
 
 
-In practice, the true densities $f_X$ and $f_Y$ are unknown — so neither formula can be evaluated directly.
+#### ⚒️ **Estimation** {-} 
+
+In practice, the true density $f_X$ and the true pmf $p_W$ are typically unknown — so neither formula can be evaluated directly to compute the true means $E(Y)$ and $E(W).$ 
+
+Given observed realizations of a continuous random variable
+$$
+X_{1,\text{obs}},\dots,X_{n,\text{obs}}
+$$
+we can estimate $E(X)$ by 
+$$
+\bar{X}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n X_{i,\operatorname{obs}}.
+$$
+Alternative notations: 
+$$
+\bar{X}_{\operatorname{obs}} = \hat{\mu}_{X,\operatorname{obs}} = \widehat{E}_{\operatorname{obs}}(X)
+$$
+
+Given observed realizations of a discrete random variable
+$$
+W_{1,\text{obs}},\dots,W_{n,\text{obs}}
+$$
+we can estimate $E(W)$ by 
+$$
+\bar{W}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n W_{i,\operatorname{obs}}.
+$$
+Alternative notations: 
+$$
+\bar{W}_{\operatorname{obs}} = \hat{\mu}_{W,\operatorname{obs}} = \widehat{E}_{\operatorname{obs}}(W)
+$$
+
+❗ Estimating the mean of a discrete random variable 
+$$
+W\in\{w_1,w_2,\dots\}
+$$ 
+only makes sense in cases where the values $w_1,w_2,\dots$ are numeric (e.g. rolling dice). 
 
 #### 🤸‍♀️ **Jump-Test Data Example** {-}
 
@@ -750,93 +848,114 @@ Y_{1,\operatorname{obs}}, \ldots, Y_{n,\operatorname{obs}}
 $$
 we can estimate the expected values $E(X)$ and $E(Y)$ by the **sample means**:
 $$
-\hat{\mu}_{X,\operatorname{obs}} = \bar{X}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n X_{i,\operatorname{obs}}
+\bar{X}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n X_{i,\operatorname{obs}}
 $$
 $$
-\hat{\mu}_{Y,\operatorname{obs}} = \bar{Y}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n Y_{i,\operatorname{obs}}
+\bar{Y}_{\operatorname{obs}} = \frac{1}{n} \sum_{i=1}^n Y_{i,\operatorname{obs}}
 $$
 
-In R, `mean()` computes sample means: 
+In R, `mean()` computes sample means:
 
 * $\bar{X}_{\operatorname{obs}}=$`mean(jumptest_data$hairlength)` $=$ `r round(mean(jumptest_data$hairlength),1)`
 * $\bar{Y}_{\operatorname{obs}}=$`mean(jumptest_data$jumpreach)` $=$ `r round(mean(jumptest_data$jumpreach),1)`
 
+Since we generated the data ourselves, we also know the true population means (usually unknown in practice):
+
+* $E(X)=$ `r 0.5*mu_X_m + 0.5*mu_X_f`
+* $E(Y)=$ `r 0.5*mu_Y_m + 0.5*mu_Y_f`
+
+So, the estimates $\bar{X}_{\operatorname{obs}}$ and $\bar{Y}_{\operatorname{obs}}$ are doing a good job - both have values close to the true (usually unknown) values.
 
 ### Variance and Standard Deviation {-}
 
-The **variance** of $X$ is the expected squared deviation from the mean:
+The **variance** of a continuous random variable $X$ with density $f_X$ is the expected squared deviation from its mean:
 
 \begin{align*}
-\sigma_X^2=\text{Var}(X) 
-& = E\!\left[(X - E(X))^2\right]\\
-& = \int_{-\infty}^{\infty} (x - E(X))^2\, f(x)\, dx.
+\sigma_X^2 = \text{Var}(X)
+&= E\!\left[(X - \mu_X)^2\right]\\
+&= \int_{-\infty}^{\infty} (x - \mu_X)^2\, f_X(x)\, dx.
 \end{align*}
 
-The **standard deviation** is 
+The **standard deviation** is
 $$
-\text{SD}(X) = \sqrt{\text{Var}(X)},
-$$ 
+\sigma_X = \text{SD}(X) = \sqrt{\text{Var}(X)},
+$$
 which has the same units as $X$ and is therefore easier to interpret.
 
-For a discrete random variable $W$, the integral becomes a sum:
+::: {.callout-note appearance="simple"}
+Think of $\text{Var}(X)$ as the average squared distance of a draw from the mean. A large variance means draws tend to spread far from $\mu_X$; a small variance means they cluster tightly around it. The standard deviation $\text{SD}(X)$ expresses that same spread on the original scale of $X$.
+:::
+
+For a discrete random variable $W$ with possible values $w_1, w_2, \ldots$ and probabilities $p_W(w_k) = P(W = w_k)$, the integral becomes a sum:
 
 \begin{align*}
-\sigma_W^2=\text{Var}(W) 
-&= E\!\left[(W - E(W))^2\right]\\ 
-&= \sum_{k=1,2,\dots} (w_k - E(W))^2\, p_W(w_k).
+\sigma_W^2 = \text{Var}(W)
+&= E\!\left[(W - \mu_W)^2\right]\\
+&= \sum_{k=1,2,\dots} (w_k - \mu_W)^2\, p_W(w_k).
 \end{align*}
 
-Variance scales **quadratically**, but remains unchanged for constant shifts ($b$):
+**Example:** The variance when rolling a fair die $D \in \{1,2,3,4,5,6\}$, where $E(D) = 3.5$, is
+\begin{align*}
+\text{Var}(D)
+&= (1-3.5)^2\cdot\tfrac{1}{6} + (2-3.5)^2\cdot\tfrac{1}{6} + (3-3.5)^2\cdot\tfrac{1}{6}+\\
+&+ (4-3.5)^2\cdot\tfrac{1}{6} + (5-3.5)^2\cdot\tfrac{1}{6} + (6-3.5)^2\cdot\tfrac{1}{6}\\
+&= \frac{1}{6}\cdot\big[(1-3.5)^2 + (2-3.5)^2 + (3-3.5)^2 \\
+&\phantom{\frac{1}{6}\cdot} + (4-3.5)^2 + (5-3.5)^2 + (6-3.5)^2\big]\\
+&= \frac{1}{6}\cdot\left[\frac{25}{4} + \frac{9}{4} + \frac{1}{4} + \frac{1}{4} + \frac{9}{4} + \frac{25}{4}\right]\\
+&= \frac{1}{6}\cdot\frac{25+9+1+1+9+25}{4}\\
+&= \frac{35}{12} \approx 2.92,
+\end{align*}
+so the standard deviation is $\text{SD}(D) = \sqrt{35/12} \approx 1.71$.
+
+#### **Properties of Variance and Standard Deviation** {-}
+
+Variance scales **quadratically** with the scale factor and is unaffected by constant shifts:
 $$
-\text{Var}(aX + b) = a^2\, \text{Var}(X).
+\text{Var}(aX + b) = a^2\,\text{Var}(X).
 $$
-Standard deviation scales **linearly** and also remains unchanged for constant shifts ($b$):
+Standard deviation scales **linearly** and is likewise unaffected by constant shifts:
 $$
-\text{SD}(aX + b) = a\, \text{SD}(X).
+\text{SD}(aX + b) = |a|\,\text{SD}(X).
 $$
 
+#### ⚒️ **Estimation** {-}
 
-In practice, neither the true variance nor the true standard deviation can be computed without knowing the true $f_X$ or $f_Y$.
+In practice, the true density $f_X$ is typically unknown — so neither $\text{Var}(X)$ nor $\text{SD}(X)$ can be evaluated directly.
+
+Given observed realizations
+$$
+X_{1,\operatorname{obs}}, \ldots, X_{n,\operatorname{obs}},
+$$
+we estimate $\text{Var}(X)$ by the **sample variance**
+$$
+\hat{\sigma}^2_{X,\operatorname{obs}} = \widehat{\text{Var}}_{\operatorname{obs}}(X) = \frac{1}{n-1}\sum_{i=1}^n \bigl(X_{i,\operatorname{obs}} - \bar{X}_{\operatorname{obs}}\bigr)^2,
+$$
+and $\text{SD}(X)$ by the **sample standard deviation**
+$$
+\hat{\sigma}_{X,\operatorname{obs}} = \sqrt{\hat{\sigma}^2_{X,\operatorname{obs}}}.
+$$
+The divisor $n-1$ rather than $n$ corrects for the fact that $\bar{X}_{\operatorname{obs}}$ is itself estimated from the same data.
 
 #### 🤸‍♀️ **Jump-Test Data Example** {-}
 
-Given observed data
-$$
-X_{1,\operatorname{obs}}, \ldots, X_{n,\operatorname{obs}}
-$$
-and
-$$
-Y_{1,\operatorname{obs}}, \ldots, Y_{n,\operatorname{obs}}
-$$
-we can estimate the **typically unknown** variances $\text{Var}(X)$ and $\text{Var}(X)$ using the **sample variances**
-$$
-\hat{\sigma}^2_{X,\operatorname{obs}} = \widehat{\text{Var}}_{X,\operatorname{obs}} = \frac{1}{n-1} \sum_{i=1}^n
-  (X_{i,\operatorname{obs}} - \bar{X}_{\operatorname{obs}})^2
-$$
-$$
-\hat{\sigma}^2_{Y,\operatorname{obs}} = \widehat{\text{Var}}_{Y,\operatorname{obs}} = \frac{1}{n-1} \sum_{i=1}^n
-  (Y_{i,\operatorname{obs}} - \bar{Y}_{\operatorname{obs}})^2
-$$
-To estimate the **typically unknown** standard deviations $\text{SD}(X)$ and $\text{SD}(X)$ we can use the **sample standard deviations**
-$$
-\hat{\sigma}_{X,\operatorname{obs}} = \sqrt{\widehat{\text{Var}}_{X,\operatorname{obs}}}
-$$
-$$
-\hat{\sigma}_{Y,\operatorname{obs}} = \sqrt{\widehat{\text{Var}}_{Y,\operatorname{obs}}}
-$$ 
+In R, `var()` computes the sample variance and `sd()` computes the sample standard deviation:
 
+* $\hat\sigma_{X,\operatorname{obs}}^2=$ `var(jumptest_data$hairlength)` $=$ `r round(var(jumptest_data$hairlength),1)`
+* $\hat\sigma_{X,\operatorname{obs}}=$ `sd(jumptest_data$hairlength)` $=$ `r round(sd(jumptest_data$hairlength),1)`
+* $\hat\sigma_{Y,\operatorname{obs}}^2=$ `var(jumptest_data$jumpreach)` $=$ `r round(var(jumptest_data$jumpreach),1)`
+* $\hat\sigma_{Y,\operatorname{obs}}=$ `sd(jumptest_data$jumpreach)` $=$ `r round(sd(jumptest_data$jumpreach),1)`
 
-In R, `var()` computes $\hat{\sigma}^2_{X,\operatorname{obs}}$ and `sd()` computes $\hat{\sigma}_{X,\operatorname{obs}}\colon$
+Since we generated the data ourselves, we also know the true population variances and standard deviations (usually unknown in practice):
 
-* $\hat\sigma_{X,\operatorname{obs}}^2=$ `var(jumptest_data$hairlength)`$=$ `r round(var(jumptest_data$hairlength),1)`
-* $\hat\sigma_{X,\operatorname{obs}}=$   `sd(jumptest_data$hairlength)` $=$ `r round(sd(jumptest_data$hairlength),1)`
-* $\hat\sigma_{Y,\operatorname{obs}}^2=$ `var(jumptest_data$jumpreach)`   $=$ `r round(var(jumptest_data$jumpreach),1)`
-* $\hat\sigma_{Y,\operatorname{obs}}=$   `sd(jumptest_data$jumpreach)`    $=$ `r round(sd(jumptest_data$jumpreach),1)`
+* $\sigma_X^2=$ `r round(0.5*sigma_X_m^2 + 0.5*sigma_X_f^2 + (mu_X_m-mu_X_f)^2/4, 1)`
+* $\sigma_X=$ `r round(sqrt(0.5*sigma_X_m^2 + 0.5*sigma_X_f^2 + (mu_X_m-mu_X_f)^2/4), 1)`
+* $\sigma_Y^2=$ `r round(0.5*sigma_Y_m^2 + 0.5*sigma_Y_f^2 + (mu_Y_m-mu_Y_f)^2/4, 1)`
+* $\sigma_Y=$ `r round(sqrt(0.5*sigma_Y_m^2 + 0.5*sigma_Y_f^2 + (mu_Y_m-mu_Y_f)^2/4), 1)`
 
 
 ## Joint and Conditional Distributions {#sec-joint-conditional}
 
-Most interesting statistical questions involve two and more than two random variables. Often, we want to understand how they vary together.
+Most interesting statistical questions involve two or more random variables. Often, we want to understand how they vary together.
 
 ### Bivariate Density Function {-}
 
@@ -1159,12 +1278,7 @@ $$
 
 ```{r}
 #| echo: false
-jumptest_data2 <- data.frame(
-    "jumpreach"  = jumpreach, 
-    "hairlength" = hairlength, 
-    "gender01"   = gender01)
-
-kbl(head(jumptest_data2),
+kbl(head(jumptest_data[,c(1,2,3)]),
     col.names = c("Y: Jump Reach (cm)", "X1: Hair Length (cm)", "X2: Gender (1 = female, 0 = male)"),
     align = c("r", "r")) |>
   kable_styling(bootstrap_options = c("striped", "hover"),
